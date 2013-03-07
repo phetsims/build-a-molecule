@@ -33,6 +33,7 @@ require.config( {
     DOT: '../common/dot/js',
     ASSERT: '../common/assert/js',
     PHETCOMMON: '../common/phetcommon/js',
+    CHEMISTRY: '../common/chemistry/js',
     i18n: "../contrib/i18n-2.0.2",
     tpl: "../contrib/tpl-0.2"
   },
