@@ -10,3 +10,6 @@
 [submodule "common/phetcommon"]
 	path = common/phetcommon
 	url = https://github.com/phetsims/phetcommon.git
+[submodule "common/chemistry"]
+	path = common/chemistry
+	url = https://github.com/phetsims/chemistry.git
