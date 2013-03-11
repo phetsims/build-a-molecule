@@ -13,3 +13,6 @@
 [submodule "common/chemistry"]
 	path = common/chemistry
 	url = https://github.com/phetsims/chemistry.git
+[submodule "common/kite"]
+	path = common/kite
+	url = https://github.com/phetsims/kite.git

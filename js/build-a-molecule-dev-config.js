@@ -11,6 +11,12 @@ if ( window.has ) {
   window.has.add( 'assert.build-a-molecule', function( global, document, anElement ) {
     return true;
   } );
+  window.has.add( 'assert.kite', function( global, document, anElement ) {
+    return true;
+  } );
+  window.has.add( 'assert.kite.extra', function( global, document, anElement ) {
+    return true;
+  } );
   window.has.add( 'assert.scenery', function( global, document, anElement ) {
     return true;
   } );
@@ -30,6 +36,7 @@ require.config( {
     underscore: '../contrib/lodash.min-1.0.0-rc.3',
     jquery: '../contrib/jquery-1.8.3.min',
     SCENERY: '../common/scenery/js',
+    KITE: '../common/kite/js',
     DOT: '../common/dot/js',
     ASSERT: '../common/assert/js',
     PHETCOMMON: '../common/phetcommon/js',

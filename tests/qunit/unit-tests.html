@@ -17,6 +17,7 @@
   
   <script src="unit-tests.js"></script>
   <script src="../../common/scenery/tests/qunit/unit-tests.js"></script>
+  <script src="../../common/kite/tests/qunit/unit-tests.js"></script>
   <script src="../../common/dot/tests/qunit/unit-tests.js"></script>
   
 </head>
@@ -41,12 +42,14 @@
     // we need to wait until our config file is loaded before our require statement. apparently this was not guaranteed
     function check() {
       if ( window.loadedBuildAMoleculeConfig ) {
-        require( [ 'main', 'SCENERY/main', 'DOT/main' ], function( bam, scenery, dot ) {
+        require( [ 'main', 'SCENERY/main', 'KITE/main', 'DOT/main' ], function( bam, scenery, kite, dot ) {
           window.scenery = scenery;
+          window.kite = kite;
           window.dot = dot;
           
           runBuildAMoleculeTests( '.' );
           runSceneryTests( '../../common/scenery/tests/qunit' );
+          runKiteTests( '../../common/kite/tests/qunit' );
           runDotTests( '../../common/dot/tests/qunit' );
           
           if ( console.log ) {
