@@ -32,15 +32,23 @@ require.config( {
   // just depends on BAM dependencies. strip out parts from our dependencies that we don't need.
   deps: [ 'main' ],
   
+  config: {
+    i18n: {
+      locale: "en_us" // default for development
+    }
+  },
+  
   paths: {
-    underscore: '../contrib/lodash.min-1.0.0-rc.3',
-    jquery: '../contrib/jquery-1.8.3.min',
+    // Common repos
     SCENERY: '../common/scenery/js',
     KITE: '../common/kite/js',
     DOT: '../common/dot/js',
     ASSERT: '../common/assert/js',
     PHETCOMMON: '../common/phetcommon/js',
     CHEMISTRY: '../common/chemistry/js',
+    
+    underscore: '../contrib/lodash.min-1.0.0-rc.3',
+    jquery: '../contrib/jquery-1.8.3.min',
     i18n: "../contrib/i18n-2.0.2",
     tpl: "../contrib/tpl-0.2"
   },
