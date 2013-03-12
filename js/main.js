@@ -21,6 +21,7 @@ require( [
   
   var scene = new Scene( $container, {
     // scenery options here
+    renderer: 'svg'
   } );
   window.debugScene = scene; // makes debugging easier. not used for actual code
   
