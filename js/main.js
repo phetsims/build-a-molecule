@@ -15,7 +15,9 @@ require( [
   
   var $container = $( '#scene-container' );
   
-  var scene = new Scene( $container );
+  var scene = new Scene( $container, {
+    // scenery options here
+  } );
   window.debugScene = scene; // makes debugging easier. not used for actual code
   
   scene.addChild( new AtomNode( Element.O, {
@@ -98,4 +100,6 @@ require( [
     // stats.end();
   }
   window.requestAnimationFrame( tick, $container[0] );
+  
+  scene.initializeStandaloneEvents();
 } );

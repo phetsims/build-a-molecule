@@ -24,7 +24,9 @@ define( function( require ) {
   var Shape          = require( 'KITE/Shape' );
   
   var AtomNode = function( element, options ) {
-    Node.call( this, options );
+    Node.call( this, _.extend( {
+      cursor: 'pointer'
+    }, options ) );
     
     this.color = new Color( element.color );
     this.radius = element.radius;
