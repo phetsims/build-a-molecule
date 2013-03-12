@@ -5,6 +5,7 @@
  */
 require( [
     'SCENERY/Scene',
+    'SCENERY/nodes/Node',
     'SCENERY/input/SimpleDragHandler',
     'SCENERY/util/Util',
     'CHEMISTRY/Element',
@@ -13,7 +14,7 @@ require( [
     '../scenery-phet/js/bucket/BucketHole.js',
     'log',
     'view/AtomNode'
-  ], function( Scene, SimpleDragHandler, SceneryUtil, Element, Bucket, BucketFront, BucketHole, log, AtomNode ) {
+  ], function( Scene, Node, SimpleDragHandler, SceneryUtil, Element, Bucket, BucketFront, BucketHole, log, AtomNode ) {
   "use strict";
   
   log( 'All Build a Molecule does is print this line to the console. Yay.' );
@@ -81,10 +82,6 @@ require( [
     y: 400
   } ) );
   
-  _.each( scene.children, function( child ) {
-    child.addInputListener( new SimpleDragHandler() );
-  } );
-  
   var bucket = new Bucket( {
     x: 600,
     y: 100,
@@ -93,8 +90,10 @@ require( [
     baseColor: Element.O.color,
     caption: 'Oxygen'
   } );
-  scene.addChild( new BucketHole( bucket ) );
-  scene.addChild( new BucketFront( bucket ) );
+  scene.addChild( new Node( { children: [
+    new BucketHole( bucket ),
+    new BucketFront( bucket )
+  ] } ) );
   bucket = new Bucket( {
     x: 600,
     y: 170,
@@ -103,8 +102,10 @@ require( [
     baseColor: Element.N.color,
     caption: 'Nitrogen'
   } );
-  scene.addChild( new BucketHole( bucket ) );
-  scene.addChild( new BucketFront( bucket ) );
+  scene.addChild( new Node( { children: [
+    new BucketHole( bucket ),
+    new BucketFront( bucket )
+  ] } ) );
   bucket = new Bucket( {
     x: 600,
     y: 30,
@@ -113,8 +114,14 @@ require( [
     baseColor: Element.C.color,
     caption: 'Carbon'
   } );
-  scene.addChild( new BucketHole( bucket ) );
-  scene.addChild( new BucketFront( bucket ) );
+  scene.addChild( new Node( { children: [
+    new BucketHole( bucket ),
+    new BucketFront( bucket )
+  ] } ) );
+  
+  _.each( scene.children, function( child ) {
+    child.addInputListener( new SimpleDragHandler() );
+  } );
   
   /*---------------------------------------------------------------------------*
   * Layout
