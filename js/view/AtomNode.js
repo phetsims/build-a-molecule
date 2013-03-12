@@ -58,17 +58,6 @@ define( function( require ) {
     text.centerX = 0;
     text.centerY = 0;
     this.addChild( text );
-    
-    // PText labelNode = new PText() {{
-    //     setText( atom.getSymbol() );
-    //     setFont( new PhetFont( 10, true ) );
-    //     setScale( sphericalNode.getFullBoundsReference().width * 0.65 / getFullBoundsReference().width );
-    //     if ( 0.30 * atom.getColor().getRed() + 0.59 * atom.getColor().getGreen() + 0.11 * atom.getColor().getBlue() < 125 ) {
-    //         setTextPaint( Color.WHITE );
-    //     }
-    //     setOffset( -getFullBoundsReference().width / 2, -getFullBoundsReference().height / 2 );
-    // }};
-    // sphericalNode.addChild( labelNode );
   };
   
   Inheritance.inheritPrototype( AtomNode, Node );
