@@ -5,6 +5,7 @@
  */
 require( [
     'SCENERY/Scene',
+    'SCENERY/input/SimpleDragHandler',
     'SCENERY/util/Util',
     'CHEMISTRY/Element',
     'PHETCOMMON/model/Bucket',
@@ -12,7 +13,7 @@ require( [
     '../scenery-phet/js/bucket/BucketHole.js',
     'log',
     'view/AtomNode'
-  ], function( Scene, SceneryUtil, Element, Bucket, BucketFront, BucketHole, log, AtomNode ) {
+  ], function( Scene, SimpleDragHandler, SceneryUtil, Element, Bucket, BucketFront, BucketHole, log, AtomNode ) {
   "use strict";
   
   log( 'All Build a Molecule does is print this line to the console. Yay.' );
@@ -79,6 +80,10 @@ require( [
     x: 1000,
     y: 400
   } ) );
+  
+  _.each( scene.children, function( child ) {
+    child.addInputListener( new SimpleDragHandler() );
+  } );
   
   var bucket = new Bucket( {
     x: 600,
