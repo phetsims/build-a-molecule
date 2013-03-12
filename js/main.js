@@ -103,7 +103,7 @@ require( [
     x: 600,
     y: 30,
     width: 300,
-    height: 70,
+    height: 50,
     baseColor: Element.C.color,
     caption: 'Carbon'
   } );
