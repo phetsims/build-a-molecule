@@ -89,6 +89,26 @@ require( [
   } );
   scene.addChild( new BucketHole( bucket ) );
   scene.addChild( new BucketFront( bucket ) );
+  bucket = new Bucket( {
+    x: 600,
+    y: 170,
+    width: 150,
+    height: 50,
+    baseColor: Element.N.color,
+    caption: 'Nitrogen'
+  } );
+  scene.addChild( new BucketHole( bucket ) );
+  scene.addChild( new BucketFront( bucket ) );
+  bucket = new Bucket( {
+    x: 600,
+    y: 30,
+    width: 300,
+    height: 70,
+    baseColor: Element.C.color,
+    caption: 'Carbon'
+  } );
+  scene.addChild( new BucketHole( bucket ) );
+  scene.addChild( new BucketFront( bucket ) );
   
   /*---------------------------------------------------------------------------*
   * Layout
