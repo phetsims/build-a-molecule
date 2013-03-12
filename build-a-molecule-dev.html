@@ -11,28 +11,49 @@
   
   <!-- runs in full-screen mode on iOS devices -->
   <meta name="apple-mobile-web-app-capable" content="yes">
-
+  
+  <!-- disable caching for dev version -->
+  <meta http-equiv="cache-control" content="no-cache">
+  <meta http-equiv="pragma" content="no-cache">
+  
   <!-- internationalized title will be overwritten -->
   <title>Build a Molecule (development version)</title>
-
+  
   <!-- CSS -->
   <link rel="stylesheet" href="../phetcommon/css/phetcommon.css"/>
   <link rel="stylesheet" href="contrib/bootstrap-2.2.2/css/bootstrap.min.css"/>
-  <!-- <link rel="stylesheet" href="contrib/font-awesome/css/font-awesome.css"/> -->
-  <!-- <link rel="stylesheet" href="css/example-sim.css"/> -->
-
-  <!-- jquery must be loaded here -->
+  
+  <!-- dependencies -->
   <script src="contrib/jquery-1.9.1.js"></script>
-
+  <script src="contrib/lodash-1.0.0-rc.3.js"></script>
+  <script src="contrib/has.js"></script>
+  
   <!-- sim -->
   <script data-main='js/build-a-molecule-dev-config.js' src='contrib/require-2.1.4.js'></script>
-
+  
+  <style type="text/css">
+    /* Let content go to the edges */
+    html, body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+    
+    /* Have the #scene-container div cover the entire viewport */
+    #scene-container {
+      position: absolute;
+      left: 0;
+      top: 0;
+      background-color: #fff;
+      z-index: 0;
+      padding: none !important;
+    }
+    
+  </style>
 </head>
 <body>
   <div id="scene-container"></div>
-  
-  <!-- Overlay that prevents us from seeing images briefly. -->
-  <div id="overlay"
-       style="position: absolute; top:0; width: 100%;height: 100%; left:0; background-color: black"></div>
 </body>
 </html>
