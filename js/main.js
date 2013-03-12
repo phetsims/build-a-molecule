@@ -5,9 +5,10 @@
  */
 require( [
     'SCENERY/Scene',
+    'CHEMISTRY/Element',
     'log',
     'view/AtomNode'
-  ], function( Scene, log, AtomNode ) {
+  ], function( Scene, Element, log, AtomNode ) {
   "use strict";
   
   log( 'All Build a Molecule does is print this line to the console. Yay.' );
@@ -17,7 +18,60 @@ require( [
   var scene = new Scene( $container );
   window.debugScene = scene; // makes debugging easier. not used for actual code
   
-  scene.addChild( new AtomNode() );
+  scene.addChild( new AtomNode( Element.O, {
+    x: 100,
+    y: 100
+  } ) );
+  
+  scene.addChild( new AtomNode( Element.H, {
+    x: 250,
+    y: 100
+  } ) );
+  
+  scene.addChild( new AtomNode( Element.C, {
+    x: 400,
+    y: 100
+  } ) );
+  
+  scene.addChild( new AtomNode( Element.N, {
+    x: 100,
+    y: 300
+  } ) );
+  
+  scene.addChild( new AtomNode( Element.Cl, {
+    x: 300,
+    y: 300
+  } ) );
+  
+  scene.addChild( new AtomNode( Element.F, {
+    x: 600,
+    y: 300
+  } ) );
+  
+  scene.addChild( new AtomNode( Element.B, {
+    x: 100,
+    y: 550
+  } ) );
+  
+  scene.addChild( new AtomNode( Element.Si, {
+    x: 400,
+    y: 550
+  } ) );
+  
+  scene.addChild( new AtomNode( Element.P, {
+    x: 700,
+    y: 550
+  } ) );
+  
+  scene.addChild( new AtomNode( Element.Br, {
+    x: 1000,
+    y: 150
+  } ) );
+  
+  scene.addChild( new AtomNode( Element.I, {
+    x: 1000,
+    y: 400
+  } ) );
   
   function layout() {
     var width = window.innerWidth;
@@ -27,4 +81,21 @@ require( [
   }
   window.addEventListener( 'resize', layout );
   layout();
+  
+  var lastTime = 0;
+  var timeElapsed = 0;
+  function tick() {
+    window.requestAnimationFrame( tick, $container[0] );
+    
+    var timeNow = new Date().getTime();
+    if ( lastTime != 0 ) {
+      timeElapsed = (timeNow - lastTime) / 1000.0;
+    }
+    lastTime = timeNow;
+    
+    // stats.begin();
+    scene.updateScene(); // repaints dirty regions. use renderScene() to render everything
+    // stats.end();
+  }
+  window.requestAnimationFrame( tick, $container[0] );
 } );
