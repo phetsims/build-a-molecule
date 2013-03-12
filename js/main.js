@@ -5,10 +5,14 @@
  */
 require( [
     'SCENERY/Scene',
+    'SCENERY/util/Util',
     'CHEMISTRY/Element',
+    'PHETCOMMON/model/Bucket',
+    '../scenery-phet/js/bucket/BucketFront.js',
+    '../scenery-phet/js/bucket/BucketHole.js',
     'log',
     'view/AtomNode'
-  ], function( Scene, Element, log, AtomNode ) {
+  ], function( Scene, SceneryUtil, Element, Bucket, BucketFront, BucketHole, log, AtomNode ) {
   "use strict";
   
   log( 'All Build a Molecule does is print this line to the console. Yay.' );
@@ -75,6 +79,21 @@ require( [
     y: 400
   } ) );
   
+  var bucket = new Bucket( {
+    x: 600,
+    y: 100,
+    width: 200,
+    height: 50,
+    baseColor: Element.O.color,
+    caption: 'Oxygen'
+  } );
+  scene.addChild( new BucketHole( bucket ) );
+  scene.addChild( new BucketFront( bucket ) );
+  
+  /*---------------------------------------------------------------------------*
+  * Layout
+  *----------------------------------------------------------------------------*/
+  
   function layout() {
     var width = window.innerWidth;
     var height = window.innerHeight;
@@ -83,6 +102,12 @@ require( [
   }
   window.addEventListener( 'resize', layout );
   layout();
+  
+  /*---------------------------------------------------------------------------*
+  * Event loop
+  *----------------------------------------------------------------------------*/
+  
+  SceneryUtil.polyfillRequestAnimationFrame();
   
   var lastTime = 0;
   var timeElapsed = 0;

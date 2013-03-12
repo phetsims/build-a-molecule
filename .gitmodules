@@ -16,3 +16,6 @@
 [submodule "common/kite"]
 	path = common/kite
 	url = https://github.com/phetsims/kite.git
+[submodule "common/scenery-phet"]
+	path = common/scenery-phet
+	url = https://github.com/phetsims/scenery-phet.git
