@@ -5,3 +5,22 @@ Molecule Shapes TODO
 Preloader
 Support portrait and landscape?
 Backbone / model investigation
+
+"Model":
+  Tabs:
+    Play area bounds
+    Kit area bounds
+    
+    CollectionList:
+      currentCollection
+      
+      KitCollections:
+        currentKit
+        
+        Kits:
+          
+        ColectionBoxes:
+          moleculeType
+          capacity
+          quantity
+          molecules

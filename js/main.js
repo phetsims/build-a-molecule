@@ -13,8 +13,9 @@ require( [
     '../scenery-phet/js/bucket/BucketFront.js',
     '../scenery-phet/js/bucket/BucketHole.js',
     'log',
-    'view/AtomNode'
-  ], function( Scene, Node, SimpleDragHandler, SceneryUtil, Element, Bucket, BucketFront, BucketHole, log, AtomNode ) {
+    'view/AtomNode',
+    'model/Atom2'
+  ], function( Scene, Node, SimpleDragHandler, SceneryUtil, Element, Bucket, BucketFront, BucketHole, log, AtomNode, Atom2 ) {
   "use strict";
   
   log( 'All Build a Molecule does is print this line to the console. Yay.' );

@@ -56,13 +56,15 @@ require.config( {
     
     underscore: '../contrib/lodash.min-1.0.0-rc.3',
     jquery: '../contrib/jquery-1.8.3.min',
+    backbone: '../contrib/backbone-0.9.10',
     i18n: "../contrib/i18n-2.0.2",
     tpl: "../contrib/tpl-0.2"
   },
   
   shim: {
     underscore: { exports: '_' },
-    jquery: { exports: '$' }
+    jquery: { exports: '$' },
+    backbone: { exports: 'Backbone' }
   },
   
   urlArgs: new Date().getTime() // add cache buster query string to make browser refresh actually reload everything
