@@ -25,24 +25,39 @@ define( function( require ) {
     this._userControlled = false;
   };
   
+  // experimental handling of property attributes through Backbone's Events, similarly to Property
+  function propertyAttributes( names ) {
+    var result = {};
+    _.each( names, function( name ) {
+      var underscoreName = '_' + name;
+      var eventName = 'change:' + name;
+      
+      // we need to set the ES5 getter/setter like this, since we don't have a literal for the property name
+      Object.defineProperty( result, name, {
+        configurable: true,
+        enumerable: true,
+        get: function() {
+          return this[underscoreName];
+        },
+        set: function( value ) {
+          var oldValue = this[underscoreName];
+          this[underscoreName] = value;
+          
+          // trigger a backbone event
+          this.trigger( eventName, value, oldValue );
+        }
+      } );
+    } );
+    return result;
+  }
+  
   Atom2.prototype = extend( {}, Backbone.Events, Atom.prototype, {
     constructor: Atom2,
     
-    set position( value ) {
-      var oldValue = this._position;
-      this._position = value;
-      this.trigger( 'change:position', value, oldValue );
-    },
-    
-    get position() {
-      return this._position;
+    set positionAndDestination( value ) {
+      this.destination = this.position = value;
     }
-  } );
-  // Inheritance.inheritPrototype( Atom2, Atom );
-  
-  // _.extend( Atom2.prototype, Backbone.Events, {
-    
-  // } );
+  }, propertyAttributes( [ 'position', 'destination', 'userControlled' ] ) );
   
   return Atom2;
 } );
