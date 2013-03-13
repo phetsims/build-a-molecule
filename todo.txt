@@ -5,6 +5,8 @@ Molecule Shapes TODO
 Preloader
 Support portrait and landscape?
 Backbone / model investigation
+  Backbone.Events for 'property'-like behavior
+  Serialization with JSON?
 
 "Model":
   Tabs:
