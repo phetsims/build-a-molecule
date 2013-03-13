@@ -161,7 +161,7 @@ require( [
     window.requestAnimationFrame( tick, $container[0] );
     
     var timeNow = new Date().getTime();
-    if ( lastTime != 0 ) {
+    if ( lastTime !== 0 ) {
       timeElapsed = (timeNow - lastTime) / 1000.0;
     }
     lastTime = timeNow;
