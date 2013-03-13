@@ -26,7 +26,7 @@ define( function( require ) {
   };
   
   // experimental handling of property attributes through Backbone's Events, similarly to Property
-  function addPropertyAttribute( obj, name ) {
+  function addChangeProperty( obj, name ) {
     var underscoreName = '_' + name;
     var eventName = 'change:' + name;
     
@@ -55,9 +55,9 @@ define( function( require ) {
     }
   } );
   
-  addPropertyAttribute( Atom2.prototype, 'position' );
-  addPropertyAttribute( Atom2.prototype, 'destination' );
-  addPropertyAttribute( Atom2.prototype, 'userControlled' );
+  addChangeProperty( Atom2.prototype, 'position' );
+  addChangeProperty( Atom2.prototype, 'destination' );
+  addChangeProperty( Atom2.prototype, 'userControlled' );
   
   return Atom2;
 } );
