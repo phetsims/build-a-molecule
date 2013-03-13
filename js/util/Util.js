@@ -1,7 +1,7 @@
 // Copyright 2002-2012, University of Colorado
 
 /**
- * An atom, extended with position/destination information that is animated
+ * Utilities that should probably be moved into common code
  *
  * @author Jonathan Olson <olsonsjc@gmail.com>
  */
