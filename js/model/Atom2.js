@@ -16,6 +16,7 @@ define( function( require ) {
   var Atom = require( 'CHEMISTRY/Atom' );
   var Vector2 = require( 'DOT/Vector2' );
   var extend = require( 'SCENERY/util/Util' ).extend;
+  var addChangeProperty = require( 'util/Util' ).addChangeProperty;
   
   var Atom2 = function( element ) {
     Atom.call( this, element );
@@ -24,28 +25,6 @@ define( function( require ) {
     this._destination = new Vector2();
     this._userControlled = false;
   };
-  
-  // experimental handling of property attributes through Backbone's Events, similarly to Property
-  function addChangeProperty( obj, name ) {
-    var underscoreName = '_' + name;
-    var eventName = 'change:' + name;
-    
-    // we need to set the ES5 getter/setter like this, since we don't have a literal for the property name
-    Object.defineProperty( obj, name, {
-      configurable: true,
-      enumerable: true,
-      get: function() {
-        return this[underscoreName];
-      },
-      set: function( value ) {
-        var oldValue = this[underscoreName];
-        this[underscoreName] = value;
-        
-        // trigger a backbone event
-        this.trigger( eventName, value, oldValue );
-      }
-    } );
-  }
   
   Atom2.prototype = extend( {}, Backbone.Events, Atom.prototype, {
     constructor: Atom2,
