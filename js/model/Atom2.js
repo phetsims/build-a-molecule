@@ -15,16 +15,30 @@ define( function( require ) {
   var Inheritance = require( 'PHETCOMMON/util/Inheritance' );
   var Atom = require( 'CHEMISTRY/Atom' );
   var Vector2 = require( 'DOT/Vector2' );
+  var extend = require( 'SCENERY/util/Util' ).extend;
   
   var Atom2 = function( element ) {
     Atom.call( this, element );
     
-    this.position = new Vector2();
-    this.destination = new Vector2();
-    this.userControlled = false;
+    this._position = new Vector2();
+    this._destination = new Vector2();
+    this._userControlled = false;
   };
   
-  Inheritance.inheritPrototype( Atom2, Atom );
+  Atom2.prototype = extend( {}, Backbone.Events, Atom.prototype, {
+    constructor: Atom2,
+    
+    set position( value ) {
+      var oldValue = this._position;
+      this._position = value;
+      this.trigger( 'change:position', value, oldValue );
+    },
+    
+    get position() {
+      return this._position;
+    }
+  } );
+  // Inheritance.inheritPrototype( Atom2, Atom );
   
   // _.extend( Atom2.prototype, Backbone.Events, {
     

@@ -4,6 +4,7 @@
  * @author Jonathan Olson <olsonsjc@gmail.com>
  */
 require( [
+    'DOT/Vector2',
     'SCENERY/Scene',
     'SCENERY/nodes/Node',
     'SCENERY/input/SimpleDragHandler',
@@ -15,7 +16,7 @@ require( [
     'log',
     'view/AtomNode',
     'model/Atom2'
-  ], function( Scene, Node, SimpleDragHandler, SceneryUtil, Element, Bucket, BucketFront, BucketHole, log, AtomNode, Atom2 ) {
+  ], function( Vector2, Scene, Node, SimpleDragHandler, SceneryUtil, Element, Bucket, BucketFront, BucketHole, log, AtomNode, Atom2 ) {
   "use strict";
   
   log( 'All Build a Molecule does is print this line to the console. Yay.' );
@@ -123,6 +124,13 @@ require( [
   _.each( scene.children, function( child ) {
     child.addInputListener( new SimpleDragHandler() );
   } );
+  
+  var atom = new Atom2( Element.N );
+  atom.on( 'change:position', function( value, oldValue ) {
+    console.log( 'changed position from ' + oldValue.toString() + ' to ' + value.toString() );
+  } );
+  atom.position = new Vector2( 4, 7 );
+  atom.position = new Vector2( 1, 2 );
   
   /*---------------------------------------------------------------------------*
   * Layout
