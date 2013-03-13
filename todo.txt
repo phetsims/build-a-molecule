@@ -20,9 +20,26 @@ Backbone / model investigation
         currentKit
         
         Kits:
+          Buckets:
+            element
+            atom ids
+            position
           
         ColectionBoxes:
           moleculeType
           capacity
           quantity
           molecules
+        
+        Atoms:
+          id
+          element
+          position
+          destination
+          userControlled
+          visible
+        
+        Molecules:
+          id
+          cid
+          atom ids
