@@ -10,7 +10,7 @@ module.exports = function( grunt ) {
     
     jshint: {
       all: [
-        'Gruntfile.js', 'js/**/*.js', 'common/scenery/js/**/*.js', 'common/kite/js/**/*.js', 'common/dot/js/**/*.js', 'common/assert/js/**/*.js'
+        'Gruntfile.js', 'js/**/*.js', 'common/scenery/js/**/*.js', 'common/kite/js/**/*.js', 'common/dot/js/**/*.js', 'common/phet-core/js/**/*.js', 'common/assert/js/**/*.js'
       ],
       // adjust with options from http://www.jshint.com/docs/
       options: {
@@ -27,7 +27,7 @@ module.exports = function( grunt ) {
         undef: true,
         // unused: true, // certain layer APIs not used in cases
         // strict: true,
-        trailing: true,
+        // trailing: true,
         
         // relaxing options
         es5: true, // we use ES5 getters and setters for now
@@ -47,6 +47,9 @@ module.exports = function( grunt ) {
           console: false,
           Float32Array: true, // we actually polyfill this, so allow it to be set
           
+          HTMLImageElement: false,
+          HTMLCanvasElement: false,
+          
           $: false,
           _: false,
           clearTimeout: false,
@@ -64,7 +67,5 @@ module.exports = function( grunt ) {
   // Default task.
   grunt.registerTask( 'default', [ 'jshint' ] );
   grunt.loadNpmTasks( 'grunt-requirejs' );
-  grunt.loadNpmTasks( 'grunt-contrib-concat' );
-  grunt.loadNpmTasks( 'grunt-contrib-uglify' );
   grunt.loadNpmTasks( 'grunt-contrib-jshint' );
 };
