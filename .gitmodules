@@ -19,3 +19,6 @@
 [submodule "common/scenery-phet"]
 	path = common/scenery-phet
 	url = https://github.com/phetsims/scenery-phet.git
+[submodule "common/phet-core"]
+	path = common/phet-core
+	url = https://github.com/phetsims/phet-core.git
