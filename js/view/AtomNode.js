@@ -56,7 +56,7 @@ define( function( require ) {
       fontSize: 50,
       fill: isTextWhite ? '#fff' : '#000'
     } );
-    text.scaleBy( Math.min( 0.65 * this.diameter / text.getBounds().width, 0.65 * this.diameter / text.getBounds().height ) );
+    text.scale( Math.min( 0.65 * this.diameter / text.getBounds().width, 0.65 * this.diameter / text.getBounds().height ) );
     text.centerX = 0;
     text.centerY = 0;
     this.addChild( text );
