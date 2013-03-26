@@ -42,8 +42,8 @@ require.config( {
     // Common repos
     SCENERY: '../../scenery/js',
     // SCENERY: '../common/scenery/js',
-    SCENERYPHET: '../../scenery-phet/js',
-    // SCENERYPHET: '../common/scenery-phet/js',
+    SCENERY_PHET: '../../scenery-phet/js',
+    // SCENERY_PHET: '../common/scenery-phet/js',
     KITE: '../../kite/js',
     // KITE: '../common/kite/js',
     DOT: '../../dot/js',
@@ -56,6 +56,8 @@ require.config( {
     // PHETCOMMON: '../common/phetcommon/js',
     CHEMISTRY: '../../chemistry/js',
     // CHEMISTRY: '../common/chemistry/js',
+    FORT: '../../fort/js',
+    // FORT: '../common/fort/js',
     
     underscore: '../contrib/lodash.min-1.0.0-rc.3',
     jquery: '../contrib/jquery-1.8.3.min',

@@ -11,7 +11,7 @@ require( [
     'SCENERY/util/Util',
     'CHEMISTRY/Element',
     'PHETCOMMON/model/Bucket',
-    '../scenery-phet/js/bucket/BucketFront.js',
+    '../scenery-phet/js/bucket/BucketFront.js', // TODO: why is path replacement not working here?
     '../scenery-phet/js/bucket/BucketHole.js',
     'log',
     'view/AtomNode',
