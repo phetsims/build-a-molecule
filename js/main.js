@@ -29,60 +29,17 @@ require( [
   } );
   window.debugScene = scene; // makes debugging easier. not used for actual code
   
-  scene.addChild( new AtomNode( Element.O, {
-    x: 100,
-    y: 100
-  } ) );
-  
-  scene.addChild( new AtomNode( Element.H, {
-    x: 250,
-    y: 100
-  } ) );
-  
-  scene.addChild( new AtomNode( Element.C, {
-    x: 400,
-    y: 100
-  } ) );
-  
-  scene.addChild( new AtomNode( Element.N, {
-    x: 100,
-    y: 300
-  } ) );
-  
-  scene.addChild( new AtomNode( Element.Cl, {
-    x: 300,
-    y: 300
-  } ) );
-  
-  scene.addChild( new AtomNode( Element.F, {
-    x: 600,
-    y: 300
-  } ) );
-  
-  scene.addChild( new AtomNode( Element.B, {
-    x: 100,
-    y: 550
-  } ) );
-  
-  scene.addChild( new AtomNode( Element.Si, {
-    x: 400,
-    y: 550
-  } ) );
-  
-  scene.addChild( new AtomNode( Element.P, {
-    x: 700,
-    y: 550
-  } ) );
-  
-  scene.addChild( new AtomNode( Element.Br, {
-    x: 1000,
-    y: 150
-  } ) );
-  
-  scene.addChild( new AtomNode( Element.I, {
-    x: 1000,
-    y: 400
-  } ) );
+  scene.addChild( new AtomNode( Element.O, { x: 100, y: 100 } ) );
+  scene.addChild( new AtomNode( Element.H, { x: 250, y: 100 } ) );
+  scene.addChild( new AtomNode( Element.C, { x: 400, y: 100 } ) );
+  scene.addChild( new AtomNode( Element.N, { x: 100, y: 300 } ) );
+  scene.addChild( new AtomNode( Element.Cl, { x: 300, y: 300 } ) );
+  scene.addChild( new AtomNode( Element.F, { x: 600, y: 300 } ) );
+  scene.addChild( new AtomNode( Element.B, { x: 100, y: 550 } ) );
+  scene.addChild( new AtomNode( Element.Si, { x: 400, y: 550 } ) );
+  scene.addChild( new AtomNode( Element.P, { x: 700, y: 550 } ) );
+  scene.addChild( new AtomNode( Element.Br, { x: 1000, y: 150 } ) );
+  scene.addChild( new AtomNode( Element.I, { x: 1000, y: 400 } ) );
   
   var bucket = new Bucket( {
     x: 600,
@@ -125,15 +82,16 @@ require( [
     child.addInputListener( new SimpleDragHandler() );
   } );
   
-  var atom = new Atom2( Element.N );
-  atom.on( 'change:position', function( value, oldValue ) {
-    console.log( 'changed position from ' + oldValue.toString() + ' to ' + value.toString() );
+  var atom = new Atom2( { element: Element.N } );
+  atom.on( 'change:position', function( model, value ) {
+    console.log( 'changed position from ' + model.previous( 'position' ).toString() + ' to ' + value.toString() );
   } );
-  atom.on( 'change:destination', function( value, oldValue ) {
-    console.log( 'changed destination from ' + oldValue.toString() + ' to ' + value.toString() );
+  atom.on( 'change:destination', function( model, value ) {
+    console.log( 'changed destination from ' + model.previous( 'destination' ).toString() + ' to ' + value.toString() );
   } );
   atom.position = new Vector2( 4, 7 );
   atom.position = new Vector2( 1, 2 );
+  debugger;
   atom.positionAndDestination = new Vector2( -1, -1 );
   
   /*---------------------------------------------------------------------------*
