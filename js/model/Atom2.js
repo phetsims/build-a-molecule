@@ -13,6 +13,7 @@ define( function( require ) {
   
   var Vector2 = require( 'DOT/Vector2' );
   var Fort = require( 'FORT/Fort' );
+  var extend = require( 'PHET_CORE/extend' );
   
   var Atom2 = Fort.Model.extend( {
     defaults: {
@@ -32,10 +33,13 @@ define( function( require ) {
       this.electronegativity = this.element.electronegativity;
       this.atomicWeight = this.element.atomicWeight;
       this.color = this.element.color;
-    },
-    
-    set positionAndDestination( value ) {
-      this.position = this.destination = value;
+      
+      // add the ES5 getter/setter in
+      extend( this, {
+        set positionAndDestination( value ) {
+          this.position = this.destination = value;
+        }
+      } );
     }
   } );
   window.Atom2 = Atom2;
