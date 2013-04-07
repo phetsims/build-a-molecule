@@ -2,6 +2,11 @@
 Molecule Shapes TODO
 ====================
 
+
+Common code for:
+  HashMap
+  Set
+
 Preloader
 Support portrait and landscape?
 Backbone / model investigation
