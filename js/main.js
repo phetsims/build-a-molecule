@@ -91,7 +91,6 @@ require( [
   } );
   atom.position = new Vector2( 4, 7 );
   atom.position = new Vector2( 1, 2 );
-  debugger;
   atom.positionAndDestination = new Vector2( -1, -1 );
   
   /*---------------------------------------------------------------------------*
