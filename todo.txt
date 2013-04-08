@@ -1,6 +1,24 @@
 
-Molecule Shapes TODO
+Build a Molecule TODO
 ====================
+
+Fort code:
+var start = +new Date();for ( var i = 0; i < 30000; i++ ) {
+  var a = new Atom2( { element: Element.N } );
+  var b = new Atom2( { element: Element.O } );
+  var bond = new Bond( { a: a, b: b } );
+  var radius1 = bond.getOtherAtom( a ).radius;
+  var radius2 = bond.getOtherAtom( b ).radius;
+}; console.log( +new Date() - start );
+
+Non-fort code:
+var start = +new Date();for ( var i = 0; i < 30000; i++ ) {
+  var a = new FastAtom2( Element.N );
+  var b = new FastAtom2( Element.O );
+  var bond = new FastBond( a, b );
+  var radius1 = bond.getOtherAtom( a ).radius;
+  var radius2 = bond.getOtherAtom( b ).radius;
+}; console.log( +new Date() - start );
 
 
 Common code for:

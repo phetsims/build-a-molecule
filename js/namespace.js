@@ -20,6 +20,10 @@ define( function( require ) {
     AtomNode: require( 'view/AtomNode' ),
     Bond: require( 'model/Bond' ),
     Strings: require( 'Strings' ),
-    log: require( 'log' )
+    log: require( 'log' ),
+    
+    // for temporary benchmarks
+    FastAtom2: require( 'model/FastAtom2' ),
+    FastBond: require( 'model/FastBond' )
   };
 } );
