@@ -82,13 +82,14 @@ require( [
     child.addInputListener( new SimpleDragHandler() );
   } );
   
-  var atom = new Atom2( { element: Element.N } );
+  var atom = new Atom2( Element.N );
   atom.on( 'change:position', function( value, oldValue ) {
     console.log( 'changed position from ' + oldValue.toString() + ' to ' + value.toString() );
   } );
   atom.on( 'change:destination', function( value, oldValue ) {
     console.log( 'changed destination from ' + oldValue.toString() + ' to ' + value.toString() );
   } );
+  console.log( atom.name );
   atom.position = new Vector2( 4, 7 );
   atom.position = new Vector2( 1, 2 );
   atom.positionAndDestination = new Vector2( -1, -1 );

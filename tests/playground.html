@@ -20,7 +20,7 @@
     // we need to wait until our config file is loaded before our require statement. apparently this was not guaranteed
     function check() {
       if ( window.loadedDotConfig ) {
-        requirejs( [ 'SCENERY/main', 'KITE/main', 'DOT/main', 'PHET_CORE/main', 'model/Atom2' ], function( scenery, kite, dot, core, Atom2 ) {
+        requirejs( [ 'SCENERY/main', 'KITE/main', 'DOT/main', 'PHET_CORE/main', 'MODEL/Atom2' ], function( scenery, kite, dot, core, Atom2 ) {
           window.scenery = scenery;
           window.kite = kite;
           window.dot = dot;
