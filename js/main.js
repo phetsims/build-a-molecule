@@ -11,15 +11,20 @@ require( [
     'SCENERY/util/Util',
     'CHEMISTRY/Element',
     'PHETCOMMON/model/Bucket',
-    '../scenery-phet/js/bucket/BucketFront.js', // TODO: why is path replacement not working here?
-    '../scenery-phet/js/bucket/BucketHole.js',
+    'SCENERY_PHET/bucket/BucketFront', // TODO: why is path replacement not working here?
+    'SCENERY_PHET/bucket/BucketHole',
     'log',
     'view/AtomNode',
-    'model/Atom2'
-  ], function( Vector2, Scene, Node, SimpleDragHandler, SceneryUtil, Element, Bucket, BucketFront, BucketHole, log, AtomNode, Atom2 ) {
-  "use strict";
+    'model/Atom2',
+    'namespace'
+  ], function( Vector2, Scene, Node, SimpleDragHandler, SceneryUtil, Element, Bucket, BucketFront, BucketHole, log, AtomNode, Atom2, namespace ) {
+  'use strict';
   
   log( 'All Build a Molecule does is print this line to the console. Yay.' );
+  
+  // for our development version, put everything we want for debugging into the global namespace
+  // TODO: remove for production version. Require.js doesn't let us change dependencies, and this would pull in EVERYTHING in scenery/kite/dot/etc.
+  _.extend( window, namespace );
   
   var $container = $( '#scene-container' );
   

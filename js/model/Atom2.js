@@ -42,11 +42,11 @@ define( function( require ) {
     },
     
     getPositionBounds: function() {
-      return new Bounds2( this.position.x - this.radius, this.position.y - this.radius, this.position.x + radius, this.position.y + radius );
+      return new Bounds2( this.position.x - this.radius, this.position.y - this.radius, this.position.x + this.radius, this.position.y + this.radius );
     },
     
     getDestinationBounds: function() {
-      return new Bounds2( this.destination.x - this.radius, this.destination.y - this.radius, this.destination.x + radius, this.destination.y + radius );
+      return new Bounds2( this.destination.x - this.radius, this.destination.y - this.radius, this.destination.x + this.radius, this.destination.y + this.radius );
     },
     
     stepInTime: function( dt ) {
@@ -69,8 +69,8 @@ define( function( require ) {
         }
         else {
           // Move towards the destination.
-          var angle = Math.atan2( this.destination.getY() - this.position.getY(),
-                                  this.destination.getX() - this.position.getX() );
+          var angle = Math.atan2( this.destination.y - this.position.y,
+                                  this.destination.x - this.position.x );
           this.translate( Vector2.createPolar( distanceToTravel, angle ) );
         }
       }
@@ -87,7 +87,7 @@ define( function( require ) {
     
     translate: function( delta ) {
       assert && assert( arguments.length === 1 ); // Java code also had translate( x, y )
-      this.position = position.plus( delta );
+      this.position = this.position.plus( delta );
     }
   } );
   

@@ -10,6 +10,7 @@
   
   <script src="../contrib/jquery-1.9.1.js"></script>
   <script src="../contrib/lodash-1.0.0-rc.3.js"></script>
+  <script src="../contrib/backbone-0.9.10.js"></script>
   <script src="../contrib/has.js"></script>
   
   <script data-main="../js/build-a-molecule-dev-config.js" src="../contrib/require-2.1.4.js"></script>
@@ -20,7 +21,7 @@
     // we need to wait until our config file is loaded before our require statement. apparently this was not guaranteed
     function check() {
       if ( window.loadedDotConfig ) {
-        requirejs( [ 'SCENERY/main', 'KITE/main', 'DOT/main', 'PHET_CORE/main', 'MODEL/Atom2' ], function( scenery, kite, dot, core, Atom2 ) {
+        requirejs( [ 'SCENERY/main', 'KITE/main', 'DOT/main', 'PHET_CORE/main', 'model/Atom2' ], function( scenery, kite, dot, core, Atom2 ) {
           window.scenery = scenery;
           window.kite = kite;
           window.dot = dot;

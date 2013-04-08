@@ -8,6 +8,9 @@
 
 // if has.js is included, set assertion flags to true (so we can catch errors during development)
 if ( window.has ) {
+  window.has.add( 'development', function( global, document, anElement ) {
+    return true;
+  } );
   window.has.add( 'assert.build-a-molecule', function( global, document, anElement ) {
     return true;
   } );
