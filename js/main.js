@@ -9,13 +9,13 @@ require( [
     'SCENERY/nodes/Node',
     'SCENERY/input/SimpleDragHandler',
     'SCENERY/util/Util',
-    'CHEMISTRY/Element',
+    'MODEL/chemistry/Element',
     'PHETCOMMON/model/Bucket',
     '../scenery-phet/js/bucket/BucketFront.js', // TODO: why is path replacement not working here?
     '../scenery-phet/js/bucket/BucketHole.js',
     'log',
     'view/AtomNode',
-    'model/Atom2'
+    'MODEL/Atom2'
   ], function( Vector2, Scene, Node, SimpleDragHandler, SceneryUtil, Element, Bucket, BucketFront, BucketHole, log, AtomNode, Atom2 ) {
   "use strict";
   
@@ -83,11 +83,11 @@ require( [
   } );
   
   var atom = new Atom2( { element: Element.N } );
-  atom.on( 'change:position', function( model, value ) {
-    console.log( 'changed position from ' + model.previous( 'position' ).toString() + ' to ' + value.toString() );
+  atom.on( 'change:position', function( value, oldValue ) {
+    console.log( 'changed position from ' + oldValue.toString() + ' to ' + value.toString() );
   } );
-  atom.on( 'change:destination', function( model, value ) {
-    console.log( 'changed destination from ' + model.previous( 'destination' ).toString() + ' to ' + value.toString() );
+  atom.on( 'change:destination', function( value, oldValue ) {
+    console.log( 'changed destination from ' + oldValue.toString() + ' to ' + value.toString() );
   } );
   atom.position = new Vector2( 4, 7 );
   atom.position = new Vector2( 1, 2 );

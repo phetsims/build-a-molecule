@@ -39,6 +39,10 @@ require.config( {
   },
   
   paths: {
+    // reference to our model code
+    MODEL: '../../bam-model/js',
+    // MODEL: '../common/bam-model/js',
+    
     // Common repos
     SCENERY: '../../scenery/js',
     // SCENERY: '../common/scenery/js',
@@ -54,7 +58,7 @@ require.config( {
     // ASSERT: '../common/assert/js',
     PHETCOMMON: '../../phetcommon/js',
     // PHETCOMMON: '../common/phetcommon/js',
-    CHEMISTRY: '../../chemistry/js',
+    // CHEMISTRY: '../../chemistry/js', // temporarily not using chemistry repo, using model version instead
     // CHEMISTRY: '../common/chemistry/js',
     FORT: '../../fort/js',
     // FORT: '../common/fort/js',
