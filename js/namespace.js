@@ -18,6 +18,7 @@ define( function( require ) {
     
     Atom2: require( 'model/Atom2' ),
     AtomNode: require( 'view/AtomNode' ),
+    Bond: require( 'model/Bond' ),
     Strings: require( 'Strings' ),
     log: require( 'log' )
   };

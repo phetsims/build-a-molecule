@@ -17,6 +17,8 @@ define( function( require ) {
   
   var MOTION_VELOCITY = 800; // In picometers per second of sim time.
   
+  var idCounter = 1;
+  
   var Atom2 = Fort.Model.extend( {
     defaults: {
       element: null, // required
@@ -30,6 +32,7 @@ define( function( require ) {
       assert && assert( this.element, 'element is required for an Atom2' );
       var atom = this;
       
+      this.id = '' + idCounter++; // a global ID for the atom
       this.symbol = this.element.symbol;
       this.radius = this.element.radius;
       this.diameter = this.element.radius * 2;
