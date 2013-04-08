@@ -9,13 +9,13 @@ require( [
     'SCENERY/nodes/Node',
     'SCENERY/input/SimpleDragHandler',
     'SCENERY/util/Util',
-    'MODEL/chemistry/Element',
+    'CHEMISTRY/Element',
     'PHETCOMMON/model/Bucket',
     '../scenery-phet/js/bucket/BucketFront.js', // TODO: why is path replacement not working here?
     '../scenery-phet/js/bucket/BucketHole.js',
     'log',
     'view/AtomNode',
-    'MODEL/Atom2'
+    'model/Atom2'
   ], function( Vector2, Scene, Node, SimpleDragHandler, SceneryUtil, Element, Bucket, BucketFront, BucketHole, log, AtomNode, Atom2 ) {
   "use strict";
   
