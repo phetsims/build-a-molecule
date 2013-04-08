@@ -28,6 +28,7 @@ define( function( require ) {
     
     init: function() {
       assert && assert( this.element, 'element is required for an Atom2' );
+      var atom = this;
       
       this.symbol = this.element.symbol;
       this.radius = this.element.radius;
