@@ -55,6 +55,8 @@ require.config( {
     // PHET_CORE: '../common/phet-core/js',
     ASSERT: '../../assert/js',
     // ASSERT: '../common/assert/js',
+    AXON: '../../axon/js',
+    //AXON: '../../common/axon/js',
     PHETCOMMON: '../../phetcommon/js',
     // PHETCOMMON: '../common/phetcommon/js',
     CHEMISTRY: '../../chemistry/js', // temporarily not using chemistry repo, using model version instead
