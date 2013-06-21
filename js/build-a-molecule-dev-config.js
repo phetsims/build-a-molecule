@@ -61,8 +61,6 @@ require.config( {
     // PHETCOMMON: '../common/phetcommon/js',
     CHEMISTRY: '../../chemistry/js', // temporarily not using chemistry repo, using model version instead
     // CHEMISTRY: '../common/chemistry/js',
-    FORT: '../../fort/js',
-    // FORT: '../common/fort/js',
     
     underscore: '../contrib/lodash.min-1.0.0-rc.3',
     jquery: '../contrib/jquery-1.8.3.min',

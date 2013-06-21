@@ -14,7 +14,6 @@ define( function( require ) {
     BucketHole: require( 'SCENERY_PHET/bucket/BucketHole' ),
     Element: require( 'CHEMISTRY/Element' ),
     Atom: require( 'CHEMISTRY/Atom' ),
-    Fort: require( 'FORT/Fort' ),
     
     Atom2: require( 'model/Atom2' ),
     AtomNode: require( 'view/AtomNode' ),

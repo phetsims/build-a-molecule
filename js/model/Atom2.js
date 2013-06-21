@@ -13,13 +13,13 @@ define( function( require ) {
   
   var Vector2 = require( 'DOT/Vector2' );
   var Bounds2 = require( 'DOT/Bounds2' );
-  var Fort = require( 'FORT/Fort' );
   
   var MOTION_VELOCITY = 800; // In picometers per second of sim time.
   
   var idCounter = 1;
   
-  var Atom2 = Fort.Model.extend( {
+  //TODO: Update to PropertySet after Fort was removed
+  var Atom2 = createWithPropertySet( {
     defaults: {
       element: null, // required
       

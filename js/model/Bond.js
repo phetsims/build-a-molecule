@@ -11,10 +11,9 @@ define( function( require ) {
   
   var assert = require( 'ASSERT/assert' )( 'build-a-molecule' );
   
-  var Fort = require( 'FORT/Fort' );
   var extend = require( 'PHET_CORE/extend' );
   
-  var Bond = Fort.Model.extend( {
+  var Bond = PropertySet.createWithPropertySet( {
     defaults: {
       a: null, // required
       b: null // required
