@@ -43,8 +43,7 @@ define( function( require ) {
     gradientFill.addColorStop( middleRadius / fullRadius, this.color.getCSS() );
     gradientFill.addColorStop( 1, '#000000' );
 
-    this.addChild( new Path( {
-      shape: Shape.circle( 0, 0, this.radius ),
+    this.addChild( new Path( Shape.circle( 0, 0, this.radius ), {
       fill: gradientFill
     } ) );
 
