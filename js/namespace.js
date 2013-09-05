@@ -12,17 +12,13 @@ define( function( require ) {
     Bucket: require( 'PHETCOMMON/model/Bucket' ),
     BucketFront: require( 'SCENERY_PHET/bucket/BucketFront' ),
     BucketHole: require( 'SCENERY_PHET/bucket/BucketHole' ),
-    Element: require( 'CHEMISTRY/Element' ),
-    Atom: require( 'CHEMISTRY/Atom' ),
+    Element: require( 'NITROGLYCERIN/Element' ),
+    Atom: require( 'NITROGLYCERIN/Atom' ),
     
     Atom2: require( 'model/Atom2' ),
     AtomNode: require( 'view/AtomNode' ),
     Bond: require( 'model/Bond' ),
     Strings: require( 'Strings' ),
-    log: require( 'log' ),
-    
-    // for temporary benchmarks
-    FastAtom2: require( 'model/FastAtom2' ),
-    FastBond: require( 'model/FastBond' )
+    Constants: require( 'Constants' )
   };
 } );

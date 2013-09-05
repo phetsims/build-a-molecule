@@ -11,30 +11,17 @@ define( function( require ) {
   
   var assert = require( 'ASSERT/assert' )( 'build-a-molecule' );
   
-  var extend = require( 'PHET_CORE/extend' );
+  var Bond = function Bond( a, b ) {
+    assert && assert( a !== b, 'Bonds cannot connect an atom to itself' );
+    this.a = a;
+    this.b = b;
+  }
   
-  var Bond = PropertySet.createWithPropertySet( {
-    defaults: {
-      a: null, // required
-      b: null // required
-    },
+  Bond.prototype = {
+    constructor: Bond,
     
-    init: function() {
-      var bond = this;
-      
-      assert && assert( this.a !== this.b, 'Bonds cannot connect an atom to itself' );
-      if ( assert ) {
-        this.on( 'change:a change:b', function() {
-          assert( bond.a !== bond.b, 'Bonds cannot conenct an atom to itself' );
-        } );
-      }
-      
-      extend( this, {
-        // be defensive in case either atom gets changed
-        get id() {
-          return this.a.id + '-' + this.b.id;
-        }
-      } );
+    getId: function() {
+      return this.a.id + '-' + this.b.id;
     },
     
     equals: function( other ) {
@@ -54,7 +41,7 @@ define( function( require ) {
     toSerial2: function( index ) {
       return index + '';
     }
-  } );
+  }
   
   return Bond;
 } );
