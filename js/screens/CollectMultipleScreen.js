@@ -11,13 +11,14 @@ define( function( require ) {
   var Strings = require( 'Strings' );
   var Constants = require( 'Constants' );
   var ScreenView = require( 'JOIST/ScreenView' );
+  var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   
   return {
     name: Strings.title_collectMultiple,
     backgroundColor: Constants.canvasBackgroundColor,
     icon: new Rectangle( 0, 0, 548, 373, { fill: 'green' } ),
     // icon: new Image( Images.getImage( 'collectMultiple-thumbnail.png' ) ),
-    createModel: function() { return {}; },
+    createModel: function() { return { step: function( timeElapsed ) {} }; },
     createView: function( model ) { return new ScreenView(); }
   };
 } );

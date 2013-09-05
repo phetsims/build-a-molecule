@@ -5,7 +5,8 @@
  */
  require( [
     // used in the function call
-    'JOIST/SimLauncher', 'JOIST/Sim', 'Strings', 'Images', 'SCENERY/nodes/Rectangle',
+    'JOIST/SimLauncher', 'JOIST/Sim', 'Strings', 'Images',
+    'screens/MakeMoleculeScreen', 'screens/CollectMultipleScreen', 'screens/LargerMoleculesScreen',
     
     // specified as dependencies for independent debugging (playground, etc.)
     'namespace',
@@ -13,7 +14,9 @@
     'model/Atom2',
     'model/Bond'
   ],
-  function( SimLauncher, Sim, Strings, Images, Rectangle, namespace ) {
+  function( SimLauncher, Sim, Strings, Images,
+            MakeMoleculeScreen, CollectMultipleScreen, LargerMoleculesScreen,
+            namespace ) {
     'use strict';
     
     var simOptions = {
@@ -30,14 +33,12 @@
     
     // if the flag is set on window, don't launch the sim
     if ( !window.delayBuildAMoleculeLaunch ) {
-      console.log( 'boo' );
-      
       SimLauncher.launch( Images, function() {
         //Create and start the sim
         new Sim( Strings['build-a-molecule.name'], [
-          new MakeMoleculesScreen(),
-          new CollectMultipleScreen(),
-          new LargerMoleculesScreen()
+          MakeMoleculeScreen,
+          CollectMultipleScreen,
+          LargerMoleculesScreen
         ], simOptions ).start();
       } );
     }
