@@ -28,7 +28,7 @@ define( function( require ) {
     this.destination = Vector2.ZERO;
     
     this.id = idCounter++;
-  }
+  };
   
   return Atom2;
 } );

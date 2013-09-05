@@ -1,6 +1,8 @@
 // Copyright 2002-2013, University of Colorado
 
 define( function( require ) {
+  'use strict';
+  
   var Strings = require( 'i18n!../nls/build-a-molecule-strings' );
   
   var elementMap = {
@@ -20,7 +22,7 @@ define( function( require ) {
   
   Strings.getAtomName = function getAtomName( element ) {
     return elementMap[element.symbol];
-  }
+  };
   
   return Strings;
 } );

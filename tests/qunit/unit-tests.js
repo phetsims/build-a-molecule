@@ -12,6 +12,6 @@ function runBuildAMoleculeTests( pathToTestBase ) {
     document.getElementsByTagName( 'head' )[0].appendChild( script );
   }
   
-  // TODO: add tests when we need them
-  // loadTestFile( 'js/test-utils.js' );
+  loadTestFile( 'js/model.js' );
+  loadTestFile( 'js/linting.js' );
 };

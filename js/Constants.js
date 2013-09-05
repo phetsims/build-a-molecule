@@ -1,6 +1,7 @@
 // Copyright 2002-2013, University of Colorado
 
 define( function( require ) {
+  'use strict';
   
   var Element = require( 'NITROGLYCERIN/Element' );
   var Color = require( 'SCENERY/util/Color' );

@@ -2,6 +2,8 @@
 
 // mostly used for debugging purposes
 define( function( require ) {
+  'use strict';
+  
   return {
     scenery: require( 'SCENERY/main' ),
     kite: require( 'KITE/main' ),

@@ -15,7 +15,7 @@ define( function( require ) {
     assert && assert( a !== b, 'Bonds cannot connect an atom to itself' );
     this.a = a;
     this.b = b;
-  }
+  };
   
   Bond.prototype = {
     constructor: Bond,
@@ -41,7 +41,7 @@ define( function( require ) {
     toSerial2: function( index ) {
       return index + '';
     }
-  }
+  };
   
   return Bond;
 } );
