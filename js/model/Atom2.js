@@ -11,6 +11,7 @@ define( function( require ) {
   
   var assert = require( 'ASSERT/assert' )( 'build-a-molecule' );
   var namespace = require( 'BAM/namespace' );
+  var inherit = require( 'PHET_CORE/inherit' );
   var PropertySet = require( 'AXON/PropertySet' );
   var Rectangle = require( 'DOT/Rectangle' );
   var Strings = require( 'BAM/Strings' );
@@ -33,7 +34,7 @@ define( function( require ) {
       position: Vector2.ZERO,
       userControlled: false, //True if the particle is being dragged by the user
       visible: true,
-      addedToModel: false
+      addedToModel: true
     } );
     
     this.clock = clock;
@@ -55,9 +56,7 @@ define( function( require ) {
     // considered mutable, public
     this.destination = this.position;
     
-    this.addToModel(); // Assume that this is initially an active part of the model.
-    
-    this.userControlledProperty.link( function( controlled ) {
+    this.userControlledProperty.lazyLink( function( controlled ) {
       if ( controlled ) {
         atom.trigger( 'grabbedByUser', atom );
       } else {
@@ -76,9 +75,7 @@ define( function( require ) {
     } );
   };
   
-  Atom2.prototype = {
-    constructor: Atom2,
-    
+  inherit( PropertySet, Atom2, {
     get positionBounds() {
       return new Rectangle( this.position.x - this.radius, this.position.y - this.radius, this.diameter, this.diameter );
     },
@@ -132,7 +129,7 @@ define( function( require ) {
       PropertySet.prototype.reset.call( this );
       this.destination = this.position;
     }
-  };
+  } );
   
   return Atom2;
 } );

@@ -15,6 +15,9 @@ define( function( require ) {
     BucketFront: require( 'SCENERY_PHET/bucket/BucketFront' ),
     BucketHole: require( 'SCENERY_PHET/bucket/BucketHole' ),
     Element: require( 'NITROGLYCERIN/Element' ),
-    Atom: require( 'NITROGLYCERIN/Atom' )
+    Atom: require( 'NITROGLYCERIN/Atom' ),
+    
+    Property: require( 'AXON/Property' ),
+    PropertySet: require( 'AXON/PropertySet' )
   };
 } );
