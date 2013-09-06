@@ -478,16 +478,15 @@ define( function( require ) {
     toSimple: function() {
       var result = new MoleculeStructure( this.atoms.length, this.bonds.length );
       
-      // TODO: we really do need a hash map? maybe every atom deserves its own unique ID?
-      Map<Atom, Atom> newMap = new HashMap<Atom, Atom>();
-      for ( AtomT atom : atoms ) {
-          Atom newAtom = new Atom( atom.getElement() );
+      var newMap = {}; // old atom ID => new atom
+      _.each( this.atoms, function( atom ) {
+          var newAtom = new Atom( atom.element );
           result.addAtom( newAtom );
-          newMap.put( atom, newAtom );
-      }
-      for ( Bond<AtomT> bond : bonds ) {
-          result.addBond( new Bond<Atom>( newMap.get( bond.a ), newMap.get( bond.b ) ) );
-      }
+          newMap[atom.id] = newAtom;
+      } );
+      _.each( this.bonds, function( bond ) {
+        result.addBond( new Bond( newMap[bond.a.id], newMap[bond.b.id] ) );
+      } );
       return result;
     }
   };
@@ -617,32 +616,35 @@ define( function( require ) {
    *
    * NOTE: equivalency matrices are stored in row-major format (compared to the Java version)
    *
-   * @param equivalences          Equivalence Matrix
-   * @param myIndex               Index for the row (index into our atoms). calls with myIndex + 1 to children
-   * @param otherRemainingIndices Remaining available 'other' indices
+   * @param {Array[Boolean]} equivalences          Equivalence Matrix, square!, row-major (stored as one boolean array)
+   * @param {Int}            myIndex               Index for the row (index into our atoms). calls with myIndex + 1 to children
+   * @param {Array[Int]}     otherRemainingIndices Remaining available 'other' indices
    * @return Whether a successful matching permutation was found
    */
-  public static boolean checkEquivalencyMatrix( boolean[][] equivalences, int myIndex, List<Integer> otherRemainingIndices ) {
-      // should be inefficient, but not too bad (computational complexity is not optimal)
-      for ( Integer otherIndex : new ArrayList<Integer>( otherRemainingIndices ) ) { // loop over all remaining others
-          if ( equivalences[myIndex][otherIndex] ) { // only follow path if it is true (equivalent)
+  MoleculeStructure.checkEquivalencyMatrix = function( equivalences, myIndex, List<Integer> otherRemainingIndices ) {
+    var size = Math.sqrt( equivalences.length ); // it's square, so this technicall works
+    // TODO: performance: this should leak memory in un-fun ways, and performance complexity should be sped up
+    
+    // should be inefficient, but not too bad (computational complexity is not optimal)
+    _.each( otherRemainingIndices.slice( 0 ), function( otherIndex ) { // loop over all remaining others
+      if ( equivalences[myIndex * size + otherIndex] ) { // only follow path if it is true (equivalent)
 
-              // remove the index from consideration for checking the following submatrix
-              otherRemainingIndices.remove( otherIndex );
+        // remove the index from consideration for checking the following submatrix
+        otherRemainingIndices.splice( otherRemainingIndices.indexOf( otherIndex ), 1 ); // TODO: replace with remove()
 
-              boolean success = ( myIndex == equivalences.length - 1 ) // there are no more permutations to check
-                                || checkEquivalencyMatrix( equivalences, myIndex + 1, otherRemainingIndices ); // or we can find a good combination of the remaining indices
+        var success = ( myIndex === equivalences.length - 1 ) || // there are no more permutations to check
+                      MoleculeStructure.checkEquivalencyMatrix( equivalences, myIndex + 1, otherRemainingIndices ); // or we can find a good combination of the remaining indices
 
-              // add it back in so the calling function's contract for otherRemainingIndices is satisfied
-              otherRemainingIndices.add( otherIndex );
+        // add it back in so the calling function's contract for otherRemainingIndices is satisfied
+        otherRemainingIndices.push( otherIndex );
 
-              if ( success ) {
-                  return true;
-              }
-          }
+        if ( success ) {
+          return true;
+        }
       }
-      return false;
-  }
+    } );
+    return false;
+  };
   
   /**
    * Reads in the serialized form produced above

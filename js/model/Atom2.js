@@ -19,8 +19,6 @@ define( function( require ) {
   var Strings = require( 'BAM/Strings' );
   var Vector2 = require( 'DOT/Vector2' );
   
-  var idCounter = 1;
-  
   var motionVelocity = 800; // In picometers per second of sim time.
   
   /*
@@ -44,8 +42,6 @@ define( function( require ) {
     this.clockListener = this.stepInTime.bind( this );
     
     this.name = Strings.getAtomName( element );
-    this.reference = (idCounter++).toString( 16 ); // mimics the original simulation
-    this.id = this.symbol + '_' + this.reference; // ID for sim-sharing purposes
     
     // considered mutable, public
     this.destination = this.position;
