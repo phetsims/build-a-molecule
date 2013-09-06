@@ -196,7 +196,7 @@ define( function( require ) {
       var dirtyAtoms = [];
 
       // pull one atom out. doesn't matter which one
-      dirtyAtoms.add( this.atoms[0] );
+      dirtyAtoms.push( this.atoms[0] );
 
       while ( dirtyAtoms.length > 0 ) {
         // while atoms are dirty, pull one out
