@@ -12,7 +12,8 @@
     'BAM/namespace',
     'BAM/view/AtomNode',
     'BAM/model/Atom2',
-    'BAM/model/Bond'
+    'BAM/model/Bond',
+    'BAM/model/Bucket'
   ],
   function( SimLauncher, Sim, Strings, Images,
             MakeMoleculeScreen, CollectMultipleScreen, LargerMoleculesScreen,
