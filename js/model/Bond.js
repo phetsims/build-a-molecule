@@ -21,7 +21,7 @@ define( function( require ) {
   Bond.prototype = {
     constructor: Bond,
     
-    getId: function() {
+    get id() {
       return this.a.id + '-' + this.b.id;
     },
     

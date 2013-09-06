@@ -10,8 +10,10 @@ define( function( require ) {
   'use strict';
   
   var assert = require( 'ASSERT/assert' )( 'build-a-molecule' );
-  var namespace = require( 'BAM/namespace' );
+  var Atom = require( 'NITROGLYCERIN/Atom' );
+  var extend = require( 'PHET_CORE/extend' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var namespace = require( 'BAM/namespace' );
   var PropertySet = require( 'AXON/PropertySet' );
   var Rectangle = require( 'DOT/Rectangle' );
   var Strings = require( 'BAM/Strings' );
@@ -36,18 +38,10 @@ define( function( require ) {
       visible: true,
       addedToModel: true
     } );
+    Atom.call( this, element );
     
     this.clock = clock;
     this.clockListener = this.stepInTime.bind( this );
-    
-    // these are all directly from element, for convenience
-    this.element = element;
-    this.symbol = this.element.symbol;
-    this.radius = this.element.radius;
-    this.diameter = this.element.radius * 2;
-    this.electronegativity = this.element.electronegativity;
-    this.atomicWeight = this.element.atomicWeight;
-    this.color = this.element.color;
     
     this.name = Strings.getAtomName( element );
     this.reference = (idCounter++).toString( 16 ); // mimics the original simulation
@@ -75,7 +69,7 @@ define( function( require ) {
     } );
   };
   
-  inherit( PropertySet, Atom2, {
+  inherit( PropertySet, Atom2, extend( {}, Atom.prototype, {
     get positionBounds() {
       return new Rectangle( this.position.x - this.radius, this.position.y - this.radius, this.diameter, this.diameter );
     },
@@ -129,7 +123,7 @@ define( function( require ) {
       PropertySet.prototype.reset.call( this );
       this.destination = this.position;
     }
-  } );
+  } ) );
   
   return Atom2;
 } );
