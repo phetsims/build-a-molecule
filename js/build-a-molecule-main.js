@@ -16,6 +16,11 @@
     'BAM/model/Bucket',
     'BAM/model/MoleculeStructure',
     
+    // data
+    'BAM/model/data/collectionMoleculesData',
+    'BAM/model/data/otherMoleculesData',
+    'BAM/model/data/structuresData',
+    
     // stubs
     'BAM/model/MoleculeList',
     'BAM/model/ElementHistogram'
