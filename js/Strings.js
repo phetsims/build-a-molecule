@@ -3,7 +3,9 @@
 define( function( require ) {
   'use strict';
   
+  var namespace = require( 'BAM/namespace' );
   var Strings = require( 'i18n!BAM/../nls/build-a-molecule-strings' );
+  namespace.Strings = Strings;
   
   var elementMap = {
     'H': Strings[ 'atom.hydrogen' ],

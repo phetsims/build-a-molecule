@@ -10,6 +10,7 @@ define( function( require ) {
   'use strict';
   
   var assert = require( 'ASSERT/assert' )( 'build-a-molecule' );
+  var namespace = require( 'BAM/namespace' );
   var PropertySet = require( 'AXON/PropertySet' );
   var Rectangle = require( 'DOT/Rectangle' );
   var Strings = require( 'BAM/Strings' );
@@ -25,7 +26,7 @@ define( function( require ) {
    *   droppedByUser:    function( particle ) {}
    *   removedFromModel: function( particle ) {}
    */
-  var Atom2 = function Atom2( element, clock ) {
+  var Atom2 = namespace.Atom2 = function Atom2( element, clock ) {
     var atom = this;
     
     PropertySet.call( this, {

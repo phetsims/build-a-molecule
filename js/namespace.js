@@ -15,12 +15,6 @@ define( function( require ) {
     BucketFront: require( 'SCENERY_PHET/bucket/BucketFront' ),
     BucketHole: require( 'SCENERY_PHET/bucket/BucketHole' ),
     Element: require( 'NITROGLYCERIN/Element' ),
-    Atom: require( 'NITROGLYCERIN/Atom' ),
-    
-    Atom2: require( 'BAM/model/Atom2' ),
-    AtomNode: require( 'BAM/view/AtomNode' ),
-    Bond: require( 'BAM/model/Bond' ),
-    Strings: require( 'BAM/Strings' ),
-    Constants: require( 'BAM/Constants' )
+    Atom: require( 'NITROGLYCERIN/Atom' )
   };
 } );

@@ -11,6 +11,7 @@
 define( function( require ) {
   'use strict';
 
+  var namespace = require( 'BAM/namespace' );
   var Vector2 = require( 'DOT/Vector2' );
 
   var inherit = require( 'PHET_CORE/inherit' );
@@ -23,7 +24,7 @@ define( function( require ) {
 
   var Shape = require( 'KITE/Shape' );
 
-  var AtomNode = function( element, options ) {
+  var AtomNode = namespace.AtomNode = function( element, options ) {
     Node.call( this, _.extend( {
       cursor: 'pointer'
     }, options ) );

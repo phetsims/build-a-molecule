@@ -10,8 +10,9 @@ define( function( require ) {
   "use strict";
   
   var assert = require( 'ASSERT/assert' )( 'build-a-molecule' );
+  var namespace = require( 'BAM/namespace' );
   
-  var Bond = function Bond( a, b ) {
+  var Bond = namespace.Bond = function Bond( a, b ) {
     assert && assert( a !== b, 'Bonds cannot connect an atom to itself' );
     this.a = a;
     this.b = b;
