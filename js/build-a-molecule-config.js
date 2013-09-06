@@ -34,7 +34,9 @@ require.config( {
     PHETCOMMON: '../../phetcommon/js',
     SCENERY: '../../scenery/js',
     SCENERY_PHET: '../../scenery-phet/js',
-    SUN: '../../sun/js'
+    SUN: '../../sun/js',
+    
+    BAM: '.'
   },
   
   urlArgs: new Date().getTime() // add cache buster query string to make browser refresh actually reload everything

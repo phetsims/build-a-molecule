@@ -3,7 +3,7 @@
 define( function( require ) {
   'use strict';
   
-  var Strings = require( 'i18n!../nls/build-a-molecule-strings' );
+  var Strings = require( 'i18n!BAM/../nls/build-a-molecule-strings' );
   
   var elementMap = {
     'H': Strings[ 'atom.hydrogen' ],

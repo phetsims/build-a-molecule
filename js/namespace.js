@@ -17,10 +17,10 @@ define( function( require ) {
     Element: require( 'NITROGLYCERIN/Element' ),
     Atom: require( 'NITROGLYCERIN/Atom' ),
     
-    Atom2: require( 'model/Atom2' ),
-    AtomNode: require( 'view/AtomNode' ),
-    Bond: require( 'model/Bond' ),
-    Strings: require( 'Strings' ),
-    Constants: require( 'Constants' )
+    Atom2: require( 'BAM/model/Atom2' ),
+    AtomNode: require( 'BAM/view/AtomNode' ),
+    Bond: require( 'BAM/model/Bond' ),
+    Strings: require( 'BAM/Strings' ),
+    Constants: require( 'BAM/Constants' )
   };
 } );

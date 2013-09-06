@@ -5,14 +5,14 @@
  */
  require( [
     // used in the function call
-    'JOIST/SimLauncher', 'JOIST/Sim', 'Strings', 'Images',
-    'screens/MakeMoleculeScreen', 'screens/CollectMultipleScreen', 'screens/LargerMoleculesScreen',
+    'JOIST/SimLauncher', 'JOIST/Sim', 'BAM/Strings', 'BAM/Images',
+    'BAM/screens/MakeMoleculeScreen', 'BAM/screens/CollectMultipleScreen', 'BAM/screens/LargerMoleculesScreen',
     
     // specified as dependencies for independent debugging (playground, etc.)
-    'namespace',
-    'view/AtomNode',
-    'model/Atom2',
-    'model/Bond'
+    'BAM/namespace',
+    'BAM/view/AtomNode',
+    'BAM/model/Atom2',
+    'BAM/model/Bond'
   ],
   function( SimLauncher, Sim, Strings, Images,
             MakeMoleculeScreen, CollectMultipleScreen, LargerMoleculesScreen,

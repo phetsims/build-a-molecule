@@ -8,8 +8,8 @@
 define( function( require ) {
   'use strict';
   
-  var Strings = require( 'Strings' );
-  var Constants = require( 'Constants' );
+  var Strings = require( 'BAM/Strings' );
+  var Constants = require( 'BAM/Constants' );
   var ScreenView = require( 'JOIST/ScreenView' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   

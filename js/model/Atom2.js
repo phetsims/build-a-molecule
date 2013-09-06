@@ -12,7 +12,7 @@ define( function( require ) {
   var assert = require( 'ASSERT/assert' )( 'build-a-molecule' );
   var PropertySet = require( 'AXON/PropertySet' );
   var Rectangle = require( 'DOT/Rectangle' );
-  var Strings = require( 'Strings' );
+  var Strings = require( 'BAM/Strings' );
   var Vector2 = require( 'DOT/Vector2' );
   
   var idCounter = 1;
