@@ -13,7 +13,12 @@
     'BAM/view/AtomNode',
     'BAM/model/Atom2',
     'BAM/model/Bond',
-    'BAM/model/Bucket'
+    'BAM/model/Bucket',
+    'BAM/model/MoleculeStructure',
+    
+    // stubs
+    'BAM/model/MoleculeList',
+    'BAM/model/ElementHistogram'
   ],
   function( SimLauncher, Sim, Strings, Images,
             MakeMoleculeScreen, CollectMultipleScreen, LargerMoleculesScreen,

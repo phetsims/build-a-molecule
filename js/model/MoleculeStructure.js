@@ -65,7 +65,7 @@ define( function( require ) {
     
     getBondsInvolving: function( atom ) {
       // TODO: performance: optimize out function allocation here?
-      return _.filter( this.bonds, function( bond ) { return bond.contains( atom ); } )
+      return _.filter( this.bonds, function( bond ) { return bond.contains( atom ); } );
     },
     
     getMatchingCompleteMolecule: function() {
@@ -92,16 +92,15 @@ define( function( require ) {
 
       var organic = containsCarbon && containsHydrogen;
 
-      var sortedElements = _.sortBy( this.getElementList(), organic
-                                                            ? MoleculeStructure.organicSortValue         // carbon first, then hydrogen, then others alphabetically
-                                                            : MoleculeStructure.electronegativeSortValue // sort by increasing electronegativity
-                                                            );
+      var sortedElements = _.sortBy( this.getElementList(), organic ? MoleculeStructure.organicSortValue         // carbon first, then hydrogen, then others alphabetically
+                                                                    : MoleculeStructure.electronegativeSortValue // sort by increasing electronegativity
+                                                                    );
 
       // grab our formula out
       var formula = ChemUtils.createSymbolWithoutSubscripts( sortedElements );
 
       // return the formula, unless it is in our exception list (in which case, handle the exception case)
-      return formulaExceptions[formula] || formula;
+      return MoleculeStructure.formulaExceptions[formula] || formula;
     },
     
     /**
@@ -126,9 +125,9 @@ define( function( require ) {
           // for an alcohol subgroup (hydroxyl) we need:
           if ( neighbors.length === 2 && // 2 neighbors
                // 1st carbon, 2nd hydrogen
-               ( neighbors[0].isCarbon() && neighbors[1].isHydrogen() )
+               ( neighbors[0].isCarbon() && neighbors[1].isHydrogen() ) ||
                // OR 2nd carbon, 1st hydrogen
-               || ( neighbors[0].isHydrogen() && neighbors[1].isCarbon() ) ) {
+               ( neighbors[0].isHydrogen() && neighbors[1].isCarbon() ) ) {
             alcoholCount++;
 
             // pull off the hydrogen
@@ -224,7 +223,7 @@ define( function( require ) {
       }
 
       // since it has no loops, now we check to see if we reached all atoms. if not, the molecule must not be connected
-      return visitedAtoms.length !== atoms.length;
+      return visitedAtoms.length !== this.atoms.length;
     },
     
     getDebuggingDump: function() {
@@ -320,7 +319,7 @@ define( function( require ) {
       // TODO: performance: sets instead of arrays here?
       var myVisited = [];
       var otherVisited = [];
-      var firstAtom = atoms[0]; // grab the 1st atom
+      var firstAtom = this.atoms[0]; // grab the 1st atom
       var length = other.atoms.length;
       for ( var i = 0; i < length; i++ ) {
         var otherAtom = other.atoms[i];
@@ -357,7 +356,7 @@ define( function( require ) {
      * @param {Atom}              myAtom
      * @param {Atom}              otherAtom
      */
-    checkEquivalency: function( MoleculeStructure<U> other, Set<AtomT> myVisited, Set<U> otherVisited, AtomT myAtom, U otherAtom ) {
+    checkEquivalency: function( other, myVisited, otherVisited, myAtom, otherAtom ) {
       // basically this checks whether two different sub-trees of two different molecules are 'equivalent'
 
       // ------- If you change this, also consider the similar code in StrippedMolecule
@@ -394,7 +393,7 @@ define( function( require ) {
       for ( var myIndex = 0; myIndex < size; myIndex++ ) {
         availableIndices.push( myIndex );
         for ( var otherIndex = 0; otherIndex < size; otherIndex++ ) {
-          equivalences[myIndex * size + otherIndex] = checkEquivalency( other, myVisited, otherVisited, myUnvisitedNeighbors[myIndex], otherUnvisitedNeighbors[otherIndex] );
+          equivalences[myIndex * size + otherIndex] = this.checkEquivalency( other, myVisited, otherVisited, myUnvisitedNeighbors[myIndex], otherUnvisitedNeighbors[otherIndex] );
         }
       }
 
@@ -493,7 +492,7 @@ define( function( require ) {
   
   MoleculeStructure.formulaExceptions = {
     'H3N': 'NH3', // treated as if it is organic
-    'CHN', 'HCN'  // not considered organic
+    'CHN': 'HCN'  // not considered organic
   };
   
   MoleculeStructure.electronegativeSortValue = function( element ) {
@@ -621,7 +620,7 @@ define( function( require ) {
    * @param {Array[Int]}     otherRemainingIndices Remaining available 'other' indices
    * @return Whether a successful matching permutation was found
    */
-  MoleculeStructure.checkEquivalencyMatrix = function( equivalences, myIndex, List<Integer> otherRemainingIndices ) {
+  MoleculeStructure.checkEquivalencyMatrix = function( equivalences, myIndex, otherRemainingIndices ) {
     var size = Math.sqrt( equivalences.length ); // it's square, so this technicall works
     // TODO: performance: this should leak memory in un-fun ways, and performance complexity should be sped up
     
@@ -652,61 +651,57 @@ define( function( require ) {
    * @param str Serialized form of a structure
    * @return Molecule structure
    */
-  public static MoleculeStructure<Atom> fromSerial( String str ) {
-      StringTokenizer t = new StringTokenizer( str, '|' );
-      int atomCount = Integer.parseInt( t.nextToken() );
-      int bondCount = Integer.parseInt( t.nextToken() );
-      MoleculeStructure<Atom> structure = new MoleculeStructure<Atom>( atomCount, bondCount );
-      Atom[] atoms = new Atom[atomCount];
-
-      for ( int i = 0; i < atomCount; i++ ) {
-          atoms[i] = Atom.createAtomFromSymbol( t.nextToken() );
-          structure.addAtom( atoms[i] );
-      }
-
-      for ( int i = 0; i < bondCount; i++ ) {
-          structure.addBond( atoms[Integer.parseInt( t.nextToken() )], atoms[Integer.parseInt( t.nextToken() )] );
-      }
-
-      return structure;
-  }
+  MoleculeStructure.fromSerial = function( str ) {
+    var tokens = str.split( '|' );
+    var idx = 0;
+    var atomCount = parseInt( tokens[idx++], 10 );
+    var bondCount = parseInt( tokens[idx++], 10 );
+    var structure = new MoleculeStructure( atomCount, bondCount );
+    var atoms = new Array( atomCount );
+    
+    for ( var i = 0; i < atomCount; i++ ) {
+      atoms[i] = Atom.createAtomFromSymbol( tokens[idx++] );
+      structure.addAtom( atoms[i] );
+    }
+    for ( i = 0; i < bondCount; i++ ) {
+      structure.addBond( atoms[parseInt( tokens[idx++], 10 )], atoms[parseInt( tokens[idx++], 10 )] );
+    }
+    return structure;
+  };
   
   /**
    * Deserialize a molecule structure
    *
-   * @param line              The data (string) to deserialize
-   * @param moleculeGenerator Creates a molecule with properties that we can fill with atoms/bonds
-   * @param atomParser        Creates an atom from a string representing an atom
-   * @param bondParser        Creates a bond from a string representing a bond
-   * @param <U>               Atom type
-   * @param <B>               Bond type
-   * @param <M>               Molecule type
-   * @return A constructed molecule
+   * @param {String}            line              The data (string) to deserialize
+   * @param {MoleculeGenerator} moleculeGenerator function( atomCount, bondCount ):MoleculeStructure. Creates a molecule with properties that we can fill with atoms/bonds
+   * @param {AtomParser}        atomParser        function( atomString ):Atom. Creates an atom from a string representing an atom
+   * @param {BondParser}        bondParser        function( bondString, connectedAtom, moleculeStructure ):Bond. Creates a bond from a string representing a bond
+   * @return {MoleculeStructure} A constructed molecule
    */
-  public static <U extends Atom, B extends Bond<U>, M extends MoleculeStructure<U>> M fromSerial2( String line, MoleculeGenerator<U, M> moleculeGenerator, AtomParser<U> atomParser, BondParser<U, B> bondParser ) {
-      StringTokenizer t = new StringTokenizer( line, '|' );
-      int atomCount = Integer.parseInt( t.nextToken() );
-      int bondCount = Integer.parseInt( t.nextToken() );
-
-      M molecule = moleculeGenerator.createMolecule( atomCount, bondCount );
-      for ( int i = 0; i < atomCount; i++ ) {
-          String atomBondString = t.nextToken();
-          StringTokenizer subT = new StringTokenizer( atomBondString, ',' );
-          U atom = atomParser.parseAtom( subT.nextToken() );
-          molecule.addAtom( atom );
-          while ( subT.hasMoreTokens() ) {
-              B bond = bondParser.parseBond( subT.nextToken(), atom, molecule );
-              molecule.addBond( bond );
-          }
+  MoleculeStructure.fromSerial2 = function( line, moleculeGenerator, atomParser, bondParser ) {
+    var tokens = line.split( '|' );
+    var idx = 0;
+    var atomCount = parseInt( tokens[idx++], 10 );
+    var bondCount = parseInt( tokens[idx++], 10 );
+    var molecule = moleculeGenerator( atomCount, bondCount );
+    for ( var i = 0; i < atomCount; i++ ) {
+      var atomBondString = tokens[idx++];
+      var subIdx = 0;
+      var subTokens = atomBondString.split( ',' );
+      var atom = atomParser( subTokens[subIdx++] );
+      molecule.addAtom( atom );
+      while ( subIdx < subTokens.length ) {
+        var bond = bondParser( subTokens[subIdx++], atom, molecule );
+        molecule.addBond( bond );
       }
+    }
+    return molecule;
+  };
 
-      return molecule;
-  }
-
-  public static MoleculeStructure<Atom> fromSerial2Basic( String line ) {
-      // assumes atom base class (just symbol) and simple bonds (just connectivity)
-      return fromSerial2( line, new DefaultMoleculeGenerator(), new DefaultAtomParser(), new DefaultBondParser() );
-  }
+  MoleculeStructure.fromSerial2Basic = function( line ) {
+    // assumes atom base class (just symbol) and simple bonds (just connectivity)
+    return MoleculeStructure.fromSerial2( line, MoleculeStructure.defaultMoleculeGenerator, MoleculeStructure.defaultAtomParser, MoleculeStructure.defaultBondParser );
+  };
   
   /*---------------------------------------------------------------------------*
   * parser classes and default implementations
@@ -737,7 +732,7 @@ define( function( require ) {
   
   MoleculeStructure.defaultBondParser = function( bondString, connectedAtom, moleculeStructure ) {
     // bondString is index of other atom to bond
-    return new Bond( connectedAtom, moleculeStructure.atoms[parseInt( bondString )] );
+    return new Bond( connectedAtom, moleculeStructure.atoms[parseInt( bondString, 10 )] );
   };
   
   return MoleculeStructure;
