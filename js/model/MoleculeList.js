@@ -266,5 +266,8 @@ define( function( require ) {
     assert && assert( !!molecule );
   } );
   
+  // TODO: performance: postpone all of the loading?
+  MoleculeList.getMasterInstance();
+  
   return MoleculeList;
 } );
