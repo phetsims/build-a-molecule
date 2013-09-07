@@ -18,6 +18,7 @@
     'BAM/model/Molecule',
     'BAM/model/Direction',
     'BAM/model/LewisDotModel',
+    'BAM/model/LayoutBounds',
     
     // data
     'BAM/model/data/collectionMoleculesData',

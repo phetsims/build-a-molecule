@@ -6,8 +6,37 @@ define( function( require ) {
   var namespace = require( 'BAM/namespace' );
   var Element = require( 'NITROGLYCERIN/Element' );
   var Color = require( 'SCENERY/util/Color' );
+  var Dimension2 = require( 'DOT/Dimension2' );
+  var Vector2 = require( 'DOT/Vector2' );
+  var ModelViewTransform2 = require( 'PHETCOMMON/view/ModelViewTransform2' );
+  
+  var viewSize = new Dimension2( 1008, 679 );
+  var mvt = ModelViewTransform2.createSinglePointScaleInvertedYMapping(
+    Vector2.ZERO,
+    new Vector2( Math.round( viewSize.width * 0.5 ), Math.round( viewSize.height * 0.5 ) ),
+    0.3 // "Zoom factor" - smaller zooms out, larger zooms in
+  );
+  var modelSize = new Dimension2(
+    mvt.viewToModelDeltaX( viewSize.width ),
+    Math.abs( mvt.viewToModelDeltaY( viewSize.height ) )
+  );
+  var viewPadding = 18;
+  var modelPadding = mvt.viewToModelDeltaX( viewPadding );
   
   namespace.Constants = {
+    
+    projectName: 'build-a-molecule',
+    
+    /*---------------------------------------------------------------------------*
+    * Layout
+    *----------------------------------------------------------------------------*/
+    
+    stageSize: viewSize, // the size of our "view" coordinate area
+    modelViewTransform: mvt,
+    modelSize: modelSize,
+    viewPadding: viewPadding,
+    modelPadding: modelPadding,
+    
     /*---------------------------------------------------------------------------*
     * Colors
     *----------------------------------------------------------------------------*/
