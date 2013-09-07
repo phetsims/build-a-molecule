@@ -21,15 +21,13 @@
     'BAM/model/LayoutBounds',
     'BAM/model/CompleteMolecule',
     'BAM/model/StrippedMolecule',
+    'BAM/model/MoleculeList',
+    'BAM/model/ElementHistogram',
     
     // data
     'BAM/model/data/collectionMoleculesData',
     'BAM/model/data/otherMoleculesData',
-    'BAM/model/data/structuresData',
-    
-    // stubs
-    'BAM/model/MoleculeList',
-    'BAM/model/ElementHistogram'
+    'BAM/model/data/structuresData'
   ],
   function( SimLauncher, Sim, Strings, Images,
             MakeMoleculeScreen, CollectMultipleScreen, LargerMoleculesScreen,
