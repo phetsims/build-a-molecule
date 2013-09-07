@@ -147,7 +147,6 @@ define( function( require ) {
   var masterInstance = null;
   var initialized = false;
   var initialList = new MoleculeList();
-  initialList.loadInitialData();
   
   MoleculeList.startInitialization = function() {
     // TODO: performance: use web worker or chop it up into bits of work
@@ -175,6 +174,44 @@ define( function( require ) {
     }
     
     return result;
+  };
+  
+  /*---------------------------------------------------------------------------*
+  * static helper methods
+  *----------------------------------------------------------------------------*/
+
+  /**
+   * @return A list of complete molecules
+   */
+  MoleculeList.readCompleteMoleculesFromData = function( strings ) {
+    return _.map( strings, function( string ) {
+      var molecule = CompleteMolecule.fromSerial2( string );
+
+      // sanity checks
+      if ( molecule.hasLoopsOrIsDisconnected() ) {
+        throw new Error( 'ignoring molecule: ' + molecule.commonName );
+      }
+      if ( molecule.hasWeirdHydrogenProperties() ) {
+        throw new Error( 'weird hydrogen pattern in: ' + molecule.commonName );
+      }
+      return molecule;
+    } );
+  };
+
+  /**
+   * @param filename File name relative to the sim's data directory
+   * @return A list of molecule structures
+   */
+  MoleculeList.readMoleculeStructuresFromData = function( strings ) {
+    return _.map( strings, function( string ) {
+      var structure = MoleculeStructure.fromSerial2Basic( string );
+
+      // sanity checks
+      if ( structure.hasWeirdHydrogenProperties() ) {
+          throw new Error( "weird hydrogen pattern in structure: " + string );
+      }
+      return structure;
+    } );
   };
   
   /*---------------------------------------------------------------------------*
@@ -227,43 +264,7 @@ define( function( require ) {
     assert && assert( !!molecule );
   } );
   
-  /*---------------------------------------------------------------------------*
-  * static helper methods
-  *----------------------------------------------------------------------------*/
-
-  /**
-   * @return A list of complete molecules
-   */
-  MoleculeList.readCompleteMoleculesFromData = function( strings ) {
-    return _.map( strings, function( string ) {
-      var molecule = CompleteMolecule.fromSerial2( string );
-
-      // sanity checks
-      if ( molecule.hasLoopsOrIsDisconnected() ) {
-        throw new Error( 'ignoring molecule: ' + molecule.commonName );
-      }
-      if ( molecule.hasWeirdHydrogenProperties() ) {
-        throw new Error( 'weird hydrogen pattern in: ' + molecule.commonName );
-      }
-      return molecule;
-    } );
-  };
-
-  /**
-   * @param filename File name relative to the sim's data directory
-   * @return A list of molecule structures
-   */
-  MoleculeList.readMoleculeStructuresFromData = function( strings ) {
-    return _.map( strings, function( string ) {
-      var structure = MoleculeStructure.fromSerial2Basic( string );
-
-      // sanity checks
-      if ( structure.hasWeirdHydrogenProperties() ) {
-          throw new Error( "weird hydrogen pattern in structure: " + string );
-      }
-      return structure;
-    } );
-  };
+  initialList.loadInitialData();
   
   return MoleculeList;
 } );
