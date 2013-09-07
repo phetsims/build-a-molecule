@@ -16,6 +16,7 @@
     'BAM/model/Bucket',
     'BAM/model/MoleculeStructure',
     'BAM/model/Molecule',
+    'BAM/model/Direction',
     
     // data
     'BAM/model/data/collectionMoleculesData',
