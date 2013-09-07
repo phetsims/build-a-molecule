@@ -184,7 +184,7 @@ define( function( require ) {
       var length = this.atoms.length;
       for ( var i = 0; i < length; i++ ) {
         var atom = this.atoms[i];
-        if ( atom.isHydrogen && this.getNeighbors( atom ).length > 1 ) {
+        if ( atom.isHydrogen() && this.getNeighbors( atom ).length > 1 ) {
           return true;
         }
       }
@@ -219,7 +219,7 @@ define( function( require ) {
         }
 
         // move our atom from dirty to visited
-        dirtyAtoms.splice( _.indexOf( dirtyAtoms, atom ), 1 );
+        // dirtyAtoms.splice( _.indexOf( dirtyAtoms, atom ), 1 );
         visitedAtoms.push( atom );
       }
 
@@ -562,7 +562,7 @@ define( function( require ) {
     var dirtyAtoms = [bond.a];
     while ( dirtyAtoms.length > 0 ) {
       var atom = dirtyAtoms.pop();
-      dirtyAtoms.splice( dirtyAtoms.indexOf( atom ), 1 ); // TODO: replace with remove()
+      // dirtyAtoms.splice( dirtyAtoms.indexOf( atom ), 1 ); // TODO: replace with remove()
 
       // for all neighbors that don't use our 'bond'
       _.each( structure.bonds, function( otherBond ) {

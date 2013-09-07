@@ -214,6 +214,8 @@ define( function( require ) {
     } );
   };
   
+  initialList.loadInitialData();
+  
   /*---------------------------------------------------------------------------*
   * molecule references and customized names
   *----------------------------------------------------------------------------*/
@@ -263,8 +265,6 @@ define( function( require ) {
   _.each( MoleculeList.collectionBoxMolecules, function( molecule ) {
     assert && assert( !!molecule );
   } );
-  
-  initialList.loadInitialData();
   
   return MoleculeList;
 } );
