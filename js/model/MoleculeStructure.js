@@ -17,7 +17,7 @@ define( function( require ) {
   var assert = require( 'ASSERT/assert' )( 'build-a-molecule' );
   var namespace = require( 'BAM/namespace' );
   var Bond = require( 'BAM/model/Bond' );
-  var MoleculeList = require( 'BAM/model/MoleculeList' );
+  // var MoleculeList = require( 'BAM/model/MoleculeList' );
   var ElementHistogram = require( 'BAM/model/ElementHistogram' );
   var ChemUtils = require( 'NITROGLYCERIN/ChemUtils' );
   var Element = require( 'NITROGLYCERIN/Element' );
@@ -70,11 +70,11 @@ define( function( require ) {
     },
     
     getMatchingCompleteMolecule: function() {
-      return MoleculeList.getMasterInstance().findMatchingCompleteMolecule( this );
+      return namespace.MoleculeList.getMasterInstance().findMatchingCompleteMolecule( this );
     },
     
     isAllowedStructure: function() {
-      return this.atoms.length < 2 || MoleculeList.getMasterInstance().isAllowedStructure( this );
+      return this.atoms.length < 2 || namespace.MoleculeList.getMasterInstance().isAllowedStructure( this );
     },
     
     getHillSystemFormulaFragment: function() {
