@@ -19,6 +19,7 @@
     'BAM/model/Direction',
     'BAM/model/LewisDotModel',
     'BAM/model/LayoutBounds',
+    'BAM/model/CompleteMolecule',
     
     // data
     'BAM/model/data/collectionMoleculesData',
