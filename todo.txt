@@ -5,6 +5,9 @@ Build a Molecule TODO
 Logging    (strippable)
 Assertions (strippable)
 
+Memory:
+  Atoms are storing too much info in their instances from their Element. It's convenient, but probably killing us.
+
 Specify sim title string for Sim
 
 Common code for:
