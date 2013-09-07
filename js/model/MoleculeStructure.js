@@ -26,6 +26,7 @@ define( function( require ) {
   var nextMoleculeId = 0;
   
   //REVIEW comments below indicate that ordering is important. Describe why ordering is significant.
+  // NOTE from porting: StrippedMolecule relies on the ordering of atoms, and possibly bonds
   
   // TODO: Molecule calls with (12,12)
   var MoleculeStructure = namespace.MoleculeStructure = function MoleculeStructure( numAtoms, numBonds ) {

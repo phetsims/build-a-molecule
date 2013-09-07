@@ -20,6 +20,7 @@
     'BAM/model/LewisDotModel',
     'BAM/model/LayoutBounds',
     'BAM/model/CompleteMolecule',
+    'BAM/model/StrippedMolecule',
     
     // data
     'BAM/model/data/collectionMoleculesData',
