@@ -17,12 +17,6 @@ define( function( require ) {
     this.vector = vector;
   };
   
-  Direction.prototype = {
-    constructor: Direction,
-    
-    
-  };
-  
   Direction.North = new Direction( new Vector2( 0, 1 ) );
   Direction.East = new Direction( new Vector2( 1, 0 ) );
   Direction.South = new Direction( new Vector2( 0, -1 ) );
