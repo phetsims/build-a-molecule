@@ -23,6 +23,7 @@
     'BAM/model/StrippedMolecule',
     'BAM/model/MoleculeList',
     'BAM/model/ElementHistogram',
+    'BAM/model/Kit',
     
     // data
     'BAM/model/data/collectionMoleculesData',

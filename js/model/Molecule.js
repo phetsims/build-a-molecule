@@ -16,7 +16,7 @@ define( function( require ) {
   var MoleculeStructure = require( 'BAM/model/MoleculeStructure' );
   
   var Molecule = namespace.Molecule = function Molecule( numAtoms, numBonds ) {
-    MoleculeStructure.call( this, numAtoms, numBonds );
+    MoleculeStructure.call( this, numAtoms || 0, numBonds || 0 );
   };
   
   inherit( MoleculeStructure, Molecule, {
