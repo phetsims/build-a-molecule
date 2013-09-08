@@ -8,6 +8,9 @@ Assertions (strippable)
 Memory:
   Atoms are storing too much info in their instances from their Element. It's convenient, but probably killing us.
 
+Performance:
+  ES5 getter/setter removal from inner-loop code
+
 Specify sim title string for Sim
 
 Common code for:
@@ -16,9 +19,12 @@ Common code for:
 
 Preloader
 Support portrait and landscape?
-Backbone / model investigation
-  Backbone.Events for 'property'-like behavior
-  Serialization with JSON?
+Full serialization?
+Zoom/pan handler prototype
+Recycling bin for molecules/atoms?
+Handling hard-to-touch things:
+  Scissors? - single-finger would interact with panning if zoomed in, might be acceptable
+  3D button / break apart button - not sure
 
 "Model":
   Tabs:
