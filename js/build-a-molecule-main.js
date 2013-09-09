@@ -41,6 +41,10 @@
             namespace ) {
     'use strict';
     
+    // workaround, since the needed require statement in BAM/Images causes require.js to quote:
+    //           Uncaught Error: Module name "BAM/namespace" has not been loaded yet for context: _. Use require([])
+    namespace.Images = Images;
+    
     var simOptions = {
       credits: 'TODO (without scrolling credits, the BAM team refuses to take credit!)'
     };
