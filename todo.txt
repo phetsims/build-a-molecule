@@ -5,6 +5,8 @@ Build a Molecule TODO
 Logging    (strippable)
 Assertions (strippable)
 
+CollectionList/KitCollection - consider extending ObservableArray instead?
+
 Check usages of getFirstTargetBox for handling undefined instead of null as a negative result
 
 Memory:

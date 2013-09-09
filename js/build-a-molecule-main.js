@@ -26,6 +26,7 @@
     'BAM/model/Kit',
     'BAM/model/CollectionBox',
     'BAM/model/KitCollection',
+    'BAM/model/CollectionList',
     
     // data
     'BAM/model/data/collectionMoleculesData',
