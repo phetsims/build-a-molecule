@@ -29,8 +29,8 @@ define( function( require ) {
     
     this.layoutBounds = layoutBounds;
     this.collections = [];
-    this.addedCollection( firstCollection );
     this.currentIndex = 0;
+    this.addCollection( firstCollection );
   };
   
   inherit( PropertySet, CollectionList, {

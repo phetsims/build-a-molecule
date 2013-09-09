@@ -55,9 +55,12 @@
       SimLauncher.launch( Images, function() {
         //Create and start the sim
         new Sim( Strings['build-a-molecule.name'], [
-          MakeMoleculeScreen,
-          CollectMultipleScreen,
-          LargerMoleculesScreen
+          // TODO: replace these with the actual panel widths
+          // new MakeMoleculeScreen( CollectionPanel.getCollectionPanelModelWidth( true ) ),
+          new MakeMoleculeScreen( 400 ),
+          // new CollectMultipleScreen( CollectionPanel.getCollectionPanelModelWidth( false ) ),
+          new CollectMultipleScreen( 400 ),
+          new LargerMoleculesScreen()
         ], simOptions ).start();
       } );
     }

@@ -93,7 +93,7 @@ define( function( require ) {
 
     addCollectionBox: function( box ) {
       var kitCollection = this;
-      this.collectionBoxes.add( box );
+      this.collectionBoxes.push( box );
 
       // listen to when our collection boxes change, so that we can identify when all of our collection boxes are filled
       box.quantityProperty.link( function() {
