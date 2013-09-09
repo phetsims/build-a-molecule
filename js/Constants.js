@@ -75,6 +75,7 @@ define( function( require ) {
     * Misc
     *----------------------------------------------------------------------------*/
     
+    allowBondBreaking: true,
     supportedElements: [
       Element.B, Element.Br, Element.C, Element.Cl, Element.F, Element.H, Element.I, Element.N, Element.O, Element.P, Element.S, Element.Si
     ]

@@ -30,6 +30,9 @@
     // view
     'BAM/view/AtomNode',
     'BAM/view/MoleculeMetadataNode',
+    'BAM/view/MoleculeBondNode',
+    'BAM/view/MoleculeBondContainerNode',
+    'BAM/view/KitView',
     
     // data
     'BAM/model/data/collectionMoleculesData',

@@ -21,6 +21,8 @@ define( function( require ) {
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   
   var MoleculeMetadataNode = namespace.MoleculeMetadataNode = function MoleculeMetadataNode( kit, molecule ) {
+    Node.call( this, {} );
+    
     var selfNode = this;
     this.molecule = molecule;
     this.updatePositionListener = selfNode.updatePosition.bind( selfNode );
