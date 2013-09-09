@@ -41,7 +41,7 @@ define( function( require ) {
 
     var gradientFill = new RadialGradient( gCenter.x, gCenter.y, 0, gCenter.x, gCenter.y, fullRadius );
     gradientFill.addColorStop( 0, '#ffffff' );
-    gradientFill.addColorStop( middleRadius / fullRadius, this.color.getCSS() );
+    gradientFill.addColorStop( middleRadius / fullRadius, this.color.toCSS() );
     gradientFill.addColorStop( 1, '#000000' );
 
     this.addChild( new Path( Shape.circle( 0, 0, this.radius ), {
