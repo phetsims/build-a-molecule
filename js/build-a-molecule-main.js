@@ -24,6 +24,8 @@
     'BAM/model/MoleculeList',
     'BAM/model/ElementHistogram',
     'BAM/model/Kit',
+    'BAM/model/CollectionBox',
+    'BAM/model/KitCollection',
     
     // data
     'BAM/model/data/collectionMoleculesData',

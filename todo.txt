@@ -5,6 +5,8 @@ Build a Molecule TODO
 Logging    (strippable)
 Assertions (strippable)
 
+Check usages of getFirstTargetBox for handling undefined instead of null as a negative result
+
 Memory:
   Atoms are storing too much info in their instances from their Element. It's convenient, but probably killing us.
 
