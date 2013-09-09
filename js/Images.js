@@ -9,6 +9,12 @@ define( function() {
 
   return {
     imageNames: [
+      'split-blue.png',
+      'green-left.png',
+      'green-right.png',
+      'green-middle.png',
+      'scissors.png',
+      'scissors-closed.png'
     ]
   };
 } );
