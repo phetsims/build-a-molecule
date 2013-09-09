@@ -10,7 +10,6 @@
     
     // specified as dependencies for independent debugging (playground, etc.)
     'BAM/namespace',
-    'BAM/view/AtomNode',
     'BAM/model/Atom2',
     'BAM/model/Bond',
     'BAM/model/Bucket',
@@ -27,6 +26,10 @@
     'BAM/model/CollectionBox',
     'BAM/model/KitCollection',
     'BAM/model/CollectionList',
+    
+    // view
+    'BAM/view/AtomNode',
+    'BAM/view/MoleculeMetadataNode',
     
     // data
     'BAM/model/data/collectionMoleculesData',

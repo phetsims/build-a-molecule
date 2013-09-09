@@ -61,6 +61,17 @@ define( function( require ) {
     metadataPaddingBetweenNodeAndMolecule: 5, // vertical space between molecule and name/buttons
     
     /*---------------------------------------------------------------------------*
+    * Images
+    *----------------------------------------------------------------------------*/
+    
+    imageSplitIcon:          'split-blue.png',
+    imageGreenLeft:          'green-left.png',
+    imageGreenRight:         'green-right.png',
+    imageGreenMiddle:        'green-middle.png',
+    imageScissorsIcon:       'scissors.png',
+    imageScissorsClosedIcon: 'scissors-closed.png',
+    
+    /*---------------------------------------------------------------------------*
     * Misc
     *----------------------------------------------------------------------------*/
     
