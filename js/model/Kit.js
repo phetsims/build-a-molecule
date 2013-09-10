@@ -520,7 +520,7 @@ define( function( require ) {
             }
             
             _.each( kit.lewisDotModel.getOpenDirections( otherAtom ), function( otherDirection ) {
-              var direction = otherDirection.opposite();
+              var direction = otherDirection.opposite;
               if ( !_.contains( kit.lewisDotModel.getOpenDirections( ourAtom ), direction ) ) {
                 // the spot on otherAtom was open, but the corresponding spot on our main atom was not
                 return;
