@@ -522,7 +522,7 @@ define( function( require ) {
 
             // sanity check, and run it through our molecule structure model to see if it would be allowable
             if ( otherAtom === ourAtom || !kit.canBond( ourAtom, otherAtom ) ) {
-                return;
+              return;
             }
             
             _.each( kit.lewisDotModel.getOpenDirections( otherAtom ), function( otherDirection ) {
