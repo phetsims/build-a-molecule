@@ -212,10 +212,10 @@ define( function( require ) {
 
       // for the love of god, this matrix is NOT symmetric. It computes whether each tree branch for A is equivalent to each tree branch for B
       for ( var myIndex = 0; myIndex < size; myIndex++ ) {
-          availableIndices.push( myIndex );
-          for ( var otherIndex = 0; otherIndex < size; otherIndex++ ) {
-              equivalences[myIndex * size + otherIndex] = this.checkEquivalency( other, myVisited, otherVisited, myUnvisitedNeighbors[myIndex], otherUnvisitedNeighbors[otherIndex], subCheck );
-          }
+        availableIndices.push( myIndex );
+        for ( var otherIndex = 0; otherIndex < size; otherIndex++ ) {
+          equivalences[myIndex * size + otherIndex] = this.checkEquivalency( other, myVisited, otherVisited, myUnvisitedNeighbors[myIndex], otherUnvisitedNeighbors[otherIndex], subCheck );
+        }
       }
 
       // remove the atoms from the visited sets, to hold our contract
@@ -223,7 +223,7 @@ define( function( require ) {
       otherVisited.splice( otherVisited.indexOf( otherAtom ), 1 ); // TODO: replace with remove()
 
       // return whether we can find a successful permutation matching from our equivalency matrix
-      return MoleculeStructure.checkEquivalencyMatrix( equivalences, 0, availableIndices );
+      return MoleculeStructure.checkEquivalencyMatrix( equivalences, 0, availableIndices, size );
     },
 
     getCopyWithAtomRemoved: function( atom ) {

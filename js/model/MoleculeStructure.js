@@ -403,7 +403,7 @@ define( function( require ) {
       otherVisited.splice( otherVisited.indexOf( otherAtom ), 1 ); // TODO: replace with remove()
 
       // return whether we can find a successful permutation matching from our equivalency matrix
-      return MoleculeStructure.checkEquivalencyMatrix( equivalences, 0, availableIndices );
+      return MoleculeStructure.checkEquivalencyMatrix( equivalences, 0, availableIndices, size );
     },
     
     getElementList: function() {
@@ -619,21 +619,25 @@ define( function( require ) {
    * @param {Array[Boolean]} equivalences          Equivalence Matrix, square!, row-major (stored as one boolean array)
    * @param {Int}            myIndex               Index for the row (index into our atoms). calls with myIndex + 1 to children
    * @param {Array[Int]}     otherRemainingIndices Remaining available 'other' indices
+   * @param {Int}            size                  This square matrix is size x size in dimensions
    * @return Whether a successful matching permutation was found
    */
-  MoleculeStructure.checkEquivalencyMatrix = function( equivalences, myIndex, otherRemainingIndices ) {
+  MoleculeStructure.checkEquivalencyMatrix = function( equivalences, myIndex, otherRemainingIndices, size ) {
     var size = Math.sqrt( equivalences.length ); // it's square, so this technicall works
     // TODO: performance: this should leak memory in un-fun ways, and performance complexity should be sped up
     
     // should be inefficient, but not too bad (computational complexity is not optimal)
-    _.each( otherRemainingIndices.slice( 0 ), function( otherIndex ) { // loop over all remaining others
+    var arr = otherRemainingIndices.slice( 0 );
+    var len = arr.length;
+    for ( var i = 0; i < len; i++ ) { // loop over all remaining others
+      var otherIndex = arr[i];
       if ( equivalences[myIndex * size + otherIndex] ) { // only follow path if it is true (equivalent)
 
         // remove the index from consideration for checking the following submatrix
         otherRemainingIndices.splice( otherRemainingIndices.indexOf( otherIndex ), 1 ); // TODO: replace with remove()
 
-        var success = ( myIndex === equivalences.length - 1 ) || // there are no more permutations to check
-                      MoleculeStructure.checkEquivalencyMatrix( equivalences, myIndex + 1, otherRemainingIndices ); // or we can find a good combination of the remaining indices
+        var success = ( myIndex === size - 1 ) || // there are no more permutations to check
+                      MoleculeStructure.checkEquivalencyMatrix( equivalences, myIndex + 1, otherRemainingIndices, size ); // or we can find a good combination of the remaining indices
 
         // add it back in so the calling function's contract for otherRemainingIndices is satisfied
         otherRemainingIndices.push( otherIndex );
@@ -642,7 +646,7 @@ define( function( require ) {
           return true;
         }
       }
-    } );
+    }
     return false;
   };
   
