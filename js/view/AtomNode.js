@@ -31,7 +31,7 @@ define( function( require ) {
     var element = atom.element;
 
     this.color = new Color( element.color );
-    this.radius = element.radius;
+    this.radius = Constants.modelViewTransform.modelToViewDeltaX( element.radius );
     this.diameter = this.radius * 2;
 
     var gCenter = new Vector2( -this.radius / 3, -this.radius / 3 );
