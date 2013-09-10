@@ -553,6 +553,7 @@ define( function( require ) {
       var isBondingInvalid = bestLocation === null || bestDistanceFromIdealLocation > Kit.bondDistanceThreshold;
 
       if ( isBondingInvalid ) {
+        this.separateMoleculeDestinations();
         return false;
       }
 
