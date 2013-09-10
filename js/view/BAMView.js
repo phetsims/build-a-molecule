@@ -30,7 +30,7 @@ define( function( require ) {
 
   return inherit( ScreenView, BAMView, {
     addCollection: function( collection ) {
-      var result = new KitCollectionNode( this.collectionList.currentCollectionProperty, collection, this );
+      var result = new KitCollectionNode( this.collectionList, collection, this );
       this.addChild( result );
       
       // supposedly: return this so we can manipulate it in an override....?

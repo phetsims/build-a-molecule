@@ -14,9 +14,10 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var Constants = require( 'BAM/Constants' );
   var KitView = require( 'BAM/view/KitView' );
+  var KitPanel = require( 'BAM/control/KitPanel' );
   var Node = require( 'SCENERY/nodes/Node' );
   
-  var KitCollectionNode = namespace.KitCollectionNode = function KitCollectionNode( currentColletionProperty, collection, view ) {
+  var KitCollectionNode = namespace.KitCollectionNode = function KitCollectionNode( collectionList, collection, view ) {
     Node.call( this, {} );
     var that = this;
     
@@ -33,8 +34,7 @@ define( function( require ) {
     this.addChild( metadataLayer );
     this.addChild( topLayer );
 
-    // TODO: incomplete: add in KitPanel
-    // bottomLayer.addChild( new KitPanel( collection, collectionList.getAvailableKitBounds() ) );
+    bottomLayer.addChild( new KitPanel( collection, collectionList.availableKitBounds ) );
     
     _.each( collection.kits, function( kit ) {
       var kitView = new KitView( kit, view );
@@ -45,7 +45,7 @@ define( function( require ) {
     } );
     
     // set visibility based on whether our collection is the current one
-    currentColletionProperty.link( function( newCollection ) {
+    collectionList.currentCollectionProperty.link( function( newCollection ) {
       that.visible = newCollection === collection;
     } );
   };

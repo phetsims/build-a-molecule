@@ -35,11 +35,15 @@
     'BAM/view/KitView',
     'BAM/view/KitCollectionNode',
     'BAM/view/BAMView',
+    'BAM/control/KitPanel',
     
     // data
     'BAM/model/data/collectionMoleculesData',
     'BAM/model/data/otherMoleculesData',
-    'BAM/model/data/structuresData'
+    'BAM/model/data/structuresData',
+    
+    // why, require.js, why?
+    'SCENERY_PHET/NextPreviousNavigationNode'
   ],
   function( SimLauncher, Sim, Strings, Images,
             MakeMoleculeScreen, CollectMultipleScreen, LargerMoleculesScreen,

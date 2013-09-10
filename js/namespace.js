@@ -14,6 +14,7 @@ define( function( require ) {
     Bucket: require( 'PHETCOMMON/model/Bucket' ),
     BucketFront: require( 'SCENERY_PHET/bucket/BucketFront' ),
     BucketHole: require( 'SCENERY_PHET/bucket/BucketHole' ),
+    NextPreviousNavigationNode: require( 'SCENERY_PHET/NextPreviousNavigationNode' ),
     Element: require( 'NITROGLYCERIN/Element' ),
     Atom: require( 'NITROGLYCERIN/Atom' ),
     
