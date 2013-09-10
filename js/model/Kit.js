@@ -109,6 +109,12 @@ define( function( require ) {
       _.each( buckets, function( bucket ) {
         // also note: this moves the atoms also!
         bucket.position = new Vector2( bucket.position.x - usedWidth / 2 + kitXCenter + bucket.width / 2, kitY );
+        
+        // since changing the bucket's position doesn't change contained atoms!
+        // TODO: have the bucket position change do this?
+        _.each( bucket.atoms, function( atom ) {
+          atom.translatePositionAndDestination( bucket.position );
+        } );
       } );
     },
 
