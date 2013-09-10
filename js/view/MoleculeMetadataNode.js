@@ -15,7 +15,7 @@ define( function( require ) {
   var Images = require( 'BAM/Images' );
   var Constants = require( 'BAM/Constants' );
   var Node = require( 'SCENERY/nodes/Node' );
-  var HTMLText = require( 'SCENERY/nodes/HTMLText' );
+  var Text = require( 'SCENERY/nodes/Text' );
   var Image = require( 'SCENERY/nodes/Image' );
   var ButtonListener = require( 'SCENERY/input/ButtonListener' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
@@ -40,8 +40,9 @@ define( function( require ) {
       /*---------------------------------------------------------------------------*
       * label with chemical formula and common name
       *----------------------------------------------------------------------------*/
-      var label = new HTMLText( completeMolecule.getDisplayName(), {
-        font: new PhetFont( { size: 14, weight: 'bold' } )
+      var label = new Text( completeMolecule.getDisplayName(), {
+        font: new PhetFont( { size: 14, weight: 'bold' } ),
+        centerY: 9
       } );
       this.addChild( label );
       currentX += label.width + 10;
