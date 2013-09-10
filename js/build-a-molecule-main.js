@@ -60,6 +60,7 @@
       _.extend( window, namespace );
       
       // TODO: developer features as necessary
+      // var kit = sim.screens[0].model.collections[0].kits[0]
     }
     
     // if the flag is set on window, don't launch the sim
