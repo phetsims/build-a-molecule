@@ -55,9 +55,10 @@ define( function( require ) {
       fontWeight: 'bold',
       fontFamily: 'Arial, sans-serif',
       fontSize: 50,
-      fill: isTextWhite ? '#fff' : '#000'
+      fill: isTextWhite ? '#fff' : '#000',
+      boundsMethod: 'fast'
     } );
-    text.scale( Math.min( 0.65 * this.diameter / text.getBounds().width, 0.65 * this.diameter / text.getBounds().height ) );
+    text.scale( Math.min( 0.75 * this.diameter / text.getBounds().width, 0.75 * this.diameter / text.getBounds().height ) );
     text.centerX = 0;
     text.centerY = 0;
     this.addChild( text );
