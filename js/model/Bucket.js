@@ -70,7 +70,7 @@ define( function( require ) {
     // Instantly place the atom in the correct position, whether or not it is in the bucket
     placeAtom: function( atom ) {
       if ( this.containsParticle( atom ) ) {
-        this.removeParticle( atom );
+        this.removeParticle( atom, true );
       }
       this.addParticleFirstOpen( atom, false );
     }
