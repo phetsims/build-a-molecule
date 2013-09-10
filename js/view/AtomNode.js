@@ -12,10 +12,9 @@ define( function( require ) {
   'use strict';
 
   var namespace = require( 'BAM/namespace' );
-  var Vector2 = require( 'DOT/Vector2' );
-
+  var Constants = require( 'BAM/Constants' );
   var inherit = require( 'PHET_CORE/inherit' );
-
+  var Vector2 = require( 'DOT/Vector2' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Path = require( 'SCENERY/nodes/Path' );
   var Text = require( 'SCENERY/nodes/Text' );
@@ -24,10 +23,12 @@ define( function( require ) {
 
   var Shape = require( 'KITE/Shape' );
 
-  var AtomNode = namespace.AtomNode = function( element, options ) {
+  var AtomNode = namespace.AtomNode = function( atom, options ) {
     Node.call( this, _.extend( {
       cursor: 'pointer'
     }, options ) );
+    
+    var element = atom.element;
 
     this.color = new Color( element.color );
     this.radius = element.radius;
@@ -60,6 +61,17 @@ define( function( require ) {
     text.centerX = 0;
     text.centerY = 0;
     this.addChild( text );
+    
+    var that = this;
+    atom.positionProperty.link( function( modelPosition ) {
+      that.setTranslation( Constants.modelViewTransform.modelToViewPosition( modelPosition ) );
+    } );
+    atom.visibleProperty.link( function( visible ) {
+      that.visible = visible;
+    } );
+    atom.on( 'removedFromModel', function() {
+      that.detach(); // removes us from all parents
+    } );
   };
 
   return inherit( Node, AtomNode );

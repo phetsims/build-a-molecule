@@ -43,7 +43,7 @@ define( function( require ) {
       kitView.bottomLayer.addChild( bucketHole );
       
       _.each( bucket.atoms, function( atom ) {
-        var atomNode = new AtomNode( atom.element );
+        var atomNode = new AtomNode( atom );
         kitView.atomNodeMap[atom.id] = atomNode;
         kitView.atomLayer.addChild( atomNode );
         
