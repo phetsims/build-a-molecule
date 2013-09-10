@@ -12,13 +12,14 @@ define( function( require ) {
   var namespace = require( 'BAM/namespace' );
   var Constants = require( 'BAM/Constants' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var Node = require( 'SCENERY/nodes/Node' );
+  var Rectangle = require( 'DOT/Rectangle' );
+  var ScreenView = require( 'JOIST/ScreenView' );
   var KitCollectionNode = require( 'BAM/view/KitCollectionNode' );
 
   var Shape = require( 'KITE/Shape' );
 
   var BAMView = namespace.BAMView = function( collectionList ) {
-    Node.call( this, { renderer: 'svg' } );
+    ScreenView.call( this, { renderer: 'svg' } );
     
     this.collectionList = collectionList;
     
@@ -27,7 +28,7 @@ define( function( require ) {
     collectionList.on( 'addedCollection', this.addCollection.bind( this ) );
   };
 
-  return inherit( Node, BAMView, {
+  return inherit( ScreenView, BAMView, {
     addCollection: function( collection ) {
       var result = new KitCollectionNode( this.collectionList.currentCollectionProperty, collection, this );
       this.addChild( result );
@@ -36,8 +37,6 @@ define( function( require ) {
       return result;
     },
     
-    layout: function( width, height ) {
-      
-    }
+    layoutBounds: new Rectangle( 0, 0, Constants.stageSize.width, Constants.stageSize.height )
   } );
 } );
