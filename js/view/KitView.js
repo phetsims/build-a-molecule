@@ -126,13 +126,13 @@ define( function( require ) {
   KitView.prototype = {
     constructor: KitView, 
     
-    addMoleculeBondNodesfunction: function( molecule ) {
+    addMoleculeBondNodes: function( molecule ) {
       var moleculeBondContainerNode = new MoleculeBondContainerNode( this.kit, molecule, this.view );
       this.metadataLayer.addChild( moleculeBondContainerNode );
       this.bondMap[molecule.moleculeId] = moleculeBondContainerNode;
     },
 
-    removeMoleculeBondNodesfunction: function( molecule ) {
+    removeMoleculeBondNodes: function( molecule ) {
       var moleculeBondContainerNode = this.bondMap[molecule.moleculeId];
       moleculeBondContainerNode.destruct();
       this.metadataLayer.removeChild( moleculeBondContainerNode );
