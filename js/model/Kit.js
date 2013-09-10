@@ -122,13 +122,13 @@ define( function( require ) {
 
     isContainedInBucket: function( atom ) {
       return _.some( this.buckets, function( bucket ) {
-        bucket.containsParticle( atom );
+        return bucket.containsParticle( atom );
       } );
     },
 
     getBucketForElement: function( element ) {
       return _.find( this.buckets, function( bucket ) {
-        bucket.element.isSameElement( element );
+        return bucket.element.isSameElement( element );
       } );
     },
 
