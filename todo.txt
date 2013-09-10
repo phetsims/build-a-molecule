@@ -66,3 +66,21 @@ Handling hard-to-touch things:
           id
           cid
           atom ids
+
+
+Until we have dependencies.txt inserted, here is the 0.0.0-rc0 working snapshot:
+
+# build-a-molecule 0.0.0-rc0 Tue Sep 10 02:19:37 MDT 2013
+build-a-molecule d6698ad7c8f35b010e1c76bf30f36c309fbc3584
+assert 8b4caae26fcee2870e0664147e6131e634b928a1
+axon c8f4b283e8cea046775a0e6b5c3d2e3fcfa8abc7
+dot 5400906c580023b672a93787b2465e22ba783efe
+joist c552531e753f779dfdafdf70dd016222f0f26697
+kite 55da7a2ec875fec3b314aab63f9016d86bd725b6
+nitroglycerin dd991b442b12f4c5f5aa2c258a968c1a345b9753
+phet-core ac56848a65a56b78dcde58fc1d00869b925fd17a
+phetcommon 7f8a8eba555466739a8bd2f04f0caf4acc2e28b3
+scenery 3c29b4a3397184d8962a18246aace0542b1a5b29
+scenery-phet df85663086f767d2ebadb5bb57620b1383d40658
+sun ad1acb423a818ec71bf2d7bf67e91856e4fa3b05
+chipper d3c4b928f5886c84d102fe0f2ab2a3e2d73b7709
