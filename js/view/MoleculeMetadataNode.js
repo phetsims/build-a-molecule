@@ -71,7 +71,7 @@ define( function( require ) {
     this.addChild( buttonBreak );
     
     _.each( molecule.atoms, function( atom ) {
-      atom.positionProperty.link( this.updatePositionListener );
+      atom.positionProperty.link( selfNode.updatePositionListener );
     } );
 
     this.updatePosition(); // sanity check. should update (unfortunately) a number of times above
@@ -79,7 +79,7 @@ define( function( require ) {
     // hide 3D dialogs when the kit is hidden
     kit.visibleProperty.link( function( isVisible ) {
       if ( !isVisible ) {
-        throw new Error( 'dialog.hideDialogIfShown' );
+        // TODO: incomplete: throw new Error( 'dialog.hideDialogIfShown' );
       }
     } );
   };
@@ -88,9 +88,9 @@ define( function( require ) {
     destruct: function() {
       var selfNode = this;
       _.each( this.molecule.atoms, function( atom ) {
-        atom.unlink( selfNode.updatePositionListener );
+        atom.positionProperty.unlink( selfNode.updatePositionListener );
       } );
-      throw new Error( 'dialog.hideDialogIfShown' );
+      // TODO: incomplete: throw new Error( 'dialog.hideDialogIfShown' );
     },
 
     updatePosition: function() {
