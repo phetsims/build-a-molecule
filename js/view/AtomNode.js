@@ -49,7 +49,7 @@ define( function( require ) {
       fill: gradientFill
     } ) );
 
-    var isTextWhite = 0.30 * this.color.r + 0.59 * this.color.g + 0.11 * this.color.b < 125;
+    var isTextWhite = AtomNode.needsWhiteColor( this.color );
 
     var text = new Text( element.symbol, {
       fontWeight: 'bold',
@@ -73,6 +73,10 @@ define( function( require ) {
     atom.on( 'removedFromModel', function() {
       that.detach(); // removes us from all parents
     } );
+  };
+  
+  AtomNode.needsWhiteColor = function( color ) {
+    return 0.30 * color.r + 0.59 * color.g + 0.11 * color.b < 125;
   };
 
   return inherit( Node, AtomNode );

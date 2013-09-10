@@ -12,11 +12,13 @@ define( function( require ) {
   var assert = require( 'ASSERT/assert' )( 'build-a-molecule' );
   var namespace = require( 'BAM/namespace' );
   var Atom2 = require( 'BAM/model/Atom2' );
+  var AtomNode = require( 'BAM/view/AtomNode' );
   var inherit = require( 'PHET_CORE/inherit' );
   var SphereBucket = require( 'PHETCOMMON/model/SphereBucket' );
   var Vector2 = require( 'DOT/Vector2' );
   var Dimension2 = require( 'DOT/Dimension2' );
   var Strings = require( 'BAM/Strings' );
+  var Color = require( 'SCENERY/util/Color' );
   
   /**
    * Constructor.  The dimensions used are just numbers, i.e. they are not
@@ -36,7 +38,7 @@ define( function( require ) {
       sphereRadius: element.radius,
       baseColor: element.color,
       caption: Strings.getAtomName( element ),
-      captionColor: 'black'
+      captionColor: AtomNode.needsWhiteColor( new Color( element.color ) ) ? 'white' : 'black'
     } );
     
     this.element = element;
