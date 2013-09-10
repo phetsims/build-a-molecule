@@ -107,7 +107,7 @@ define( function( require ) {
      * @return Either a matching CompleteMolecule, or null if none is found
      */
     findMatchingCompleteMolecule: function( moleculeStructure ) {
-      var length = this.completeMolecules;
+      var length = this.completeMolecules.length;
       for ( var i = 0; i < length; i++ ) {
         var completeMolecule = this.completeMolecules[i];
         if ( moleculeStructure.isEquivalent( completeMolecule ) ) {
