@@ -26,7 +26,7 @@ define( function( require ) {
     this.atom = atom;
     this.connections = {}; // maps Direction ID => LewisDotAtom
     _.each( Direction.values, function( direction ) {
-      lewisDotAtom[direction.id] = null; // nothing in this direction
+      lewisDotAtom.connections[direction.id] = null; // nothing in this direction
     } );
   };
   
