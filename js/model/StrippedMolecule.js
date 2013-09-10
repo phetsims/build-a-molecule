@@ -114,7 +114,7 @@ define( function( require ) {
           // we found an isomorphism with firstAtom => otherAtom
           return true;
         }
-      };
+      }
       return false;
     },
 

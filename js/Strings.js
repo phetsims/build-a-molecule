@@ -8,18 +8,18 @@ define( function( require ) {
   namespace.Strings = Strings;
   
   var elementMap = {
-    'H': Strings[ 'atom_hydrogen' ],
-    'O': Strings[ 'atom_oxygen' ],
-    'C': Strings[ 'atom_carbon' ],
-    'N': Strings[ 'atom_nitrogen' ],
-    'F': Strings[ 'atom_fluorine' ],
-    'Cl': Strings[ 'atom_chlorine' ],
-    'B': Strings[ 'atom_boron' ],
-    'S': Strings[ 'atom_sulphur' ],
-    'Si': Strings[ 'atom_silicon' ],
-    'P': Strings[ 'atom_phosphorus' ],
-    'I': Strings[ 'atom_iodine' ],
-    'Br': Strings[ 'atom_bromine' ]
+    'H': Strings.atom_hydrogen,
+    'O': Strings.atom_oxygen,
+    'C': Strings.atom_carbon,
+    'N': Strings.atom_nitrogen,
+    'F': Strings.atom_fluorine,
+    'Cl': Strings.atom_chlorine,
+    'B': Strings.atom_boron,
+    'S': Strings.atom_sulphur,
+    'Si': Strings.atom_silicon,
+    'P': Strings.atom_phosphorus,
+    'I': Strings.atom_iodine,
+    'Br': Strings.atom_bromine
   };
   
   Strings.getAtomName = function getAtomName( element ) {

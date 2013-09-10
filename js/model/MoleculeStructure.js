@@ -623,7 +623,7 @@ define( function( require ) {
    * @return Whether a successful matching permutation was found
    */
   MoleculeStructure.checkEquivalencyMatrix = function( equivalences, myIndex, otherRemainingIndices, size ) {
-    var size = Math.sqrt( equivalences.length ); // it's square, so this technicall works
+    // var size = Math.sqrt( equivalences.length ); // it's square, so this technicall works
     // TODO: performance: this should leak memory in un-fun ways, and performance complexity should be sped up
     
     // should be inefficient, but not too bad (computational complexity is not optimal)

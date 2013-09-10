@@ -213,7 +213,7 @@ define( function( require ) {
             }
           }
         }
-      };
+      }
 
       // everything worked
       return success;
