@@ -480,7 +480,7 @@ define( function( require ) {
       var structure = this.getMolecule( a );
       if ( structure.atoms.length > 2 ) {
         _.each( structure.bonds, function( bond ) {
-          if ( bond.a.hasSameElement( bond.b ) && bond.a.symbol.equals( 'H' ) ) {
+          if ( bond.a.hasSameElement( bond.b ) && bond.a.symbol === 'H' ) {
             window.console && console.log && console.log( 'WARNING: Hydrogen bonded to another hydrogen in a molecule which is not diatomic hydrogen' );
           }
         } );
