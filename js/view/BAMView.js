@@ -18,7 +18,7 @@ define( function( require ) {
   var Shape = require( 'KITE/Shape' );
 
   var BAMView = namespace.BAMView = function( collectionList ) {
-    Node.call( this, {} );
+    Node.call( this, { renderer: 'svg' } );
     
     this.collectionList = collectionList;
     
