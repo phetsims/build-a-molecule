@@ -107,12 +107,14 @@ define( function( require ) {
       var myVisited = [];
       var otherVisited = [];
       var firstAtom = this.stripped.atoms[0]; // grab the 1st atom
-      _.each( other.stripped.atoms, function( otherAtom ) {
+      var length = other.stripped.atoms.length;
+      for ( var i = 0; i < length; i++ ) {
+        var otherAtom = other.stripped.atoms[i];
         if ( that.checkEquivalency( other, myVisited, otherVisited, firstAtom, otherAtom, false ) ) {
           // we found an isomorphism with firstAtom => otherAtom
           return true;
         }
-      } );
+      };
       return false;
     },
 

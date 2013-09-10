@@ -514,7 +514,7 @@ define( function( require ) {
         _.each( kit.atoms, function( otherAtom ) {
           // disallow loops in an already-connected molecule
           if ( kit.getMolecule( otherAtom ) === molecule ) {
-            return;
+            return; // continue, in the inner loop
           }
 
           // don't bond to something in a bucket!
@@ -522,19 +522,19 @@ define( function( require ) {
 
             // sanity check, and run it through our molecule structure model to see if it would be allowable
             if ( otherAtom === ourAtom || !kit.canBond( ourAtom, otherAtom ) ) {
-              return;
+              return; // continue, in the inner loop
             }
             
             _.each( kit.lewisDotModel.getOpenDirections( otherAtom ), function( otherDirection ) {
               var direction = otherDirection.opposite;
               if ( !_.contains( kit.lewisDotModel.getOpenDirections( ourAtom ), direction ) ) {
                 // the spot on otherAtom was open, but the corresponding spot on our main atom was not
-                return;
+                return; // continue, in the inner loop
               }
 
               // check the lewis dot model to make sure we wouldn't have two "overlapping" atoms that aren't both hydrogen
               if ( !kit.lewisDotModel.willAllowBond( ourAtom, direction, otherAtom ) ) {
-                return;
+                return; // continue, in the inner loop
               }
 
               var location = new BondingOption( otherAtom, otherDirection, ourAtom );

@@ -198,7 +198,8 @@ define( function( require ) {
       var success = true;
 
       // check all directions so we can explore all other atoms that need to be mapped
-      _.each( Direction.values, function( direction ) {
+      for ( var i = 0; i < 4; i++ ) {
+        var direction = Direction.values[i];
         if ( dotAtom.hasConnection( direction ) ) {
           var otherDot = dotAtom.getLewisDotAtom( direction );
 
@@ -212,7 +213,7 @@ define( function( require ) {
             }
           }
         }
-      } );
+      };
 
       // everything worked
       return success;
