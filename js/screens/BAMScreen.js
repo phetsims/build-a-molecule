@@ -25,6 +25,7 @@ define( function( require ) {
   var CollectionBox = require( 'BAM/model/CollectionBox' );
   var ScreenView = require( 'JOIST/ScreenView' );
   var PropertySet = require( 'AXON/PropertySet' );
+  var BAMView = require( 'BAM/view/BAMView' );
   
   var BAMScreen = namespace.BAMScreen = function BAMScreen( name, icon, createInitialKitCollection, layoutBounds, createKitCollection ) {
     Screen.call( this, name, icon, function() {
@@ -38,7 +39,7 @@ define( function( require ) {
       };
       return model;
     }, function( model ) {
-      return new ScreenView();
+      return new BAMView( model );
     }, Constants.canvasBackgroundColor );
   };
   
@@ -155,7 +156,9 @@ define( function( require ) {
     return collection;
   };
   
-  inherit( Screen, BAMScreen );
+  inherit( Screen, BAMScreen, {
+    
+  } );
   
   // from array of CompleteMolecule, returns {CompleteMolecule}
   BAMScreen.pickRandomMoleculeNotIn = function( molecules ) {

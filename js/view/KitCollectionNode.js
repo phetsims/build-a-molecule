@@ -38,10 +38,10 @@ define( function( require ) {
     
     _.each( collection.kits, function( kit ) {
       var kitView = new KitView( kit, view );
-      bottomLayer.addChild( kitView.getBottomLayer() );
-      atomLayer.addChild( kitView.getAtomLayer() );
-      metadataLayer.addChild( kitView.getMetadataLayer() );
-      topLayer.addChild( kitView.getTopLayer() );
+      bottomLayer.addChild( kitView.bottomLayer );
+      atomLayer.addChild( kitView.atomLayer );
+      metadataLayer.addChild( kitView.metadataLayer );
+      topLayer.addChild( kitView.topLayer );
     } );
     
     // set visibility based on whether our collection is the current one

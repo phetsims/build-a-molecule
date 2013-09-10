@@ -9,6 +9,7 @@ define( function( require ) {
   'use strict';
   
   var Strings = require( 'BAM/Strings' );
+  var inherit = require( 'PHET_CORE/inherit' );
   var Dimension2 = require( 'DOT/Dimension2' );
   var namespace = require( 'BAM/namespace' );
   var Constants = require( 'BAM/Constants' );
@@ -51,6 +52,8 @@ define( function( require ) {
       return BAMScreen.generateKitCollection( true, 4, clock, bounds );
     } );
   };
+  
+  inherit( BAMScreen, CollectMultipleScreen );
   
   return CollectMultipleScreen;
 } );
