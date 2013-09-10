@@ -121,11 +121,12 @@ define( function( require ) {
      */
     getBondDirection: function( a, b ) {
       var dotA = this.getLewisDotAtom( a );
-      _.each( Direction.values, function( direction ) {
+      for ( var i = 0; i < 4; i++ ) {
+        var direction = Direction.values[i];
         if ( dotA.hasConnection( direction ) && dotA.getLewisDotAtom( direction ).atom === b ) {
           return direction;
         }
-      } );
+      }
       throw new Error( "Bond not found" );
     },
 
