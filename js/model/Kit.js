@@ -502,7 +502,7 @@ define( function( require ) {
       var bestDistanceFromIdealLocation = Number.POSITIVE_INFINITY;
 
       // for each atom in our molecule, we try to see if it can bond to other atoms
-      _.each( this.molecule.atoms, function( ourAtom ) {
+      _.each( molecule.atoms, function( ourAtom ) {
         
         // all other atoms
         _.each( kit.atoms, function( otherAtom ) {
