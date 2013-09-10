@@ -27,6 +27,8 @@ define( function( require ) {
   
   inherit( PropertySet, KitCollection, {
     addKit: function( kit ) {
+      var kitCollection = this;
+      
       if ( this.currentKit ) {
         kit.hide();
       } else {
@@ -51,9 +53,9 @@ define( function( require ) {
           var molecule = kit.getMolecule( atom );
 
           // check to see if we are trying to drop it in a collection box.
-          var numBoxes = this.collectionBoxes.length;
+          var numBoxes = kitCollection.collectionBoxes.length;
           for ( var i = 0; i < numBoxes; i++ ) {
-            var box = this.collectionBoxes[i];
+            var box = kitCollection.collectionBoxes[i];
             
             // permissive, so that if the box bounds and molecule bounds intersect, we call it a 'hit'
             if ( box.getDropBounds().intersects( molecule.getPositionBounds() ) ) {
@@ -78,7 +80,7 @@ define( function( require ) {
       } );
       
       kit.on( 'addedMolecule', function( molecule ) {
-        _.each( this.collectionBoxes, function( box ) {
+        _.each( kitCollection.collectionBoxes, function( box ) {
           if ( box.willAllowMoleculeDrop( molecule ) ) {
             box.trigger( 'acceptedMoleculeCreation', molecule );
           }
