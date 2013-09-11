@@ -13,10 +13,18 @@ define( function() {
       'green-left.png',
       'green-right.png',
       'green-middle.png',
+      
+      // png files (for non-IE cursors)
       'scissors.png',
       'scissors-closed.png',
       'scissors-up.png',
-      'scissors-closed-up.png'
+      'scissors-closed-up.png',
+      
+      // cursor files (for Internet Explorer)
+      'scissors.cur',
+      'scissors-closed.cur',
+      'scissors-up.cur',
+      'scissors-closed-up.cur'
     ]
   };
 } );
