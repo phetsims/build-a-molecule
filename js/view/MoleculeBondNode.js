@@ -17,6 +17,7 @@ define( function( require ) {
   var Node = require( 'SCENERY/nodes/Node' );
   var ButtonListener = require( 'SCENERY/input/ButtonListener' );
   var Circle = require( 'SCENERY/nodes/Circle' );
+  var platform = require( 'PHET_CORE/platform' );
   
   var bondRadius = 5; // "Radius" of the bond target that will break the bond
   
@@ -32,15 +33,33 @@ define( function( require ) {
     var bondDirection = kit.getBondDirection( a, b );
     var isHorizontal = bondDirection.id === 'west' || bondDirection.id === 'east';
     
-    var scissorsOpen = Images.getImage( isHorizontal ? Constants.imageScissorsUpIcon : Constants.imageScissorsIcon ); // 23x20
-    var scissorsClosed = Images.getImage( isHorizontal ? Constants.imageScissorsClosedUpIcon : Constants.imageScissorsClosedIcon ); //26x15
+    var openFile = 'scissors';
+    var closedFile = 'scissors-closed';
+    if ( isHorizontal ) {
+      openFile += '-up';
+      closedFile += '-up';
+    }
+    if ( platform.ie ) {
+      openFile += '.cur';
+      closedFile += '.cur';
+    } else {
+      openFile += '.png';
+      closedFile += '.png';
+    }
+    
+    var scissorsOpen = Images.getImage( openFile ); // 23x20 or 20x23
+    var scissorsClosed = Images.getImage( closedFile ); //26x15 or 15x26
     
     // offsets should center this
-    var openCursor = 'url(' + scissorsOpen.src + ') ' + ( isHorizontal ? '10 11' : '11 10' ) + ', auto';
-    var closedCursor = 'url(' + scissorsClosed.src + ') ' + ( isHorizontal ? '7 13' : '13 7' ) + ', auto';
-  
-  // TODO: rotation by -pi/2 if isHorizontal
-
+    var openCursor, closedCursor;
+    if ( platform.ie ) {
+      openCursor = 'url(' + scissorsOpen.src + '), auto';
+      closedCursor = 'url(' + scissorsClosed.src + '), auto';
+    } else {
+      openCursor = 'url(' + scissorsOpen.src + ') ' + ( isHorizontal ? '10 11' : '11 10' ) + ', auto';
+      closedCursor = 'url(' + scissorsClosed.src + ') ' + ( isHorizontal ? '7 13' : '13 7' ) + ', auto';
+    }
+    
     // hit target
     var target = new Circle( bondRadius, {
       // no fill or stroke
