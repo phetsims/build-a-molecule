@@ -38,7 +38,8 @@ define( function( require ) {
       sphereRadius: element.radius,
       baseColor: element.color,
       caption: Strings.getAtomName( element ),
-      captionColor: AtomNode.needsWhiteColor( new Color( element.color ) ) ? 'white' : 'black'
+      captionColor: AtomNode.needsWhiteColor( new Color( element.color ) ) ? 'white' : 'black',
+      verticalParticleOffset: -30 + element.radius / 2
     } );
     
     this.element = element;

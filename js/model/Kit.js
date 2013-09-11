@@ -14,6 +14,7 @@ define( function( require ) {
   var namespace = require( 'BAM/namespace' );
   var PropertySet = require( 'AXON/PropertySet' );
   var Vector2 = require( 'DOT/Vector2' );
+  var Bounds2 = require( 'DOT/Bounds2' );
   var Rectangle = require( 'DOT/Rectangle' );
   var Molecule = require( 'BAM/model/Molecule' );
   var MoleculeStructure = require( 'BAM/model/MoleculeStructure' );
@@ -90,10 +91,8 @@ define( function( require ) {
     },
 
     layoutBuckets: function( buckets ) {
-      var kitY = this.availableKitBounds.centerY - 20;
-      var kitXCenter = this.availableKitBounds.centerX;
-
       var usedWidth = 0;
+      var bucketBounds = Bounds2.NOTHING.copy(); // considered mutable, used to calculate the center bounds of a bucket AND its atoms
 
       // lays out all of the buckets from the left to right
       for ( var i = 0; i < buckets.length; i++ ) {
@@ -101,9 +100,17 @@ define( function( require ) {
         if ( i !== 0 ) {
             usedWidth += Kit.bucketPadding;
         }
-        bucket.position = new Vector2( usedWidth, kitY );
+        
+        // include both the bucket's shape and its atoms in our bounds, so we can properly center the group
+        bucketBounds.includeBounds( bucket.containerShape.bounds );
+        _.each( bucket.atoms, function( atom ) { bucketBounds.includeBounds( new Bounds2( atom.position.x - atom.radius, atom.position.y - atom.radius,
+                                                                                          atom.position.x + atom.radius, atom.position.y + atom.radius ) ); } );
+        bucket.position = new Vector2( usedWidth, 0 );
         usedWidth += bucket.width;
       }
+      
+      var kitXCenter = this.availableKitBounds.centerX;
+      var kitY = this.availableKitBounds.centerY - bucketBounds.centerY;
 
       // centers the buckets horizontally within the kit
       _.each( buckets, function( bucket ) {
