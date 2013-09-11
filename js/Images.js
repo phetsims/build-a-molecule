@@ -14,7 +14,9 @@ define( function() {
       'green-right.png',
       'green-middle.png',
       'scissors.png',
-      'scissors-closed.png'
+      'scissors-closed.png',
+      'scissors-up.png',
+      'scissors-closed-up.png'
     ]
   };
 } );

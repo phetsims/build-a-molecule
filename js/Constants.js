@@ -64,12 +64,14 @@ define( function( require ) {
     * Images
     *----------------------------------------------------------------------------*/
     
-    imageSplitIcon:          'split-blue.png',
-    imageGreenLeft:          'green-left.png',
-    imageGreenRight:         'green-right.png',
-    imageGreenMiddle:        'green-middle.png',
-    imageScissorsIcon:       'scissors.png',
-    imageScissorsClosedIcon: 'scissors-closed.png',
+    imageSplitIcon:            'split-blue.png',
+    imageGreenLeft:            'green-left.png',
+    imageGreenRight:           'green-right.png',
+    imageGreenMiddle:          'green-middle.png',
+    imageScissorsIcon:         'scissors.png',
+    imageScissorsClosedIcon:   'scissors-closed.png',
+    imageScissorsUpIcon:       'scissors-up.png',
+    imageScissorsClosedUpIcon: 'scissors-closed-up.png',
     
     /*---------------------------------------------------------------------------*
     * Misc

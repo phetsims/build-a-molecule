@@ -32,12 +32,12 @@ define( function( require ) {
     var bondDirection = kit.getBondDirection( a, b );
     var isHorizontal = bondDirection.id === 'west' || bondDirection.id === 'east';
     
-    var scissorsOpen = Images.getImage( Constants.imageScissorsIcon ); // 23x20
-    var scissorsClosed = Images.getImage( Constants.imageScissorsClosedIcon ); //26x15
+    var scissorsOpen = Images.getImage( isHorizontal ? Constants.imageScissorsUpIcon : Constants.imageScissorsIcon ); // 23x20
+    var scissorsClosed = Images.getImage( isHorizontal ? Constants.imageScissorsClosedUpIcon : Constants.imageScissorsClosedIcon ); //26x15
     
     // offsets should center this
-    var openCursor = 'url(' + scissorsOpen.src + ') 11 10, auto';
-    var closedCursor = 'url(' + scissorsClosed.src + ') 13 7, auto';
+    var openCursor = 'url(' + scissorsOpen.src + ') ' + ( isHorizontal ? '10 11' : '11 10' ) + ', auto';
+    var closedCursor = 'url(' + scissorsClosed.src + ') ' + ( isHorizontal ? '7 13' : '13 7' ) + ', auto';
   
   // TODO: rotation by -pi/2 if isHorizontal
 
