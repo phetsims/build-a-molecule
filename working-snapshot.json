@@ -1,0 +1,63 @@
+#   Thu Sep 19 00:32:07 MDT 2013
+{
+  "build-a-molecule": {
+    "sha": "707678bcd88cfac3108e93967b573228ddfb819e",
+    "branch": "master"
+  },
+  "sherpa": {
+    "sha": "65434405d7439fef68d8273d3f0e538b4295a9aa",
+    "branch": "master"
+  },
+  "chipper": {
+    "sha": "ba6b9f8016fe1d84f112389d63bbbcbb35c16090",
+    "branch": "master"
+  },
+  "assert": {
+    "sha": "243a1befeb048c0a5354812fa0ee24b5a62df742",
+    "branch": "master"
+  },
+  "axon": {
+    "sha": "579865077d9cf01445f6267904f963b7566dd126",
+    "branch": "master"
+  },
+  "dot": {
+    "sha": "4851df8e3bc26411736fb9730f1189d2014bec35",
+    "branch": "master"
+  },
+  "joist": {
+    "sha": "00a5de050444676e49bb6987a6cd5bbd51a95e36",
+    "branch": "master"
+  },
+  "kite": {
+    "sha": "59bdb613629a04846d4986bd4da498d7e4435b98",
+    "branch": "master"
+  },
+  "nitroglycerin": {
+    "sha": "dd991b442b12f4c5f5aa2c258a968c1a345b9753",
+    "branch": "master"
+  },
+  "phet-core": {
+    "sha": "da8852d1e86f3dc857079daec8283769b9ffe678",
+    "branch": "master"
+  },
+  "phetcommon": {
+    "sha": "2c303d8bc121f912404c226302d413839abd3170",
+    "branch": "master"
+  },
+  "scenery": {
+    "sha": "40b1d49a2b9788d3040cbd14e9ca654c24d68914",
+    "branch": "master"
+  },
+  "scenery-phet": {
+    "sha": "9a076b0ff391b480c544396436d1356596a0808b",
+    "branch": "master"
+  },
+  "sun": {
+    "sha": "3114c63e494030bf2c6ecd05f4c5a44bf8b7e8e4",
+    "branch": "master"
+  },
+  "vibe": {
+    "sha": "a2eccc10c5583f91a0be7ece279b4060d294aa03",
+    "branch": "master"
+  },
+}
