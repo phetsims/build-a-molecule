@@ -38,6 +38,7 @@
     'BAM/view/MoleculeCollectingView',
     'BAM/control/KitPanel',
     'BAM/control/CollectionPanel',
+    'BAM/control/AllFilledDialogNode',
     
     // data
     'BAM/model/data/collectionMoleculesData',
@@ -64,6 +65,8 @@
     if ( window.phetcommon.getQueryParameter( 'dev' ) ) {
       // put our development shortcuts for types and data into the global namespace
       _.extend( window, namespace );
+      
+      window.namespace = namespace;
       
       // TODO: developer features as necessary
       // var kit = sim.screens[0].model.collections[0].kits[0]

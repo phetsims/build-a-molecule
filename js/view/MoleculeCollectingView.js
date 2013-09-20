@@ -15,6 +15,7 @@ define( function( require ) {
   var Rectangle = require( 'DOT/Rectangle' );
   var BAMView = require( 'BAM/view/BAMView' );
   var CollectionPanel = require( 'BAM/control/CollectionPanel' );
+  var AllFilledDialogNode = require( 'BAM/control/AllFilledDialogNode' );
 
   var Shape = require( 'KITE/Shape' );
 
@@ -82,6 +83,7 @@ define( function( require ) {
 
   return inherit( BAMView, MoleculeCollectingView, {
     addCollection: function( collection ) {
+      var view = this;
       var kitCollectionNode = BAMView.prototype.addCollection.call( this, collection );
       
       var hasShownOnce = false;
@@ -89,19 +91,20 @@ define( function( require ) {
       
       // show dialog the 1st time all collection boxes are filled
       collection.allCollectionBoxesFilledProperty.link( function() {
-        console.log( 'TODO: AllFilledDialogNode handling in MoleculeCollectingView' );
-        // if ( collection.allCollectionBoxesFilled ) {
-        //   if ( !hasShownOnce ) {
-        //     allFilledDialogNode = new AllFilledDialogNode( collectionList.getAvailablePlayAreaBounds(), regenerateCallback );
-        //     hasShownOnce = true;
-        //   }
-        //   kitCollectionNode.addChild( allFilledDialogNode );
-        // }
-        // else {
-        //   if ( allFilledDialogNode !== null ) {
-        //     kitCollectionNode.removeChild( allFilledDialogNode );
-        //   }
-        // }
+        if ( collection.allCollectionBoxesFilled ) {
+          if ( !hasShownOnce ) {
+            allFilledDialogNode = new AllFilledDialogNode( view.collectionList.availablePlayAreaBounds, view.regenerateCallback );
+            hasShownOnce = true;
+          }
+          if ( !kitCollectionNode.hasParent() ) {
+            kitCollectionNode.addChild( allFilledDialogNode );
+          }
+        }
+        else {
+          if ( allFilledDialogNode !== null ) {
+            allFilledDialogNode.detach();
+          }
+        }
       } );
       
       return kitCollectionNode;

@@ -23,6 +23,7 @@ define( function( require ) {
   var Element = require( 'NITROGLYCERIN/Element' );
   var ScreenView = require( 'JOIST/ScreenView' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
+  var MoleculeCollectingView = require( 'BAM/view/MoleculeCollectingView' );
   
   var MakeMoleculeScreen = namespace.MakeMoleculeScreen = function MakeMoleculeScreen( collectionAreaWidth ) {
     // icon: new Image( Images.getImage( 'makeMolecule-thumbnail.png' ) ),
@@ -49,6 +50,12 @@ define( function( require ) {
       return kitCollection;
     }, new LayoutBounds( false, collectionAreaWidth ), function( bounds, clock ) {
       return BAMScreen.generateKitCollection( false, 5, clock, bounds );
+    }, function( model ) {
+      // create the view
+      return new MoleculeCollectingView( model, true, function() {
+        // next collection callback
+        model.addCollection( BAMScreen.generateKitCollection( false, 5, model.clock, model.layoutBounds ) );
+      } );
     } );
   };
   

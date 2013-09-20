@@ -25,12 +25,11 @@ define( function( require ) {
   var CollectionBox = require( 'BAM/model/CollectionBox' );
   var ScreenView = require( 'JOIST/ScreenView' );
   var PropertySet = require( 'AXON/PropertySet' );
-  var BAMView = require( 'BAM/view/BAMView' );
   
-  var BAMScreen = namespace.BAMScreen = function BAMScreen( name, icon, createInitialKitCollection, layoutBounds, createKitCollection ) {
+  var BAMScreen = namespace.BAMScreen = function BAMScreen( name, icon, createInitialKitCollection, layoutBounds, createKitCollection, createView ) {
     Screen.call( this, name, icon, function() {
       var clock = new PropertySet( {} );
-      var model = new CollectionList( createInitialKitCollection( layoutBounds, clock ), layoutBounds );
+      var model = new CollectionList( createInitialKitCollection( layoutBounds, clock ), layoutBounds, clock );
       model.step = function step( timeElapsed ) {
         clock.trigger( 'tick', timeElapsed );
       };
@@ -38,9 +37,7 @@ define( function( require ) {
         return createKitCollection( layoutBounds, clock );
       };
       return model;
-    }, function( model ) {
-      return new BAMView( model );
-    }, Constants.canvasBackgroundColor );
+    }, createView, Constants.canvasBackgroundColor );
   };
   
   /**

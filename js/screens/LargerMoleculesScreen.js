@@ -23,6 +23,7 @@ define( function( require ) {
   var Element = require( 'NITROGLYCERIN/Element' );
   var ScreenView = require( 'JOIST/ScreenView' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
+  var BAMView = require( 'BAM/view/BAMView' );
   
   var LargerMoleculesScreen = namespace.LargerMoleculesScreen = function LargerMoleculesScreen() {
     // icon: new Image( Images.getImage( 'largerMolecules-thumbnail.png' ) ),
@@ -92,6 +93,9 @@ define( function( require ) {
       return kitCollection;
     }, new LayoutBounds( true, 0 ), function( bounds, clock ) {
       throw new Error( 'There are no more kit collections in the 3rd tab' );
+    }, function( model ) {
+      // create the view
+      return new BAMView( model );
     } );
   };
   

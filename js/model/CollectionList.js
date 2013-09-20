@@ -22,12 +22,13 @@ define( function( require ) {
    * addedCollection: function( kitCollection )
    * removedCollection: function( kitCollection )
    */
-  var CollectionList = namespace.CollectionList = function CollectionList( firstCollection, layoutBounds ) {
+  var CollectionList = namespace.CollectionList = function CollectionList( firstCollection, layoutBounds, clock ) {
     PropertySet.call( this, {
       currentCollection: firstCollection
     } );
     
     this.layoutBounds = layoutBounds;
+    this.clock = clock;
     this.collections = [];
     this.currentIndex = 0;
     this.addCollection( firstCollection );
