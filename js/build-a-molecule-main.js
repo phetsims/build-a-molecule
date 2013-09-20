@@ -35,7 +35,9 @@
     'BAM/view/KitView',
     'BAM/view/KitCollectionNode',
     'BAM/view/BAMView',
+    'BAM/view/MoleculeCollectingView',
     'BAM/control/KitPanel',
+    'BAM/control/CollectionPanel',
     
     // data
     'BAM/model/data/collectionMoleculesData',
