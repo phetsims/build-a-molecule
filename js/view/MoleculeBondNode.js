@@ -57,8 +57,8 @@ define( function( require ) {
       openCursor = 'url(' + scissorsOpen.src + '), ' + backup;
       closedCursor = 'url(' + scissorsClosed.src + '), ' + backup;
     } else {
-      openCursor = 'url(' + scissorsOpen.src + ') ' + ( isHorizontal ? '10 11' : '11 10' ) + ', ' + backup;
-      closedCursor = 'url(' + scissorsClosed.src + ') ' + ( isHorizontal ? '7 13' : '13 7' ) + ', ' + backup;
+      openCursor = 'url(' + scissorsOpen.src + ') ' + ( isHorizontal ? '10 11' : '11 10' ) + ', auto';
+      closedCursor = 'url(' + scissorsClosed.src + ') ' + ( isHorizontal ? '7 13' : '13 7' ) + ', auto';
     }
     
     // hit target
