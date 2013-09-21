@@ -103,14 +103,18 @@ define( function( require ) {
     *----------------------------------------------------------------------------*/
     
     addHeaderNode: function( headerNode ) {
-      console.log( 'make actual layout' );
-      headerNode.top = this.children[this.children.length-1].bottom - ( this.children.length > 1 ? 3 : 0 ); // more compact padding in general below the box node
+      var selfNode = this;
+      
+      // headerNode.top = this.children[this.children.length-1].bottom - ( this.children.length > 1 ? 3 : 0 ); // more compact padding in general below the box node
       this.insertChild( this.headerCount++, headerNode );
       
-      // center everything again (just in case something is wider)
       var centerX = this.width / 2;
+      var y = 0;
       _.each( this.children, function( child ) {
         child.centerX = centerX;
+        child.top = y;
+        y += child.height + 5 + ( child === selfNode.boxNode ? 3 : -3 );
+        console.log( child.height + ', to ' + child.top + ' with ' + child.y );
       } );
     },
 
