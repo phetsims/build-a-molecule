@@ -43,6 +43,7 @@
     'BAM/control/CollectionBoxNode',
     'BAM/control/SingleCollectionBoxNode',
     'BAM/control/MultipleCollectionBoxNode',
+    'BAM/control/CollectionAreaNode',
     
     // data
     'BAM/model/data/collectionMoleculesData',
