@@ -78,7 +78,8 @@ define( function( require ) {
       // var node = box.moleculeType.createPseudo3DNode();
       // node.visible = false;
       // nodes.push( node );
-      // moleculeLayer.addChild( node );
+      // this.moleculeLayer.addChild( node );
+      this.moleculeLayer.addChild( new Rectangle( 0, 0, 10, 10, { fill: 'red' } ) );
     }
 
     // position them like we would with the others
