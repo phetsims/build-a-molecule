@@ -33,6 +33,7 @@ define( function( require ) {
     this.moleculeNodes = [];
     this.moleculeNodeMap = {}; // molecule ID => node, stores nodes for each moecule
     this.blinkTimeout = null; // NOT zero, since that could be a valid timeout ID for window.setTimeout!
+    this.boxNode = new Node();
     
     this.blackBox = new Rectangle( 0, 0, 160, 50, {
       fill: Constants.moleculeCollectionBoxBackground
@@ -56,10 +57,10 @@ define( function( require ) {
       this.button3dWidth = 0;
     }
     
-    this.addChild( this.blackBox );
+    this.boxNode.addChild( this.blackBox );
     
     this.moleculeLayer = new Node();
-    this.addChild( this.moleculeLayer );
+    this.boxNode.addChild( this.moleculeLayer );
     
     this.updateBoxGraphics();
     
@@ -85,7 +86,7 @@ define( function( require ) {
 
     this.centerMoleculesInBlackBox();
     
-    this.boxNode = new Node();
+    this.boxNode.y = 3;
     this.addChild( this.boxNode );
   };
 
@@ -103,7 +104,14 @@ define( function( require ) {
     
     addHeaderNode: function( headerNode ) {
       console.log( 'make actual layout' );
+      headerNode.top = this.children[this.children.length-1].bottom - ( this.children.length > 1 ? 3 : 0 ); // more compact padding in general below the box node
       this.insertChild( this.headerCount++, headerNode );
+      
+      // center everything again (just in case something is wider)
+      var centerX = this.width / 2;
+      _.each( this.children, function( child ) {
+        child.centerX = centerX;
+      } );
     },
 
     addMolecule: function( molecule ) {
