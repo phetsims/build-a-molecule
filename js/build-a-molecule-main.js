@@ -36,9 +36,11 @@
     'BAM/view/KitCollectionNode',
     'BAM/view/BAMView',
     'BAM/view/MoleculeCollectingView',
+    'BAM/view/view3d/ShowMolecule3DButtonNode',
     'BAM/control/KitPanel',
     'BAM/control/CollectionPanel',
     'BAM/control/AllFilledDialogNode',
+    'BAM/control/CollectionBoxNode',
     
     // data
     'BAM/model/data/collectionMoleculesData',
