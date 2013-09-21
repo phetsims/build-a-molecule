@@ -16,7 +16,7 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
   
-  var CollectionPanel = namespace.CollectionPanel = function( kitCollectionModel, availableKitBounds ) {
+  var CollectionPanel = namespace.CollectionPanel = function CollectionPanel( kitCollectionModel, availableKitBounds ) {
     Node.call( this, {} );
     
   };

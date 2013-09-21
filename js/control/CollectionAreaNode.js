@@ -21,7 +21,7 @@ define( function( require ) {
   var SingleCollectionBoxNode = require( 'BAM/control/SingleCollectionBoxNode' );
   var MultipleCollectionBoxNode = require( 'BAM/control/MultipleCollectionBoxNode' );
   
-  var CollectionAreaNode = namespace.CollectionAreaNode = function( collection, isSingleCollectionMode, toModelBounds ) {
+  var CollectionAreaNode = namespace.CollectionAreaNode = function CollectionAreaNode( collection, isSingleCollectionMode, toModelBounds ) {
     Node.call( this, {} );
     var selfNode = this;
     

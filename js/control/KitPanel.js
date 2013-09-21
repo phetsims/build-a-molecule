@@ -26,7 +26,7 @@ define( function( require ) {
   
   var kitArrowYOffset = 5; // vertical offset of the kit arrows from the top of the kit
 
-  var KitPanel = namespace.KitPanel = function( kitCollectionModel, availableKitBounds ) {
+  var KitPanel = namespace.KitPanel = function KitPanel( kitCollectionModel, availableKitBounds ) {
     Node.call( this, {} );
     
     assert && assert( Constants.modelViewTransform.getMatrix().m11() < 0 ); // we assume this and correct for the inversed Y

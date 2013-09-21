@@ -19,7 +19,7 @@ define( function( require ) {
 
   var Shape = require( 'KITE/Shape' );
 
-  var MoleculeCollectingView = namespace.MoleculeCollectingView = function( collectionList, isSingleCollectionMode, regenerateCallback ) {
+  var MoleculeCollectingView = namespace.MoleculeCollectingView = function MoleculeCollectingView( collectionList, isSingleCollectionMode, regenerateCallback ) {
     var view = this;
     
     BAMView.call( this, collectionList );

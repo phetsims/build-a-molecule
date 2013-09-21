@@ -23,7 +23,7 @@ define( function( require ) {
 
   var Shape = require( 'KITE/Shape' );
 
-  var AtomNode = namespace.AtomNode = function( atom, options ) {
+  var AtomNode = namespace.AtomNode = function AtomNode( atom, options ) {
     Node.call( this, _.extend( {
       cursor: 'pointer'
     }, options ) );

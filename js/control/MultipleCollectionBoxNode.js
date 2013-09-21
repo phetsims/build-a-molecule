@@ -24,7 +24,7 @@ define( function( require ) {
   var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   
-  var MultipleCollectionBoxNode = namespace.MultipleCollectionBoxNode = function( box, toModelBounds ) {
+  var MultipleCollectionBoxNode = namespace.MultipleCollectionBoxNode = function MultipleCollectionBoxNode( box, toModelBounds ) {
     CollectionBoxNode.call( this, box, toModelBounds );
     
     this.addHeaderNode( new HTMLText( StringUtils.format( Strings.collection_multiple_goalFormat,

@@ -16,7 +16,7 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
   
-  var ShowMolecule3DButtonNode = namespace.ShowMolecule3DButtonNode = function() {
+  var ShowMolecule3DButtonNode = namespace.ShowMolecule3DButtonNode = function ShowMolecule3DButtonNode() {
     Node.call( this, {} );
   };
 

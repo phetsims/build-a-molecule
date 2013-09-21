@@ -22,7 +22,7 @@ define( function( require ) {
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var TextButton = require( 'SUN/TextButton' );
   
-  var AllFilledDialogNode = namespace.AllFilledDialogNode = function( availablePlayAreaBounds, regenerateCallback ) {
+  var AllFilledDialogNode = namespace.AllFilledDialogNode = function AllFilledDialogNode( availablePlayAreaBounds, regenerateCallback ) {
     Node.call( this, {} );
     var dialog = this;
     

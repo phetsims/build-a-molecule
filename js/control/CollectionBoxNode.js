@@ -23,7 +23,7 @@ define( function( require ) {
   var moleculePadding = 5;
   var blackBoxPaddingFor3D = Constants.has3d ? 10 : 0;
   
-  var CollectionBoxNode = namespace.CollectionBoxNode = function( box, toModelBounds ) {
+  var CollectionBoxNode = namespace.CollectionBoxNode = function CollectionBoxNode( box, toModelBounds ) {
     Node.call( this, {} );
     var selfNode = this;
     

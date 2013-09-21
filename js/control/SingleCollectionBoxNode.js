@@ -23,7 +23,7 @@ define( function( require ) {
   var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   
-  var SingleCollectionBoxNode = namespace.SingleCollectionBoxNode = function( box, toModelBounds ) {
+  var SingleCollectionBoxNode = namespace.SingleCollectionBoxNode = function SingleCollectionBoxNode( box, toModelBounds ) {
     CollectionBoxNode.call( this, box, toModelBounds );
     
     assert && assert( box.capacity === 1 );
