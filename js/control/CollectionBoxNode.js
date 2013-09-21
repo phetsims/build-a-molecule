@@ -21,7 +21,7 @@ define( function( require ) {
   var ShowMolecule3DButtonNode = require( 'BAM/view/view3d/ShowMolecule3DButtonNode' );
   
   var moleculePadding = 5;
-  var blackBoxPaddingFor3D = 10;
+  var blackBoxPaddingFor3D = Constants.has3d ? 10 : 0;
   
   var CollectionBoxNode = namespace.CollectionBoxNode = function( box, toModelBounds ) {
     Node.call( this, {} );
@@ -41,16 +41,20 @@ define( function( require ) {
       box.setDropBounds( toModelBounds( selfNode.blackBox ) );
     };
     
-    var show3dButton = new ShowMolecule3DButtonNode( this.dialog, box.moleculeType );
-    show3dButton.centerX = this.blackBox.centerX - blackBoxPaddingFor3D;
-    this.button3dWidth = show3dButton.width;
-    var update3dVisibility = function() {
-      show3dButton.visible = box.quantity > 0;
-    };
-    box.on( 'addedMolecule', update3dVisibility );
-    box.on( 'removedMolecule', update3dVisibility );
-    update3dVisibility();
-    this.blackBox.addChild( show3dButton );
+    if ( Constants.has3d ) {
+      var show3dButton = new ShowMolecule3DButtonNode( this.dialog, box.moleculeType );
+      show3dButton.centerX = this.blackBox.centerX - blackBoxPaddingFor3D;
+      this.button3dWidth = show3dButton.width;
+      var update3dVisibility = function() {
+        show3dButton.visible = box.quantity > 0;
+      };
+      box.on( 'addedMolecule', update3dVisibility );
+      box.on( 'removedMolecule', update3dVisibility );
+      update3dVisibility();
+      this.blackBox.addChild( show3dButton );
+    } else {
+      this.button3dWidth = 0;
+    }
     
     this.addChild( this.blackBox );
     

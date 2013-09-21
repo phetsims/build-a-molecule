@@ -19,6 +19,7 @@ define( function( require ) {
   var Image = require( 'SCENERY/nodes/Image' );
   var ButtonListener = require( 'SCENERY/input/ButtonListener' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
+  var ShowMolecule3DButtonNode = require( 'BAM/view/view3d/ShowMolecule3DButtonNode' );
   
   var MoleculeMetadataNode = namespace.MoleculeMetadataNode = function MoleculeMetadataNode( kit, molecule ) {
     Node.call( this, {} );
@@ -50,10 +51,14 @@ define( function( require ) {
       /*---------------------------------------------------------------------------*
       * show 3d button
       *----------------------------------------------------------------------------*/
-      // var button3d = new ShowMolecule3DButtonNode( dialog, completeMolecule, {
-      //   x: currentX;
-      // } );
-      // currentX += button3d.width + 5;
+      if ( Constants.has3d ) {
+        // TODO: add dialog!
+        var button3d = new ShowMolecule3DButtonNode( this.dialog, completeMolecule, {
+          x: currentX
+        } );
+        this.addChild( button3d );
+        currentX += button3d.width + 5;
+      }
     }
 
     /*---------------------------------------------------------------------------*
