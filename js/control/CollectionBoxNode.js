@@ -103,7 +103,7 @@ define( function( require ) {
     
     addHeaderNode: function( headerNode ) {
       console.log( 'make actual layout' );
-      this.insertChild( this.headerCount++ );
+      this.insertChild( this.headerCount++, headerNode );
     },
 
     addMolecule: function( molecule ) {

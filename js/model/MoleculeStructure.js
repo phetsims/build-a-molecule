@@ -512,7 +512,7 @@ define( function( require ) {
 
   MoleculeStructure.alphabeticSortValue = function( element ) {
     var value = 1000 * element.symbol.charCodeAt( 0 );
-    if ( element.symbol.length() > 1 ) {
+    if ( element.symbol.length > 1 ) {
       value += element.symbol.charCodeAt( 1 );
     }
     return value;

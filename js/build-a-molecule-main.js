@@ -41,6 +41,8 @@
     'BAM/control/CollectionPanel',
     'BAM/control/AllFilledDialogNode',
     'BAM/control/CollectionBoxNode',
+    'BAM/control/SingleCollectionBoxNode',
+    'BAM/control/MultipleCollectionBoxNode',
     
     // data
     'BAM/model/data/collectionMoleculesData',
