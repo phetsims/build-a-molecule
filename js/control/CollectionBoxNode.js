@@ -39,7 +39,7 @@ define( function( require ) {
       fill: Constants.moleculeCollectionBoxBackground
     } );
     this.locationUpdateObserver = function() {
-      box.setDropBounds( toModelBounds( selfNode.blackBox ) );
+      box.dropBounds = toModelBounds( selfNode.blackBox );
     };
     
     if ( Constants.has3d ) {
@@ -244,9 +244,6 @@ define( function( require ) {
             selfNode.blackBox.stroke = Constants.moleculeCollectionBackground;
           }
 
-          // make sure this paint happens immediately
-          selfNode.blackBox.repaint();
-          
           // set the blinkTimeout so it can be canceled
           selfNode.blinkTimeout = window.setTimeout( tick, blinkDelayInMs );
         }

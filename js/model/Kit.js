@@ -218,7 +218,7 @@ define( function( require ) {
       _.each( molecule.atoms, function( atom ) {
         kit.atoms.splice( kit.atoms.indexOf( atom ), 1 ); // TODO: remove() instead of splice()
         kit.atomsInCollectionBox.push( atom );
-        atom.visible.set( false );
+        atom.visible = false;
       } );
       box.addMolecule( molecule );
       this.removedMolecules[molecule.moleculeId] = box;

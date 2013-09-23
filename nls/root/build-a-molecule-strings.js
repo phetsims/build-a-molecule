@@ -30,7 +30,7 @@ define( {
   'collection_multiple_goalFormat': 'Goal: {0}{1}',
   'collection_multiple_quantityFormat': 'You have: {0}{1}',
   'collection_multiple_quantityEmpty': 'You have: (empty)',
-  'collection_yourMoleculeCollection': '<center>Your Molecules</center>',
+  'collection_yourMoleculeCollection': 'Your Molecules',
   'collection_allFilled': 'You completed your collection!',
   'collection_tryWithDifferentMolecules': 'Next Collection',
   'collection_hint': 'Drag your molecule here',

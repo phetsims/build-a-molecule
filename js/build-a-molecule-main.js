@@ -8,8 +8,10 @@
     'JOIST/SimLauncher', 'JOIST/Sim', 'BAM/Strings', 'BAM/Images',
     'BAM/screens/MakeMoleculeScreen', 'BAM/screens/CollectMultipleScreen', 'BAM/screens/LargerMoleculesScreen',
     
-    // specified as dependencies for independent debugging (playground, etc.)
     'BAM/namespace',
+    'BAM/control/CollectionPanel',
+    
+    // specified as dependencies for independent debugging (playground, etc.)
     'BAM/model/Atom2',
     'BAM/model/Bond',
     'BAM/model/Bucket',
@@ -44,6 +46,7 @@
     'BAM/control/SingleCollectionBoxNode',
     'BAM/control/MultipleCollectionBoxNode',
     'BAM/control/CollectionAreaNode',
+    'BAM/control/CollectionPanel',
     
     // data
     'BAM/model/data/collectionMoleculesData',
@@ -55,7 +58,7 @@
   ],
   function( SimLauncher, Sim, Strings, Images,
             MakeMoleculeScreen, CollectMultipleScreen, LargerMoleculesScreen,
-            namespace ) {
+            namespace, CollectionPanel ) {
     'use strict';
     
     // workaround, since the needed require statement in BAM/Images causes require.js to quote:
@@ -83,10 +86,10 @@
         //Create and start the sim
         new Sim( Strings['build-a-molecule.name'], [
           // TODO: replace these with the actual panel widths
-          // new MakeMoleculeScreen( CollectionPanel.getCollectionPanelModelWidth( true ) ),
-          new MakeMoleculeScreen( 400 ),
-          // new CollectMultipleScreen( CollectionPanel.getCollectionPanelModelWidth( false ) ),
-          new CollectMultipleScreen( 400 ),
+          new MakeMoleculeScreen( CollectionPanel.getCollectionPanelModelWidth( true ) ),
+          // new MakeMoleculeScreen( 400 ),
+          new CollectMultipleScreen( CollectionPanel.getCollectionPanelModelWidth( false ) ),
+          // new CollectMultipleScreen( 400 ),
           new LargerMoleculesScreen()
         ], simOptions ).start();
       } );

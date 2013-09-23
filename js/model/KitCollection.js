@@ -15,12 +15,15 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var PropertySet = require( 'AXON/PropertySet' );
   
+  var currentId = 0;
+  
   var KitCollection = namespace.KitCollection = function KitCollection() {
     PropertySet.call( this, {
       currentKit: null,
       allCollectionBoxesFilled: false // this will remain false if we have no collection boxes
     } );
     
+    this.id = currentId++;
     this.kits = [];
     this.collectionBoxes = [];
   };

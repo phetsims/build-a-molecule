@@ -4,6 +4,8 @@
 define( function( require ) {
   'use strict';
   
+  var Property = require( 'AXON/Property' );
+  
   return {
     scenery: require( 'SCENERY/main' ),
     kite: require( 'KITE/main' ),
@@ -18,7 +20,9 @@ define( function( require ) {
     Element: require( 'NITROGLYCERIN/Element' ),
     Atom: require( 'NITROGLYCERIN/Atom' ),
     
-    Property: require( 'AXON/Property' ),
-    PropertySet: require( 'AXON/PropertySet' )
+    Property: Property,
+    PropertySet: require( 'AXON/PropertySet' ),
+    
+    soundEnabled: new Property( false )
   };
 } );
