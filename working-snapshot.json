@@ -60,3 +60,65 @@
     "branch": "master"
   },
 }
+{
+  "build-a-molecule": {
+    "sha": "ac7223081202b27ea37abd2341a2288641c81fd3",
+    "branch": "master"
+  },
+  "sherpa": {
+    "sha": "dfb6eef1c6ef3cf73ecce60643b8dc22db5d2c9b",
+    "branch": "master"
+  },
+  "chipper": {
+    "sha": "06ec98872b32424ddb8ac7869ac98b5f9575879a",
+    "branch": "master"
+  },
+  "assert": {
+    "sha": "243a1befeb048c0a5354812fa0ee24b5a62df742",
+    "branch": "master"
+  },
+  "axon": {
+    "sha": "579865077d9cf01445f6267904f963b7566dd126",
+    "branch": "master"
+  },
+  "dot": {
+    "sha": "7c9822cc506e8fa7368178bcc2c252f0ecf1a2f9",
+    "branch": "master"
+  },
+  "joist": {
+    "sha": "6c3b8b43d5a36ffef5332d4a07e7f8696c258e3d",
+    "branch": "master"
+  },
+  "kite": {
+    "sha": "0c82ed2959458c1aa9ce9684ef23a2ef60789e51",
+    "branch": "master"
+  },
+  "nitroglycerin": {
+    "sha": "dd991b442b12f4c5f5aa2c258a968c1a345b9753",
+    "branch": "master"
+  },
+  "phet-core": {
+    "sha": "cb1382b97e568ec790751e70ded5cedec99d1eeb",
+    "branch": "master"
+  },
+  "phetcommon": {
+    "sha": "2c303d8bc121f912404c226302d413839abd3170",
+    "branch": "master"
+  },
+  "scenery": {
+    "sha": "01248949ba6530abdf3dbf050b0f8b988502da9d",
+    "branch": "master"
+  },
+  "scenery-phet": {
+    "sha": "a389778bd40960c5a6c2f0c6e61fb87e27e46ddd",
+    "branch": "master"
+  },
+  "sun": {
+    "sha": "096d34d0a5a3cfff1614bce523b149704ace0cc0",
+    "branch": "master"
+  },
+  "vibe": {
+    "sha": "c3a07c78ce2251e2bc4fd9ead4453a35e11484e3",
+    "branch": "master"
+  },
+}
