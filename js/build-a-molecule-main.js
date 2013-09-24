@@ -5,7 +5,7 @@
  */
  require( [
     // used in the function call
-    'JOIST/SimLauncher', 'JOIST/Sim', 'BAM/Strings', 'BAM/Images',
+    'JOIST/SimLauncher', 'JOIST/Sim', 'BAM/Strings',
     'BAM/screens/MakeMoleculeScreen', 'BAM/screens/CollectMultipleScreen', 'BAM/screens/LargerMoleculesScreen',
     
     'BAM/namespace',
@@ -56,14 +56,10 @@
     // why, require.js, why?
     'SCENERY_PHET/NextPreviousNavigationNode'
   ],
-  function( SimLauncher, Sim, Strings, Images,
+  function( SimLauncher, Sim, Strings,
             MakeMoleculeScreen, CollectMultipleScreen, LargerMoleculesScreen,
             namespace, CollectionPanel ) {
     'use strict';
-    
-    // workaround, since the needed require statement in BAM/Images causes require.js to quote:
-    //           Uncaught Error: Module name "BAM/namespace" has not been loaded yet for context: _. Use require([])
-    namespace.Images = Images;
     
     var simOptions = {
       credits: 'TODO (without scrolling credits, the BAM team refuses to take credit!)'
@@ -82,7 +78,7 @@
     
     // if the flag is set on window, don't launch the sim
     if ( !window.delayBuildAMoleculeLaunch ) {
-      SimLauncher.launch( Images, function() {
+      SimLauncher.launch( {imageNames: []}, function() {
         //Create and start the sim
         new Sim( Strings['build-a-molecule.name'], [
           // TODO: replace these with the actual panel widths

@@ -12,12 +12,34 @@ define( function( require ) {
   var assert = require( 'ASSERT/assert' )( 'build-a-molecule' );
   var namespace = require( 'BAM/namespace' );
   var Constants = require( 'BAM/Constants' );
-  var Images = require( 'BAM/Images' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
   var ButtonListener = require( 'SCENERY/input/ButtonListener' );
   var Circle = require( 'SCENERY/nodes/Circle' );
   var platform = require( 'PHET_CORE/platform' );
+  
+  /* Notes on .cur file generation, all from the images directory, with "sudo apt-get install icoutils" for icotool:
+icotool -c -o scissors.ico scissors.png
+icotool -c -o scissors-closed.ico scissors-closed.png
+icotool -c -o scissors-up.ico scissors-up.png
+icotool -c -o scissors-closed-up.ico scissors-closed-up.png
+
+./ico2cur.py scissors.ico -x 11 -y 10
+./ico2cur.py scissors-closed.ico -x 13 -y 7
+./ico2cur.py scissors-up.ico -x 10 -y 11
+./ico2cur.py scissors-closed-up.ico -x 7 -y 13
+   */
+  
+  var images = {
+    'scissors.png':           require( 'image!BAM/../images/scissors.png' ),
+    'scissors-closed.png':    require( 'image!BAM/../images/scissors-closed.png' ),
+    'scissors-up.png':        require( 'image!BAM/../images/scissors-up.png' ),
+    'scissors-closed-up.png': require( 'image!BAM/../images/scissors-closed-up.png' ),
+    'scissors.cur':           require( 'image!BAM/../images/scissors.cur' ),
+    'scissors-closed.cur':    require( 'image!BAM/../images/scissors-closed.cur' ),
+    'scissors-up.cur':        require( 'image!BAM/../images/scissors-up.cur' ),
+    'scissors-closed-up.cur': require( 'image!BAM/../images/scissors-closed-up.cur' )
+  };
   
   var bondRadius = 5; // "Radius" of the bond target that will break the bond
   
@@ -47,8 +69,8 @@ define( function( require ) {
       closedFile += '.png';
     }
     
-    var scissorsOpen = Images.getImage( openFile ); // 23x20 or 20x23
-    var scissorsClosed = Images.getImage( closedFile ); //26x15 or 15x26
+    var scissorsOpen = images[openFile]; // 23x20 or 20x23
+    var scissorsClosed = images[closedFile]; //26x15 or 15x26
     var backup = ( isHorizontal ? 'col-resize' : 'row-resize' ) + ', auto';
     
     // offsets should center this

@@ -26,7 +26,6 @@ define( function( require ) {
   var MoleculeCollectingView = require( 'BAM/view/MoleculeCollectingView' );
   
   var CollectMultipleScreen = namespace.CollectMultipleScreen = function CollectMultipleScreen( collectionAreaWidth ) {
-    // icon: new Image( Images.getImage( 'collectMultiple-thumbnail.png' ) ),
     BAMScreen.call( this, Strings.title_collectMultiple, new Rectangle( 0, 0, 548, 373, { fill: 'green' } ), function( bounds, clock ) {
       var kitCollection = new KitCollection();
       kitCollection.addKit( new Kit( bounds, [
@@ -54,7 +53,7 @@ define( function( require ) {
     }, function( model ) {
       // create the view
       return new MoleculeCollectingView( model, false, function() {
-        // next collection
+        // next collection callback
         model.addCollection( BAMScreen.generateKitCollection( true, 4, model.clock, model.layoutBounds ) );
       } );
     } );

@@ -26,7 +26,6 @@ define( function( require ) {
   var MoleculeCollectingView = require( 'BAM/view/MoleculeCollectingView' );
   
   var MakeMoleculeScreen = namespace.MakeMoleculeScreen = function MakeMoleculeScreen( collectionAreaWidth ) {
-    // icon: new Image( Images.getImage( 'makeMolecule-thumbnail.png' ) ),
     BAMScreen.call( this, Strings.title_makeMolecule, new Rectangle( 0, 0, 548, 373, { fill: 'red' } ), function( bounds, clock ) {
       var kitCollection = new KitCollection();
       kitCollection.addKit( new Kit( bounds, [

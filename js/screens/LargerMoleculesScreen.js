@@ -26,7 +26,6 @@ define( function( require ) {
   var BAMView = require( 'BAM/view/BAMView' );
   
   var LargerMoleculesScreen = namespace.LargerMoleculesScreen = function LargerMoleculesScreen() {
-    // icon: new Image( Images.getImage( 'largerMolecules-thumbnail.png' ) ),
     BAMScreen.call( this, Strings.title_largerMolecules, new Rectangle( 0, 0, 548, 373, { fill: 'blue' } ), function( bounds, clock ) {
       var kitCollection = new KitCollection();
 

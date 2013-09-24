@@ -12,7 +12,6 @@ define( function( require ) {
   var assert = require( 'ASSERT/assert' )( 'build-a-molecule' );
   var inherit = require( 'PHET_CORE/inherit' );
   var namespace = require( 'BAM/namespace' );
-  var Images = require( 'BAM/Images' );
   var Constants = require( 'BAM/Constants' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Text = require( 'SCENERY/nodes/Text' );
@@ -20,6 +19,7 @@ define( function( require ) {
   var ButtonListener = require( 'SCENERY/input/ButtonListener' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var ShowMolecule3DButtonNode = require( 'BAM/view/view3d/ShowMolecule3DButtonNode' );
+  var splitIconImage = require( 'image!BAM/../images/split-blue.png' );
   
   var MoleculeMetadataNode = namespace.MoleculeMetadataNode = function MoleculeMetadataNode( kit, molecule ) {
     Node.call( this, {} );
@@ -65,7 +65,7 @@ define( function( require ) {
     * break-up button
     *----------------------------------------------------------------------------*/
     var buttonBreak = new Node( {
-      children: [ new Image( Images.getImage( Constants.imageSplitIcon ) ) ],
+      children: [ new Image( splitIconImage ) ],
       x: currentX,
       cursor: 'pointer'
     } );
