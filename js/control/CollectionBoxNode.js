@@ -107,15 +107,25 @@ define( function( require ) {
       var selfNode = this;
       
       // headerNode.top = this.children[this.children.length-1].bottom - ( this.children.length > 1 ? 3 : 0 ); // more compact padding in general below the box node
-      this.insertChild( this.headerCount++, headerNode );
+      this.addChild( headerNode );
+      // this.insertChild( this.headerCount++, headerNode );
       
       var centerX = this.width / 2;
       var y = 0;
-      _.each( this.children, function( child ) {
+      var len = this._children.length;
+      for ( var i = 1; i > 0; i++ ) {
+        if ( i >= len ) {
+          i = 0;
+        }
+        var child = this._children[i];
         child.centerX = centerX;
         child.top = y;
         y += child.height + 5 + ( child === selfNode.boxNode ? 3 : -3 );
-        console.log( child.height + ', to ' + child.top + ' with ' + child.y );
+        if ( i === 0 ) {
+          break;
+        }
+      }
+      _.each( this.children, function( child ) {
       } );
     },
 
