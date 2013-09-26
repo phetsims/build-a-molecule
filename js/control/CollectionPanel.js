@@ -56,6 +56,7 @@ define( function( require ) {
       } )
     } );
     this.layoutNode.addChild( moleculeCollectionText );
+    moleculeCollectionText.top = 0;
     y += moleculeCollectionText.height + 5;
     
     // "Collection X" with arrows
