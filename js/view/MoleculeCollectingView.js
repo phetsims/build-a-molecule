@@ -96,7 +96,7 @@ define( function( require ) {
             allFilledDialogNode = new AllFilledDialogNode( view.collectionList.availablePlayAreaBounds, view.regenerateCallback );
             hasShownOnce = true;
           }
-          if ( !kitCollectionNode.hasParent() ) {
+          if ( !allFilledDialogNode.hasParent() ) {
             kitCollectionNode.addChild( allFilledDialogNode );
           }
         }
