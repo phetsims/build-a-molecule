@@ -147,7 +147,7 @@ define( function( require ) {
 
   return inherit( Node, CollectionPanel, {
     updateLayout: function() {
-      this.soundToggleButton.top = this.collectionAreaHolder.bottom + 5;
+      this.soundToggleButton.top = this.collectionAreaHolder.bottom + 25;
       var centerX = this.layoutNode.width / 2;
       _.each( this.layoutNode.children, function( child ) {
         child.centerX = centerX;
