@@ -74,12 +74,10 @@ define( function( require ) {
     // add invisible molecules to the molecule layer so that its size won't change later (fixes molecule positions)
     var nodes = [];
     for ( var i = 0; i < box.capacity; i++ ) {
-      console.log( 'TODO: CompleteMolecule.createPseudo3DNode then enable in CollectionBoxNode' );
-      // var node = box.moleculeType.createPseudo3DNode();
-      // node.visible = false;
-      // nodes.push( node );
-      // this.moleculeLayer.addChild( node );
-      this.moleculeLayer.addChild( new Rectangle( 0, 0, 10, 10, { fill: 'red' } ) );
+      var node = box.moleculeType.createPseudo3DNode();
+      node.visible = false;
+      nodes.push( node );
+      this.moleculeLayer.addChild( node );
     }
 
     // position them like we would with the others
@@ -133,7 +131,6 @@ define( function( require ) {
       this.cancelBlinksInProgress();
       this.updateBoxGraphics();
       
-      console.log( 'createPseudo3DNode, then CollectionBoxNode' );
       var pseudo3DNode = molecule.getMatchingCompleteMolecule().createPseudo3DNode();
       this.moleculeLayer.addChild( pseudo3DNode );
       this.moleculeNodes.push( pseudo3DNode );

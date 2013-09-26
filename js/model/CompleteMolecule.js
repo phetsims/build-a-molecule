@@ -16,10 +16,25 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var namespace = require( 'BAM/namespace' );
   var Strings = require( 'BAM/Strings' );
+  var Node = require( 'SCENERY/nodes/Node' );
   var Element = require( 'NITROGLYCERIN/Element' );
   var Atom = require( 'NITROGLYCERIN/Atom' );
+  var AtomNode = require( 'NITROGLYCERIN/nodes/AtomNode' );
   var Bond = require( 'BAM/model/Bond' );
   var MoleculeStructure = require( 'BAM/model/MoleculeStructure' );
+  var nodeTypes = [
+    require( 'NITROGLYCERIN/nodes/Cl2Node' ), require( 'NITROGLYCERIN/nodes/CO2Node' ), require( 'NITROGLYCERIN/nodes/CO2Node' ),
+    require( 'NITROGLYCERIN/nodes/CS2Node' ), require( 'NITROGLYCERIN/nodes/F2Node' ), require( 'NITROGLYCERIN/nodes/H2Node' ),
+    require( 'NITROGLYCERIN/nodes/N2Node' ), require( 'NITROGLYCERIN/nodes/NONode' ), require( 'NITROGLYCERIN/nodes/N2ONode' ),
+    require( 'NITROGLYCERIN/nodes/O2Node' ), require( 'NITROGLYCERIN/nodes/C2H2Node' ), require( 'NITROGLYCERIN/nodes/C2H4Node' ),
+    require( 'NITROGLYCERIN/nodes/C2H5ClNode' ), require( 'NITROGLYCERIN/nodes/C2H5OHNode' ), require( 'NITROGLYCERIN/nodes/C2H6Node' ),
+    require( 'NITROGLYCERIN/nodes/CH2ONode' ), require( 'NITROGLYCERIN/nodes/CH3OHNode' ), require( 'NITROGLYCERIN/nodes/CH4Node' ),
+    require( 'NITROGLYCERIN/nodes/H2ONode' ), require( 'NITROGLYCERIN/nodes/H2SNode' ), require( 'NITROGLYCERIN/nodes/HClNode' ),
+    require( 'NITROGLYCERIN/nodes/HFNode' ), require( 'NITROGLYCERIN/nodes/NH3Node' ), require( 'NITROGLYCERIN/nodes/NO2Node' ),
+    require( 'NITROGLYCERIN/nodes/OF2Node' ), require( 'NITROGLYCERIN/nodes/P4Node' ), require( 'NITROGLYCERIN/nodes/PCl3Node' ),
+    require( 'NITROGLYCERIN/nodes/PCl5Node' ), require( 'NITROGLYCERIN/nodes/PF3Node' ), require( 'NITROGLYCERIN/nodes/PH3Node' ),
+    require( 'NITROGLYCERIN/nodes/SO2Node' ), require( 'NITROGLYCERIN/nodes/SO3Node' )
+  ];
   
   /*
    * @param {String} commonName
@@ -73,55 +88,34 @@ define( function( require ) {
       }
     },
     
-    // TODO: 3D node
-    
-    // TODO: quasi-3D node
-    // // nodes listed so we can construct them with reflection
-    // private static final Class[] nodeClasses = new Class[] {
-    //         Cl2Node.class, CO2Node.class, CO2Node.class, CS2Node.class, F2Node.class, H2Node.class, N2Node.class, NONode.class, N2ONode.class,
-    //         O2Node.class, C2H2Node.class, C2H4Node.class, C2H5ClNode.class, C2H5OHNode.class, C2H6Node.class, CH2ONode.class, CH3OHNode.class,
-    //         CH4Node.class, H2ONode.class, H2SNode.class, HClNode.class, HFNode.class, NH3Node.class, NO2Node.class, OF2Node.class, P4Node.class,
-    //         PCl3Node.class, PCl5Node.class, PF3Node.class, PH3Node.class, SO2Node.class, SO3Node.class
-    // };
+    // @return A node that represents a 2d but quasi-3D version
+    createPseudo3DNode: function() {
+      var molecularFormula = this.molecularFormula;
+      var molecularFormulaType = molecularFormula + 'Node';
+      
+      // if we can find it in the common chemistry nodes, use that
+      var length = nodeTypes.length;
+      for ( var i = 0; i < length; i++ ) {
+        var NodeType = nodeTypes[i];
+        if ( NodeType.name === molecularFormulaType || ( NodeType.name === 'NH3Node' && molecularFormula === 'H3N' ) ) {
+          return new NodeType();
+        }
+      }
 
-    // // @return A node that represents a 2d but quasi-3D version
-    // public PNode createPseudo3DNode() {
-    //     // if we can find it in the common chemistry nodes, use that
-    //     for ( Class nodeClass : nodeClasses ) {
-    //         if ( nodeClass.getSimpleName().equals( molecularFormula + "Node" ) || ( nodeClass == NH3Node.class && molecularFormula.equals( "H3N" ) ) ) {
-    //             try {
-    //                 return (PNode) nodeClass.getConstructors()[0].newInstance();
-    //             }
-    //             catch ( InstantiationException e ) {
-    //                 e.printStackTrace();
-    //             }
-    //             catch ( IllegalAccessException e ) {
-    //                 e.printStackTrace();
-    //             }
-    //             catch ( InvocationTargetException e ) {
-    //                 e.printStackTrace();
-    //             }
-    //         }
-    //     }
-
-    //     // otherwise, use our 2d positions to construct a version. we get the correct back-to-front rendering
-    //     return new PNode() {{
-    //         List<PubChemAtom> wrappers = new ArrayList<PubChemAtom>( CompleteMolecule.this.getAtoms() );
-
-    //         // sort by Z-depth in 3D
-    //         Collections.sort( wrappers, new Comparator<PubChemAtom>() {
-    //             public int compare( PubChemAtom a, PubChemAtom b ) {
-    //                 return ( new Float( a.getZ3d() ) ).compareTo( b.getZ3d() );
-    //             }
-    //         } );
-
-    //         for ( final PubChemAtom atomWrapper : wrappers ) {
-    //             addChild( new AtomNode( atomWrapper.getElement() ) {{
-    //                 setOffset( atomWrapper.getX2d() * 15, atomWrapper.getY2d() * 15 ); // custom scale for now.
-    //             }} );
-    //         }
-    //     }};
-    // }
+      // otherwise, use our 2d positions to construct a version. we get the correct back-to-front rendering
+      var node = new Node();
+      var wrappers = _.sortBy( this.atoms, function( atom ) {
+        return atom.z3d;
+      } );
+      _.each( wrappers, function( atomWrapper ) {
+        node.addChild( new AtomNode( atomWrapper.element, {
+          // custom scale for now
+          x: atomWrapper.x2d() * 15,
+          y: atomWrapper.y2d() * 15
+        } ) );
+      } );
+      return node;
+    },
     
     toSerial2: function() {
       // add in a header
