@@ -14,6 +14,7 @@ define( function( require ) {
   var Constants = require( 'BAM/Constants' );
   var BucketFront = require( 'SCENERY_PHET/bucket/BucketFront' );
   var BucketHole = require( 'SCENERY_PHET/bucket/BucketHole' );
+  var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Node = require( 'SCENERY/nodes/Node' );
   var AtomNode = require( 'BAM/view/AtomNode' );
   var MoleculeBondContainerNode = require( 'BAM/view/MoleculeBondContainerNode' );
@@ -36,7 +37,13 @@ define( function( require ) {
     this.bottomLayer = new Node();
     
     _.each( kit.buckets, function( bucket ) {
-      var bucketFront = new BucketFront( bucket, Constants.modelViewTransform );
+      var bucketFront = new BucketFront( bucket, Constants.modelViewTransform, {
+        labelFont: new PhetFont( {
+          weight: 'bold',
+          size: 18,
+          family: 'Arial, sans-serif'
+        } ) // matching the old look for now
+      } );
       var bucketHole = new BucketHole( bucket, Constants.modelViewTransform );
 
       kitView.topLayer.addChild( bucketFront );
