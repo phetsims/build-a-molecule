@@ -103,7 +103,7 @@ define( function( require ) {
       var atomMultiple = 1 + ( ableToIncreaseMultiple ? equivalentMoleculesRemaining : 0 );
 
       // for each type of atom
-      _.each( molecule.getElementList(), function( element ) {
+      _.each( _.unique( molecule.getElementList() ), function( element ) {
         // find out how many atoms of this type we need
         var requiredAtomCount = 0;
         _.each( molecule.atoms, function( atom ) {
@@ -139,7 +139,7 @@ define( function( require ) {
       while ( atomMultiple > 0 ) {
         for ( var k = 0; k < molecules.length; k++ ) {
           if ( molecules[k].getHillSystemFormulaFragment() === molecule.getHillSystemFormulaFragment() ) {
-            molecules.remove( k );
+            molecules.splice( k, 1 );
             break;
           }
         }

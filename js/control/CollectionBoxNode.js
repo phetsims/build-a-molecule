@@ -143,7 +143,7 @@ define( function( require ) {
       this.cancelBlinksInProgress();
       this.updateBoxGraphics();
 
-      var lastMoleculeNode = this.moleculeNodeMap.get( molecule );
+      var lastMoleculeNode = this.moleculeNodeMap[molecule.moleculeId];
       this.moleculeLayer.removeChild( lastMoleculeNode );
       this.moleculeNodes.splice( this.moleculeNodes.indexOf( lastMoleculeNode ), 1 ); // TODO: replace splice with remove
       delete this.moleculeNodeMap[molecule.moleculeId];
