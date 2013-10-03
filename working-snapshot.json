@@ -1,14 +1,14 @@
 {
   "build-a-molecule": {
-    "sha": "bb926e7c8fba9d53b51d4eeab80e467b4b712e14",
+    "sha": "7af103122af96fc3817f5fde747798d860d58b07",
     "branch": "master"
   },
   "sherpa": {
-    "sha": "def6e7bdda9b3ae9373a43761bde8a8df9659957",
+    "sha": "bb78b8b67b9ddb5033d0e4b6764ecd9eafeae211",
     "branch": "master"
   },
   "chipper": {
-    "sha": "32e104a391b764e0d5d83a5bf41facaf4ca9efab",
+    "sha": "94a47da45936eb9f4915c21fec4bb198e1e56a40",
     "branch": "master"
   },
   "assert": {
@@ -16,47 +16,51 @@
     "branch": "master"
   },
   "axon": {
-    "sha": "d300aca03d342df379975aa9462a1a0701ad35db",
+    "sha": "ce50e9fb08440d00d5a768271ce618a746d4cfdc",
     "branch": "master"
   },
   "dot": {
-    "sha": "ec5c162a62bc36b5b1609a4386c2dadb450071f2",
+    "sha": "57591de55bf9445ef5dcffeab84b5b0c9ca73658",
     "branch": "master"
   },
   "joist": {
-    "sha": "5b59274cf84b6e42e2b2b22bae50ae7f580b2ae9",
+    "sha": "85d53e01d7f96fa54c4f229db4d40b775d797a4b",
     "branch": "master"
   },
   "kite": {
-    "sha": "3595e1c8d287088968d5bdc4c7eead34562fd8c3",
+    "sha": "c3a5ef17fc3beea037f4939e088ac455461611fa",
     "branch": "master"
   },
   "nitroglycerin": {
-    "sha": "a81472b078d553d697832c960d7164486f163d28",
+    "sha": "fc42c45e4dcaa5311a4879cd5365505c14a811a4",
     "branch": "master"
   },
   "phet-core": {
-    "sha": "1e82d1d968dd428ba2b2a44957d2e2838ef85204",
+    "sha": "0224cba319fec8a03b986085916f63b8dc6916b0",
     "branch": "master"
   },
   "phetcommon": {
-    "sha": "7149963a4b8183ee77a51e76de075e010e8155e5",
+    "sha": "0ef807168b3712c1c0ef9e7e9bc3dd6703eac14b",
     "branch": "master"
   },
   "scenery": {
-    "sha": "4f61e01edda81f70f57b837af4bbbe91efeac04c",
+    "sha": "83a798ed4c51ee1a1ac4df7d0d2819dccad2b9ad",
     "branch": "master"
   },
   "scenery-phet": {
-    "sha": "e1b642c096147ba6fbb48bbd750e797946044b8f",
+    "sha": "15eeb5395abd2694b1e6fae8984037b51237f6d4",
     "branch": "master"
   },
   "sun": {
-    "sha": "1239636b6a9ad6ebaaa791b27dd23e6c260f9257",
+    "sha": "b3caa0a967bbfbd94e89a38afd2ad6539c8bc172",
     "branch": "master"
   },
   "vibe": {
-    "sha": "e63cd9999480d1b36aa79f886ba0255ca2e7ae95",
+    "sha": "9507effe4468f13d82b5507844a4dc214224efe4",
+    "branch": "master"
+  },
+  "sherpa": {
+    "sha": "bb78b8b67b9ddb5033d0e4b6764ecd9eafeae211",
     "branch": "master"
   },
 }
