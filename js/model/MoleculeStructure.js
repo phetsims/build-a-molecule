@@ -14,7 +14,6 @@
 define( function( require ) {
   'use strict';
   
-  var assert = require( 'ASSERT/assert' )( 'build-a-molecule' );
   var namespace = require( 'BAM/namespace' );
   var Bond = require( 'BAM/model/Bond' );
   // var MoleculeList = require( 'BAM/model/MoleculeList' );

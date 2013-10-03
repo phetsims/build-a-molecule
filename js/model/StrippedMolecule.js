@@ -12,7 +12,6 @@
 define( function( require ) {
   'use strict';
   
-  var assert = require( 'ASSERT/assert' )( 'build-a-molecule' );
   var namespace = require( 'BAM/namespace' );
   var Atom = require( 'NITROGLYCERIN/Atom' );
   var Element = require( 'NITROGLYCERIN/Element' );

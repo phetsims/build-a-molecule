@@ -9,7 +9,6 @@
 define( function( require ) {
   'use strict';
   
-  var assert = require( 'ASSERT/assert' )( 'build-a-molecule' );
   var inherit = require( 'PHET_CORE/inherit' );
   var namespace = require( 'BAM/namespace' );
   var PropertySet = require( 'AXON/PropertySet' );
@@ -298,7 +297,7 @@ define( function( require ) {
     },
 
     hasAtomsOutsideOfBuckets: function() {
-      return this.molecules.length || this.hasMoleculesInBoxes;
+      return !!( this.molecules.length || this.hasMoleculesInBoxes );
     },
 
     /*---------------------------------------------------------------------------*

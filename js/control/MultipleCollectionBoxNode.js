@@ -10,7 +10,6 @@
 define( function( require ) {
   'use strict';
   
-  var assert = require( 'ASSERT/assert' )( 'build-a-molecule' );
   var namespace = require( 'BAM/namespace' );
   var Constants = require( 'BAM/Constants' );
   var Bounds2 = require( 'DOT/Bounds2' );

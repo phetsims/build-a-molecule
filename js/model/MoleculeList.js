@@ -15,7 +15,6 @@ define( function( require ) {
   
   //REVIEW use logging instead of System.out throughout, since this happens at startup in production product.
   
-  var assert = require( 'ASSERT/assert' )( 'build-a-molecule' );
   var namespace = require( 'BAM/namespace' );
   
   var collectionMoleculesData = require( 'BAM/model/data/collectionMoleculesData' );

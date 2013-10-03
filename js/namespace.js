@@ -11,7 +11,6 @@ define( function( require ) {
     kite: require( 'KITE/main' ),
     dot: require( 'DOT/main' ),
     core: require( 'PHET_CORE/main' ),
-    assert: require( 'ASSERT/assert' ),
     
     Bucket: require( 'PHETCOMMON/model/Bucket' ),
     BucketFront: require( 'SCENERY_PHET/bucket/BucketFront' ),
