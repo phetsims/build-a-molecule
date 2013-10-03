@@ -14,7 +14,7 @@ define( function( require ) {
   var mvt = ModelViewTransform2.createSinglePointScaleInvertedYMapping(
     Vector2.ZERO,
     new Vector2( Math.round( viewSize.width * 0.5 ), Math.round( viewSize.height * 0.5 ) ),
-    0.3 // "Zoom factor" - smaller zooms out, larger zooms in
+    0.3 * 1.2 // "Zoom factor" - smaller zooms out, larger zooms in
   );
   var modelSize = new Dimension2(
     mvt.viewToModelDeltaX( viewSize.width ),
