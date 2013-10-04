@@ -41,6 +41,8 @@
   <canvas id="can"></canvas>
   
   <script>
+    var useNiceFill = false;
+    
     var canvas = document.getElementById( 'can' );
     canvas.width = 512;
     canvas.height = 512;
@@ -51,8 +53,8 @@
         // make sure the full sim code doesn't launch immediately
         window.delayBuildAMoleculeLaunch = true;
 
-        require( [ 'build-a-molecule-main', 'BAM/namespace', 'SCENERY/main', 'KITE/main', 'DOT/main', 'PHET_CORE/main', 'NITROGLYCERIN/Element', 'BAM/model/CompleteMolecule', 'DOT/Matrix3', 'DOT/Vector3', 'KITE/segments/EllipticalArc' ],
-          function( bleh, bam, scenery, kite, dot, core, Element, CompleteMolecule, Matrix3, Vector3, EllipticalArc ) {
+        require( [ 'build-a-molecule-main', 'BAM/namespace', 'SCENERY/main', 'KITE/main', 'DOT/main', 'PHET_CORE/main', 'NITROGLYCERIN/Element', 'BAM/model/CompleteMolecule', 'DOT/Matrix3', 'DOT/Vector3', 'KITE/segments/EllipticalArc', 'SCENERY/util/Color', 'DOT/Util', 'DOT/Ray3' ],
+          function( bleh, bam, scenery, kite, dot, core, Element, CompleteMolecule, Matrix3, Vector3, EllipticalArc, Color, DotUtil, Ray3 ) {
             
           window.bam = bam;
           window.scenery = scenery;
@@ -122,6 +124,64 @@
             };
           }
           
+          var sunDirection = dot( -1, 0.5, 2 ).normalized();
+          var moonDirection = dot( 2, -1, 1 ).normalized();
+          var sunWeight = 0.8;
+          var moonWeight = 0.6;
+          function shade( element, normal ) {
+            var baseColor = new Color( element.color );
+            var sunTotal = Math.max( 0, normal.dot( sunDirection ) ) * sunWeight;
+            var moonTotal = Math.max( 0, normal.dot( moonDirection ) ) * moonWeight;
+
+            var weight = Math.min( 1, sunTotal + moonTotal );
+            
+            return 'rgb(' +
+                   Math.floor( weight * baseColor.red ) + ',' +
+                   Math.floor( weight * baseColor.green ) + ',' +
+                   Math.floor( weight * baseColor.blue ) + ')';
+          }
+          
+          function shadedCanvas( element, size ) {
+            var canvas = document.createElement( 'canvas' );
+            canvas.width = size;
+            canvas.height = size;
+            var context = canvas.getContext( '2d' );
+            
+            var step = 2 / size; // sample at the centers of pixels
+            for ( var idx = 0; idx < size; idx++ ) {
+              var x = -1 + ( idx + 0.5 ) * step;
+              for ( var idy = 0; idy < size; idy++ ) {
+                var y = 1 - ( idy + 0.5 ) * step; // inverse Y for 3d style
+                
+                var intersection = DotUtil.sphereRayIntersection( 1, new Ray3( new Vector3( x, y, 2 ), Vector3.Z_UNIT.negated() ) );
+                var normal = intersection ? intersection.normal : new Vector3( x, y, 0 ).normalized(); // shade as the closest point on the sphere if we miss
+                
+                context.fillStyle = shade( element, normal );
+                context.fillRect( idx, idy, 1, 1 );
+              }
+            }
+            return canvas;
+          }
+          
+          var elementPatterns = {};
+          var elementPatternTransforms = {};
+          _.each( Element.elements, function( element ) {
+            var size = 128;
+            var canvas = shadedCanvas( element, size );
+            var pattern = context.createPattern( canvas, 'no-repeat' );
+            elementPatterns[element.symbol] = pattern;
+            var matrix = new Matrix3( 2 * element.radius / size, 0,                         -element.radius,
+                                      0,                         2 * element.radius / size, -element.radius,
+                                      0,                         0,                         1 );
+            elementPatternTransforms[element.symbol] = matrix.inverted();
+            // pattern.setTransform( matrix.toSVGMatrix() );
+            // document.body.appendChild( canvas );
+          } );
+          // document.body.appendChild( shadedCanvas( Element.O, 128 ) );
+          // document.body.appendChild( shadedCanvas( Element.N, 128 ) );
+          // document.body.appendChild( shadedCanvas( Element.H, 128 ) );
+          // document.body.appendChild( shadedCanvas( Element.C, 128 ) );
+          
           function step( timeElapsed ) {
             var rot = Matrix3.rotationY( timeElapsed );
             _.each( currentAtoms, function( atom ) {
@@ -142,6 +202,7 @@
             
             for ( var i = 0; i < atoms.length; i++ ) {
               var atom = atoms[i];
+              var element = atom.element;
               
               var arcs = [];
               
@@ -174,23 +235,30 @@
               
               arcs = _.sortBy( arcs, function( arc ) { return arc.circleStart; } );
               
-              context.fillStyle = atom.color;
+              context.save();
+              context.translate( midX, midY );
               context.beginPath();
-              
               if ( arcs.length ) {
                 for ( var j = 0; j < arcs.length; j++ ) {
-                  var ellipticalArc = new EllipticalArc( arcs[j].center.plus( dot( atom.x + midX, atom.y + midY ) ),
+                  var ellipticalArc = new EllipticalArc( arcs[j].center.plus( dot( atom.x, atom.y ) ),
                                                          arcs[j].rx, arcs[j].ry,
                                                          arcs[j].rotation,
                                                          arcs[j].ellipseStart, arcs[j].ellipseEnd, false );
                   ellipticalArc.writeToContext( context );
                   var atEnd = j + 1 === arcs.length;
-                  context.arc( atom.x + midX, atom.y + midY, atom.radius, arcs[j].circleEnd, atEnd ? ( arcs[0].circleStart + Math.PI * 2 ) : arcs[j+1].circleStart, false );
+                  context.arc( atom.x, atom.y, atom.radius, arcs[j].circleEnd, atEnd ? ( arcs[0].circleStart + Math.PI * 2 ) : arcs[j+1].circleStart, false );
                 }
               } else {
-                context.arc( atom.x + midX, atom.y + midY, atom.radius, 0, Math.PI * 2, false );
+                context.arc( atom.x, atom.y, atom.radius, 0, Math.PI * 2, false );
+              }
+              if ( useNiceFill ) {
+                elementPatternTransforms[element.symbol].canvasAppendTransform( context );
+                context.fillStyle = elementPatterns[element.symbol];
+              } else {
+                context.fillStyle = atom.color;
               }
               context.fill();
+              context.restore();
             }
           }
           
