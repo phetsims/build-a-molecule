@@ -8,6 +8,7 @@
 define( function( require ) {
   'use strict';
   
+  var title_collectMultipleString = require( 'string!BAM/title.collectMultiple' );
   var Strings = require( 'BAM/Strings' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Dimension2 = require( 'DOT/Dimension2' );
@@ -26,7 +27,7 @@ define( function( require ) {
   var MoleculeCollectingView = require( 'BAM/view/MoleculeCollectingView' );
   
   var CollectMultipleScreen = namespace.CollectMultipleScreen = function CollectMultipleScreen( collectionAreaWidth ) {
-    BAMScreen.call( this, Strings.title_collectMultiple, new Rectangle( 0, 0, 548, 373, { fill: 'green' } ), function( bounds, clock ) {
+    BAMScreen.call( this, title_collectMultipleString, new Rectangle( 0, 0, 548, 373, { fill: 'green' } ), function( bounds, clock ) {
       var kitCollection = new KitCollection();
       kitCollection.addKit( new Kit( bounds, [
         new Bucket( new Dimension2( 400, 200 ), clock, Element.H, 2 ),

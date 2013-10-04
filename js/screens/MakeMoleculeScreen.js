@@ -8,7 +8,7 @@
 define( function( require ) {
   'use strict';
   
-  var Strings = require( 'BAM/Strings' );
+  var title_makeMoleculeString = require( 'string!BAM/title.makeMolecule' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Dimension2 = require( 'DOT/Dimension2' );
   var namespace = require( 'BAM/namespace' );
@@ -26,7 +26,7 @@ define( function( require ) {
   var MoleculeCollectingView = require( 'BAM/view/MoleculeCollectingView' );
   
   var MakeMoleculeScreen = namespace.MakeMoleculeScreen = function MakeMoleculeScreen( collectionAreaWidth ) {
-    BAMScreen.call( this, Strings.title_makeMolecule, new Rectangle( 0, 0, 548, 373, { fill: 'red' } ), function( bounds, clock ) {
+    BAMScreen.call( this, title_makeMoleculeString, new Rectangle( 0, 0, 548, 373, { fill: 'red' } ), function( bounds, clock ) {
       var kitCollection = new KitCollection();
       kitCollection.addKit( new Kit( bounds, [
         new Bucket( new Dimension2( 400, 200 ), clock, Element.H, 2 ),

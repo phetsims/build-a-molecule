@@ -12,7 +12,7 @@ define( function( require ) {
   var namespace = require( 'BAM/namespace' );
   var Constants = require( 'BAM/Constants' );
   var Bounds2 = require( 'DOT/Bounds2' );
-  var Strings = require( 'BAM/Strings' );
+  var collection_single_formatString = require( 'string!BAM/collection.single.format' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
   var HTMLText = require( 'SCENERY/nodes/HTMLText' );
@@ -27,7 +27,7 @@ define( function( require ) {
     
     assert && assert( box.capacity === 1 );
     
-    this.addHeaderNode( new HTMLText( StringUtils.format( Strings.collection_single_format,
+    this.addHeaderNode( new HTMLText( StringUtils.format( collection_single_formatString,
                                                           box.moleculeType.getGeneralFormulaFragment(),
                                                           box.moleculeType.getDisplayName() ), {
       font: new PhetFont( {

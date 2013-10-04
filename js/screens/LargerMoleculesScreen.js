@@ -8,7 +8,7 @@
 define( function( require ) {
   'use strict';
   
-  var Strings = require( 'BAM/Strings' );
+  var title_largerMoleculesString = require( 'string!BAM/title.largerMolecules' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Dimension2 = require( 'DOT/Dimension2' );
   var namespace = require( 'BAM/namespace' );
@@ -26,7 +26,7 @@ define( function( require ) {
   var BAMView = require( 'BAM/view/BAMView' );
   
   var LargerMoleculesScreen = namespace.LargerMoleculesScreen = function LargerMoleculesScreen() {
-    BAMScreen.call( this, Strings.title_largerMolecules, new Rectangle( 0, 0, 548, 373, { fill: 'blue' } ), function( bounds, clock ) {
+    BAMScreen.call( this, title_largerMoleculesString, new Rectangle( 0, 0, 548, 373, { fill: 'blue' } ), function( bounds, clock ) {
       var kitCollection = new KitCollection();
 
       // NOTE: if kits are modified here, examine MAX_NUM_HEAVY_ATOMS in MoleculeSDFCombinedParser, as it may need to be changed

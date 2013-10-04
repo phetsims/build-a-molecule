@@ -13,7 +13,6 @@ define( function( require ) {
   
   var Screen = require( 'JOIST/Screen' );
   var Dimension2 = require( 'DOT/Dimension2' );
-  var Strings = require( 'BAM/Strings' );
   var Constants = require( 'BAM/Constants' );
   var Element = require( 'NITROGLYCERIN/Element' );
   var MoleculeList = require( 'BAM/model/MoleculeList' );
