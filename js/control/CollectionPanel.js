@@ -24,7 +24,6 @@ define( function( require ) {
   var Node = require( 'SCENERY/nodes/Node' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var Text = require( 'SCENERY/nodes/Text' );
-  var HTMLText = require( 'SCENERY/nodes/HTMLText' );
   var NextPreviousNavigationNode = require( 'SCENERY_PHET/NextPreviousNavigationNode' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var SoundToggleButton = require( 'SCENERY_PHET/SoundToggleButton' );
@@ -50,7 +49,7 @@ define( function( require ) {
     this.layoutNode.setTranslation( containerPadding, containerPadding );
 
     // "Your Molecule Collection"
-    var moleculeCollectionText = new HTMLText( collection_yourMoleculeCollectionString, {
+    var moleculeCollectionText = new Text( collection_yourMoleculeCollectionString, {
       font: new PhetFont( {
         size: 22
       } )
