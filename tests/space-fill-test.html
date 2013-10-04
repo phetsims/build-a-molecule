@@ -183,12 +183,15 @@
               context.beginPath();
               
               if ( arcs.length ) {
-                var ellipticalArc = new EllipticalArc( arcs[0].center.plus( dot( atom.x + midX, atom.y + midY ) ),
-                                                       arcs[0].rx, arcs[0].ry,
-                                                       arcs[0].rotation,
-                                                       arcs[0].ellipseStart, arcs[0].ellipseEnd, false );
-                ellipticalArc.writeToContext( context );
-                context.arc( atom.x + midX, atom.y + midY, atom.radius, arcs[0].circleEnd, arcs[0].circleStart + Math.PI * 2, false );
+                for ( var j = 0; j < arcs.length; j++ ) {
+                  var ellipticalArc = new EllipticalArc( arcs[j].center.plus( dot( atom.x + midX, atom.y + midY ) ),
+                                                         arcs[j].rx, arcs[j].ry,
+                                                         arcs[j].rotation,
+                                                         arcs[j].ellipseStart, arcs[j].ellipseEnd, false );
+                  ellipticalArc.writeToContext( context );
+                  var atEnd = j + 1 === arcs.length;
+                  context.arc( atom.x + midX, atom.y + midY, atom.radius, arcs[j].circleEnd, atEnd ? ( arcs[0].circleStart + Math.PI * 2 ) : arcs[j+1].circleStart, false );
+                }
               } else {
                 context.arc( atom.x + midX, atom.y + midY, atom.radius, 0, Math.PI * 2, false );
               }
