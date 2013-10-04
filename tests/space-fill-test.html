@@ -51,8 +51,8 @@
         // make sure the full sim code doesn't launch immediately
         window.delayBuildAMoleculeLaunch = true;
 
-        require( [ 'build-a-molecule-main', 'BAM/namespace', 'SCENERY/main', 'KITE/main', 'DOT/main', 'PHET_CORE/main', 'NITROGLYCERIN/Element', 'BAM/model/CompleteMolecule', 'DOT/Matrix3' ],
-          function( bleh, bam, scenery, kite, dot, core, Element, CompleteMolecule, Matrix3 ) {
+        require( [ 'build-a-molecule-main', 'BAM/namespace', 'SCENERY/main', 'KITE/main', 'DOT/main', 'PHET_CORE/main', 'NITROGLYCERIN/Element', 'BAM/model/CompleteMolecule', 'DOT/Matrix3', 'DOT/Vector3', 'KITE/segments/EllipticalArc' ],
+          function( bleh, bam, scenery, kite, dot, core, Element, CompleteMolecule, Matrix3, Vector3, EllipticalArc ) {
             
           window.bam = bam;
           window.scenery = scenery;
@@ -72,7 +72,7 @@
             
             // 2d circle-circle intersection point
             var ix = ( d * d + ra * ra - rb * rb ) / ( 2 * d );
-            var iy = ra * Math.Sqrt( 1 - ix * ix / ( ra * ra ) );
+            var iy = ra * Math.sqrt( 1 - ix * ix / ( ra * ra ) );
             
             // elliptical arc center
             var cx = ix * Math.sin( theta );
@@ -111,13 +111,21 @@
           }
           
           // HCN
-          var n = dot( hcn.atoms[0].x3d(), hcn.atoms[0].y3d(), hcn.atoms[0].z3d() ).times( 100 ); // to picometers from angstroms? hopefully?
-          var c = dot( hcn.atoms[1].x3d(), hcn.atoms[1].y3d(), hcn.atoms[1].z3d() ).times( 100 ); // to picometers from angstroms? hopefully?
-          var h = dot( hcn.atoms[2].x3d(), hcn.atoms[2].y3d(), hcn.atoms[2].z3d() ).times( 100 ); // to picometers from angstroms? hopefully?
+          var n = dot( hcn.atoms[0].x3d(), hcn.atoms[0].y3d(), hcn.atoms[0].z3d() ).times( 70 ); // to picometers from angstroms? hopefully?
+          var c = dot( hcn.atoms[1].x3d(), hcn.atoms[1].y3d(), hcn.atoms[1].z3d() ).times( 70 ); // to picometers from angstroms? hopefully?
+          var h = dot( hcn.atoms[2].x3d(), hcn.atoms[2].y3d(), hcn.atoms[2].z3d() ).times( 70 ); // to picometers from angstroms? hopefully?
           
           n.element = Element.N;
           c.element = Element.C;
           h.element = Element.H;
+          
+          n.radius = n.element.radius;
+          c.radius = c.element.radius;
+          h.radius = h.element.radius;
+          
+          n.color = n.element.color;
+          c.color = c.element.color;
+          h.color = h.element.color;
           
           function step( timeElapsed ) {
             var rot = Matrix3.rotationY( timeElapsed );
@@ -132,37 +140,61 @@
             var midX = width / 2;
             var midY = height / 2;
             // context.clearRect( 0, 0, width, height );
-            context.fillStyle = '#eee';
+            context.fillStyle = '#000';
             context.fillRect( 0, 0, width, height );
             
             var atoms = _.sortBy( [h,c,n], function( v ) { return v.z; } );
             
             for ( var i = 0; i < atoms.length; i++ ) {
               var atom = atoms[i];
-              var element = atom.element
-              context.fillStyle = element.color;
+              
+              var arcs = [];
+              
+              // check each atom behind this one for occlusion
+              for ( var k = 0; k < i; k++ ) {
+                var otherAtom = atoms[k];
+                
+                var delta = otherAtom.minus( atom );
+                var d = delta.magnitude();
+                if ( d < atom.radius + otherAtom.radius - 1e-7 ) {
+                  var theta = delta.angleBetween( dot( 0, 0, -1 ) );
+                  var arcData = ellipticalArcCut( atom.radius,  otherAtom.radius, d, theta );
+                  if ( arcData ) {
+                    // angle to center of ellipse
+                    var phi = Math.atan2( delta.y, delta.x );
+                    var center = dot( arcData.cx, arcData.cy ).rotated( phi );
+                    arcs.push( {
+                      center: center,
+                      rx: arcData.rx,
+                      ry: arcData.ry,
+                      rotation: phi,
+                      circleStart: phi - arcData.psi,
+                      circleEnd: phi + arcData.psi,
+                      ellipseStart: -arcData.alpha,
+                      ellipseEnd: arcData.alpha
+                    } );
+                  }
+                }
+              }
+              
+              arcs = _.sortBy( arcs, function( arc ) { return arc.circleStart; } );
+              
+              context.fillStyle = atom.color;
               context.beginPath();
-              context.arc( atom.x + midX, atom.y + midY, element.radius, 0, Math.PI * 2, false );
+              
+              if ( arcs.length ) {
+                var ellipticalArc = new EllipticalArc( arcs[0].center.plus( dot( atom.x + midX, atom.y + midY ) ),
+                                                       arcs[0].rx, arcs[0].ry,
+                                                       arcs[0].rotation,
+                                                       arcs[0].ellipseStart, arcs[0].ellipseEnd, false );
+                ellipticalArc.writeToContext( context );
+                context.arc( atom.x + midX, atom.y + midY, atom.radius, arcs[0].circleEnd, arcs[0].circleStart + Math.PI * 2, false );
+              } else {
+                context.arc( atom.x + midX, atom.y + midY, atom.radius, 0, Math.PI * 2, false );
+              }
               context.fill();
             }
-            
-            // context.fillStyle = Element.N.color;
-            // context.beginPath();
-            // context.arc( n.x + midX, n.y + midY, Element.N.radius, 0, Math.PI * 2, false );
-            // context.fill();
-            
-            // context.fillStyle = Element.C.color;
-            // context.beginPath();
-            // context.arc( c.x + midX, c.y + midY, Element.C.radius, 0, Math.PI * 2, false );
-            // context.fill();
-            
-            // context.fillStyle = Element.H.color;
-            // context.beginPath();
-            // context.arc( h.x + midX, h.y + midY, Element.H.radius, 0, Math.PI * 2, false );
-            // context.fill();
           }
-          
-          draw();
           
           var lastTime = 0;
           var timeElapsed = 0;
