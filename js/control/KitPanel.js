@@ -11,7 +11,8 @@ define( function( require ) {
   
   var namespace = require( 'BAM/namespace' );
   var Constants = require( 'BAM/Constants' );
-  var Strings = require( 'BAM/Strings' );
+  var kit_labelString = require( 'string!BAM/kit.label' );
+  var kit_resetKitString = require( 'string!BAM/kit.resetKit' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Path = require( 'SCENERY/nodes/Path' );
@@ -52,7 +53,7 @@ define( function( require ) {
       } )
     } );
     kitCollectionModel.currentKitProperty.link( function() {
-      labelNode.text = StringUtils.format( Strings.kit_label, kitCollectionModel.currentKitIndex + 1 );
+      labelNode.text = StringUtils.format( kit_labelString, kitCollectionModel.currentKitIndex + 1 );
     } );
     
     var navigationNode = new NextPreviousNavigationNode( labelNode, {
@@ -78,7 +79,7 @@ define( function( require ) {
     * refill kit
     *----------------------------------------------------------------------------*/
     
-    var refillButton = new TextButton( Strings.kit_resetKit, function() {
+    var refillButton = new TextButton( kit_resetKitString, function() {
       kitCollectionModel.currentKit.resetKit();
     }, {
       rectangleFillUp: Color.ORANGE,

@@ -12,7 +12,6 @@ define( function( require ) {
   
   var namespace = require( 'BAM/namespace' );
   var Constants = require( 'BAM/Constants' );
-  var Strings = require( 'BAM/Strings' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );

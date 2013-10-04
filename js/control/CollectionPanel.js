@@ -11,7 +11,8 @@ define( function( require ) {
   
   var namespace = require( 'BAM/namespace' );
   var Constants = require( 'BAM/Constants' );
-  var Strings = require( 'BAM/Strings' );
+  var collection_yourMoleculeCollectionString = require( 'string!BAM/collection.yourMoleculeCollection' );
+  var collection_labelString = require( 'string!BAM/collection.label' );
   var Bounds2 = require( 'DOT/Bounds2' );
   var CollectionAreaNode = require( 'BAM/control/CollectionAreaNode' );
   var CollectionList = require( 'BAM/model/CollectionList' );
@@ -49,7 +50,7 @@ define( function( require ) {
     this.layoutNode.setTranslation( containerPadding, containerPadding );
 
     // "Your Molecule Collection"
-    var moleculeCollectionText = new HTMLText( Strings.collection_yourMoleculeCollection, {
+    var moleculeCollectionText = new HTMLText( collection_yourMoleculeCollectionString, {
       font: new PhetFont( {
         size: 22
       } )
@@ -66,7 +67,7 @@ define( function( require ) {
       } )
     } );
     collectionList.currentCollectionProperty.link( function() {
-      currentCollectionText.text = StringUtils.format( Strings.collection_label, collectionList.currentIndex + 1 );
+      currentCollectionText.text = StringUtils.format( collection_labelString, collectionList.currentIndex + 1 );
     } );
     var collectionSwitcher = new NextPreviousNavigationNode( currentCollectionText, {
       arrowColor: Constants.kitArrowBackgroundEnabled,

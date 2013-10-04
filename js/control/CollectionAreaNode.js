@@ -11,7 +11,7 @@ define( function( require ) {
   
   var namespace = require( 'BAM/namespace' );
   var Constants = require( 'BAM/Constants' );
-  var Strings = require( 'BAM/Strings' );
+  var collection_resetString = require( 'string!BAM/collection.reset' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Color = require( 'SCENERY/util/Color' );
   var Node = require( 'SCENERY/nodes/Node' );
@@ -65,7 +65,7 @@ define( function( require ) {
     /*---------------------------------------------------------------------------*
     * Reset Collection button
     *----------------------------------------------------------------------------*/
-    var resetCollectionButton = new TextButton( Strings.collection_reset, function() {
+    var resetCollectionButton = new TextButton( collection_resetString, function() {
       // when clicked, empty collection boxes
       _.each( collection.collectionBoxes, function( box ) {
         box.clear();
