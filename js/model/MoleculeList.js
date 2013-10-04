@@ -115,6 +115,18 @@ define( function( require ) {
       }
       return null;
     },
+    
+    // by pubchem compound ID (CID)
+    findMoleculeByCID: function( cid ) {
+      var length = this.completeMolecules.length;
+      for ( var i = 0; i < length; i++ ) {
+        var completeMolecule = this.completeMolecules[i];
+        if ( completeMolecule.cid === cid ) {
+          return completeMolecule;
+        }
+      }
+      return null;
+    },
 
     getAllCompleteMolecules: function() {
       // TODO: performance: do we need a full copy here?

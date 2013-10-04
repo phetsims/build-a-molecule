@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+  <title>BAM Space Filling Test</title>
+  
+  <!-- jQuery and LoDash are dependencies -->
+  <script src="../../sherpa/jquery-2.0.3.min.js"></script>
+  <script src="../../sherpa/lodash-2.0.0.min.js"></script>
+  <script src="../../sherpa/has.js"></script>
+  
+  <script type="text/javascript" src="../../phetcommon/js/util/query-parameters.js"></script>
+  
+  <!-- Our code, in either the concatenated 'with comments' version or the minified version -->
+  <script data-main="../js/build-a-molecule-config.js" src="../../sherpa/require-2.1.8.js"></script>
+  
+  <style type="text/css">
+    .scene {
+      float: left;
+      margin-left: 5px;
+      position: relative; /* trigger correct positioning inside the scene */
+      background-color: #fff;
+      z-index: 0;
+      padding: none !important; /* in case we add jQuery Mobile back in */
+      border: 1px solid black;
+    }
+    
+    #can {
+      width: 512px;
+      height: 512px;
+    }
+  </style>
+</head>
+
+<body>
+  
+  <h1>BAM Space Filling Test</h1>
+  
+  <canvas id="can"></canvas>
+  
+  <script>
+    var canvas = document.getElementById( 'can' );
+    canvas.width = 512;
+    canvas.height = 512;
+    var context = canvas.getContext( '2d' );
+    
+    function check() {
+      if ( window.loadedBuildAMoleculeConfig ) {
+        // make sure the full sim code doesn't launch immediately
+        window.delayBuildAMoleculeLaunch = true;
+
+        require( [ 'build-a-molecule-main', 'BAM/namespace', 'SCENERY/main', 'KITE/main', 'DOT/main', 'PHET_CORE/main', 'NITROGLYCERIN/Element', 'BAM/model/CompleteMolecule', 'DOT/Matrix3' ],
+          function( bleh, bam, scenery, kite, dot, core, Element, CompleteMolecule, Matrix3 ) {
+            
+          window.bam = bam;
+          window.scenery = scenery;
+          window.kite = kite;
+          window.dot = dot;
+          window.core = core;
+          
+          // var generalTest = MoleculeList.getMasterInstance().findMoleculeByCID( 23418945 );
+          // var hcn = MoleculeList.getMasterInstance().findMoleculeByCID( 768 );
+          var hcn = CompleteMolecule.fromSerial2( 'hydrogen cyanide|CHN|768|full|3|2|N 3.403 0.405 -0.58 0 0|C 2.5369 -0.095 0.58 0 0,0-3|H 2.0 -0.405 1.645 0 0,1-1' );
+          var big = CompleteMolecule.fromSerial2( 'dimethylphosphoryloxy(dimethyl)phosphine|C4H12O2P2|23418945|3d|20|19|P -1.2703 -0.0791 -0.0060|P 1.6184 0.0953 0.6201|O 0.2532 0.4317 -0.1773,0-1,1-1|O -1.4175 -1.5612 0.1777,0-2|C -1.9147 0.8899 1.3416,0-1|C -2.0608 0.5368 -1.4786,0-1|C 2.0317 -1.508 -0.1719,1-1|C 2.7599 1.1945 -0.3056,1-1|H -1.4013 0.645 2.2755,4-1|H -1.7872 1.9591 1.1492,4-1|H -2.9818 0.6925 1.4763,4-1|H -1.6306 0.0687 -2.3684,5-1|H -3.1319 0.3176 -1.4578,5-1|H -1.9348 1.6198 -1.5652,5-1|H 1.3532 -2.2924 0.1748,6-1|H 3.0516 -1.8082 0.0858,6-1|H 1.957 -1.45 -1.2619,6-1|H 2.5488 2.2424 -0.0728,7-1|H 2.6613 1.0599 -1.3869,7-1|H 3.7977 0.9883 -0.028,7-1' );
+          
+          function ellipticalArcCut( ra, rb, d, theta ) {
+            if ( theta > Math.PI / 2 ) {
+              // other one is in front, bail!
+            }
+            
+            // 2d circle-circle intersection point
+            var ix = ( d * d + ra * ra - rb * rb ) / ( 2 * d );
+            var iy = ra * Math.Sqrt( 1 - ix * ix / ( ra * ra ) );
+            
+            // elliptical arc center
+            var cx = ix * Math.sin( theta );
+            var cy = 0;
+            
+            // elliptical semi-minor/major axes
+            var rx = iy * Math.cos( theta );
+            var ry = iy;
+            
+            var cutoffTheta = Math.atan2( ix, iy ); // yes, tan( ix/iy ) converts to this, don't let your instincts tell you otherwise
+            
+            if ( theta < cutoffTheta - 1e-7 ) {
+              // no arc needed
+              return null;
+            }
+            
+            var nx = ix / ( ra * Math.sin( theta ) );
+            
+            // start angle for our elliptical arc (from our ra circle's parametric frame)
+            var psi = Math.acos( nx );
+            
+            // start angle for our elliptical arc (from the elliptical arc's parametric frame)
+            var alpha = Math.atan2( ra * Math.sqrt( 1 - nx * nx ) / ry, ( ra * nx - cx ) / rx );
+            
+            return {
+              ix: ix,
+              iy: iy,
+              cx: cx,
+              cy: cy,
+              rx: rx,
+              ry: ry,
+              nx: nx,
+              psi: psi,
+              alpha: alpha
+            };
+          }
+          
+          // HCN
+          var n = dot( hcn.atoms[0].x3d(), hcn.atoms[0].y3d(), hcn.atoms[0].z3d() ).times( 100 ); // to picometers from angstroms? hopefully?
+          var c = dot( hcn.atoms[1].x3d(), hcn.atoms[1].y3d(), hcn.atoms[1].z3d() ).times( 100 ); // to picometers from angstroms? hopefully?
+          var h = dot( hcn.atoms[2].x3d(), hcn.atoms[2].y3d(), hcn.atoms[2].z3d() ).times( 100 ); // to picometers from angstroms? hopefully?
+          
+          n.element = Element.N;
+          c.element = Element.C;
+          h.element = Element.H;
+          
+          function step( timeElapsed ) {
+            var rot = Matrix3.rotationY( timeElapsed );
+            rot.multiplyVector3( n );
+            rot.multiplyVector3( c );
+            rot.multiplyVector3( h );
+          }
+          
+          function draw() {
+            var width = 512;
+            var height = 512;
+            var midX = width / 2;
+            var midY = height / 2;
+            // context.clearRect( 0, 0, width, height );
+            context.fillStyle = '#eee';
+            context.fillRect( 0, 0, width, height );
+            
+            var atoms = _.sortBy( [h,c,n], function( v ) { return v.z; } );
+            
+            for ( var i = 0; i < atoms.length; i++ ) {
+              var atom = atoms[i];
+              var element = atom.element
+              context.fillStyle = element.color;
+              context.beginPath();
+              context.arc( atom.x + midX, atom.y + midY, element.radius, 0, Math.PI * 2, false );
+              context.fill();
+            }
+            
+            // context.fillStyle = Element.N.color;
+            // context.beginPath();
+            // context.arc( n.x + midX, n.y + midY, Element.N.radius, 0, Math.PI * 2, false );
+            // context.fill();
+            
+            // context.fillStyle = Element.C.color;
+            // context.beginPath();
+            // context.arc( c.x + midX, c.y + midY, Element.C.radius, 0, Math.PI * 2, false );
+            // context.fill();
+            
+            // context.fillStyle = Element.H.color;
+            // context.beginPath();
+            // context.arc( h.x + midX, h.y + midY, Element.H.radius, 0, Math.PI * 2, false );
+            // context.fill();
+          }
+          
+          draw();
+          
+          var lastTime = 0;
+          var timeElapsed = 0;
+          function tick() {
+            window.requestAnimationFrame( tick, canvas );
+            
+            var timeNow = new Date().getTime();
+            if ( lastTime != 0 ) {
+              timeElapsed = (timeNow - lastTime) / 1000.0;
+            }
+            lastTime = timeNow;
+            
+            step( timeElapsed );
+            draw();
+          }
+          window.requestAnimationFrame( tick, canvas );
+        } );
+      }
+      else {
+        setTimeout( check, 4 );
+      }
+    }
+    setTimeout( check, 4 );
+    
+  </script>
+
+</body>
+</html>
