@@ -11,7 +11,8 @@ define( function( require ) {
   
   var namespace = require( 'BAM/namespace' );
   var Constants = require( 'BAM/Constants' );
-  var Strings = require( 'BAM/Strings' );
+  var collection_allFilledString = require( 'string!BAM/collection.allFilled' );
+  var collection_tryWithDifferentMoleculesString = require( 'string!BAM/collection.tryWithDifferentMolecules' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Text = require( 'SCENERY/nodes/Text' );
@@ -27,16 +28,16 @@ define( function( require ) {
     
     var smiley = new FaceNode( 120 ).smile();
     this.addChild( smiley );
-    
-    var text = new Text( Strings.collection_allFilled, {
+
+    var text = new Text( collection_allFilledString, {
       font: new PhetFont( {
         size: 20,
         weight: 'bold'
       } )
     } );
     this.addChild( text );
-    
-    var button = new TextButton( Strings.collection_tryWithDifferentMolecules, function() {
+
+    var button = new TextButton( collection_tryWithDifferentMoleculesString, function() {
       regenerateCallback();
       dialog.visible = false;
     }, {

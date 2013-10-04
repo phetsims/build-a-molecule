@@ -5,7 +5,7 @@
  */
 require( [
   // used in the function call
-  'JOIST/SimLauncher', 'JOIST/Sim', 'BAM/Strings',
+  'JOIST/SimLauncher', 'JOIST/Sim', 'string!BAM/build-a-molecule.name',
   'BAM/screens/MakeMoleculeScreen', 'BAM/screens/CollectMultipleScreen', 'BAM/screens/LargerMoleculesScreen',
 
   'BAM/namespace',
@@ -56,7 +56,7 @@ require( [
   // why, require.js, why?
   'SCENERY_PHET/NextPreviousNavigationNode'
 ],
-  function( SimLauncher, Sim, Strings, MakeMoleculeScreen, CollectMultipleScreen, LargerMoleculesScreen, namespace, CollectionPanel ) {
+  function( SimLauncher, Sim, buildAMoleculeNameString, MakeMoleculeScreen, CollectMultipleScreen, LargerMoleculesScreen, namespace, CollectionPanel ) {
     'use strict';
 
     var simOptions = {
@@ -78,7 +78,7 @@ require( [
     if ( !window.delayBuildAMoleculeLaunch ) {
       SimLauncher.launch( function() {
         //Create and start the sim
-        new Sim( Strings['build-a-molecule.name'], [
+        new Sim( buildAMoleculeNameString, [
           // TODO: replace these with the actual panel widths
           new MakeMoleculeScreen( CollectionPanel.getCollectionPanelModelWidth( true ) ),
           // new MakeMoleculeScreen( 400 ),

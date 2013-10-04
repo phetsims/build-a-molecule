@@ -12,19 +12,21 @@ window.loadedBuildAMoleculeConfig = true;
 require.config( {
   // just depends on BAM dependencies. strip out parts from our dependencies that we don't need.
   deps: [ 'build-a-molecule-main' ],
-  
+
   config: {
     i18n: {
       locale: "en_us" // default for development
     }
   },
-  
+
   paths: {
     // require.js plugins
     i18n: '../../sherpa/i18n-2.0.4',
     image: '../../chipper/requirejs-plugins/image',
     audio: '../../chipper/requirejs-plugins/audio',
-    
+    string: '../../chipper/requirejs-plugins/string',
+    text: '../../sherpa/text',
+
     // PhET libs, uppercase names to identify them in require.js imports
     ASSERT: '../../assert/js',
     AXON: '../../axon/js',
@@ -37,9 +39,9 @@ require.config( {
     SCENERY: '../../scenery/js',
     SCENERY_PHET: '../../scenery-phet/js',
     SUN: '../../sun/js',
-    
+
     BAM: '.'
   },
-  
+
   urlArgs: new Date().getTime() // add cache buster query string to make browser refresh actually reload everything
 } );
