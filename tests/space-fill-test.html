@@ -65,6 +65,18 @@
           var hcn = CompleteMolecule.fromSerial2( 'hydrogen cyanide|CHN|768|full|3|2|N 3.403 0.405 -0.58 0 0|C 2.5369 -0.095 0.58 0 0,0-3|H 2.0 -0.405 1.645 0 0,1-1' );
           var big = CompleteMolecule.fromSerial2( 'dimethylphosphoryloxy(dimethyl)phosphine|C4H12O2P2|23418945|3d|20|19|P -1.2703 -0.0791 -0.0060|P 1.6184 0.0953 0.6201|O 0.2532 0.4317 -0.1773,0-1,1-1|O -1.4175 -1.5612 0.1777,0-2|C -1.9147 0.8899 1.3416,0-1|C -2.0608 0.5368 -1.4786,0-1|C 2.0317 -1.508 -0.1719,1-1|C 2.7599 1.1945 -0.3056,1-1|H -1.4013 0.645 2.2755,4-1|H -1.7872 1.9591 1.1492,4-1|H -2.9818 0.6925 1.4763,4-1|H -1.6306 0.0687 -2.3684,5-1|H -3.1319 0.3176 -1.4578,5-1|H -1.9348 1.6198 -1.5652,5-1|H 1.3532 -2.2924 0.1748,6-1|H 3.0516 -1.8082 0.0858,6-1|H 1.957 -1.45 -1.2619,6-1|H 2.5488 2.2424 -0.0728,7-1|H 2.6613 1.0599 -1.3869,7-1|H 3.7977 0.9883 -0.028,7-1' );
           
+          function to3d( atom ) {
+            var v = dot( atom.x3d(), atom.y3d(), atom.z3d() ).times( 75 ); // similar to picometers from angstroms? hopefully?
+            v.element = atom.element;
+            v.radius = atom.element.radius;
+            v.color = atom.element.color;
+            return v;
+          }
+          var hcnAtoms = hcn.atoms.map( to3d );
+          var bigAtoms = big.atoms.map( to3d );
+          
+          var currentAtoms = bigAtoms;
+          
           function ellipticalArcCut( ra, rb, d, theta ) {
             if ( theta > Math.PI / 2 ) {
               // other one is in front, bail!
@@ -110,28 +122,11 @@
             };
           }
           
-          // HCN
-          var n = dot( hcn.atoms[0].x3d(), hcn.atoms[0].y3d(), hcn.atoms[0].z3d() ).times( 70 ); // to picometers from angstroms? hopefully?
-          var c = dot( hcn.atoms[1].x3d(), hcn.atoms[1].y3d(), hcn.atoms[1].z3d() ).times( 70 ); // to picometers from angstroms? hopefully?
-          var h = dot( hcn.atoms[2].x3d(), hcn.atoms[2].y3d(), hcn.atoms[2].z3d() ).times( 70 ); // to picometers from angstroms? hopefully?
-          
-          n.element = Element.N;
-          c.element = Element.C;
-          h.element = Element.H;
-          
-          n.radius = n.element.radius;
-          c.radius = c.element.radius;
-          h.radius = h.element.radius;
-          
-          n.color = n.element.color;
-          c.color = c.element.color;
-          h.color = h.element.color;
-          
           function step( timeElapsed ) {
             var rot = Matrix3.rotationY( timeElapsed );
-            rot.multiplyVector3( n );
-            rot.multiplyVector3( c );
-            rot.multiplyVector3( h );
+            _.each( currentAtoms, function( atom ) {
+              rot.multiplyVector3( atom );
+            } );
           }
           
           function draw() {
@@ -143,7 +138,7 @@
             context.fillStyle = '#000';
             context.fillRect( 0, 0, width, height );
             
-            var atoms = _.sortBy( [h,c,n], function( v ) { return v.z; } );
+            var atoms = _.sortBy( currentAtoms, function( v ) { return v.z; } );
             
             for ( var i = 0; i < atoms.length; i++ ) {
               var atom = atoms[i];
