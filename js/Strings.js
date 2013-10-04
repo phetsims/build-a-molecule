@@ -2,29 +2,42 @@
 
 define( function( require ) {
   'use strict';
-  
+
   var namespace = require( 'BAM/namespace' );
-  var Strings = require( 'i18n!BAM/../nls/build-a-molecule-strings' );
+  var Strings = {};
+  var hydrogen = require( 'string!BAM/atom.hydrogen' );
+  var oxygen = require( 'string!BAM/atom.oxygen' );
+  var carbon = require( 'string!BAM/atom.carbon' );
+  var nitrogen = require( 'string!BAM/atom.nitrogen' );
+  var fluorine = require( 'string!BAM/atom.fluorine' );
+  var chlorine = require( 'string!BAM/atom.chlorine' );
+  var boron = require( 'string!BAM/atom.boron' );
+  var sulphur = require( 'string!BAM/atom.sulphur' );
+  var silicon = require( 'string!BAM/atom.silicon' );
+  var phosphorus = require( 'string!BAM/atom.phosphorus' );
+  var iodine = require( 'string!BAM/atom.iodine' );
+  var bromine = require( 'string!BAM/atom.bromine' );
+
   namespace.Strings = Strings;
-  
+
   var elementMap = {
-    'H': Strings.atom_hydrogen,
-    'O': Strings.atom_oxygen,
-    'C': Strings.atom_carbon,
-    'N': Strings.atom_nitrogen,
-    'F': Strings.atom_fluorine,
-    'Cl': Strings.atom_chlorine,
-    'B': Strings.atom_boron,
-    'S': Strings.atom_sulphur,
-    'Si': Strings.atom_silicon,
-    'P': Strings.atom_phosphorus,
-    'I': Strings.atom_iodine,
-    'Br': Strings.atom_bromine
+    'H': hydrogen,
+    'O': oxygen,
+    'C': carbon,
+    'N': nitrogen,
+    'F': fluorine,
+    'Cl': chlorine,
+    'B': boron,
+    'S': sulphur,
+    'Si': silicon,
+    'P': phosphorus,
+    'I': iodine,
+    'Br': bromine
   };
-  
+
   Strings.getAtomName = function getAtomName( element ) {
     return elementMap[element.symbol];
   };
-  
+
   return Strings;
 } );
