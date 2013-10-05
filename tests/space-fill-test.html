@@ -2,7 +2,9 @@
 <html lang="en">
 <head>
   <meta charset="utf-8"/>
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+  <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1"/>
+  <meta name="apple-mobile-web-app-capable" content="yes">
 
   <title>BAM Space Filling Test</title>
   
@@ -36,8 +38,7 @@
 
 <body>
   
-  <h1>BAM Space Filling Test</h1>
-  <h2>NOTE: Not optimized, no perspective</h2>
+  <h1>BAM Space Filling Test (NOTE: Not optimized, no perspective)</h1>
   
   <canvas id="can"></canvas>
   
@@ -57,6 +58,9 @@
     canvas.width = 512;
     canvas.height = 512;
     var context = canvas.getContext( '2d' );
+    
+    context.font = '20px sans-serif';
+    context.fillText( 'loading...', 256, 256 );
     
     function check() {
       if ( window.loadedBuildAMoleculeConfig ) {
