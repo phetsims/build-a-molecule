@@ -33,6 +33,13 @@
       width: 512px;
       height: 512px;
     }
+    
+    .listcontainer {
+      height: 512px;
+      overflow: scroll;
+      float: right;
+      width: 400px;
+    }
   </style>
 </head>
 
@@ -41,6 +48,10 @@
   <h1>BAM Space Filling Test (NOTE: Not optimized, no perspective)</h1>
   
   <canvas id="can"></canvas>
+  <div class="listcontainer">
+    <table id="molecule-table">
+    </table>
+  </div>
   
   <br>
   <input type="radio" name="fill" id="radioFlat"></input><label for="radioFlat">Flat Color</label>
@@ -69,8 +80,8 @@
         // make sure the full sim code doesn't launch immediately
         window.delayBuildAMoleculeLaunch = true;
 
-        require( [ 'build-a-molecule-main', 'BAM/namespace', 'SCENERY/main', 'KITE/main', 'DOT/main', 'PHET_CORE/main', 'NITROGLYCERIN/Element', 'BAM/model/CompleteMolecule', 'DOT/Matrix3', 'DOT/Vector2', 'DOT/Vector3', 'KITE/segments/Arc', 'KITE/segments/EllipticalArc', 'SCENERY/util/Color', 'DOT/Util', 'DOT/Ray3' ],
-          function( bleh, bam, scenery, kite, dot, core, Element, CompleteMolecule, Matrix3, Vector2, Vector3, Arc, EllipticalArc, Color, DotUtil, Ray3 ) {
+        require( [ 'build-a-molecule-main', 'BAM/namespace', 'SCENERY/main', 'KITE/main', 'DOT/main', 'PHET_CORE/main', 'NITROGLYCERIN/Element', 'BAM/model/CompleteMolecule', 'DOT/Matrix3', 'DOT/Vector2', 'DOT/Vector3', 'KITE/segments/Arc', 'KITE/segments/EllipticalArc', 'SCENERY/util/Color', 'DOT/Util', 'DOT/Ray3', 'BAM/model/MoleculeList' ],
+          function( bleh, bam, scenery, kite, dot, core, Element, CompleteMolecule, Matrix3, Vector2, Vector3, Arc, EllipticalArc, Color, DotUtil, Ray3, MoleculeList ) {
             
           window.bam = bam;
           window.scenery = scenery;
@@ -83,6 +94,18 @@
           var hcn = CompleteMolecule.fromSerial2( 'hydrogen cyanide|CHN|768|full|3|2|N 3.403 0.405 -0.58 0 0|C 2.5369 -0.095 0.58 0 0,0-3|H 2.0 -0.405 1.645 0 0,1-1' );
           var big = CompleteMolecule.fromSerial2( 'dimethylphosphoryloxy(dimethyl)phosphine|C4H12O2P2|23418945|3d|20|19|P -1.2703 -0.0791 -0.0060|P 1.6184 0.0953 0.6201|O 0.2532 0.4317 -0.1773,0-1,1-1|O -1.4175 -1.5612 0.1777,0-2|C -1.9147 0.8899 1.3416,0-1|C -2.0608 0.5368 -1.4786,0-1|C 2.0317 -1.508 -0.1719,1-1|C 2.7599 1.1945 -0.3056,1-1|H -1.4013 0.645 2.2755,4-1|H -1.7872 1.9591 1.1492,4-1|H -2.9818 0.6925 1.4763,4-1|H -1.6306 0.0687 -2.3684,5-1|H -3.1319 0.3176 -1.4578,5-1|H -1.9348 1.6198 -1.5652,5-1|H 1.3532 -2.2924 0.1748,6-1|H 3.0516 -1.8082 0.0858,6-1|H 1.957 -1.45 -1.2619,6-1|H 2.5488 2.2424 -0.0728,7-1|H 2.6613 1.0599 -1.3869,7-1|H 3.7977 0.9883 -0.028,7-1' );
           
+          var table = document.getElementById( 'molecule-table' );
+          _.each( MoleculeList.getMasterInstance().completeMolecules, function( molecule ) {
+            var tr = document.createElement( 'tr' );
+            var nameCol = document.createElement( 'td' );
+            nameCol.innerHTML = '<a href="#" onclick="return switchTo(' + molecule.cid + ');">' + molecule.getDisplayName() + '</a>';
+            var formulaCol = document.createElement( 'td' );
+            formulaCol.innerHTML = molecule.getGeneralFormulaFragment();
+            tr.appendChild( nameCol );
+            tr.appendChild( formulaCol );
+            table.appendChild( tr );
+          } );
+          
           function to3d( atom ) {
             var v = dot( atom.x3d(), atom.y3d(), atom.z3d() ).times( 75 ); // similar to picometers from angstroms? hopefully?
             v.element = atom.element;
@@ -94,6 +117,11 @@
           var bigAtoms = big.atoms.map( to3d );
           
           var currentAtoms = bigAtoms;
+          
+          window.switchTo = function( cid ) {
+            currentAtoms = MoleculeList.getMasterInstance().findMoleculeByCID( cid ).atoms.map( to3d );
+            return false;
+          };
           
           function ellipticalArcCut( ra, rb, d, theta ) {
             if ( theta > Math.PI / 2 ) {
@@ -207,7 +235,10 @@
             var midY = height / 2;
             // context.clearRect( 0, 0, width, height );
             context.fillStyle = '#000';
+            context.setTransform( 1, 0, 0, 1, 0, 0 );
             context.fillRect( 0, 0, width, height );
+            var bigScale = 0.7;
+            context.setTransform( bigScale, 0, 0, bigScale, midX - bigScale * midX, midY - bigScale * midY );
             
             var atoms = _.sortBy( currentAtoms, function( v ) { return v.z; } );
             
