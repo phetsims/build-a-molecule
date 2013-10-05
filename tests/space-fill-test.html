@@ -45,14 +45,16 @@
   <br>
   <input type="radio" name="fill" id="radioFlat"></input><label for="radioFlat">Flat Color</label>
   <input type="radio" name="fill" id="radioBAM"></input><label for="radioBAM">BAM/BCE style</label>
-  <input type="radio" name="fill" checked="checked" id="radioMS"></input><label for="radioMS">Molecule Shapes style</label>
+  <input type="radio" name="fill" id="radioMS"></input><label for="radioMS">Molecule Shapes style</label>
+  <input type="radio" name="fill" checked="checked" id="radioGrad"></input><label for="radioGrad">Jmol style</label>
   
   <script>
-    var fillMode = 1; // 0: flat, 1: pre-rendered pattern, 2: BAM/BCE gradient
+    var fillMode = 3; // 0: flat, 1: pre-rendered pattern, 2: BAM/BCE gradient, 3: custom gradient
     
     document.getElementById( 'radioFlat' ).addEventListener( 'click', function() { fillMode = 0; } );
     document.getElementById( 'radioBAM' ).addEventListener( 'click', function() { fillMode = 2; } );
     document.getElementById( 'radioMS' ).addEventListener( 'click', function() { fillMode = 1; } );
+    document.getElementById( 'radioGrad' ).addEventListener( 'click', function() { fillMode = 3; } );
     
     var canvas = document.getElementById( 'can' );
     canvas.width = 512;
@@ -294,6 +296,23 @@
                   gradientFill.addColorStop( 0, '#ffffff' );
                   gradientFill.addColorStop( middleRadius / fullRadius, element.color );
                   gradientFill.addColorStop( 1, '#000000' );
+                  context.fillStyle = gradientFill;
+                  break;
+                case 3:
+                  // custom
+                  var diameter = atom.radius * 2;
+                  var gCenter = new Vector2( -atom.radius / 5, -atom.radius / 5 );
+                  var middleRadius = diameter / 3;
+                  var fullRadius = gCenter.minus( new Vector2( 1, 1 ).normalized().times( atom.radius ) ).magnitude();
+                  var gradientFill = context.createRadialGradient( gCenter.x, gCenter.y, 0, gCenter.x, gCenter.y, fullRadius );
+                  
+                  var baseColor = new Color( element.color );
+                  gradientFill.addColorStop( 0, baseColor.colorUtilsBrighter( 0.5 ).toCSS() );
+                  gradientFill.addColorStop( 0.08, baseColor.colorUtilsBrighter( 0.2 ).toCSS() );
+                  gradientFill.addColorStop( 0.4, baseColor.colorUtilsDarker( 0.1 ).toCSS() );
+                  gradientFill.addColorStop( 0.8, baseColor.colorUtilsDarker( 0.4 ).toCSS() );
+                  gradientFill.addColorStop( 0.95, baseColor.colorUtilsDarker( 0.6 ).toCSS() );
+                  gradientFill.addColorStop( 1, baseColor.colorUtilsDarker( 0.4 ).toCSS() );
                   context.fillStyle = gradientFill;
                   break;
               }
