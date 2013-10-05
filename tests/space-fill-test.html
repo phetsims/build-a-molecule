@@ -41,7 +41,7 @@
   <canvas id="can"></canvas>
   
   <script>
-    var useNiceFill = false;
+    var fillMode = 0; // 0: flat, 1: pre-rendered pattern, 2: test gradient
     
     var canvas = document.getElementById( 'can' );
     canvas.width = 512;
@@ -53,8 +53,8 @@
         // make sure the full sim code doesn't launch immediately
         window.delayBuildAMoleculeLaunch = true;
 
-        require( [ 'build-a-molecule-main', 'BAM/namespace', 'SCENERY/main', 'KITE/main', 'DOT/main', 'PHET_CORE/main', 'NITROGLYCERIN/Element', 'BAM/model/CompleteMolecule', 'DOT/Matrix3', 'DOT/Vector3', 'KITE/segments/EllipticalArc', 'SCENERY/util/Color', 'DOT/Util', 'DOT/Ray3' ],
-          function( bleh, bam, scenery, kite, dot, core, Element, CompleteMolecule, Matrix3, Vector3, EllipticalArc, Color, DotUtil, Ray3 ) {
+        require( [ 'build-a-molecule-main', 'BAM/namespace', 'SCENERY/main', 'KITE/main', 'DOT/main', 'PHET_CORE/main', 'NITROGLYCERIN/Element', 'BAM/model/CompleteMolecule', 'DOT/Matrix3', 'DOT/Vector2', 'DOT/Vector3', 'KITE/segments/Arc', 'KITE/segments/EllipticalArc', 'SCENERY/util/Color', 'DOT/Util', 'DOT/Ray3' ],
+          function( bleh, bam, scenery, kite, dot, core, Element, CompleteMolecule, Matrix3, Vector2, Vector3, Arc, EllipticalArc, Color, DotUtil, Ray3 ) {
             
           window.bam = bam;
           window.scenery = scenery;
@@ -244,18 +244,29 @@
                                                          arcs[j].rx, arcs[j].ry,
                                                          arcs[j].rotation,
                                                          arcs[j].ellipseStart, arcs[j].ellipseEnd, false );
-                  ellipticalArc.writeToContext( context );
                   var atEnd = j + 1 === arcs.length;
-                  context.arc( atom.x, atom.y, atom.radius, arcs[j].circleEnd, atEnd ? ( arcs[0].circleStart + Math.PI * 2 ) : arcs[j+1].circleStart, false );
+                  var arc = new Arc( new Vector2( atom.x, atom.y ), atom.radius, arcs[j].circleEnd, atEnd ? ( arcs[0].circleStart + Math.PI * 2 ) : arcs[j+1].circleStart, false );
+                  ellipticalArc.writeToContext( context );
+                  arc.writeToContext( context );
                 }
               } else {
-                context.arc( atom.x, atom.y, atom.radius, 0, Math.PI * 2, false );
+                var arc = new Arc( new Vector2( atom.x, atom.y ), atom.radius, 0, Math.PI * 2, false );
+                arc.writeToContext( context );
               }
-              if ( useNiceFill ) {
-                elementPatternTransforms[element.symbol].canvasAppendTransform( context );
-                context.fillStyle = elementPatterns[element.symbol];
-              } else {
-                context.fillStyle = atom.color;
+              switch ( fillMode ) {
+                case 0:
+                  context.fillStyle = atom.color;
+                  break;
+                case 1:
+                  // elementPatternTransforms[element.symbol].canvasAppendTransform( context );
+                  context.fillStyle = elementPatterns[element.symbol];
+                  break;
+                case 2:
+                  var gradient = context.createRadialGradient( 0, 0, 0, 0, 0, 100 );
+                  gradient.addColorStop( 0, '#0f0' );
+                  gradient.addColorStop( 1, '#0ff' );
+                  context.fillStyle = gradient;
+                  break;
               }
               context.fill();
               context.restore();
