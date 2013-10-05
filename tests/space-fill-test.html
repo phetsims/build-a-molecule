@@ -37,11 +37,21 @@
 <body>
   
   <h1>BAM Space Filling Test</h1>
+  <h2>NOTE: Not optimized, no perspective</h2>
   
   <canvas id="can"></canvas>
   
+  <br>
+  <input type="radio" name="fill" id="radioFlat"></input><label for="radioFlat">Flat Color</label>
+  <input type="radio" name="fill" id="radioBAM"></input><label for="radioBAM">BAM/BCE style</label>
+  <input type="radio" name="fill" checked="checked" id="radioMS"></input><label for="radioMS">Molecule Shapes style</label>
+  
   <script>
-    var fillMode = 2; // 0: flat, 1: pre-rendered pattern, 2: test gradient
+    var fillMode = 1; // 0: flat, 1: pre-rendered pattern, 2: BAM/BCE gradient
+    
+    document.getElementById( 'radioFlat' ).addEventListener( 'click', function() { fillMode = 0; } );
+    document.getElementById( 'radioBAM' ).addEventListener( 'click', function() { fillMode = 2; } );
+    document.getElementById( 'radioMS' ).addEventListener( 'click', function() { fillMode = 1; } );
     
     var canvas = document.getElementById( 'can' );
     canvas.width = 512;
