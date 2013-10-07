@@ -31,7 +31,8 @@ define( function( require ) {
     
     this.addInputListener( new ButtonListener( {
       fire: function( evt ) {
-        new Molecule3DNode( completeMolecule, that.getUniqueTrail() );
+        var trail = that.getUniqueTrail();
+        trail.rootNode().addChild( new Molecule3DNode( completeMolecule, trail ) );
       }
     } ) );
     
