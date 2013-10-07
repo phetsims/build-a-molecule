@@ -21,15 +21,17 @@ define( function( require ) {
   var greenMiddle = require( 'image!BAM/../images/green-middle.png' );
   var greenRight = require( 'image!BAM/../images/green-right.png' );
   var iconString = require( 'string!BAM/3d.icon' );
+  var Molecule3DNode = require( 'BAM/view/view3d/Molecule3DNode' );
 
   var ShowMolecule3DButtonNode = namespace.ShowMolecule3DButtonNode = function ShowMolecule3DButtonNode( completeMolecule, options ) {
+    var that = this;
     Node.call( this, _.extend( {
       cursor: 'pointer'
     }, options ) );
     
     this.addInputListener( new ButtonListener( {
       fire: function( evt ) {
-        
+        new Molecule3DNode( completeMolecule, that.getUniqueTrail() );
       }
     } ) );
     

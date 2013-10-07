@@ -33,6 +33,8 @@ define( function( require ) {
   };
 
   return inherit( ScreenView, BAMView, {
+    isBAMView: true, // because require.js doesn't like to load us in some places!
+    
     addCollection: function( collection ) {
       var kitCollectionNode = new KitCollectionNode( this.collectionList, collection, this );
       this.addChild( kitCollectionNode );
