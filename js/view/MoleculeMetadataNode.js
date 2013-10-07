@@ -52,7 +52,7 @@ define( function( require ) {
       *----------------------------------------------------------------------------*/
       if ( Constants.has3d ) {
         // TODO: add dialog!
-        var button3d = new ShowMolecule3DButtonNode( this.dialog, completeMolecule, {
+        var button3d = new ShowMolecule3DButtonNode( completeMolecule, {
           x: currentX
         } );
         this.addChild( button3d );
