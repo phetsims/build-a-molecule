@@ -18,6 +18,7 @@ define( function( require ) {
   var Vector3 = require( 'DOT/Vector3' );
   var Bounds2 = require( 'DOT/Bounds2' );
   var Matrix3 = require( 'DOT/Matrix3' );
+  var Quaternion = require( 'DOT/Quaternion' );
   var Node = require( 'SCENERY/nodes/Node' );
   var DOM = require( 'SCENERY/nodes/DOM' );
   var Path = require( 'SCENERY/nodes/Path' );
@@ -86,59 +87,59 @@ define( function( require ) {
     };
   }
   
-  var sunDirection = new Vector3( -1, 0.5, 2 ).normalized();
-  var moonDirection = new Vector3( 2, -1, 1 ).normalized();
-  var sunWeight = 0.8;
-  var moonWeight = 0.6;
-  function shade( element, normal ) {
-    var baseColor = new Color( element.color );
-    var sunTotal = Math.max( 0, normal.dot( sunDirection ) ) * sunWeight;
-    var moonTotal = Math.max( 0, normal.dot( moonDirection ) ) * moonWeight;
+  // var sunDirection = new Vector3( -1, 0.5, 2 ).normalized();
+  // var moonDirection = new Vector3( 2, -1, 1 ).normalized();
+  // var sunWeight = 0.8;
+  // var moonWeight = 0.6;
+  // function shade( element, normal ) {
+  //   var baseColor = new Color( element.color );
+  //   var sunTotal = Math.max( 0, normal.dot( sunDirection ) ) * sunWeight;
+  //   var moonTotal = Math.max( 0, normal.dot( moonDirection ) ) * moonWeight;
 
-    var weight = Math.min( 1, sunTotal + moonTotal );
+  //   var weight = Math.min( 1, sunTotal + moonTotal );
     
-    return 'rgb(' +
-           Math.floor( weight * baseColor.red ) + ',' +
-           Math.floor( weight * baseColor.green ) + ',' +
-           Math.floor( weight * baseColor.blue ) + ')';
-  }
+  //   return 'rgb(' +
+  //          Math.floor( weight * baseColor.red ) + ',' +
+  //          Math.floor( weight * baseColor.green ) + ',' +
+  //          Math.floor( weight * baseColor.blue ) + ')';
+  // }
   
-  function shadedCanvas( element, size ) {
-    var canvas = document.createElement( 'canvas' );
-    canvas.width = size;
-    canvas.height = size;
-    var context = canvas.getContext( '2d' );
+  // function shadedCanvas( element, size ) {
+  //   var canvas = document.createElement( 'canvas' );
+  //   canvas.width = size;
+  //   canvas.height = size;
+  //   var context = canvas.getContext( '2d' );
     
-    var step = 2 / size; // sample at the centers of pixels
-    for ( var idx = 0; idx < size; idx++ ) {
-      var x = -1 + ( idx + 0.5 ) * step;
-      for ( var idy = 0; idy < size; idy++ ) {
-        var y = 1 - ( idy + 0.5 ) * step; // inverse Y for 3d style
+  //   var step = 2 / size; // sample at the centers of pixels
+  //   for ( var idx = 0; idx < size; idx++ ) {
+  //     var x = -1 + ( idx + 0.5 ) * step;
+  //     for ( var idy = 0; idy < size; idy++ ) {
+  //       var y = 1 - ( idy + 0.5 ) * step; // inverse Y for 3d style
         
-        var intersection = DotUtil.sphereRayIntersection( 1, new Ray3( new Vector3( x, y, 2 ), Vector3.Z_UNIT.negated() ) );
-        var normal = intersection ? intersection.normal : new Vector3( x, y, 0 ).normalized(); // shade as the closest point on the sphere if we miss
+  //       var intersection = DotUtil.sphereRayIntersection( 1, new Ray3( new Vector3( x, y, 2 ), Vector3.Z_UNIT.negated() ) );
+  //       var normal = intersection ? intersection.normal : new Vector3( x, y, 0 ).normalized(); // shade as the closest point on the sphere if we miss
         
-        context.fillStyle = shade( element, normal );
-        context.fillRect( idx, idy, 1, 1 );
-      }
-    }
-    return canvas;
-  }
+  //       context.fillStyle = shade( element, normal );
+  //       context.fillRect( idx, idy, 1, 1 );
+  //     }
+  //   }
+  //   return canvas;
+  // }
   
-  var elementPatterns = {};
-  var tmpContext = document.createElement( 'canvas' ).getContext( '2d' );
-  var elementPatternTransforms = {};
-  _.each( Element.elements, function( element ) {
-    var size = 128;
-    var canvas = shadedCanvas( element, size );
-    var pattern = tmpContext.createPattern( canvas, 'no-repeat' );
-    elementPatterns[element.symbol] = pattern;
-    var matrix = new Matrix3( 2 * element.radius / size, 0,                         -element.radius,
-                              0,                         2 * element.radius / size, -element.radius,
-                              0,                         0,                         1 );
-    elementPatternTransforms[element.symbol] = matrix.inverted();
-    // pattern.setTransform( matrix.toSVGMatrix() );
-  } );
+  // var elementPatterns = {};
+  // var tmpContext = document.createElement( 'canvas' ).getContext( '2d' );
+  // var elementPatternTransforms = {};
+  // _.each( Element.elements, function( element ) {
+  //   var size = 128;
+  //   var canvas = shadedCanvas( element, size );
+  //   var pattern = tmpContext.createPattern( canvas, 'no-repeat' );
+  //   elementPatterns[element.symbol] = pattern;
+  //   var matrix = new Matrix3( 2 * element.radius / size, 0,                         -element.radius,
+  //                             0,                         2 * element.radius / size, -element.radius,
+  //                             0,                         0,                         1 );
+  //   elementPatternTransforms[element.symbol] = matrix.inverted();
+  //   // pattern.setTransform( matrix.toSVGMatrix() );
+  // } );
 
   var Molecule3DNode = namespace.Molecule3DNode = function Molecule3DNode( completeMolecule, trail ) {
     var that = this;
@@ -264,7 +265,8 @@ define( function( require ) {
         context.save();
         context.translate( midX + atom.x, midY + atom.y );
         context.beginPath();
-        var transformMatrix = fillMode === 1 ? elementPatternTransforms[element.symbol] : Matrix3.IDENTITY;
+        // var transformMatrix = fillMode === 1 ? elementPatternTransforms[element.symbol] : Matrix3.IDENTITY;
+        var transformMatrix = Matrix3.IDENTITY;
         var inverseTransformMatrix = transformMatrix.inverted();
         var arc, ellipticalArc;
         if ( inverseTransformMatrix !== Matrix3.IDENTITY ) {
@@ -299,7 +301,7 @@ define( function( require ) {
             context.fillStyle = atom.color;
             break;
           case 1:
-            context.fillStyle = elementPatterns[element.symbol];
+            // context.fillStyle = elementPatterns[element.symbol];
             break;
           case 2:
             // copied from BAM's AtomNode
@@ -336,24 +338,72 @@ define( function( require ) {
       }
     }
     
+    var upCursor = '-webkit-grab, -moz-grab, grab, pointer';
+    var downCursor = '-webkit-grabbing, -moz-grabbing, grabbing, move';
+    canvas.style.cursor = upCursor;
+    
+    var dragging = false;
+    
     function tick( timeElapsed ) {
-      var rot = Matrix3.rotationY( timeElapsed );
+      var matrix;
+      if ( !dragging && currentPosition.equals( lastPosition ) ) {
+        matrix = Matrix3.rotationY( timeElapsed );
+      } else {
+        var correctScale = 4 / canvas.width;
+        var delta = currentPosition.minus( lastPosition );
+        var quat = Quaternion.fromEulerAngles(
+          -delta.y * correctScale, // yaw
+          delta.x * correctScale,  // roll
+          0                        // pitch
+        );
+        matrix = quat.toRotationMatrix();
+        lastPosition = currentPosition;
+      }
       _.each( currentAtoms, function( atom ) {
-        rot.multiplyVector3( atom );
+        matrix.multiplyVector3( atom );
       } );
       draw();
     }
     
     namespace.timeTick.on( 'tick', tick );
     
+    var lastPosition = Vector2.ZERO;
+    var currentPosition = Vector2.ZERO;
+    var dragListener = {
+      up: function( event ) {
+        dragging = false;
+        event.pointer.removeInputListener( dragListener );
+        event.handle();
+        canvas.style.cursor = upCursor;
+      },
+      
+      cancel: function( event ) {
+        dragging = false;
+        event.pointer.removeInputListener( dragListener );
+        canvas.style.cursor = upCursor;
+      },
+      
+      move: function( event ) {
+        currentPosition = event.pointer.point.copy();
+      }
+    };
     dom.addInputListener( {
-      up: function( evt ) {
-        evt.handle();
+      up: function( event ) {
+        event.handle();
+      },
+      
+      down: function( event ) {
+        if ( !dragging ) {
+          dragging = true;
+          lastPosition = currentPosition = event.pointer.point.copy();
+          event.pointer.addInputListener( dragListener );
+          canvas.style.cursor = downCursor;
+        }
       }
     } );
     
     this.addInputListener( {
-      up: function( evt ) {
+      up: function( event ) {
         scene.removeEventListener( 'resize', updateLayout );
         view.removeEventListener( 'bounds', updateLayout );
         scene.removeChild( that );
