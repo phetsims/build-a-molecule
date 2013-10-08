@@ -41,8 +41,9 @@ define( function( require ) {
     };
     
     if ( Constants.has3d ) {
-      var show3dButton = new ShowMolecule3DButtonNode( this.dialog, box.moleculeType );
-      show3dButton.centerX = this.blackBox.centerX - blackBoxPaddingFor3D;
+      var show3dButton = new ShowMolecule3DButtonNode( box.moleculeType );
+      show3dButton.right = this.blackBox.right - blackBoxPaddingFor3D;
+      show3dButton.centerY = this.blackBox.centerY;
       this.button3dWidth = show3dButton.width;
       var update3dVisibility = function() {
         show3dButton.visible = box.quantity > 0;
