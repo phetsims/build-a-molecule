@@ -1,6 +1,6 @@
 {
   "build-a-molecule": {
-    "sha": "cf95202f2efcd384b69a0b266120498c8558535f",
+    "sha": "59db3dac1e5348dda3442089b1bdd35eb37b5c1c",
     "branch": "master"
   },
   "sherpa": {
@@ -20,7 +20,7 @@
     "branch": "master"
   },
   "dot": {
-    "sha": "dbf4be79b053f0e1e6eba3d711946d44813fea65",
+    "sha": "f6c357b3a8a24c67d8f724f5d56dc3fa4be01234",
     "branch": "master"
   },
   "joist": {
@@ -32,7 +32,7 @@
     "branch": "master"
   },
   "nitroglycerin": {
-    "sha": "fc42c45e4dcaa5311a4879cd5365505c14a811a4",
+    "sha": "64361d194e74042acafed34bc099aa54ff385d24",
     "branch": "master"
   },
   "phet-core": {
