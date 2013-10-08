@@ -28,40 +28,7 @@ define( function( require ) {
       cursor: 'pointer'
     }, options ) );
     
-    var element = atom.element;
-
-    this.color = new Color( element.color );
-    this.radius = Constants.modelViewTransform.modelToViewDeltaX( element.radius );
-    this.diameter = this.radius * 2;
-
-    var gCenter = new Vector2( -this.radius / 3, -this.radius / 3 );
-
-    // copying ShadedSphereNode
-    var middleRadius = this.diameter / 3;
-    var fullRadius = middleRadius + 0.7 * this.diameter;
-
-    var gradientFill = new RadialGradient( gCenter.x, gCenter.y, 0, gCenter.x, gCenter.y, fullRadius );
-    gradientFill.addColorStop( 0, '#ffffff' );
-    gradientFill.addColorStop( middleRadius / fullRadius, this.color.toCSS() );
-    gradientFill.addColorStop( 1, '#000000' );
-
-    this.addChild( new Path( Shape.circle( 0, 0, this.radius ), {
-      fill: gradientFill
-    } ) );
-
-    var isTextWhite = AtomNode.needsWhiteColor( this.color );
-
-    var text = new Text( element.symbol, {
-      fontWeight: 'bold',
-      fontFamily: 'Arial, sans-serif',
-      fontSize: 50,
-      fill: isTextWhite ? '#fff' : '#000',
-      boundsMethod: 'fast'
-    } );
-    text.scale( Math.min( 0.75 * this.diameter / text.getBounds().width, 0.75 * this.diameter / text.getBounds().height ) );
-    text.centerX = 0;
-    text.centerY = 0;
-    this.addChild( text );
+    this.addChild( AtomNode.getGraphics( atom.element ) );
     
     var that = this;
     atom.positionProperty.link( function( modelPosition ) {
@@ -73,6 +40,51 @@ define( function( require ) {
     atom.on( 'removedFromModel', function() {
       that.detach(); // removes us from all parents
     } );
+  };
+  
+  // map from element symbol => graphical node for the atom, so that we can use the DAG to save overhead and costs
+  var elementMap = {};
+  AtomNode.getGraphics = function( element ) {
+    var node = elementMap[element.symbol];
+    if ( node ) {
+      return node;
+    }
+    
+    var color = new Color( element.color );
+    var radius = Constants.modelViewTransform.modelToViewDeltaX( element.radius );
+    var diameter = radius * 2;
+
+    var gCenter = new Vector2( -radius / 3, -radius / 3 );
+
+    // copying ShadedSphereNode
+    var middleRadius = diameter / 3;
+    var fullRadius = middleRadius + 0.7 * diameter;
+
+    var gradientFill = new RadialGradient( gCenter.x, gCenter.y, 0, gCenter.x, gCenter.y, fullRadius );
+    gradientFill.addColorStop( 0, '#ffffff' );
+    gradientFill.addColorStop( middleRadius / fullRadius, color.toCSS() );
+    gradientFill.addColorStop( 1, '#000000' );
+    
+    node = new Path( Shape.circle( 0, 0, radius ), {
+      fill: gradientFill
+    } );
+
+    var isTextWhite = AtomNode.needsWhiteColor( color );
+
+    var text = new Text( element.symbol, {
+      fontWeight: 'bold',
+      fontFamily: 'Arial, sans-serif',
+      fontSize: 50,
+      fill: isTextWhite ? '#fff' : '#000',
+      boundsMethod: 'fast'
+    } );
+    text.scale( Math.min( 0.75 * diameter / text.getBounds().width, 0.75 * diameter / text.getBounds().height ) );
+    text.centerX = 0;
+    text.centerY = 0;
+    node.addChild( text );
+    
+    elementMap[element.symbol] = node;
+    return node;
   };
   
   AtomNode.needsWhiteColor = function( color ) {
