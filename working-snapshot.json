@@ -1,14 +1,14 @@
 {
   "build-a-molecule": {
-    "sha": "7af103122af96fc3817f5fde747798d860d58b07",
+    "sha": "16b4e7fd4eb702c4621cc2bb9e4ac8d26ad63030",
     "branch": "master"
   },
   "sherpa": {
-    "sha": "bb78b8b67b9ddb5033d0e4b6764ecd9eafeae211",
+    "sha": "71d59ca730a951e5faee5d10144b99da954bd8d2",
     "branch": "master"
   },
   "chipper": {
-    "sha": "94a47da45936eb9f4915c21fec4bb198e1e56a40",
+    "sha": "a3d03207c141b48ff350641f3cd85cb9bcd1c4ef",
     "branch": "master"
   },
   "assert": {
@@ -16,19 +16,19 @@
     "branch": "master"
   },
   "axon": {
-    "sha": "ce50e9fb08440d00d5a768271ce618a746d4cfdc",
+    "sha": "6d71098ce79925d8f9dcde921991fafe791f0bc0",
     "branch": "master"
   },
   "dot": {
-    "sha": "57591de55bf9445ef5dcffeab84b5b0c9ca73658",
+    "sha": "dbf4be79b053f0e1e6eba3d711946d44813fea65",
     "branch": "master"
   },
   "joist": {
-    "sha": "85d53e01d7f96fa54c4f229db4d40b775d797a4b",
+    "sha": "feec32400d53c59de0dddcd481f56de7b7dee628",
     "branch": "master"
   },
   "kite": {
-    "sha": "c3a5ef17fc3beea037f4939e088ac455461611fa",
+    "sha": "454041bc4251789b7de2ef3e396d82ddd7be0524",
     "branch": "master"
   },
   "nitroglycerin": {
@@ -40,19 +40,19 @@
     "branch": "master"
   },
   "phetcommon": {
-    "sha": "0ef807168b3712c1c0ef9e7e9bc3dd6703eac14b",
+    "sha": "5de09fde46b134199046a8cfac7cbae065b09b7f",
     "branch": "master"
   },
   "scenery": {
-    "sha": "83a798ed4c51ee1a1ac4df7d0d2819dccad2b9ad",
+    "sha": "46840ea19a6696ddaa579fb73ec37c53c2b5e7e4",
     "branch": "master"
   },
   "scenery-phet": {
-    "sha": "15eeb5395abd2694b1e6fae8984037b51237f6d4",
+    "sha": "980eef31807677cbe0d7999d3ccc95a9c6730fdc",
     "branch": "master"
   },
   "sun": {
-    "sha": "b3caa0a967bbfbd94e89a38afd2ad6539c8bc172",
+    "sha": "a25e236f62fb4ce407a500ca885eab51c7fd31b0",
     "branch": "master"
   },
   "vibe": {
@@ -60,7 +60,7 @@
     "branch": "master"
   },
   "sherpa": {
-    "sha": "bb78b8b67b9ddb5033d0e4b6764ecd9eafeae211",
+    "sha": "71d59ca730a951e5faee5d10144b99da954bd8d2",
     "branch": "master"
   },
 }
