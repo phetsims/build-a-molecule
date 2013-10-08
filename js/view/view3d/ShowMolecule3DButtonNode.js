@@ -53,7 +53,7 @@ define( function( require ) {
     
     var labelPadding = 2;
     var width = Math.ceil( Math.max( sqSize, label.width + 2 * labelPadding ) );
-    label.centerX = label.width / 2;
+    label.centerX = width / 2;
     label.centerY = sqSize / 2;
     
     var base = new MeterBodyNode( width, greenLeft, greenMiddle, greenRight, {} );
