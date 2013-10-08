@@ -10,7 +10,7 @@ define( function( require ) {
   var Vector2 = require( 'DOT/Vector2' );
   var ModelViewTransform2 = require( 'PHETCOMMON/view/ModelViewTransform2' );
   
-  var viewSize = new Dimension2( 1008, 679 );
+  var viewSize = new Dimension2( 1100, 679 );
   var mvt = ModelViewTransform2.createSinglePointScaleInvertedYMapping(
     Vector2.ZERO,
     new Vector2( Math.round( viewSize.width * 0.5 ), Math.round( viewSize.height * 0.5 ) ),
