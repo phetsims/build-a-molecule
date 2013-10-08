@@ -87,6 +87,7 @@ define( function( require ) {
       x: kitViewBounds.minX + 5,
       y: kitViewBounds.minY + 5
     } );
+    refillButton.touchArea = Shape.bounds( refillButton.selfBounds.union( refillButton.childBounds ).dilated( 10 ) );
     var updateRefillButton = function() {
       refillButton.enabled = kitCollectionModel.currentKit.hasAtomsOutsideOfBuckets();
     };
