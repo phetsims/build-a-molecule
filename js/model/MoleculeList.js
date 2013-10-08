@@ -199,12 +199,8 @@ define( function( require ) {
       var molecule = CompleteMolecule.fromSerial2( string );
 
       // sanity checks
-      if ( molecule.hasLoopsOrIsDisconnected() ) {
-        throw new Error( 'ignoring molecule: ' + molecule.commonName );
-      }
-      if ( molecule.hasWeirdHydrogenProperties() ) {
-        throw new Error( 'weird hydrogen pattern in: ' + molecule.commonName );
-      }
+      assert && assert( !molecule.hasLoopsOrIsDisconnected(), 'has loops or is disconnected: ' + molecule.commonName );
+      assert && assert( !molecule.hasWeirdHydrogenProperties(), 'has weird hydrogen pattern in: ' + molecule.commonName );
       return molecule;
     } );
   };
@@ -214,15 +210,17 @@ define( function( require ) {
    * @return A list of molecule structures
    */
   MoleculeList.readMoleculeStructuresFromData = function( strings ) {
-    return _.map( strings, function( string ) {
+    var len = strings.length;
+    var arr = new Array( len );
+    for ( var i = 0; i < len; i++ ) {
+      var string = strings[i];
       var structure = MoleculeStructure.fromSerial2Basic( string );
 
       // sanity checks
-      if ( structure.hasWeirdHydrogenProperties() ) {
-          throw new Error( "weird hydrogen pattern in structure: " + string );
-      }
-      return structure;
-    } );
+      assert && assert( !structure.hasWeirdHydrogenProperties(), 'Weird hydrogen pattern in structure: ' + string );
+      arr[i] = structure;
+    }
+    return arr;
   };
   
   initialList.loadInitialData();
