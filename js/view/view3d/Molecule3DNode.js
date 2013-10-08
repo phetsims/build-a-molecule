@@ -17,6 +17,7 @@ define( function( require ) {
   var Vector2 = require( 'DOT/Vector2' );
   var Vector3 = require( 'DOT/Vector3' );
   var Bounds2 = require( 'DOT/Bounds2' );
+  var Bounds3 = require( 'DOT/Bounds3' );
   var Matrix3 = require( 'DOT/Matrix3' );
   var Quaternion = require( 'DOT/Quaternion' );
   var Node = require( 'SCENERY/nodes/Node' );
@@ -209,6 +210,19 @@ define( function( require ) {
     view.addEventListener( 'bounds', updateLayout );
     
     var currentAtoms = completeMolecule.atoms.map( to3d );
+    
+    // center the bounds of the atoms
+    var bounds3 = Bounds3.NOTHING.copy();
+    _.each( currentAtoms, function( atom ) {
+      bounds3.includeBounds( new Bounds3( atom.x - atom.radius, atom.y - atom.radius, atom.z - atom.radius,
+                                          atom.x + atom.radius, atom.y + atom.radius, atom.z + atom.radius ) );
+    } );
+    var center3 = bounds3.center;
+    if ( center3.magnitude() ) {
+      _.each( currentAtoms, function( atom ) {
+        atom.subtract( center3 );
+      } );
+    }
     
     var maxTotalRadius = 0;
     _.each( currentAtoms, function( atom ) {
