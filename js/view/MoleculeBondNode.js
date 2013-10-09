@@ -30,14 +30,14 @@ icotool -c -o scissors-closed-up.ico scissors-closed-up.png
    */
   
   var images = {
-    'scissors.png':           require( 'image!BAM/../images/scissors.png' ),
-    'scissors-closed.png':    require( 'image!BAM/../images/scissors-closed.png' ),
-    'scissors-up.png':        require( 'image!BAM/../images/scissors-up.png' ),
-    'scissors-closed-up.png': require( 'image!BAM/../images/scissors-closed-up.png' ),
-    'scissors.cur':           require( 'image!BAM/../images/scissors.cur' ),
-    'scissors-closed.cur':    require( 'image!BAM/../images/scissors-closed.cur' ),
-    'scissors-up.cur':        require( 'image!BAM/../images/scissors-up.cur' ),
-    'scissors-closed-up.cur': require( 'image!BAM/../images/scissors-closed-up.cur' )
+    'scissors.png':           require( 'image!BAM/scissors.png' ),
+    'scissors-closed.png':    require( 'image!BAM/scissors-closed.png' ),
+    'scissors-up.png':        require( 'image!BAM/scissors-up.png' ),
+    'scissors-closed-up.png': require( 'image!BAM/scissors-closed-up.png' ),
+    'scissors.cur':           require( 'image!BAM/scissors.cur' ),
+    'scissors-closed.cur':    require( 'image!BAM/scissors-closed.cur' ),
+    'scissors-up.cur':        require( 'image!BAM/scissors-up.cur' ),
+    'scissors-closed-up.cur': require( 'image!BAM/scissors-closed-up.cur' )
   };
   
   var bondRadius = 5; // "Radius" of the bond target that will break the bond

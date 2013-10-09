@@ -18,7 +18,7 @@ define( function( require ) {
   var ButtonListener = require( 'SCENERY/input/ButtonListener' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var ShowMolecule3DButtonNode = require( 'BAM/view/view3d/ShowMolecule3DButtonNode' );
-  var splitIconImage = require( 'image!BAM/../images/split-blue.png' );
+  var splitIconImage = require( 'image!BAM/split-blue.png' );
   
   var MoleculeMetadataNode = namespace.MoleculeMetadataNode = function MoleculeMetadataNode( kit, molecule ) {
     Node.call( this, {} );

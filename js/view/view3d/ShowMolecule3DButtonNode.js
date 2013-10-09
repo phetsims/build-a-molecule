@@ -17,9 +17,9 @@ define( function( require ) {
   var ButtonListener = require( 'SCENERY/input/ButtonListener' );
   var MeterBodyNode = require( 'SCENERY_PHET/MeterBodyNode' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  var greenLeft = require( 'image!BAM/../images/green-left.png' );
-  var greenMiddle = require( 'image!BAM/../images/green-middle.png' );
-  var greenRight = require( 'image!BAM/../images/green-right.png' );
+  var greenLeft = require( 'image!BAM/green-left.png' );
+  var greenMiddle = require( 'image!BAM/green-middle.png' );
+  var greenRight = require( 'image!BAM/green-right.png' );
   var iconString = require( 'string!BAM/3d.icon' );
   var Molecule3DNode = require( 'BAM/view/view3d/Molecule3DNode' );
 
