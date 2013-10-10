@@ -13,12 +13,6 @@ require.config( {
   // just depends on BAM dependencies. strip out parts from our dependencies that we don't need.
   deps: [ 'build-a-molecule-main' ],
 
-  config: {
-    i18n: {
-      locale: "en_us" // default for development
-    }
-  },
-
   paths: {
     // require.js plugins
     image: '../../chipper/requirejs-plugins/image',
