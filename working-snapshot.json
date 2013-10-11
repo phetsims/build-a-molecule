@@ -1,6 +1,6 @@
 {
   "build-a-molecule": {
-    "sha": "59db3dac1e5348dda3442089b1bdd35eb37b5c1c",
+    "sha": "f292c31474df3a829402c153a4744710ca820533",
     "branch": "master"
   },
   "sherpa": {
@@ -8,7 +8,7 @@
     "branch": "master"
   },
   "chipper": {
-    "sha": "b5c63164e9a7547f786d7feaaab5b6f9fc617fbd",
+    "sha": "a26e593bfd93f411e3db715e164a2f02f62bf82f",
     "branch": "master"
   },
   "assert": {
@@ -16,19 +16,19 @@
     "branch": "master"
   },
   "axon": {
-    "sha": "6d71098ce79925d8f9dcde921991fafe791f0bc0",
+    "sha": "a3532264c777508f83a633c9af2fa8757b6ce1de",
     "branch": "master"
   },
   "dot": {
-    "sha": "f6c357b3a8a24c67d8f724f5d56dc3fa4be01234",
+    "sha": "52bb4f051107692c80b8d689a7d339d8dbe99790",
     "branch": "master"
   },
   "joist": {
-    "sha": "8746d56d389795b829f3ed45db52359a0aecaf60",
+    "sha": "982e7042f17319841fa4aa9763e97a0d2805f5e7",
     "branch": "master"
   },
   "kite": {
-    "sha": "454041bc4251789b7de2ef3e396d82ddd7be0524",
+    "sha": "835bd21ac21b58d147736d8a70a36d2736d0b7e3",
     "branch": "master"
   },
   "nitroglycerin": {
@@ -40,23 +40,27 @@
     "branch": "master"
   },
   "phetcommon": {
-    "sha": "5de09fde46b134199046a8cfac7cbae065b09b7f",
+    "sha": "41952c4deb5a25ddedda042a65ce964dd24a8c36",
     "branch": "master"
   },
   "scenery": {
-    "sha": "46840ea19a6696ddaa579fb73ec37c53c2b5e7e4",
+    "sha": "eacce8aeffe9e0d78d88ea18e0f91aa10d6deb64",
     "branch": "master"
   },
   "scenery-phet": {
-    "sha": "980eef31807677cbe0d7999d3ccc95a9c6730fdc",
+    "sha": "1a18c82bae1e19c277c043faed00fbee9b943c47",
     "branch": "master"
   },
   "sun": {
-    "sha": "a25e236f62fb4ce407a500ca885eab51c7fd31b0",
+    "sha": "f05d7e6def1b36c652371e1e8af33e9ef833401d",
+    "branch": "master"
+  },
+  "vegas": {
+    "sha": "f96d08f74111c05f6f82c946b98df8dfffb3894c",
     "branch": "master"
   },
   "vibe": {
-    "sha": "9507effe4468f13d82b5507844a4dc214224efe4",
+    "sha": "a705a0fa734caa395866265951de6817f3205bea",
     "branch": "master"
   },
   "sherpa": {
