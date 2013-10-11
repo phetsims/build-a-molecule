@@ -7,6 +7,8 @@ define( function( require ) {
   var Property = require( 'AXON/Property' );
   var PropertySet = require( 'AXON/PropertySet' );
   
+  var soundEnabled = new Property( false );
+  
   return {
     scenery: require( 'SCENERY/main' ),
     kite: require( 'KITE/main' ),
@@ -23,7 +25,8 @@ define( function( require ) {
     Property: Property,
     PropertySet: PropertySet,
     
-    soundEnabled: new Property( false ),
+    soundEnabled: soundEnabled,
+    gameAudioPlayer: new (require( 'VEGAS/GameAudioPlayer' ))( soundEnabled ),
     
     timeTick: new PropertySet( {} )
   };

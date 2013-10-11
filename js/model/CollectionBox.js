@@ -36,9 +36,7 @@ define( function( require ) {
     
     this.on( 'addedMolecule', function( molecule ) {
       if ( box.quantity === capacity ) {
-        if ( namespace.soundEnabled.get() ) {
-          throw new Error( 'playCollectionBoxFilledSound' );
-        }
+        namespace.gameAudioPlayer.correctAnswer();
       }
     } );
   };
