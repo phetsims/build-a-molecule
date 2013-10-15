@@ -12,6 +12,7 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var namespace = require( 'BAM/namespace' );
   var Constants = require( 'BAM/Constants' );
+  var Shape = require( 'KITE/Shape' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Text = require( 'SCENERY/nodes/Text' );
   var Image = require( 'SCENERY/nodes/Image' );
@@ -41,8 +42,8 @@ define( function( require ) {
       * label with chemical formula and common name
       *----------------------------------------------------------------------------*/
       var label = new Text( completeMolecule.getDisplayName(), {
-        font: new PhetFont( { size: 14, weight: 'bold' } ),
-        centerY: 9
+        font: new PhetFont( { size: 17, weight: 'bold' } ),
+        centerY: 11
       } );
       this.addChild( label );
       currentX += label.width + 10;
@@ -53,10 +54,12 @@ define( function( require ) {
       if ( Constants.has3d ) {
         // TODO: add dialog!
         var button3d = new ShowMolecule3DButtonNode( completeMolecule, {
-          x: currentX
+          x: currentX,
+          scale: 1.2
         } );
+        button3d.touchArea = Shape.bounds( button3d.childBounds.dilated( 4 / 1.2 ) );
         this.addChild( button3d );
-        currentX += button3d.width + 5;
+        currentX += button3d.width + 8;
       }
     }
 
@@ -66,8 +69,10 @@ define( function( require ) {
     var buttonBreak = new Node( {
       children: [ new Image( splitIconImage ) ],
       x: currentX,
+      scale: 1.2,
       cursor: 'pointer'
     } );
+    buttonBreak.touchArea = Shape.bounds( buttonBreak.childBounds.dilated( 4 / 1.2 ) );
     buttonBreak.addInputListener( new ButtonListener( {
       fire: function( evt ) {
         kit.breakMolecule( molecule );
