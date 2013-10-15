@@ -66,7 +66,7 @@ define( function( require ) {
     gradientFill.addColorStop( 1, '#000000' );
     
     node = new Path( Shape.circle( 0, 0, radius ), {
-      fill: gradientFill
+      fill: AtomNode.experimentalBrighterGradient( radius, color )
     } );
 
     var isTextWhite = AtomNode.needsWhiteColor( color );
@@ -89,6 +89,74 @@ define( function( require ) {
   
   AtomNode.needsWhiteColor = function( color ) {
     return 0.30 * color.r + 0.59 * color.g + 0.11 * color.b < 125;
+  };
+  
+  AtomNode.oldGradient = function( radius, color ) {
+    var diameter = radius * 2;
+    var gCenter = new Vector2( -radius / 3, -radius / 3 );
+
+    // copying ShadedSphereNode
+    var middleRadius = diameter / 3;
+    var fullRadius = middleRadius + 0.7 * diameter;
+
+    var gradientFill = new RadialGradient( gCenter.x, gCenter.y, 0, gCenter.x, gCenter.y, fullRadius );
+    gradientFill.addColorStop( 0, '#ffffff' );
+    gradientFill.addColorStop( middleRadius / fullRadius, color.toCSS() );
+    gradientFill.addColorStop( 1, '#000000' );
+    return gradientFill;
+  };
+  
+  AtomNode.experimentalGradient = function( radius, baseColor ) {
+    var diameter = radius * 2;
+    var gCenter = new Vector2( -radius / 5, -radius / 5 );
+    var middleRadius = diameter / 3;
+    var fullRadius = gCenter.minus( new Vector2( 1, 1 ).normalized().times( radius ) ).magnitude();
+    var gradientFill = new RadialGradient( gCenter.x, gCenter.y, 0, gCenter.x, gCenter.y, fullRadius );
+    
+    gradientFill.addColorStop( 0, baseColor.colorUtilsBrighter( 0.5 ).toCSS() );
+    gradientFill.addColorStop( 0.08, baseColor.colorUtilsBrighter( 0.2 ).toCSS() );
+    gradientFill.addColorStop( 0.4, baseColor.colorUtilsDarker( 0.1 ).toCSS() );
+    gradientFill.addColorStop( 0.8, baseColor.colorUtilsDarker( 0.4 ).toCSS() );
+    gradientFill.addColorStop( 0.95, baseColor.colorUtilsDarker( 0.6 ).toCSS() );
+    gradientFill.addColorStop( 1, baseColor.colorUtilsDarker( 0.4 ).toCSS() );
+    return gradientFill;
+  };
+  
+  AtomNode.experimentalBrightGradient = function( radius, baseColor ) {
+    var diameter = radius * 2;
+    var gCenter = new Vector2( -radius / 3, -radius / 3 );
+    var middleRadius = diameter / 3;
+    var fullRadius = gCenter.minus( new Vector2( 1, 1 ).normalized().times( radius ) ).magnitude();
+    var gradientFill = new RadialGradient( gCenter.x, gCenter.y, 0, gCenter.x, gCenter.y, fullRadius );
+    
+    var adjust = 0.2;
+    
+    gradientFill.addColorStop( 0, baseColor.colorUtilsBrightness( 0.5 + 0.2 ).toCSS() );
+    gradientFill.addColorStop( 0.08, baseColor.colorUtilsBrightness( 0.2 + 0.2 ).toCSS() );
+    gradientFill.addColorStop( 0.4, baseColor.colorUtilsBrightness( -0.1 + 0.1 ).toCSS() );
+    gradientFill.addColorStop( 0.8, baseColor.colorUtilsBrightness( -0.4 + 0.1 ).toCSS() );
+    gradientFill.addColorStop( 0.95, baseColor.colorUtilsBrightness( -0.6 + 0 ).toCSS() );
+    gradientFill.addColorStop( 1, baseColor.colorUtilsBrightness( -0.4 + 0 ).toCSS() );
+    return gradientFill;
+  };
+
+  
+  AtomNode.experimentalBrighterGradient = function( radius, baseColor ) {
+    var diameter = radius * 2;
+    var gCenter = new Vector2( -radius / 3, -radius / 3 );
+    var middleRadius = diameter / 3;
+    var fullRadius = gCenter.minus( new Vector2( 1, 1 ).normalized().times( radius ) ).magnitude();
+    var gradientFill = new RadialGradient( gCenter.x, gCenter.y, 0, gCenter.x, gCenter.y, fullRadius );
+    
+    var adjust = 0.2;
+    
+    gradientFill.addColorStop( 0, baseColor.colorUtilsBrightness( 0.5 + 0.4 ).toCSS() );
+    gradientFill.addColorStop( 0.08, baseColor.colorUtilsBrightness( 0.2 + 0.3 ).toCSS() );
+    gradientFill.addColorStop( 0.4, baseColor.colorUtilsBrightness( -0.1 + 0.2 ).toCSS() );
+    gradientFill.addColorStop( 0.8, baseColor.colorUtilsBrightness( -0.4 + 0.1 ).toCSS() );
+    gradientFill.addColorStop( 0.95, baseColor.colorUtilsBrightness( -0.6 + 0 ).toCSS() );
+    gradientFill.addColorStop( 1, baseColor.colorUtilsBrightness( -0.4 + 0 ).toCSS() );
+    return gradientFill;
   };
 
   return inherit( Node, AtomNode );
