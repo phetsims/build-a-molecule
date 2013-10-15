@@ -1,6 +1,6 @@
 {
   "build-a-molecule": {
-    "sha": "9c7843e2e2f8138a5163467403b218001d3f6736",
+    "sha": "baa53bf0e6e791cc2f973e18216735b22ceec760",
     "branch": "master"
   },
   "sherpa": {
@@ -44,7 +44,7 @@
     "branch": "master"
   },
   "scenery": {
-    "sha": "b1f64ae49c10fab450b62553a613cbe8ded3522d",
+    "sha": "6a9f7fe308243f8d281c741668e039a893f79757",
     "branch": "master"
   },
   "scenery-phet": {
