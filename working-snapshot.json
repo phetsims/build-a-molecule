@@ -1,6 +1,6 @@
 {
   "build-a-molecule": {
-    "sha": "f292c31474df3a829402c153a4744710ca820533",
+    "sha": "9c7843e2e2f8138a5163467403b218001d3f6736",
     "branch": "master"
   },
   "sherpa": {
@@ -8,7 +8,7 @@
     "branch": "master"
   },
   "chipper": {
-    "sha": "a26e593bfd93f411e3db715e164a2f02f62bf82f",
+    "sha": "1c842f45873ea07c7809fc18d8abb0eab72fc50a",
     "branch": "master"
   },
   "assert": {
@@ -44,23 +44,23 @@
     "branch": "master"
   },
   "scenery": {
-    "sha": "eacce8aeffe9e0d78d88ea18e0f91aa10d6deb64",
+    "sha": "b1f64ae49c10fab450b62553a613cbe8ded3522d",
     "branch": "master"
   },
   "scenery-phet": {
-    "sha": "1a18c82bae1e19c277c043faed00fbee9b943c47",
+    "sha": "dd53b6228deda1bb6cd991bfe1893aac393801b8",
     "branch": "master"
   },
   "sun": {
-    "sha": "f05d7e6def1b36c652371e1e8af33e9ef833401d",
+    "sha": "7d6974a6e5fe5be2c6dcc55966a5848b7155a346",
     "branch": "master"
   },
   "vegas": {
-    "sha": "f96d08f74111c05f6f82c946b98df8dfffb3894c",
+    "sha": "7b452a416956d9dc24e71401dbed2867f66cab08",
     "branch": "master"
   },
   "vibe": {
-    "sha": "a705a0fa734caa395866265951de6817f3205bea",
+    "sha": "d6cde8db3826de33be10af55fa8160beefa70fce",
     "branch": "master"
   },
   "sherpa": {
