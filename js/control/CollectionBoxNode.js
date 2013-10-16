@@ -13,6 +13,7 @@ define( function( require ) {
   var namespace = require( 'BAM/namespace' );
   var Constants = require( 'BAM/Constants' );
   var Bounds2 = require( 'DOT/Bounds2' );
+  var Shape = require( 'KITE/Shape' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Image = require( 'SCENERY/nodes/Image' );
@@ -64,6 +65,7 @@ define( function( require ) {
     
     if ( Constants.has3d ) {
       var show3dButton = new ShowMolecule3DButtonNode( box.moleculeType );
+      show3dButton.touchArea = Shape.bounds( show3dButton.bounds.dilated( 10 ) );
       show3dButton.right = this.blackBox.right - blackBoxPaddingFor3D;
       show3dButton.centerY = this.blackBox.centerY;
       this.button3dWidth = show3dButton.width;
