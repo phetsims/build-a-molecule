@@ -21,6 +21,7 @@ define( function( require ) {
   var FaceNode = require( 'SCENERY_PHET/FaceNode' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var TextButton = require( 'SUN/TextButton' );
+  var Shape = require( 'KITE/Shape' );
   
   var AllFilledDialogNode = namespace.AllFilledDialogNode = function AllFilledDialogNode( availablePlayAreaBounds, regenerateCallback ) {
     Node.call( this, {} );
@@ -47,6 +48,7 @@ define( function( require ) {
       } ),
       rectangleFillUp: Color.ORANGE,
     } );
+    button.touchArea = Shape.bounds( button.localBounds.dilated( 20 ) );
     this.addChild( button );
     
     // layout
