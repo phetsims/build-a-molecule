@@ -25,7 +25,6 @@ define( function( require ) {
   var DOM = require( 'SCENERY/nodes/DOM' );
   var Path = require( 'SCENERY/nodes/Path' );
   var Text = require( 'SCENERY/nodes/Text' );
-  var Text = require( 'SCENERY/nodes/Text' );
   var HTMLText = require( 'SCENERY/nodes/HTMLText' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var RadialGradient = require( 'SCENERY/util/RadialGradient' );
@@ -118,7 +117,7 @@ define( function( require ) {
       radius: 16,
       xSpacing: 8,
       stroke: 'white' // border
-    }
+    };
     var spaceFillButton = new AquaRadioButton( viewStyleProperty, 'spaceFill', spaceFillText, radioButtonOptions );
     spaceFillButton.touchArea = Shape.bounds( spaceFillButton.localBounds.dilated( optionsHorizontalPadding / 2 ) );
     var ballAndStickButton = new AquaRadioButton( viewStyleProperty, 'ballAndStick', ballAndStickText, radioButtonOptions );
