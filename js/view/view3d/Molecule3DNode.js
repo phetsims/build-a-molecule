@@ -147,41 +147,6 @@ define( function( require ) {
     
     this.lastPosition = Vector2.ZERO;
     this.currentPosition = Vector2.ZERO;
-    var dragListener = {
-      up: function( event ) {
-        moleculeNode.dragging = false;
-        event.pointer.removeInputListener( dragListener );
-        event.handle();
-        moleculeNode.upCursor();
-        if ( grabInitialTransforms ) {
-          console.log( moleculeNode.masterMatrix.toString() );
-        }
-      },
-      
-      cancel: function( event ) {
-        moleculeNode.dragging = false;
-        event.pointer.removeInputListener( dragListener );
-        moleculeNode.upCursor();
-      },
-      
-      move: function( event ) {
-        moleculeNode.currentPosition = event.pointer.point.copy();
-      }
-    };
-    this.addInputListener( {
-      up: function( event ) {
-        event.handle();
-      },
-      
-      down: function( event ) {
-        if ( !moleculeNode.dragging ) {
-          moleculeNode.dragging = true;
-          moleculeNode.lastPosition = moleculeNode.currentPosition = event.pointer.point.copy();
-          event.pointer.addInputListener( dragListener );
-          moleculeNode.downCursor();
-        }
-      }
-    } );
     
     if ( grabInitialTransforms ) {
       this.masterMatrix = new Matrix3();
@@ -233,6 +198,46 @@ define( function( require ) {
   };
 
   return inherit( DOM, Molecule3DNode, {
+    initializeDrag: function( target ) {
+      var moleculeNode = this;
+      
+      var dragListener = {
+        up: function( event ) {
+          moleculeNode.dragging = false;
+          event.pointer.removeInputListener( dragListener );
+          event.handle();
+          moleculeNode.upCursor();
+          if ( grabInitialTransforms ) {
+            console.log( moleculeNode.masterMatrix.toString() );
+          }
+        },
+        
+        cancel: function( event ) {
+          moleculeNode.dragging = false;
+          event.pointer.removeInputListener( dragListener );
+          moleculeNode.upCursor();
+        },
+        
+        move: function( event ) {
+          moleculeNode.currentPosition = event.pointer.point.copy();
+        }
+      };
+      target.addInputListener( {
+        up: function( event ) {
+          event.handle();
+        },
+        
+        down: function( event ) {
+          if ( !moleculeNode.dragging ) {
+            moleculeNode.dragging = true;
+            moleculeNode.lastPosition = moleculeNode.currentPosition = event.pointer.point.copy();
+            event.pointer.addInputListener( dragListener );
+            moleculeNode.downCursor();
+          }
+        }
+      } );
+    },
+    
     upCursor: function() {
       // fallbacks first, best way to ensure browsers keep the last one that works
       this.canvas.style.cursor = 'pointer';

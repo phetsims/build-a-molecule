@@ -118,7 +118,8 @@ define( function( require ) {
       top: stageCenterY + verticalOffset
     } );
     buttonHolder.addInputListener( {
-      up: function( evt ) {
+      // don't start drags on the close button
+      down: function( evt ) {
         evt.handle();
       }
     } );
@@ -145,6 +146,7 @@ define( function( require ) {
     var moleculeNode = new Molecule3DNode( completeMolecule, this.getGlobalCanvasBounds( view ), true );
     moleculeNode.updateCSSTransform = function( transform, element ) {}; // don't CSS transform it
     moleculeNode.touchArea = moleculeNode.mouseArea = Shape.bounds( this.getLocalCanvasBounds() );
+    moleculeNode.initializeDrag( this );
     this.addChild( moleculeNode );
     
     var transformMatrix = Molecule3DNode.initialTransforms[completeMolecule.getGeneralFormula()];
