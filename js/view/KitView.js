@@ -3,6 +3,8 @@
 /**
  * Shows a kit (series of buckets full of different types of atoms)
  *
+ * TODO: consider 'KitNode' as a name?
+ *
  * @author Jonathan Olson <olsonsjc@gmail.com>
  */
 
