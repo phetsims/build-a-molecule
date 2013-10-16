@@ -24,7 +24,7 @@ define( function( require ) {
   var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' ); // TODO: DragListener
   
   var KitView = namespace.KitView = function KitView( kit, view ) {
-    Node.call( this );
+    Node.call( this, { layerSplit: true } );
     var kitView = this;
     
     this.kit = kit;
