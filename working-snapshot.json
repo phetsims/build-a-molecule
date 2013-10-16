@@ -1,6 +1,6 @@
 {
   "build-a-molecule": {
-    "sha": "baa53bf0e6e791cc2f973e18216735b22ceec760",
+    "sha": "afee9c6df34a1656e02478916f2d4615f859a0ea",
     "branch": "master"
   },
   "sherpa": {
@@ -8,7 +8,7 @@
     "branch": "master"
   },
   "chipper": {
-    "sha": "1c842f45873ea07c7809fc18d8abb0eab72fc50a",
+    "sha": "433d86371989a0281891e4e7746e72d1b8bdf704",
     "branch": "master"
   },
   "assert": {
@@ -20,11 +20,11 @@
     "branch": "master"
   },
   "dot": {
-    "sha": "52bb4f051107692c80b8d689a7d339d8dbe99790",
+    "sha": "91736c575370ee823815d32ff9f33b2072ff7c9c",
     "branch": "master"
   },
   "joist": {
-    "sha": "982e7042f17319841fa4aa9763e97a0d2805f5e7",
+    "sha": "e9689efe94329c472720466173362cb770d829ee",
     "branch": "master"
   },
   "kite": {
@@ -48,7 +48,7 @@
     "branch": "master"
   },
   "scenery-phet": {
-    "sha": "dd53b6228deda1bb6cd991bfe1893aac393801b8",
+    "sha": "c49da118b706c179d058050673249c97117938b4",
     "branch": "master"
   },
   "sun": {
@@ -60,7 +60,7 @@
     "branch": "master"
   },
   "vibe": {
-    "sha": "d6cde8db3826de33be10af55fa8160beefa70fce",
+    "sha": "3fda0de3aefe5ce3026f379b2f3c8c0e5c49cd16",
     "branch": "master"
   },
   "sherpa": {
