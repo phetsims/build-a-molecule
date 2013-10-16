@@ -146,9 +146,9 @@ define( function( require ) {
       var strippedMolecule = new StrippedMolecule( structure );
       var hashString = strippedMolecule.stripped.getHistogram().getHashString();
       
-      // TODO: performance: only do the lookup once
-      if ( this.allowedStructureFormulaMap[hashString] ) {
-        this.allowedStructureFormulaMap[hashString].push( strippedMolecule );
+      var spot = this.allowedStructureFormulaMap[hashString];
+      if ( spot ) {
+        spot.push( strippedMolecule );
       } else {
         this.allowedStructureFormulaMap[hashString] = [strippedMolecule];
       }
