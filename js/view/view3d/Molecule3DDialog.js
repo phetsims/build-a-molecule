@@ -14,6 +14,7 @@ define( function( require ) {
   var namespace = require( 'BAM/namespace' );
   var Constants = require( 'BAM/Constants' );
   var Molecule3DNode = require( 'BAM/view/view3d/Molecule3DNode' );
+  var CloseButton = require( 'BAM/view/view3d/CloseButton' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Vector2 = require( 'DOT/Vector2' );
   var Vector3 = require( 'DOT/Vector3' );
@@ -123,6 +124,15 @@ define( function( require ) {
     } );
     buttonHolder.touchArea = Shape.bounds( buttonHolder.localBounds.dilated( 20 ) );
     this.addChild( buttonHolder );
+    
+    /*---------------------------------------------------------------------------*
+    * Close button
+    *----------------------------------------------------------------------------*/
+    
+    this.addChild( new CloseButton( function() {}, {
+      top: 10,
+      right: Constants.stageSize.width - 10
+    } ) );
     
     /*---------------------------------------------------------------------------*
     * 3D view

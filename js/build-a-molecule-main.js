@@ -41,6 +41,7 @@ require( [
   'BAM/view/view3d/ShowMolecule3DButtonNode',
   'BAM/view/view3d/Molecule3DDialog',
   'BAM/view/view3d/Molecule3DNode',
+  'BAM/view/view3d/CloseButton',
   'BAM/control/KitPanel',
   'BAM/control/CollectionPanel',
   'BAM/control/AllFilledDialogNode',
