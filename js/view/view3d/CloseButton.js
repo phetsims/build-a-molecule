@@ -34,6 +34,7 @@ define( function( require ) {
     var downNode = new Path( shape, _.extend( { stroke: '#fff', fill: '#000' }, commonOptions ) );
     var disabledNode = new Path( shape, _.extend( { stroke: '#444', fill: '#000' }, commonOptions ) );
     PushButton.call( this, upNode, overNode, downNode, disabledNode, callback, options );
+    this.touchArea = new Shape().circle( 0, 0, outside + 40 );
   };
   
   return inherit( PushButton, CloseButton );

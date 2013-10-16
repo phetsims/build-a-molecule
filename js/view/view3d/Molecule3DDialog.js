@@ -50,7 +50,7 @@ define( function( require ) {
   var optionsHorizontalPadding = 40;
   
   var Molecule3DDialog = namespace.Molecule3DDialog = function Molecule3DDialog( completeMolecule, trail, view ) {
-    var that = this;
+    var dialog = this;
     Node.call( this );
     
     this.initialTrail = trail;
@@ -129,10 +129,15 @@ define( function( require ) {
     * Close button
     *----------------------------------------------------------------------------*/
     
-    this.addChild( new CloseButton( function() {}, {
+    var closeButton = new CloseButton( function() { dialog.disposeView(); }, {
       top: 10,
       right: Constants.stageSize.width - 10
-    } ) );
+    } );
+    closeButton.addInputListener( {
+      // don't start drags on the close button
+      down: function( event ) { event.handle(); }
+    } );
+    this.addChild( closeButton );
     
     /*---------------------------------------------------------------------------*
     * 3D view
@@ -168,7 +173,7 @@ define( function( require ) {
       
       background.fill = backgroundGradient;
       
-      moleculeNode.setMoleculeBounds( that.getGlobalCanvasBounds( view ) );
+      moleculeNode.setMoleculeBounds( dialog.getGlobalCanvasBounds( view ) );
     }
     updateLayout();
     scene.addEventListener( 'resize', updateLayout );
@@ -178,14 +183,12 @@ define( function( require ) {
     var clock = view.collectionList.clock;
     clock.on( 'tick', tick );
     
-    this.addInputListener( {
-      up: function( event ) {
-        scene.removeEventListener( 'resize', updateLayout );
-        view.removeEventListener( 'bounds', updateLayout );
-        view.removeChild( that );
-        clock.off( 'tick', tick );
-      }
-    } );
+    this.disposeView = function() {
+      scene.removeEventListener( 'resize', updateLayout );
+      view.removeEventListener( 'bounds', updateLayout );
+      view.removeChild( dialog );
+      clock.off( 'tick', tick );
+    };
   };
 
   return inherit( Node, Molecule3DDialog, {
