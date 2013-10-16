@@ -21,13 +21,25 @@ define( function( require ) {
 
   var BAMView = namespace.BAMView = function BAMView( collectionList ) {
     ScreenView.call( this, { renderer: 'svg' } );
+    var view = this;
     
     this.baseNode = new Node();
     this.addChild( this.baseNode );
     
+    this.kitCollectionMap = {}; // maps KitCollection ID => KitCollectionNode
+    
     this.collectionList = collectionList;
     
     this.addCollection( collectionList.currentCollection );
+    
+    collectionList.currentCollectionProperty.link( function( newCollection, oldCollection ) {
+      if ( oldCollection ) {
+        view.removeChild( view.kitCollectionMap[oldCollection.id] );
+      }
+      if ( newCollection ) {
+        view.addChild( view.kitCollectionMap[newCollection.id] );
+      }
+    } );
     
     collectionList.on( 'addedCollection', this.addCollection.bind( this ) );
   };
@@ -37,7 +49,7 @@ define( function( require ) {
     
     addCollection: function( collection ) {
       var kitCollectionNode = new KitCollectionNode( this.collectionList, collection, this );
-      this.addChild( kitCollectionNode );
+      this.kitCollectionMap[collection.id] = kitCollectionNode;
       
       // supposedly: return this so we can manipulate it in an override....?
       return kitCollectionNode;

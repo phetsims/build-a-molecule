@@ -128,11 +128,6 @@ define( function( require ) {
     //         }
     //     }
     // } );
-
-    // update visibility based on the kit visibility
-    kit.visibleProperty.link( function( visible ) {
-      kitView.visible = visible;
-    } );
   };
   
   inherit( Node, KitView, {

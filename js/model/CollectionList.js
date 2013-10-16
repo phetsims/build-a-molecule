@@ -3,6 +3,8 @@
 /**
  * An internal list of collections that a user will be able to scroll through using a control on the collection area
  *
+ * TODO: rename to 'KitCollectionList'?
+ *
  * @author Jonathan Olson <olsonsjc@gmail.com>
  */
 

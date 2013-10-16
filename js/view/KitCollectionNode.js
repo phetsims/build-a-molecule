@@ -37,11 +37,6 @@ define( function( require ) {
         that.addChild( kitMap[newKit.id] );
       }
     } );
-    
-    // set visibility based on whether our collection is the current one
-    collectionList.currentCollectionProperty.link( function( newCollection ) {
-      that.visible = newCollection === collection;
-    } );
   };
   
   inherit( Node, KitCollectionNode );
