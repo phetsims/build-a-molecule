@@ -14,6 +14,7 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var namespace = require( 'BAM/namespace' );
   var Constants = require( 'BAM/Constants' );
+  var Shape = require( 'KITE/Shape' );
   var BucketFront = require( 'SCENERY_PHET/bucket/BucketFront' );
   var BucketHole = require( 'SCENERY_PHET/bucket/BucketHole' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
@@ -53,6 +54,13 @@ define( function( require ) {
         } ) // matching the old look for now
       } );
       var bucketHole = new BucketHole( bucket, Constants.modelViewTransform );
+      bucketHole.touchArea = new Shape().moveTo( bucketHole.left - bucketHole.x, bucketHole.centerY - bucketHole.y )
+                                        .lineTo( bucketHole.left - bucketHole.x + 17, bucketHole.centerY + 60 - bucketHole.y )
+                                        .lineTo( bucketHole.right - bucketHole.x - 17, bucketHole.centerY + 60 - bucketHole.y )
+                                        .lineTo( bucketHole.right - bucketHole.x, bucketHole.centerY - bucketHole.y )
+                                        .lineTo( bucketHole.right - bucketHole.x - 35, bucketHole.centerY - 55 - bucketHole.y )
+                                        .lineTo( bucketHole.left - bucketHole.x + 35, bucketHole.centerY - 55 - bucketHole.y )
+                                        .close();
 
       topLayer.addChild( bucketFront );
       bottomLayer.addChild( bucketHole );
