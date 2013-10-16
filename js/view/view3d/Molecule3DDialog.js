@@ -68,7 +68,7 @@ define( function( require ) {
     
     var viewStyleProperty = new Property( 'spaceFill' ); // spaceFill or ballAndStick
     
-    var moleculeNode = new Molecule3DNode( completeMolecule, this.getGlobalCanvasBounds( view ), false );
+    var moleculeNode = new Molecule3DNode( completeMolecule, this.getGlobalCanvasBounds( view ), true );
     this.addChild( viewChild );
     this.addChild( moleculeNode );
     
