@@ -273,9 +273,22 @@ define( function( require ) {
       }
     }
     
-    var upCursor = '-webkit-grab, -moz-grab, grab, pointer';
-    var downCursor = '-webkit-grabbing, -moz-grabbing, grabbing, move';
-    canvas.style.cursor = upCursor;
+    function upCursor() {
+      // fallbacks first, best way to ensure browsers keep the last one that works
+      canvas.style.cursor = 'pointer';
+      canvas.style.cursor = '-webkit-grab';
+      canvas.style.cursor = '-moz-grab';
+      canvas.style.cursor = 'grab';
+    }
+    
+    function downCursor() {
+      // fallbacks first, best way to ensure browsers keep the last one that works
+      canvas.style.cursor = 'move';
+      canvas.style.cursor = '-webkit-grabbing';
+      canvas.style.cursor = '-moz-grabbing';
+      canvas.style.cursor = 'grabbing';
+    }
+    upCursor();
     
     var dragging = false;
     
@@ -309,13 +322,13 @@ define( function( require ) {
         dragging = false;
         event.pointer.removeInputListener( dragListener );
         event.handle();
-        canvas.style.cursor = upCursor;
+        upCursor();
       },
       
       cancel: function( event ) {
         dragging = false;
         event.pointer.removeInputListener( dragListener );
-        canvas.style.cursor = upCursor;
+        upCursor();
       },
       
       move: function( event ) {
@@ -332,7 +345,7 @@ define( function( require ) {
           dragging = true;
           lastPosition = currentPosition = event.pointer.point.copy();
           event.pointer.addInputListener( dragListener );
-          canvas.style.cursor = downCursor;
+          downCursor();
         }
       }
     } );
