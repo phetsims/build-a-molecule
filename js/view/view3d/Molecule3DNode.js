@@ -20,7 +20,6 @@ define( function( require ) {
   var Bounds3 = require( 'DOT/Bounds3' );
   var Matrix3 = require( 'DOT/Matrix3' );
   var Quaternion = require( 'DOT/Quaternion' );
-  var Node = require( 'SCENERY/nodes/Node' );
   var DOM = require( 'SCENERY/nodes/DOM' );
   var Path = require( 'SCENERY/nodes/Path' );
   var Text = require( 'SCENERY/nodes/Text' );
@@ -32,8 +31,6 @@ define( function( require ) {
   var DotUtil = require( 'DOT/Util' );
   var Ray3 = require( 'DOT/Ray3' );
   var Element = require( 'NITROGLYCERIN/Element' );
-  
-  var fillMode = 3; // 0: flat, 1: pre-rendered pattern, 2: BAM/BCE gradient, 3: custom gradient
   
   function to3d( atom ) {
     var v = new Vector3( atom.x3d(), atom.y3d(), atom.z3d() ).times( 75 ); // similar to picometers from angstroms? hopefully?
@@ -88,72 +85,27 @@ define( function( require ) {
     };
   }
   
-  var Molecule3DNode = namespace.Molecule3DNode = function Molecule3DNode( completeMolecule, trail ) {
+  var Molecule3DNode = namespace.Molecule3DNode = function Molecule3DNode( completeMolecule, initialBounds ) {
     var that = this;
-    Node.call( this, {} );
     
     var useHighRes = false;
     
-    var scene = trail.rootNode();
-    var view = _.find( trail.nodes, function( node ) { return node.isBAMView; } );
+    var canvas = this.canvas = document.createElement( 'canvas' );
+    var context = this.context = canvas.getContext( '2d' );
     
-    var background = new Rectangle( 0, 0, 50, 50, { fill: 'rgba(0,0,0,0.7)' } );
-    this.addChild( background );
-    
-    var width = 0;
-    var height = 0;
-    var matrix = trail.getMatrix();
-    
-    var canvas = document.createElement( 'canvas' );
-    var context = canvas.getContext( '2d' );
-    
-    var backingScale = 1;
+    this.backingScale = 1;
     if ( useHighRes ) {
-      backingScale = Util.backingScale( context );
+      this.backingScale = Util.backingScale( context );
     }
     
     canvas.className = 'canvas-3d';
     canvas.style.position = 'absolute';
     canvas.style.left = '0';
     canvas.style.top = '0';
-    var dom = new DOM( canvas );
-    this.addChild( dom );
     
-    function updateLayout() {
-      var sceneWidth = window.innerWidth;
-      var sceneHeight = window.innerHeight;
-      var newMatrix = trail.getMatrix();
-      if ( sceneWidth === width && sceneHeight === height && matrix.equals( newMatrix ) ) {
-        return;
-      }
-      width = sceneWidth;
-      height = sceneHeight;
-      matrix = newMatrix;
-      
-      background.rectWidth = width;
-      background.rectHeight = height;
-      
-      var radius = 200;
-      var centerX = Constants.stageSize.width / 2;
-      var centerY = Constants.stageSize.height / 2;
-      var bounds = new Bounds2( centerX - radius, centerY - radius, centerX + radius, centerY + radius );
-      var globalBounds = view.localToGlobalBounds( bounds ).roundedOut();
-      
-      canvas.width = globalBounds.width * backingScale;
-      canvas.height = globalBounds.height * backingScale;
-      canvas.style.width = globalBounds.width + 'px';
-      canvas.style.height = globalBounds.height + 'px';
-      canvas.style.left = globalBounds.x + 'px';
-      canvas.style.top = globalBounds.y + 'px';
-      canvas.style.backgroundColor = '#000';
-      context.clearRect( 0, 0, canvas.width, canvas.height );
-      context.fillStyle = 'rgba(0,255,0,0.5)';
-      context.fillRect( 0, 0, canvas.width, canvas.height );
-      dom.invalidateSelf( globalBounds );
-    }
-    updateLayout();
-    scene.addEventListener( 'resize', updateLayout );
-    view.addEventListener( 'bounds', updateLayout );
+    this.setMoleculeCanvasBounds( initialBounds );
+    
+    DOM.call( this, canvas );
     
     var currentAtoms = completeMolecule.atoms.map( to3d );
     
@@ -335,7 +287,7 @@ define( function( require ) {
         currentPosition = event.pointer.point.copy();
       }
     };
-    dom.addInputListener( {
+    this.addInputListener( {
       up: function( event ) {
         event.handle();
       },
@@ -350,15 +302,28 @@ define( function( require ) {
       }
     } );
     
-    this.addInputListener( {
-      up: function( event ) {
-        scene.removeEventListener( 'resize', updateLayout );
-        view.removeEventListener( 'bounds', updateLayout );
-        scene.removeChild( that );
-        namespace.timeTick.off( 'tick', tick );
-      }
-    } );
+    this.disposeMolecule = function() {
+      namespace.timeTick.off( 'tick', tick );
+    };
   };
 
-  return inherit( Node, Molecule3DNode );
+  return inherit( DOM, Molecule3DNode, {
+    setMoleculeCanvasBounds: function( globalBounds ) {
+      this.canvas.width = globalBounds.width * this.backingScale;
+      this.canvas.height = globalBounds.height * this.backingScale;
+      this.canvas.style.width = globalBounds.width + 'px';
+      this.canvas.style.height = globalBounds.height + 'px';
+      this.canvas.style.left = globalBounds.x + 'px';
+      this.canvas.style.top = globalBounds.y + 'px';
+      this.canvas.style.backgroundColor = '#000';
+      this.context.clearRect( 0, 0, this.canvas.width, this.canvas.height );
+      this.context.fillStyle = 'rgba(0,255,0,0.5)';
+      this.context.fillRect( 0, 0, this.canvas.width, this.canvas.height );
+    },
+    
+    setMoleculeBounds: function( globalBounds ) {
+      this.setMoleculeCanvasBounds( globalBounds );
+      this.invalidateSelf( globalBounds );
+    }
+  } );
 } );

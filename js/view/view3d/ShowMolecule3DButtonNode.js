@@ -21,7 +21,7 @@ define( function( require ) {
   var greenMiddle = require( 'image!BAM/green-middle.png' );
   var greenRight = require( 'image!BAM/green-right.png' );
   var iconString = require( 'string!BAM/3d.icon' );
-  var Molecule3DNode = require( 'BAM/view/view3d/Molecule3DNode' );
+  var Molecule3DDialog = require( 'BAM/view/view3d/Molecule3DDialog' );
 
   var ShowMolecule3DButtonNode = namespace.ShowMolecule3DButtonNode = function ShowMolecule3DButtonNode( completeMolecule, options ) {
     var that = this;
@@ -32,7 +32,7 @@ define( function( require ) {
     this.addInputListener( new ButtonListener( {
       fire: function( evt ) {
         var trail = that.getUniqueTrail();
-        trail.rootNode().addChild( new Molecule3DNode( completeMolecule, trail ) );
+        trail.rootNode().addChild( new Molecule3DDialog( completeMolecule, trail ) );
       }
     } ) );
     
