@@ -379,7 +379,7 @@ define( function( require ) {
       this.canvas.style.height = globalBounds.height + 'px';
       this.canvas.style.left = globalBounds.x + 'px';
       this.canvas.style.top = globalBounds.y + 'px';
-      this.canvas.style.backgroundColor = '#000';
+      // this.canvas.style.backgroundColor = '#000';
     },
     
     setMoleculeBounds: function( globalBounds ) {
