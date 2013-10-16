@@ -19,17 +19,19 @@ define( function( require ) {
   var MoleculeStructure = require( 'BAM/model/MoleculeStructure' );
   var LewisDotModel = require( 'BAM/model/LewisDotModel' );
   
+  var kitIdCounter = 0;
+  
   /*
    * Events:
    *   addedMolecule: function( molecule )
    *   removedMolecule: function( molecule )
    */
-  
   var Kit = namespace.Kit = function Kit( layoutBounds, buckets ) {
     PropertySet.call( this, {
       visible: false,
       hasMoleculesInBoxes: false // we record this so we know when the "reset kit" should be shown
     } );
+    this.id = kitIdCounter++;
     
     this.buckets = buckets;
     this.layoutBounds = layoutBounds;

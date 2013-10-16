@@ -9,6 +9,7 @@
 define( function( require ) {
   'use strict';
   
+  var inherit = require( 'PHET_CORE/inherit' );
   var namespace = require( 'BAM/namespace' );
   var Constants = require( 'BAM/Constants' );
   var BucketFront = require( 'SCENERY_PHET/bucket/BucketFront' );
@@ -21,6 +22,7 @@ define( function( require ) {
   var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' ); // TODO: DragListener
   
   var KitView = namespace.KitView = function KitView( kit, view ) {
+    Node.call( this );
     var kitView = this;
     
     this.kit = kit;
@@ -30,10 +32,15 @@ define( function( require ) {
     this.bondMap = {}; // moleculeId => MoleculeBondContainerNode
     this.atomNodeMap = {}; // atom.id => AtomNode
     
-    this.topLayer = new Node();
-    this.metadataLayer = new Node();
-    this.atomLayer = new Node();
-    this.bottomLayer = new Node();
+    var topLayer = this.topLayer = new Node();
+    var metadataLayer = this.metadataLayer = new Node();
+    var atomLayer = this.atomLayer = new Node();
+    var bottomLayer = this.bottomLayer = new Node();
+    
+    this.addChild( bottomLayer );
+    this.addChild( atomLayer );
+    this.addChild( metadataLayer );
+    this.addChild( topLayer );
     
     _.each( kit.buckets, function( bucket ) {
       var bucketFront = new BucketFront( bucket, Constants.modelViewTransform, {
@@ -45,13 +52,13 @@ define( function( require ) {
       } );
       var bucketHole = new BucketHole( bucket, Constants.modelViewTransform );
 
-      kitView.topLayer.addChild( bucketFront );
-      kitView.bottomLayer.addChild( bucketHole );
+      topLayer.addChild( bucketFront );
+      bottomLayer.addChild( bucketHole );
       
       _.each( bucket.atoms, function( atom ) {
         var atomNode = new AtomNode( atom );
         kitView.atomNodeMap[atom.id] = atomNode;
-        kitView.atomLayer.addChild( atomNode );
+        atomLayer.addChild( atomNode );
         
         // Add a drag listener that will move the model element when the user
         // drags this atom.
@@ -84,7 +91,7 @@ define( function( require ) {
     // handle molecule creation and destruction
     kit.on( 'addedMolecule', function( molecule ) {
       var moleculeMetadataNode = new MoleculeMetadataNode( kit, molecule );
-      kitView.metadataLayer.addChild( moleculeMetadataNode );
+      metadataLayer.addChild( moleculeMetadataNode );
       kitView.metadataMap[molecule.moleculeId] = moleculeMetadataNode;
 
       if ( Constants.allowBondBreaking ) {
@@ -94,7 +101,7 @@ define( function( require ) {
     kit.on( 'removedMolecule', function( molecule ) {
       var moleculeMetadataNode = kitView.metadataMap[molecule.moleculeId];
       moleculeMetadataNode.destruct();
-      kitView.metadataLayer.removeChild( moleculeMetadataNode );
+      metadataLayer.removeChild( moleculeMetadataNode );
       delete kitView.metadataMap[molecule.moleculeId];
 
       if ( Constants.allowBondBreaking ) {
@@ -122,16 +129,11 @@ define( function( require ) {
 
     // update visibility based on the kit visibility
     kit.visibleProperty.link( function( visible ) {
-      kitView.topLayer.visible = visible;
-      kitView.metadataLayer.visible = visible;
-      kitView.atomLayer.visible = visible;
-      kitView.bottomLayer.visible = visible;
+      kitView.visible = visible;
     } );
   };
   
-  KitView.prototype = {
-    constructor: KitView, 
-    
+  inherit( Node, KitView, {
     addMoleculeBondNodes: function( molecule ) {
       var moleculeBondContainerNode = new MoleculeBondContainerNode( this.kit, molecule, this.view );
       this.metadataLayer.addChild( moleculeBondContainerNode );
@@ -144,7 +146,7 @@ define( function( require ) {
       this.metadataLayer.removeChild( moleculeBondContainerNode );
       delete this.bondMap[molecule.moleculeId];
     }
-  };
+  } );
   
   return KitView;
 } );

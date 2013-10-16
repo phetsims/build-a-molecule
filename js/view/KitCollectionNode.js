@@ -20,27 +20,11 @@ define( function( require ) {
     Node.call( this, {} );
     var that = this;
     
-    /*---------------------------------------------------------------------------*
-    * layers
-    *----------------------------------------------------------------------------*/
-    var bottomLayer = new Node();
-    var metadataLayer = new Node();
-    var atomLayer = new Node();
-    var topLayer = new Node();
+    this.addChild( new KitPanel( collection, collectionList.availableKitBounds ) );
 
-    this.addChild( bottomLayer );
-    this.addChild( atomLayer );
-    this.addChild( metadataLayer );
-    this.addChild( topLayer );
-
-    bottomLayer.addChild( new KitPanel( collection, collectionList.availableKitBounds ) );
-    
     _.each( collection.kits, function( kit ) {
       var kitView = new KitView( kit, view );
-      bottomLayer.addChild( kitView.bottomLayer );
-      atomLayer.addChild( kitView.atomLayer );
-      metadataLayer.addChild( kitView.metadataLayer );
-      topLayer.addChild( kitView.topLayer );
+      that.addChild( kitView );
     } );
     
     // set visibility based on whether our collection is the current one
