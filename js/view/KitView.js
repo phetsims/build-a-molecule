@@ -76,15 +76,49 @@ define( function( require ) {
         } ) // matching the old look for now
       } );
       var bucketHole = new BucketHole( bucket, Constants.modelViewTransform );
-      bucketHole.touchArea = new Shape().moveTo( bucketHole.left - bucketHole.x, bucketHole.centerY - bucketHole.y )
-                                        .lineTo( bucketHole.left - bucketHole.x + 17, bucketHole.centerY + 60 - bucketHole.y )
-                                        .lineTo( bucketHole.right - bucketHole.x - 17, bucketHole.centerY + 60 - bucketHole.y )
-                                        .lineTo( bucketHole.right - bucketHole.x, bucketHole.centerY - bucketHole.y )
-                                        .lineTo( bucketHole.right - bucketHole.x - 35, bucketHole.centerY - 55 - bucketHole.y )
-                                        .lineTo( bucketHole.left - bucketHole.x + 35, bucketHole.centerY - 55 - bucketHole.y )
-                                        .close();
-      // but don't pick the elliptical paths in the hole
+      // NOTE: we will use the Bucket's hole with an expanded touch area to trigger the "grab by touching the bucket" behavior
+      bucketHole.touchArea = bucketHole.mouseArea = new Shape().moveTo( bucketHole.left - bucketHole.x, bucketHole.centerY - bucketHole.y )
+                                                               .lineTo( bucketHole.left - bucketHole.x + 17, bucketHole.centerY + 60 - bucketHole.y )
+                                                               .lineTo( bucketHole.right - bucketHole.x - 17, bucketHole.centerY + 60 - bucketHole.y )
+                                                               .lineTo( bucketHole.right - bucketHole.x, bucketHole.centerY - bucketHole.y )
+                                                               .lineTo( bucketHole.right - bucketHole.x - 35, bucketHole.centerY - 10 - bucketHole.y )
+                                                               .lineTo( bucketHole.left - bucketHole.x + 35, bucketHole.centerY - 10 - bucketHole.y )
+                                                               .close();
+      // we will be updating the bucket's cursor depending on whether it has atoms
+      function bucketHoleCursorUpdate() {
+        bucketHole.cursor = bucket.atoms.length ? 'pointer' : 'default';
+      }
+      kit.on( 'addedMolecule', bucketHoleCursorUpdate );
+      kit.on( 'removedMolecule', bucketHoleCursorUpdate );
+      bucketHoleCursorUpdate();
+      
+      // but don't pick the elliptical paths in the hole (that would be expensive to compute so often)
       _.each( bucketHole.children, function( child ) { child.pickable = false; } );
+      
+      // our hook to start dragging an atom (if available in the bucket)
+      bucketHole.addInputListener( {
+        down: function( event ) {
+          // coordinate transforms to get our atom
+          var viewPoint = view.globalToLocalPoint( event.pointer.point );
+          var modelPoint = Constants.modelViewTransform.viewToModelPosition( viewPoint );
+          var atom = kitView.closestAtom( modelPoint, Number.POSITIVE_INFINITY, bucket.element ); // filter by the element
+          
+          // if it's not in our bucket, ignore it (could skip weird cases where an atom outside of the bucket is technically closer)
+          if ( !_.contains( bucket.atoms, atom ) ) {
+            return;
+          }
+          
+          // move the atom to right under the pointer for this assisted drag - otherwise the offset would be too noticeable
+          atom.position = atom.destination = modelPoint;
+          
+          var atomNode = kitView.atomNodeMap[atom.id];
+          // TODO: use a new DragListener
+          event.target = event.currentTarget = atomNode; // for now, modify the event directly so we can "point" it towards the atom node instead
+          
+          // trigger the drag start
+          atomNode.atomDragListener.startDrag( event );
+        }
+      } );
 
       topLayer.addChild( bucketFront );
       bottomLayer.addChild( bucketHole );
@@ -99,7 +133,7 @@ define( function( require ) {
         
         // Add a drag listener that will move the model element when the user
         // drags this atom.
-        atomNode.addInputListener( new SimpleDragHandler( {
+        var atomListener = new SimpleDragHandler( {
           start: function( evt, trail ) {
             atom.userControlled = true;
             
@@ -121,7 +155,9 @@ define( function( require ) {
             var modelDelta = Constants.modelViewTransform.viewToModelDelta( data.delta );
             kit.atomDragged( atom, modelDelta );
           }
-        } ) );
+        } );
+        atomNode.addInputListener( atomListener );
+        atomNode.atomDragListener = atomListener;
       } );
     } );
     
@@ -147,26 +183,11 @@ define( function( require ) {
     } );
     
     assert && assert( kit.molecules.length === 0 );
-    // BuildAMoleculeApplication.allowBondBreaking.addObserver( new SimpleObserver() {
-    //     public void update() {
-    //         if ( BuildAMoleculeApplication.allowBondBreaking.get() ) {
-    //             // enabled, so add in bond nodes
-    //             for ( Molecule molecule : metadataMap.keySet() ) {
-    //                 addMoleculeBondNodes( molecule );
-    //             }
-    //         }
-    //         else {
-    //             // disabled, so remove bond nodes
-    //             for ( Molecule molecule : bondMap.keySet() ) {
-    //                 removeMoleculeBondNodes( molecule );
-    //             }
-    //         }
-    //     }
-    // } );
   };
   
   inherit( Node, KitView, {
-    closestAtom: function( modelPoint, threshold ) {
+    // distance needs to be within threshold, and if an element is provided, the element must match
+    closestAtom: function( modelPoint, threshold, element ) {
       assert && assert( threshold );
       
       var thresholdSquared = threshold * threshold;
@@ -191,7 +212,7 @@ define( function( require ) {
         // not really distance, persay, since it can go negative
         var distanceSquared = dx * dx + dy * dy - atom.radius * atom.radius;
         
-        if ( distanceSquared > bestDistanceSquared ) {
+        if ( distanceSquared > bestDistanceSquared || ( element && atom.element !== element ) ) {
           continue;
         }
         
