@@ -88,60 +88,6 @@ define( function( require ) {
     };
   }
   
-  // var sunDirection = new Vector3( -1, 0.5, 2 ).normalized();
-  // var moonDirection = new Vector3( 2, -1, 1 ).normalized();
-  // var sunWeight = 0.8;
-  // var moonWeight = 0.6;
-  // function shade( element, normal ) {
-  //   var baseColor = new Color( element.color );
-  //   var sunTotal = Math.max( 0, normal.dot( sunDirection ) ) * sunWeight;
-  //   var moonTotal = Math.max( 0, normal.dot( moonDirection ) ) * moonWeight;
-
-  //   var weight = Math.min( 1, sunTotal + moonTotal );
-    
-  //   return 'rgb(' +
-  //          Math.floor( weight * baseColor.red ) + ',' +
-  //          Math.floor( weight * baseColor.green ) + ',' +
-  //          Math.floor( weight * baseColor.blue ) + ')';
-  // }
-  
-  // function shadedCanvas( element, size ) {
-  //   var canvas = document.createElement( 'canvas' );
-  //   canvas.width = size;
-  //   canvas.height = size;
-  //   var context = canvas.getContext( '2d' );
-    
-  //   var step = 2 / size; // sample at the centers of pixels
-  //   for ( var idx = 0; idx < size; idx++ ) {
-  //     var x = -1 + ( idx + 0.5 ) * step;
-  //     for ( var idy = 0; idy < size; idy++ ) {
-  //       var y = 1 - ( idy + 0.5 ) * step; // inverse Y for 3d style
-        
-  //       var intersection = DotUtil.sphereRayIntersection( 1, new Ray3( new Vector3( x, y, 2 ), Vector3.Z_UNIT.negated() ) );
-  //       var normal = intersection ? intersection.normal : new Vector3( x, y, 0 ).normalized(); // shade as the closest point on the sphere if we miss
-        
-  //       context.fillStyle = shade( element, normal );
-  //       context.fillRect( idx, idy, 1, 1 );
-  //     }
-  //   }
-  //   return canvas;
-  // }
-  
-  // var elementPatterns = {};
-  // var tmpContext = document.createElement( 'canvas' ).getContext( '2d' );
-  // var elementPatternTransforms = {};
-  // _.each( Element.elements, function( element ) {
-  //   var size = 128;
-  //   var canvas = shadedCanvas( element, size );
-  //   var pattern = tmpContext.createPattern( canvas, 'no-repeat' );
-  //   elementPatterns[element.symbol] = pattern;
-  //   var matrix = new Matrix3( 2 * element.radius / size, 0,                         -element.radius,
-  //                             0,                         2 * element.radius / size, -element.radius,
-  //                             0,                         0,                         1 );
-  //   elementPatternTransforms[element.symbol] = matrix.inverted();
-  //   // pattern.setTransform( matrix.toSVGMatrix() );
-  // } );
-
   var Molecule3DNode = namespace.Molecule3DNode = function Molecule3DNode( completeMolecule, trail ) {
     var that = this;
     Node.call( this, {} );
@@ -229,6 +175,30 @@ define( function( require ) {
       maxTotalRadius = Math.max( maxTotalRadius, atom.magnitude() + atom.radius );
     } );
     
+    function createGradient( element ) {
+      var diameter = element.radius * 2;
+      var gCenter = new Vector2( -element.radius / 5, -element.radius / 5 );
+      var middleRadius = diameter / 3;
+      var fullRadius = gCenter.minus( new Vector2( 1, 1 ).normalized().times( element.radius ) ).magnitude();
+      var gradientFill = context.createRadialGradient( gCenter.x, gCenter.y, 0, gCenter.x, gCenter.y, fullRadius );
+      
+      var baseColor = new Color( element.color );
+      gradientFill.addColorStop( 0, baseColor.colorUtilsBrighter( 0.5 ).toCSS() );
+      gradientFill.addColorStop( 0.08, baseColor.colorUtilsBrighter( 0.2 ).toCSS() );
+      gradientFill.addColorStop( 0.4, baseColor.colorUtilsDarker( 0.1 ).toCSS() );
+      gradientFill.addColorStop( 0.8, baseColor.colorUtilsDarker( 0.4 ).toCSS() );
+      gradientFill.addColorStop( 0.95, baseColor.colorUtilsDarker( 0.6 ).toCSS() );
+      gradientFill.addColorStop( 1, baseColor.colorUtilsDarker( 0.4 ).toCSS() );
+      return gradientFill;
+    }
+    
+    var gradientMap = {}; // element symbol => gradient
+    _.each( currentAtoms, function( atom ) {
+      if ( !gradientMap[atom.element.symbol] ) {
+        gradientMap[atom.element.symbol] = createGradient( atom.element );
+      }
+    } );
+    
     function draw() {
       var width = canvas.width;
       var height = canvas.height;
@@ -279,13 +249,7 @@ define( function( require ) {
         context.save();
         context.translate( midX + atom.x, midY + atom.y );
         context.beginPath();
-        // var transformMatrix = fillMode === 1 ? elementPatternTransforms[element.symbol] : Matrix3.IDENTITY;
-        var transformMatrix = Matrix3.IDENTITY;
-        var inverseTransformMatrix = transformMatrix.inverted();
         var arc, ellipticalArc;
-        if ( inverseTransformMatrix !== Matrix3.IDENTITY ) {
-          inverseTransformMatrix.canvasAppendTransform( context );
-        }
         if ( arcs.length ) {
           for ( var j = 0; j < arcs.length; j++ ) {
             ellipticalArc = new EllipticalArc( arcs[j].center,
@@ -294,59 +258,16 @@ define( function( require ) {
                                                arcs[j].ellipseStart, arcs[j].ellipseEnd, false );
             var atEnd = j + 1 === arcs.length;
             arc = new Arc( Vector2.ZERO, atom.radius, arcs[j].circleEnd, atEnd ? ( arcs[0].circleStart + Math.PI * 2 ) : arcs[j+1].circleStart, false );
-            if ( transformMatrix !== Matrix3.IDENTITY ) {
-              ellipticalArc = ellipticalArc.transformed( transformMatrix );
-              arc = arc.transformed( transformMatrix );
-            }
             ellipticalArc.writeToContext( context );
             arc.writeToContext( context );
           }
         } else {
-          if ( transformMatrix !== Matrix3.IDENTITY ) {
-            // workaround for 
-            arc = new Arc( transformMatrix.timesVector2( Vector2.ZERO ), transformMatrix.m00() * atom.radius, 0, Math.PI * 2, false );
-          } else {
-            arc = new Arc( Vector2.ZERO, atom.radius, 0, Math.PI * 2, false );
-          }
+          arc = new Arc( Vector2.ZERO, atom.radius, 0, Math.PI * 2, false );
           arc.writeToContext( context );
         }
-        switch ( fillMode ) {
-          case 0:
-            context.fillStyle = atom.color;
-            break;
-          case 1:
-            // context.fillStyle = elementPatterns[element.symbol];
-            break;
-          case 2:
-            // copied from BAM's AtomNode
-            // var diameter = atom.radius * 2;
-            // var gCenter = new Vector2( -atom.radius / 3, -atom.radius / 3 );
-            // var middleRadius = diameter / 3;
-            // var fullRadius = middleRadius + 0.7 * diameter;
-            // var gradientFill = context.createRadialGradient( gCenter.x, gCenter.y, 0, gCenter.x, gCenter.y, fullRadius );
-            // gradientFill.addColorStop( 0, '#ffffff' );
-            // gradientFill.addColorStop( middleRadius / fullRadius, element.color );
-            // gradientFill.addColorStop( 1, '#000000' );
-            // context.fillStyle = gradientFill;
-            break;
-          case 3:
-            // custom
-            var diameter = atom.radius * 2;
-            var gCenter = new Vector2( -atom.radius / 5, -atom.radius / 5 );
-            var middleRadius = diameter / 3;
-            var fullRadius = gCenter.minus( new Vector2( 1, 1 ).normalized().times( atom.radius ) ).magnitude();
-            var gradientFill = context.createRadialGradient( gCenter.x, gCenter.y, 0, gCenter.x, gCenter.y, fullRadius );
+        
+        context.fillStyle = gradientMap[atom.element.symbol];
             
-            var baseColor = new Color( element.color );
-            gradientFill.addColorStop( 0, baseColor.colorUtilsBrighter( 0.5 ).toCSS() );
-            gradientFill.addColorStop( 0.08, baseColor.colorUtilsBrighter( 0.2 ).toCSS() );
-            gradientFill.addColorStop( 0.4, baseColor.colorUtilsDarker( 0.1 ).toCSS() );
-            gradientFill.addColorStop( 0.8, baseColor.colorUtilsDarker( 0.4 ).toCSS() );
-            gradientFill.addColorStop( 0.95, baseColor.colorUtilsDarker( 0.6 ).toCSS() );
-            gradientFill.addColorStop( 1, baseColor.colorUtilsDarker( 0.4 ).toCSS() );
-            context.fillStyle = gradientFill;
-            break;
-        }
         context.fill();
         context.restore();
       }
