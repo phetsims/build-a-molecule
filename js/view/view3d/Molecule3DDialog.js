@@ -48,16 +48,13 @@ define( function( require ) {
   var stageCenterY = Constants.stageSize.height / 2;
   var optionsHorizontalPadding = 40;
   
-  var Molecule3DDialog = namespace.Molecule3DDialog = function Molecule3DDialog( completeMolecule, trail ) {
+  var Molecule3DDialog = namespace.Molecule3DDialog = function Molecule3DDialog( completeMolecule, trail, view ) {
     var that = this;
-    Node.call( this, { renderer: 'svg' } );
+    Node.call( this );
     
     this.initialTrail = trail;
     
     var scene = trail.rootNode();
-    var view = _.find( trail.nodes, function( node ) { return node.isBAMView; } );
-    
-    var viewChild = new Node();
     
     var background = new Rectangle( 0, 0, 50, 50, { fill: 'rgba(0,0,0,0.85)' } );
     this.addChild( background );
@@ -68,15 +65,6 @@ define( function( require ) {
     
     var viewStyleProperty = new Property( 'spaceFill' ); // spaceFill or ballAndStick
     
-    var moleculeNode = new Molecule3DNode( completeMolecule, this.getGlobalCanvasBounds( view ), true );
-    this.addChild( viewChild );
-    this.addChild( moleculeNode );
-    
-    var transformMatrix = Molecule3DNode.initialTransforms[completeMolecule.getGeneralFormula()];
-    if ( transformMatrix ) {
-      moleculeNode.transformMolecule( transformMatrix );
-    }
-    
     /*---------------------------------------------------------------------------*
     * Chemical formula label
     *----------------------------------------------------------------------------*/
@@ -86,7 +74,7 @@ define( function( require ) {
       centerX: stageCenterX,
       bottom: stageCenterY - verticalOffset
     } );
-    viewChild.addChild( formulaText );
+    this.addChild( formulaText );
     
     /*---------------------------------------------------------------------------*
     * Display name label
@@ -97,7 +85,7 @@ define( function( require ) {
       centerX: stageCenterX,
       bottom: formulaText.top - 5
     } );
-    viewChild.addChild( nameText );
+    this.addChild( nameText );
     
     /*---------------------------------------------------------------------------*
     * Space fill / Ball and stick radio buttons
@@ -134,12 +122,25 @@ define( function( require ) {
       }
     } );
     buttonHolder.touchArea = Shape.bounds( buttonHolder.localBounds.dilated( 20 ) );
-    viewChild.addChild( buttonHolder );
+    this.addChild( buttonHolder );
+    
+    /*---------------------------------------------------------------------------*
+    * 3D view
+    *----------------------------------------------------------------------------*/
+    var moleculeNode = new Molecule3DNode( completeMolecule, this.getGlobalCanvasBounds( view ), true );
+    moleculeNode.updateCSSTransform = function( transform, element ) {}; // don't CSS transform it
+    moleculeNode.touchArea = moleculeNode.mouseArea = Shape.bounds( this.getLocalCanvasBounds() );
+    this.addChild( moleculeNode );
+    
+    var transformMatrix = Molecule3DNode.initialTransforms[completeMolecule.getGeneralFormula()];
+    if ( transformMatrix ) {
+      moleculeNode.transformMolecule( transformMatrix );
+    }
     
     function updateLayout() {
       var sceneWidth = window.innerWidth;
       var sceneHeight = window.innerHeight;
-      var newMatrix = trail.getMatrix();
+      var newMatrix = view.getMatrix();
       if ( sceneWidth === width && sceneHeight === height && matrix.equals( newMatrix ) ) {
         return;
       }
@@ -147,16 +148,15 @@ define( function( require ) {
       height = sceneHeight;
       matrix = newMatrix;
       
-      background.rectWidth = width;
-      background.rectHeight = height;
+      var screenBounds = view.globalToLocalBounds( new Bounds2( 0, 0, width, height ) );
+      background.setRectBounds( screenBounds );
       
-      var backgroundGradient = new RadialGradient( width / 2, height / 2, 0, width / 2, height / 2, Math.max( width / 2, height / 2 ) );
+      var backgroundGradient = new RadialGradient( screenBounds.centerX, screenBounds.centerY, 0,
+                                                   screenBounds.centerX, screenBounds.centerY, Math.max( screenBounds.centerX, screenBounds.centerY ) );
       backgroundGradient.addColorStop( 0, 'rgba(0,0,0,0.95)' );
       backgroundGradient.addColorStop( 1, 'rgba(0,0,0,0.85)' );
       
       background.fill = backgroundGradient;
-      
-      viewChild.matrix = view.getMatrix();
       
       moleculeNode.setMoleculeBounds( that.getGlobalCanvasBounds( view ) );
     }
@@ -165,25 +165,28 @@ define( function( require ) {
     view.addEventListener( 'bounds', updateLayout );
     
     var tick = moleculeNode.tick.bind( moleculeNode );
-    namespace.timeTick.on( 'tick', tick );
+    var clock = view.collectionList.clock;
+    clock.on( 'tick', tick );
     
     this.addInputListener( {
       up: function( event ) {
         scene.removeEventListener( 'resize', updateLayout );
         view.removeEventListener( 'bounds', updateLayout );
-        scene.removeChild( that );
-        namespace.timeTick.off( 'tick', tick );
-        that.removeChild( viewChild );
+        view.removeChild( that );
+        clock.off( 'tick', tick );
       }
     } );
   };
 
   return inherit( Node, Molecule3DDialog, {
-    getGlobalCanvasBounds: function( view ) {
+    getLocalCanvasBounds: function() {
       var centerX = stageCenterX;
       var centerY = stageCenterY;
-      var bounds = new Bounds2( centerX - size, centerY - size, centerX + size, centerY + size );
-      return view.localToGlobalBounds( bounds ).roundedOut();
+      return new Bounds2( centerX - size, centerY - size, centerX + size, centerY + size );
+    },
+    
+    getGlobalCanvasBounds: function( view ) {
+      return view.localToGlobalBounds( this.getLocalCanvasBounds() ).roundedOut();
     }
   } );
 } );

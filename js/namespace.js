@@ -26,8 +26,6 @@ define( function( require ) {
     PropertySet: PropertySet,
     
     soundEnabled: soundEnabled,
-    gameAudioPlayer: new (require( 'VEGAS/GameAudioPlayer' ))( soundEnabled ),
-    
-    timeTick: new PropertySet( {} )
+    gameAudioPlayer: new (require( 'VEGAS/GameAudioPlayer' ))( soundEnabled )
   };
 } );

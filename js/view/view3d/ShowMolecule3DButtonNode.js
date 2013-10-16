@@ -32,7 +32,8 @@ define( function( require ) {
     this.addInputListener( new ButtonListener( {
       fire: function( evt ) {
         var trail = that.getUniqueTrail();
-        trail.rootNode().addChild( new Molecule3DDialog( completeMolecule, trail ) );
+        var view = _.find( trail.nodes, function( node ) { return node.isBAMView; } );
+        view.addChild( new Molecule3DDialog( completeMolecule, trail, view ) );
       }
     } ) );
     

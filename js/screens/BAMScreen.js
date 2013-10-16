@@ -30,7 +30,6 @@ define( function( require ) {
       var model = new CollectionList( createInitialKitCollection( layoutBounds, clock ), layoutBounds, clock );
       model.step = function step( timeElapsed ) {
         clock.trigger( 'tick', timeElapsed );
-        namespace.timeTick.trigger( 'tick', timeElapsed );
       };
       model.generateKitCollection = function generateKitCollection() {
         return createKitCollection( layoutBounds, clock );
