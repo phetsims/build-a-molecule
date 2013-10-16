@@ -14,11 +14,13 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var namespace = require( 'BAM/namespace' );
   var Constants = require( 'BAM/Constants' );
+  var Bounds2 = require( 'DOT/Bounds2' );
   var Shape = require( 'KITE/Shape' );
   var BucketFront = require( 'SCENERY_PHET/bucket/BucketFront' );
   var BucketHole = require( 'SCENERY_PHET/bucket/BucketHole' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Node = require( 'SCENERY/nodes/Node' );
+  var Trail = require( 'SCENERY/util/Trail' );
   var AtomNode = require( 'BAM/view/AtomNode' );
   var MoleculeBondContainerNode = require( 'BAM/view/MoleculeBondContainerNode' );
   var MoleculeMetadataNode = require( 'BAM/view/MoleculeMetadataNode' );
@@ -45,6 +47,26 @@ define( function( require ) {
     this.addChild( metadataLayer );
     this.addChild( topLayer );
     
+    // override its hit testing
+    atomLayer.trailUnderPoint = function( point, options, recursive, hasListener ) {
+      // return accurate hits for the mouse
+      if ( options && options.isMouse ) {
+        return Node.prototype.trailUnderPoint.call( atomLayer, point, options, recursive, hasListener );
+      }
+      
+      // probably a touch or something we will target
+      var modelPoint = Constants.modelViewTransform.viewToModelPosition( point );
+      var atom = kitView.closestAtom( modelPoint, 100 );
+      if ( atom ) {
+        // TODO: this is somewhat hackish. better way of doing this?
+        return new Trail( [atomLayer, kitView.atomNodeMap[atom.id]] );
+      } else {
+        return null;
+      }
+    };
+    // ensure that touches don't get pruned before this point
+    atomLayer.touchArea = Shape.bounds( Constants.stageSize.toBounds() );
+    
     _.each( kit.buckets, function( bucket ) {
       var bucketFront = new BucketFront( bucket, Constants.modelViewTransform, {
         labelFont: new PhetFont( {
@@ -61,6 +83,8 @@ define( function( require ) {
                                         .lineTo( bucketHole.right - bucketHole.x - 35, bucketHole.centerY - 55 - bucketHole.y )
                                         .lineTo( bucketHole.left - bucketHole.x + 35, bucketHole.centerY - 55 - bucketHole.y )
                                         .close();
+      // but don't pick the elliptical paths in the hole
+      _.each( bucketHole.children, function( child ) { child.pickable = false; } );
 
       topLayer.addChild( bucketFront );
       bottomLayer.addChild( bucketHole );
@@ -142,6 +166,42 @@ define( function( require ) {
   };
   
   inherit( Node, KitView, {
+    closestAtom: function( modelPoint, threshold ) {
+      assert && assert( threshold );
+      
+      var thresholdSquared = threshold * threshold;
+      
+      var atoms = this.kit.atoms;
+      var numAtoms = atoms.length;
+      
+      var best = null;
+      var bestDistanceSquared = thresholdSquared; // limit ourselves at the threshold, and add this to the best distance so we only need one check in the loop
+      
+      var x = modelPoint.x;
+      var y = modelPoint.y;
+      
+      // ignore stacking order for this operation
+      for ( var i = 0; i < numAtoms; i++ ) {
+        var atom = atoms[i];
+        var position = atom.positionProperty.get(); // no ES5 setters so we have the fastest possible code in this inner loop (called during hit testing)
+        
+        var dx = x - position.x;
+        var dy = y - position.y;
+        
+        // not really distance, persay, since it can go negative
+        var distanceSquared = dx * dx + dy * dy - atom.radius * atom.radius;
+        
+        if ( distanceSquared > bestDistanceSquared ) {
+          continue;
+        }
+        
+        bestDistanceSquared = distanceSquared;
+        best = atom;
+      }
+      
+      return best;
+    },
+    
     addMoleculeBondNodes: function( molecule ) {
       var moleculeBondContainerNode = new MoleculeBondContainerNode( this.kit, molecule, this.view );
       this.metadataLayer.addChild( moleculeBondContainerNode );
