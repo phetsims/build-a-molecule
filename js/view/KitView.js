@@ -140,7 +140,7 @@ define( function( require ) {
             var molecule = kit.getMolecule( atom );
             if ( molecule ) {
               _.each( molecule.atoms, function( moleculeAtom ) {
-                kitView.atomNodeMap[atom.id].moveToFront();
+                kitView.atomNodeMap[moleculeAtom.id].moveToFront();
               } );
             } else {
               atomNode.moveToFront();
