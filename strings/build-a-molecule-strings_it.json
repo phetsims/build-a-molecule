@@ -27,7 +27,7 @@
   "atom.bromine": "Bromo",
   "molecule.fluoromethane": "Fluorometano",
   "title.largerMolecules": "Grandi molecole",
-  "collection.yourMoleculeCollection": "<center>La tua molecola</center>",
+  "collection.yourMoleculeCollection": "La tua molecola",
   "atom.phosphorus": "Fosforo",
   "collection.reset": "Azzera la raccolta",
   "atom.boron": "Boro",

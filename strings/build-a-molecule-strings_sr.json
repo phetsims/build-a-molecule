@@ -27,7 +27,7 @@
   "atom.bromine": "Бром",
   "molecule.fluoromethane": "Флуорметан (Метил-флуорид)",
   "title.largerMolecules": "Већи молекули",
-  "collection.yourMoleculeCollection": "<center>Ваши молекули </center>",
+  "collection.yourMoleculeCollection": "Ваши молекули ",
   "3d.icon": "3Д",
   "atom.phosphorus": "Фосфор",
   "collection.reset": "Испразни колекцију (Јово,наново!)",

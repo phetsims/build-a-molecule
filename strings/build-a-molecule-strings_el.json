@@ -27,7 +27,7 @@
   "collection.single.format": "{0}{1}",
   "molecule.fluoromethane": "Φθορομεθάνιο",
   "title.largerMolecules": "Μεγαλύτερα μόρια",
-  "collection.yourMoleculeCollection": "<center>Τα δικά σας μόρια</center>",
+  "collection.yourMoleculeCollection": "Τα δικά σας μόρια",
   "3d.icon": "3D",
   "atom.phosphorus": "Φώσφορος",
   "collection.reset": "Επαναφορά συλλογής",

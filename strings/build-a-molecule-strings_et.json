@@ -28,7 +28,7 @@
   "collection.single.format": "{0} ({1})",
   "molecule.fluoromethane": "Fluorometaan",
   "title.largerMolecules": "Suuremad molekulid",
-  "collection.yourMoleculeCollection": "<center>Sinu molekulid</center>",
+  "collection.yourMoleculeCollection": "Sinu molekulid",
   "3d.icon": "3D",
   "atom.phosphorus": "Fosfor",
   "collection.reset": "Kollektsiooni algseade",

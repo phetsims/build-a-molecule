@@ -26,7 +26,7 @@
   "atom.bromine": "brom",
   "molecule.fluoromethane": "fluorometan",
   "title.largerMolecules": "większe cząsteczki",
-  "collection.yourMoleculeCollection": "<center>Twoje cząsteczki</center>",
+  "collection.yourMoleculeCollection": "Twoje cząsteczki",
   "atom.phosphorus": "fosfor",
   "collection.reset": "skasuj kolekcję",
   "atom.boron": "bor",

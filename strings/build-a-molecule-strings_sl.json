@@ -28,7 +28,7 @@
   "collection.single.format": "{0} ({1})",
   "molecule.fluoromethane": "Fluorometan",
   "title.largerMolecules": "Velike molekule",
-  "collection.yourMoleculeCollection": "<center>Tvoje molekule</center>",
+  "collection.yourMoleculeCollection": "Tvoje molekule",
   "3d.icon": "3D",
   "atom.phosphorus": "Fosfor",
   "collection.reset": "Ponastavi zbirko",

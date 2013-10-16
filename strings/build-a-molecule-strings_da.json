@@ -27,7 +27,7 @@
   "collection.single.format": "{0} ({1})",
   "molecule.fluoromethane": "Flourmethan",
   "title.largerMolecules": "Større molekyler",
-  "collection.yourMoleculeCollection": "<center>Dine molekyler</center>",
+  "collection.yourMoleculeCollection": "Dine molekyler",
   "3d.icon": "3D",
   "atom.phosphorus": "Fosfor",
   "collection.reset": "Nulstil samling",

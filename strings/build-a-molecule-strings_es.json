@@ -28,7 +28,7 @@
   "collection.single.format": "{0} ({1})",
   "molecule.fluoromethane": "Fluorometano",
   "title.largerMolecules": "Grandes moléculas",
-  "collection.yourMoleculeCollection": "<center>Tus moléculas</center>",
+  "collection.yourMoleculeCollection": "Tus moléculas",
   "3d.icon": "3D",
   "atom.phosphorus": "fósforo",
   "collection.reset": "Reinicia la colección",

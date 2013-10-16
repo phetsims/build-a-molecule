@@ -28,7 +28,7 @@
   "collection.single.format": " {0} ({1})",
   "molecule.fluoromethane": "Fluormetan",
   "title.largerMolecules": "Större molekyler",
-  "collection.yourMoleculeCollection": "<center>Dina molekyler</center>",
+  "collection.yourMoleculeCollection": "Dina molekyler",
   "atom.phosphorus": "Fosfor",
   "collection.reset": "Återställ samling",
   "atom.boron": "Bor",

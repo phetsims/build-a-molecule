@@ -28,7 +28,7 @@
   "collection.single.format": "{0} ({1})",
   "molecule.fluoromethane": "氟代甲烷",
   "title.largerMolecules": "较大的分子",
-  "collection.yourMoleculeCollection": "<center>你的分子</center>",
+  "collection.yourMoleculeCollection": "你的分子",
   "3d.icon": "3D",
   "atom.phosphorus": "磷",
   "collection.reset": "重置",

@@ -26,7 +26,7 @@
   "collection.single.format": "{0} {1}",
   "molecule.fluoromethane": "fluormethaan",
   "title.largerMolecules": "grotere moleculen",
-  "collection.yourMoleculeCollection": "<center> Je moleculen </center>",
+  "collection.yourMoleculeCollection": " Je moleculen ",
   "atom.phosphorus": "fosfor",
   "collection.reset": "Reset verzameling",
   "atom.boron": "boor",

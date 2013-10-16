@@ -28,7 +28,7 @@
   "collection.single.format": "{0} ({1})",
   "molecule.fluoromethane": "Fluorometan",
   "title.largerMolecules": "Phân tử lớn",
-  "collection.yourMoleculeCollection": "<center>Phân tử của bạn</center>",
+  "collection.yourMoleculeCollection": "Phân tử của bạn",
   "3d.icon": "3D",
   "atom.phosphorus": "Phosphor",
   "collection.reset": "Reset bộ sưu tập",

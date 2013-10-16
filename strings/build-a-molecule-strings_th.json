@@ -28,7 +28,7 @@
   "collection.single.format": "{0} ({1})",
   "molecule.fluoromethane": "ฟลูโอโรมีเทน",
   "title.largerMolecules": "โมเลกุลใหญ่ .",
-  "collection.yourMoleculeCollection": "<center>โมเลกุล</center>",
+  "collection.yourMoleculeCollection": "โมเลกุล",
   "3d.icon": "3D",
   "atom.phosphorus": "ฟอสฟอรัส",
   "collection.reset": "เริ่มใหม่",

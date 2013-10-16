@@ -28,7 +28,7 @@
   "collection.single.format": "{0} ({1})",
   "molecule.fluoromethane": "फ्लुरोमिथेन",
   "title.largerMolecules": "मोठे रेणू",
-  "collection.yourMoleculeCollection": "<center>तुमचा रेणू</center>",
+  "collection.yourMoleculeCollection": "तुमचा रेणू",
   "3d.icon": "त्रिमीत",
   "atom.phosphorus": "फॉस्फरस",
   "collection.reset": "Reset Collection",

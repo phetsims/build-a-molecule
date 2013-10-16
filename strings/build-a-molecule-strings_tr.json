@@ -28,7 +28,7 @@
   "collection.single.format": "{0} ({1})",
   "molecule.fluoromethane": "Metan Florür",
   "title.largerMolecules": "Daha Büyük Moleküller",
-  "collection.yourMoleculeCollection": "<center>Molekülleriniz</center>",
+  "collection.yourMoleculeCollection": "Molekülleriniz",
   "3d.icon": "3D",
   "atom.phosphorus": "Fosfat",
   "collection.reset": "Seti Sıfırla",

@@ -28,7 +28,7 @@
   "collection.single.format": "{0}({1})",
   "molecule.fluoromethane": "플루오로메탄",
   "title.largerMolecules": "큰 분자",
-  "collection.yourMoleculeCollection": "<center>만든 분자들 </center>",
+  "collection.yourMoleculeCollection": "만든 분자들 ",
   "3d.icon": "3차원",
   "atom.phosphorus": "인",
   "collection.reset": "작업 초기화",

@@ -28,7 +28,7 @@
   "collection.single.format": "{0} ({1})",
   "molecule.fluoromethane": "Fluorimetaani",
   "title.largerMolecules": "Suuremmat molekyylit",
-  "collection.yourMoleculeCollection": "<center>Molekyylisi</center>",
+  "collection.yourMoleculeCollection": "Molekyylisi",
   "3d.icon": "3D",
   "atom.phosphorus": "Fosfori",
   "collection.reset": "Alusta kokoelma",

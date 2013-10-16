@@ -27,7 +27,7 @@
   "atom.bromine": "臭素",
   "molecule.fluoromethane": "フッ化メタン",
   "title.largerMolecules": "大きい分子",
-  "collection.yourMoleculeCollection": "<center>分子</center>",
+  "collection.yourMoleculeCollection": "分子",
   "atom.phosphorus": "リン",
   "collection.reset": "コレクションをリセット",
   "atom.boron": "ボロン",

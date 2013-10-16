@@ -28,7 +28,7 @@
   "collection.single.format": "{0} ({1})",
   "molecule.fluoromethane": "فلوروميثان",
   "title.largerMolecules": "جزيئات أكبر",
-  "collection.yourMoleculeCollection": "<center>جزيئاتك</center>",
+  "collection.yourMoleculeCollection": "جزيئاتك",
   "3d.icon": "ثلاثي الأبعاد",
   "atom.phosphorus": "الفوسفور",
   "collection.reset": "تفريغ",

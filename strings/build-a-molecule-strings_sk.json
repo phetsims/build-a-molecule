@@ -27,7 +27,7 @@
   "collection.single.format": "{0}({1})",
   "molecule.fluoromethane": "Fluórmetán",
   "title.largerMolecules": "Vlastné molekuly",
-  "collection.yourMoleculeCollection": "<center>Molekuly</center>",
+  "collection.yourMoleculeCollection": "Molekuly",
   "3d.icon": "3D",
   "atom.phosphorus": "Fosfor",
   "collection.reset": "Znovu",

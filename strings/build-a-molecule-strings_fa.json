@@ -28,7 +28,7 @@
   "collection.single.format": "{0} ({1})",
   "molecule.fluoromethane": "فلوئورومتان",
   "title.largerMolecules": "مولکولهای بزرگتر",
-  "collection.yourMoleculeCollection": "<center>مولکولهای شما</center>",
+  "collection.yourMoleculeCollection": "مولکولهای شما",
   "3d.icon": "سه بعدی",
   "atom.phosphorus": "فسفر",
   "collection.reset": "تنظیم دوباره مجموعه",
