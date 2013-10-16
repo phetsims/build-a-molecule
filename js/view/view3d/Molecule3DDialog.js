@@ -25,6 +25,7 @@ define( function( require ) {
   var DOM = require( 'SCENERY/nodes/DOM' );
   var Path = require( 'SCENERY/nodes/Path' );
   var Text = require( 'SCENERY/nodes/Text' );
+  var HTMLText = require( 'SCENERY/nodes/HTMLText' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var Color = require( 'SCENERY/util/Color' );
   var Util = require( 'SCENERY/util/Util' );
@@ -32,6 +33,7 @@ define( function( require ) {
   var EllipticalArc = require( 'KITE/segments/EllipticalArc' );
   var DotUtil = require( 'DOT/Util' );
   var Ray3 = require( 'DOT/Ray3' );
+  var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Element = require( 'NITROGLYCERIN/Element' );
   
   var size = 200;
@@ -45,7 +47,9 @@ define( function( require ) {
     var scene = trail.rootNode();
     var view = _.find( trail.nodes, function( node ) { return node.isBAMView; } );
     
-    var background = new Rectangle( 0, 0, 50, 50, { fill: 'rgba(0,0,0,0.7)' } );
+    var viewChild = new Node();
+    
+    var background = new Rectangle( 0, 0, 50, 50, { fill: 'rgba(0,0,0,0.85)' } );
     this.addChild( background );
     
     var width = 0;
@@ -53,12 +57,29 @@ define( function( require ) {
     var matrix = trail.getMatrix();
     
     var moleculeNode = new Molecule3DNode( completeMolecule, this.getGlobalCanvasBounds( view ), false );
+    this.addChild( viewChild );
     this.addChild( moleculeNode );
     
     var transformMatrix = Molecule3DNode.initialTransforms[completeMolecule.getGeneralFormula()];
     if ( transformMatrix ) {
       moleculeNode.transformMolecule( transformMatrix );
     }
+    
+    var formulaText = new HTMLText( completeMolecule.getGeneralFormulaFragment(), {
+      font: new PhetFont( 20 ),
+      fill: '#bbb',
+      centerX: Constants.stageSize.width / 2,
+      bottom: Constants.stageSize.height / 2 - size - 15
+    } );
+    viewChild.addChild( formulaText );
+    
+    var nameText = new Text( completeMolecule.getDisplayName(), {
+      font: new PhetFont( 30 ),
+      fill: 'white',
+      centerX: Constants.stageSize.width / 2,
+      bottom: formulaText.top - 5
+    } );
+    viewChild.addChild( nameText );
     
     function updateLayout() {
       var sceneWidth = window.innerWidth;
@@ -73,6 +94,8 @@ define( function( require ) {
       
       background.rectWidth = width;
       background.rectHeight = height;
+      
+      viewChild.matrix = view.getMatrix();
       
       moleculeNode.setMoleculeBounds( that.getGlobalCanvasBounds( view ) );
     }
@@ -89,6 +112,7 @@ define( function( require ) {
         view.removeEventListener( 'bounds', updateLayout );
         scene.removeChild( that );
         namespace.timeTick.off( 'tick', tick );
+        that.removeChild( viewChild );
       }
     } );
   };
