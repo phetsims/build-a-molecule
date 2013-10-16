@@ -14,6 +14,7 @@ define( function( require ) {
   var collection_yourMoleculeCollectionString = require( 'string!BAM/collection.yourMoleculeCollection' );
   var collection_labelString = require( 'string!BAM/collection.label' );
   var Bounds2 = require( 'DOT/Bounds2' );
+  var Shape = require( 'KITE/Shape' );
   var CollectionAreaNode = require( 'BAM/control/CollectionAreaNode' );
   var CollectionList = require( 'BAM/model/CollectionList' );
   var LayoutBounds = require( 'BAM/model/LayoutBounds' );
@@ -78,6 +79,10 @@ define( function( require ) {
       },
       previous: function() {
         collectionList.switchToPreviousCollection();
+      },
+      touchAreaExtension: function( shape ) {
+        // square touch area
+        return Shape.bounds( shape.bounds.dilated( 7 ) );
       }
     } );
     function updateSwitcher() {
