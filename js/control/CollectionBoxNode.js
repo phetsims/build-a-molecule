@@ -35,6 +35,12 @@ define( function( require ) {
       moleculeNode.draw();
       moleculeIdThumbnailMap[completeMolecule.moleculeId] = new Image( moleculeNode.canvas.toDataURL() );
     }
+    
+    // wrap the returned image in an extra node so we can transform them independently, and that takes up the proper amount of space
+    var node = moleculeIdThumbnailMap[completeMolecule.moleculeId];
+    var wrapperNode = new Rectangle( 0, 0, 50, 50 );
+    wrapperNode.addChild( node );
+    return wrapperNode;
   }
   
   var CollectionBoxNode = namespace.CollectionBoxNode = function CollectionBoxNode( box, toModelBounds ) {
@@ -89,7 +95,7 @@ define( function( require ) {
     // add invisible molecules to the molecule layer so that its size won't change later (fixes molecule positions)
     var nodes = [];
     for ( var i = 0; i < box.capacity; i++ ) {
-      var node = box.moleculeType.createPseudo3DNode();
+      var node = lookupThumbnail( box.moleculeType );
       node.visible = false;
       nodes.push( node );
       this.moleculeLayer.addChild( node );
@@ -146,7 +152,7 @@ define( function( require ) {
       this.cancelBlinksInProgress();
       this.updateBoxGraphics();
       
-      var pseudo3DNode = molecule.getMatchingCompleteMolecule().createPseudo3DNode();
+      var pseudo3DNode = lookupThumbnail( molecule.getMatchingCompleteMolecule() );
       this.moleculeLayer.addChild( pseudo3DNode );
       this.moleculeNodes.push( pseudo3DNode );
       this.moleculeNodeMap[molecule.moleculeId] = pseudo3DNode;
@@ -206,8 +212,8 @@ define( function( require ) {
 
       // for now, we scale the molecules up and down depending on their size
       this.moleculeLayer.setScaleMagnitude( 1 );
-      var xScale = ( moleculeArea.width - 25 ) / this.moleculeLayer.width;
-      var yScale = ( moleculeArea.height - 25 ) / this.moleculeLayer.height;
+      var xScale = ( moleculeArea.width - 5 ) / this.moleculeLayer.width;
+      var yScale = ( moleculeArea.height - 5 ) / this.moleculeLayer.height;
       this.moleculeLayer.setScaleMagnitude( Math.min( xScale, yScale ) );
       
       this.moleculeLayer.center = moleculeArea.center.minus( moleculeArea.upperLeft );
