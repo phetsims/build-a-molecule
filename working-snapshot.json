@@ -1,6 +1,6 @@
 {
   "build-a-molecule": {
-    "sha": "afee9c6df34a1656e02478916f2d4615f859a0ea",
+    "sha": "c04402fd8d7e4e375e271de108af6eed0cbcbbc3",
     "branch": "master"
   },
   "sherpa": {
@@ -44,11 +44,11 @@
     "branch": "master"
   },
   "scenery": {
-    "sha": "6a9f7fe308243f8d281c741668e039a893f79757",
+    "sha": "60d0ab3997dd4efcae14d8a9a805227600c5594d",
     "branch": "master"
   },
   "scenery-phet": {
-    "sha": "c49da118b706c179d058050673249c97117938b4",
+    "sha": "ffa8add1d994ae0e8f6465847db98e9497d35215",
     "branch": "master"
   },
   "sun": {
