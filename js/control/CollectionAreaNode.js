@@ -13,10 +13,12 @@ define( function( require ) {
   var Constants = require( 'BAM/Constants' );
   var collection_resetString = require( 'string!BAM/collection.reset' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var Shape = require( 'KITE/Shape' );
   var Color = require( 'SCENERY/util/Color' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var TextButton = require( 'SUN/TextButton' );
+  var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var SingleCollectionBoxNode = require( 'BAM/control/SingleCollectionBoxNode' );
   var MultipleCollectionBoxNode = require( 'BAM/control/MultipleCollectionBoxNode' );
   
@@ -74,8 +76,10 @@ define( function( require ) {
         kit.resetKit();
       } );
     }, {
+      font: new PhetFont( 14 ),
       rectangleFillUp: Color.ORANGE
     } );
+    resetCollectionButton.touchArea = Shape.bounds( resetCollectionButton.bounds.dilate( 7 ) );
     
     function updateEnabled() {
       var enabled = false;

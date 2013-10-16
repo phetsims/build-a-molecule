@@ -103,6 +103,7 @@ define( function( require ) {
 
     // sound on/off
     this.soundToggleButton = new SoundToggleButton( namespace.soundEnabled );
+    this.soundToggleButton.touchArea = Shape.bounds( this.soundToggleButton.bounds.dilated( 7 ) );
     this.layoutNode.addChild( this.soundToggleButton );
     this.soundToggleButton.top = y;
 
