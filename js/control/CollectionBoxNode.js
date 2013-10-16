@@ -12,14 +12,30 @@ define( function( require ) {
   
   var namespace = require( 'BAM/namespace' );
   var Constants = require( 'BAM/Constants' );
+  var Bounds2 = require( 'DOT/Bounds2' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
+  var Image = require( 'SCENERY/nodes/Image' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var Property = require( 'AXON/Property' );
   var ShowMolecule3DButtonNode = require( 'BAM/view/view3d/ShowMolecule3DButtonNode' );
+  var Molecule3DNode = require( 'BAM/view/view3d/Molecule3DNode' );
   
   var moleculePadding = 5;
   var blackBoxPaddingFor3D = Constants.has3d ? 10 : 0;
+  
+  var moleculeIdThumbnailMap = {}; // maps moleculeId => Node (thumbnail view for the molecule)
+  function lookupThumbnail( completeMolecule ) {
+    if ( !moleculeIdThumbnailMap[completeMolecule.moleculeId] ) {
+      var moleculeNode = new Molecule3DNode( completeMolecule, new Bounds2( 0, 0, 50, 50 ), false );
+      var transformMatrix = Molecule3DNode.initialTransforms[completeMolecule.getGeneralFormula()];
+      if ( transformMatrix ) {
+        moleculeNode.transformMolecule( transformMatrix );
+      }
+      moleculeNode.draw();
+      moleculeIdThumbnailMap[completeMolecule.moleculeId] = new Image( moleculeNode.canvas.toDataURL() );
+    }
+  }
   
   var CollectionBoxNode = namespace.CollectionBoxNode = function CollectionBoxNode( box, toModelBounds ) {
     Node.call( this, {} );
