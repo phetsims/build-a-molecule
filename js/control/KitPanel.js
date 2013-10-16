@@ -66,6 +66,10 @@ define( function( require ) {
       },
       previous: function() {
         kitCollectionModel.goToPreviousKit();
+      },
+      touchAreaExtension: function( shape ) {
+        // square touch area
+        return Shape.bounds( shape.bounds.dilated( 7 ) );
       }
     } );
     kitCollectionModel.currentKitProperty.link( function() {
