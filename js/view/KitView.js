@@ -58,7 +58,10 @@ define( function( require ) {
       bottomLayer.addChild( bucketHole );
       
       _.each( bucket.atoms, function( atom ) {
-        var atomNode = new AtomNode( atom );
+        var atomNode = new AtomNode( atom, {
+          // renderer: 'svg',
+          // rendererOptions: { cssTransform: true }
+        } );
         kitView.atomNodeMap[atom.id] = atomNode;
         atomLayer.addChild( atomNode );
         
