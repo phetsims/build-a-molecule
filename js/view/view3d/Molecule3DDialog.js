@@ -50,7 +50,7 @@ define( function( require ) {
   
   var Molecule3DDialog = namespace.Molecule3DDialog = function Molecule3DDialog( completeMolecule, trail ) {
     var that = this;
-    Node.call( this, {} );
+    Node.call( this, { renderer: 'svg' } );
     
     this.initialTrail = trail;
     
