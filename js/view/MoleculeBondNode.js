@@ -16,6 +16,7 @@ define( function( require ) {
   var ButtonListener = require( 'SCENERY/input/ButtonListener' );
   var Circle = require( 'SCENERY/nodes/Circle' );
   var platform = require( 'PHET_CORE/platform' );
+  var Shape = require( 'KITE/Shape' );
   
   /* Notes on .cur file generation, all from the images directory, with "sudo apt-get install icoutils" for icotool:
 icotool -c -o scissors.ico scissors.png
@@ -85,7 +86,8 @@ icotool -c -o scissors-closed-up.ico scissors-closed-up.png
     // hit target
     var target = new Circle( bondRadius, {
       // no fill or stroke
-      cursor: openCursor
+      cursor: openCursor,
+      touchArea: new Shape() // these areas don't respond to touch events
     } );
     target.addInputListener( new ButtonListener( {
       fire: function( evt ) {
