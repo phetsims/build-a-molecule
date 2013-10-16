@@ -55,6 +55,11 @@ define( function( require ) {
     var moleculeNode = new Molecule3DNode( completeMolecule, this.getGlobalCanvasBounds( view ), false );
     this.addChild( moleculeNode );
     
+    var transformMatrix = Molecule3DNode.initialTransforms[completeMolecule.getGeneralFormula()];
+    if ( transformMatrix ) {
+      moleculeNode.transformMolecule( transformMatrix );
+    }
+    
     function updateLayout() {
       var sceneWidth = window.innerWidth;
       var sceneHeight = window.innerHeight;

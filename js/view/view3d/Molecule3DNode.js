@@ -32,6 +32,8 @@ define( function( require ) {
   var Ray3 = require( 'DOT/Ray3' );
   var Element = require( 'NITROGLYCERIN/Element' );
   
+  var grabInitialTransforms = false; // debug flag, specifies whether master transforms are tracked and printed to determine "pretty" setup transformations
+  
   function to3d( atom ) {
     var v = new Vector3( atom.x3d(), atom.y3d(), atom.z3d() ).times( 75 ); // similar to picometers from angstroms? hopefully?
     v.element = atom.element;
@@ -144,6 +146,9 @@ define( function( require ) {
         event.pointer.removeInputListener( dragListener );
         event.handle();
         moleculeNode.upCursor();
+        if ( grabInitialTransforms ) {
+          console.log( moleculeNode.masterMatrix.toString() );
+        }
       },
       
       cancel: function( event ) {
@@ -170,6 +175,21 @@ define( function( require ) {
         }
       }
     } );
+    
+    if ( grabInitialTransforms ) {
+      this.masterMatrix = new Matrix3();
+    }
+  };
+  
+  Molecule3DNode.initialTransforms = {
+    'H2O':
+      new Matrix3( 0.181499678570479,  -0.7277838769374022, -0.6613535326501101,
+                   0.7878142178395282,  0.5101170681131106, -0.34515117700738,
+                   0.58856318679366,   -0.45837888835509194, 0.6659445696615028 ),
+    'NH3':
+      new Matrix3( 0.7256419599759283,   0.18308950432030757, -0.6632661451710371,
+                   0.6790637847806467,  -0.03508484396138366,  0.7332403629940194,
+                   0.11097802540002322, -0.9824699929931513,  -0.14978848669494887 )
   };
 
   return inherit( DOM, Molecule3DNode, {
@@ -299,10 +319,17 @@ define( function( require ) {
         matrix = quat.toRotationMatrix();
         this.lastPosition = this.currentPosition;
       }
+      this.transformMolecule( matrix );
+      this.draw();
+    },
+    
+    transformMolecule: function( matrix ) {
       _.each( this.currentAtoms, function( atom ) {
         matrix.multiplyVector3( atom );
       } );
-      this.draw();
+      if ( grabInitialTransforms ) {
+        this.masterMatrix = matrix.timesMatrix( this.masterMatrix );
+      }
     },
     
     setMoleculeCanvasBounds: function( globalBounds ) {
