@@ -25,8 +25,10 @@ define( function( require ) {
   var DOM = require( 'SCENERY/nodes/DOM' );
   var Path = require( 'SCENERY/nodes/Path' );
   var Text = require( 'SCENERY/nodes/Text' );
+  var Text = require( 'SCENERY/nodes/Text' );
   var HTMLText = require( 'SCENERY/nodes/HTMLText' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
+  var RadialGradient = require( 'SCENERY/util/RadialGradient' );
   var Color = require( 'SCENERY/util/Color' );
   var Util = require( 'SCENERY/util/Util' );
   var Arc = require( 'KITE/segments/Arc' );
@@ -94,6 +96,12 @@ define( function( require ) {
       
       background.rectWidth = width;
       background.rectHeight = height;
+      
+      var backgroundGradient = new RadialGradient( width / 2, height / 2, 0, width / 2, height / 2, Math.max( width / 2, height / 2 ) );
+      backgroundGradient.addColorStop( 0, 'rgba(0,0,0,0.95)' );
+      backgroundGradient.addColorStop( 1, 'rgba(0,0,0,0.85)' );
+      
+      background.fill = backgroundGradient;
       
       viewChild.matrix = view.getMatrix();
       
