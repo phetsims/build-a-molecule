@@ -35,11 +35,14 @@ define( function( require ) {
     constructor: MoleculeList,
     
     loadInitialData: function() {
+      var startTime = Date.now();
       var mainMolecules = MoleculeList.readCompleteMoleculesFromData( collectionMoleculesData );
       _.each( mainMolecules, this.addCompleteMolecule.bind( this ) );
+      console.log( 'loaded initial data in ' + ( Date.now() - startTime ) + 'ms' );
     },
 
     loadMasterData: function() {
+      var startTime = Date.now();
       var that = this;
       // load in our collection molecules first
       _.each( initialList.getAllCompleteMolecules(), this.addCompleteMolecule.bind( this ) );
@@ -59,6 +62,7 @@ define( function( require ) {
       // then load structures
       var mainStructures = MoleculeList.readMoleculeStructuresFromData( structuresData );
       _.each( mainStructures, this.addAllowedStructure.bind( this ) );
+      console.log( 'loaded master data in ' + ( Date.now() - startTime ) + 'ms' );
     },
 
     /**
