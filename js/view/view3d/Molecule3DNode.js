@@ -380,9 +380,6 @@ define( function( require ) {
       this.canvas.style.left = globalBounds.x + 'px';
       this.canvas.style.top = globalBounds.y + 'px';
       this.canvas.style.backgroundColor = '#000';
-      this.context.clearRect( 0, 0, this.canvas.width, this.canvas.height );
-      this.context.fillStyle = 'rgba(0,255,0,0.5)';
-      this.context.fillRect( 0, 0, this.canvas.width, this.canvas.height );
     },
     
     setMoleculeBounds: function( globalBounds ) {
