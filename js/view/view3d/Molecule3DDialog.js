@@ -75,12 +75,15 @@ define( function( require ) {
     scene.addEventListener( 'resize', updateLayout );
     view.addEventListener( 'bounds', updateLayout );
     
+    var tick = moleculeNode.tick.bind( moleculeNode );
+    namespace.timeTick.on( 'tick', tick );
+    
     this.addInputListener( {
       up: function( event ) {
         scene.removeEventListener( 'resize', updateLayout );
         view.removeEventListener( 'bounds', updateLayout );
         scene.removeChild( that );
-        moleculeNode.disposeMolecule();
+        namespace.timeTick.off( 'tick', tick );
       }
     } );
   };

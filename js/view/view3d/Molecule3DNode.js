@@ -136,9 +136,6 @@ define( function( require ) {
     
     this.dragging = false;
     
-    var tick = this.tick.bind( this );
-    namespace.timeTick.on( 'tick', tick );
-    
     this.lastPosition = Vector2.ZERO;
     this.currentPosition = Vector2.ZERO;
     var dragListener = {
@@ -173,10 +170,6 @@ define( function( require ) {
         }
       }
     } );
-    
-    this.disposeMolecule = function() {
-      namespace.timeTick.off( 'tick', tick );
-    };
   };
 
   return inherit( DOM, Molecule3DNode, {
