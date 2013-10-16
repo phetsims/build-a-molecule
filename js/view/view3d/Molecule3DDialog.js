@@ -31,14 +31,23 @@ define( function( require ) {
   var RadialGradient = require( 'SCENERY/util/RadialGradient' );
   var Color = require( 'SCENERY/util/Color' );
   var Util = require( 'SCENERY/util/Util' );
+  var Shape = require( 'KITE/Shape' );
   var Arc = require( 'KITE/segments/Arc' );
   var EllipticalArc = require( 'KITE/segments/EllipticalArc' );
   var DotUtil = require( 'DOT/Util' );
   var Ray3 = require( 'DOT/Ray3' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
+  var AquaRadioButton = require( 'SUN/AquaRadioButton' );
   var Element = require( 'NITROGLYCERIN/Element' );
+  var Property = require( 'AXON/Property' );
+  var spaceFillString = require( 'string!BAM/3d.spaceFilling' );
+  var ballAndStickString = require( 'string!BAM/3d.ballAndStick' );
   
   var size = 200;
+  var verticalOffset = size + 15;
+  var stageCenterX = Constants.stageSize.width / 2;
+  var stageCenterY = Constants.stageSize.height / 2;
+  var optionsHorizontalPadding = 40;
   
   var Molecule3DDialog = namespace.Molecule3DDialog = function Molecule3DDialog( completeMolecule, trail ) {
     var that = this;
@@ -58,6 +67,8 @@ define( function( require ) {
     var height = 0;
     var matrix = trail.getMatrix();
     
+    var viewStyleProperty = new Property( 'spaceFill' ); // spaceFill or ballAndStick
+    
     var moleculeNode = new Molecule3DNode( completeMolecule, this.getGlobalCanvasBounds( view ), false );
     this.addChild( viewChild );
     this.addChild( moleculeNode );
@@ -67,21 +78,64 @@ define( function( require ) {
       moleculeNode.transformMolecule( transformMatrix );
     }
     
+    /*---------------------------------------------------------------------------*
+    * Chemical formula label
+    *----------------------------------------------------------------------------*/
     var formulaText = new HTMLText( completeMolecule.getGeneralFormulaFragment(), {
       font: new PhetFont( 20 ),
       fill: '#bbb',
-      centerX: Constants.stageSize.width / 2,
-      bottom: Constants.stageSize.height / 2 - size - 15
+      centerX: stageCenterX,
+      bottom: stageCenterY - verticalOffset
     } );
     viewChild.addChild( formulaText );
     
+    /*---------------------------------------------------------------------------*
+    * Display name label
+    *----------------------------------------------------------------------------*/
     var nameText = new Text( completeMolecule.getDisplayName(), {
       font: new PhetFont( 30 ),
       fill: 'white',
-      centerX: Constants.stageSize.width / 2,
+      centerX: stageCenterX,
       bottom: formulaText.top - 5
     } );
     viewChild.addChild( nameText );
+    
+    /*---------------------------------------------------------------------------*
+    * Space fill / Ball and stick radio buttons
+    *----------------------------------------------------------------------------*/
+    
+    var buttonTextOptions = {
+      font: new PhetFont( 22 ),
+      fill: 'white'
+    };
+    var spaceFillText = new Text( spaceFillString, buttonTextOptions );
+    var ballAndStickText = new Text( ballAndStickString, buttonTextOptions );
+    
+    var radioButtonOptions = {
+      selectedColor: 'rgba(255,255,255,0.4)', // fill
+      deselectedColor: 'black', // center
+      centerColor: 'white', // center
+      radius: 16,
+      xSpacing: 8,
+      stroke: 'white' // border
+    }
+    var spaceFillButton = new AquaRadioButton( viewStyleProperty, 'spaceFill', spaceFillText, radioButtonOptions );
+    spaceFillButton.touchArea = Shape.bounds( spaceFillButton.localBounds.dilated( optionsHorizontalPadding / 2 ) );
+    var ballAndStickButton = new AquaRadioButton( viewStyleProperty, 'ballAndStick', ballAndStickText, radioButtonOptions );
+    ballAndStickButton.touchArea = Shape.bounds( ballAndStickButton.localBounds.dilated( optionsHorizontalPadding / 2 ) );
+    ballAndStickButton.left = spaceFillButton.right + optionsHorizontalPadding;
+    var buttonHolder = new Node( {
+      children: [spaceFillButton, ballAndStickButton],
+      centerX: stageCenterX,
+      top: stageCenterY + verticalOffset
+    } );
+    buttonHolder.addInputListener( {
+      up: function( evt ) {
+        evt.handle();
+      }
+    } );
+    buttonHolder.touchArea = Shape.bounds( buttonHolder.localBounds.dilated( 20 ) );
+    viewChild.addChild( buttonHolder );
     
     function updateLayout() {
       var sceneWidth = window.innerWidth;
@@ -127,8 +181,8 @@ define( function( require ) {
 
   return inherit( Node, Molecule3DDialog, {
     getGlobalCanvasBounds: function( view ) {
-      var centerX = Constants.stageSize.width / 2;
-      var centerY = Constants.stageSize.height / 2;
+      var centerX = stageCenterX;
+      var centerY = stageCenterY;
       var bounds = new Bounds2( centerX - size, centerY - size, centerX + size, centerY + size );
       return view.localToGlobalBounds( bounds ).roundedOut();
     }
