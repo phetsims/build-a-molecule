@@ -85,54 +85,123 @@ define( function( require ) {
     };
   }
   
-  var Molecule3DNode = namespace.Molecule3DNode = function Molecule3DNode( completeMolecule, initialBounds ) {
-    var that = this;
+  var Molecule3DNode = namespace.Molecule3DNode = function Molecule3DNode( completeMolecule, initialBounds, useHighRes ) {
+    var moleculeNode = this;
     
-    var useHighRes = false;
-    
-    var canvas = this.canvas = document.createElement( 'canvas' );
-    var context = this.context = canvas.getContext( '2d' );
-    
-    this.backingScale = 1;
-    if ( useHighRes ) {
-      this.backingScale = Util.backingScale( context );
-    }
-    
-    canvas.className = 'canvas-3d';
-    canvas.style.position = 'absolute';
-    canvas.style.left = '0';
-    canvas.style.top = '0';
-    
+    // prepare the canvas
+    this.canvas = document.createElement( 'canvas' );
+    this.context = this.canvas.getContext( '2d' );
+    this.backingScale = useHighRes ? Util.backingScale( this.context ) : 1;
+    this.canvas.className = 'canvas-3d';
+    this.canvas.style.position = 'absolute';
+    this.canvas.style.left = '0';
+    this.canvas.style.top = '0';
     this.setMoleculeCanvasBounds( initialBounds );
     
-    DOM.call( this, canvas );
+    // construct ourself with the canvas (now properly initially sized)
+    DOM.call( this, this.canvas );
     
-    var currentAtoms = completeMolecule.atoms.map( to3d );
+    // map the atoms into our enhanced format
+    this.currentAtoms = completeMolecule.atoms.map( to3d );
     
     // center the bounds of the atoms
     var bounds3 = Bounds3.NOTHING.copy();
-    _.each( currentAtoms, function( atom ) {
+    _.each( this.currentAtoms, function( atom ) {
       bounds3.includeBounds( new Bounds3( atom.x - atom.radius, atom.y - atom.radius, atom.z - atom.radius,
                                           atom.x + atom.radius, atom.y + atom.radius, atom.z + atom.radius ) );
     } );
     var center3 = bounds3.center;
     if ( center3.magnitude() ) {
-      _.each( currentAtoms, function( atom ) {
+      _.each( this.currentAtoms, function( atom ) {
         atom.subtract( center3 );
       } );
     }
     
+    // compute our outer bounds so we can properly scale our transform to fit
     var maxTotalRadius = 0;
-    _.each( currentAtoms, function( atom ) {
+    _.each( this.currentAtoms, function( atom ) {
       maxTotalRadius = Math.max( maxTotalRadius, atom.magnitude() + atom.radius );
     } );
+    this.maxTotalRadius = maxTotalRadius;
     
-    function createGradient( element ) {
+    var gradientMap = {}; // element symbol => gradient
+    _.each( this.currentAtoms, function( atom ) {
+      if ( !gradientMap[atom.element.symbol] ) {
+        gradientMap[atom.element.symbol] = moleculeNode.createGradient( atom.element );
+      }
+    } );
+    this.gradientMap = gradientMap;
+    
+    this.upCursor();
+    
+    this.dragging = false;
+    
+    var tick = this.tick.bind( this );
+    namespace.timeTick.on( 'tick', tick );
+    
+    this.lastPosition = Vector2.ZERO;
+    this.currentPosition = Vector2.ZERO;
+    var dragListener = {
+      up: function( event ) {
+        moleculeNode.dragging = false;
+        event.pointer.removeInputListener( dragListener );
+        event.handle();
+        moleculeNode.upCursor();
+      },
+      
+      cancel: function( event ) {
+        moleculeNode.dragging = false;
+        event.pointer.removeInputListener( dragListener );
+        moleculeNode.upCursor();
+      },
+      
+      move: function( event ) {
+        moleculeNode.currentPosition = event.pointer.point.copy();
+      }
+    };
+    this.addInputListener( {
+      up: function( event ) {
+        event.handle();
+      },
+      
+      down: function( event ) {
+        if ( !moleculeNode.dragging ) {
+          moleculeNode.dragging = true;
+          moleculeNode.lastPosition = moleculeNode.currentPosition = event.pointer.point.copy();
+          event.pointer.addInputListener( dragListener );
+          moleculeNode.downCursor();
+        }
+      }
+    } );
+    
+    this.disposeMolecule = function() {
+      namespace.timeTick.off( 'tick', tick );
+    };
+  };
+
+  return inherit( DOM, Molecule3DNode, {
+    upCursor: function() {
+      // fallbacks first, best way to ensure browsers keep the last one that works
+      this.canvas.style.cursor = 'pointer';
+      this.canvas.style.cursor = '-webkit-grab';
+      this.canvas.style.cursor = '-moz-grab';
+      this.canvas.style.cursor = 'grab';
+    },
+    
+    downCursor: function() {
+      // fallbacks first, best way to ensure browsers keep the last one that works
+      this.canvas.style.cursor = 'move';
+      this.canvas.style.cursor = '-webkit-grabbing';
+      this.canvas.style.cursor = '-moz-grabbing';
+      this.canvas.style.cursor = 'grabbing';
+    },
+    
+    createGradient: function( element ) {
       var diameter = element.radius * 2;
       var gCenter = new Vector2( -element.radius / 5, -element.radius / 5 );
       var middleRadius = diameter / 3;
       var fullRadius = gCenter.minus( new Vector2( 1, 1 ).normalized().times( element.radius ) ).magnitude();
-      var gradientFill = context.createRadialGradient( gCenter.x, gCenter.y, 0, gCenter.x, gCenter.y, fullRadius );
+      var gradientFill = this.context.createRadialGradient( gCenter.x, gCenter.y, 0, gCenter.x, gCenter.y, fullRadius );
       
       var baseColor = new Color( element.color );
       gradientFill.addColorStop( 0, baseColor.colorUtilsBrighter( 0.5 ).toCSS() );
@@ -142,26 +211,22 @@ define( function( require ) {
       gradientFill.addColorStop( 0.95, baseColor.colorUtilsDarker( 0.6 ).toCSS() );
       gradientFill.addColorStop( 1, baseColor.colorUtilsDarker( 0.4 ).toCSS() );
       return gradientFill;
-    }
+    },
     
-    var gradientMap = {}; // element symbol => gradient
-    _.each( currentAtoms, function( atom ) {
-      if ( !gradientMap[atom.element.symbol] ) {
-        gradientMap[atom.element.symbol] = createGradient( atom.element );
-      }
-    } );
-    
-    function draw() {
+    draw: function() {
+      var canvas = this.canvas;
+      var context = this.context;
+      
       var width = canvas.width;
       var height = canvas.height;
       var midX = width / 2;
       var midY = height / 2;
       context.setTransform( 1, 0, 0, 1, 0, 0 );
       context.clearRect( 0, 0, width, height );
-      var bigScale = width / maxTotalRadius / 2.5;
+      var bigScale = width / this.maxTotalRadius / 2.5;
       context.setTransform( bigScale, 0, 0, bigScale, midX - bigScale * midX, midY - bigScale * midY );
       
-      var atoms = _.sortBy( currentAtoms, function( v ) { return v.z; } );
+      var atoms = _.sortBy( this.currentAtoms, function( v ) { return v.z; } );
       
       for ( var i = 0; i < atoms.length; i++ ) {
         var atom = atoms[i];
@@ -177,7 +242,7 @@ define( function( require ) {
           var d = delta.magnitude();
           if ( d < atom.radius + otherAtom.radius - 1e-7 ) {
             var theta = delta.angleBetween( new Vector3( 0, 0, -1 ) );
-            var arcData = ellipticalArcCut( atom.radius,  otherAtom.radius, d, theta );
+            var arcData = ellipticalArcCut( atom.radius, otherAtom.radius, d, theta );
             if ( arcData ) {
               // angle to center of ellipse
               var phi = Math.atan2( delta.y, delta.x );
@@ -218,96 +283,35 @@ define( function( require ) {
           arc.writeToContext( context );
         }
         
-        context.fillStyle = gradientMap[atom.element.symbol];
+        context.fillStyle = this.gradientMap[atom.element.symbol];
             
         context.fill();
         context.restore();
       }
-    }
+    },
     
-    function upCursor() {
-      // fallbacks first, best way to ensure browsers keep the last one that works
-      canvas.style.cursor = 'pointer';
-      canvas.style.cursor = '-webkit-grab';
-      canvas.style.cursor = '-moz-grab';
-      canvas.style.cursor = 'grab';
-    }
-    
-    function downCursor() {
-      // fallbacks first, best way to ensure browsers keep the last one that works
-      canvas.style.cursor = 'move';
-      canvas.style.cursor = '-webkit-grabbing';
-      canvas.style.cursor = '-moz-grabbing';
-      canvas.style.cursor = 'grabbing';
-    }
-    upCursor();
-    
-    var dragging = false;
-    
-    function tick( timeElapsed ) {
+    tick: function( timeElapsed ) {
       var matrix;
-      if ( !dragging && currentPosition.equals( lastPosition ) ) {
+      if ( !this.dragging && this.currentPosition.equals( this.lastPosition ) ) {
         matrix = Matrix3.rotationY( timeElapsed );
       } else {
-        var correctScale = 4 / canvas.width;
-        var delta = currentPosition.minus( lastPosition );
+        // TODO: WARNING: test high-res on iPad, this may be a bug here (includes scaled-up version!)
+        var correctScale = 4 / this.canvas.width;
+        var delta = this.currentPosition.minus( this.lastPosition );
         var quat = Quaternion.fromEulerAngles(
           -delta.y * correctScale, // yaw
           delta.x * correctScale,  // roll
           0                        // pitch
         );
         matrix = quat.toRotationMatrix();
-        lastPosition = currentPosition;
+        this.lastPosition = this.currentPosition;
       }
-      _.each( currentAtoms, function( atom ) {
+      _.each( this.currentAtoms, function( atom ) {
         matrix.multiplyVector3( atom );
       } );
-      draw();
-    }
+      this.draw();
+    },
     
-    namespace.timeTick.on( 'tick', tick );
-    
-    var lastPosition = Vector2.ZERO;
-    var currentPosition = Vector2.ZERO;
-    var dragListener = {
-      up: function( event ) {
-        dragging = false;
-        event.pointer.removeInputListener( dragListener );
-        event.handle();
-        upCursor();
-      },
-      
-      cancel: function( event ) {
-        dragging = false;
-        event.pointer.removeInputListener( dragListener );
-        upCursor();
-      },
-      
-      move: function( event ) {
-        currentPosition = event.pointer.point.copy();
-      }
-    };
-    this.addInputListener( {
-      up: function( event ) {
-        event.handle();
-      },
-      
-      down: function( event ) {
-        if ( !dragging ) {
-          dragging = true;
-          lastPosition = currentPosition = event.pointer.point.copy();
-          event.pointer.addInputListener( dragListener );
-          downCursor();
-        }
-      }
-    } );
-    
-    this.disposeMolecule = function() {
-      namespace.timeTick.off( 'tick', tick );
-    };
-  };
-
-  return inherit( DOM, Molecule3DNode, {
     setMoleculeCanvasBounds: function( globalBounds ) {
       this.canvas.width = globalBounds.width * this.backingScale;
       this.canvas.height = globalBounds.height * this.backingScale;

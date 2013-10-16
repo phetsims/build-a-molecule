@@ -52,7 +52,7 @@ define( function( require ) {
     var height = 0;
     var matrix = trail.getMatrix();
     
-    var moleculeNode = new Molecule3DNode( completeMolecule, this.getGlobalCanvasBounds( view ) );
+    var moleculeNode = new Molecule3DNode( completeMolecule, this.getGlobalCanvasBounds( view ), false );
     this.addChild( moleculeNode );
     
     function updateLayout() {
