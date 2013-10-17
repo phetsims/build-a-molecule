@@ -29,6 +29,7 @@ define( function( require ) {
   var AtomNode = require( 'BAM/view/AtomNode' );
   var MoleculeBondContainerNode = require( 'BAM/view/MoleculeBondContainerNode' );
   var MoleculeMetadataNode = require( 'BAM/view/MoleculeMetadataNode' );
+  var SliceNode = require( 'BAM/view/SliceNode' );
   var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' ); // TODO: DragListener
   
   var KitView = namespace.KitView = function KitView( kit, view ) {
@@ -49,71 +50,16 @@ define( function( require ) {
     
     var viewSwipeBounds = Constants.modelViewTransform.modelToViewBounds( kit.layoutBounds.availablePlayAreaBounds );
     var swipeCatch = this.swipeCatch = Rectangle.bounds( viewSwipeBounds.eroded( Constants.viewPadding ), { layerSplit: true } );
-    var canvas = document.createElement( 'canvas' );
-    var context = canvas.getContext( '2d' );
-    var dom = new DOM( canvas );
-    topLayer.addChild( dom );
-    dom.updateCSSTransform = function( transform, element ) {}; // don't CSS transform it
-    var globalBounds;
-    var toModelTransform;
-    var lastPoint = null;
-    var lastModelPoint = new Vector2();
-    var oldModelPoint = new Vector2();
-    var bondsCut = [];
-    function cut( oldPoint, newPoint ) {
-      
-    }
-    swipeCatch.addInputListener( new SimpleDragHandler( {
-      dragCursor: 'none',
-      start: function( event, trail ) {
-        globalBounds = view.localToGlobalBounds( viewSwipeBounds ).roundedOut();
-        canvas.width = globalBounds.width;
-        canvas.height = globalBounds.height;
-        canvas.style.width = globalBounds.width + 'px';
-        canvas.style.height = globalBounds.height + 'px';
-        canvas.style.position = 'absolute';
-        canvas.style.left = globalBounds.x + 'px';
-        canvas.style.top = globalBounds.y + 'px';
-        context.lineStyle = 'blue';
-        toModelTransform = new Transform3( Constants.modelViewTransform.getInverse().timesMatrix( view.getUniqueTrail().getMatrix().inverted() ) );
-      },
-      drag: function( event, trail ) {
-        context.beginPath();
-        var isStep = !!lastPoint;
-        if ( lastPoint ) {
-          context.moveTo( lastPoint.x, lastPoint.y );
-        } else {
-          lastPoint = new Vector2();
-        }
-        
-        // compute offset and draw the latest segment on the canvas
-        lastPoint.set( event.pointer.point.x - globalBounds.x,
-                       event.pointer.point.y - globalBounds.y );
-        context.lineTo( lastPoint.x, lastPoint.y );
-        context.stroke();
-        
-        // transform to model coordinates, and get a model delta
-        oldModelPoint.set( lastModelPoint.x, lastModelPoint.y );
-        lastModelPoint.set( lastPoint.x, lastPoint.y );
-        toModelTransform.getMatrix().multiplyVector2( lastModelPoint );
-        
-        if ( isStep ) {
-          // handle the point and delta here
-          cut( oldModelPoint, lastModelPoint );
-        }
-      },
-      end: function( event, trail ) {
-        lastPoint = null;
-        bondsCut = [];
-        context.clearRect( 0, 0, globalBounds.width, globalBounds.height );
-      }
-    } ) );
+    var sliceNode = this.sliceNode = new SliceNode( viewSwipeBounds, view );
+    
+    swipeCatch.addInputListener( sliceNode.sliceInputListener );
     
     this.addChild( swipeCatch );
     this.addChild( bottomLayer );
     this.addChild( atomLayer );
     this.addChild( metadataLayer );
     this.addChild( topLayer );
+    this.addChild( sliceNode );
     
     // override its hit testing
     atomLayer.trailUnderPoint = function( point, options, recursive, hasListener ) {

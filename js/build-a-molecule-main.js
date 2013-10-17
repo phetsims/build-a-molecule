@@ -38,6 +38,7 @@ require( [
   'BAM/view/KitCollectionNode',
   'BAM/view/BAMView',
   'BAM/view/MoleculeCollectingView',
+  'BAM/view/SliceNode',
   'BAM/view/view3d/ShowMolecule3DButtonNode',
   'BAM/view/view3d/Molecule3DDialog',
   'BAM/view/view3d/Molecule3DNode',
