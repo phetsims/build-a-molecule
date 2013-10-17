@@ -67,9 +67,12 @@ define( function( require ) {
       previous: function() {
         kitCollectionModel.goToPreviousKit();
       },
-      touchAreaExtension: function( shape ) {
+      touchAreaExtension: function( shape, isPrevious ) {
         // square touch area
-        return Shape.bounds( shape.bounds.dilated( 7 ) );
+        var dilatedShape = shape.bounds.dilated( 7 );
+        return Shape.bounds( isPrevious ?
+                             dilatedShape.withMaxX( shape.bounds.right + labelNode.width / 2 ) :
+                             dilatedShape.withMinX( shape.bounds.left - labelNode.width / 2 ) );
       }
     } );
     kitCollectionModel.currentKitProperty.link( function() {
