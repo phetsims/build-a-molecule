@@ -38,6 +38,8 @@ require.config( {
 
     BAM: '.'
   },
+  
+  waitSeconds: 30, // because the sim's data files are big
 
   urlArgs: new Date().getTime() // add cache buster query string to make browser refresh actually reload everything
 } );
