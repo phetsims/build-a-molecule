@@ -76,8 +76,8 @@ icotool -c -o scissors-closed-up.ico scissors-closed-up.png
     // offsets should center this
     var openCursor, closedCursor;
     if ( platform.ie ) {
-      openCursor = 'url(' + scissorsOpen.src + '), ' + backup;
-      closedCursor = 'url(' + scissorsClosed.src + '), ' + backup;
+      openCursor = 'url(' + scissorsOpen.src + '), url(http://phetsims.github.io/build-a-molecule/images/' + openFile + '), ' + backup;
+      closedCursor = 'url(' + scissorsClosed.src + '), url(http://phetsims.github.io/build-a-molecule/images/' + closedFile + '), ' + backup;
     } else {
       openCursor = 'url(' + scissorsOpen.src + ') ' + ( isHorizontal ? '10 11' : '11 10' ) + ', ' + backup;
       closedCursor = 'url(' + scissorsClosed.src + ') ' + ( isHorizontal ? '7 13' : '13 7' ) + ', ' + backup;
