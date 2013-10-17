@@ -14,12 +14,17 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var namespace = require( 'BAM/namespace' );
   var Constants = require( 'BAM/Constants' );
+  var Vector2 = require( 'DOT/Vector2' );
   var Bounds2 = require( 'DOT/Bounds2' );
+  var Matrix3 = require( 'DOT/Matrix3' );
+  var Transform3 = require( 'DOT/Transform3' );
   var Shape = require( 'KITE/Shape' );
   var BucketFront = require( 'SCENERY_PHET/bucket/BucketFront' );
   var BucketHole = require( 'SCENERY_PHET/bucket/BucketHole' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Node = require( 'SCENERY/nodes/Node' );
+  var DOM = require( 'SCENERY/nodes/DOM' );
+  var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var Trail = require( 'SCENERY/util/Trail' );
   var AtomNode = require( 'BAM/view/AtomNode' );
   var MoleculeBondContainerNode = require( 'BAM/view/MoleculeBondContainerNode' );
@@ -42,6 +47,69 @@ define( function( require ) {
     var atomLayer = this.atomLayer = new Node();
     var bottomLayer = this.bottomLayer = new Node();
     
+    var viewSwipeBounds = Constants.modelViewTransform.modelToViewBounds( kit.layoutBounds.availablePlayAreaBounds );
+    var swipeCatch = this.swipeCatch = Rectangle.bounds( viewSwipeBounds.eroded( Constants.viewPadding ), { layerSplit: true } );
+    var canvas = document.createElement( 'canvas' );
+    var context = canvas.getContext( '2d' );
+    var dom = new DOM( canvas );
+    topLayer.addChild( dom );
+    dom.updateCSSTransform = function( transform, element ) {}; // don't CSS transform it
+    var globalBounds;
+    var toModelTransform;
+    var lastPoint = null;
+    var lastModelPoint = new Vector2();
+    var oldModelPoint = new Vector2();
+    var bondsCut = [];
+    function cut( oldPoint, newPoint ) {
+      
+    }
+    swipeCatch.addInputListener( new SimpleDragHandler( {
+      dragCursor: 'none',
+      start: function( event, trail ) {
+        globalBounds = view.localToGlobalBounds( viewSwipeBounds ).roundedOut();
+        canvas.width = globalBounds.width;
+        canvas.height = globalBounds.height;
+        canvas.style.width = globalBounds.width + 'px';
+        canvas.style.height = globalBounds.height + 'px';
+        canvas.style.position = 'absolute';
+        canvas.style.left = globalBounds.x + 'px';
+        canvas.style.top = globalBounds.y + 'px';
+        context.lineStyle = 'blue';
+        toModelTransform = new Transform3( Constants.modelViewTransform.getInverse().timesMatrix( view.getUniqueTrail().getMatrix().inverted() ) );
+      },
+      drag: function( event, trail ) {
+        context.beginPath();
+        var isStep = !!lastPoint;
+        if ( lastPoint ) {
+          context.moveTo( lastPoint.x, lastPoint.y );
+        } else {
+          lastPoint = new Vector2();
+        }
+        
+        // compute offset and draw the latest segment on the canvas
+        lastPoint.set( event.pointer.point.x - globalBounds.x,
+                       event.pointer.point.y - globalBounds.y );
+        context.lineTo( lastPoint.x, lastPoint.y );
+        context.stroke();
+        
+        // transform to model coordinates, and get a model delta
+        oldModelPoint.set( lastModelPoint.x, lastModelPoint.y );
+        lastModelPoint.set( lastPoint.x, lastPoint.y );
+        toModelTransform.getMatrix().multiplyVector2( lastModelPoint );
+        
+        if ( isStep ) {
+          // handle the point and delta here
+          cut( oldModelPoint, lastModelPoint );
+        }
+      },
+      end: function( event, trail ) {
+        lastPoint = null;
+        bondsCut = [];
+        context.clearRect( 0, 0, globalBounds.width, globalBounds.height );
+      }
+    } ) );
+    
+    this.addChild( swipeCatch );
     this.addChild( bottomLayer );
     this.addChild( atomLayer );
     this.addChild( metadataLayer );
