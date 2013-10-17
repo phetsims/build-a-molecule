@@ -71,7 +71,7 @@ icotool -c -o scissors-closed-up.ico scissors-closed-up.png
     
     var scissorsOpen = images[openFile]; // 23x20 or 20x23
     var scissorsClosed = images[closedFile]; //26x15 or 15x26
-    var backup = ( isHorizontal ? 'col-resize' : 'row-resize' ) + ', auto';
+    var backup = ( isHorizontal ? 'col-resize' : 'row-resize' );
     
     // offsets should center this
     var openCursor, closedCursor;
@@ -79,8 +79,8 @@ icotool -c -o scissors-closed-up.ico scissors-closed-up.png
       openCursor = 'url(' + scissorsOpen.src + '), ' + backup;
       closedCursor = 'url(' + scissorsClosed.src + '), ' + backup;
     } else {
-      openCursor = 'url(' + scissorsOpen.src + ') ' + ( isHorizontal ? '10 11' : '11 10' ) + ', auto';
-      closedCursor = 'url(' + scissorsClosed.src + ') ' + ( isHorizontal ? '7 13' : '13 7' ) + ', auto';
+      openCursor = 'url(' + scissorsOpen.src + ') ' + ( isHorizontal ? '10 11' : '11 10' ) + ', ' + backup;
+      closedCursor = 'url(' + scissorsClosed.src + ') ' + ( isHorizontal ? '7 13' : '13 7' ) + ', ' + backup;
     }
     
     // hit target
