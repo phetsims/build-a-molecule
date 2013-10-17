@@ -18,8 +18,11 @@ define( function( require ) {
   var DOM = require( 'SCENERY/nodes/DOM' );
   var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' ); // TODO: DragListener
 
-  var SliceNode = namespace.SliceNode = function SliceNode( viewSwipeBounds, view ) {
+  var SliceNode = namespace.SliceNode = function SliceNode( kit, viewSwipeBounds, view ) {
     var sliceNode = this;
+    
+    this.kit = kit;
+    this.bondData = [];
     
     var canvas = document.createElement( 'canvas' );
     var context = canvas.getContext( '2d' );
@@ -30,7 +33,6 @@ define( function( require ) {
     var lastPoint = null;
     var lastModelPoint = new Vector2();
     var oldModelPoint = new Vector2();
-    var bondsCut = [];
     
     this.sliceInputListener = new SimpleDragHandler( {
       dragCursor: 'none',
@@ -43,8 +45,22 @@ define( function( require ) {
         canvas.style.position = 'absolute';
         canvas.style.left = globalBounds.x + 'px';
         canvas.style.top = globalBounds.y + 'px';
-        context.lineStyle = 'blue';
         toModelTransform = new Transform3( Constants.modelViewTransform.getInverse().timesMatrix( view.getUniqueTrail().getMatrix().inverted() ) );
+        
+        _.each( kit.molecules, function( molecule ) {
+          _.each( molecule.bonds, function( bond ) {
+            sliceNode.bondData.push( {
+              bond: bond,
+              cut: false,
+              // TODO: also try out destination?
+              aPos: bond.a.position,
+              bPos: bond.b.position,
+              doubleMaxRadius: Math.max( bond.a.radius, bond.b.radius ) * Math.max( bond.a.radius, bond.b.radius ),
+              center: bond.a.position.blend( bond.b.position, 0.5 ),
+              delta: bond.b.position.minus( bond.a.position ) // don't reverse this
+            } );
+          } );
+        } );
       },
       drag: function( event, trail ) {
         context.beginPath();
@@ -63,7 +79,7 @@ define( function( require ) {
         
         // transform to model coordinates, and get a model delta
         oldModelPoint.set( lastModelPoint.x, lastModelPoint.y );
-        lastModelPoint.set( lastPoint.x, lastPoint.y );
+        lastModelPoint.set( event.pointer.point.x, event.pointer.point.y );
         toModelTransform.getMatrix().multiplyVector2( lastModelPoint );
         
         if ( isStep ) {
@@ -73,7 +89,12 @@ define( function( require ) {
       },
       end: function( event, trail ) {
         lastPoint = null;
-        bondsCut = [];
+        _.each( sliceNode.bondData, function( dat ) {
+          if ( dat.cut ) {
+            kit.breakBond( dat.bond.a, dat.bond.b );
+          }
+        } );
+        sliceNode.bondData = [];
         context.clearRect( 0, 0, globalBounds.width, globalBounds.height );
       }
     } );
@@ -81,7 +102,40 @@ define( function( require ) {
 
   return inherit( DOM, SliceNode, {
     cut: function( oldModelPoint, newModelPoint ) {
-      
+      var dragDeltaX = newModelPoint.x - oldModelPoint.x;
+      var dragDeltaY = newModelPoint.y - oldModelPoint.y;
+      _.each( this.bondData, function( dat ) {
+        // skip already-cut bonds
+        if ( dat.cut ) {
+          return;
+        }
+        
+        // skip farther away bonds (possible that we could have cases not cut on slow computers?)
+        // TODO: improve this!
+        if ( dat.center.distanceSquared( newModelPoint ) > 16 * dat.doubleMaxRadius ) {
+          return;
+        }
+        
+        var denom = -dragDeltaX * dat.delta.y + dat.delta.x * dragDeltaY;
+        
+        // too close to parallel
+        if ( Math.abs( denom ) < 1e-5 ) {
+          return;
+        }
+        
+        var dx = dat.aPos.x - oldModelPoint.x;
+        var dy = dat.aPos.y - oldModelPoint.y;
+        
+        var s = ( -dat.delta.y * dx + dat.delta.x * dy ) / denom;
+        var t = ( dragDeltaX * dy - dragDeltaY * dx ) / denom;
+        
+        // TODO: weight it so that we can exclude cuts that aren't close enough to the bond
+        if ( s >= 0 && s <= 1 && t >= 0 && t <= 1 ) {
+          dat.cut = true; // collision detected
+          var ix = dat.aPos.x + t * dat.delta.x;
+          var iy = dat.aPos.y + t * dat.delta.y;
+        }
+      } );
     },
     
     updateCSSTransform: function( transform, element ) {

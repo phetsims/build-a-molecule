@@ -50,7 +50,7 @@ define( function( require ) {
     
     var viewSwipeBounds = Constants.modelViewTransform.modelToViewBounds( kit.layoutBounds.availablePlayAreaBounds );
     var swipeCatch = this.swipeCatch = Rectangle.bounds( viewSwipeBounds.eroded( Constants.viewPadding ), { layerSplit: true } );
-    var sliceNode = this.sliceNode = new SliceNode( viewSwipeBounds, view );
+    var sliceNode = this.sliceNode = new SliceNode( kit, viewSwipeBounds, view );
     
     swipeCatch.addInputListener( sliceNode.sliceInputListener );
     
