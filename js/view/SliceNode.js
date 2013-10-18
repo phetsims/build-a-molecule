@@ -92,11 +92,16 @@ define( function( require ) {
       },
       end: function( event, trail ) {
         lastPoint = null;
+        var cutCount = 0;
         _.each( sliceNode.bondData, function( dat ) {
           if ( dat.cut ) {
-            kit.breakBond( dat.bond.a, dat.bond.b );
+            cutCount++;
+            kit.breakBond( dat.bond.a, dat.bond.b, true ); // skip the destination separation
           }
         } );
+        if ( cutCount ) {
+          kit.separateMoleculeDestinations();
+        }
         sliceNode.traveledDistance = 0;
         sliceNode.bondData = [];
         context.clearRect( 0, 0, globalBounds.width, globalBounds.height );

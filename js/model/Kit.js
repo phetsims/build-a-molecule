@@ -278,7 +278,7 @@ define( function( require ) {
      * @param {Atom2} a Atom A
      * @param {Atom2} b Atom B
      */
-    breakBond: function( a, b ) {
+    breakBond: function( a, b, skipSeparation ) {
       // get our old and new molecule structures
       var oldMolecule = this.getMolecule( a );
       var newMolecules = MoleculeStructure.getMoleculesFromBrokenBond( oldMolecule, oldMolecule.getBond( a, b ), new Molecule(), new Molecule() );
@@ -291,7 +291,9 @@ define( function( require ) {
       _.each( newMolecules, this.addMolecule.bind( this ) );
 
       // push the new separate molecules away
-      this.separateMoleculeDestinations();
+      if ( !skipSeparation ) {
+        this.separateMoleculeDestinations();
+      }
     },
 
     getBondDirection: function( a, b ) {
