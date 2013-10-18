@@ -17,12 +17,15 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var DOM = require( 'SCENERY/nodes/DOM' );
   var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' ); // TODO: DragListener
+  
+  var sliceDistanceLimit = 1000;
 
   var SliceNode = namespace.SliceNode = function SliceNode( kit, viewSwipeBounds, view ) {
     var sliceNode = this;
     
     this.kit = kit;
     this.bondData = [];
+    this.traveledDistance = 0;
     
     var canvas = document.createElement( 'canvas' );
     var context = canvas.getContext( '2d' );
@@ -84,7 +87,7 @@ define( function( require ) {
         
         if ( isStep ) {
           // handle the point and delta here
-          sliceNode.cut( oldModelPoint, lastModelPoint );
+          sliceNode.cut( oldModelPoint, lastModelPoint, event );
         }
       },
       end: function( event, trail ) {
@@ -94,6 +97,7 @@ define( function( require ) {
             kit.breakBond( dat.bond.a, dat.bond.b );
           }
         } );
+        sliceNode.traveledDistance = 0;
         sliceNode.bondData = [];
         context.clearRect( 0, 0, globalBounds.width, globalBounds.height );
       }
@@ -101,9 +105,10 @@ define( function( require ) {
   };
 
   return inherit( DOM, SliceNode, {
-    cut: function( oldModelPoint, newModelPoint ) {
+    cut: function( oldModelPoint, newModelPoint, event ) {
       var dragDeltaX = newModelPoint.x - oldModelPoint.x;
       var dragDeltaY = newModelPoint.y - oldModelPoint.y;
+      
       _.each( this.bondData, function( dat ) {
         // skip already-cut bonds
         if ( dat.cut ) {
@@ -136,6 +141,11 @@ define( function( require ) {
           var iy = dat.aPos.y + t * dat.delta.y;
         }
       } );
+      
+      this.traveledDistance += Math.sqrt( dragDeltaX * dragDeltaX + dragDeltaY * dragDeltaY );
+      if ( this.traveledDistance > sliceDistanceLimit && this.sliceInputListener.dragging ) {
+        this.sliceInputListener.endDrag( event );
+      }
     },
     
     updateCSSTransform: function( transform, element ) {
