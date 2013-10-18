@@ -44,7 +44,7 @@ define( function( require ) {
   var ballAndStickString = require( 'string!BAM/3d.ballAndStick' );
   
   var size = 200;
-  var verticalOffset = size + 15;
+  var verticalOffset = size + 5;
   var stageCenterX = Constants.stageSize.width / 2;
   var stageCenterY = Constants.stageSize.height / 2;
   var optionsHorizontalPadding = 40;
@@ -57,12 +57,21 @@ define( function( require ) {
     
     var scene = trail.rootNode();
     
+    var outsideNode = new Rectangle( 0, 0, 50, 50, { fill: 'rgba(0,0,0,0.5)' } );
+    outsideNode.addInputListener( {
+      down: function( event ) {
+        dialog.disposeView();
+      }
+    } );
+    this.addChild( outsideNode );
+    
     var background = new Rectangle( 0, 0, 50, 50, { fill: 'rgba(0,0,0,0.85)' } );
     this.addChild( background );
     
     var width = 0;
     var height = 0;
     var matrix = trail.getMatrix();
+    var stageWindowPadding = 35;
     
     var viewStyleProperty = new Property( 'spaceFill' ); // spaceFill or ballAndStick
     
@@ -93,7 +102,7 @@ define( function( require ) {
     *----------------------------------------------------------------------------*/
     
     var buttonTextOptions = {
-      font: new PhetFont( 22 ),
+      font: new PhetFont( 20 ),
       fill: 'white'
     };
     var spaceFillText = new Text( spaceFillString, buttonTextOptions );
@@ -131,8 +140,8 @@ define( function( require ) {
     *----------------------------------------------------------------------------*/
     
     var closeButton = new CloseButton( function() { dialog.disposeView(); }, {
-      top: 10,
-      right: Constants.stageSize.width - 10
+      centerX: Constants.stageSize.width - stageWindowPadding,
+      centerY: stageWindowPadding
     } );
     closeButton.addInputListener( {
       // don't start drags on the close button
@@ -166,10 +175,12 @@ define( function( require ) {
       matrix = newMatrix;
       
       var screenBounds = view.globalToLocalBounds( new Bounds2( 0, 0, width, height ) );
-      background.setRectBounds( screenBounds );
+      outsideNode.setRectBounds( screenBounds.roundedOut() );
+      var windowBounds = Constants.stageSize.toBounds().eroded( stageWindowPadding );
+      background.setRectBounds( windowBounds );
       
-      var backgroundGradient = new RadialGradient( screenBounds.centerX, screenBounds.centerY, 0,
-                                                   screenBounds.centerX, screenBounds.centerY, Math.max( screenBounds.centerX, screenBounds.centerY ) );
+      var backgroundGradient = new RadialGradient( windowBounds.centerX, windowBounds.centerY, 0,
+                                                   windowBounds.centerX, windowBounds.centerY, Math.max( windowBounds.centerX, windowBounds.centerY ) );
       backgroundGradient.addColorStop( 0, 'rgba(0,0,0,0.95)' );
       backgroundGradient.addColorStop( 1, 'rgba(0,0,0,0.85)' );
       
