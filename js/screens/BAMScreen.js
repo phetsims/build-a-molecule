@@ -35,7 +35,7 @@ define( function( require ) {
         return createKitCollection( layoutBounds, clock );
       };
       return model;
-    }, createView, Constants.canvasBackgroundColor );
+    }, createView, { backgroundColor: Constants.canvasBackgroundColor } );
   };
   
   /**
