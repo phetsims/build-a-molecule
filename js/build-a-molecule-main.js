@@ -64,7 +64,9 @@ require( [
     'use strict';
 
     var simOptions = {
-      credits: 'TODO (without scrolling credits, the BAM team refuses to take credit!)'
+      credits: {
+        //TODO (without scrolling credits, the BAM team refuses to take credit!)'
+      }
     };
 
     // Appending '?dev' to the URL will enable developer-only features.
