@@ -86,9 +86,10 @@ define( function( require ) {
     * refill kit
     *----------------------------------------------------------------------------*/
     
-    var refillButton = new TextButton( kit_resetKitString, function() {
-      kitCollectionModel.currentKit.resetKit();
-    }, {
+    var refillButton = new TextButton( kit_resetKitString, {
+      callback: function() {
+        kitCollectionModel.currentKit.resetKit();
+      },
       rectangleFillUp: Color.ORANGE,
       font: new PhetFont( { size: 12, weight: 'bold' } ),
       x: kitViewBounds.minX + 5,

@@ -38,10 +38,11 @@ define( function( require ) {
     } );
     this.addChild( text );
 
-    var button = new TextButton( collection_tryWithDifferentMoleculesString, function() {
-      regenerateCallback();
-      dialog.visible = false;
-    }, {
+    var button = new TextButton( collection_tryWithDifferentMoleculesString, {
+      callback: function() {
+        regenerateCallback();
+        dialog.visible = false;
+      },
       font: new PhetFont( {
         size: 18,
         weight: 'bold'

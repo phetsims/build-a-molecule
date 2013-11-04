@@ -67,15 +67,16 @@ define( function( require ) {
     /*---------------------------------------------------------------------------*
     * Reset Collection button
     *----------------------------------------------------------------------------*/
-    var resetCollectionButton = new TextButton( collection_resetString, function() {
-      // when clicked, empty collection boxes
-      _.each( collection.collectionBoxes, function( box ) {
-        box.clear();
-      } );
-      _.each( collection.kits, function( kit ) {
-        kit.resetKit();
-      } );
-    }, {
+    var resetCollectionButton = new TextButton( collection_resetString, {
+      callback: function() {
+        // when clicked, empty collection boxes
+        _.each( collection.collectionBoxes, function( box ) {
+          box.clear();
+        } );
+        _.each( collection.kits, function( kit ) {
+          kit.resetKit();
+        } );
+      },
       font: new PhetFont( 14 ),
       rectangleFillUp: Color.ORANGE
     } );

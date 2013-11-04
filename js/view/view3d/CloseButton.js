@@ -33,7 +33,9 @@ define( function( require ) {
     var overNode = new Path( shape, _.extend( { stroke: '#fff', fill: '#666' }, commonOptions ) );
     var downNode = new Path( shape, _.extend( { stroke: '#fff', fill: '#000' }, commonOptions ) );
     var disabledNode = new Path( shape, _.extend( { stroke: '#444', fill: '#000' }, commonOptions ) );
-    PushButton.call( this, upNode, overNode, downNode, disabledNode, callback, options );
+
+    options.callback = callback;
+    PushButton.call( this, upNode, overNode, downNode, disabledNode, options );
     this.touchArea = new Shape().circle( 0, 0, outside + 40 );
   };
   
