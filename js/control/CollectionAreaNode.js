@@ -68,7 +68,7 @@ define( function( require ) {
     * Reset Collection button
     *----------------------------------------------------------------------------*/
     var resetCollectionButton = new TextButton( collection_resetString, {
-      callback: function() {
+      listener: function() {
         // when clicked, empty collection boxes
         _.each( collection.collectionBoxes, function( box ) {
           box.clear();

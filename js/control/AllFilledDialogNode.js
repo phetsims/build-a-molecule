@@ -39,7 +39,7 @@ define( function( require ) {
     this.addChild( text );
 
     var button = new TextButton( collection_tryWithDifferentMoleculesString, {
-      callback: function() {
+      listener: function() {
         regenerateCallback();
         dialog.visible = false;
       },

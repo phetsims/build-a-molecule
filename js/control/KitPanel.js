@@ -87,7 +87,7 @@ define( function( require ) {
     *----------------------------------------------------------------------------*/
     
     var refillButton = new TextButton( kit_resetKitString, {
-      callback: function() {
+      listener: function() {
         kitCollectionModel.currentKit.resetKit();
       },
       rectangleFillUp: Color.ORANGE,

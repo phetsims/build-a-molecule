@@ -34,7 +34,7 @@ define( function( require ) {
     var downNode = new Path( shape, _.extend( { stroke: '#fff', fill: '#000' }, commonOptions ) );
     var disabledNode = new Path( shape, _.extend( { stroke: '#444', fill: '#000' }, commonOptions ) );
 
-    options.callback = callback;
+    options.listener = callback; //TODO consider replacing the constructor callback parameter with an option so we don't need to do this.
     PushButton.call( this, upNode, overNode, downNode, disabledNode, options );
     this.touchArea = new Shape().circle( 0, 0, outside + 40 );
   };
