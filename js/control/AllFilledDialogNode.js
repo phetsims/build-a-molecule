@@ -20,7 +20,7 @@ define( function( require ) {
   var Color = require( 'SCENERY/util/Color' );
   var FaceNode = require( 'SCENERY_PHET/FaceNode' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  var TextButton = require( 'SUN/TextButton' );
+  var TextPushButton = require( 'SUN/TextPushButton' );
   var Shape = require( 'KITE/Shape' );
   
   var AllFilledDialogNode = namespace.AllFilledDialogNode = function AllFilledDialogNode( availablePlayAreaBounds, regenerateCallback ) {
@@ -38,7 +38,7 @@ define( function( require ) {
     } );
     this.addChild( text );
 
-    var button = new TextButton( collection_tryWithDifferentMoleculesString, {
+    var button = new TextPushButton( collection_tryWithDifferentMoleculesString, {
       listener: function() {
         regenerateCallback();
         dialog.visible = false;
