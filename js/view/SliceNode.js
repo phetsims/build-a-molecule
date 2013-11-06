@@ -75,14 +75,14 @@ define( function( require ) {
         }
         
         // compute offset and draw the latest segment on the canvas
-        lastPoint.set( event.pointer.point.x - globalBounds.x,
+        lastPoint.setXY( event.pointer.point.x - globalBounds.x,
                        event.pointer.point.y - globalBounds.y );
         context.lineTo( lastPoint.x, lastPoint.y );
         context.stroke();
         
         // transform to model coordinates, and get a model delta
-        oldModelPoint.set( lastModelPoint.x, lastModelPoint.y );
-        lastModelPoint.set( event.pointer.point.x, event.pointer.point.y );
+        oldModelPoint.setXY( lastModelPoint.x, lastModelPoint.y );
+        lastModelPoint.setXY( event.pointer.point.x, event.pointer.point.y );
         toModelTransform.getMatrix().multiplyVector2( lastModelPoint );
         
         if ( isStep ) {
