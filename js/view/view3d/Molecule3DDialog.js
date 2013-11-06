@@ -192,6 +192,12 @@ define( function( require ) {
     scene.addEventListener( 'resize', updateLayout );
     view.addEventListener( 'bounds', updateLayout );
     
+    moleculeNode.draggingProperty.link( function( dragging ) {
+      var cursor = dragging ? 'scenery-grabbing-pointer' : 'scenery-grab-pointer';
+      background.cursor = cursor;
+      moleculeNode.cursor = cursor;
+    } );
+    
     var tick = moleculeNode.tick.bind( moleculeNode );
     var clock = view.collectionList.clock;
     clock.on( 'tick', tick );

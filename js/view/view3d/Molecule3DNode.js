@@ -31,6 +31,7 @@ define( function( require ) {
   var DotUtil = require( 'DOT/Util' );
   var Ray3 = require( 'DOT/Ray3' );
   var Element = require( 'NITROGLYCERIN/Element' );
+  var Property = require( 'AXON/Property' );
   
   var grabInitialTransforms = false; // debug flag, specifies whether master transforms are tracked and printed to determine "pretty" setup transformations
   
@@ -97,6 +98,8 @@ define( function( require ) {
   var Molecule3DNode = namespace.Molecule3DNode = function Molecule3DNode( completeMolecule, initialBounds, useHighRes ) {
     var moleculeNode = this;
     
+    this.draggingProperty = new Property( false );
+    
     // prepare the canvas
     this.canvas = document.createElement( 'canvas' );
     this.context = this.canvas.getContext( '2d' );
@@ -140,8 +143,6 @@ define( function( require ) {
       }
     } );
     this.gradientMap = gradientMap;
-    
-    this.upCursor();
     
     this.dragging = false;
     
@@ -206,7 +207,7 @@ define( function( require ) {
           moleculeNode.dragging = false;
           event.pointer.removeInputListener( dragListener );
           event.handle();
-          moleculeNode.upCursor();
+          moleculeNode.draggingProperty.set( false );
           if ( grabInitialTransforms ) {
             console.log( moleculeNode.masterMatrix.toString() );
           }
@@ -215,7 +216,7 @@ define( function( require ) {
         cancel: function( event ) {
           moleculeNode.dragging = false;
           event.pointer.removeInputListener( dragListener );
-          moleculeNode.upCursor();
+          moleculeNode.draggingProperty.set( false );
         },
         
         move: function( event ) {
@@ -232,26 +233,10 @@ define( function( require ) {
             moleculeNode.dragging = true;
             moleculeNode.lastPosition = moleculeNode.currentPosition = event.pointer.point.copy();
             event.pointer.addInputListener( dragListener );
-            moleculeNode.downCursor();
+            moleculeNode.draggingProperty.set( true );
           }
         }
       } );
-    },
-    
-    upCursor: function() {
-      // fallbacks first, best way to ensure browsers keep the last one that works
-      this.canvas.style.cursor = 'pointer';
-      this.canvas.style.cursor = '-webkit-grab';
-      this.canvas.style.cursor = '-moz-grab';
-      this.canvas.style.cursor = 'grab';
-    },
-    
-    downCursor: function() {
-      // fallbacks first, best way to ensure browsers keep the last one that works
-      this.canvas.style.cursor = 'move';
-      this.canvas.style.cursor = '-webkit-grabbing';
-      this.canvas.style.cursor = '-moz-grabbing';
-      this.canvas.style.cursor = 'grabbing';
     },
     
     createGradient: function( element ) {
