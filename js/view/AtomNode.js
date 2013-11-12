@@ -75,8 +75,7 @@ define( function( require ) {
       fontWeight: 'bold',
       fontFamily: 'Arial, sans-serif',
       fontSize: 50,
-      fill: isTextWhite ? '#fff' : '#000',
-      boundsMethod: 'fast'
+      fill: isTextWhite ? '#fff' : '#000'
     } );
     text.scale( Math.min( 0.75 * diameter / text.getBounds().width, 0.75 * diameter / text.getBounds().height ) );
     text.centerX = 0;
