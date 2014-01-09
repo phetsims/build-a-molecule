@@ -1,70 +1,70 @@
 {
   "build-a-molecule": {
-    "sha": "0bfeedf206f844af99d3294808aef35d4f2b72df",
+    "sha": "b81f6e15885a4d6101ea07195804ba2f9ab18616",
     "branch": "master"
   },
   "sherpa": {
-    "sha": "71d59ca730a951e5faee5d10144b99da954bd8d2",
+    "sha": "3b0523b0de3260529a17ca7ff8ff23108ad1d42e",
     "branch": "master"
   },
   "chipper": {
-    "sha": "15c6ffacee16818fd0ab8e609ea1c31d358f1be6",
+    "sha": "d0d0d6b16348db3abbb10c1ebcbc8c4490ecb770",
     "branch": "master"
   },
   "assert": {
-    "sha": "243a1befeb048c0a5354812fa0ee24b5a62df742",
+    "sha": "0c480cdecbd6e3b34f152271788fcac4a1590d58",
     "branch": "master"
   },
   "axon": {
-    "sha": "a3532264c777508f83a633c9af2fa8757b6ce1de",
+    "sha": "46a7d5a01020eac95d4bfd2c91579b3f3a098161",
     "branch": "master"
   },
   "dot": {
-    "sha": "8aa7af07ad3e03b796db9408d95be49b2f873a22",
+    "sha": "9762473c672e62dde726e7d4e465b708cb5a4327",
     "branch": "master"
   },
   "joist": {
-    "sha": "e9689efe94329c472720466173362cb770d829ee",
+    "sha": "bcc67fc74fe5d2324fb17f17e6e63d3ee7da1ad3",
     "branch": "master"
   },
   "kite": {
-    "sha": "835bd21ac21b58d147736d8a70a36d2736d0b7e3",
+    "sha": "6e8f789e67f3490b6016560676263656764a6454",
     "branch": "master"
   },
   "nitroglycerin": {
-    "sha": "64361d194e74042acafed34bc099aa54ff385d24",
+    "sha": "04593cc995f618bcff4efbdcefd38da009167dc2",
     "branch": "master"
   },
   "phet-core": {
-    "sha": "0224cba319fec8a03b986085916f63b8dc6916b0",
+    "sha": "94ed6796b3686f42686ace5ef7314e92011605d2",
     "branch": "master"
   },
   "phetcommon": {
-    "sha": "41952c4deb5a25ddedda042a65ce964dd24a8c36",
+    "sha": "da9d9ec08fd5cb4688a25bf4234b0b91732810f7",
     "branch": "master"
   },
   "scenery": {
-    "sha": "b824f029aa52dd6169c9ab5f84f7020d8226db36",
+    "sha": "b9a3f96dcb0f7cd928e0bd1c682da8490a529db5",
     "branch": "master"
   },
   "scenery-phet": {
-    "sha": "71615f2c5e935d378136e555a8452b050f9cd77f",
+    "sha": "8e9ed519d497512237a470345d0bd59ce9c69249",
     "branch": "master"
   },
   "sun": {
-    "sha": "f3ccdbe8e36cb279b0a438a7ddf7b95a6fd09af6",
+    "sha": "327bec9ca19606667e9593e8ecae7d6f34dda922",
     "branch": "master"
   },
   "vegas": {
-    "sha": "5ffdd7adc96b09d95d37cc00cae9914bbf23e14a",
+    "sha": "57e2fbfbbe90c77ba331e990e66a517af71fcd9d",
     "branch": "master"
   },
   "vibe": {
-    "sha": "d8e8b288711ee09d236228bfe75feff7b2e52f13",
+    "sha": "eaf37986ecdb49f01b19021ebd2666d894039d36",
     "branch": "master"
   },
   "sherpa": {
-    "sha": "71d59ca730a951e5faee5d10144b99da954bd8d2",
+    "sha": "3b0523b0de3260529a17ca7ff8ff23108ad1d42e",
     "branch": "master"
   },
 }
