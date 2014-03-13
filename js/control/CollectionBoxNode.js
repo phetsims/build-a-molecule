@@ -218,7 +218,7 @@ define( function( require ) {
       var yScale = ( moleculeArea.height - 5 ) / this.moleculeLayer.height;
       this.moleculeLayer.setScaleMagnitude( Math.min( xScale, yScale ) );
       
-      this.moleculeLayer.center = moleculeArea.center.minus( moleculeArea.upperLeft );
+      this.moleculeLayer.center = moleculeArea.center.minus( moleculeArea.leftTop );
     },
 
     updateBoxGraphics: function() {
