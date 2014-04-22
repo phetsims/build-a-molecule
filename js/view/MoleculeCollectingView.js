@@ -1,4 +1,4 @@
-// Copyright 2002-2013, University of Colorado
+// Copyright 2002-2014, University of Colorado
 
 /**
  * Subtype of BAMView that shows kits, but also has a collection area to the right-hand side

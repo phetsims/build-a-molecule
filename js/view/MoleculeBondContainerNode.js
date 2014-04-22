@@ -1,4 +1,4 @@
-// Copyright 2002-2013, University of Colorado
+// Copyright 2002-2014, University of Colorado
 
 /**
  * Contains "bond breaking" nodes for a single molecule, so they can be cut apart with scissors

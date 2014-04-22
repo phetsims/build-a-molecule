@@ -1,4 +1,4 @@
-// Copyright 2002-2013, University of Colorado Boulder
+// Copyright 2002-2014, University of Colorado Boulder
 
 /*
  * Supertype for modules in Build a Molecule. Handles code required for all modules (bounds, canvas handling, and the ability to switch models)

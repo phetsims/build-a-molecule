@@ -1,4 +1,4 @@
-// Copyright 2002-2013, University of Colorado
+// Copyright 2002-2014, University of Colorado
 
 /**
  * Molecule structure with the hydrogens stripped out (but with the hydrogen count of an atom saved)

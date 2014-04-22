@@ -1,4 +1,4 @@
-// Copyright 2002-2013, University of Colorado
+// Copyright 2002-2014, University of Colorado
 
 /**
  * Represents a complete (stable) molecule with a name and structure. Includes 2d and 3d representations,
