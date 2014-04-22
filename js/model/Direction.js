@@ -3,7 +3,7 @@
 /**
  * Represents a cardinal direction for use in our model. Also includes unit vector version
  *
- * @author Jonathan Olson <olsonsjc@gmail.com>
+ * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 
 define( function( require ) {

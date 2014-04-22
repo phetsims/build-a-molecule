@@ -3,7 +3,7 @@
 /**
  * Node canvas for Build a Molecule. It features kits shown at the bottom. Can be extended to add other parts
  *
- * @author Jonathan Olson <olsonsjc@gmail.com>
+ * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 
 define( function( require ) {

@@ -8,7 +8,7 @@
  *
  * Note: equivalency matrices are stored in row-major format (compared to the Java version)
  *
- * @author Jonathan Olson <olsonsjc@gmail.com>
+ * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 
 define( function( require ) {

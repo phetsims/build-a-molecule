@@ -3,7 +3,7 @@
 /**
  * Contains the kit background and controls for switching between kits
  *
- * @author Jonathan Olson <olsonsjc@gmail.com>
+ * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 
 define( function( require ) {

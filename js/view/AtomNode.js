@@ -5,7 +5,7 @@
  *
  * NOTE: Iodine is unusable as its label is too large (very thin I). If needed, rework the scaling
  *
- * @author Jonathan Olson <olsonsjc@gmail.com>
+ * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 
 define( function( require ) {

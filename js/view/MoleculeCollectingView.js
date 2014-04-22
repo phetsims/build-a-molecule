@@ -3,7 +3,7 @@
 /**
  * Subtype of BAMView that shows kits, but also has a collection area to the right-hand side
  *
- * @author Jonathan Olson <olsonsjc@gmail.com>
+ * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 
 define( function( require ) {

@@ -3,7 +3,7 @@
 /**
  * Displays the molecule name and 'X' to break apart the molecule
  *
- * @author Jonathan Olson <olsonsjc@gmail.com>
+ * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 
 define( function( require ) {

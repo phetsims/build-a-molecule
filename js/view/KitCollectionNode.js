@@ -3,7 +3,7 @@
 /**
  * Contains the kits and atoms in the play area.
  *
- * @author Jonathan Olson <olsonsjc@gmail.com>
+ * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 
 define( function( require ) {

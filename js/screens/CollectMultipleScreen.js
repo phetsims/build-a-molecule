@@ -3,7 +3,7 @@
 /*
  * Screen for 2nd tab. Collection boxes take multiple molecules of the same type, and start off with a different kit collection each time
  *
- * @author Jonathan Olson <olsonsjc@gmail.com>
+ * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 define( function( require ) {
   'use strict';

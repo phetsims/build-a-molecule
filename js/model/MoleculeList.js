@@ -7,7 +7,7 @@
  *
  * TODO: stub: this is just a stub, fill out with actual behavior
  *
- * @author Jonathan Olson <olsonsjc@gmail.com>
+ * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 
 define( function( require ) {

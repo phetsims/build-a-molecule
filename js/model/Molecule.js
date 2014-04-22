@@ -3,7 +3,7 @@
 /**
  * Represents a "Build a Molecule" molecule. Also useful as a type alias for code readability
  *
- * @author Jonathan Olson <olsonsjc@gmail.com>
+ * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 
 define( function( require ) {

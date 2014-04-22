@@ -3,7 +3,7 @@
 /**
  * Close button (circle with an X) to close the 3D display
  *
- * @author Jonathan Olson <olsonsjc@gmail.com>
+ * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 
 define( function( require ) {

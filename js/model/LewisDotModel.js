@@ -4,7 +4,7 @@
  * Represents the lewis-dot directional connections between atoms. Holds information for all atoms within a particular kit, but it is generic
  * enough to handle other situations
  *
- * @author Jonathan Olson <olsonsjc@gmail.com>
+ * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 
 define( function( require ) {

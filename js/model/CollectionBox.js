@@ -3,7 +3,7 @@
 /**
  * Stores multiple instances of a single type of molecule. Keeps track of quantity, and has a desired capacity.
  *
- * @author Jonathan Olson <olsonsjc@gmail.com>
+ * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 
 define( function( require ) {

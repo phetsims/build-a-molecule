@@ -3,7 +3,7 @@
 /*
  * 1st screen: collection boxes only take 1 molecule, and our 1st kit collection is always the same
  *
- * @author Jonathan Olson <olsonsjc@gmail.com>
+ * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 define( function( require ) {
   'use strict';

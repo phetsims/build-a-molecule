@@ -4,7 +4,7 @@
  * Represents a main running model for the 1st two tabs. Contains a collection of kits and boxes. Kits are responsible
  * for their buckets and atoms.
  *
- * @author Jonathan Olson <olsonsjc@gmail.com>
+ * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 
 define( function( require ) {

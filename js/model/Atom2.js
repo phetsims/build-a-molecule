@@ -3,7 +3,7 @@
 /**
  * An atom, extended with position/destination information that is animated
  *
- * @author Jonathan Olson <olsonsjc@gmail.com>
+ * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 
 define( function( require ) {

@@ -4,7 +4,7 @@
  * Displays a collection box that can collect multiple molecules with two text labels above. One shows the "goal", and the other shows the current
  * quantity present in the box.
  *
- * @author Jonathan Olson <olsonsjc@gmail.com>
+ * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 
 define( function( require ) {

@@ -4,7 +4,7 @@
  * Represents a generic collection box node which is decorated by additional header nodes (probably text describing what can be put in, what is in it,
  * etc.)
  *
- * @author Jonathan Olson <olsonsjc@gmail.com>
+ * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 
 define( function( require ) {

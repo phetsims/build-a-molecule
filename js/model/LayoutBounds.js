@@ -3,7 +3,7 @@
 /**
  * Contains layout information relevant to where the kits are placed, where molecules can exist in the play area, etc.
  *
- * @author Jonathan Olson <olsonsjc@gmail.com>
+ * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 
 define( function( require ) {

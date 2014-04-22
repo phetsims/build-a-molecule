@@ -3,7 +3,7 @@
 /**
  * Build a Molecule configuration file.
  *
- * @author Jonathan Olson <olsonsjc@gmail.com>
+ * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 
 // flag is set so we can ensure that the config has executed. This prevents various Require.js dynamic loading timeouts and script errors

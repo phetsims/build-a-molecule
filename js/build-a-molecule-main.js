@@ -1,7 +1,7 @@
 /**
  * Main entry point for the sim.
  *
- * @author Jonathan Olson <olsonsjc@gmail.com>
+ * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 require( [
   // used in the function call

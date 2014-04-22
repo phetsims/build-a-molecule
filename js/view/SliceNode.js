@@ -4,7 +4,7 @@
  * Allows slicing of bonds by swiping touches / mouse across the surface. Displays streak in high-performance way,
  * and has node.sliceInputListener which should be added to a node to initiate the slice.
  *
- * @author Jonathan Olson <olsonsjc@gmail.com>
+ * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 
 define( function( require ) {
