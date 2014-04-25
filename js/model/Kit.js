@@ -10,6 +10,7 @@ define( function( require ) {
   'use strict';
   
   var inherit = require( 'PHET_CORE/inherit' );
+  var cleanArray = require( 'PHET_CORE/cleanArray' );
   var namespace = require( 'BAM/namespace' );
   var PropertySet = require( 'AXON/PropertySet' );
   var Vector2 = require( 'DOT/Vector2' );
@@ -75,10 +76,10 @@ define( function( require ) {
       // NOTE: right now, the actual atom models move back to the buckets even though the virtual "molecule" says in the box. consider moving it!
 
       // wipe our internal state
-      this.atoms.length = 0;
-      this.atomsInCollectionBox.length = 0;
+      cleanArray( this.atoms );
+      cleanArray( this.atomsInCollectionBox );
       this.lewisDotModel = new LewisDotModel();
-      this.molecules.length = 0;
+      cleanArray( this.molecules );
       this.removedMolecules = {};
 
       // keep track of all atoms in our kit
