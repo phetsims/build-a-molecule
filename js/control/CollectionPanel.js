@@ -8,7 +8,7 @@
 
 define( function( require ) {
   'use strict';
-  
+
   var namespace = require( 'BAM/namespace' );
   var Constants = require( 'BAM/Constants' );
   var collection_yourMoleculeCollectionString = require( 'string!BAM/collection.yourMoleculeCollection' );
@@ -27,25 +27,25 @@ define( function( require ) {
   var Text = require( 'SCENERY/nodes/Text' );
   var NextPreviousNavigationNode = require( 'SCENERY_PHET/NextPreviousNavigationNode' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  var SoundToggleButton = require( 'SCENERY_PHET/SoundToggleButton' );
+  var SoundToggleButtonDeprecated = require( 'SCENERY_PHET/SoundToggleButtonDeprecated' );
   var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   var PropertySet = require( 'AXON/PropertySet' );
   var Scene = require( 'SCENERY/Scene' );
-  
+
   var containerPadding = 15;
-  
+
   var CollectionPanel = namespace.CollectionPanel = function CollectionPanel( collectionList, isSingleCollectionMode, collectionAttachmentCallbacks, toModelBounds ) {
     var panel = this;
     Node.call( this, {} );
-    
+
     var y = 0; // TODO: improve layout code using GeneralLayoutNode?
-    
+
     this.layoutNode = new Node();
     this.collectionAreaHolder = new Node();
     this.backgroundHolder = new Node();
     this.collectionAreaMap = {}; // kitCollection id => node
     this.collectionAttachmentCallbacks = collectionAttachmentCallbacks;
-    
+
     // move it over so the background will have padding
     this.layoutNode.setTranslation( containerPadding, containerPadding );
 
@@ -58,7 +58,7 @@ define( function( require ) {
     this.layoutNode.addChild( moleculeCollectionText );
     moleculeCollectionText.top = 0;
     y += moleculeCollectionText.height + 5;
-    
+
     // "Collection X" with arrows
     var currentCollectionText = new Text( '', {
       font: new PhetFont( {
@@ -85,10 +85,12 @@ define( function( require ) {
         return Shape.bounds( shape.bounds.dilated( 7 ) );
       }
     } );
+
     function updateSwitcher() {
       collectionSwitcher.hasNext = collectionList.hasNextCollection();
       collectionSwitcher.hasPrevious = collectionList.hasPreviousCollection();
     }
+
     collectionList.currentCollectionProperty.link( updateSwitcher );
     collectionList.on( 'addedCollection', updateSwitcher );
     collectionList.on( 'removedCollection', updateSwitcher );
@@ -102,7 +104,7 @@ define( function( require ) {
     y += 5; // TODO: height?
 
     // sound on/off
-    this.soundToggleButton = new SoundToggleButton( namespace.soundEnabled );
+    this.soundToggleButton = new SoundToggleButtonDeprecated( namespace.soundEnabled );
     this.soundToggleButton.touchArea = Shape.bounds( this.soundToggleButton.bounds.dilated( 7 ) );
     this.layoutNode.addChild( this.soundToggleButton );
     this.soundToggleButton.top = y;
@@ -133,7 +135,7 @@ define( function( require ) {
       panel.useCollection( newCollection );
     } );
   };
-  
+
   /**
    * Used to get the panel width so that we can construct the model (and thus kit) beforehand
    *
@@ -146,7 +148,7 @@ define( function( require ) {
     collection.addCollectionBox( new CollectionBox( MoleculeList.H2O, 1 ) );
     var collectionList = new CollectionList( collection, new LayoutBounds( false, 0 ), new PropertySet( {} ) );
     var collectionPanel = new CollectionPanel( collectionList, isSingleCollectionMode, [], function() { return Bounds2.NOTHING; } );
-    
+
     return Constants.modelViewTransform.viewToModelDeltaX( collectionPanel.width );
   };
 
@@ -158,7 +160,7 @@ define( function( require ) {
         child.centerX = centerX;
       } );
     },
-    
+
     useCollection: function( collection ) {
       // swap out the inner collection area
       this.collectionAreaHolder.removeAllChildren();
@@ -179,8 +181,8 @@ define( function( require ) {
       }
 
       /*---------------------------------------------------------------------------*
-      * draw new background
-      *----------------------------------------------------------------------------*/
+       * draw new background
+       *----------------------------------------------------------------------------*/
       this.backgroundHolder.removeAllChildren();
       // TODO: this is a major performance drain! just set the bounds!
       var background = new Rectangle( 0, 0, this.getPlacementWidth(), this.getPlacementHeight(), {
@@ -205,7 +207,7 @@ define( function( require ) {
       }
       return false;
     },
-    
+
     getPlacementWidth: function() {
       return this.layoutNode.width + containerPadding * 2;
     },
@@ -218,7 +220,7 @@ define( function( require ) {
       var fixedHeight = Constants.stageSize.height - Constants.viewPadding * 2; // we will have padding above and below
 
       if ( requiredHeight > fixedHeight ) {
-          console.log( 'Warning: collection panel is too tall. required: ' + requiredHeight + ', but has: ' + fixedHeight );
+        console.log( 'Warning: collection panel is too tall. required: ' + requiredHeight + ', but has: ' + fixedHeight );
       }
 
       return fixedHeight;
