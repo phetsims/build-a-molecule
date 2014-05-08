@@ -27,7 +27,7 @@ define( function( require ) {
   var Text = require( 'SCENERY/nodes/Text' );
   var NextPreviousNavigationNode = require( 'SCENERY_PHET/NextPreviousNavigationNode' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  var SoundToggleButtonDeprecated = require( 'SCENERY_PHET/SoundToggleButtonDeprecated' );
+  var SoundToggleButton = require( 'SCENERY_PHET/SoundToggleButton' );
   var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   var PropertySet = require( 'AXON/PropertySet' );
   var Scene = require( 'SCENERY/Scene' );
@@ -104,7 +104,7 @@ define( function( require ) {
     y += 5; // TODO: height?
 
     // sound on/off
-    this.soundToggleButton = new SoundToggleButtonDeprecated( namespace.soundEnabled );
+    this.soundToggleButton = new SoundToggleButton( namespace.soundEnabled );
     this.soundToggleButton.touchArea = Shape.bounds( this.soundToggleButton.bounds.dilated( 7 ) );
     this.layoutNode.addChild( this.soundToggleButton );
     this.soundToggleButton.top = y;
