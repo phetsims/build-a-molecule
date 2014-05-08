@@ -8,7 +8,7 @@
 
 define( function( require ) {
   'use strict';
-  
+
   var namespace = require( 'BAM/namespace' );
   var Constants = require( 'BAM/Constants' );
   var kit_labelString = require( 'string!BAM/kit.label' );
@@ -22,30 +22,30 @@ define( function( require ) {
   var NextPreviousNavigationNode = require( 'SCENERY_PHET/NextPreviousNavigationNode' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
-  var TextPushButton = require( 'SUN/TextPushButton' );
-  
+  var TextPushButtonDeprecated = require( 'SUN/TextPushButtonDeprecated' );
+
   var kitArrowYOffset = 5; // vertical offset of the kit arrows from the top of the kit
 
   var KitPanel = namespace.KitPanel = function KitPanel( kitCollectionModel, availableKitBounds ) {
     Node.call( this, {} );
-    
+
     assert && assert( Constants.modelViewTransform.getMatrix().m11() < 0 ); // we assume this and correct for the inversed Y
-    
+
     var kitViewBounds = Constants.modelViewTransform.modelToViewBounds( availableKitBounds );
-    
+
     /*---------------------------------------------------------------------------*
-    * background
-    *----------------------------------------------------------------------------*/
-    
+     * background
+     *----------------------------------------------------------------------------*/
+
     this.addChild( new Path( Shape.bounds( kitViewBounds ), {
       fill: Constants.kitBackground,
       stroke: Constants.kitBorder
     } ) );
-    
+
     /*---------------------------------------------------------------------------*
-    * label and next/previous
-    *----------------------------------------------------------------------------*/
-    
+     * label and next/previous
+     *----------------------------------------------------------------------------*/
+
     var labelNode = new Text( '', {
       font: new PhetFont( {
         size: 18,
@@ -55,7 +55,7 @@ define( function( require ) {
     kitCollectionModel.currentKitProperty.link( function() {
       labelNode.text = StringUtils.format( kit_labelString, kitCollectionModel.currentKitIndex + 1 );
     } );
-    
+
     var navigationNode = new NextPreviousNavigationNode( labelNode, {
       arrowColor: Constants.kitArrowBackgroundEnabled,
       arrowStrokeColor: Constants.kitArrowBorderEnabled,
@@ -83,10 +83,10 @@ define( function( require ) {
     this.addChild( navigationNode );
 
     /*---------------------------------------------------------------------------*
-    * refill kit
-    *----------------------------------------------------------------------------*/
-    
-    var refillButton = new TextPushButton( kit_resetKitString, {
+     * refill kit
+     *----------------------------------------------------------------------------*/
+
+    var refillButton = new TextPushButtonDeprecated( kit_resetKitString, {
       listener: function() {
         kitCollectionModel.currentKit.resetKit();
       },

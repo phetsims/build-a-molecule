@@ -8,7 +8,7 @@
 
 define( function( require ) {
   'use strict';
-  
+
   var namespace = require( 'BAM/namespace' );
   var Constants = require( 'BAM/Constants' );
   var collection_allFilledString = require( 'string!BAM/collection.allFilled' );
@@ -20,13 +20,13 @@ define( function( require ) {
   var Color = require( 'SCENERY/util/Color' );
   var FaceNode = require( 'SCENERY_PHET/FaceNode' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  var TextPushButton = require( 'SUN/TextPushButton' );
+  var TextPushButtonDeprecated = require( 'SUN/TextPushButtonDeprecated' );
   var Shape = require( 'KITE/Shape' );
-  
+
   var AllFilledDialogNode = namespace.AllFilledDialogNode = function AllFilledDialogNode( availablePlayAreaBounds, regenerateCallback ) {
     Node.call( this, {} );
     var dialog = this;
-    
+
     var smiley = new FaceNode( 120 ).smile();
     this.addChild( smiley );
 
@@ -38,7 +38,7 @@ define( function( require ) {
     } );
     this.addChild( text );
 
-    var button = new TextPushButton( collection_tryWithDifferentMoleculesString, {
+    var button = new TextPushButtonDeprecated( collection_tryWithDifferentMoleculesString, {
       listener: function() {
         regenerateCallback();
         dialog.visible = false;
@@ -51,18 +51,18 @@ define( function( require ) {
     } );
     button.touchArea = Shape.bounds( button.localBounds.dilated( 20 ) );
     this.addChild( button );
-    
+
     // layout
     text.centerX = button.centerX = smiley.centerX = this.centerX;
     text.top = smiley.bottom + 10;
     button.top = text.bottom + 10;
-    
+
     var background = new Rectangle( this.bounds.dilated( 10 ), {
       stroke: 'black',
       fill: Constants.completeBackgroundColor
     } );
     this.insertChild( 0, background );
-    
+
     this.center = Constants.modelViewTransform.modelToViewBounds( availablePlayAreaBounds ).center;
   };
 
