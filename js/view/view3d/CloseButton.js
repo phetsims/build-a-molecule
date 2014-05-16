@@ -13,7 +13,7 @@ define( function( require ) {
   var Constants = require( 'BAM/Constants' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
-  var PushButton = require( 'SUN/PushButton' );
+  var PushButtonDeprecated = require( 'SUN/PushButtonDeprecated' );
   var Path = require( 'SCENERY/nodes/Path' );
   var Shape = require( 'KITE/Shape' );
   
@@ -35,9 +35,9 @@ define( function( require ) {
     var disabledNode = new Path( shape, _.extend( { stroke: '#444', fill: '#000' }, commonOptions ) );
 
     options.listener = callback; //TODO consider replacing the constructor callback parameter with an option so we don't need to do this.
-    PushButton.call( this, upNode, overNode, downNode, disabledNode, options );
+    PushButtonDeprecated.call( this, upNode, overNode, downNode, disabledNode, options );
     this.touchArea = new Shape().circle( 0, 0, outside + 40 );
   };
   
-  return inherit( PushButton, CloseButton );
+  return inherit( PushButtonDeprecated, CloseButton );
 } );
