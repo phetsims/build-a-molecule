@@ -17,7 +17,7 @@ define( function( require ) {
   var Color = require( 'SCENERY/util/Color' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
-  var TextPushButtonDeprecated = require( 'SUN/TextPushButtonDeprecated' );
+  var TextPushButton = require( 'SUN/buttons/TextPushButton' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var SingleCollectionBoxNode = require( 'BAM/control/SingleCollectionBoxNode' );
   var MultipleCollectionBoxNode = require( 'BAM/control/MultipleCollectionBoxNode' );
@@ -68,7 +68,7 @@ define( function( require ) {
     /*---------------------------------------------------------------------------*
      * Reset Collection button
      *----------------------------------------------------------------------------*/
-    var resetCollectionButton = new TextPushButtonDeprecated( collection_resetString, {
+    var resetCollectionButton = new TextPushButton( collection_resetString, {
       listener: function() {
         // when clicked, empty collection boxes
         _.each( collection.collectionBoxes, function( box ) {
@@ -79,7 +79,7 @@ define( function( require ) {
         } );
       },
       font: new PhetFont( 14 ),
-      rectangleFillUp: Color.ORANGE
+      baseColor: Color.ORANGE
     } );
     resetCollectionButton.touchArea = Shape.bounds( resetCollectionButton.bounds.dilate( 7 ) );
 

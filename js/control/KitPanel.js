@@ -22,7 +22,7 @@ define( function( require ) {
   var NextPreviousNavigationNode = require( 'SCENERY_PHET/NextPreviousNavigationNode' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
-  var TextPushButtonDeprecated = require( 'SUN/TextPushButtonDeprecated' );
+  var TextPushButton = require( 'SUN/buttons/TextPushButton' );
 
   var kitArrowYOffset = 5; // vertical offset of the kit arrows from the top of the kit
 
@@ -86,11 +86,11 @@ define( function( require ) {
      * refill kit
      *----------------------------------------------------------------------------*/
 
-    var refillButton = new TextPushButtonDeprecated( kit_resetKitString, {
+    var refillButton = new TextPushButton( kit_resetKitString, {
       listener: function() {
         kitCollectionModel.currentKit.resetKit();
       },
-      rectangleFillUp: Color.ORANGE,
+      baseColor: Color.ORANGE,
       font: new PhetFont( { size: 12, weight: 'bold' } ),
       x: kitViewBounds.minX + 5,
       y: kitViewBounds.minY + 5

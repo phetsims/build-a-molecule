@@ -20,7 +20,7 @@ define( function( require ) {
   var Color = require( 'SCENERY/util/Color' );
   var FaceNode = require( 'SCENERY_PHET/FaceNode' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  var TextPushButtonDeprecated = require( 'SUN/TextPushButtonDeprecated' );
+  var TextPushButton = require( 'SUN/buttons/TextPushButton' );
   var Shape = require( 'KITE/Shape' );
 
   var AllFilledDialogNode = namespace.AllFilledDialogNode = function AllFilledDialogNode( availablePlayAreaBounds, regenerateCallback ) {
@@ -38,7 +38,7 @@ define( function( require ) {
     } );
     this.addChild( text );
 
-    var button = new TextPushButtonDeprecated( collection_tryWithDifferentMoleculesString, {
+    var button = new TextPushButton( collection_tryWithDifferentMoleculesString, {
       listener: function() {
         regenerateCallback();
         dialog.visible = false;
@@ -47,7 +47,7 @@ define( function( require ) {
         size: 18,
         weight: 'bold'
       } ),
-      rectangleFillUp: Color.ORANGE,
+      baseColor: Color.ORANGE
     } );
     button.touchArea = Shape.bounds( button.localBounds.dilated( 20 ) );
     this.addChild( button );
