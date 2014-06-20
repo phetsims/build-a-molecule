@@ -8,12 +8,9 @@
 define( function( require ) {
   'use strict';
   
-  var title_collectMultipleString = require( 'string!BAM/title.collectMultiple' );
-  var Strings = require( 'BAM/Strings' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Dimension2 = require( 'DOT/Dimension2' );
   var namespace = require( 'BAM/namespace' );
-  var Constants = require( 'BAM/Constants' );
   var BAMScreen = require( 'BAM/screens/BAMScreen' );
   var KitCollection = require( 'BAM/model/KitCollection' );
   var Kit = require( 'BAM/model/Kit' );
@@ -22,9 +19,11 @@ define( function( require ) {
   var LayoutBounds = require( 'BAM/model/LayoutBounds' );
   var Bucket = require( 'BAM/model/Bucket' );
   var Element = require( 'NITROGLYCERIN/Element' );
-  var ScreenView = require( 'JOIST/ScreenView' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var MoleculeCollectingView = require( 'BAM/view/MoleculeCollectingView' );
+  
+  // strings
+  var title_collectMultipleString = require( 'string!BAM/title.collectMultiple' );
   
   var CollectMultipleScreen = namespace.CollectMultipleScreen = function CollectMultipleScreen( collectionAreaWidth ) {
     BAMScreen.call( this, title_collectMultipleString, new Rectangle( 0, 0, 548, 373, { fill: 'green' } ), function( bounds, clock ) {

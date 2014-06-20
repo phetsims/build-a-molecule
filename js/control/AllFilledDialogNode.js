@@ -11,8 +11,6 @@ define( function( require ) {
 
   var namespace = require( 'BAM/namespace' );
   var Constants = require( 'BAM/Constants' );
-  var collection_allFilledString = require( 'string!BAM/collection.allFilled' );
-  var collection_tryWithDifferentMoleculesString = require( 'string!BAM/collection.tryWithDifferentMolecules' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Text = require( 'SCENERY/nodes/Text' );
@@ -22,6 +20,10 @@ define( function( require ) {
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var TextPushButton = require( 'SUN/buttons/TextPushButton' );
   var Shape = require( 'KITE/Shape' );
+  
+  // strings
+  var collection_allFilledString = require( 'string!BAM/collection.allFilled' );
+  var collection_tryWithDifferentMoleculesString = require( 'string!BAM/collection.tryWithDifferentMolecules' );
 
   var AllFilledDialogNode = namespace.AllFilledDialogNode = function AllFilledDialogNode( availablePlayAreaBounds, regenerateCallback ) {
     Node.call( this, {} );

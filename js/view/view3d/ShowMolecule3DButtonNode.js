@@ -10,18 +10,21 @@ define( function( require ) {
   'use strict';
 
   var namespace = require( 'BAM/namespace' );
-  var Constants = require( 'BAM/Constants' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Text = require( 'SCENERY/nodes/Text' );
   var ButtonListener = require( 'SCENERY/input/ButtonListener' );
   var MeterBodyNode = require( 'SCENERY_PHET/MeterBodyNode' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
+  var Molecule3DDialog = require( 'BAM/view/view3d/Molecule3DDialog' );
+  
+  // images
   var greenLeft = require( 'image!BAM/green-left.png' );
   var greenMiddle = require( 'image!BAM/green-middle.png' );
   var greenRight = require( 'image!BAM/green-right.png' );
+  
+  // strings
   var iconString = require( 'string!BAM/3d.icon' );
-  var Molecule3DDialog = require( 'BAM/view/view3d/Molecule3DDialog' );
 
   var ShowMolecule3DButtonNode = namespace.ShowMolecule3DButtonNode = function ShowMolecule3DButtonNode( completeMolecule, options ) {
     var that = this;

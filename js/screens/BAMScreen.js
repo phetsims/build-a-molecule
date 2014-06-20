@@ -21,7 +21,6 @@ define( function( require ) {
   var Bucket = require( 'BAM/model/Bucket' );
   var Kit = require( 'BAM/model/Kit' );
   var CollectionBox = require( 'BAM/model/CollectionBox' );
-  var ScreenView = require( 'JOIST/ScreenView' );
   var PropertySet = require( 'AXON/PropertySet' );
   
   var BAMScreen = namespace.BAMScreen = function BAMScreen( name, icon, createInitialKitCollection, layoutBounds, createKitCollection, createView ) {

@@ -5,6 +5,8 @@ define( function( require ) {
 
   var namespace = require( 'BAM/namespace' );
   var Strings = {};
+  
+  // strings
   var hydrogen = require( 'string!BAM/atom.hydrogen' );
   var oxygen = require( 'string!BAM/atom.oxygen' );
   var carbon = require( 'string!BAM/atom.carbon' );

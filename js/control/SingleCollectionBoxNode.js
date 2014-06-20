@@ -10,17 +10,17 @@ define( function( require ) {
   'use strict';
   
   var namespace = require( 'BAM/namespace' );
-  var Constants = require( 'BAM/Constants' );
   var Bounds2 = require( 'DOT/Bounds2' );
-  var collection_single_formatString = require( 'string!BAM/collection.single.format' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var Node = require( 'SCENERY/nodes/Node' );
   var HTMLText = require( 'SCENERY/nodes/HTMLText' );
   var CollectionBoxNode = require( 'BAM/control/CollectionBoxNode' );
   var MoleculeList = require( 'BAM/model/MoleculeList' );
   var CollectionBox = require( 'BAM/model/CollectionBox' );
   var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
+  
+  // strings
+  var collection_single_formatString = require( 'string!BAM/collection.single.format' );
   
   var SingleCollectionBoxNode = namespace.SingleCollectionBoxNode = function SingleCollectionBoxNode( box, toModelBounds ) {
     CollectionBoxNode.call( this, box, toModelBounds );

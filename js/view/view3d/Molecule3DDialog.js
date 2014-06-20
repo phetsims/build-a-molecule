@@ -16,30 +16,18 @@ define( function( require ) {
   var Molecule3DNode = require( 'BAM/view/view3d/Molecule3DNode' );
   var CloseButton = require( 'BAM/view/view3d/CloseButton' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var Vector2 = require( 'DOT/Vector2' );
-  var Vector3 = require( 'DOT/Vector3' );
   var Bounds2 = require( 'DOT/Bounds2' );
-  var Bounds3 = require( 'DOT/Bounds3' );
-  var Matrix3 = require( 'DOT/Matrix3' );
-  var Quaternion = require( 'DOT/Quaternion' );
   var Node = require( 'SCENERY/nodes/Node' );
-  var DOM = require( 'SCENERY/nodes/DOM' );
-  var Path = require( 'SCENERY/nodes/Path' );
   var Text = require( 'SCENERY/nodes/Text' );
   var HTMLText = require( 'SCENERY/nodes/HTMLText' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var RadialGradient = require( 'SCENERY/util/RadialGradient' );
-  var Color = require( 'SCENERY/util/Color' );
-  var Util = require( 'SCENERY/util/Util' );
   var Shape = require( 'KITE/Shape' );
-  var Arc = require( 'KITE/segments/Arc' );
-  var EllipticalArc = require( 'KITE/segments/EllipticalArc' );
-  var DotUtil = require( 'DOT/Util' );
-  var Ray3 = require( 'DOT/Ray3' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var AquaRadioButton = require( 'SUN/AquaRadioButton' );
-  var Element = require( 'NITROGLYCERIN/Element' );
   var Property = require( 'AXON/Property' );
+  
+  // strings
   var spaceFillString = require( 'string!BAM/3d.spaceFilling' );
   var ballAndStickString = require( 'string!BAM/3d.ballAndStick' );
   

@@ -10,9 +10,7 @@ define( function( require ) {
   'use strict';
 
   var namespace = require( 'BAM/namespace' );
-  var Constants = require( 'BAM/Constants' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var Node = require( 'SCENERY/nodes/Node' );
   var PushButtonDeprecated = require( 'SUN/PushButtonDeprecated' );
   var Path = require( 'SCENERY/nodes/Path' );
   var Shape = require( 'KITE/Shape' );

@@ -12,25 +12,17 @@ define( function( require ) {
   'use strict';
 
   var namespace = require( 'BAM/namespace' );
-  var Constants = require( 'BAM/Constants' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Vector2 = require( 'DOT/Vector2' );
   var Vector3 = require( 'DOT/Vector3' );
-  var Bounds2 = require( 'DOT/Bounds2' );
   var Bounds3 = require( 'DOT/Bounds3' );
   var Matrix3 = require( 'DOT/Matrix3' );
   var Quaternion = require( 'DOT/Quaternion' );
   var DOM = require( 'SCENERY/nodes/DOM' );
-  var Path = require( 'SCENERY/nodes/Path' );
-  var Text = require( 'SCENERY/nodes/Text' );
-  var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var Color = require( 'SCENERY/util/Color' );
   var Util = require( 'SCENERY/util/Util' );
   var Arc = require( 'KITE/segments/Arc' );
   var EllipticalArc = require( 'KITE/segments/EllipticalArc' );
-  var DotUtil = require( 'DOT/Util' );
-  var Ray3 = require( 'DOT/Ray3' );
-  var Element = require( 'NITROGLYCERIN/Element' );
   var Property = require( 'AXON/Property' );
 
   var grabInitialTransforms = false; // debug flag, specifies whether master transforms are tracked and printed to determine "pretty" setup transformations
@@ -111,7 +103,9 @@ define( function( require ) {
     this.setMoleculeCanvasBounds( initialBounds );
 
     // construct ourself with the canvas (now properly initially sized)
-    DOM.call( this, this.canvas );
+    DOM.call( this, this.canvas, {
+      preventTransform: true
+    } );
 
     // map the atoms into our enhanced format
     this.currentAtoms = completeMolecule.atoms.map( to3d );
@@ -230,9 +224,8 @@ define( function( require ) {
     },
 
     createGradient: function( element ) {
-      var diameter = element.radius * 2;
+      // var diameter = element.radius * 2;
       var gCenter = new Vector2( -element.radius / 5, -element.radius / 5 );
-      var middleRadius = diameter / 3;
       var fullRadius = gCenter.minus( new Vector2( 1, 1 ).normalized().times( element.radius ) ).magnitude();
       var gradientFill = this.context.createRadialGradient( gCenter.x, gCenter.y, 0, gCenter.x, gCenter.y, fullRadius );
 
@@ -263,7 +256,6 @@ define( function( require ) {
 
       for ( var i = 0; i < atoms.length; i++ ) {
         var atom = atoms[i];
-        var element = atom.element;
 
         var arcs = [];
 

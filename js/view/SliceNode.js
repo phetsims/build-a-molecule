@@ -29,7 +29,9 @@ define( function( require ) {
     
     var canvas = document.createElement( 'canvas' );
     var context = canvas.getContext( '2d' );
-    DOM.call( this, canvas );
+    DOM.call( this, canvas, {
+      preventTransform: true
+    } );
     
     var globalBounds;
     var toModelTransform;
@@ -142,8 +144,8 @@ define( function( require ) {
         // TODO: weight it so that we can exclude cuts that aren't close enough to the bond
         if ( s >= 0 && s <= 1 && t >= 0 && t <= 1 ) {
           dat.cut = true; // collision detected
-          var ix = dat.aPos.x + t * dat.delta.x;
-          var iy = dat.aPos.y + t * dat.delta.y;
+          // var ix = dat.aPos.x + t * dat.delta.x;
+          // var iy = dat.aPos.y + t * dat.delta.y;
         }
       } );
       

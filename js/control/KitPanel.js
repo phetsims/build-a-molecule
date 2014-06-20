@@ -11,8 +11,6 @@ define( function( require ) {
 
   var namespace = require( 'BAM/namespace' );
   var Constants = require( 'BAM/Constants' );
-  var kit_labelString = require( 'string!BAM/kit.label' );
-  var kit_resetKitString = require( 'string!BAM/kit.resetKit' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Path = require( 'SCENERY/nodes/Path' );
@@ -23,6 +21,10 @@ define( function( require ) {
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   var TextPushButton = require( 'SUN/buttons/TextPushButton' );
+  
+  // strings
+  var kit_labelString = require( 'string!BAM/kit.label' );
+  var kit_resetKitString = require( 'string!BAM/kit.resetKit' );
 
   var kitArrowYOffset = 5; // vertical offset of the kit arrows from the top of the kit
 

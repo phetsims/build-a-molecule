@@ -11,8 +11,7 @@ define( function( require ) {
 
   var namespace = require( 'BAM/namespace' );
   var Constants = require( 'BAM/Constants' );
-  var collection_yourMoleculeCollectionString = require( 'string!BAM/collection.yourMoleculeCollection' );
-  var collection_labelString = require( 'string!BAM/collection.label' );
+  var BAMScreen = require( 'BAM/screens/BAMScreen' );
   var Bounds2 = require( 'DOT/Bounds2' );
   var Shape = require( 'KITE/Shape' );
   var CollectionAreaNode = require( 'BAM/control/CollectionAreaNode' );
@@ -30,7 +29,10 @@ define( function( require ) {
   var SoundToggleButton = require( 'SCENERY_PHET/SoundToggleButton' );
   var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   var PropertySet = require( 'AXON/PropertySet' );
-  var Scene = require( 'SCENERY/Scene' );
+  
+  // strings
+  var collection_yourMoleculeCollectionString = require( 'string!BAM/collection.yourMoleculeCollection' );
+  var collection_labelString = require( 'string!BAM/collection.label' );
 
   var containerPadding = 15;
 
@@ -201,7 +203,7 @@ define( function( require ) {
       var node = this;
       while ( node.getParent() !== null ) {
         node = node.getParent();
-        if ( node instanceof Scene ) {
+        if ( node instanceof BAMScreen ) {
           return true;
         }
       }

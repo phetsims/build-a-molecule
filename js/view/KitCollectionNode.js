@@ -11,7 +11,6 @@ define( function( require ) {
   
   var namespace = require( 'BAM/namespace' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var Constants = require( 'BAM/Constants' );
   var KitView = require( 'BAM/view/KitView' );
   var KitPanel = require( 'BAM/control/KitPanel' );
   var Node = require( 'SCENERY/nodes/Node' );

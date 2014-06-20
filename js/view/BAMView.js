@@ -17,8 +17,6 @@ define( function( require ) {
   var ScreenView = require( 'JOIST/ScreenView' );
   var KitCollectionNode = require( 'BAM/view/KitCollectionNode' );
 
-  var Shape = require( 'KITE/Shape' );
-
   var BAMView = namespace.BAMView = function BAMView( collectionList ) {
     ScreenView.call( this, { renderer: 'svg' } );
     var view = this;

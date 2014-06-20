@@ -17,8 +17,6 @@ define( function( require ) {
   var CollectionPanel = require( 'BAM/control/CollectionPanel' );
   var AllFilledDialogNode = require( 'BAM/control/AllFilledDialogNode' );
 
-  var Shape = require( 'KITE/Shape' );
-
   var MoleculeCollectingView = namespace.MoleculeCollectingView = function MoleculeCollectingView( collectionList, isSingleCollectionMode, regenerateCallback ) {
     var view = this;
     

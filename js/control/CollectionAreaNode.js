@@ -10,8 +10,6 @@ define( function( require ) {
   'use strict';
 
   var namespace = require( 'BAM/namespace' );
-  var Constants = require( 'BAM/Constants' );
-  var collection_resetString = require( 'string!BAM/collection.reset' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Shape = require( 'KITE/Shape' );
   var Color = require( 'SCENERY/util/Color' );
@@ -21,6 +19,9 @@ define( function( require ) {
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var SingleCollectionBoxNode = require( 'BAM/control/SingleCollectionBoxNode' );
   var MultipleCollectionBoxNode = require( 'BAM/control/MultipleCollectionBoxNode' );
+  
+  // strings
+  var collection_resetString = require( 'string!BAM/collection.reset' );
 
   var CollectionAreaNode = namespace.CollectionAreaNode = function CollectionAreaNode( collection, isSingleCollectionMode, toModelBounds ) {
     Node.call( this, {} );

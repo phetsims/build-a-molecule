@@ -373,7 +373,6 @@ define( function( require ) {
      */
     separateMoleculeDestinations: function() {
       // TODO: performance: general optimization
-      var kit = this;
       var maxIterations = 500;
       var pushAmount = 10; // how much to push two molecules away
       

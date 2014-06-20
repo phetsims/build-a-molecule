@@ -8,22 +8,20 @@
 define( function( require ) {
   'use strict';
   
-  var title_largerMoleculesString = require( 'string!BAM/title.largerMolecules' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Dimension2 = require( 'DOT/Dimension2' );
   var namespace = require( 'BAM/namespace' );
-  var Constants = require( 'BAM/Constants' );
   var BAMScreen = require( 'BAM/screens/BAMScreen' );
   var KitCollection = require( 'BAM/model/KitCollection' );
   var Kit = require( 'BAM/model/Kit' );
-  var CollectionBox = require( 'BAM/model/CollectionBox' );
-  var MoleculeList = require( 'BAM/model/MoleculeList' );
   var LayoutBounds = require( 'BAM/model/LayoutBounds' );
   var Bucket = require( 'BAM/model/Bucket' );
   var Element = require( 'NITROGLYCERIN/Element' );
-  var ScreenView = require( 'JOIST/ScreenView' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var BAMView = require( 'BAM/view/BAMView' );
+  
+  // strings
+  var title_largerMoleculesString = require( 'string!BAM/title.largerMolecules' );
   
   var LargerMoleculesScreen = namespace.LargerMoleculesScreen = function LargerMoleculesScreen() {
     BAMScreen.call( this, title_largerMoleculesString, new Rectangle( 0, 0, 548, 373, { fill: 'blue' } ), function( bounds, clock ) {
