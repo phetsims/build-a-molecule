@@ -13,7 +13,7 @@
 
 define( function( require ) {
   'use strict';
-  
+
   var namespace = require( 'BAM/namespace' );
   var Bond = require( 'BAM/model/Bond' );
   // var MoleculeList = require( 'BAM/model/MoleculeList' );
@@ -21,37 +21,37 @@ define( function( require ) {
   var ChemUtils = require( 'NITROGLYCERIN/ChemUtils' );
   var Element = require( 'NITROGLYCERIN/Element' );
   var Atom = require( 'NITROGLYCERIN/Atom' );
-  
+
   var nextMoleculeId = 0;
-  
+
   //REVIEW comments below indicate that ordering is important. Describe why ordering is significant.
   // NOTE from porting: StrippedMolecule relies on the ordering of atoms, and possibly bonds
-  
+
   // TODO: Molecule calls with (12,12)
   var MoleculeStructure = namespace.MoleculeStructure = function MoleculeStructure( numAtoms, numBonds ) {
     assert && assert( numAtoms !== undefined && numBonds !== undefined, 'numAtoms and numBonds required' );
-    
+
     this.moleculeId = nextMoleculeId++; // used for molecule identification and ordering for optimization
-    
+
     // TODO: performance: figure out a way of preallocating the arrays, and instead of pushing, just set the proper index (higher performance)
     // this.atoms = new Array( numAtoms );
     this.atoms = [];
     // this.bonds = new Array( numBonds );
     this.bonds = [];
   };
-  
+
   MoleculeStructure.prototype = {
     constructor: MoleculeStructure,
-    
+
     addAtom: function( atom ) {
       assert && assert( !_.contains( this.atoms, atom ), 'Cannot add an already existing atom' );
       this.atoms.push( atom ); // NOTE: don't mess with the order
       return atom;
     },
-    
+
     addBond: function( a, b ) {
       var bond;
-      
+
       // TODO: optimize call-sites of this to just use one way (almost assuredly creating the bond first)
       if ( a instanceof Bond ) {
         bond = a;
@@ -62,24 +62,24 @@ define( function( require ) {
       assert && assert( _.contains( this.atoms, bond.b ) );
       this.bonds.push( bond );
     },
-    
+
     getBondsInvolving: function( atom ) {
       // TODO: performance: optimize out function allocation here?
       return _.filter( this.bonds, function( bond ) { return bond.contains( atom ); } );
     },
-    
+
     getMatchingCompleteMolecule: function() {
       return namespace.MoleculeList.getMasterInstance().findMatchingCompleteMolecule( this );
     },
-    
+
     isAllowedStructure: function() {
       return this.atoms.length < 2 || namespace.MoleculeList.getMasterInstance().isAllowedStructure( this );
     },
-    
+
     getHillSystemFormulaFragment: function() {
       return ChemUtils.hillOrderedSymbol( this.getElementList() );
     },
-    
+
     /**
      * Our best attempt at getting a general molecular naming algorithm that handles organic and non-organic compounds.
      * <p/>
@@ -102,7 +102,7 @@ define( function( require ) {
       // return the formula, unless it is in our exception list (in which case, handle the exception case)
       return MoleculeStructure.formulaExceptions[formula] || formula;
     },
-    
+
     /**
      * Return the molecular formula, with structural information available if possible. Currently handles alcohol structure based on
      * https://secure.wikimedia.org/wikipedia/en/wiki/Alcohols#Common_Names
@@ -111,10 +111,10 @@ define( function( require ) {
      */
     getStructuralFormula: function() {
       var structure = this;
-      
+
       // scan for alcohols (OH bonded to C)
       var alcoholCount = 0;
-      
+
       // we pull of the alcohols so we can get that molecular formula (and we append the alcohols afterwards)
       var structureWithoutAlcohols = this.getCopy();
       _.each( this.atoms, function( oxygenAtom ) {
@@ -150,7 +150,7 @@ define( function( require ) {
         return structureWithoutAlcohols.getGeneralFormula() + '(OH)' + alcoholCount;
       }
     },
-    
+
 
     /**
      * Use the above general molecular formula, but return it with HTML subscripts
@@ -225,7 +225,7 @@ define( function( require ) {
       // since it has no loops, now we check to see if we reached all atoms. if not, the molecule must not be connected
       return visitedAtoms.length !== this.atoms.length;
     },
-    
+
     getDebuggingDump: function() {
       var str = 'Molecule\n';
       _.each( this.atoms, function( atom ) {
@@ -241,14 +241,14 @@ define( function( require ) {
     containsElement: function( element ) {
       return _.some( this.atoms, function( atom ) { return atom.element === element; } );
     },
-    
+
     // between atoms a and b
     getBond: function( a, b ) {
       var result = _.find( this.bonds, function( bond ) { return bond.contains( a ) && bond.contains( b ); } );
       assert && assert( result, 'Could not find bond!' );
       return result;
     },
-    
+
     // TODO: performance: cache this?
     getHistogram: function() {
       return new ElementHistogram( this );
@@ -257,7 +257,7 @@ define( function( require ) {
     getMoleculeId: function() {
       return this.moleculeId;
     },
-    
+
     // TODO: rename copy()
     getCopy: function() {
       var result = new MoleculeStructure( this.atoms.length, this.bonds.length );
@@ -315,7 +315,7 @@ define( function( require ) {
         // different molecular formula
         return false;
       }
-      
+
       // TODO: performance: sets instead of arrays here?
       var myVisited = [];
       var otherVisited = [];
@@ -348,7 +348,7 @@ define( function( require ) {
       // TODO: performance: hashset with fast lookup?
       return _.filter( this.getNeighbors( atom ), function( otherAtom ) { return !_.contains( exclusionSet, otherAtom ); } );
     },
-    
+
     /*
      * @param {MoleculeStructure} other
      * @param {Array[Atom]}       myVisited
@@ -404,12 +404,12 @@ define( function( require ) {
       // return whether we can find a successful permutation matching from our equivalency matrix
       return MoleculeStructure.checkEquivalencyMatrix( equivalences, 0, availableIndices, size );
     },
-    
+
     getElementList: function() {
       // return defensive copy. if that is changed, examine all usages
       return _.map( this.atoms, function( atom ) { return atom.element; } );
     },
-    
+
     /*---------------------------------------------------------------------------*
     * serialization and parsing
     *----------------------------------------------------------------------------*/
@@ -423,7 +423,7 @@ define( function( require ) {
      */
     toSerial: function() {
       var structure = this;
-      
+
       var ret = this.atoms.length + '|' + this.bonds.length;
       _.each( this.atoms, function( atom ) {
         ret += '|' + atom.symbol;
@@ -436,7 +436,7 @@ define( function( require ) {
 
       return ret;
     },
-    
+
     /**
      * Format description, '|' is literal
      * <p/>
@@ -470,13 +470,13 @@ define( function( require ) {
       }
       return result;
     },
-    
+
     /**
      * @return A new equivalent structure using simple atoms and bonds
      */
     toSimple: function() {
       var result = new MoleculeStructure( this.atoms.length, this.bonds.length );
-      
+
       var newMap = {}; // old atom ID => new atom
       _.each( this.atoms, function( atom ) {
           var newAtom = new Atom( atom.element );
@@ -489,12 +489,12 @@ define( function( require ) {
       return result;
     }
   };
-  
+
   MoleculeStructure.formulaExceptions = {
     'H3N': 'NH3', // treated as if it is organic
     'CHN': 'HCN'  // not considered organic
   };
-  
+
   MoleculeStructure.electronegativeSortValue = function( element ) {
     return element.electronegativity;
   };
@@ -516,7 +516,7 @@ define( function( require ) {
     }
     return value;
   };
-  
+
   /**
    * Combines molecules together by bonding their atoms A and B
    *
@@ -551,7 +551,7 @@ define( function( require ) {
     /*---------------------------------------------------------------------------*
     * separate out which atoms belong in which remaining molecule
     *----------------------------------------------------------------------------*/
-    
+
     // TODO: performance: use sets for fast insertion, removal, and querying, wherever necessary in this function
     var atomsInA = [bond.a];
 
@@ -581,7 +581,7 @@ define( function( require ) {
     /*---------------------------------------------------------------------------*
     * construct our two molecules
     *----------------------------------------------------------------------------*/
-    
+
     _.each( structure.atoms, function( atom ) {
       if ( _.contains( atomsInA, atom ) ) {
         molA.addAtom( atom );
@@ -589,7 +589,7 @@ define( function( require ) {
         molB.addAtom( atom );
       }
     } );
-    
+
     _.each( structure.bonds, function( otherBond ) {
       if ( otherBond !== bond ) {
         if ( _.contains( atomsInA, otherBond.a ) ) {
@@ -608,7 +608,7 @@ define( function( require ) {
     // return our two molecules
     return [molA, molB];
   };
-  
+
   /**
    * Given a matrix of equivalencies, can we find a permutation of the 'other' atoms that are equivalent to
    * their respective 'my' atoms?
@@ -624,7 +624,7 @@ define( function( require ) {
   MoleculeStructure.checkEquivalencyMatrix = function( equivalences, myIndex, otherRemainingIndices, size ) {
     // var size = Math.sqrt( equivalences.length ); // it's square, so this technicall works
     // TODO: performance: this should leak memory in un-fun ways, and performance complexity should be sped up
-    
+
     // should be inefficient, but not too bad (computational complexity is not optimal)
     var arr = otherRemainingIndices.slice( 0 );
     var len = arr.length;
@@ -648,7 +648,7 @@ define( function( require ) {
     }
     return false;
   };
-  
+
   /**
    * Reads in the serialized form produced above
    *
@@ -662,7 +662,7 @@ define( function( require ) {
     var bondCount = parseInt( tokens[idx++], 10 );
     var structure = new MoleculeStructure( atomCount, bondCount );
     var atoms = new Array( atomCount );
-    
+
     for ( var i = 0; i < atomCount; i++ ) {
       atoms[i] = Atom.createAtomFromSymbol( tokens[idx++] );
       structure.addAtom( atoms[i] );
@@ -672,7 +672,7 @@ define( function( require ) {
     }
     return structure;
   };
-  
+
   /**
    * Deserialize a molecule structure
    *
@@ -706,11 +706,11 @@ define( function( require ) {
     // assumes atom base class (just symbol) and simple bonds (just connectivity)
     return MoleculeStructure.fromSerial2( line, MoleculeStructure.defaultMoleculeGenerator, MoleculeStructure.defaultAtomParser, MoleculeStructure.defaultBondParser );
   };
-  
+
   /*---------------------------------------------------------------------------*
   * parser classes and default implementations
   *----------------------------------------------------------------------------*/
-  
+
   /*
   public static interface MoleculeGenerator<U extends Atom, M> {
       public M createMolecule( int atomCount, int bondCount );
@@ -724,20 +724,20 @@ define( function( require ) {
       public B parseBond( String bondString, U connectedAtom, MoleculeStructure<U> moleculeStructure );
   }
   */
-  
+
   MoleculeStructure.defaultMoleculeGenerator = function( atomCount, bondCount ) {
     return new MoleculeStructure( atomCount, bondCount );
   };
-  
+
   MoleculeStructure.defaultAtomParser = function( atomString ) {
     // atomString is an element symbol
     return new Atom( Element.getElementBySymbol( atomString ) );
   };
-  
+
   MoleculeStructure.defaultBondParser = function( bondString, connectedAtom, moleculeStructure ) {
     // bondString is index of other atom to bond
     return new Bond( connectedAtom, moleculeStructure.atoms[parseInt( bondString, 10 )] );
   };
-  
+
   return MoleculeStructure;
 } );

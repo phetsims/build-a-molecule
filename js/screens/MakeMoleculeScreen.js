@@ -7,7 +7,7 @@
  */
 define( function( require ) {
   'use strict';
-  
+
   var inherit = require( 'PHET_CORE/inherit' );
   var Dimension2 = require( 'DOT/Dimension2' );
   var namespace = require( 'BAM/namespace' );
@@ -21,10 +21,10 @@ define( function( require ) {
   var Element = require( 'NITROGLYCERIN/Element' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var MoleculeCollectingView = require( 'BAM/view/MoleculeCollectingView' );
-  
+
   // strings
   var title_makeMoleculeString = require( 'string!BAM/title.makeMolecule' );
-  
+
   var MakeMoleculeScreen = namespace.MakeMoleculeScreen = function MakeMoleculeScreen( collectionAreaWidth ) {
     BAMScreen.call( this, title_makeMoleculeString, new Rectangle( 0, 0, 548, 373, { fill: 'red' } ), function( bounds, clock ) {
       var kitCollection = new KitCollection();
@@ -57,8 +57,8 @@ define( function( require ) {
       } );
     } );
   };
-  
+
   inherit( BAMScreen, MakeMoleculeScreen );
-  
+
   return MakeMoleculeScreen;
 } );

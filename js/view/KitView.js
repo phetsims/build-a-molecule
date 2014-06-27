@@ -10,7 +10,7 @@
 
 define( function( require ) {
   'use strict';
-  
+
   var inherit = require( 'PHET_CORE/inherit' );
   var namespace = require( 'BAM/namespace' );
   var Constants = require( 'BAM/Constants' );
@@ -26,43 +26,43 @@ define( function( require ) {
   var MoleculeMetadataNode = require( 'BAM/view/MoleculeMetadataNode' );
   var SliceNode = require( 'BAM/view/SliceNode' );
   var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' ); // TODO: DragListener
-  
+
   var KitView = namespace.KitView = function KitView( kit, view ) {
     Node.call( this, { layerSplit: true } );
     var kitView = this;
-    
+
     this.kit = kit;
     this.view = view;
-    
+
     this.metadataMap = {}; // moleculeId => MoleculeMetadataNode
     this.bondMap = {}; // moleculeId => MoleculeBondContainerNode
     this.atomNodeMap = {}; // atom.id => AtomNode
-    
+
     var topLayer = this.topLayer = new Node();
     var metadataLayer = this.metadataLayer = new Node();
     var atomLayer = this.atomLayer = new Node();
     var bottomLayer = this.bottomLayer = new Node();
-    
+
     var viewSwipeBounds = Constants.modelViewTransform.modelToViewBounds( kit.layoutBounds.availablePlayAreaBounds );
     var swipeCatch = this.swipeCatch = Rectangle.bounds( viewSwipeBounds.eroded( Constants.viewPadding ), { layerSplit: true } );
     var sliceNode = this.sliceNode = new SliceNode( kit, viewSwipeBounds, view );
-    
+
     swipeCatch.addInputListener( sliceNode.sliceInputListener );
-    
+
     this.addChild( swipeCatch );
     this.addChild( bottomLayer );
     this.addChild( atomLayer );
     this.addChild( metadataLayer );
     this.addChild( topLayer );
     this.addChild( sliceNode );
-    
+
     // override its hit testing
     atomLayer.trailUnderPoint = function( point, options, recursive, hasListener ) {
       // return accurate hits for the mouse
       if ( options && options.isMouse ) {
         return Node.prototype.trailUnderPoint.call( atomLayer, point, options, recursive, hasListener );
       }
-      
+
       // probably a touch or something we will target
       var modelPoint = Constants.modelViewTransform.viewToModelPosition( point );
       var atom = kitView.closestAtom( modelPoint, 100 );
@@ -75,7 +75,7 @@ define( function( require ) {
     };
     // ensure that touches don't get pruned before this point
     atomLayer.touchArea = Shape.bounds( Constants.stageSize.toBounds() );
-    
+
     _.each( kit.buckets, function( bucket ) {
       var bucketFront = new BucketFront( bucket, Constants.modelViewTransform, {
         labelFont: new PhetFont( {
@@ -100,10 +100,10 @@ define( function( require ) {
       kit.on( 'addedMolecule', bucketHoleCursorUpdate );
       kit.on( 'removedMolecule', bucketHoleCursorUpdate );
       bucketHoleCursorUpdate();
-      
+
       // but don't pick the elliptical paths in the hole (that would be expensive to compute so often)
       _.each( bucketHole.children, function( child ) { child.pickable = false; } );
-      
+
       // our hook to start dragging an atom (if available in the bucket)
       bucketHole.addInputListener( {
         down: function( event ) {
@@ -111,19 +111,19 @@ define( function( require ) {
           var viewPoint = view.globalToLocalPoint( event.pointer.point );
           var modelPoint = Constants.modelViewTransform.viewToModelPosition( viewPoint );
           var atom = kitView.closestAtom( modelPoint, Number.POSITIVE_INFINITY, bucket.element ); // filter by the element
-          
+
           // if it's not in our bucket, ignore it (could skip weird cases where an atom outside of the bucket is technically closer)
           if ( !_.contains( bucket.atoms, atom ) ) {
             return;
           }
-          
+
           // move the atom to right under the pointer for this assisted drag - otherwise the offset would be too noticeable
           atom.position = atom.destination = modelPoint;
-          
+
           var atomNode = kitView.atomNodeMap[atom.id];
           // TODO: use a new DragListener
           event.target = event.currentTarget = atomNode; // for now, modify the event directly so we can "point" it towards the atom node instead
-          
+
           // trigger the drag start
           atomNode.atomDragListener.startDrag( event );
         }
@@ -131,7 +131,7 @@ define( function( require ) {
 
       topLayer.addChild( bucketFront );
       bottomLayer.addChild( bucketHole );
-      
+
       _.each( bucket.atoms, function( atom ) {
         var atomNode = new AtomNode( atom, {
           // renderer: 'svg',
@@ -139,13 +139,13 @@ define( function( require ) {
         } );
         kitView.atomNodeMap[atom.id] = atomNode;
         atomLayer.addChild( atomNode );
-        
+
         // Add a drag listener that will move the model element when the user
         // drags this atom.
         var atomListener = new SimpleDragHandler( {
           start: function( evt, trail ) {
             atom.userControlled = true;
-            
+
             var molecule = kit.getMolecule( atom );
             if ( molecule ) {
               _.each( molecule.atoms, function( moleculeAtom ) {
@@ -155,11 +155,11 @@ define( function( require ) {
               atomNode.moveToFront();
             }
           },
-          
+
           end: function( evt, trail ) {
             atom.userControlled = false;
           },
-          
+
           translate: function( data ) {
             var modelDelta = Constants.modelViewTransform.viewToModelDelta( data.delta );
             kit.atomDragged( atom, modelDelta );
@@ -169,7 +169,7 @@ define( function( require ) {
         atomNode.atomDragListener = atomListener;
       } );
     } );
-    
+
     // handle molecule creation and destruction
     kit.on( 'addedMolecule', function( molecule ) {
       var moleculeMetadataNode = new MoleculeMetadataNode( kit, molecule );
@@ -190,48 +190,48 @@ define( function( require ) {
         kitView.removeMoleculeBondNodes( molecule );
       }
     } );
-    
+
     assert && assert( kit.molecules.length === 0 );
   };
-  
+
   inherit( Node, KitView, {
     // distance needs to be within threshold, and if an element is provided, the element must match
     closestAtom: function( modelPoint, threshold, element ) {
       assert && assert( threshold );
-      
+
       var thresholdSquared = threshold * threshold;
-      
+
       var atoms = this.kit.atoms;
       var numAtoms = atoms.length;
-      
+
       var best = null;
       var bestDistanceSquared = thresholdSquared; // limit ourselves at the threshold, and add this to the best distance so we only need one check in the loop
-      
+
       var x = modelPoint.x;
       var y = modelPoint.y;
-      
+
       // ignore stacking order for this operation
       for ( var i = 0; i < numAtoms; i++ ) {
         var atom = atoms[i];
         var position = atom.positionProperty.get(); // no ES5 setters so we have the fastest possible code in this inner loop (called during hit testing)
-        
+
         var dx = x - position.x;
         var dy = y - position.y;
-        
+
         // not really distance, persay, since it can go negative
         var distanceSquared = dx * dx + dy * dy - atom.radius * atom.radius;
-        
+
         if ( distanceSquared > bestDistanceSquared || ( element && atom.element !== element ) ) {
           continue;
         }
-        
+
         bestDistanceSquared = distanceSquared;
         best = atom;
       }
-      
+
       return best;
     },
-    
+
     addMoleculeBondNodes: function( molecule ) {
       var moleculeBondContainerNode = new MoleculeBondContainerNode( this.kit, molecule, this.view );
       this.metadataLayer.addChild( moleculeBondContainerNode );
@@ -245,6 +245,6 @@ define( function( require ) {
       delete this.bondMap[molecule.moleculeId];
     }
   } );
-  
+
   return KitView;
 } );

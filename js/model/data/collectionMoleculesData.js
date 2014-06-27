@@ -8,9 +8,9 @@
 
 define( function( require ) {
   'use strict';
-  
+
   var namespace = require( 'BAM/namespace' );
-  
+
   var collectionMoleculesData = namespace.collectionMoleculesData = [
     'acetylene|C2H2|6326|full|4|3|C 2.5369 -0.25 -0.6 0 0|C 3.403 0.25 0.6 0 0,0-3|H 2.0 -0.56 -1.665 0 -1.0E-4,0-1|H 3.9399 0.56 1.665 0 1.0E-4,1-1',
     'ammonia|H3N|222|full|4|3|N 2.5369 0.155 0 0 0|H 3.0739 0.465 -0.4417 0.2906 0.8711,0-1|H 2.0 0.465 0.7256 0.6896 -0.1907,0-1|H 2.5369 -0.465 0.4875 -0.8701 0.2089,0-1',
@@ -39,6 +39,6 @@ define( function( require ) {
     'trifluoroborane|BF3|6356|2d|4|3|F 3.732 0.75|F 2.0 0.75|F 2.866 -0.75|B 2.866 0.25,0-1,1-1,2-1',
     'water|H2O|962|full|3|2|O 2.5369 -0.155 0 0 0|H 3.0739 0.155 0.2774 0.8929 0.2544,0-1|H 2.0 0.155 0.6068 -0.2383 -0.7169,0-1'
   ];
-  
+
   return collectionMoleculesData;
 } );

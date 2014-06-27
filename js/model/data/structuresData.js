@@ -8,9 +8,9 @@
 
 define( function( require ) {
   'use strict';
-  
+
   var namespace = require( 'BAM/namespace' );
-  
+
   var structuresData = namespace.structuresData = [
     '0|0',
     '1|0|Br',
@@ -29889,6 +29889,6 @@ define( function( require ) {
     '23|22|O|O|O|N|N|N|N,1,2,4|C,3|C,7|C,3,4,5|C,0,8|H,0|H,3|H,4|H,5|H,5|H,7|H,7|H,8|H,8|H,9|H,10|H,10',
     '23|22|O|O|O|N|N|N|N,1,2,4|C|C,3,7|C,0,7|C,3,4,5|H,0|H,1|H,2|H,4|H,5|H,5|H,7|H,7|H,8|H,8|H,9|H,9'
   ];
-  
+
   return structuresData;
 } );

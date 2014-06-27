@@ -20,16 +20,16 @@ define( function( require ) {
   var BAMView = namespace.BAMView = function BAMView( collectionList ) {
     ScreenView.call( this, { renderer: 'svg' } );
     var view = this;
-    
+
     this.baseNode = new Node();
     this.addChild( this.baseNode );
-    
+
     this.kitCollectionMap = {}; // maps KitCollection ID => KitCollectionNode
-    
+
     this.collectionList = collectionList;
-    
+
     this.addCollection( collectionList.currentCollection );
-    
+
     collectionList.currentCollectionProperty.link( function( newCollection, oldCollection ) {
       if ( oldCollection ) {
         view.removeChild( view.kitCollectionMap[oldCollection.id] );
@@ -38,21 +38,21 @@ define( function( require ) {
         view.addChild( view.kitCollectionMap[newCollection.id] );
       }
     } );
-    
+
     collectionList.on( 'addedCollection', this.addCollection.bind( this ) );
   };
 
   return inherit( ScreenView, BAMView, {
     isBAMView: true, // because require.js doesn't like to load us in some places!
-    
+
     addCollection: function( collection ) {
       var kitCollectionNode = new KitCollectionNode( this.collectionList, collection, this );
       this.kitCollectionMap[collection.id] = kitCollectionNode;
-      
+
       // supposedly: return this so we can manipulate it in an override....?
       return kitCollectionNode;
     },
-    
+
     layoutBounds: new Rectangle( 0, 0, Constants.stageSize.width, Constants.stageSize.height )
   } );
 } );

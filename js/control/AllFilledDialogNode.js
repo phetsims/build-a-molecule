@@ -20,7 +20,7 @@ define( function( require ) {
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var TextPushButton = require( 'SUN/buttons/TextPushButton' );
   var Shape = require( 'KITE/Shape' );
-  
+
   // strings
   var collection_allFilledString = require( 'string!BAM/collection.allFilled' );
   var collection_tryWithDifferentMoleculesString = require( 'string!BAM/collection.tryWithDifferentMolecules' );

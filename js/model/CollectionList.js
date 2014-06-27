@@ -10,11 +10,11 @@
 
 define( function( require ) {
   'use strict';
-  
+
   var namespace = require( 'BAM/namespace' );
   var inherit = require( 'PHET_CORE/inherit' );
   var PropertySet = require( 'AXON/PropertySet' );
-  
+
   /*
    * @param {KitCollection} firstCollection
    * @param {LayoutBounds}  layoutBounds
@@ -27,14 +27,14 @@ define( function( require ) {
     PropertySet.call( this, {
       currentCollection: firstCollection
     } );
-    
+
     this.layoutBounds = layoutBounds;
     this.clock = clock;
     this.collections = [];
     this.currentIndex = 0;
     this.addCollection( firstCollection );
   };
-  
+
   inherit( PropertySet, CollectionList, {
     switchTo: function( collection ) {
       this.currentIndex = this.collections.indexOf( collection );
@@ -43,7 +43,7 @@ define( function( require ) {
 
     addCollection: function( collection ) {
       this.collections.push( collection );
-      
+
       // TODO: notifications before changing current collection - is this desired? may be
       this.trigger( 'addedCollection', collection );
 
@@ -55,13 +55,13 @@ define( function( require ) {
     removeCollection: function( collection ) {
       assert && assert( this.currentCollection !== collection );
       this.collections.splice( this.collections.indexOf( collection ), 1 ); // TODO: use remove() instead of splice()
-      
+
       this.trigger( 'removedCollection', collection );
     },
 
     reset: function() {
       var list = this;
-      
+
       // switch to the first collection
       this.switchTo( this.collections[0] );
 
@@ -100,6 +100,6 @@ define( function( require ) {
       this.switchTo( this.collections[this.currentIndex + 1] );
     }
   } );
-  
+
   return CollectionList;
 } );

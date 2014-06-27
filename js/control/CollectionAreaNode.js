@@ -19,7 +19,7 @@ define( function( require ) {
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var SingleCollectionBoxNode = require( 'BAM/control/SingleCollectionBoxNode' );
   var MultipleCollectionBoxNode = require( 'BAM/control/MultipleCollectionBoxNode' );
-  
+
   // strings
   var collection_resetString = require( 'string!BAM/collection.reset' );
 

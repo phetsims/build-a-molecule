@@ -9,58 +9,58 @@
 
 define( function( require ) {
   'use strict';
-  
+
   var namespace = require( 'BAM/namespace' );
   var Direction = require( 'BAM/model/Direction' );
   var Vector2 = require( 'DOT/Vector2' );
-  
+
   var LewisDotModel = namespace.LewisDotModel = function LewisDotModel() {
     // maps atom ID => LewisDotAtom
     this.atomMap = {};
   };
-  
+
   var LewisDotAtom = namespace.LewisDotAtom = function( atom ) {
     var lewisDotAtom = this;
-    
+
     this.atom = atom;
     this.connections = {}; // maps Direction ID => LewisDotAtom
     _.each( Direction.values, function( direction ) {
       lewisDotAtom.connections[direction.id] = null; // nothing in this direction
     } );
   };
-  
+
   LewisDotAtom.prototype = {
     constructor: LewisDotAtom,
-    
+
     hasConnection: function( direction ) {
       return this.connections[direction.id] !== null;
     },
-    
+
     getLewisDotAtom: function( direction ) {
       return this.connections[direction.id];
     },
-    
+
     connect: function( direction, lewisDotAtom ) {
       this.connections[direction.id] = lewisDotAtom;
     },
-    
+
     disconnect: function( direction ) {
       this.connections[direction.id] = null;
     }
   };
-  
+
   LewisDotModel.prototype = {
     constructor: LewisDotModel,
-    
+
     addAtom: function( atom ) {
       this.atomMap[atom.id] = new LewisDotAtom( atom );
     },
-    
+
     breakBondsOfAtom: function( atom ) {
       var model = this;
-      
+
       var dotAtom = this.getLewisDotAtom( atom );
-      
+
       // disconnect all of its bonds
       _.each( Direction.values, function( direction ) {
         if ( dotAtom.hasConnection( direction ) ) {
@@ -69,7 +69,7 @@ define( function( require ) {
         }
       } );
     },
-    
+
     /**
      * Break the bond between A and B (if it exists)
      *
@@ -146,7 +146,7 @@ define( function( require ) {
       * and verifying that no atoms share the same coordinates if they are not both
       * hydrogen.
       *----------------------------------------------------------------------------*/
-      
+
       var coordinateMap = {};
 
       // map the molecule on the A side, from the origin
@@ -175,12 +175,12 @@ define( function( require ) {
      */
     mapMolecule: function( coordinates, atom, excludedAtom, coordinateMap ) {
       var model = this;
-      
+
       var dotAtom = this.getLewisDotAtom( atom );
 
       // for sanity and equality (negative zero equals zero, so don't worry about that)
       var point = new Vector2( Math.round( coordinates.x ), Math.round( coordinates.y ) );
-      
+
       var idx = point.x + ',' + point.y;
 
       // if we have seen a different atom in this position
@@ -222,6 +222,6 @@ define( function( require ) {
       return this.atomMap[atom.id];
     }
   };
-  
+
   return LewisDotModel;
 } );

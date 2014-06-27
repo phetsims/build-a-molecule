@@ -19,13 +19,13 @@ define( function( require ) {
 
   var MoleculeCollectingView = namespace.MoleculeCollectingView = function MoleculeCollectingView( collectionList, isSingleCollectionMode, regenerateCallback ) {
     var view = this;
-    
+
     BAMView.call( this, collectionList );
-    
+
     this.regenerateCallback = regenerateCallback;
-    
+
     var collectionAttachmentCallbacks = [];
-    
+
     var collectionPanel = new CollectionPanel( collectionList, isSingleCollectionMode, collectionAttachmentCallbacks, function( node ) {
       // returns model bounds from a node, given local coordinates on a node
       var viewBounds = node.getParent().getUniqueTrail().getTransformTo( view.getUniqueTrail() ).transformBounds2( node.bounds );
@@ -34,10 +34,10 @@ define( function( require ) {
     collectionPanel.right = Constants.stageSize.width - Constants.viewPadding;
     collectionPanel.top = Constants.viewPadding;
     this.baseNode.addChild( collectionPanel );
-    
+
     // notify attachment
     _.each( collectionAttachmentCallbacks, function( callback ) { callback(); } );
-    
+
     /*---------------------------------------------------------------------------*
     * collection box hint arrow. add this only to the 1st collection
     *----------------------------------------------------------------------------*/
@@ -83,10 +83,10 @@ define( function( require ) {
     addCollection: function( collection ) {
       var view = this;
       var kitCollectionNode = BAMView.prototype.addCollection.call( this, collection );
-      
+
       var hasShownOnce = false;
       var allFilledDialogNode = null;
-      
+
       // show dialog the 1st time all collection boxes are filled
       collection.allCollectionBoxesFilledProperty.link( function() {
         if ( collection.allCollectionBoxesFilled ) {
@@ -104,10 +104,10 @@ define( function( require ) {
           }
         }
       } );
-      
+
       return kitCollectionNode;
     },
-    
+
     layoutBounds: new Rectangle( 0, 0, Constants.stageSize.width, Constants.stageSize.height )
   } );
 } );

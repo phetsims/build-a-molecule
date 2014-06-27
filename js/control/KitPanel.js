@@ -21,7 +21,7 @@ define( function( require ) {
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   var TextPushButton = require( 'SUN/buttons/TextPushButton' );
-  
+
   // strings
   var kit_labelString = require( 'string!BAM/kit.label' );
   var kit_resetKitString = require( 'string!BAM/kit.resetKit' );

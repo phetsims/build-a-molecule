@@ -14,7 +14,7 @@ define( function( require ) {
   var PushButtonDeprecated = require( 'SUN/PushButtonDeprecated' );
   var Path = require( 'SCENERY/nodes/Path' );
   var Shape = require( 'KITE/Shape' );
-  
+
   var CloseButton = namespace.CloseButton = function CloseButton( callback, options ) {
     var outside = 20;
     var inside = 9;
@@ -36,6 +36,6 @@ define( function( require ) {
     PushButtonDeprecated.call( this, upNode, overNode, downNode, disabledNode, options );
     this.touchArea = new Shape().circle( 0, 0, outside + 40 );
   };
-  
+
   return inherit( PushButtonDeprecated, CloseButton );
 } );

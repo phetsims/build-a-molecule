@@ -9,28 +9,28 @@
 
 define( function( require ) {
   'use strict';
-  
+
   var namespace = require( 'BAM/namespace' );
   var inherit = require( 'PHET_CORE/inherit' );
   var PropertySet = require( 'AXON/PropertySet' );
-  
+
   var currentId = 0;
-  
+
   var KitCollection = namespace.KitCollection = function KitCollection() {
     PropertySet.call( this, {
       currentKit: null,
       allCollectionBoxesFilled: false // this will remain false if we have no collection boxes
     } );
-    
+
     this.id = currentId++;
     this.kits = [];
     this.collectionBoxes = [];
   };
-  
+
   inherit( PropertySet, KitCollection, {
     addKit: function( kit ) {
       var kitCollection = this;
-      
+
       if ( this.currentKit ) {
         kit.hide();
       } else {
@@ -44,9 +44,9 @@ define( function( require ) {
           oldKit.hide();
         } );
       }
-      
+
       this.kits.push( kit );
-      
+
       var dropListener = function( atom ) {
         var wasDroppedInCollectionBox = false;
 
@@ -58,7 +58,7 @@ define( function( require ) {
           var numBoxes = kitCollection.collectionBoxes.length;
           for ( var i = 0; i < numBoxes; i++ ) {
             var box = kitCollection.collectionBoxes[i];
-            
+
             // permissive, so that if the box bounds and molecule bounds intersect, we call it a 'hit'
             if ( box.dropBounds.intersectsBounds( molecule.positionBounds ) ) {
 
@@ -76,11 +76,11 @@ define( function( require ) {
           kit.atomDropped( atom );
         }
       };
-      
+
       _.each( kit.atoms, function( atomModel ) {
         atomModel.on( 'droppedByUser', dropListener );
       } );
-      
+
       kit.on( 'addedMolecule', function( molecule ) {
         _.each( kitCollection.collectionBoxes, function( box ) {
           if ( box.willAllowMoleculeDrop( molecule ) ) {
@@ -89,7 +89,7 @@ define( function( require ) {
         } );
       } );
     },
-    
+
     // returns {CollectionBox} or undefined
     getFirstTargetBox: function( molecule ) {
       return _.first( this.collectionBoxes, function( box ) { return box.willAllowMoleculeDrop( molecule ); } );
@@ -105,7 +105,7 @@ define( function( require ) {
         kitCollection.allCollectionBoxesFilled = kitCollection.collectionBoxes.length && allFull;
       } );
     },
-    
+
     get currentKitIndex() {
       // TODO: consider a direct reference to the index?
       return _.indexOf( this.kits, this.currentKit );
@@ -139,6 +139,6 @@ define( function( require ) {
       }
     }
   } );
-  
+
   return KitCollection;
 } );

@@ -8,7 +8,7 @@
 
 define( function( require ) {
   'use strict';
-  
+
   var namespace = require( 'BAM/namespace' );
   var Constants = require( 'BAM/Constants' );
   var inherit = require( 'PHET_CORE/inherit' );
@@ -17,7 +17,7 @@ define( function( require ) {
   var Circle = require( 'SCENERY/nodes/Circle' );
   var platform = require( 'PHET_CORE/platform' );
   var Shape = require( 'KITE/Shape' );
-  
+
   /* Notes on .cur file generation, all from the images directory, with "sudo apt-get install icoutils" for icotool:
 icotool -c -o scissors.ico scissors.png
 icotool -c -o scissors-closed.ico scissors-closed.png
@@ -29,7 +29,7 @@ icotool -c -o scissors-closed-up.ico scissors-closed-up.png
 ./ico2cur.py scissors-up.ico -x 10 -y 11
 ./ico2cur.py scissors-closed-up.ico -x 7 -y 13
    */
-  
+
   var images = {
     'scissors.png':           require( 'image!BAM/scissors.png' ),
     'scissors-closed.png':    require( 'image!BAM/scissors-closed.png' ),
@@ -40,21 +40,21 @@ icotool -c -o scissors-closed-up.ico scissors-closed-up.png
     'scissors-up.cur':        require( 'image!BAM/scissors-up.cur' ),
     'scissors-closed-up.cur': require( 'image!BAM/scissors-closed-up.cur' )
   };
-  
+
   var bondRadius = 5; // "Radius" of the bond target that will break the bond
-  
+
   var MoleculeBondNode = namespace.MoleculeBondNode = function MoleculeBondNode( bond, kit, view ) {
     var self = this;
-    
+
     Node.call( this, {} );
-    
+
     var a = this.a = bond.a;
     var b = this.b = bond.b;
 
     // use the lewis dot model to get our bond direction
     var bondDirection = kit.getBondDirection( a, b );
     var isHorizontal = bondDirection.id === 'west' || bondDirection.id === 'east';
-    
+
     var openFile = 'scissors';
     var closedFile = 'scissors-closed';
     if ( isHorizontal ) {
@@ -68,11 +68,11 @@ icotool -c -o scissors-closed-up.ico scissors-closed-up.png
       openFile += '.png';
       closedFile += '.png';
     }
-    
+
     var scissorsOpen = images[openFile]; // 23x20 or 20x23
     var scissorsClosed = images[closedFile]; //26x15 or 15x26
     var backup = ( isHorizontal ? 'col-resize' : 'row-resize' );
-    
+
     // offsets should center this
     var openCursor, closedCursor;
     if ( platform.ie ) {
@@ -82,7 +82,7 @@ icotool -c -o scissors-closed-up.ico scissors-closed-up.png
       openCursor = 'url(' + scissorsOpen.src + ') ' + ( isHorizontal ? '10 11' : '11 10' ) + ', ' + backup;
       closedCursor = 'url(' + scissorsClosed.src + ') ' + ( isHorizontal ? '7 13' : '13 7' ) + ', ' + backup;
     }
-    
+
     // hit target
     var target = new Circle( bondRadius, {
       // no fill or stroke
@@ -110,13 +110,13 @@ icotool -c -o scissors-closed-up.ico scissors-closed-up.png
     a.positionProperty.link( this.positionListener );
     b.positionProperty.link( this.positionListener );
   };
-  
+
   inherit( Node, MoleculeBondNode, {
     destruct: function() {
       this.a.positionProperty.unlink( this.positionListener );
       this.b.positionProperty.unlink( this.positionListener );
     }
   } );
-  
+
   return MoleculeBondNode;
 } );

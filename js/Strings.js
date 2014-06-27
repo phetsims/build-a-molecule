@@ -5,7 +5,7 @@ define( function( require ) {
 
   var namespace = require( 'BAM/namespace' );
   var Strings = {};
-  
+
   // strings
   var hydrogen = require( 'string!BAM/atom.hydrogen' );
   var oxygen = require( 'string!BAM/atom.oxygen' );
@@ -19,7 +19,7 @@ define( function( require ) {
   var phosphorus = require( 'string!BAM/atom.phosphorus' );
   var iodine = require( 'string!BAM/atom.iodine' );
   var bromine = require( 'string!BAM/atom.bromine' );
-  
+
   Strings['molecule.hydrogen_peroxide'] = require( 'string!BAM/molecule.hydrogen_peroxide' );
   Strings['molecule.formaldehyde'] = require( 'string!BAM/molecule.formaldehyde' );
   Strings['molecule.silane'] = require( 'string!BAM/molecule.silane' );

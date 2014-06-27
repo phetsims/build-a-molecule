@@ -8,7 +8,7 @@
 
 define( function( require ) {
   'use strict';
-  
+
   var inherit = require( 'PHET_CORE/inherit' );
   var cleanArray = require( 'PHET_CORE/cleanArray' );
   var namespace = require( 'BAM/namespace' );
@@ -19,9 +19,9 @@ define( function( require ) {
   var Molecule = require( 'BAM/model/Molecule' );
   var MoleculeStructure = require( 'BAM/model/MoleculeStructure' );
   var LewisDotModel = require( 'BAM/model/LewisDotModel' );
-  
+
   var kitIdCounter = 0;
-  
+
   /*
    * Events:
    *   addedMolecule: function( molecule )
@@ -33,25 +33,25 @@ define( function( require ) {
       hasMoleculesInBoxes: false // we record this so we know when the "reset kit" should be shown
     } );
     this.id = kitIdCounter++;
-    
+
     this.buckets = buckets;
     this.layoutBounds = layoutBounds;
-    
+
     this.atoms = []; // our master list of atoms (in and out of buckets), but not ones in collection boxes
     this.atomsInCollectionBox = []; // atoms in the collection box
     this.lewisDotModel = null; // created later, lewis-dot connections between atoms on the play area
     this.molecules = []; // molecule structures in the play area
     this.removedMolecules = {}; // moleculeId => CollectionBox, molecule structures that were put into the collection box. kept for now, since modifying the reset behavior will be much easier if we retain this
-    
+
     this.resetKit();
-    
+
     this.layoutBuckets( buckets );
   };
-  
+
   inherit( PropertySet, Kit, {
     resetKit: function() {
       var kit = this;
-      
+
       // not resetting visible, since that is not handled by us
       this.hasMoleculesInBoxesProperty.reset();
 
@@ -67,7 +67,7 @@ define( function( require ) {
       _.each( this.atoms.concat( this.atomsInCollectionBox ), function( atom ) {
         // reset the actual atom
         atom.reset();
-        
+
         // THEN place it so we overwrite its "bad" position and destination info
         kit.getBucketForElement( atom.element ).placeAtom( atom );
       } );
@@ -85,7 +85,7 @@ define( function( require ) {
       // keep track of all atoms in our kit
       _.each( this.buckets, function( bucket ) {
         kit.atoms = kit.atoms.concat( bucket.atoms );
-        
+
         _.each( bucket.atoms, function( atom ) {
           kit.lewisDotModel.addAtom( atom );
         } );
@@ -102,7 +102,7 @@ define( function( require ) {
         if ( i !== 0 ) {
             usedWidth += Kit.bucketPadding;
         }
-        
+
         // include both the bucket's shape and its atoms in our bounds, so we can properly center the group
         bucketBounds.includeBounds( bucket.containerShape.bounds );
         _.each( bucket.atoms, function( atom ) { bucketBounds.includeBounds( new Bounds2( atom.position.x - atom.radius, atom.position.y - atom.radius,
@@ -110,7 +110,7 @@ define( function( require ) {
         bucket.position = new Vector2( usedWidth, 0 );
         usedWidth += bucket.width;
       }
-      
+
       var kitXCenter = this.availableKitBounds.centerX;
       var kitY = this.availableKitBounds.centerY - bucketBounds.centerY;
 
@@ -118,7 +118,7 @@ define( function( require ) {
       _.each( buckets, function( bucket ) {
         // also note: this moves the atoms also!
         bucket.position = new Vector2( bucket.position.x - usedWidth / 2 + kitXCenter + bucket.width / 2, kitY );
-        
+
         // since changing the bucket's position doesn't change contained atoms!
         // TODO: have the bucket position change do this?
         _.each( bucket.atoms, function( atom ) {
@@ -165,7 +165,7 @@ define( function( require ) {
       // dropped on kit, put it in a bucket
       var wasInPlay = this.isAtomInPlay( atom );
       var droppedInKitArea = this.availableKitBounds.containsPoint( atom.position );
-      
+
       if ( droppedInKitArea ) {
         if ( wasInPlay ) {
           this.recycleMoleculeIntoBuckets( this.getMolecule( atom ) );
@@ -239,7 +239,7 @@ define( function( require ) {
       var numMolecules = this.molecules.length;
       for ( var i = 0; i < numMolecules; i++ ) {
         var molecule = this.molecules[i];
-        
+
         var numAtoms = molecule.atoms.length;
         for ( var j = 0; j < numAtoms; j++ ) {
           var otherAtom = molecule.atoms[j];
@@ -263,10 +263,10 @@ define( function( require ) {
       this.removeMolecule( molecule );
       _.each( molecule.atoms, function( atom ) {
         kit.lewisDotModel.breakBondsOfAtom( atom );
-        
+
         var newMolecule = new Molecule();
         newMolecule.addAtom( atom );
-        
+
         kit.addMolecule( newMolecule );
         createdMolecules.push( molecule );
       } );
@@ -311,13 +311,13 @@ define( function( require ) {
 
     addMolecule: function( molecule ) {
       this.molecules.push( molecule );
-      
+
       this.trigger( 'addedMolecule', molecule );
     },
 
     removeMolecule: function( molecule ) {
       this.molecules.splice( this.molecules.indexOf( molecule ), 1 ); // TODO: remove() instead of splice()
-      
+
       this.trigger( 'removedMolecule', molecule );
     },
 
@@ -375,7 +375,7 @@ define( function( require ) {
       // TODO: performance: general optimization
       var maxIterations = 500;
       var pushAmount = 10; // how much to push two molecules away
-      
+
       var availablePlayAreaBounds = this.availablePlayAreaBounds;
 
       var foundOverlap = true;
@@ -384,7 +384,7 @@ define( function( require ) {
         var numMolecules = this.molecules.length;
         for ( var i = 0; i < numMolecules; i++ ) {
           var a = this.molecules[i];
-          
+
           var aBounds = this.padMoleculeBounds( a.destinationBounds );
 
           // push it away from the outsides
@@ -407,7 +407,7 @@ define( function( require ) {
           // then separate it from other molecules
           for ( var k = 0; k < numMolecules; k++ ) {
             var b = this.molecules[k];
-            
+
             if ( a.moleculeId >= b.moleculeId ) {
               // this removes the case where a == b, and will make sure we don't run the following code twice for (a,b) and (b,a)
               continue;
@@ -519,7 +519,7 @@ define( function( require ) {
 
       // for each atom in our molecule, we try to see if it can bond to other atoms
       _.each( molecule.atoms, function( ourAtom ) {
-        
+
         // all other atoms
         _.each( kit.atoms, function( otherAtom ) {
           // disallow loops in an already-connected molecule
@@ -534,7 +534,7 @@ define( function( require ) {
             if ( otherAtom === ourAtom || !kit.canBond( ourAtom, otherAtom ) ) {
               return; // continue, in the inner loop
             }
-            
+
             _.each( kit.lewisDotModel.getOpenDirections( otherAtom ), function( otherDirection ) {
               var direction = otherDirection.opposite;
               if ( !_.contains( kit.lewisDotModel.getOpenDirections( ourAtom ), direction ) ) {
@@ -577,26 +577,26 @@ define( function( require ) {
       this.bond( bestLocation.a, bestLocation.direction, bestLocation.b ); // model bonding
       return true;
     },
-    
+
     // {Atom2}s
     canBond: function( a, b ) {
       return this.getMolecule( a ) !== this.getMolecule( b ) && this.getPossibleMoleculeStructureFromBond( a, b ).isAllowedStructure();
     }
   } );
-  
+
   // A bond option from A to B. B would be moved to the location near A to bond.
   var BondingOption = Kit.BondingOption = function BondingOption( a, direction, b ) {
     this.a = a;
     this.direction = direction;
     this.b = b;
-    
+
     // The location the atom should be placed
     this.idealLocation = a.position.plus( direction.vector.times( a.radius + b.radius ) );
   };
-  
+
   Kit.bondDistanceThreshold = 200;
   Kit.bucketPadding = 50;
   Kit.interMoleculePadding = 150;
-  
+
   return Kit;
 } );

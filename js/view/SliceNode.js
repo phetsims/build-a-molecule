@@ -17,28 +17,28 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var DOM = require( 'SCENERY/nodes/DOM' );
   var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' ); // TODO: DragListener
-  
+
   var sliceDistanceLimit = 1000;
 
   var SliceNode = namespace.SliceNode = function SliceNode( kit, viewSwipeBounds, view ) {
     var sliceNode = this;
-    
+
     this.kit = kit;
     this.bondData = [];
     this.traveledDistance = 0;
-    
+
     var canvas = document.createElement( 'canvas' );
     var context = canvas.getContext( '2d' );
     DOM.call( this, canvas, {
       preventTransform: true
     } );
-    
+
     var globalBounds;
     var toModelTransform;
     var lastPoint = null;
     var lastModelPoint = new Vector2();
     var oldModelPoint = new Vector2();
-    
+
     this.sliceInputListener = new SimpleDragHandler( {
       dragCursor: 'none',
       start: function( event, trail ) {
@@ -51,7 +51,7 @@ define( function( require ) {
         canvas.style.left = globalBounds.x + 'px';
         canvas.style.top = globalBounds.y + 'px';
         toModelTransform = new Transform3( Constants.modelViewTransform.getInverse().timesMatrix( view.getUniqueTrail().getMatrix().inverted() ) );
-        
+
         _.each( kit.molecules, function( molecule ) {
           _.each( molecule.bonds, function( bond ) {
             sliceNode.bondData.push( {
@@ -75,18 +75,18 @@ define( function( require ) {
         } else {
           lastPoint = new Vector2();
         }
-        
+
         // compute offset and draw the latest segment on the canvas
         lastPoint.setXY( event.pointer.point.x - globalBounds.x,
                        event.pointer.point.y - globalBounds.y );
         context.lineTo( lastPoint.x, lastPoint.y );
         context.stroke();
-        
+
         // transform to model coordinates, and get a model delta
         oldModelPoint.setXY( lastModelPoint.x, lastModelPoint.y );
         lastModelPoint.setXY( event.pointer.point.x, event.pointer.point.y );
         toModelTransform.getMatrix().multiplyVector2( lastModelPoint );
-        
+
         if ( isStep ) {
           // handle the point and delta here
           sliceNode.cut( oldModelPoint, lastModelPoint, event );
@@ -115,32 +115,32 @@ define( function( require ) {
     cut: function( oldModelPoint, newModelPoint, event ) {
       var dragDeltaX = newModelPoint.x - oldModelPoint.x;
       var dragDeltaY = newModelPoint.y - oldModelPoint.y;
-      
+
       _.each( this.bondData, function( dat ) {
         // skip already-cut bonds
         if ( dat.cut ) {
           return;
         }
-        
+
         // skip farther away bonds (possible that we could have cases not cut on slow computers?)
         // TODO: improve this!
         if ( dat.center.distanceSquared( newModelPoint ) > 16 * dat.doubleMaxRadius ) {
           return;
         }
-        
+
         var denom = -dragDeltaX * dat.delta.y + dat.delta.x * dragDeltaY;
-        
+
         // too close to parallel
         if ( Math.abs( denom ) < 1e-5 ) {
           return;
         }
-        
+
         var dx = dat.aPos.x - oldModelPoint.x;
         var dy = dat.aPos.y - oldModelPoint.y;
-        
+
         var s = ( -dat.delta.y * dx + dat.delta.x * dy ) / denom;
         var t = ( dragDeltaX * dy - dragDeltaY * dx ) / denom;
-        
+
         // TODO: weight it so that we can exclude cuts that aren't close enough to the bond
         if ( s >= 0 && s <= 1 && t >= 0 && t <= 1 ) {
           dat.cut = true; // collision detected
@@ -148,13 +148,13 @@ define( function( require ) {
           // var iy = dat.aPos.y + t * dat.delta.y;
         }
       } );
-      
+
       this.traveledDistance += Math.sqrt( dragDeltaX * dragDeltaX + dragDeltaY * dragDeltaY );
       if ( this.traveledDistance > sliceDistanceLimit && this.sliceInputListener.dragging ) {
         this.sliceInputListener.endDrag( event );
       }
     },
-    
+
     updateCSSTransform: function( transform, element ) {
       // prevent CSS transforms, we work in the global space
     }

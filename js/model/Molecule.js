@@ -8,16 +8,16 @@
 
 define( function( require ) {
   'use strict';
-  
+
   var inherit = require( 'PHET_CORE/inherit' );
   var Bounds2 = require( 'DOT/Bounds2' );
   var namespace = require( 'BAM/namespace' );
   var MoleculeStructure = require( 'BAM/model/MoleculeStructure' );
-  
+
   var Molecule = namespace.Molecule = function Molecule( numAtoms, numBonds ) {
     MoleculeStructure.call( this, numAtoms || 0, numBonds || 0 );
   };
-  
+
   inherit( MoleculeStructure, Molecule, {
     // Where the molecule is right now
     get positionBounds() {
@@ -28,7 +28,7 @@ define( function( require ) {
       } );
       return bounds;
     },
-    
+
     // Where the molecule will end up
     get destinationBounds() {
       // mutable way of handling this, so we need to make a copy
@@ -38,7 +38,7 @@ define( function( require ) {
       } );
       return bounds;
     },
-    
+
     // @param {Vector2}
     shiftDestination: function( delta ) {
       _.each( this.atoms, function( atom ) {
@@ -47,6 +47,6 @@ define( function( require ) {
       } );
     }
   } );
-  
+
   return Molecule;
 } );

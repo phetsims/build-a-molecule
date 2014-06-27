@@ -8,11 +8,11 @@
 
 define( function( require ) {
   'use strict';
-  
+
   var namespace = require( 'BAM/namespace' );
   var Constants = require( 'BAM/Constants' );
   var Rectangle = require( 'DOT/Rectangle' );
-  
+
   /**
    * Construct the necessary layout. If isWide is true, the collectionAreaModelWidth is ignored
    *
@@ -40,6 +40,6 @@ define( function( require ) {
             this.availableKitBounds.width + Constants.modelPadding * 2, // add in padding, since there is padding in-between the kit and collection area
             Constants.modelSize.height / 2 - kitTop );
   };
-  
+
   return LayoutBounds;
 } );

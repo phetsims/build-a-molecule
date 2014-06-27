@@ -29,7 +29,7 @@ define( function( require ) {
   var SoundToggleButton = require( 'SCENERY_PHET/SoundToggleButton' );
   var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   var PropertySet = require( 'AXON/PropertySet' );
-  
+
   // strings
   var collection_yourMoleculeCollectionString = require( 'string!BAM/collection.yourMoleculeCollection' );
   var collection_labelString = require( 'string!BAM/collection.label' );

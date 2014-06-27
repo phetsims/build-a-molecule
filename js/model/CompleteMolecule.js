@@ -11,7 +11,7 @@
 
 define( function( require ) {
   'use strict';
-  
+
   var inherit = require( 'PHET_CORE/inherit' );
   var namespace = require( 'BAM/namespace' );
   var Strings = require( 'BAM/Strings' );
@@ -34,7 +34,7 @@ define( function( require ) {
     require( 'NITROGLYCERIN/nodes/PCl5Node' ), require( 'NITROGLYCERIN/nodes/PF3Node' ), require( 'NITROGLYCERIN/nodes/PH3Node' ),
     require( 'NITROGLYCERIN/nodes/SO2Node' ), require( 'NITROGLYCERIN/nodes/SO3Node' )
   ];
-  
+
   /*
    * @param {String} commonName
    * @param {String} molecularFormula
@@ -45,14 +45,14 @@ define( function( require ) {
    */
   var CompleteMolecule = namespace.CompleteMolecule = function CompleteMolecule( commonName, molecularFormula, atomCount, bondCount, has2d, has3d ) {
     MoleculeStructure.call( this, atomCount, bondCount );
-    
+
     this._commonName = commonName; // as said by pubchem (or overridden)
     this.molecularFormula = molecularFormula; // as said by pubchem
     this.has2d = has2d;
     this.has3d = has3d;
     // this.cid = null;
   };
-  
+
   inherit( MoleculeStructure, CompleteMolecule, {
     get commonName() {
       var result = this._commonName;
@@ -61,14 +61,14 @@ define( function( require ) {
       }
       return CompleteMolecule.capitalize( result );
     },
-    
+
     /**
      * @return The translation string key that should be used to look up a translated value
      */
     get stringKey() {
       return 'molecule.' + this._commonName.replace( ' ', '_' );
     },
-    
+
     /**
      * @return A translated display name if possible. This does a weird lookup so that we can only list some of the names in the translation, but can
      *         accept an even larger number of translated names in a translation file
@@ -86,12 +86,12 @@ define( function( require ) {
         return this.commonName;
       }
     },
-    
+
     // @return A node that represents a 2d but quasi-3D version
     createPseudo3DNode: function() {
       var molecularFormula = this.molecularFormula;
       var molecularFormulaType = molecularFormula + 'Node';
-      
+
       // if we can find it in the common chemistry nodes, use that
       var length = nodeTypes.length;
       for ( var i = 0; i < length; i++ ) {
@@ -115,20 +115,20 @@ define( function( require ) {
       } );
       return node;
     },
-    
+
     toSerial2: function() {
       // add in a header
       var format = ( this.has3d ? ( this.has2d ? 'full' : '3d' ) : '2d' );
       return this.commonName + '|' + this.molecularFormula + '|' + this.cid + '|' + format + '|' + MoleculeStructure.prototype.toSerial2.call( this );
     }
   } );
-  
+
   CompleteMolecule.capitalize = function( str ) {
     var characters = str.split( '' );
     var lastWasSpace = true;
     for ( var i = 0; i < characters.length; i++ ) {
       var character = characters[i];
-      
+
       // whitespace check in general
       if ( /\s/.test( character ) ) {
         lastWasSpace = true;
@@ -141,7 +141,7 @@ define( function( require ) {
     }
     return characters.join( '' );
   };
-  
+
   /*---------------------------------------------------------------------------*
   * serialization
   *----------------------------------------------------------------------------*/
@@ -163,7 +163,7 @@ define( function( require ) {
     var atomCount        = parseInt( tokens[idx++], 10 );
     var bondCount        = parseInt( tokens[idx++], 10 );
     var completeMolecule = new CompleteMolecule( commonName, molecularFormula, atomCount, bondCount, true, true );
-    
+
     // for each atom, read its symbol, then 2d coordinates, then 3d coordinates (total of 6 fields)
     for ( i = 0; i < atomCount; i++ ) {
       var symbol = tokens[idx++];
@@ -189,7 +189,7 @@ define( function( require ) {
 
     return completeMolecule;
   };
-  
+
   CompleteMolecule.fromSerial2 = function( line ) {
     /*---------------------------------------------------------------------------*
     * extract header
@@ -209,20 +209,20 @@ define( function( require ) {
 
     // select the atom parser depending on the format
     var atomParser = has3d ? ( has2dAnd3d ? PubChemAtomFull.parser : PubChemAtom3.parser ) : PubChemAtom2.parser;
-    
+
     return MoleculeStructure.fromSerial2( line.slice( burnedLength ), function( atomCount, bondCount ) {
       var molecule = new CompleteMolecule( commonName, molecularFormula, atomCount, bondCount, has2d, has3d );
       molecule.cid = cid;
       return molecule;
     }, atomParser, PubChemBond.parser );
   };
-  
+
   /*---------------------------------------------------------------------------*
   * atom varieties, depending on what information we have from PubChem. varieties
   * are necessary for memory size requirements so we don't store more data than
   * necessary.
   *----------------------------------------------------------------------------*/
-  
+
   // TODO: performance: get rid of ES5 here?
   var PubChemAtom = CompleteMolecule.PubChemAtom = function( element ) {
     Atom.call( this, element );
@@ -230,15 +230,15 @@ define( function( require ) {
   inherit( Atom, PubChemAtom, {
     has2d: function() { return false; },
     has3d: function() { return false; },
-    
+
     x2d: function() { return 0; },
     y2d: function() { return 0; },
-    
+
     x3d: function() { return 0; },
     y3d: function() { return 0; },
     z3d: function() { return 0; }
   } );
-  
+
   var PubChemAtom2 = CompleteMolecule.PubChemAtom2 = function( element, x2d, y2d ) {
     Atom.call( this, element );
     this._x2d = x2d;
@@ -247,15 +247,15 @@ define( function( require ) {
   inherit( Atom, PubChemAtom2, {
     has2d: function() { return true; },
     has3d: function() { return false; },
-    
+
     // TODO: consider replacing with direct properties
     x2d: function() { return this._x2d; },
     y2d: function() { return this._y2d; },
-    
+
     x3d: function() { return this._x2d; },
     y3d: function() { return this._y2d; },
     z3d: function() { return 0; },
-    
+
     toString: function() { return Atom.prototype.toString.call( this ) + ' ' + this._x2d + ' ' + this._y2d; }
   } );
   PubChemAtom2.parser = function( atomString ) {
@@ -264,7 +264,7 @@ define( function( require ) {
                              parseFloat( tokens[1] ),
                              parseFloat( tokens[2] ) );
   };
-  
+
   var PubChemAtom3 = CompleteMolecule.PubChemAtom3 = function( element, x3d, y3d, z3d ) {
     Atom.call( this, element );
     this._x3d = x3d;
@@ -274,15 +274,15 @@ define( function( require ) {
   inherit( Atom, PubChemAtom3, {
     has2d: function() { return false; },
     has3d: function() { return true; },
-    
+
     // TODO: consider replacing with direct properties
     x2d: function() { return 0; },
     y2d: function() { return 0; },
-    
+
     x3d: function() { return this._x3d; },
     y3d: function() { return this._y3d; },
     z3d: function() { return this._z3d; },
-    
+
     toString: function() { return Atom.prototype.toString.call( this ) + ' ' + this._x3d + ' ' + this._y3d + ' ' + this._z3d; }
   } );
   PubChemAtom3.parser = function( atomString ) {
@@ -292,7 +292,7 @@ define( function( require ) {
                              parseFloat( tokens[2] ),
                              parseFloat( tokens[3] ) );
   };
-  
+
   var PubChemAtomFull = CompleteMolecule.PubChemAtomFull = function( element, x2d, y2d, x3d, y3d, z3d ) {
     Atom.call( this, element );
     this._x2d = x2d;
@@ -304,15 +304,15 @@ define( function( require ) {
   inherit( Atom, PubChemAtomFull, {
     has2d: function() { return true; },
     has3d: function() { return true; },
-    
+
     // TODO: consider replacing with direct properties
     x2d: function() { return this._x2d; },
     y2d: function() { return this._y2d; },
-    
+
     x3d: function() { return this._x3d; },
     y3d: function() { return this._y3d; },
     z3d: function() { return this._z3d; },
-    
+
     toString: function() { return Atom.prototype.toString.call( this ) + ' ' + this._x2d + ' ' + this._y2d + ' ' + this._x3d + ' ' + this._y3d + ' ' + this._z3d; }
   } );
   PubChemAtomFull.parser = function( atomString ) {
@@ -324,7 +324,7 @@ define( function( require ) {
                                 parseFloat( tokens[4] ),
                                 parseFloat( tokens[5] ) );
   };
-  
+
   // a,b are PubChemAtoms of some type
   var PubChemBond = CompleteMolecule.PubChemBond = function( a, b, order ) {
     Bond.call( this, a, b );
@@ -341,6 +341,6 @@ define( function( require ) {
     var order = parseInt( tokens[1], 10 );
     return new PubChemBond( connectedAtom, molecule.atoms[index], order );
   };
-  
+
   return CompleteMolecule;
 } );

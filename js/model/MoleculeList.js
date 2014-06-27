@@ -12,28 +12,28 @@
 
 define( function( require ) {
   'use strict';
-  
+
   //REVIEW use logging instead of System.out throughout, since this happens at startup in production product.
-  
+
   var namespace = require( 'BAM/namespace' );
-  
+
   var collectionMoleculesData = require( 'BAM/model/data/collectionMoleculesData' );
   var otherMoleculesData = require( 'BAM/model/data/otherMoleculesData' );
   var structuresData = require( 'BAM/model/data/structuresData' );
   var CompleteMolecule = require( 'BAM/model/CompleteMolecule' );
   var StrippedMolecule = require( 'BAM/model/StrippedMolecule' );
   var MoleculeStructure = require( 'BAM/model/MoleculeStructure' );
-  
+
   var MoleculeList = namespace.MoleculeList = function MoleculeList() {
     this.completeMolecules = []; // all complete molecules
     this.moleculeNameMap = {}; // unique name => complete molecule
-    
+
     this.allowedStructureFormulaMap = {}; // formula => allowed stripped molecules (array)
   };
-  
+
   MoleculeList.prototype = {
     constructor: MoleculeList,
-    
+
     loadInitialData: function() {
       var startTime = Date.now();
       var mainMolecules = MoleculeList.readCompleteMoleculesFromData( collectionMoleculesData );
@@ -58,7 +58,7 @@ define( function( require ) {
 
         that.addCompleteMolecule( molecule );
       } );
-      
+
       // then load structures
       var mainStructures = MoleculeList.readMoleculeStructuresFromData( structuresData );
       _.each( mainStructures, this.addAllowedStructure.bind( this ) );
@@ -119,7 +119,7 @@ define( function( require ) {
       }
       return null;
     },
-    
+
     // by pubchem compound ID (CID)
     findMoleculeByCID: function( cid ) {
       var length = this.completeMolecules.length;
@@ -149,7 +149,7 @@ define( function( require ) {
     addAllowedStructure: function( structure ) {
       var strippedMolecule = new StrippedMolecule( structure );
       var hashString = strippedMolecule.stripped.getHistogram().getHashString();
-      
+
       var spot = this.allowedStructureFormulaMap[hashString];
       if ( spot ) {
         spot.push( strippedMolecule );
@@ -158,11 +158,11 @@ define( function( require ) {
       }
     }
   };
-  
+
   var masterInstance = null;
   var initialized = false;
   var initialList = new MoleculeList();
-  
+
   MoleculeList.startInitialization = function() {
     // TODO: performance: use web worker or chop it up into bits of work
     masterInstance = new MoleculeList();
@@ -170,27 +170,27 @@ define( function( require ) {
     initialized = true;
     // TODO: log completion?
   };
-  
+
   MoleculeList.getMasterInstance = function() {
     if ( !initialized ) {
       // TODO: performance: threading-like replacement goes here
       MoleculeList.startInitialization();
     }
-    
+
     return masterInstance;
   };
-  
+
   MoleculeList.getMoleculeByName = function( name ) {
     var result = initialList.moleculeNameMap[name];
-    
+
     if ( !result ) {
       // TODO: logger here needed as a warning for master lookup?
       result = MoleculeList.getMasterInstance().moleculeNameMap[name];
     }
-    
+
     return result;
   };
-  
+
   /*---------------------------------------------------------------------------*
   * static helper methods
   *----------------------------------------------------------------------------*/
@@ -226,9 +226,9 @@ define( function( require ) {
     }
     return arr;
   };
-  
+
   initialList.loadInitialData();
-  
+
   /*---------------------------------------------------------------------------*
   * molecule references and customized names
   *----------------------------------------------------------------------------*/
@@ -274,13 +274,13 @@ define( function( require ) {
     MoleculeList.getMoleculeByName( "Silane" ),
     MoleculeList.getMoleculeByName( "Sulfur Dioxide" )
   ];
-  
+
   _.each( MoleculeList.collectionBoxMolecules, function( molecule ) {
     assert && assert( !!molecule );
   } );
-  
+
   // TODO: performance: postpone all of the loading?
   MoleculeList.getMasterInstance();
-  
+
   return MoleculeList;
 } );

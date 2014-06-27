@@ -11,23 +11,23 @@
 
 define( function( require ) {
   'use strict';
-  
+
   var namespace = require( 'BAM/namespace' );
   var Atom = require( 'NITROGLYCERIN/Atom' );
   var Element = require( 'NITROGLYCERIN/Element' );
   var Bond = require( 'BAM/model/Bond' );
   var MoleculeStructure = require( 'BAM/model/MoleculeStructure' );
-  
+
   // @param {MoleculeStructure} original
   var StrippedMolecule = namespace.StrippedMolecule = function StrippedMolecule( original ) {
     var that = this;
-    
+
     // var atomsToAdd = [];
     var bondsToAdd = [];
 
     // copy non-hydrogens
     var atomsToAdd = _.filter( original.atoms, function( atom ) { return !atom.isHydrogen(); } );
-    
+
     /**
      * Array indexed the same way as stripped.atoms for efficiency. It's essentially immutable, so this works
      */
@@ -59,10 +59,10 @@ define( function( require ) {
     _.each( atomsToAdd, this.stripped.addAtom.bind( this.stripped ) );
     _.each( bondsToAdd, this.stripped.addBond.bind( this.stripped ) );
   };
-  
+
   StrippedMolecule.prototype = {
     constructor: StrippedMolecule,
-    
+
     /**
      * @return MoleculeStructure, where the hydrogen atoms are not the original hydrogen atoms
      */
@@ -101,7 +101,7 @@ define( function( require ) {
       if ( this.stripped.atoms.length === 0 && other.stripped.atoms.length === 0 ) {
         return true;
       }
-      
+
       // TODO: performance: use something more like HashSet here
       var myVisited = [];
       var otherVisited = [];
@@ -152,7 +152,7 @@ define( function( require ) {
       }
       return false;
     },
-    
+
     /*
      * @param {StrippedMolecule} other
      * @param {Array[Atom]}      myVisited
@@ -236,6 +236,6 @@ define( function( require ) {
       return result;
     }
   };
-  
+
   return StrippedMolecule;
 } );

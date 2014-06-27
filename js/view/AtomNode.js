@@ -27,9 +27,9 @@ define( function( require ) {
     Node.call( this, _.extend( {
       cursor: 'pointer'
     }, options ) );
-    
+
     this.addChild( AtomNode.getGraphics( atom.element ) );
-    
+
     var that = this;
     atom.positionProperty.link( function( modelPosition ) {
       that.setTranslation( Constants.modelViewTransform.modelToViewPosition( modelPosition ) );
@@ -41,7 +41,7 @@ define( function( require ) {
       that.detach(); // removes us from all parents
     } );
   };
-  
+
   // map from element symbol => graphical node for the atom, so that we can use the DAG to save overhead and costs
   var elementMap = {};
   AtomNode.getGraphics = function( element ) {
@@ -49,7 +49,7 @@ define( function( require ) {
     if ( node ) {
       return node;
     }
-    
+
     var color = new Color( element.color );
     var radius = Constants.modelViewTransform.modelToViewDeltaX( element.radius );
     var diameter = radius * 2;
@@ -64,7 +64,7 @@ define( function( require ) {
     gradientFill.addColorStop( 0, '#ffffff' );
     gradientFill.addColorStop( middleRadius / fullRadius, color.toCSS() );
     gradientFill.addColorStop( 1, '#000000' );
-    
+
     node = new Path( Shape.circle( 0, 0, radius ), {
       fill: AtomNode.experimentalBrighterGradient( radius, color )
     } );
@@ -81,15 +81,15 @@ define( function( require ) {
     text.centerX = 0;
     text.centerY = 0;
     node.addChild( text );
-    
+
     elementMap[element.symbol] = node;
     return node;
   };
-  
+
   AtomNode.needsWhiteColor = function( color ) {
     return 0.30 * color.r + 0.59 * color.g + 0.11 * color.b < 125;
   };
-  
+
   AtomNode.oldGradient = function( radius, color ) {
     var diameter = radius * 2;
     var gCenter = new Vector2( -radius / 3, -radius / 3 );
@@ -104,13 +104,13 @@ define( function( require ) {
     gradientFill.addColorStop( 1, '#000000' );
     return gradientFill;
   };
-  
+
   AtomNode.experimentalGradient = function( radius, baseColor ) {
     // var diameter = radius * 2;
     var gCenter = new Vector2( -radius / 5, -radius / 5 );
     var fullRadius = gCenter.minus( new Vector2( 1, 1 ).normalize().multiply( radius ) ).magnitude();
     var gradientFill = new RadialGradient( gCenter.x, gCenter.y, 0, gCenter.x, gCenter.y, fullRadius );
-    
+
     gradientFill.addColorStop( 0, baseColor.colorUtilsBrighter( 0.5 ).toCSS() );
     gradientFill.addColorStop( 0.08, baseColor.colorUtilsBrighter( 0.2 ).toCSS() );
     gradientFill.addColorStop( 0.4, baseColor.colorUtilsDarker( 0.1 ).toCSS() );
@@ -119,13 +119,13 @@ define( function( require ) {
     gradientFill.addColorStop( 1, baseColor.colorUtilsDarker( 0.4 ).toCSS() );
     return gradientFill;
   };
-  
+
   AtomNode.experimentalBrightGradient = function( radius, baseColor ) {
     // var diameter = radius * 2;
     var gCenter = new Vector2( -radius / 3, -radius / 3 );
     var fullRadius = gCenter.minus( new Vector2( 1, 1 ).normalize().multiply( radius ) ).magnitude();
     var gradientFill = new RadialGradient( gCenter.x, gCenter.y, 0, gCenter.x, gCenter.y, fullRadius );
-    
+
     gradientFill.addColorStop( 0, baseColor.colorUtilsBrightness( 0.5 + 0.2 ).toCSS() );
     gradientFill.addColorStop( 0.08, baseColor.colorUtilsBrightness( 0.2 + 0.2 ).toCSS() );
     gradientFill.addColorStop( 0.4, baseColor.colorUtilsBrightness( -0.1 + 0.1 ).toCSS() );
@@ -135,13 +135,13 @@ define( function( require ) {
     return gradientFill;
   };
 
-  
+
   AtomNode.experimentalBrighterGradient = function( radius, baseColor ) {
     // var diameter = radius * 2;
     var gCenter = new Vector2( -radius / 3, -radius / 3 );
     var fullRadius = gCenter.minus( new Vector2( 1, 1 ).normalize().multiply( radius ) ).magnitude();
     var gradientFill = new RadialGradient( gCenter.x, gCenter.y, 0, gCenter.x, gCenter.y, fullRadius );
-    
+
     gradientFill.addColorStop( 0, baseColor.colorUtilsBrightness( 0.9 ).toCSS() );
     gradientFill.addColorStop( 0.08, baseColor.colorUtilsBrightness( 0.5 ).toCSS() );
     gradientFill.addColorStop( 0.4, baseColor.colorUtilsBrightness( 0.1 ).toCSS() );

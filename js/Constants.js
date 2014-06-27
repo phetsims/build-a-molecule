@@ -2,14 +2,14 @@
 
 define( function( require ) {
   'use strict';
-  
+
   var namespace = require( 'BAM/namespace' );
   var Element = require( 'NITROGLYCERIN/Element' );
   var Color = require( 'SCENERY/util/Color' );
   var Dimension2 = require( 'DOT/Dimension2' );
   var Vector2 = require( 'DOT/Vector2' );
   var ModelViewTransform2 = require( 'PHETCOMMON/view/ModelViewTransform2' );
-  
+
   var viewSize = new Dimension2( 1100, 679 );
   var mvt = ModelViewTransform2.createSinglePointScaleInvertedYMapping(
     Vector2.ZERO,
@@ -22,31 +22,31 @@ define( function( require ) {
   );
   var viewPadding = 18;
   var modelPadding = mvt.viewToModelDeltaX( viewPadding );
-  
+
   namespace.Constants = {
-    
+
     projectName: 'build-a-molecule',
-    
+
     /*---------------------------------------------------------------------------*
     * Features
     *----------------------------------------------------------------------------*/
-    
+
     has3d: true,
-    
+
     /*---------------------------------------------------------------------------*
     * Layout
     *----------------------------------------------------------------------------*/
-    
+
     stageSize: viewSize, // the size of our "view" coordinate area
     modelViewTransform: mvt,
     modelSize: modelSize,
     viewPadding: viewPadding,
     modelPadding: modelPadding,
-    
+
     /*---------------------------------------------------------------------------*
     * Colors
     *----------------------------------------------------------------------------*/
-    
+
     canvasBackgroundColor:                new Color( 198, 226, 246 ), // main play area background
     moleculeCollectionBackground:         new Color( 238, 238, 238 ), // collection area background
     moleculeCollectionBorder:             Color.BLACK,                // border around the collection area
@@ -59,22 +59,22 @@ define( function( require ) {
     kitArrowBackgroundEnabled:            Color.YELLOW,               // kit next/prev arrow background
     kitArrowBorderEnabled:                Color.BLACK,                // kit next/prev arrow border
     completeBackgroundColor:              new Color( 238, 238, 238 ), // background when complete
-    
+
     /*---------------------------------------------------------------------------*
     * Layout
     *----------------------------------------------------------------------------*/
-    
+
     metadataPaddingBetweenNodeAndMolecule: 5, // vertical space between molecule and name/buttons
-    
+
     /*---------------------------------------------------------------------------*
     * Misc
     *----------------------------------------------------------------------------*/
-    
+
     allowBondBreaking: true,
     supportedElements: [
       Element.B, Element.Br, Element.C, Element.Cl, Element.F, Element.H, Element.I, Element.N, Element.O, Element.P, Element.S, Element.Si
     ]
   };
-  
+
   return namespace.Constants;
 } );

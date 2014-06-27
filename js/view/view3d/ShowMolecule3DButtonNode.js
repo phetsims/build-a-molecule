@@ -17,12 +17,12 @@ define( function( require ) {
   var MeterBodyNode = require( 'SCENERY_PHET/MeterBodyNode' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Molecule3DDialog = require( 'BAM/view/view3d/Molecule3DDialog' );
-  
+
   // images
   var greenLeft = require( 'image!BAM/green-left.png' );
   var greenMiddle = require( 'image!BAM/green-middle.png' );
   var greenRight = require( 'image!BAM/green-right.png' );
-  
+
   // strings
   var iconString = require( 'string!BAM/3d.icon' );
 
@@ -31,7 +31,7 @@ define( function( require ) {
     Node.call( this, _.extend( {
       cursor: 'pointer'
     }, options ) );
-    
+
     this.addInputListener( new ButtonListener( {
       fire: function( evt ) {
         var trail = that.getUniqueTrail();
@@ -39,9 +39,9 @@ define( function( require ) {
         view.addChild( new Molecule3DDialog( completeMolecule, trail, view ) );
       }
     } ) );
-    
+
     var sqSize = 19; // 19 is a hard-coded constant to make it square
-    
+
     var label = new Text( iconString, {
       font: new PhetFont( {
         size: 12,
@@ -49,19 +49,19 @@ define( function( require ) {
       } ),
       fill: 'white'
     } );
-    
+
     // if the label is too wide, override it
     if ( label.width > 35 ) {
       label.text = '3D';
     }
-    
+
     var labelPadding = 2;
     var width = Math.ceil( Math.max( sqSize, label.width + 2 * labelPadding ) );
     label.centerX = width / 2;
     label.centerY = sqSize / 2;
-    
+
     var base = new MeterBodyNode( width, greenLeft, greenMiddle, greenRight, {} );
-    
+
     this.addChild( base );
     this.addChild( label );
   };

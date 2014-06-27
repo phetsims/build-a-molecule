@@ -8,12 +8,12 @@
 
 define( function( require ) {
   'use strict';
-  
+
   var namespace = require( 'BAM/namespace' );
   var inherit = require( 'PHET_CORE/inherit' );
   var PropertySet = require( 'AXON/PropertySet' );
   var Bounds2 = require( 'DOT/Bounds2' );
-  
+
   /*
    * @param {CompleteMolecule} moleculeType
    * @param {Int}              capacity
@@ -27,27 +27,27 @@ define( function( require ) {
     PropertySet.call( this, {
       quantity: 0
     } );
-    
+
     var box = this;
     this.moleculeType = moleculeType;
     this.capacity = capacity;
     this.molecules = [];
     this._dropBounds = Bounds2.NOTHING;
-    
+
     this.on( 'addedMolecule', function( molecule ) {
       if ( box.quantity === capacity ) {
         namespace.gameAudioPlayer.correctAnswer();
       }
     } );
   };
-  
+
   inherit( PropertySet, CollectionBox, {
     set dropBounds( value ) {
       // TODO: consider removing ES5 getter/setter here
       assert && assert( value );
       this._dropBounds = value;
     },
-    
+
     get dropBounds() {
       return this._dropBounds;
     },
@@ -72,14 +72,14 @@ define( function( require ) {
     addMolecule: function( molecule ) {
       this.quantity++;
       this.molecules.push( molecule );
-      
+
       this.trigger( 'addedMolecule', molecule );
     },
 
     removeMolecule: function( molecule ) {
       this.quantity--;
       this.molecules.splice( this.molecules.indexOf( molecule ), 1 ); // TODO: remove() instead of splice()
-      
+
       this.trigger( 'removedMolecule', molecule );
     },
 
@@ -87,6 +87,6 @@ define( function( require ) {
       _.each( this.molecules.slice( 0 ), this.removeMolecule.bind( this ) );
     }
   } );
-  
+
   return CollectionBox;
 } );

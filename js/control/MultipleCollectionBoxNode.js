@@ -19,7 +19,7 @@ define( function( require ) {
   var CollectionBox = require( 'BAM/model/CollectionBox' );
   var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  
+
   // strings
   var collection_multiple_goalFormatString = require( 'string!BAM/collection.multiple.goalFormat' );
   var collection_multiple_quantityEmptyString = require( 'string!BAM/collection.multiple.quantityEmpty' );

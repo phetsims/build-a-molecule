@@ -8,7 +8,7 @@
 
 define( function( require ) {
   'use strict';
-  
+
   var inherit = require( 'PHET_CORE/inherit' );
   var namespace = require( 'BAM/namespace' );
   var Constants = require( 'BAM/Constants' );
@@ -19,22 +19,22 @@ define( function( require ) {
   var ButtonListener = require( 'SCENERY/input/ButtonListener' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var ShowMolecule3DButtonNode = require( 'BAM/view/view3d/ShowMolecule3DButtonNode' );
-  
+
   // images
   var splitIconImage = require( 'image!BAM/split-blue.png' );
-  
+
   var MoleculeMetadataNode = namespace.MoleculeMetadataNode = function MoleculeMetadataNode( kit, molecule ) {
     Node.call( this, {} );
-    
+
     var selfNode = this;
     this.molecule = molecule;
     this.updatePositionListener = selfNode.updatePosition.bind( selfNode );
-    
+
     if ( molecule.atoms.length < 2 ) {
       // we don't need anything at all if it is not a "molecule"
       return;
     }
-    
+
     var completeMolecule = molecule.getMatchingCompleteMolecule();
 
     var currentX = 0;
@@ -81,7 +81,7 @@ define( function( require ) {
       }
     } ) );
     this.addChild( buttonBreak );
-    
+
     _.each( molecule.atoms, function( atom ) {
       atom.positionProperty.link( selfNode.updatePositionListener );
     } );
@@ -95,7 +95,7 @@ define( function( require ) {
       }
     } );
   };
-  
+
   inherit( Node, MoleculeMetadataNode, {
     destruct: function() {
       var selfNode = this;
@@ -108,11 +108,11 @@ define( function( require ) {
     updatePosition: function() {
       var modelPositionBounds = this.molecule.positionBounds;
       var moleculeViewBounds = Constants.modelViewTransform.modelToViewBounds( modelPositionBounds );
-      
+
       this.setTranslation( moleculeViewBounds.centerX - this.width / 2, // horizontally center
                            moleculeViewBounds.minY - this.height - Constants.metadataPaddingBetweenNodeAndMolecule ); // offset from top of molecule
     }
   } );
-  
+
   return MoleculeMetadataNode;
 } );

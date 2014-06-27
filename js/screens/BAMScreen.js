@@ -7,10 +7,10 @@
  */
 define( function( require ) {
   'use strict';
-  
+
   var namespace = require( 'BAM/namespace' );
   var inherit = require( 'PHET_CORE/inherit' );
-  
+
   var Screen = require( 'JOIST/Screen' );
   var Dimension2 = require( 'DOT/Dimension2' );
   var Constants = require( 'BAM/Constants' );
@@ -22,7 +22,7 @@ define( function( require ) {
   var Kit = require( 'BAM/model/Kit' );
   var CollectionBox = require( 'BAM/model/CollectionBox' );
   var PropertySet = require( 'AXON/PropertySet' );
-  
+
   var BAMScreen = namespace.BAMScreen = function BAMScreen( name, icon, createInitialKitCollection, layoutBounds, createKitCollection, createView ) {
     Screen.call( this, name, icon, function() {
       var clock = new PropertySet( {} );
@@ -36,7 +36,7 @@ define( function( require ) {
       return model;
     }, createView, { backgroundColor: Constants.canvasBackgroundColor } );
   };
-  
+
   /**
    * Generate a group of collection boxes and kits such that the boxes can be filled.
    *
@@ -51,7 +51,7 @@ define( function( require ) {
     var kits = [];
     var boxes = [];
     var molecules = []; // store all the molecules that will need to be created
-    
+
     var molecule; // used twice in two different loops :(
 
     for ( var i = 0; i < numBoxes; i++ ) {
@@ -149,11 +149,11 @@ define( function( require ) {
     _.each( boxes, collection.addCollectionBox.bind( collection ) );
     return collection;
   };
-  
+
   inherit( Screen, BAMScreen, {
-    
+
   } );
-  
+
   // from array of CompleteMolecule, returns {CompleteMolecule}
   BAMScreen.pickRandomMoleculeNotIn = function( molecules ) {
     // Infinite loop. We're living on the edge now, baby!
@@ -164,6 +164,6 @@ define( function( require ) {
       }
     }
   };
-  
+
   return BAMScreen;
 } );

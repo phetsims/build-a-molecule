@@ -8,7 +8,7 @@
 
 define( function( require ) {
   'use strict';
-  
+
   var namespace = require( 'BAM/namespace' );
   var Atom2 = require( 'BAM/model/Atom2' );
   var AtomNode = require( 'BAM/view/AtomNode' );
@@ -18,7 +18,7 @@ define( function( require ) {
   var Dimension2 = require( 'DOT/Dimension2' );
   var Strings = require( 'BAM/Strings' );
   var Color = require( 'SCENERY/util/Color' );
-  
+
   /**
    * Constructor.  The dimensions used are just numbers, i.e. they are not
    * meant to be any specific size (such as meters).  This enabled
@@ -30,7 +30,7 @@ define( function( require ) {
    */
   var Bucket = namespace.Bucket = function Bucket( size, clock, element, quantity ) {
     this._position = null;
-    
+
     SphereBucket.call( this, {
       position: Vector2.ZERO,
       size: size,
@@ -40,35 +40,35 @@ define( function( require ) {
       captionColor: AtomNode.needsWhiteColor( new Color( element.color ) ) ? 'white' : 'black',
       verticalParticleOffset: -30 + element.radius / 2
     } );
-    
+
     this.element = element;
     this.width = this.containerShape.computeBounds().width;
-    
+
     for ( var i = 0; i < quantity; i++ ) {
       this.addParticleFirstOpen( new Atom2( element, clock ), false );
     }
   };
-  
+
   inherit( SphereBucket, Bucket, {
     get atoms() {
       return this.getParticleList();
     },
-    
+
     set position( point ) {
       this._position = point;
-      
+
       // when we move the bucket, we must also move our contained atoms
       var delta = point.minus( this.position );
-      
+
       _.each( this.atoms, function( atom ) {
         atom.setPositionAndDestination( atom.position.plus( delta ) );
       } );
     },
-    
+
     get position() {
       return this._position;
     },
-    
+
     // Instantly place the atom in the correct position, whether or not it is in the bucket
     placeAtom: function( atom ) {
       if ( this.containsParticle( atom ) ) {
@@ -77,7 +77,7 @@ define( function( require ) {
       this.addParticleFirstOpen( atom, false );
     }
   } );
-  
+
   /**
    * Make sure we can fit all of our atoms in just two rows
    *
@@ -95,10 +95,10 @@ define( function( require ) {
     // add a bit, and make sure we don't go under 350
     return Math.floor( Math.max( 350, width + 1 ) );
   };
-  
+
   Bucket.createAutoSized = function( clock, element, quantity ) {
     return new Bucket( new Dimension2( Bucket.calculateIdealBucketWidth( element.radius, quantity ), 200 ), clock, element, quantity );
   };
-  
+
   return Bucket;
 } );
