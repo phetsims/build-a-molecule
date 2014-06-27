@@ -14,7 +14,7 @@ define( function( require ) {
   var mvt = ModelViewTransform2.createSinglePointScaleInvertedYMapping(
     Vector2.ZERO,
     new Vector2( Math.round( viewSize.width * 0.5 ), Math.round( viewSize.height * 0.5 ) ),
-    0.3 * 1.2 // "Zoom factor" - smaller zooms out, larger zooms in
+      0.3 * 1.2 // "Zoom factor" - smaller zooms out, larger zooms in
   );
   var modelSize = new Dimension2(
     mvt.viewToModelDeltaX( viewSize.width ),
@@ -47,18 +47,18 @@ define( function( require ) {
     * Colors
     *----------------------------------------------------------------------------*/
 
-    canvasBackgroundColor:                new Color( 198, 226, 246 ), // main play area background
-    moleculeCollectionBackground:         new Color( 238, 238, 238 ), // collection area background
-    moleculeCollectionBorder:             Color.BLACK,                // border around the collection area
-    moleculeCollectionBoxHighlight:       Color.YELLOW,               // box highlight (border when it's full)
-    moleculeCollectionBoxBackground:      Color.BLACK,                // box background
-    moleculeCollectionBoxBackgroundBlink: Color.BLACK,                // box background while blinking
-    moleculeCollectionBoxBorderBlink:     Color.BLUE,                 // box border when blinking
-    kitBackground:                        Color.WHITE,                // kit area background
-    kitBorder:                            Color.BLACK,                // border around the kit area
-    kitArrowBackgroundEnabled:            Color.YELLOW,               // kit next/prev arrow background
-    kitArrowBorderEnabled:                Color.BLACK,                // kit next/prev arrow border
-    completeBackgroundColor:              new Color( 238, 238, 238 ), // background when complete
+    canvasBackgroundColor: new Color( 198, 226, 246 ),        // main play area background
+    moleculeCollectionBackground: new Color( 238, 238, 238 ), // collection area background
+    moleculeCollectionBorder: Color.BLACK,                    // border around the collection area
+    moleculeCollectionBoxHighlight: Color.YELLOW,             // box highlight (border when it's full)
+    moleculeCollectionBoxBackground: Color.BLACK,             // box background
+    moleculeCollectionBoxBackgroundBlink: Color.BLACK,        // box background while blinking
+    moleculeCollectionBoxBorderBlink: Color.BLUE,             // box border when blinking
+    kitBackground: Color.WHITE,                               // kit area background
+    kitBorder: Color.BLACK,                                   // border around the kit area
+    kitArrowBackgroundEnabled: Color.YELLOW,                  // kit next/prev arrow background
+    kitArrowBorderEnabled: Color.BLACK,                       // kit next/prev arrow border
+    completeBackgroundColor: new Color( 238, 238, 238 ),      // background when complete
 
     /*---------------------------------------------------------------------------*
     * Layout

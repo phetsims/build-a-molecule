@@ -33,7 +33,8 @@ define( function( require ) {
 
       if ( this.currentKit ) {
         kit.hide();
-      } else {
+      }
+      else {
         // first kit, generally
         this.currentKit = kit;
         kit.show();

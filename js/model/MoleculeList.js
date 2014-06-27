@@ -153,7 +153,8 @@ define( function( require ) {
       var spot = this.allowedStructureFormulaMap[hashString];
       if ( spot ) {
         spot.push( strippedMolecule );
-      } else {
+      }
+      else {
         this.allowedStructureFormulaMap[hashString] = [strippedMolecule];
       }
     }
@@ -235,11 +236,11 @@ define( function( require ) {
 
   MoleculeList.CO2 = MoleculeList.getMoleculeByName( "Carbon Dioxide" );
   MoleculeList.H2O = MoleculeList.getMoleculeByName( "Water" );
-  MoleculeList.N2  = MoleculeList.getMoleculeByName( "Nitrogen" );
-  MoleculeList.CO  = MoleculeList.getMoleculeByName( "Carbon Monoxide" );
-  MoleculeList.NO  = MoleculeList.getMoleculeByName( "Nitric Oxide" );
-  MoleculeList.O2  = MoleculeList.getMoleculeByName( "Oxygen" );
-  MoleculeList.H2  = MoleculeList.getMoleculeByName( "Hydrogen" );
+  MoleculeList.N2 = MoleculeList.getMoleculeByName( "Nitrogen" );
+  MoleculeList.CO = MoleculeList.getMoleculeByName( "Carbon Monoxide" );
+  MoleculeList.NO = MoleculeList.getMoleculeByName( "Nitric Oxide" );
+  MoleculeList.O2 = MoleculeList.getMoleculeByName( "Oxygen" );
+  MoleculeList.H2 = MoleculeList.getMoleculeByName( "Hydrogen" );
   MoleculeList.Cl2 = MoleculeList.getMoleculeByName( "Chlorine" );
   MoleculeList.NH3 = MoleculeList.getMoleculeByName( "Ammonia" );
 

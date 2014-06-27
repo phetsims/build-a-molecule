@@ -48,7 +48,8 @@ define( function( require ) {
     this.userControlledProperty.lazyLink( function( controlled ) {
       if ( controlled ) {
         atom.trigger( 'grabbedByUser', atom );
-      } else {
+      }
+      else {
         atom.trigger( 'droppedByUser', atom );
       }
     } );
@@ -57,7 +58,8 @@ define( function( require ) {
       if ( isAddedToModel ) {
         // added to the model
         clock.on( 'tick', atom.clockListener );
-      } else {
+      }
+      else {
         // removed from the model
         clock.off( 'tick', atom.clockListener );
       }
@@ -90,10 +92,11 @@ define( function( require ) {
         if ( distanceToTravel >= distanceToTarget ) {
           // Closer than one step, so just go there.
           this.position = this.destination;
-        } else {
+        }
+        else {
           // Move towards the destination.
           var angle = Math.atan2( this.destination.y - this.position.y,
-                                  this.destination.x - this.position.x );
+              this.destination.x - this.position.x );
           this.translate( distanceToTravel * Math.cos( angle ), distanceToTravel * Math.sin( angle ) );
         }
       }
@@ -102,7 +105,7 @@ define( function( require ) {
     setPosition: function( x, y ) { this.position = new Vector2( x, y ); },
 
     translatePositionAndDestination: function( delta ) {
-      this.position    = this.position.plus( delta );
+      this.position = this.position.plus( delta );
       this.destination = this.destination.plus( delta );
     },
 

@@ -69,7 +69,8 @@ define( function( require ) {
       if ( atom ) {
         // TODO: this is somewhat hackish. better way of doing this?
         return new Trail( [atomLayer, kitView.atomNodeMap[atom.id]] );
-      } else {
+      }
+      else {
         return null;
       }
     };
@@ -86,17 +87,19 @@ define( function( require ) {
       } );
       var bucketHole = new BucketHole( bucket, Constants.modelViewTransform );
       // NOTE: we will use the Bucket's hole with an expanded touch area to trigger the "grab by touching the bucket" behavior
-      bucketHole.touchArea = bucketHole.mouseArea = new Shape().moveTo( bucketHole.left - bucketHole.x, bucketHole.centerY - bucketHole.y )
-                                                               .lineTo( bucketHole.left - bucketHole.x + 17, bucketHole.centerY + 60 - bucketHole.y )
-                                                               .lineTo( bucketHole.right - bucketHole.x - 17, bucketHole.centerY + 60 - bucketHole.y )
-                                                               .lineTo( bucketHole.right - bucketHole.x, bucketHole.centerY - bucketHole.y )
-                                                               .lineTo( bucketHole.right - bucketHole.x - 35, bucketHole.centerY - 10 - bucketHole.y )
-                                                               .lineTo( bucketHole.left - bucketHole.x + 35, bucketHole.centerY - 10 - bucketHole.y )
-                                                               .close();
+      bucketHole.touchArea = bucketHole.mouseArea = new Shape()
+        .moveTo( bucketHole.left - bucketHole.x, bucketHole.centerY - bucketHole.y )
+        .lineTo( bucketHole.left - bucketHole.x + 17, bucketHole.centerY + 60 - bucketHole.y )
+        .lineTo( bucketHole.right - bucketHole.x - 17, bucketHole.centerY + 60 - bucketHole.y )
+        .lineTo( bucketHole.right - bucketHole.x, bucketHole.centerY - bucketHole.y )
+        .lineTo( bucketHole.right - bucketHole.x - 35, bucketHole.centerY - 10 - bucketHole.y )
+        .lineTo( bucketHole.left - bucketHole.x + 35, bucketHole.centerY - 10 - bucketHole.y )
+        .close();
       // we will be updating the bucket's cursor depending on whether it has atoms
       function bucketHoleCursorUpdate() {
         bucketHole.cursor = bucket.atoms.length ? 'pointer' : 'default';
       }
+
       kit.on( 'addedMolecule', bucketHoleCursorUpdate );
       kit.on( 'removedMolecule', bucketHoleCursorUpdate );
       bucketHoleCursorUpdate();
@@ -151,7 +154,8 @@ define( function( require ) {
               _.each( molecule.atoms, function( moleculeAtom ) {
                 kitView.atomNodeMap[moleculeAtom.id].moveToFront();
               } );
-            } else {
+            }
+            else {
               atomNode.moveToFront();
             }
           },

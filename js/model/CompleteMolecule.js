@@ -81,7 +81,8 @@ define( function( require ) {
       // we need to check whether it came back the same as the key due to how getString works.
       if ( stringLookup && stringLookup !== lookupKey ) {
         return stringLookup;
-      } else {
+      }
+      else {
         // if we didn't find it, pull it from our English data
         return this.commonName;
       }
@@ -132,7 +133,8 @@ define( function( require ) {
       // whitespace check in general
       if ( /\s/.test( character ) ) {
         lastWasSpace = true;
-      } else {
+      }
+      else {
         if ( lastWasSpace && /[a-z]/.test( character ) ) {
           characters[i] = character.toUpperCase();
         }
@@ -158,10 +160,10 @@ define( function( require ) {
     var i;
     var tokens = line.split( '|' );
     var idx = 0;
-    var commonName       = tokens[idx++];
+    var commonName = tokens[idx++];
     var molecularFormula = tokens[idx++];
-    var atomCount        = parseInt( tokens[idx++], 10 );
-    var bondCount        = parseInt( tokens[idx++], 10 );
+    var atomCount = parseInt( tokens[idx++], 10 );
+    var bondCount = parseInt( tokens[idx++], 10 );
     var completeMolecule = new CompleteMolecule( commonName, molecularFormula, atomCount, bondCount, true, true );
 
     // for each atom, read its symbol, then 2d coordinates, then 3d coordinates (total of 6 fields)
@@ -261,8 +263,8 @@ define( function( require ) {
   PubChemAtom2.parser = function( atomString ) {
     var tokens = atomString.split( ' ' );
     return new PubChemAtom2( Element.getElementBySymbol( tokens[0] ),
-                             parseFloat( tokens[1] ),
-                             parseFloat( tokens[2] ) );
+      parseFloat( tokens[1] ),
+      parseFloat( tokens[2] ) );
   };
 
   var PubChemAtom3 = CompleteMolecule.PubChemAtom3 = function( element, x3d, y3d, z3d ) {
@@ -288,9 +290,9 @@ define( function( require ) {
   PubChemAtom3.parser = function( atomString ) {
     var tokens = atomString.split( ' ' );
     return new PubChemAtom3( Element.getElementBySymbol( tokens[0] ),
-                             parseFloat( tokens[1] ),
-                             parseFloat( tokens[2] ),
-                             parseFloat( tokens[3] ) );
+      parseFloat( tokens[1] ),
+      parseFloat( tokens[2] ),
+      parseFloat( tokens[3] ) );
   };
 
   var PubChemAtomFull = CompleteMolecule.PubChemAtomFull = function( element, x2d, y2d, x3d, y3d, z3d ) {
@@ -318,11 +320,11 @@ define( function( require ) {
   PubChemAtomFull.parser = function( atomString ) {
     var tokens = atomString.split( ' ' );
     return new PubChemAtomFull( Element.getElementBySymbol( tokens[0] ),
-                                parseFloat( tokens[1] ),
-                                parseFloat( tokens[2] ),
-                                parseFloat( tokens[3] ),
-                                parseFloat( tokens[4] ),
-                                parseFloat( tokens[5] ) );
+      parseFloat( tokens[1] ),
+      parseFloat( tokens[2] ),
+      parseFloat( tokens[3] ),
+      parseFloat( tokens[4] ),
+      parseFloat( tokens[5] ) );
   };
 
   // a,b are PubChemAtoms of some type

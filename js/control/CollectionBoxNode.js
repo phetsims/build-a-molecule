@@ -76,7 +76,8 @@ define( function( require ) {
       box.on( 'removedMolecule', update3dVisibility );
       update3dVisibility();
       this.blackBox.addChild( show3dButton );
-    } else {
+    }
+    else {
       this.button3dWidth = 0;
     }
 
@@ -261,7 +262,8 @@ define( function( require ) {
           selfNode.updateBoxGraphics();
 
           // setTimeout not re-set
-        } else {
+        }
+        else {
           // toggle state
           on = !on;
 
@@ -269,7 +271,8 @@ define( function( require ) {
           if ( on ) {
             selfNode.blackBox.fill = Constants.moleculeCollectionBoxBackgroundBlink;
             selfNode.blackBox.stroke = Constants.moleculeCollectionBoxBorderBlink;
-          } else {
+          }
+          else {
             selfNode.blackBox.fill = Constants.moleculeCollectionBoxBackground;
             selfNode.blackBox.stroke = Constants.moleculeCollectionBackground;
           }

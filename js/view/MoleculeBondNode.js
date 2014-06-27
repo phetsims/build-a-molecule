@@ -31,13 +31,13 @@ icotool -c -o scissors-closed-up.ico scissors-closed-up.png
    */
 
   var images = {
-    'scissors.png':           require( 'image!BAM/scissors.png' ),
-    'scissors-closed.png':    require( 'image!BAM/scissors-closed.png' ),
-    'scissors-up.png':        require( 'image!BAM/scissors-up.png' ),
+    'scissors.png': require( 'image!BAM/scissors.png' ),
+    'scissors-closed.png': require( 'image!BAM/scissors-closed.png' ),
+    'scissors-up.png': require( 'image!BAM/scissors-up.png' ),
     'scissors-closed-up.png': require( 'image!BAM/scissors-closed-up.png' ),
-    'scissors.cur':           require( 'image!BAM/scissors.cur' ),
-    'scissors-closed.cur':    require( 'image!BAM/scissors-closed.cur' ),
-    'scissors-up.cur':        require( 'image!BAM/scissors-up.cur' ),
+    'scissors.cur': require( 'image!BAM/scissors.cur' ),
+    'scissors-closed.cur': require( 'image!BAM/scissors-closed.cur' ),
+    'scissors-up.cur': require( 'image!BAM/scissors-up.cur' ),
     'scissors-closed-up.cur': require( 'image!BAM/scissors-closed-up.cur' )
   };
 
@@ -64,7 +64,8 @@ icotool -c -o scissors-closed-up.ico scissors-closed-up.png
     if ( platform.ie ) {
       openFile += '.cur';
       closedFile += '.cur';
-    } else {
+    }
+    else {
       openFile += '.png';
       closedFile += '.png';
     }
@@ -78,7 +79,8 @@ icotool -c -o scissors-closed-up.ico scissors-closed-up.png
     if ( platform.ie ) {
       openCursor = 'url(' + scissorsOpen.src + '), url(http://phetsims.github.io/build-a-molecule/images/' + openFile + '), ' + backup;
       closedCursor = 'url(' + scissorsClosed.src + '), url(http://phetsims.github.io/build-a-molecule/images/' + closedFile + '), ' + backup;
-    } else {
+    }
+    else {
       openCursor = 'url(' + scissorsOpen.src + ') ' + ( isHorizontal ? '10 11' : '11 10' ) + ', ' + backup;
       closedCursor = 'url(' + scissorsClosed.src + ') ' + ( isHorizontal ? '7 13' : '13 7' ) + ', ' + backup;
     }

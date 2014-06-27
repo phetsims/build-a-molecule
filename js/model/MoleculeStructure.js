@@ -55,7 +55,8 @@ define( function( require ) {
       // TODO: optimize call-sites of this to just use one way (almost assuredly creating the bond first)
       if ( a instanceof Bond ) {
         bond = a;
-      } else {
+      }
+      else {
         bond = new Bond( a, b );
       }
       assert && assert( _.contains( this.atoms, bond.a ) );
@@ -93,8 +94,8 @@ define( function( require ) {
       var organic = containsCarbon && containsHydrogen;
 
       var sortedElements = _.sortBy( this.getElementList(), organic ? MoleculeStructure.organicSortValue         // carbon first, then hydrogen, then others alphabetically
-                                                                    : MoleculeStructure.electronegativeSortValue // sort by increasing electronegativity
-                                                                    );
+          : MoleculeStructure.electronegativeSortValue // sort by increasing electronegativity
+      );
 
       // grab our formula out
       var formula = ChemUtils.createSymbolWithoutSubscripts( sortedElements );
@@ -124,9 +125,9 @@ define( function( require ) {
 
           // for an alcohol subgroup (hydroxyl) we need:
           if ( neighbors.length === 2 && // 2 neighbors
-               // 1st carbon, 2nd hydrogen
+                 // 1st carbon, 2nd hydrogen
                ( neighbors[0].isCarbon() && neighbors[1].isHydrogen() ) ||
-               // OR 2nd carbon, 1st hydrogen
+            // OR 2nd carbon, 1st hydrogen
                ( neighbors[0].isHydrogen() && neighbors[1].isCarbon() ) ) {
             alcoholCount++;
 
@@ -142,10 +143,12 @@ define( function( require ) {
       if ( alcoholCount === 0 ) {
         // no alcohols, use the regular formula
         return this.getGeneralFormula();
-      } else if ( alcoholCount === 1 ) {
+      }
+      else if ( alcoholCount === 1 ) {
         // one alcohol, tag it at the end
         return structureWithoutAlcohols.getGeneralFormula() + 'OH';
-      } else {
+      }
+      else {
         // more than one alcohol. use a count at the end
         return structureWithoutAlcohols.getGeneralFormula() + '(OH)' + alcoholCount;
       }
@@ -207,7 +210,8 @@ define( function( require ) {
         _.each( this.getNeighbors( atom ), function( otherAtom ) {
           if ( _.contains( visitedAtoms, otherAtom ) ) {
             visitedCount += 1;
-          } else {
+          }
+          else {
             dirtyAtoms.push( otherAtom );
           }
         } );
@@ -479,9 +483,9 @@ define( function( require ) {
 
       var newMap = {}; // old atom ID => new atom
       _.each( this.atoms, function( atom ) {
-          var newAtom = new Atom( atom.element );
-          result.addAtom( newAtom );
-          newMap[atom.id] = newAtom;
+        var newAtom = new Atom( atom.element );
+        result.addAtom( newAtom );
+        newMap[atom.id] = newAtom;
       } );
       _.each( this.bonds, function( bond ) {
         result.addBond( new Bond( newMap[bond.a.id], newMap[bond.b.id] ) );
@@ -502,9 +506,11 @@ define( function( require ) {
   MoleculeStructure.organicSortValue = function( element ) {
     if ( element.isCarbon() ) {
       return 0;
-    } else if ( element.isHydrogen() ) {
+    }
+    else if ( element.isHydrogen() ) {
       return 1;
-    } else {
+    }
+    else {
       return MoleculeStructure.alphabeticSortValue( element );
     }
   };
@@ -585,7 +591,8 @@ define( function( require ) {
     _.each( structure.atoms, function( atom ) {
       if ( _.contains( atomsInA, atom ) ) {
         molA.addAtom( atom );
-      } else {
+      }
+      else {
         molB.addAtom( atom );
       }
     } );
@@ -595,7 +602,8 @@ define( function( require ) {
         if ( _.contains( atomsInA, otherBond.a ) ) {
           assert && assert( _.contains( atomsInA, otherBond.b ) );
           molA.addBond( otherBond );
-        } else {
+        }
+        else {
           molB.addBond( otherBond );
         }
       }

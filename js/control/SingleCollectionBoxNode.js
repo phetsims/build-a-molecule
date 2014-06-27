@@ -28,8 +28,8 @@ define( function( require ) {
     assert && assert( box.capacity === 1 );
 
     this.addHeaderNode( new HTMLText( StringUtils.format( collection_single_formatString,
-                                                          box.moleculeType.getGeneralFormulaFragment(),
-                                                          box.moleculeType.getDisplayName() ), {
+      box.moleculeType.getGeneralFormulaFragment(),
+      box.moleculeType.getDisplayName() ), {
       font: new PhetFont( {
         size: 15,
         weight: 'bold'

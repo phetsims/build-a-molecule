@@ -100,13 +100,15 @@ define( function( require ) {
       for ( var i = 0; i < buckets.length; i++ ) {
         var bucket = buckets[i];
         if ( i !== 0 ) {
-            usedWidth += Kit.bucketPadding;
+          usedWidth += Kit.bucketPadding;
         }
 
         // include both the bucket's shape and its atoms in our bounds, so we can properly center the group
         bucketBounds.includeBounds( bucket.containerShape.bounds );
-        _.each( bucket.atoms, function( atom ) { bucketBounds.includeBounds( new Bounds2( atom.position.x - atom.radius, atom.position.y - atom.radius,
-                                                                                          atom.position.x + atom.radius, atom.position.y + atom.radius ) ); } );
+        _.each( bucket.atoms, function( atom ) {
+          bucketBounds.includeBounds( new Bounds2( atom.position.x - atom.radius, atom.position.y - atom.radius,
+              atom.position.x + atom.radius, atom.position.y + atom.radius ) );
+        } );
         bucket.position = new Vector2( usedWidth, 0 );
         usedWidth += bucket.width;
       }
@@ -169,15 +171,18 @@ define( function( require ) {
       if ( droppedInKitArea ) {
         if ( wasInPlay ) {
           this.recycleMoleculeIntoBuckets( this.getMolecule( atom ) );
-        } else {
+        }
+        else {
           this.recycleAtomIntoBuckets( atom, true ); // animate
         }
-      } else {
+      }
+      else {
         // dropped in play area
         if ( wasInPlay ) {
           this.attemptToBondMolecule( this.getMolecule( atom ) );
           this.separateMoleculeDestinations();
-        } else {
+        }
+        else {
           this.addAtomToPlay( atom );
         }
       }
@@ -360,7 +365,7 @@ define( function( require ) {
       _.each( molecule.atoms, function( atom ) {
         kit.recycleAtomIntoBuckets( atom, true );
       } );
-      this. removeMolecule( molecule );
+      this.removeMolecule( molecule );
     },
 
     padMoleculeBounds: function( bounds ) {

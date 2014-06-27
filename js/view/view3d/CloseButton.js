@@ -18,11 +18,12 @@ define( function( require ) {
   var CloseButton = namespace.CloseButton = function CloseButton( callback, options ) {
     var outside = 20;
     var inside = 9;
-    var shape = new Shape().circle( 0, 0, outside )      // outside circle
-                             .moveTo( -inside, -inside ) // X line 1
-                             .lineTo( inside, inside )
-                             .moveTo( inside, -inside )  // X line 2
-                             .lineTo( -inside, inside );
+    var shape = new Shape()
+      .circle( 0, 0, outside )    // outside circle
+      .moveTo( -inside, -inside ) // X line 1
+      .lineTo( inside, inside )
+      .moveTo( inside, -inside )  // X line 2
+      .lineTo( -inside, inside );
     var commonOptions = {
       lineWidth: 4,
       lineCap: 'round'

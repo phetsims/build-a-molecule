@@ -29,16 +29,17 @@ define( function( require ) {
 
     if ( isWide ) {
       this.availableKitBounds = new Rectangle( -halfWidth, kitBottom, availableWidth, kitHeight );
-    } else {
+    }
+    else {
       // leave room for collection area
       this.availableKitBounds = new Rectangle( -halfWidth, kitBottom, availableWidth - Constants.modelPadding - collectionAreaModelWidth, kitHeight );
     }
 
     this.availablePlayAreaBounds = new Rectangle(
-            -Constants.modelSize.width / 2, // far left part of model
-            kitTop, // top of kit
-            this.availableKitBounds.width + Constants.modelPadding * 2, // add in padding, since there is padding in-between the kit and collection area
-            Constants.modelSize.height / 2 - kitTop );
+        -Constants.modelSize.width / 2, // far left part of model
+      kitTop, // top of kit
+        this.availableKitBounds.width + Constants.modelPadding * 2, // add in padding, since there is padding in-between the kit and collection area
+        Constants.modelSize.height / 2 - kitTop );
   };
 
   return LayoutBounds;

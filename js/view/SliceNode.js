@@ -72,13 +72,15 @@ define( function( require ) {
         var isStep = !!lastPoint;
         if ( lastPoint ) {
           context.moveTo( lastPoint.x, lastPoint.y );
-        } else {
+        }
+        else {
           lastPoint = new Vector2();
         }
 
         // compute offset and draw the latest segment on the canvas
-        lastPoint.setXY( event.pointer.point.x - globalBounds.x,
-                       event.pointer.point.y - globalBounds.y );
+        lastPoint.setXY(
+            event.pointer.point.x - globalBounds.x,
+            event.pointer.point.y - globalBounds.y );
         context.lineTo( lastPoint.x, lastPoint.y );
         context.stroke();
 

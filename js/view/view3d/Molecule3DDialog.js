@@ -168,7 +168,7 @@ define( function( require ) {
       background.setRectBounds( windowBounds );
 
       var backgroundGradient = new RadialGradient( windowBounds.centerX, windowBounds.centerY, 0,
-                                                   windowBounds.centerX, windowBounds.centerY, Math.max( windowBounds.centerX, windowBounds.centerY ) );
+        windowBounds.centerX, windowBounds.centerY, Math.max( windowBounds.centerX, windowBounds.centerY ) );
       backgroundGradient.addColorStop( 0, 'rgba(0,0,0,0.95)' );
       backgroundGradient.addColorStop( 1, 'rgba(0,0,0,0.85)' );
 
@@ -176,6 +176,7 @@ define( function( require ) {
 
       moleculeNode.setMoleculeBounds( dialog.getGlobalCanvasBounds( view ) );
     }
+
     updateLayout();
     scene.addEventListener( 'resize', updateLayout );
     view.addEventListener( 'bounds', updateLayout );

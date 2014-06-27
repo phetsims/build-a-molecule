@@ -4,62 +4,62 @@
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 require( [
-  // used in the function call
-  'JOIST/SimLauncher', 'JOIST/Sim', 'string!BAM/build-a-molecule.name',
-  'BAM/screens/MakeMoleculeScreen', 'BAM/screens/CollectMultipleScreen', 'BAM/screens/LargerMoleculesScreen',
+    // used in the function call
+    'JOIST/SimLauncher', 'JOIST/Sim', 'string!BAM/build-a-molecule.name',
+    'BAM/screens/MakeMoleculeScreen', 'BAM/screens/CollectMultipleScreen', 'BAM/screens/LargerMoleculesScreen',
 
-  'BAM/namespace',
-  'BAM/control/CollectionPanel',
+    'BAM/namespace',
+    'BAM/control/CollectionPanel',
 
-  // specified as dependencies for independent debugging (playground, etc.)
-  'BAM/model/Atom2',
-  'BAM/model/Bond',
-  'BAM/model/Bucket',
-  'BAM/model/MoleculeStructure',
-  'BAM/model/Molecule',
-  'BAM/model/Direction',
-  'BAM/model/LewisDotModel',
-  'BAM/model/LayoutBounds',
-  'BAM/model/CompleteMolecule',
-  'BAM/model/StrippedMolecule',
-  'BAM/model/MoleculeList',
-  'BAM/model/ElementHistogram',
-  'BAM/model/Kit',
-  'BAM/model/CollectionBox',
-  'BAM/model/KitCollection',
-  'BAM/model/CollectionList',
+    // specified as dependencies for independent debugging (playground, etc.)
+    'BAM/model/Atom2',
+    'BAM/model/Bond',
+    'BAM/model/Bucket',
+    'BAM/model/MoleculeStructure',
+    'BAM/model/Molecule',
+    'BAM/model/Direction',
+    'BAM/model/LewisDotModel',
+    'BAM/model/LayoutBounds',
+    'BAM/model/CompleteMolecule',
+    'BAM/model/StrippedMolecule',
+    'BAM/model/MoleculeList',
+    'BAM/model/ElementHistogram',
+    'BAM/model/Kit',
+    'BAM/model/CollectionBox',
+    'BAM/model/KitCollection',
+    'BAM/model/CollectionList',
 
-  // view
-  'BAM/view/AtomNode',
-  'BAM/view/MoleculeMetadataNode',
-  'BAM/view/MoleculeBondNode',
-  'BAM/view/MoleculeBondContainerNode',
-  'BAM/view/KitView',
-  'BAM/view/KitCollectionNode',
-  'BAM/view/BAMView',
-  'BAM/view/MoleculeCollectingView',
-  'BAM/view/SliceNode',
-  'BAM/view/view3d/ShowMolecule3DButtonNode',
-  'BAM/view/view3d/Molecule3DDialog',
-  'BAM/view/view3d/Molecule3DNode',
-  'BAM/view/view3d/CloseButton',
-  'BAM/control/KitPanel',
-  'BAM/control/CollectionPanel',
-  'BAM/control/AllFilledDialogNode',
-  'BAM/control/CollectionBoxNode',
-  'BAM/control/SingleCollectionBoxNode',
-  'BAM/control/MultipleCollectionBoxNode',
-  'BAM/control/CollectionAreaNode',
-  'BAM/control/CollectionPanel',
+    // view
+    'BAM/view/AtomNode',
+    'BAM/view/MoleculeMetadataNode',
+    'BAM/view/MoleculeBondNode',
+    'BAM/view/MoleculeBondContainerNode',
+    'BAM/view/KitView',
+    'BAM/view/KitCollectionNode',
+    'BAM/view/BAMView',
+    'BAM/view/MoleculeCollectingView',
+    'BAM/view/SliceNode',
+    'BAM/view/view3d/ShowMolecule3DButtonNode',
+    'BAM/view/view3d/Molecule3DDialog',
+    'BAM/view/view3d/Molecule3DNode',
+    'BAM/view/view3d/CloseButton',
+    'BAM/control/KitPanel',
+    'BAM/control/CollectionPanel',
+    'BAM/control/AllFilledDialogNode',
+    'BAM/control/CollectionBoxNode',
+    'BAM/control/SingleCollectionBoxNode',
+    'BAM/control/MultipleCollectionBoxNode',
+    'BAM/control/CollectionAreaNode',
+    'BAM/control/CollectionPanel',
 
-  // data
-  'BAM/model/data/collectionMoleculesData',
-  'BAM/model/data/otherMoleculesData',
-  'BAM/model/data/structuresData',
+    // data
+    'BAM/model/data/collectionMoleculesData',
+    'BAM/model/data/otherMoleculesData',
+    'BAM/model/data/structuresData',
 
-  // why, require.js, why?
-  'SCENERY_PHET/NextPreviousNavigationNode'
-],
+    // why, require.js, why?
+    'SCENERY_PHET/NextPreviousNavigationNode'
+  ],
   function( SimLauncher, Sim, buildAMoleculeNameString, MakeMoleculeScreen, CollectMultipleScreen, LargerMoleculesScreen, namespace, CollectionPanel ) {
     'use strict';
 

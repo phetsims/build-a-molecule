@@ -29,8 +29,8 @@ define( function( require ) {
     CollectionBoxNode.call( this, box, toModelBounds );
 
     this.addHeaderNode( new HTMLText( StringUtils.format( collection_multiple_goalFormatString,
-                                                          box.capacity,
-                                                          box.moleculeType.getGeneralFormulaFragment() ), {
+      box.capacity,
+      box.moleculeType.getGeneralFormulaFragment() ), {
       font: new PhetFont( {
         size: 15,
         weight: 'bold'
@@ -46,7 +46,8 @@ define( function( require ) {
     box.quantityProperty.link( function( quantity ) {
       if ( quantity === 0 ) {
         quantityNode.text = collection_multiple_quantityEmptyString;
-      } else {
+      }
+      else {
         quantityNode.text = StringUtils.format( collection_multiple_quantityFormatString, quantity, box.moleculeType.getGeneralFormulaFragment() );
       }
     } );

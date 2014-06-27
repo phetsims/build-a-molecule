@@ -110,7 +110,7 @@ define( function( require ) {
       var moleculeViewBounds = Constants.modelViewTransform.modelToViewBounds( modelPositionBounds );
 
       this.setTranslation( moleculeViewBounds.centerX - this.width / 2, // horizontally center
-                           moleculeViewBounds.minY - this.height - Constants.metadataPaddingBetweenNodeAndMolecule ); // offset from top of molecule
+          moleculeViewBounds.minY - this.height - Constants.metadataPaddingBetweenNodeAndMolecule ); // offset from top of molecule
     }
   } );
 

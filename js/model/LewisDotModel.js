@@ -190,7 +190,8 @@ define( function( require ) {
           return false;
         }
         // here, they both must be hydrogen, so we don't need to worry about adding it in
-      } else {
+      }
+      else {
         coordinateMap[idx] = atom;
       }
 

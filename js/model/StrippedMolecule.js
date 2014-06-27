@@ -47,7 +47,8 @@ define( function( require ) {
         if ( aIsHydrogen || bIsHydrogen ) {
           // increment hydrogen count of either A or B, if the bond contains hydrogen
           that.hydrogenCount[atomsToAdd.indexOf( aIsHydrogen ? bond.b : bond.a )]++;
-        } else {
+        }
+        else {
           // bond doesn't involve hydrogen, so we add it to our stripped version
           bondsToAdd.push( bond );
         }
@@ -193,7 +194,7 @@ define( function( require ) {
         return false;
       }
       if ( myUnvisitedNeighbors.length === 0 ) {
-          // no more unmatched atoms
+        // no more unmatched atoms
         return true;
       }
       var size = myUnvisitedNeighbors.length;
