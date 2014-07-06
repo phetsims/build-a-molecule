@@ -19,7 +19,7 @@ define( function( require ) {
   var Bounds2 = require( 'DOT/Bounds2' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Text = require( 'SCENERY/nodes/Text' );
-  var HTMLText = require( 'SCENERY/nodes/HTMLText' );
+  var SubSupText = require( 'SCENERY_PHET/SubSupText' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var RadialGradient = require( 'SCENERY/util/RadialGradient' );
   var Shape = require( 'KITE/Shape' );
@@ -66,7 +66,7 @@ define( function( require ) {
     /*---------------------------------------------------------------------------*
     * Chemical formula label
     *----------------------------------------------------------------------------*/
-    var formulaText = new HTMLText( completeMolecule.getGeneralFormulaFragment(), {
+    var formulaText = new SubSupText( completeMolecule.getGeneralFormulaFragment(), {
       font: new PhetFont( 20 ),
       fill: '#bbb',
       centerX: stageCenterX,

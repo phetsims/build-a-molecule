@@ -12,7 +12,7 @@ define( function( require ) {
   var namespace = require( 'BAM/namespace' );
   var Bounds2 = require( 'DOT/Bounds2' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var HTMLText = require( 'SCENERY/nodes/HTMLText' );
+  var SubSupText = require( 'SCENERY_PHET/SubSupText' );
   var CollectionBoxNode = require( 'BAM/control/CollectionBoxNode' );
   var MoleculeList = require( 'BAM/model/MoleculeList' );
   var CollectionBox = require( 'BAM/model/CollectionBox' );
@@ -27,7 +27,7 @@ define( function( require ) {
 
     assert && assert( box.capacity === 1 );
 
-    this.addHeaderNode( new HTMLText( StringUtils.format( collection_single_formatString,
+    this.addHeaderNode( new SubSupText( StringUtils.format( collection_single_formatString,
       box.moleculeType.getGeneralFormulaFragment(),
       box.moleculeType.getDisplayName() ), {
       font: new PhetFont( {
