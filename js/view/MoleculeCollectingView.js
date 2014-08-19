@@ -106,8 +106,6 @@ define( function( require ) {
       } );
 
       return kitCollectionNode;
-    },
-
-    layoutBounds: new Rectangle( 0, 0, Constants.stageSize.width, Constants.stageSize.height )
+    }
   } );
 } );

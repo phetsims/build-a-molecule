@@ -18,7 +18,7 @@ define( function( require ) {
   var KitCollectionNode = require( 'BAM/view/KitCollectionNode' );
 
   var BAMView = namespace.BAMView = function BAMView( collectionList ) {
-    ScreenView.call( this, { renderer: 'svg' } );
+    ScreenView.call( this, { renderer: 'svg', layoutBounds: new Rectangle( 0, 0, Constants.stageSize.width, Constants.stageSize.height ) } );
     var view = this;
 
     this.baseNode = new Node();
@@ -51,8 +51,6 @@ define( function( require ) {
 
       // supposedly: return this so we can manipulate it in an override....?
       return kitCollectionNode;
-    },
-
-    layoutBounds: new Rectangle( 0, 0, Constants.stageSize.width, Constants.stageSize.height )
+    }
   } );
 } );
