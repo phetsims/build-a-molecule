@@ -12,7 +12,6 @@ define( function( require ) {
   var namespace = require( 'BAM/namespace' );
   var Constants = require( 'BAM/Constants' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var Rectangle = require( 'DOT/Rectangle' );
   var BAMView = require( 'BAM/view/BAMView' );
   var CollectionPanel = require( 'BAM/control/CollectionPanel' );
   var AllFilledDialogNode = require( 'BAM/control/AllFilledDialogNode' );
