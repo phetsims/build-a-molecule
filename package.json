@@ -17,6 +17,5 @@
     "esprima": "~1.0.4",
     "escodegen": "~0.0.27"
   },
-  "requirejsNamespace": "BAM",
   "simTitleStringKey": "BAM/build-a-molecule.name"
 }
