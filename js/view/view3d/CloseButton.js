@@ -28,13 +28,13 @@ define( function( require ) {
       lineWidth: 4,
       lineCap: 'round'
     };
-    var upNode = new Path( shape, _.extend( { stroke: '#eee', fill: '#000' }, commonOptions ) );
+    var idleNode = new Path( shape, _.extend( { stroke: '#eee', fill: '#000' }, commonOptions ) );
     var overNode = new Path( shape, _.extend( { stroke: '#fff', fill: '#666' }, commonOptions ) );
-    var downNode = new Path( shape, _.extend( { stroke: '#fff', fill: '#000' }, commonOptions ) );
+    var pressedNode = new Path( shape, _.extend( { stroke: '#fff', fill: '#000' }, commonOptions ) );
     var disabledNode = new Path( shape, _.extend( { stroke: '#444', fill: '#000' }, commonOptions ) );
 
     options.listener = callback; //TODO consider replacing the constructor callback parameter with an option so we don't need to do this.
-    NodesPushButton.call( this, upNode, overNode, downNode, disabledNode, options );
+    NodesPushButton.call( this, idleNode, overNode, pressedNode, disabledNode, options );
     this.touchArea = new Shape().circle( 0, 0, outside + 40 );
   };
 
