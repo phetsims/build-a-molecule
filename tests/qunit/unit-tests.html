@@ -15,9 +15,10 @@
   <script type="text/javascript" src="../../../sherpa/jquery-2.1.0.js"></script>
   <script type="text/javascript" src="../../../sherpa/lodash-2.4.1.js"></script>
   <script type="text/javascript" src="../../../sherpa/has.js"></script>
+  <script src="../../../assert/js/assert.js"></script>
   <script type="text/javascript">
-    has.add( 'assert.basic', function( global, document, anElement ) { return true; } );
-    has.add( 'assert.slow', function( global, document, anElement ) { return true; } );
+    window.assertions.enableAssert();
+    window.assertions.enableAssertSlow();
   </script>
   <script type="text/javascript" src="../../../sherpa/jshint-2.5.0.js"></script>
   <script type="text/javascript" src="../../../sherpa/qunit-1.14.0.js"></script>
@@ -30,15 +31,8 @@
   <script type="text/javascript" src="../../../phet-core/tests/qunit/unitTestLintFilesMatching.js"></script>
 
   <script type="text/javascript">
-    if ( window.has ) {
-      // enable assertions
-      window.has.add( 'assert.dot', function( global, document, anElement ) { return true; } );
-      window.has.add( 'assert.kite', function( global, document, anElement ) { return true; } );
-      window.has.add( 'assert.kite.extra', function( global, document, anElement ) { return true; } );
-      window.has.add( 'assert.scenery', function( global, document, anElement ) { return true; } );
-      window.has.add( 'assert.scenery.extra', function( global, document, anElement ) { return true; } );
-      window.has.add( 'assert.build-a-molecule', function( global, document, anElement ) { return true; } );
-    }
+    window.assertions.enableAssert();
+    window.assertions.enableAssertSlow();
   </script>
 
   <script data-main="../../js/build-a-molecule-config.js" src="../../../sherpa/require-2.1.11.js"></script>
