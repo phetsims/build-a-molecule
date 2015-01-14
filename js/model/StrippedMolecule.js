@@ -33,7 +33,7 @@ define( function( require ) {
      */
     this.hydrogenCount = new Array( atomsToAdd.length );
     for ( var i = 0; i < this.hydrogenCount.length; i++ ) {
-      this.hydrogenCount[i] = 0;
+      this.hydrogenCount[ i ] = 0;
     }
 
     // copy non-hydrogen honds, and mark hydrogen bonds
@@ -46,7 +46,7 @@ define( function( require ) {
 
         if ( aIsHydrogen || bIsHydrogen ) {
           // increment hydrogen count of either A or B, if the bond contains hydrogen
-          that.hydrogenCount[atomsToAdd.indexOf( aIsHydrogen ? bond.b : bond.a )]++;
+          that.hydrogenCount[ atomsToAdd.indexOf( aIsHydrogen ? bond.b : bond.a ) ]++;
         }
         else {
           // bond doesn't involve hydrogen, so we add it to our stripped version
@@ -88,7 +88,7 @@ define( function( require ) {
     },
 
     getHydrogenCount: function( atom ) {
-      return this.hydrogenCount[this.getIndex( atom )];
+      return this.hydrogenCount[ this.getIndex( atom ) ];
     },
 
     // @param {StrippedMolecule} other
@@ -106,10 +106,10 @@ define( function( require ) {
       // TODO: performance: use something more like HashSet here
       var myVisited = [];
       var otherVisited = [];
-      var firstAtom = this.stripped.atoms[0]; // grab the 1st atom
+      var firstAtom = this.stripped.atoms[ 0 ]; // grab the 1st atom
       var length = other.stripped.atoms.length;
       for ( var i = 0; i < length; i++ ) {
-        var otherAtom = other.stripped.atoms[i];
+        var otherAtom = other.stripped.atoms[ i ];
         if ( that.checkEquivalency( other, myVisited, otherVisited, firstAtom, otherAtom, false ) ) {
           // we found an isomorphism with firstAtom => otherAtom
           return true;
@@ -142,10 +142,10 @@ define( function( require ) {
       }
       var myVisited = [];
       var otherVisited = [];
-      var firstAtom = this.stripped.atoms[0]; // grab the 1st atom
+      var firstAtom = this.stripped.atoms[ 0 ]; // grab the 1st atom
       var length = other.stripped.atoms.length;
       for ( var i = 0; i < length; i++ ) {
-        var otherAtom = other.stripped.atoms[i];
+        var otherAtom = other.stripped.atoms[ i ];
         if ( that.checkEquivalency( other, myVisited, otherVisited, firstAtom, otherAtom, true ) ) {
           // we found an isomorphism with firstAtom => otherAtom
           return true;
@@ -204,9 +204,9 @@ define( function( require ) {
       otherVisited.push( otherAtom );
 
       /*
-        equivalency matrix. each entry is basically whether the subtree in the direction of the "my" atom is
-        equivalent to the subtree in the direction of the "other" atom, for all possible my and other atoms
-      */
+       equivalency matrix. each entry is basically whether the subtree in the direction of the "my" atom is
+       equivalent to the subtree in the direction of the "other" atom, for all possible my and other atoms
+       */
       var equivalences = new Array( size * size ); // booleans
 
       // keep track of available indices for the following matrix equivalency check
@@ -216,7 +216,7 @@ define( function( require ) {
       for ( var myIndex = 0; myIndex < size; myIndex++ ) {
         availableIndices.push( myIndex );
         for ( var otherIndex = 0; otherIndex < size; otherIndex++ ) {
-          equivalences[myIndex * size + otherIndex] = this.checkEquivalency( other, myVisited, otherVisited, myUnvisitedNeighbors[myIndex], otherUnvisitedNeighbors[otherIndex], subCheck );
+          equivalences[ myIndex * size + otherIndex ] = this.checkEquivalency( other, myVisited, otherVisited, myUnvisitedNeighbors[ myIndex ], otherUnvisitedNeighbors[ otherIndex ], subCheck );
         }
       }
 
@@ -232,7 +232,7 @@ define( function( require ) {
       var that = this;
       var result = new StrippedMolecule( this.stripped.getCopyWithAtomRemoved( atom ) );
       _.each( result.stripped.atoms, function( resultAtom ) {
-        result.hydrogenCount[result.getIndex( resultAtom )] = that.getHydrogenCount( resultAtom );
+        result.hydrogenCount[ result.getIndex( resultAtom ) ] = that.getHydrogenCount( resultAtom );
       } );
       return result;
     }

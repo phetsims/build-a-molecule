@@ -76,7 +76,7 @@ define( function( require ) {
     getDisplayName: function() {
       // first check if we have it translated. do NOT warn on missing
       var lookupKey = this.stringKey;
-      var stringLookup = Strings[lookupKey]; // NOTE: do NOT warn or error on missing strings, this is generally expected
+      var stringLookup = Strings[ lookupKey ]; // NOTE: do NOT warn or error on missing strings, this is generally expected
 
       // we need to check whether it came back the same as the key due to how getString works.
       if ( stringLookup && stringLookup !== lookupKey ) {
@@ -96,7 +96,7 @@ define( function( require ) {
       // if we can find it in the common chemistry nodes, use that
       var length = nodeTypes.length;
       for ( var i = 0; i < length; i++ ) {
-        var NodeType = nodeTypes[i];
+        var NodeType = nodeTypes[ i ];
         if ( NodeType.name === molecularFormulaType || ( NodeType.name === 'NH3Node' && molecularFormula === 'H3N' ) ) {
           return new NodeType();
         }
@@ -128,7 +128,7 @@ define( function( require ) {
     var characters = str.split( '' );
     var lastWasSpace = true;
     for ( var i = 0; i < characters.length; i++ ) {
-      var character = characters[i];
+      var character = characters[ i ];
 
       // whitespace check in general
       if ( /\s/.test( character ) ) {
@@ -136,7 +136,7 @@ define( function( require ) {
       }
       else {
         if ( lastWasSpace && /[a-z]/.test( character ) ) {
-          characters[i] = character.toUpperCase();
+          characters[ i ] = character.toUpperCase();
         }
         lastWasSpace = false;
       }
@@ -145,8 +145,8 @@ define( function( require ) {
   };
 
   /*---------------------------------------------------------------------------*
-  * serialization
-  *----------------------------------------------------------------------------*/
+   * serialization
+   *----------------------------------------------------------------------------*/
 
   /**
    * Construct a molecule out of a pipe-separated line.
@@ -160,49 +160,49 @@ define( function( require ) {
     var i;
     var tokens = line.split( '|' );
     var idx = 0;
-    var commonName = tokens[idx++];
-    var molecularFormula = tokens[idx++];
-    var atomCount = parseInt( tokens[idx++], 10 );
-    var bondCount = parseInt( tokens[idx++], 10 );
+    var commonName = tokens[ idx++ ];
+    var molecularFormula = tokens[ idx++ ];
+    var atomCount = parseInt( tokens[ idx++ ], 10 );
+    var bondCount = parseInt( tokens[ idx++ ], 10 );
     var completeMolecule = new CompleteMolecule( commonName, molecularFormula, atomCount, bondCount, true, true );
 
     // for each atom, read its symbol, then 2d coordinates, then 3d coordinates (total of 6 fields)
     for ( i = 0; i < atomCount; i++ ) {
-      var symbol = tokens[idx++];
-      var x2d = parseFloat( tokens[idx++] );
-      var y2d = parseFloat( tokens[idx++] );
-      var x3d = parseFloat( tokens[idx++] );
-      var y3d = parseFloat( tokens[idx++] );
-      var z3d = parseFloat( tokens[idx++] );
+      var symbol = tokens[ idx++ ];
+      var x2d = parseFloat( tokens[ idx++ ] );
+      var y2d = parseFloat( tokens[ idx++ ] );
+      var x3d = parseFloat( tokens[ idx++ ] );
+      var y3d = parseFloat( tokens[ idx++ ] );
+      var z3d = parseFloat( tokens[ idx++ ] );
       var atom = new PubChemAtomFull( Element.getElementBySymbol( symbol ), x2d, y2d, x3d, y3d, z3d );
       completeMolecule.addAtom( atom );
     }
 
     // for each bond, read atom indices (2 of them, which are 1-indexed), and then the order of the bond (single, double, triple, etc.)
     for ( i = 0; i < bondCount; i++ ) {
-      var a = parseInt( tokens[idx++], 10 );
-      var b = parseInt( tokens[idx++], 10 );
-      var order = parseInt( tokens[idx++], 10 );
-      var bond = new PubChemBond( completeMolecule.atoms[a - 1], completeMolecule.atoms[b - 1], order ); // -1 since our format is 1-based
+      var a = parseInt( tokens[ idx++ ], 10 );
+      var b = parseInt( tokens[ idx++ ], 10 );
+      var order = parseInt( tokens[ idx++ ], 10 );
+      var bond = new PubChemBond( completeMolecule.atoms[ a - 1 ], completeMolecule.atoms[ b - 1 ], order ); // -1 since our format is 1-based
       completeMolecule.addBond( bond );
     }
 
-    completeMolecule.cid = parseInt( tokens[idx++], 10 );
+    completeMolecule.cid = parseInt( tokens[ idx++ ], 10 );
 
     return completeMolecule;
   };
 
   CompleteMolecule.fromSerial2 = function( line ) {
     /*---------------------------------------------------------------------------*
-    * extract header
-    *----------------------------------------------------------------------------*/
+     * extract header
+     *----------------------------------------------------------------------------*/
     var tokens = line.split( '|' );
     var idx = 0;
-    var commonName = tokens[idx++];
-    var molecularFormula = tokens[idx++];
-    var cidString = tokens[idx++];
+    var commonName = tokens[ idx++ ];
+    var molecularFormula = tokens[ idx++ ];
+    var cidString = tokens[ idx++ ];
     var cid = parseInt( cidString, 10 );
-    var format = tokens[idx++];
+    var format = tokens[ idx++ ];
 
     var has2dAnd3d = format === 'full';
     var has2d = format === '2d' || has2dAnd3d;
@@ -220,10 +220,10 @@ define( function( require ) {
   };
 
   /*---------------------------------------------------------------------------*
-  * atom varieties, depending on what information we have from PubChem. varieties
-  * are necessary for memory size requirements so we don't store more data than
-  * necessary.
-  *----------------------------------------------------------------------------*/
+   * atom varieties, depending on what information we have from PubChem. varieties
+   * are necessary for memory size requirements so we don't store more data than
+   * necessary.
+   *----------------------------------------------------------------------------*/
 
   // TODO: performance: get rid of ES5 here?
   var PubChemAtom = CompleteMolecule.PubChemAtom = function( element ) {
@@ -262,9 +262,9 @@ define( function( require ) {
   } );
   PubChemAtom2.parser = function( atomString ) {
     var tokens = atomString.split( ' ' );
-    return new PubChemAtom2( Element.getElementBySymbol( tokens[0] ),
-      parseFloat( tokens[1] ),
-      parseFloat( tokens[2] ) );
+    return new PubChemAtom2( Element.getElementBySymbol( tokens[ 0 ] ),
+      parseFloat( tokens[ 1 ] ),
+      parseFloat( tokens[ 2 ] ) );
   };
 
   var PubChemAtom3 = CompleteMolecule.PubChemAtom3 = function( element, x3d, y3d, z3d ) {
@@ -289,10 +289,10 @@ define( function( require ) {
   } );
   PubChemAtom3.parser = function( atomString ) {
     var tokens = atomString.split( ' ' );
-    return new PubChemAtom3( Element.getElementBySymbol( tokens[0] ),
-      parseFloat( tokens[1] ),
-      parseFloat( tokens[2] ),
-      parseFloat( tokens[3] ) );
+    return new PubChemAtom3( Element.getElementBySymbol( tokens[ 0 ] ),
+      parseFloat( tokens[ 1 ] ),
+      parseFloat( tokens[ 2 ] ),
+      parseFloat( tokens[ 3 ] ) );
   };
 
   var PubChemAtomFull = CompleteMolecule.PubChemAtomFull = function( element, x2d, y2d, x3d, y3d, z3d ) {
@@ -319,12 +319,12 @@ define( function( require ) {
   } );
   PubChemAtomFull.parser = function( atomString ) {
     var tokens = atomString.split( ' ' );
-    return new PubChemAtomFull( Element.getElementBySymbol( tokens[0] ),
-      parseFloat( tokens[1] ),
-      parseFloat( tokens[2] ),
-      parseFloat( tokens[3] ),
-      parseFloat( tokens[4] ),
-      parseFloat( tokens[5] ) );
+    return new PubChemAtomFull( Element.getElementBySymbol( tokens[ 0 ] ),
+      parseFloat( tokens[ 1 ] ),
+      parseFloat( tokens[ 2 ] ),
+      parseFloat( tokens[ 3 ] ),
+      parseFloat( tokens[ 4 ] ),
+      parseFloat( tokens[ 5 ] ) );
   };
 
   // a,b are PubChemAtoms of some type
@@ -339,9 +339,9 @@ define( function( require ) {
   } );
   PubChemBond.parser = function( bondString, connectedAtom, molecule ) {
     var tokens = bondString.split( '-' );
-    var index = parseInt( tokens[0], 10 );
-    var order = parseInt( tokens[1], 10 );
-    return new PubChemBond( connectedAtom, molecule.atoms[index], order );
+    var index = parseInt( tokens[ 0 ], 10 );
+    var order = parseInt( tokens[ 1 ], 10 );
+    return new PubChemBond( connectedAtom, molecule.atoms[ index ], order );
   };
 
   return CompleteMolecule;

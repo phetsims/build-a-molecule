@@ -63,10 +63,10 @@ define( function( require ) {
       var list = this;
 
       // switch to the first collection
-      this.switchTo( this.collections[0] );
+      this.switchTo( this.collections[ 0 ] );
 
       // reset it
-      this.collections[0].resetAll();
+      this.collections[ 0 ].resetAll();
 
       // remove all the other collections
       _.each( this.collections.slice( 0 ), function( collection ) {
@@ -93,11 +93,11 @@ define( function( require ) {
     },
 
     switchToPreviousCollection: function() {
-      this.switchTo( this.collections[this.currentIndex - 1] );
+      this.switchTo( this.collections[ this.currentIndex - 1 ] );
     },
 
     switchToNextCollection: function() {
-      this.switchTo( this.collections[this.currentIndex + 1] );
+      this.switchTo( this.collections[ this.currentIndex + 1 ] );
     }
   } );
 

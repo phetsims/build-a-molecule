@@ -38,8 +38,8 @@ define( function( require ) {
     _.each( collectionAttachmentCallbacks, function( callback ) { callback(); } );
 
     /*---------------------------------------------------------------------------*
-    * collection box hint arrow. add this only to the 1st collection
-    *----------------------------------------------------------------------------*/
+     * collection box hint arrow. add this only to the 1st collection
+     *----------------------------------------------------------------------------*/
 
     // final KitCollection firstCollection = collectionList.currentCollection.get();
     // for ( final Kit kit : firstCollection.getKits() ) {

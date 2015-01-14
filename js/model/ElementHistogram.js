@@ -17,7 +17,7 @@ define( function( require ) {
 
     this.quantities = {};
     _.each( Constants.supportedElements, function( element ) {
-      histogram.quantities[element.symbol] = 0;
+      histogram.quantities[ element.symbol ] = 0;
     } );
 
     if ( molecule ) {
@@ -29,11 +29,11 @@ define( function( require ) {
     constructor: ElementHistogram,
 
     getQuantity: function( element ) {
-      return this.quantities[element.symbol];
+      return this.quantities[ element.symbol ];
     },
 
     addElement: function( element ) {
-      this.quantities[element.symbol] += 1;
+      this.quantities[ element.symbol ] += 1;
     },
 
     addMolecule: function( molecule ) {
@@ -53,7 +53,7 @@ define( function( require ) {
 
       var length = Constants.supportedElements.length;
       for ( var i = 0; i < length; i++ ) {
-        var element = Constants.supportedElements[i];
+        var element = Constants.supportedElements[ i ];
 
         if ( histogram.getQuantity( element ) < otherHistogram.getQuantity( element ) ) {
           return false;
@@ -81,7 +81,7 @@ define( function( require ) {
       if ( otherHistogram instanceof ElementHistogram ) {
         var length = Constants.supportedElements.length;
         for ( var i = 0; i < length; i++ ) {
-          var element = Constants.supportedElements[i];
+          var element = Constants.supportedElements[ i ];
 
           if ( histogram.getQuantity( element ) !== otherHistogram.getQuantity( element ) ) {
             return false;
@@ -98,7 +98,7 @@ define( function( require ) {
   // object with symbols as keys, result as true
   ElementHistogram.allowedChemicalSymbols = {};
   _.each( Constants.supportedElements, function( element ) {
-    ElementHistogram.allowedChemicalSymbols[element.symbol] = true;
+    ElementHistogram.allowedChemicalSymbols[ element.symbol ] = true;
   } );
 
   return ElementHistogram;

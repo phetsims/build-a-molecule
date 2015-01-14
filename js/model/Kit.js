@@ -98,7 +98,7 @@ define( function( require ) {
 
       // lays out all of the buckets from the left to right
       for ( var i = 0; i < buckets.length; i++ ) {
-        var bucket = buckets[i];
+        var bucket = buckets[ i ];
         if ( i !== 0 ) {
           usedWidth += Kit.bucketPadding;
         }
@@ -107,7 +107,7 @@ define( function( require ) {
         bucketBounds.includeBounds( bucket.containerShape.bounds );
         _.each( bucket.atoms, function( atom ) {
           bucketBounds.includeBounds( new Bounds2( atom.position.x - atom.radius, atom.position.y - atom.radius,
-              atom.position.x + atom.radius, atom.position.y + atom.radius ) );
+            atom.position.x + atom.radius, atom.position.y + atom.radius ) );
         } );
         bucket.position = new Vector2( usedWidth, 0 );
         usedWidth += bucket.width;
@@ -202,7 +202,7 @@ define( function( require ) {
       if ( this.isAtomInPlay( atom ) ) {
         var atoms = this.getMolecule( atom ).atoms;
         for ( var i = 0; i < atoms.length; i++ ) {
-          var atomInMolecule = atoms[i];
+          var atomInMolecule = atoms[ i ];
           if ( atom === atomInMolecule ) {
             continue;
           }
@@ -228,7 +228,7 @@ define( function( require ) {
         atom.visible = false;
       } );
       box.addMolecule( molecule );
-      this.removedMolecules[molecule.moleculeId] = box;
+      this.removedMolecules[ molecule.moleculeId ] = box;
     },
 
     /**
@@ -243,11 +243,11 @@ define( function( require ) {
       // TODO: performance: seems like this could be a bottleneck? faster ways?
       var numMolecules = this.molecules.length;
       for ( var i = 0; i < numMolecules; i++ ) {
-        var molecule = this.molecules[i];
+        var molecule = this.molecules[ i ];
 
         var numAtoms = molecule.atoms.length;
         for ( var j = 0; j < numAtoms; j++ ) {
-          var otherAtom = molecule.atoms[j];
+          var otherAtom = molecule.atoms[ j ];
           if ( otherAtom === atom ) {
             return molecule;
           }
@@ -311,8 +311,8 @@ define( function( require ) {
     },
 
     /*---------------------------------------------------------------------------*
-    * model implementation
-    *----------------------------------------------------------------------------*/
+     * model implementation
+     *----------------------------------------------------------------------------*/
 
     addMolecule: function( molecule ) {
       this.molecules.push( molecule );
@@ -388,7 +388,7 @@ define( function( require ) {
         foundOverlap = false;
         var numMolecules = this.molecules.length;
         for ( var i = 0; i < numMolecules; i++ ) {
-          var a = this.molecules[i];
+          var a = this.molecules[ i ];
 
           var aBounds = this.padMoleculeBounds( a.destinationBounds );
 
@@ -411,7 +411,7 @@ define( function( require ) {
 
           // then separate it from other molecules
           for ( var k = 0; k < numMolecules; k++ ) {
-            var b = this.molecules[k];
+            var b = this.molecules[ k ];
 
             if ( a.moleculeId >= b.moleculeId ) {
               // this removes the case where a == b, and will make sure we don't run the following code twice for (a,b) and (b,a)
@@ -487,8 +487,8 @@ define( function( require ) {
       this.addMolecule( newMolecule );
 
       /*---------------------------------------------------------------------------*
-      * bonding diagnostics and sanity checks
-      *----------------------------------------------------------------------------*/
+       * bonding diagnostics and sanity checks
+       *----------------------------------------------------------------------------*/
 
       var serializedForm = this.getMolecule( a ).toSerial2();
       window.console && console.log && console.log( 'created structure: ' + serializedForm );

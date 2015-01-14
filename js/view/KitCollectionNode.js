@@ -24,16 +24,16 @@ define( function( require ) {
     var kitMap = {}; // maps kit ID => KitView
     _.each( collection.kits, function( kit ) {
       var kitView = new KitView( kit, view );
-      kitMap[kit.id] = kitView;
+      kitMap[ kit.id ] = kitView;
     } );
 
     // NOTE: appends to the KitCollectionNode. This works because the KitPanel is always behind (we have a shallower tree this way)
     collection.currentKitProperty.link( function( newKit, oldKit ) {
       if ( oldKit ) {
-        that.removeChild( kitMap[oldKit.id] );
+        that.removeChild( kitMap[ oldKit.id ] );
       }
       if ( newKit ) {
-        that.addChild( kitMap[newKit.id] );
+        that.addChild( kitMap[ newKit.id ] );
       }
     } );
   };

@@ -25,7 +25,7 @@ define( function( require ) {
     this.atom = atom;
     this.connections = {}; // maps Direction ID => LewisDotAtom
     _.each( Direction.values, function( direction ) {
-      lewisDotAtom.connections[direction.id] = null; // nothing in this direction
+      lewisDotAtom.connections[ direction.id ] = null; // nothing in this direction
     } );
   };
 
@@ -33,19 +33,19 @@ define( function( require ) {
     constructor: LewisDotAtom,
 
     hasConnection: function( direction ) {
-      return this.connections[direction.id] !== null;
+      return this.connections[ direction.id ] !== null;
     },
 
     getLewisDotAtom: function( direction ) {
-      return this.connections[direction.id];
+      return this.connections[ direction.id ];
     },
 
     connect: function( direction, lewisDotAtom ) {
-      this.connections[direction.id] = lewisDotAtom;
+      this.connections[ direction.id ] = lewisDotAtom;
     },
 
     disconnect: function( direction ) {
-      this.connections[direction.id] = null;
+      this.connections[ direction.id ] = null;
     }
   };
 
@@ -53,7 +53,7 @@ define( function( require ) {
     constructor: LewisDotModel,
 
     addAtom: function( atom ) {
-      this.atomMap[atom.id] = new LewisDotAtom( atom );
+      this.atomMap[ atom.id ] = new LewisDotAtom( atom );
     },
 
     breakBondsOfAtom: function( atom ) {
@@ -121,7 +121,7 @@ define( function( require ) {
     getBondDirection: function( a, b ) {
       var dotA = this.getLewisDotAtom( a );
       for ( var i = 0; i < 4; i++ ) {
-        var direction = Direction.values[i];
+        var direction = Direction.values[ i ];
         if ( dotA.hasConnection( direction ) && dotA.getLewisDotAtom( direction ).atom === b ) {
           return direction;
         }
@@ -141,11 +141,11 @@ define( function( require ) {
     willAllowBond: function( a, direction, b ) {
 
       /*---------------------------------------------------------------------------*
-      * We need to verify that if we bind these two together that no overlaps occur.
-      * This can be done by creating a coordinate system where atom A is our origin,
-      * and verifying that no atoms share the same coordinates if they are not both
-      * hydrogen.
-      *----------------------------------------------------------------------------*/
+       * We need to verify that if we bind these two together that no overlaps occur.
+       * This can be done by creating a coordinate system where atom A is our origin,
+       * and verifying that no atoms share the same coordinates if they are not both
+       * hydrogen.
+       *----------------------------------------------------------------------------*/
 
       var coordinateMap = {};
 
@@ -160,8 +160,8 @@ define( function( require ) {
     },
 
     /*---------------------------------------------------------------------------*
-    * implementation details
-    *----------------------------------------------------------------------------*/
+     * implementation details
+     *----------------------------------------------------------------------------*/
 
     /**
      * Add "atom" to our coordinate map, and all of its neighbors EXCEPT for excludedAtom.
@@ -184,22 +184,22 @@ define( function( require ) {
       var idx = point.x + ',' + point.y;
 
       // if we have seen a different atom in this position
-      if ( coordinateMap[idx] ) {
+      if ( coordinateMap[ idx ] ) {
         // if at least one isn't hydrogen, fail out
-        if ( !atom.isHydrogen() || !coordinateMap[idx].isHydrogen() ) {
+        if ( !atom.isHydrogen() || !coordinateMap[ idx ].isHydrogen() ) {
           return false;
         }
         // here, they both must be hydrogen, so we don't need to worry about adding it in
       }
       else {
-        coordinateMap[idx] = atom;
+        coordinateMap[ idx ] = atom;
       }
 
       var success = true;
 
       // check all directions so we can explore all other atoms that need to be mapped
       for ( var i = 0; i < 4; i++ ) {
-        var direction = Direction.values[i];
+        var direction = Direction.values[ i ];
         if ( dotAtom.hasConnection( direction ) ) {
           var otherDot = dotAtom.getLewisDotAtom( direction );
 
@@ -220,7 +220,7 @@ define( function( require ) {
     },
 
     getLewisDotAtom: function( atom ) {
-      return this.atomMap[atom.id];
+      return this.atomMap[ atom.id ];
     }
   };
 

@@ -36,10 +36,10 @@ define( function( require ) {
     }
 
     this.availablePlayAreaBounds = new Rectangle(
-        -Constants.modelSize.width / 2, // far left part of model
+      -Constants.modelSize.width / 2, // far left part of model
       kitTop, // top of kit
-        this.availableKitBounds.width + Constants.modelPadding * 2, // add in padding, since there is padding in-between the kit and collection area
-        Constants.modelSize.height / 2 - kitTop );
+      this.availableKitBounds.width + Constants.modelPadding * 2, // add in padding, since there is padding in-between the kit and collection area
+      Constants.modelSize.height / 2 - kitTop );
   };
 
   return LayoutBounds;

@@ -58,8 +58,8 @@ define( function( require ) {
   inherit( CollectionBoxNode, MultipleCollectionBoxNode );
 
   /*---------------------------------------------------------------------------*
-  * precomputation of largest single collection box size
-  *----------------------------------------------------------------------------*/
+   * precomputation of largest single collection box size
+   *----------------------------------------------------------------------------*/
   // TODO: simplify this code from single/multiple into one
   var maxBounds = Bounds2.NOTHING;
 

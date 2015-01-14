@@ -27,7 +27,7 @@ define( function( require ) {
   Direction.West.opposite = Direction.East;
   Direction.East.opposite = Direction.West;
 
-  Direction.values = [Direction.North, Direction.East, Direction.South, Direction.West];
+  Direction.values = [ Direction.North, Direction.East, Direction.South, Direction.West ];
 
   return Direction;
 } );

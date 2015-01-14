@@ -40,8 +40,8 @@ define( function( require ) {
   inherit( CollectionBoxNode, SingleCollectionBoxNode );
 
   /*---------------------------------------------------------------------------*
-  * precomputation of largest single collection box size
-  *----------------------------------------------------------------------------*/
+   * precomputation of largest single collection box size
+   *----------------------------------------------------------------------------*/
   var maxBounds = Bounds2.NOTHING;
 
   _.each( MoleculeList.collectionBoxMolecules, function( molecule ) {

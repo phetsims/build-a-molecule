@@ -64,8 +64,8 @@ define( function( require ) {
     var viewStyleProperty = new Property( 'spaceFill' ); // spaceFill or ballAndStick
 
     /*---------------------------------------------------------------------------*
-    * Chemical formula label
-    *----------------------------------------------------------------------------*/
+     * Chemical formula label
+     *----------------------------------------------------------------------------*/
     var formulaText = new SubSupText( completeMolecule.getGeneralFormulaFragment(), {
       font: new PhetFont( 20 ),
       fill: '#bbb',
@@ -75,8 +75,8 @@ define( function( require ) {
     this.addChild( formulaText );
 
     /*---------------------------------------------------------------------------*
-    * Display name label
-    *----------------------------------------------------------------------------*/
+     * Display name label
+     *----------------------------------------------------------------------------*/
     var nameText = new Text( completeMolecule.getDisplayName(), {
       font: new PhetFont( 30 ),
       fill: 'white',
@@ -86,8 +86,8 @@ define( function( require ) {
     this.addChild( nameText );
 
     /*---------------------------------------------------------------------------*
-    * Space fill / Ball and stick radio buttons
-    *----------------------------------------------------------------------------*/
+     * Space fill / Ball and stick radio buttons
+     *----------------------------------------------------------------------------*/
 
     var buttonTextOptions = {
       font: new PhetFont( 20 ),
@@ -110,7 +110,7 @@ define( function( require ) {
     ballAndStickButton.touchArea = Shape.bounds( ballAndStickButton.localBounds.dilated( optionsHorizontalPadding / 2 ) );
     ballAndStickButton.left = spaceFillButton.right + optionsHorizontalPadding;
     var buttonHolder = new Node( {
-      children: [spaceFillButton, ballAndStickButton],
+      children: [ spaceFillButton, ballAndStickButton ],
       centerX: stageCenterX,
       top: stageCenterY + verticalOffset
     } );
@@ -124,8 +124,8 @@ define( function( require ) {
     this.addChild( buttonHolder );
 
     /*---------------------------------------------------------------------------*
-    * Close button
-    *----------------------------------------------------------------------------*/
+     * Close button
+     *----------------------------------------------------------------------------*/
 
     var closeButton = new CloseButton( function() { dialog.disposeView(); }, {
       centerX: Constants.stageSize.width - stageWindowPadding,
@@ -138,15 +138,15 @@ define( function( require ) {
     this.addChild( closeButton );
 
     /*---------------------------------------------------------------------------*
-    * 3D view
-    *----------------------------------------------------------------------------*/
+     * 3D view
+     *----------------------------------------------------------------------------*/
     var moleculeNode = new Molecule3DNode( completeMolecule, this.getGlobalCanvasBounds( view ), true );
     moleculeNode.updateCSSTransform = function( transform, element ) {}; // don't CSS transform it
     moleculeNode.touchArea = moleculeNode.mouseArea = Shape.bounds( this.getLocalCanvasBounds() );
     moleculeNode.initializeDrag( this );
     this.addChild( moleculeNode );
 
-    var transformMatrix = Molecule3DNode.initialTransforms[completeMolecule.getGeneralFormula()];
+    var transformMatrix = Molecule3DNode.initialTransforms[ completeMolecule.getGeneralFormula() ];
     if ( transformMatrix ) {
       moleculeNode.transformMolecule( transformMatrix );
     }

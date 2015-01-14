@@ -68,7 +68,7 @@ define( function( require ) {
       var atom = kitView.closestAtom( modelPoint, 100 );
       if ( atom ) {
         // TODO: this is somewhat hackish. better way of doing this?
-        return new Trail( [atomLayer, kitView.atomNodeMap[atom.id]] );
+        return new Trail( [ atomLayer, kitView.atomNodeMap[ atom.id ] ] );
       }
       else {
         return null;
@@ -123,7 +123,7 @@ define( function( require ) {
           // move the atom to right under the pointer for this assisted drag - otherwise the offset would be too noticeable
           atom.position = atom.destination = modelPoint;
 
-          var atomNode = kitView.atomNodeMap[atom.id];
+          var atomNode = kitView.atomNodeMap[ atom.id ];
           // TODO: use a new DragListener
           event.target = event.currentTarget = atomNode; // for now, modify the event directly so we can "point" it towards the atom node instead
 
@@ -140,7 +140,7 @@ define( function( require ) {
           // renderer: 'svg',
           // rendererOptions: { cssTransform: true }
         } );
-        kitView.atomNodeMap[atom.id] = atomNode;
+        kitView.atomNodeMap[ atom.id ] = atomNode;
         atomLayer.addChild( atomNode );
 
         // Add a drag listener that will move the model element when the user
@@ -152,7 +152,7 @@ define( function( require ) {
             var molecule = kit.getMolecule( atom );
             if ( molecule ) {
               _.each( molecule.atoms, function( moleculeAtom ) {
-                kitView.atomNodeMap[moleculeAtom.id].moveToFront();
+                kitView.atomNodeMap[ moleculeAtom.id ].moveToFront();
               } );
             }
             else {
@@ -178,17 +178,17 @@ define( function( require ) {
     kit.on( 'addedMolecule', function( molecule ) {
       var moleculeMetadataNode = new MoleculeMetadataNode( kit, molecule );
       metadataLayer.addChild( moleculeMetadataNode );
-      kitView.metadataMap[molecule.moleculeId] = moleculeMetadataNode;
+      kitView.metadataMap[ molecule.moleculeId ] = moleculeMetadataNode;
 
       if ( Constants.allowBondBreaking ) {
         kitView.addMoleculeBondNodes( molecule );
       }
     } );
     kit.on( 'removedMolecule', function( molecule ) {
-      var moleculeMetadataNode = kitView.metadataMap[molecule.moleculeId];
+      var moleculeMetadataNode = kitView.metadataMap[ molecule.moleculeId ];
       moleculeMetadataNode.destruct();
       metadataLayer.removeChild( moleculeMetadataNode );
-      delete kitView.metadataMap[molecule.moleculeId];
+      delete kitView.metadataMap[ molecule.moleculeId ];
 
       if ( Constants.allowBondBreaking ) {
         kitView.removeMoleculeBondNodes( molecule );
@@ -216,7 +216,7 @@ define( function( require ) {
 
       // ignore stacking order for this operation
       for ( var i = 0; i < numAtoms; i++ ) {
-        var atom = atoms[i];
+        var atom = atoms[ i ];
         var position = atom.positionProperty.get(); // no ES5 setters so we have the fastest possible code in this inner loop (called during hit testing)
 
         var dx = x - position.x;
@@ -239,14 +239,14 @@ define( function( require ) {
     addMoleculeBondNodes: function( molecule ) {
       var moleculeBondContainerNode = new MoleculeBondContainerNode( this.kit, molecule, this.view );
       this.metadataLayer.addChild( moleculeBondContainerNode );
-      this.bondMap[molecule.moleculeId] = moleculeBondContainerNode;
+      this.bondMap[ molecule.moleculeId ] = moleculeBondContainerNode;
     },
 
     removeMoleculeBondNodes: function( molecule ) {
-      var moleculeBondContainerNode = this.bondMap[molecule.moleculeId];
+      var moleculeBondContainerNode = this.bondMap[ molecule.moleculeId ];
       moleculeBondContainerNode.destruct();
       this.metadataLayer.removeChild( moleculeBondContainerNode );
-      delete this.bondMap[molecule.moleculeId];
+      delete this.bondMap[ molecule.moleculeId ];
     }
   } );
 

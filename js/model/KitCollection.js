@@ -58,7 +58,7 @@ define( function( require ) {
           // check to see if we are trying to drop it in a collection box.
           var numBoxes = kitCollection.collectionBoxes.length;
           for ( var i = 0; i < numBoxes; i++ ) {
-            var box = kitCollection.collectionBoxes[i];
+            var box = kitCollection.collectionBoxes[ i ];
 
             // permissive, so that if the box bounds and molecule bounds intersect, we call it a 'hit'
             if ( box.dropBounds.intersectsBounds( molecule.positionBounds ) ) {
@@ -122,13 +122,13 @@ define( function( require ) {
 
     goToNextKit: function() {
       if ( this.hasNextKit() ) {
-        this.currentKit = this.kits[this.currentKitIndex + 1];
+        this.currentKit = this.kits[ this.currentKitIndex + 1 ];
       }
     },
 
     goToPreviousKit: function() {
       if ( this.hasPreviousKit() ) {
-        this.currentKit = this.kits[this.currentKitIndex - 1];
+        this.currentKit = this.kits[ this.currentKitIndex - 1 ];
       }
     },
 

@@ -117,7 +117,7 @@ define( function( require ) {
 
     // anonymous function here, so we don't create a bunch of fields
     function createCollectionNode( collection ) {
-      panel.collectionAreaMap[collection.id] = new CollectionAreaNode( collection, isSingleCollectionMode, toModelBounds );
+      panel.collectionAreaMap[ collection.id ] = new CollectionAreaNode( collection, isSingleCollectionMode, toModelBounds );
     }
 
     // create nodes for all current collections
@@ -166,7 +166,7 @@ define( function( require ) {
     useCollection: function( collection ) {
       // swap out the inner collection area
       this.collectionAreaHolder.removeAllChildren();
-      var collectionAreaNode = this.collectionAreaMap[collection.id];
+      var collectionAreaNode = this.collectionAreaMap[ collection.id ];
       this.collectionAreaHolder.addChild( collectionAreaNode );
 
       this.updateLayout();

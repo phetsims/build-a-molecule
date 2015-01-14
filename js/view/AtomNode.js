@@ -45,7 +45,7 @@ define( function( require ) {
   // map from element symbol => graphical node for the atom, so that we can use the DAG to save overhead and costs
   var elementMap = {};
   AtomNode.getGraphics = function( element ) {
-    var node = elementMap[element.symbol];
+    var node = elementMap[ element.symbol ];
     if ( node ) {
       return node;
     }
@@ -82,7 +82,7 @@ define( function( require ) {
     text.centerY = 0;
     node.addChild( text );
 
-    elementMap[element.symbol] = node;
+    elementMap[ element.symbol ] = node;
     return node;
   };
 

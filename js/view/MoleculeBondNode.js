@@ -19,15 +19,15 @@ define( function( require ) {
   var Shape = require( 'KITE/Shape' );
 
   /* Notes on .cur file generation, all from the images directory, with "sudo apt-get install icoutils" for icotool:
-icotool -c -o scissors.ico scissors.png
-icotool -c -o scissors-closed.ico scissors-closed.png
-icotool -c -o scissors-up.ico scissors-up.png
-icotool -c -o scissors-closed-up.ico scissors-closed-up.png
+   icotool -c -o scissors.ico scissors.png
+   icotool -c -o scissors-closed.ico scissors-closed.png
+   icotool -c -o scissors-up.ico scissors-up.png
+   icotool -c -o scissors-closed-up.ico scissors-closed-up.png
 
-./ico2cur.py scissors.ico -x 11 -y 10
-./ico2cur.py scissors-closed.ico -x 13 -y 7
-./ico2cur.py scissors-up.ico -x 10 -y 11
-./ico2cur.py scissors-closed-up.ico -x 7 -y 13
+   ./ico2cur.py scissors.ico -x 11 -y 10
+   ./ico2cur.py scissors-closed.ico -x 13 -y 7
+   ./ico2cur.py scissors-up.ico -x 10 -y 11
+   ./ico2cur.py scissors-closed-up.ico -x 7 -y 13
    */
 
   var images = {
@@ -70,8 +70,8 @@ icotool -c -o scissors-closed-up.ico scissors-closed-up.png
       closedFile += '.png';
     }
 
-    var scissorsOpen = images[openFile]; // 23x20 or 20x23
-    var scissorsClosed = images[closedFile]; //26x15 or 15x26
+    var scissorsOpen = images[ openFile ]; // 23x20 or 20x23
+    var scissorsClosed = images[ closedFile ]; //26x15 or 15x26
     var backup = ( isHorizontal ? 'col-resize' : 'row-resize' );
 
     // offsets should center this

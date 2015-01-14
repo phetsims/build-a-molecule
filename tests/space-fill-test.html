@@ -215,11 +215,11 @@
               var size = 128;
               var canvas = shadedCanvas( element, size );
               var pattern = context.createPattern( canvas, 'no-repeat' );
-              elementPatterns[element.symbol] = pattern;
+              elementPatterns[ element.symbol ] = pattern;
               var matrix = Matrix3.createFromPool( 2 * element.radius / size, 0, -element.radius,
                   0, 2 * element.radius / size, -element.radius,
                   0, 0, 1 );
-              elementPatternTransforms[element.symbol] = matrix.inverted();
+              elementPatternTransforms[ element.symbol ] = matrix.inverted();
               // pattern.setTransform( matrix.toSVGMatrix() );
             } );
 
@@ -245,14 +245,14 @@
               var atoms = _.sortBy( currentAtoms, function( v ) { return v.z; } );
 
               for ( var i = 0; i < atoms.length; i++ ) {
-                var atom = atoms[i];
+                var atom = atoms[ i ];
                 var element = atom.element;
 
                 var arcs = [];
 
                 // check each atom behind this one for occlusion
                 for ( var k = 0; k < i; k++ ) {
-                  var otherAtom = atoms[k];
+                  var otherAtom = atoms[ k ];
 
                   var delta = otherAtom.minus( atom );
                   var d = delta.magnitude();
@@ -269,7 +269,7 @@
                         ry: arcData.ry,
                         rotation: phi,
                         circleStart: phi - arcData.psi,
-                        circleEnd: phi + arcData.psi,
+                        circleEnd:   phi + arcData.psi,
                         ellipseStart: -arcData.alpha,
                         ellipseEnd: arcData.alpha
                       } );
@@ -282,7 +282,7 @@
                 context.save();
                 context.translate( midX + atom.x, midY + atom.y );
                 context.beginPath();
-                var transformMatrix = fillMode === 1 ? elementPatternTransforms[element.symbol] : Matrix3.IDENTITY;
+                var transformMatrix = fillMode === 1 ? elementPatternTransforms[ element.symbol ] : Matrix3.IDENTITY;
                 var inverseTransformMatrix = transformMatrix.inverted();
                 var arc, ellipticalArc;
                 if ( inverseTransformMatrix !== Matrix3.IDENTITY ) {
@@ -290,12 +290,12 @@
                 }
                 if ( arcs.length ) {
                   for ( var j = 0; j < arcs.length; j++ ) {
-                    ellipticalArc = new EllipticalArc( arcs[j].center,
-                        arcs[j].rx, arcs[j].ry,
-                        arcs[j].rotation,
-                        arcs[j].ellipseStart, arcs[j].ellipseEnd, false );
+                    ellipticalArc = new EllipticalArc( arcs[ j ].center,
+                        arcs[ j ].rx, arcs[ j ].ry,
+                        arcs[ j ].rotation,
+                        arcs[ j ].ellipseStart, arcs[ j ].ellipseEnd, false );
                     var atEnd = j + 1 === arcs.length;
-                    arc = new Arc( Vector2.ZERO, atom.radius, arcs[j].circleEnd, atEnd ? ( arcs[0].circleStart + Math.PI * 2 ) : arcs[j + 1].circleStart, false );
+                    arc = new Arc( Vector2.ZERO, atom.radius, arcs[ j ].circleEnd, atEnd ? ( arcs[ 0 ].circleStart + Math.PI * 2 ) : arcs[ j + 1 ].circleStart, false );
                     if ( transformMatrix !== Matrix3.IDENTITY ) {
                       ellipticalArc = ellipticalArc.transformed( transformMatrix );
                       arc = arc.transformed( transformMatrix );
@@ -319,7 +319,7 @@
                     context.fillStyle = atom.color;
                     break;
                   case 1:
-                    context.fillStyle = elementPatterns[element.symbol];
+                    context.fillStyle = elementPatterns[ element.symbol ];
                     break;
                   case 2:
                     // copied from BAM's AtomNode

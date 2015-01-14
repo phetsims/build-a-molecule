@@ -114,7 +114,7 @@ define( function( require ) {
     var bounds3 = Bounds3.NOTHING.copy();
     _.each( this.currentAtoms, function( atom ) {
       bounds3.includeBounds( new Bounds3( atom.x - atom.radius, atom.y - atom.radius, atom.z - atom.radius,
-          atom.x + atom.radius, atom.y + atom.radius, atom.z + atom.radius ) );
+        atom.x + atom.radius, atom.y + atom.radius, atom.z + atom.radius ) );
     } );
     var center3 = bounds3.center;
     if ( center3.magnitude() ) {
@@ -132,8 +132,8 @@ define( function( require ) {
 
     var gradientMap = {}; // element symbol => gradient
     _.each( this.currentAtoms, function( atom ) {
-      if ( !gradientMap[atom.element.symbol] ) {
-        gradientMap[atom.element.symbol] = moleculeNode.createGradient( atom.element );
+      if ( !gradientMap[ atom.element.symbol ] ) {
+        gradientMap[ atom.element.symbol ] = moleculeNode.createGradient( atom.element );
       }
     } );
     this.gradientMap = gradientMap;
@@ -255,13 +255,13 @@ define( function( require ) {
       var atoms = _.sortBy( this.currentAtoms, function( v ) { return v.z; } );
 
       for ( var i = 0; i < atoms.length; i++ ) {
-        var atom = atoms[i];
+        var atom = atoms[ i ];
 
         var arcs = [];
 
         // check each atom behind this one for occlusion
         for ( var k = 0; k < i; k++ ) {
-          var otherAtom = atoms[k];
+          var otherAtom = atoms[ k ];
 
           var delta = otherAtom.minus( atom );
           var d = delta.magnitude();
@@ -278,7 +278,7 @@ define( function( require ) {
                 ry: arcData.ry,
                 rotation: phi,
                 circleStart: phi - arcData.psi,
-                circleEnd: phi + arcData.psi,
+                circleEnd:   phi + arcData.psi,
                 ellipseStart: -arcData.alpha,
                 ellipseEnd: arcData.alpha
               } );
@@ -294,12 +294,12 @@ define( function( require ) {
         var arc, ellipticalArc;
         if ( arcs.length ) {
           for ( var j = 0; j < arcs.length; j++ ) {
-            ellipticalArc = new EllipticalArc( arcs[j].center,
-              arcs[j].rx, arcs[j].ry,
-              arcs[j].rotation,
-              arcs[j].ellipseStart, arcs[j].ellipseEnd, false );
+            ellipticalArc = new EllipticalArc( arcs[ j ].center,
+              arcs[ j ].rx, arcs[ j ].ry,
+              arcs[ j ].rotation,
+              arcs[ j ].ellipseStart, arcs[ j ].ellipseEnd, false );
             var atEnd = j + 1 === arcs.length;
-            arc = new Arc( Vector2.ZERO, atom.radius, arcs[j].circleEnd, atEnd ? ( arcs[0].circleStart + Math.PI * 2 ) : arcs[j + 1].circleStart, false );
+            arc = new Arc( Vector2.ZERO, atom.radius, arcs[ j ].circleEnd, atEnd ? ( arcs[ 0 ].circleStart + Math.PI * 2 ) : arcs[ j + 1 ].circleStart, false );
             ellipticalArc.writeToContext( context );
             arc.writeToContext( context );
           }
@@ -309,7 +309,7 @@ define( function( require ) {
           arc.writeToContext( context );
         }
 
-        context.fillStyle = this.gradientMap[atom.element.symbol];
+        context.fillStyle = this.gradientMap[ atom.element.symbol ];
 
         context.fill();
         context.restore();
@@ -326,8 +326,8 @@ define( function( require ) {
         var correctScale = 4 / this.canvas.width;
         var delta = this.currentPosition.minus( this.lastPosition );
         var quat = Quaternion.fromEulerAngles(
-            -delta.y * correctScale, // yaw
-            delta.x * correctScale,  // roll
+          -delta.y * correctScale, // yaw
+          delta.x * correctScale,  // roll
           0                        // pitch
         );
         matrix = quat.toRotationMatrix();

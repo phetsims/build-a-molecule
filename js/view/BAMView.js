@@ -32,10 +32,10 @@ define( function( require ) {
 
     collectionList.currentCollectionProperty.link( function( newCollection, oldCollection ) {
       if ( oldCollection ) {
-        view.removeChild( view.kitCollectionMap[oldCollection.id] );
+        view.removeChild( view.kitCollectionMap[ oldCollection.id ] );
       }
       if ( newCollection ) {
-        view.addChild( view.kitCollectionMap[newCollection.id] );
+        view.addChild( view.kitCollectionMap[ newCollection.id ] );
       }
     } );
 
@@ -47,7 +47,7 @@ define( function( require ) {
 
     addCollection: function( collection ) {
       var kitCollectionNode = new KitCollectionNode( this.collectionList, collection, this );
-      this.kitCollectionMap[collection.id] = kitCollectionNode;
+      this.kitCollectionMap[ collection.id ] = kitCollectionNode;
 
       // supposedly: return this so we can manipulate it in an override....?
       return kitCollectionNode;

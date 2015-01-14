@@ -41,8 +41,8 @@ define( function( require ) {
 
     if ( completeMolecule ) {
       /*---------------------------------------------------------------------------*
-      * label with chemical formula and common name
-      *----------------------------------------------------------------------------*/
+       * label with chemical formula and common name
+       *----------------------------------------------------------------------------*/
       var label = new Text( completeMolecule.getDisplayName(), {
         font: new PhetFont( { size: 17, weight: 'bold' } ),
         centerY: 11
@@ -51,8 +51,8 @@ define( function( require ) {
       currentX += label.width + 10;
 
       /*---------------------------------------------------------------------------*
-      * show 3d button
-      *----------------------------------------------------------------------------*/
+       * show 3d button
+       *----------------------------------------------------------------------------*/
       if ( Constants.has3d ) {
         // TODO: add dialog!
         var button3d = new ShowMolecule3DButtonNode( completeMolecule, {
@@ -66,8 +66,8 @@ define( function( require ) {
     }
 
     /*---------------------------------------------------------------------------*
-    * break-up button
-    *----------------------------------------------------------------------------*/
+     * break-up button
+     *----------------------------------------------------------------------------*/
     var buttonBreak = new Node( {
       children: [ new Image( splitIconImage ) ],
       x: currentX,
@@ -110,7 +110,7 @@ define( function( require ) {
       var moleculeViewBounds = Constants.modelViewTransform.modelToViewBounds( modelPositionBounds );
 
       this.setTranslation( moleculeViewBounds.centerX - this.width / 2, // horizontally center
-          moleculeViewBounds.minY - this.height - Constants.metadataPaddingBetweenNodeAndMolecule ); // offset from top of molecule
+        moleculeViewBounds.minY - this.height - Constants.metadataPaddingBetweenNodeAndMolecule ); // offset from top of molecule
     }
   } );
 

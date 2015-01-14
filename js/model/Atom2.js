@@ -96,7 +96,7 @@ define( function( require ) {
         else {
           // Move towards the destination.
           var angle = Math.atan2( this.destination.y - this.position.y,
-              this.destination.x - this.position.x );
+            this.destination.x - this.position.x );
           this.translate( distanceToTravel * Math.cos( angle ), distanceToTravel * Math.sin( angle ) );
         }
       }

@@ -83,7 +83,7 @@ define( function( require ) {
       var buckets = [];
 
       // pull off the 1st molecule
-      molecule = molecules[0];
+      molecule = molecules[ 0 ];
 
       // NOTE: for the future, we could potentially add another type of atom?
 
@@ -135,7 +135,7 @@ define( function( require ) {
       // if we can remove others (due to an atom multiple), remove the others
       while ( atomMultiple > 0 ) {
         for ( var k = 0; k < molecules.length; k++ ) {
-          if ( molecules[k].getHillSystemFormulaFragment() === molecule.getHillSystemFormulaFragment() ) {
+          if ( molecules[ k ].getHillSystemFormulaFragment() === molecule.getHillSystemFormulaFragment() ) {
             molecules.splice( k, 1 );
             break;
           }
@@ -150,15 +150,13 @@ define( function( require ) {
     return collection;
   };
 
-  inherit( Screen, BAMScreen, {
-
-  } );
+  inherit( Screen, BAMScreen, {} );
 
   // from array of CompleteMolecule, returns {CompleteMolecule}
   BAMScreen.pickRandomMoleculeNotIn = function( molecules ) {
     // Infinite loop. We're living on the edge now, baby!
     while ( true ) {
-      var molecule = MoleculeList.collectionBoxMolecules[_.random( 0, MoleculeList.collectionBoxMolecules.length - 1 )]; // TODO: random numbers in
+      var molecule = MoleculeList.collectionBoxMolecules[ _.random( 0, MoleculeList.collectionBoxMolecules.length - 1 ) ]; // TODO: random numbers in
       if ( !_.contains( molecules, molecule ) ) {
         return molecule;
       }

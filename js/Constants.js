@@ -14,7 +14,7 @@ define( function( require ) {
   var mvt = ModelViewTransform2.createSinglePointScaleInvertedYMapping(
     Vector2.ZERO,
     new Vector2( Math.round( viewSize.width * 0.5 ), Math.round( viewSize.height * 0.5 ) ),
-      0.3 * 1.2 // "Zoom factor" - smaller zooms out, larger zooms in
+    0.3 * 1.2 // "Zoom factor" - smaller zooms out, larger zooms in
   );
   var modelSize = new Dimension2(
     mvt.viewToModelDeltaX( viewSize.width ),
@@ -28,14 +28,14 @@ define( function( require ) {
     projectName: 'build-a-molecule',
 
     /*---------------------------------------------------------------------------*
-    * Features
-    *----------------------------------------------------------------------------*/
+     * Features
+     *----------------------------------------------------------------------------*/
 
     has3d: true,
 
     /*---------------------------------------------------------------------------*
-    * Layout
-    *----------------------------------------------------------------------------*/
+     * Layout
+     *----------------------------------------------------------------------------*/
 
     stageSize: viewSize, // the size of our "view" coordinate area
     modelViewTransform: mvt,
@@ -44,8 +44,8 @@ define( function( require ) {
     modelPadding: modelPadding,
 
     /*---------------------------------------------------------------------------*
-    * Colors
-    *----------------------------------------------------------------------------*/
+     * Colors
+     *----------------------------------------------------------------------------*/
 
     canvasBackgroundColor: new Color( 198, 226, 246 ),        // main play area background
     moleculeCollectionBackground: new Color( 238, 238, 238 ), // collection area background
@@ -61,14 +61,14 @@ define( function( require ) {
     completeBackgroundColor: new Color( 238, 238, 238 ),      // background when complete
 
     /*---------------------------------------------------------------------------*
-    * Layout
-    *----------------------------------------------------------------------------*/
+     * Layout
+     *----------------------------------------------------------------------------*/
 
     metadataPaddingBetweenNodeAndMolecule: 5, // vertical space between molecule and name/buttons
 
     /*---------------------------------------------------------------------------*
-    * Misc
-    *----------------------------------------------------------------------------*/
+     * Misc
+     *----------------------------------------------------------------------------*/
 
     allowBondBreaking: true,
     supportedElements: [

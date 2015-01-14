@@ -51,7 +51,7 @@ define( function( require ) {
       var mainMolecules = MoleculeList.readCompleteMoleculesFromData( otherMoleculesData );
       _.each( mainMolecules, function( molecule ) {
         // if our molecule was included in the initial lookup, use that initial version instead so we can have instance equality preserved
-        var initialListLookup = initialList.moleculeNameMap[molecule.commonName];
+        var initialListLookup = initialList.moleculeNameMap[ molecule.commonName ];
         if ( initialListLookup && molecule.isEquivalent( initialListLookup ) ) {
           molecule = initialListLookup;
         }
@@ -88,12 +88,12 @@ define( function( require ) {
 
       // use the allowed structure map as an acceleration feature
       // TODO: performance: only do the lookup once
-      if ( this.allowedStructureFormulaMap[hashString] ) {
-        var moleculeStructures = this.allowedStructureFormulaMap[hashString];
+      if ( this.allowedStructureFormulaMap[ hashString ] ) {
+        var moleculeStructures = this.allowedStructureFormulaMap[ hashString ];
         if ( moleculeStructures ) {
           var length = moleculeStructures.length;
           for ( var i = 0; i < length; i++ ) {
-            var structure = moleculeStructures[i];
+            var structure = moleculeStructures[ i ];
             if ( structure.isHydrogenSubmolecule( strippedMolecule ) ) {
               return true;
             }
@@ -112,7 +112,7 @@ define( function( require ) {
     findMatchingCompleteMolecule: function( moleculeStructure ) {
       var length = this.completeMolecules.length;
       for ( var i = 0; i < length; i++ ) {
-        var completeMolecule = this.completeMolecules[i];
+        var completeMolecule = this.completeMolecules[ i ];
         if ( moleculeStructure.isEquivalent( completeMolecule ) ) {
           return completeMolecule;
         }
@@ -124,7 +124,7 @@ define( function( require ) {
     findMoleculeByCID: function( cid ) {
       var length = this.completeMolecules.length;
       for ( var i = 0; i < length; i++ ) {
-        var completeMolecule = this.completeMolecules[i];
+        var completeMolecule = this.completeMolecules[ i ];
         if ( completeMolecule.cid === cid ) {
           return completeMolecule;
         }
@@ -138,24 +138,24 @@ define( function( require ) {
     },
 
     /*---------------------------------------------------------------------------*
-    * computation of allowed molecule structures
-    *----------------------------------------------------------------------------*/
+     * computation of allowed molecule structures
+     *----------------------------------------------------------------------------*/
 
     addCompleteMolecule: function( completeMolecule ) {
       this.completeMolecules.push( completeMolecule );
-      this.moleculeNameMap[completeMolecule.commonName] = completeMolecule;
+      this.moleculeNameMap[ completeMolecule.commonName ] = completeMolecule;
     },
 
     addAllowedStructure: function( structure ) {
       var strippedMolecule = new StrippedMolecule( structure );
       var hashString = strippedMolecule.stripped.getHistogram().getHashString();
 
-      var spot = this.allowedStructureFormulaMap[hashString];
+      var spot = this.allowedStructureFormulaMap[ hashString ];
       if ( spot ) {
         spot.push( strippedMolecule );
       }
       else {
-        this.allowedStructureFormulaMap[hashString] = [strippedMolecule];
+        this.allowedStructureFormulaMap[ hashString ] = [ strippedMolecule ];
       }
     }
   };
@@ -182,19 +182,19 @@ define( function( require ) {
   };
 
   MoleculeList.getMoleculeByName = function( name ) {
-    var result = initialList.moleculeNameMap[name];
+    var result = initialList.moleculeNameMap[ name ];
 
     if ( !result ) {
       // TODO: logger here needed as a warning for master lookup?
-      result = MoleculeList.getMasterInstance().moleculeNameMap[name];
+      result = MoleculeList.getMasterInstance().moleculeNameMap[ name ];
     }
 
     return result;
   };
 
   /*---------------------------------------------------------------------------*
-  * static helper methods
-  *----------------------------------------------------------------------------*/
+   * static helper methods
+   *----------------------------------------------------------------------------*/
 
   /**
    * @return A list of complete molecules
@@ -218,12 +218,12 @@ define( function( require ) {
     var len = strings.length;
     var arr = new Array( len );
     for ( var i = 0; i < len; i++ ) {
-      var string = strings[i];
+      var string = strings[ i ];
       var structure = MoleculeStructure.fromSerial2Basic( string );
 
       // sanity checks
       assert && assert( !structure.hasWeirdHydrogenProperties(), 'Weird hydrogen pattern in structure: ' + string );
-      arr[i] = structure;
+      arr[ i ] = structure;
     }
     return arr;
   };
@@ -231,8 +231,8 @@ define( function( require ) {
   initialList.loadInitialData();
 
   /*---------------------------------------------------------------------------*
-  * molecule references and customized names
-  *----------------------------------------------------------------------------*/
+   * molecule references and customized names
+   *----------------------------------------------------------------------------*/
 
   MoleculeList.CO2 = MoleculeList.getMoleculeByName( "Carbon Dioxide" );
   MoleculeList.H2O = MoleculeList.getMoleculeByName( "Water" );

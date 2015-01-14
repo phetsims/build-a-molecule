@@ -27,18 +27,18 @@ define( function( require ) {
 
   var moleculeIdThumbnailMap = {}; // maps moleculeId => Node (thumbnail view for the molecule)
   function lookupThumbnail( completeMolecule ) {
-    if ( !moleculeIdThumbnailMap[completeMolecule.moleculeId] ) {
+    if ( !moleculeIdThumbnailMap[ completeMolecule.moleculeId ] ) {
       var moleculeNode = new Molecule3DNode( completeMolecule, new Bounds2( 0, 0, 50, 50 ), false );
-      var transformMatrix = Molecule3DNode.initialTransforms[completeMolecule.getGeneralFormula()];
+      var transformMatrix = Molecule3DNode.initialTransforms[ completeMolecule.getGeneralFormula() ];
       if ( transformMatrix ) {
         moleculeNode.transformMolecule( transformMatrix );
       }
       moleculeNode.draw();
-      moleculeIdThumbnailMap[completeMolecule.moleculeId] = new Image( moleculeNode.canvas.toDataURL() );
+      moleculeIdThumbnailMap[ completeMolecule.moleculeId ] = new Image( moleculeNode.canvas.toDataURL() );
     }
 
     // wrap the returned image in an extra node so we can transform them independently, and that takes up the proper amount of space
-    var node = moleculeIdThumbnailMap[completeMolecule.moleculeId];
+    var node = moleculeIdThumbnailMap[ completeMolecule.moleculeId ];
     var wrapperNode = new Rectangle( 0, 0, 50, 50 );
     wrapperNode.addChild( node );
     return wrapperNode;
@@ -122,8 +122,8 @@ define( function( require ) {
     },
 
     /*---------------------------------------------------------------------------*
-    * Implementation
-    *----------------------------------------------------------------------------*/
+     * Implementation
+     *----------------------------------------------------------------------------*/
 
     addHeaderNode: function( headerNode ) {
       var selfNode = this;
@@ -139,7 +139,7 @@ define( function( require ) {
         if ( i >= len ) {
           i = 0;
         }
-        var child = this._children[i];
+        var child = this._children[ i ];
         child.centerX = centerX;
         child.top = y;
         y += child.height + 5 + ( child === selfNode.boxNode ? 3 : -3 );
@@ -158,7 +158,7 @@ define( function( require ) {
       var pseudo3DNode = lookupThumbnail( molecule.getMatchingCompleteMolecule() );
       this.moleculeLayer.addChild( pseudo3DNode );
       this.moleculeNodes.push( pseudo3DNode );
-      this.moleculeNodeMap[molecule.moleculeId] = pseudo3DNode;
+      this.moleculeNodeMap[ molecule.moleculeId ] = pseudo3DNode;
 
       this.updateMoleculeLayout();
     },
@@ -167,10 +167,10 @@ define( function( require ) {
       this.cancelBlinksInProgress();
       this.updateBoxGraphics();
 
-      var lastMoleculeNode = this.moleculeNodeMap[molecule.moleculeId];
+      var lastMoleculeNode = this.moleculeNodeMap[ molecule.moleculeId ];
       this.moleculeLayer.removeChild( lastMoleculeNode );
       this.moleculeNodes.splice( this.moleculeNodes.indexOf( lastMoleculeNode ), 1 ); // TODO: replace splice with remove
-      delete this.moleculeNodeMap[molecule.moleculeId];
+      delete this.moleculeNodeMap[ molecule.moleculeId ];
 
       this.updateMoleculeLayout();
     },

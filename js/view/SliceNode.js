@@ -79,8 +79,8 @@ define( function( require ) {
 
         // compute offset and draw the latest segment on the canvas
         lastPoint.setXY(
-            event.pointer.point.x - globalBounds.x,
-            event.pointer.point.y - globalBounds.y );
+          event.pointer.point.x - globalBounds.x,
+          event.pointer.point.y - globalBounds.y );
         context.lineTo( lastPoint.x, lastPoint.y );
         context.stroke();
 
