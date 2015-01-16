@@ -78,8 +78,8 @@ define( function( require ) {
       }
     } );
     kitCollectionModel.currentKitProperty.link( function() {
-      navigationNode.hasNext = kitCollectionModel.hasNextKit();
-      navigationNode.hasPrevious = kitCollectionModel.hasPreviousKit();
+      navigationNode.hasNextProperty.value = kitCollectionModel.hasNextKit();
+      navigationNode.hasPreviousProperty.value = kitCollectionModel.hasPreviousKit();
     } );
     navigationNode.setTranslation( kitViewBounds.maxX - navigationNode.width - 5, kitViewBounds.minY + kitArrowYOffset );
     this.addChild( navigationNode );

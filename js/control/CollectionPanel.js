@@ -89,8 +89,8 @@ define( function( require ) {
     } );
 
     function updateSwitcher() {
-      collectionSwitcher.hasNext = collectionList.hasNextCollection();
-      collectionSwitcher.hasPrevious = collectionList.hasPreviousCollection();
+      collectionSwitcher.hasNextProperty.value = collectionList.hasNextCollection();
+      collectionSwitcher.hasPreviousProperty.value = collectionList.hasPreviousCollection();
     }
 
     collectionList.currentCollectionProperty.link( updateSwitcher );
