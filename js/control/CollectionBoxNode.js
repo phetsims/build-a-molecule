@@ -10,8 +10,8 @@
 define( function( require ) {
   'use strict';
 
-  var namespace = require( 'BAM/namespace' );
-  var Constants = require( 'BAM/Constants' );
+  var namespace = require( 'BUILD_A_MOLECULE/namespace' );
+  var Constants = require( 'BUILD_A_MOLECULE/Constants' );
   var Bounds2 = require( 'DOT/Bounds2' );
   var Shape = require( 'KITE/Shape' );
   var inherit = require( 'PHET_CORE/inherit' );
@@ -19,8 +19,8 @@ define( function( require ) {
   var Image = require( 'SCENERY/nodes/Image' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var Property = require( 'AXON/Property' );
-  var ShowMolecule3DButtonNode = require( 'BAM/view/view3d/ShowMolecule3DButtonNode' );
-  var Molecule3DNode = require( 'BAM/view/view3d/Molecule3DNode' );
+  var ShowMolecule3DButtonNode = require( 'BUILD_A_MOLECULE/view/view3d/ShowMolecule3DButtonNode' );
+  var Molecule3DNode = require( 'BUILD_A_MOLECULE/view/view3d/Molecule3DNode' );
 
   var moleculePadding = 5;
   var blackBoxPaddingFor3D = Constants.has3d ? 10 : 0;

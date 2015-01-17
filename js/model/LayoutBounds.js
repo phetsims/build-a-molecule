@@ -9,8 +9,8 @@
 define( function( require ) {
   'use strict';
 
-  var namespace = require( 'BAM/namespace' );
-  var Constants = require( 'BAM/Constants' );
+  var namespace = require( 'BUILD_A_MOLECULE/namespace' );
+  var Constants = require( 'BUILD_A_MOLECULE/Constants' );
   var Rectangle = require( 'DOT/Rectangle' );
 
   /**

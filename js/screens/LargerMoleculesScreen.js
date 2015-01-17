@@ -10,18 +10,18 @@ define( function( require ) {
 
   var inherit = require( 'PHET_CORE/inherit' );
   var Dimension2 = require( 'DOT/Dimension2' );
-  var namespace = require( 'BAM/namespace' );
-  var BAMScreen = require( 'BAM/screens/BAMScreen' );
-  var KitCollection = require( 'BAM/model/KitCollection' );
-  var Kit = require( 'BAM/model/Kit' );
-  var LayoutBounds = require( 'BAM/model/LayoutBounds' );
-  var Bucket = require( 'BAM/model/Bucket' );
+  var namespace = require( 'BUILD_A_MOLECULE/namespace' );
+  var BAMScreen = require( 'BUILD_A_MOLECULE/screens/BAMScreen' );
+  var KitCollection = require( 'BUILD_A_MOLECULE/model/KitCollection' );
+  var Kit = require( 'BUILD_A_MOLECULE/model/Kit' );
+  var LayoutBounds = require( 'BUILD_A_MOLECULE/model/LayoutBounds' );
+  var Bucket = require( 'BUILD_A_MOLECULE/model/Bucket' );
   var Element = require( 'NITROGLYCERIN/Element' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
-  var BAMView = require( 'BAM/view/BAMView' );
+  var BAMView = require( 'BUILD_A_MOLECULE/view/BAMView' );
 
   // strings
-  var title_largerMoleculesString = require( 'string!BAM/title.largerMolecules' );
+  var title_largerMoleculesString = require( 'string!BUILD_A_MOLECULE/title.largerMolecules' );
 
   var LargerMoleculesScreen = namespace.LargerMoleculesScreen = function LargerMoleculesScreen() {
     BAMScreen.call( this, title_largerMoleculesString, new Rectangle( 0, 0, 548, 373, { fill: 'blue' } ), function( bounds, clock ) {

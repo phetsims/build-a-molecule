@@ -9,7 +9,7 @@
 define( function( require ) {
   'use strict';
 
-  var namespace = require( 'BAM/namespace' );
+  var namespace = require( 'BUILD_A_MOLECULE/namespace' );
   var inherit = require( 'PHET_CORE/inherit' );
   var NodesPushButton = require( 'SUN/buttons/NodesPushButton' );
   var Path = require( 'SCENERY/nodes/Path' );

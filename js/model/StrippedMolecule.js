@@ -12,11 +12,11 @@
 define( function( require ) {
   'use strict';
 
-  var namespace = require( 'BAM/namespace' );
+  var namespace = require( 'BUILD_A_MOLECULE/namespace' );
   var Atom = require( 'NITROGLYCERIN/Atom' );
   var Element = require( 'NITROGLYCERIN/Element' );
-  var Bond = require( 'BAM/model/Bond' );
-  var MoleculeStructure = require( 'BAM/model/MoleculeStructure' );
+  var Bond = require( 'BUILD_A_MOLECULE/model/Bond' );
+  var MoleculeStructure = require( 'BUILD_A_MOLECULE/model/MoleculeStructure' );
 
   // @param {MoleculeStructure} original
   var StrippedMolecule = namespace.StrippedMolecule = function StrippedMolecule( original ) {

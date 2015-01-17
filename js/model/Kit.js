@@ -11,14 +11,14 @@ define( function( require ) {
 
   var inherit = require( 'PHET_CORE/inherit' );
   var cleanArray = require( 'PHET_CORE/cleanArray' );
-  var namespace = require( 'BAM/namespace' );
+  var namespace = require( 'BUILD_A_MOLECULE/namespace' );
   var PropertySet = require( 'AXON/PropertySet' );
   var Vector2 = require( 'DOT/Vector2' );
   var Bounds2 = require( 'DOT/Bounds2' );
   var Rectangle = require( 'DOT/Rectangle' );
-  var Molecule = require( 'BAM/model/Molecule' );
-  var MoleculeStructure = require( 'BAM/model/MoleculeStructure' );
-  var LewisDotModel = require( 'BAM/model/LewisDotModel' );
+  var Molecule = require( 'BUILD_A_MOLECULE/model/Molecule' );
+  var MoleculeStructure = require( 'BUILD_A_MOLECULE/model/MoleculeStructure' );
+  var LewisDotModel = require( 'BUILD_A_MOLECULE/model/LewisDotModel' );
 
   var kitIdCounter = 0;
 

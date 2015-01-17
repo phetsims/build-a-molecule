@@ -12,8 +12,8 @@ define( function( require ) {
   'use strict';
 
   var inherit = require( 'PHET_CORE/inherit' );
-  var namespace = require( 'BAM/namespace' );
-  var Constants = require( 'BAM/Constants' );
+  var namespace = require( 'BUILD_A_MOLECULE/namespace' );
+  var Constants = require( 'BUILD_A_MOLECULE/Constants' );
   var Shape = require( 'KITE/Shape' );
   var BucketFront = require( 'SCENERY_PHET/bucket/BucketFront' );
   var BucketHole = require( 'SCENERY_PHET/bucket/BucketHole' );
@@ -21,10 +21,10 @@ define( function( require ) {
   var Node = require( 'SCENERY/nodes/Node' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var Trail = require( 'SCENERY/util/Trail' );
-  var AtomNode = require( 'BAM/view/AtomNode' );
-  var MoleculeBondContainerNode = require( 'BAM/view/MoleculeBondContainerNode' );
-  var MoleculeMetadataNode = require( 'BAM/view/MoleculeMetadataNode' );
-  var SliceNode = require( 'BAM/view/SliceNode' );
+  var AtomNode = require( 'BUILD_A_MOLECULE/view/AtomNode' );
+  var MoleculeBondContainerNode = require( 'BUILD_A_MOLECULE/view/MoleculeBondContainerNode' );
+  var MoleculeMetadataNode = require( 'BUILD_A_MOLECULE/view/MoleculeMetadataNode' );
+  var SliceNode = require( 'BUILD_A_MOLECULE/view/SliceNode' );
   var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' ); // TODO: DragListener
 
   var KitView = namespace.KitView = function KitView( kit, view ) {

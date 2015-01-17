@@ -12,10 +12,10 @@ define( function( require ) {
   var Atom = require( 'NITROGLYCERIN/Atom' );
   var extend = require( 'PHET_CORE/extend' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var namespace = require( 'BAM/namespace' );
+  var namespace = require( 'BUILD_A_MOLECULE/namespace' );
   var PropertySet = require( 'AXON/PropertySet' );
   var Rectangle = require( 'DOT/Rectangle' );
-  var Strings = require( 'BAM/Strings' );
+  var Strings = require( 'BUILD_A_MOLECULE/Strings' );
   var Vector2 = require( 'DOT/Vector2' );
 
   var motionVelocity = 800; // In picometers per second of sim time.

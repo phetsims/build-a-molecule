@@ -11,10 +11,10 @@
 define( function( require ) {
   'use strict';
 
-  var namespace = require( 'BAM/namespace' );
-  var Constants = require( 'BAM/Constants' );
-  var Molecule3DNode = require( 'BAM/view/view3d/Molecule3DNode' );
-  var CloseButton = require( 'BAM/view/view3d/CloseButton' );
+  var namespace = require( 'BUILD_A_MOLECULE/namespace' );
+  var Constants = require( 'BUILD_A_MOLECULE/Constants' );
+  var Molecule3DNode = require( 'BUILD_A_MOLECULE/view/view3d/Molecule3DNode' );
+  var CloseButton = require( 'BUILD_A_MOLECULE/view/view3d/CloseButton' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Bounds2 = require( 'DOT/Bounds2' );
   var Node = require( 'SCENERY/nodes/Node' );
@@ -28,8 +28,8 @@ define( function( require ) {
   var Property = require( 'AXON/Property' );
 
   // strings
-  var spaceFillString = require( 'string!BAM/3d.spaceFilling' );
-  var ballAndStickString = require( 'string!BAM/3d.ballAndStick' );
+  var spaceFillString = require( 'string!BUILD_A_MOLECULE/3d.spaceFilling' );
+  var ballAndStickString = require( 'string!BUILD_A_MOLECULE/3d.ballAndStick' );
 
   var size = 200;
   var verticalOffset = size + 5;

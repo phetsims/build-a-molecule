@@ -9,7 +9,7 @@
 define( function( require ) {
   'use strict';
 
-  var namespace = require( 'BAM/namespace' );
+  var namespace = require( 'BUILD_A_MOLECULE/namespace' );
 
   var collectionMoleculesData = namespace.collectionMoleculesData = [
     'acetylene|C2H2|6326|full|4|3|C 2.5369 -0.25 -0.6 0 0|C 3.403 0.25 0.6 0 0,0-3|H 2.0 -0.56 -1.665 0 -1.0E-4,0-1|H 3.9399 0.56 1.665 0 1.0E-4,1-1',

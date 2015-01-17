@@ -14,10 +14,10 @@
 define( function( require ) {
   'use strict';
 
-  var namespace = require( 'BAM/namespace' );
-  var Bond = require( 'BAM/model/Bond' );
-  // var MoleculeList = require( 'BAM/model/MoleculeList' );
-  var ElementHistogram = require( 'BAM/model/ElementHistogram' );
+  var namespace = require( 'BUILD_A_MOLECULE/namespace' );
+  var Bond = require( 'BUILD_A_MOLECULE/model/Bond' );
+  // var MoleculeList = require( 'BUILD_A_MOLECULE/model/MoleculeList' );
+  var ElementHistogram = require( 'BUILD_A_MOLECULE/model/ElementHistogram' );
   var ChemUtils = require( 'NITROGLYCERIN/ChemUtils' );
   var Element = require( 'NITROGLYCERIN/Element' );
   var Atom = require( 'NITROGLYCERIN/Atom' );

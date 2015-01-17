@@ -36,7 +36,7 @@ require.config( {
     VEGAS: '../../vegas/js',
     VIBE: '../../vibe/js',
 
-    BAM: '.'
+    BUILD_A_MOLECULE: '.'
   },
 
   waitSeconds: 30, // because the sim's data files are big

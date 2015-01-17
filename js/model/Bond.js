@@ -9,7 +9,7 @@
 define( function( require ) {
   'use strict';
 
-  var namespace = require( 'BAM/namespace' );
+  var namespace = require( 'BUILD_A_MOLECULE/namespace' );
 
   var Bond = namespace.Bond = function Bond( a, b ) {
     assert && assert( a !== b, 'Bonds cannot connect an atom to itself' );

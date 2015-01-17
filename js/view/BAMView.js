@@ -9,13 +9,13 @@
 define( function( require ) {
   'use strict';
 
-  var namespace = require( 'BAM/namespace' );
-  var Constants = require( 'BAM/Constants' );
+  var namespace = require( 'BUILD_A_MOLECULE/namespace' );
+  var Constants = require( 'BUILD_A_MOLECULE/Constants' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Rectangle = require( 'DOT/Rectangle' );
   var Node = require( 'SCENERY/nodes/Node' );
   var ScreenView = require( 'JOIST/ScreenView' );
-  var KitCollectionNode = require( 'BAM/view/KitCollectionNode' );
+  var KitCollectionNode = require( 'BUILD_A_MOLECULE/view/KitCollectionNode' );
 
   var BAMView = namespace.BAMView = function BAMView( collectionList ) {
     ScreenView.call( this, { renderer: 'svg', layoutBounds: new Rectangle( 0, 0, Constants.stageSize.width, Constants.stageSize.height ) } );

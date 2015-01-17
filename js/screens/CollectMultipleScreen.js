@@ -10,20 +10,20 @@ define( function( require ) {
 
   var inherit = require( 'PHET_CORE/inherit' );
   var Dimension2 = require( 'DOT/Dimension2' );
-  var namespace = require( 'BAM/namespace' );
-  var BAMScreen = require( 'BAM/screens/BAMScreen' );
-  var KitCollection = require( 'BAM/model/KitCollection' );
-  var Kit = require( 'BAM/model/Kit' );
-  var CollectionBox = require( 'BAM/model/CollectionBox' );
-  var MoleculeList = require( 'BAM/model/MoleculeList' );
-  var LayoutBounds = require( 'BAM/model/LayoutBounds' );
-  var Bucket = require( 'BAM/model/Bucket' );
+  var namespace = require( 'BUILD_A_MOLECULE/namespace' );
+  var BAMScreen = require( 'BUILD_A_MOLECULE/screens/BAMScreen' );
+  var KitCollection = require( 'BUILD_A_MOLECULE/model/KitCollection' );
+  var Kit = require( 'BUILD_A_MOLECULE/model/Kit' );
+  var CollectionBox = require( 'BUILD_A_MOLECULE/model/CollectionBox' );
+  var MoleculeList = require( 'BUILD_A_MOLECULE/model/MoleculeList' );
+  var LayoutBounds = require( 'BUILD_A_MOLECULE/model/LayoutBounds' );
+  var Bucket = require( 'BUILD_A_MOLECULE/model/Bucket' );
   var Element = require( 'NITROGLYCERIN/Element' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
-  var MoleculeCollectingView = require( 'BAM/view/MoleculeCollectingView' );
+  var MoleculeCollectingView = require( 'BUILD_A_MOLECULE/view/MoleculeCollectingView' );
 
   // strings
-  var title_collectMultipleString = require( 'string!BAM/title.collectMultiple' );
+  var title_collectMultipleString = require( 'string!BUILD_A_MOLECULE/title.collectMultiple' );
 
   var CollectMultipleScreen = namespace.CollectMultipleScreen = function CollectMultipleScreen( collectionAreaWidth ) {
     BAMScreen.call( this, title_collectMultipleString, new Rectangle( 0, 0, 548, 373, { fill: 'green' } ), function( bounds, clock ) {

@@ -9,8 +9,8 @@
 define( function( require ) {
   'use strict';
 
-  var namespace = require( 'BAM/namespace' );
-  var Constants = require( 'BAM/Constants' );
+  var namespace = require( 'BUILD_A_MOLECULE/namespace' );
+  var Constants = require( 'BUILD_A_MOLECULE/Constants' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
   var ButtonListener = require( 'SCENERY/input/ButtonListener' );
@@ -31,14 +31,14 @@ define( function( require ) {
    */
 
   var images = {
-    'scissors.png': require( 'image!BAM/scissors.png' ),
-    'scissors-closed.png': require( 'image!BAM/scissors-closed.png' ),
-    'scissors-up.png': require( 'image!BAM/scissors-up.png' ),
-    'scissors-closed-up.png': require( 'image!BAM/scissors-closed-up.png' ),
-    'scissors.cur': require( 'image!BAM/scissors.cur' ),
-    'scissors-closed.cur': require( 'image!BAM/scissors-closed.cur' ),
-    'scissors-up.cur': require( 'image!BAM/scissors-up.cur' ),
-    'scissors-closed-up.cur': require( 'image!BAM/scissors-closed-up.cur' )
+    'scissors.png': require( 'image!BUILD_A_MOLECULE/scissors.png' ),
+    'scissors-closed.png': require( 'image!BUILD_A_MOLECULE/scissors-closed.png' ),
+    'scissors-up.png': require( 'image!BUILD_A_MOLECULE/scissors-up.png' ),
+    'scissors-closed-up.png': require( 'image!BUILD_A_MOLECULE/scissors-closed-up.png' ),
+    'scissors.cur': require( 'image!BUILD_A_MOLECULE/scissors.cur' ),
+    'scissors-closed.cur': require( 'image!BUILD_A_MOLECULE/scissors-closed.cur' ),
+    'scissors-up.cur': require( 'image!BUILD_A_MOLECULE/scissors-up.cur' ),
+    'scissors-closed-up.cur': require( 'image!BUILD_A_MOLECULE/scissors-closed-up.cur' )
   };
 
   var bondRadius = 5; // "Radius" of the bond target that will break the bond

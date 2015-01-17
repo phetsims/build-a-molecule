@@ -10,18 +10,18 @@ define( function( require ) {
   'use strict';
 
   var inherit = require( 'PHET_CORE/inherit' );
-  var namespace = require( 'BAM/namespace' );
-  var Constants = require( 'BAM/Constants' );
+  var namespace = require( 'BUILD_A_MOLECULE/namespace' );
+  var Constants = require( 'BUILD_A_MOLECULE/Constants' );
   var Shape = require( 'KITE/Shape' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Text = require( 'SCENERY/nodes/Text' );
   var Image = require( 'SCENERY/nodes/Image' );
   var ButtonListener = require( 'SCENERY/input/ButtonListener' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  var ShowMolecule3DButtonNode = require( 'BAM/view/view3d/ShowMolecule3DButtonNode' );
+  var ShowMolecule3DButtonNode = require( 'BUILD_A_MOLECULE/view/view3d/ShowMolecule3DButtonNode' );
 
   // images
-  var splitIconImage = require( 'image!BAM/split-blue.png' );
+  var splitIconImage = require( 'image!BUILD_A_MOLECULE/split-blue.png' );
 
   var MoleculeMetadataNode = namespace.MoleculeMetadataNode = function MoleculeMetadataNode( kit, molecule ) {
     Node.call( this, {} );

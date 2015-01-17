@@ -9,14 +9,14 @@
 define( function( require ) {
   'use strict';
 
-  var namespace = require( 'BAM/namespace' );
-  var Atom2 = require( 'BAM/model/Atom2' );
-  var AtomNode = require( 'BAM/view/AtomNode' );
+  var namespace = require( 'BUILD_A_MOLECULE/namespace' );
+  var Atom2 = require( 'BUILD_A_MOLECULE/model/Atom2' );
+  var AtomNode = require( 'BUILD_A_MOLECULE/view/AtomNode' );
   var inherit = require( 'PHET_CORE/inherit' );
   var SphereBucket = require( 'PHETCOMMON/model/SphereBucket' );
   var Vector2 = require( 'DOT/Vector2' );
   var Dimension2 = require( 'DOT/Dimension2' );
-  var Strings = require( 'BAM/Strings' );
+  var Strings = require( 'BUILD_A_MOLECULE/Strings' );
   var Color = require( 'SCENERY/util/Color' );
 
   /**

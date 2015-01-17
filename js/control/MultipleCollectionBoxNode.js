@@ -10,20 +10,20 @@
 define( function( require ) {
   'use strict';
 
-  var namespace = require( 'BAM/namespace' );
+  var namespace = require( 'BUILD_A_MOLECULE/namespace' );
   var Bounds2 = require( 'DOT/Bounds2' );
   var inherit = require( 'PHET_CORE/inherit' );
   var SubSupText = require( 'SCENERY_PHET/SubSupText' );
-  var CollectionBoxNode = require( 'BAM/control/CollectionBoxNode' );
-  var MoleculeList = require( 'BAM/model/MoleculeList' );
-  var CollectionBox = require( 'BAM/model/CollectionBox' );
+  var CollectionBoxNode = require( 'BUILD_A_MOLECULE/control/CollectionBoxNode' );
+  var MoleculeList = require( 'BUILD_A_MOLECULE/model/MoleculeList' );
+  var CollectionBox = require( 'BUILD_A_MOLECULE/model/CollectionBox' );
   var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
 
   // strings
-  var collection_multiple_goalFormatString = require( 'string!BAM/collection.multiple.goalFormat' );
-  var collection_multiple_quantityEmptyString = require( 'string!BAM/collection.multiple.quantityEmpty' );
-  var collection_multiple_quantityFormatString = require( 'string!BAM/collection.multiple.quantityFormat' );
+  var collection_multiple_goalFormatString = require( 'string!BUILD_A_MOLECULE/collection.multiple.goalFormat' );
+  var collection_multiple_quantityEmptyString = require( 'string!BUILD_A_MOLECULE/collection.multiple.quantityEmpty' );
+  var collection_multiple_quantityFormatString = require( 'string!BUILD_A_MOLECULE/collection.multiple.quantityFormat' );
 
   var MultipleCollectionBoxNode = namespace.MultipleCollectionBoxNode = function MultipleCollectionBoxNode( box, toModelBounds ) {
     CollectionBoxNode.call( this, box, toModelBounds );

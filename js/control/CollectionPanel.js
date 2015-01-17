@@ -9,17 +9,17 @@
 define( function( require ) {
   'use strict';
 
-  var namespace = require( 'BAM/namespace' );
-  var Constants = require( 'BAM/Constants' );
-  var BAMScreen = require( 'BAM/screens/BAMScreen' );
+  var namespace = require( 'BUILD_A_MOLECULE/namespace' );
+  var Constants = require( 'BUILD_A_MOLECULE/Constants' );
+  var BAMScreen = require( 'BUILD_A_MOLECULE/screens/BAMScreen' );
   var Bounds2 = require( 'DOT/Bounds2' );
   var Shape = require( 'KITE/Shape' );
-  var CollectionAreaNode = require( 'BAM/control/CollectionAreaNode' );
-  var CollectionList = require( 'BAM/model/CollectionList' );
-  var LayoutBounds = require( 'BAM/model/LayoutBounds' );
-  var KitCollection = require( 'BAM/model/KitCollection' );
-  var CollectionBox = require( 'BAM/model/CollectionBox' );
-  var MoleculeList = require( 'BAM/model/MoleculeList' );
+  var CollectionAreaNode = require( 'BUILD_A_MOLECULE/control/CollectionAreaNode' );
+  var CollectionList = require( 'BUILD_A_MOLECULE/model/CollectionList' );
+  var LayoutBounds = require( 'BUILD_A_MOLECULE/model/LayoutBounds' );
+  var KitCollection = require( 'BUILD_A_MOLECULE/model/KitCollection' );
+  var CollectionBox = require( 'BUILD_A_MOLECULE/model/CollectionBox' );
+  var MoleculeList = require( 'BUILD_A_MOLECULE/model/MoleculeList' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
@@ -31,8 +31,8 @@ define( function( require ) {
   var PropertySet = require( 'AXON/PropertySet' );
 
   // strings
-  var collection_yourMoleculeCollectionString = require( 'string!BAM/collection.yourMoleculeCollection' );
-  var collection_labelString = require( 'string!BAM/collection.label' );
+  var collection_yourMoleculeCollectionString = require( 'string!BUILD_A_MOLECULE/collection.yourMoleculeCollection' );
+  var collection_labelString = require( 'string!BUILD_A_MOLECULE/collection.label' );
 
   var containerPadding = 15;
 

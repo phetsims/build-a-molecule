@@ -15,14 +15,14 @@ define( function( require ) {
 
   //REVIEW use logging instead of System.out throughout, since this happens at startup in production product.
 
-  var namespace = require( 'BAM/namespace' );
+  var namespace = require( 'BUILD_A_MOLECULE/namespace' );
 
-  var collectionMoleculesData = require( 'BAM/model/data/collectionMoleculesData' );
-  var otherMoleculesData = require( 'BAM/model/data/otherMoleculesData' );
-  var structuresData = require( 'BAM/model/data/structuresData' );
-  var CompleteMolecule = require( 'BAM/model/CompleteMolecule' );
-  var StrippedMolecule = require( 'BAM/model/StrippedMolecule' );
-  var MoleculeStructure = require( 'BAM/model/MoleculeStructure' );
+  var collectionMoleculesData = require( 'BUILD_A_MOLECULE/model/data/collectionMoleculesData' );
+  var otherMoleculesData = require( 'BUILD_A_MOLECULE/model/data/otherMoleculesData' );
+  var structuresData = require( 'BUILD_A_MOLECULE/model/data/structuresData' );
+  var CompleteMolecule = require( 'BUILD_A_MOLECULE/model/CompleteMolecule' );
+  var StrippedMolecule = require( 'BUILD_A_MOLECULE/model/StrippedMolecule' );
+  var MoleculeStructure = require( 'BUILD_A_MOLECULE/model/MoleculeStructure' );
 
   var MoleculeList = namespace.MoleculeList = function MoleculeList() {
     this.completeMolecules = []; // all complete molecules

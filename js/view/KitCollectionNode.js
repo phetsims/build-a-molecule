@@ -9,10 +9,10 @@
 define( function( require ) {
   'use strict';
 
-  var namespace = require( 'BAM/namespace' );
+  var namespace = require( 'BUILD_A_MOLECULE/namespace' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var KitView = require( 'BAM/view/KitView' );
-  var KitPanel = require( 'BAM/control/KitPanel' );
+  var KitView = require( 'BUILD_A_MOLECULE/view/KitView' );
+  var KitPanel = require( 'BUILD_A_MOLECULE/control/KitPanel' );
   var Node = require( 'SCENERY/nodes/Node' );
 
   var KitCollectionNode = namespace.KitCollectionNode = function KitCollectionNode( collectionList, collection, view ) {

@@ -9,10 +9,10 @@
 define( function( require ) {
   'use strict';
 
-  var namespace = require( 'BAM/namespace' );
+  var namespace = require( 'BUILD_A_MOLECULE/namespace' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
-  var MoleculeBondNode = require( 'BAM/view/MoleculeBondNode' );
+  var MoleculeBondNode = require( 'BUILD_A_MOLECULE/view/MoleculeBondNode' );
 
   var MoleculeBondContainerNode = namespace.MoleculeBondContainerNode = function MoleculeBondContainerNode( kit, molecule, view ) {
     Node.call( this, {} );

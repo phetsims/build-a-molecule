@@ -9,7 +9,7 @@
 define( function( require ) {
   'use strict';
 
-  var namespace = require( 'BAM/namespace' );
+  var namespace = require( 'BUILD_A_MOLECULE/namespace' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Shape = require( 'KITE/Shape' );
   var Color = require( 'SCENERY/util/Color' );
@@ -17,11 +17,11 @@ define( function( require ) {
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var TextPushButton = require( 'SUN/buttons/TextPushButton' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  var SingleCollectionBoxNode = require( 'BAM/control/SingleCollectionBoxNode' );
-  var MultipleCollectionBoxNode = require( 'BAM/control/MultipleCollectionBoxNode' );
+  var SingleCollectionBoxNode = require( 'BUILD_A_MOLECULE/control/SingleCollectionBoxNode' );
+  var MultipleCollectionBoxNode = require( 'BUILD_A_MOLECULE/control/MultipleCollectionBoxNode' );
 
   // strings
-  var collection_resetString = require( 'string!BAM/collection.reset' );
+  var collection_resetString = require( 'string!BUILD_A_MOLECULE/collection.reset' );
 
   var CollectionAreaNode = namespace.CollectionAreaNode = function CollectionAreaNode( collection, isSingleCollectionMode, toModelBounds ) {
     Node.call( this, {} );

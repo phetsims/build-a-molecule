@@ -8,19 +8,19 @@
 define( function( require ) {
   'use strict';
 
-  var namespace = require( 'BAM/namespace' );
+  var namespace = require( 'BUILD_A_MOLECULE/namespace' );
   var inherit = require( 'PHET_CORE/inherit' );
 
   var Screen = require( 'JOIST/Screen' );
   var Dimension2 = require( 'DOT/Dimension2' );
-  var Constants = require( 'BAM/Constants' );
+  var Constants = require( 'BUILD_A_MOLECULE/Constants' );
   var Element = require( 'NITROGLYCERIN/Element' );
-  var MoleculeList = require( 'BAM/model/MoleculeList' );
-  var CollectionList = require( 'BAM/model/CollectionList' );
-  var KitCollection = require( 'BAM/model/KitCollection' );
-  var Bucket = require( 'BAM/model/Bucket' );
-  var Kit = require( 'BAM/model/Kit' );
-  var CollectionBox = require( 'BAM/model/CollectionBox' );
+  var MoleculeList = require( 'BUILD_A_MOLECULE/model/MoleculeList' );
+  var CollectionList = require( 'BUILD_A_MOLECULE/model/CollectionList' );
+  var KitCollection = require( 'BUILD_A_MOLECULE/model/KitCollection' );
+  var Bucket = require( 'BUILD_A_MOLECULE/model/Bucket' );
+  var Kit = require( 'BUILD_A_MOLECULE/model/Kit' );
+  var CollectionBox = require( 'BUILD_A_MOLECULE/model/CollectionBox' );
   var PropertySet = require( 'AXON/PropertySet' );
 
   var BAMScreen = namespace.BAMScreen = function BAMScreen( name, icon, createInitialKitCollection, layoutBounds, createKitCollection, createView ) {

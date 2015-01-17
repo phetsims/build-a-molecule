@@ -9,7 +9,7 @@
 define( function( require ) {
   'use strict';
 
-  var namespace = require( 'BAM/namespace' );
+  var namespace = require( 'BUILD_A_MOLECULE/namespace' );
   var Vector2 = require( 'DOT/Vector2' );
 
   var Direction = namespace.Direction = function Direction( vector, id ) {

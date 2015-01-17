@@ -9,8 +9,8 @@
 define( function( require ) {
   'use strict';
 
-  var namespace = require( 'BAM/namespace' );
-  var Constants = require( 'BAM/Constants' );
+  var namespace = require( 'BUILD_A_MOLECULE/namespace' );
+  var Constants = require( 'BUILD_A_MOLECULE/Constants' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Text = require( 'SCENERY/nodes/Text' );
@@ -22,8 +22,8 @@ define( function( require ) {
   var Shape = require( 'KITE/Shape' );
 
   // strings
-  var collection_allFilledString = require( 'string!BAM/collection.allFilled' );
-  var collection_tryWithDifferentMoleculesString = require( 'string!BAM/collection.tryWithDifferentMolecules' );
+  var collection_allFilledString = require( 'string!BUILD_A_MOLECULE/collection.allFilled' );
+  var collection_tryWithDifferentMoleculesString = require( 'string!BUILD_A_MOLECULE/collection.tryWithDifferentMolecules' );
 
   var AllFilledDialogNode = namespace.AllFilledDialogNode = function AllFilledDialogNode( availablePlayAreaBounds, regenerateCallback ) {
     Node.call( this, {} );

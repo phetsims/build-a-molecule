@@ -9,22 +9,22 @@
 define( function( require ) {
   'use strict';
 
-  var namespace = require( 'BAM/namespace' );
+  var namespace = require( 'BUILD_A_MOLECULE/namespace' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Text = require( 'SCENERY/nodes/Text' );
   var ButtonListener = require( 'SCENERY/input/ButtonListener' );
   var MeterBodyNode = require( 'SCENERY_PHET/MeterBodyNode' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  var Molecule3DDialog = require( 'BAM/view/view3d/Molecule3DDialog' );
+  var Molecule3DDialog = require( 'BUILD_A_MOLECULE/view/view3d/Molecule3DDialog' );
 
   // images
-  var greenLeft = require( 'image!BAM/green-left.png' );
-  var greenMiddle = require( 'image!BAM/green-middle.png' );
-  var greenRight = require( 'image!BAM/green-right.png' );
+  var greenLeft = require( 'image!BUILD_A_MOLECULE/green-left.png' );
+  var greenMiddle = require( 'image!BUILD_A_MOLECULE/green-middle.png' );
+  var greenRight = require( 'image!BUILD_A_MOLECULE/green-right.png' );
 
   // strings
-  var iconString = require( 'string!BAM/3d.icon' );
+  var iconString = require( 'string!BUILD_A_MOLECULE/3d.icon' );
 
   var ShowMolecule3DButtonNode = namespace.ShowMolecule3DButtonNode = function ShowMolecule3DButtonNode( completeMolecule, options ) {
     var that = this;

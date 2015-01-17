@@ -11,8 +11,8 @@ define( function( require ) {
 
   var inherit = require( 'PHET_CORE/inherit' );
   var Bounds2 = require( 'DOT/Bounds2' );
-  var namespace = require( 'BAM/namespace' );
-  var MoleculeStructure = require( 'BAM/model/MoleculeStructure' );
+  var namespace = require( 'BUILD_A_MOLECULE/namespace' );
+  var MoleculeStructure = require( 'BUILD_A_MOLECULE/model/MoleculeStructure' );
 
   var Molecule = namespace.Molecule = function Molecule( numAtoms, numBonds ) {
     MoleculeStructure.call( this, numAtoms || 0, numBonds || 0 );

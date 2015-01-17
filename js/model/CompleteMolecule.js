@@ -13,14 +13,14 @@ define( function( require ) {
   'use strict';
 
   var inherit = require( 'PHET_CORE/inherit' );
-  var namespace = require( 'BAM/namespace' );
-  var Strings = require( 'BAM/Strings' );
+  var namespace = require( 'BUILD_A_MOLECULE/namespace' );
+  var Strings = require( 'BUILD_A_MOLECULE/Strings' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Element = require( 'NITROGLYCERIN/Element' );
   var Atom = require( 'NITROGLYCERIN/Atom' );
   var AtomNode = require( 'NITROGLYCERIN/nodes/AtomNode' );
-  var Bond = require( 'BAM/model/Bond' );
-  var MoleculeStructure = require( 'BAM/model/MoleculeStructure' );
+  var Bond = require( 'BUILD_A_MOLECULE/model/Bond' );
+  var MoleculeStructure = require( 'BUILD_A_MOLECULE/model/MoleculeStructure' );
   var nodeTypes = [
     require( 'NITROGLYCERIN/nodes/Cl2Node' ), require( 'NITROGLYCERIN/nodes/CO2Node' ), require( 'NITROGLYCERIN/nodes/CO2Node' ),
     require( 'NITROGLYCERIN/nodes/CS2Node' ), require( 'NITROGLYCERIN/nodes/F2Node' ), require( 'NITROGLYCERIN/nodes/H2Node' ),
