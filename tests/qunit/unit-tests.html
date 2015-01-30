@@ -31,12 +31,7 @@
   <!-- Dependency for the linting tests -->
   <script type="text/javascript" src="../../../phet-core/tests/qunit/unitTestLintFilesMatching.js"></script>
 
-  <script type="text/javascript">
-    window.assertions.enableAssert();
-    window.assertions.enableAssertSlow();
-  </script>
-
-  <script data-main="../../js/build-a-molecule-config.js" src="../../../sherpa/require-2.1.11.js"></script>
+  <script data-main="../../js/build-a-molecule-dev-config.js" src="../../../sherpa/require-2.1.11.js"></script>
   <!-- <script src="../../dist/standalone/scenery.js"></script> -->
 
   <!-- Loads the code needed to run unit tests for each particular library/codebase -->
@@ -58,43 +53,22 @@
 <!-- this needs to be run after the qunit-fixture is in the DOM, but before the document is loaded because QUnit scans the fixture then -->
 <script src="../../../scenery/tests/qunit/prepare-fixture.js"></script>
 <script>
-  function collapseTests() {
-    $( '#qunit-tests .fail ol' ).css( 'display', 'none' );
-  }
+  require( [ 'build-a-molecule-dev-config' ], function() {
+    require( [ 'build-a-molecule-dev-main', 'SCENERY/main', 'KITE/main', 'DOT/main', 'AXON/main', 'PHET_CORE/main' ], function( bam, scenery, kite, dot, axon, core ) {
+      window.bam = bam;
+      window.scenery = scenery;
+      window.kite = kite;
+      window.dot = dot;
+      window.axon = axon;
+      window.core = core;
 
-  // QUnit.moduleDone( function( details ) {
-  //   collapseTests();
-  // } );
-
-  // we need to wait until our config file is loaded before our require statement. apparently this was not guaranteed
-  function check() {
-    if ( window.loadedBuildAMoleculeConfig ) {
-      // make sure the full sim code doesn't launch immediately
-      window.delayBuildAMoleculeLaunch = true;
-
-      require( [ 'build-a-molecule-main', 'SCENERY/main', 'KITE/main', 'DOT/main', 'PHET_CORE/main' ], function( bam, scenery, kite, dot, core ) {
-        window.scenery = scenery;
-        window.kite = kite;
-        window.dot = dot;
-        window.core = core;
-
-        runBuildAMoleculeTests( '.' );
-        runSceneryTests( '../../../scenery/tests/qunit' );
-        runKiteTests( '../../../kite/tests/qunit' );
-        runDotTests( '../../../dot/tests/qunit' );
-        runPhetCoreTests( '../../../phet-core/tests/qunit' );
-
-        if ( console.log ) {
-          console.log( scenery.Util.testAssert() );
-          console.log( scenery.Util.testAssertExtra() );
-        }
-      } );
-    }
-    else {
-      setTimeout( check, 4 );
-    }
-  }
-  setTimeout( check, 4 );
+      runBuildAMoleculeTests( '.' );
+      runSceneryTests( '../../../scenery/tests/qunit' );
+      runKiteTests( '../../../kite/tests/qunit' );
+      runDotTests( '../../../dot/tests/qunit' );
+      runPhetCoreTests( '../../../phet-core/tests/qunit' );
+    } );
+  } );
 </script>
 </body>
 </html>

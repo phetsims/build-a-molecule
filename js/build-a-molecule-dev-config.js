@@ -8,7 +8,7 @@
 
 require.config( {
   // just depends on BAM dependencies. strip out parts from our dependencies that we don't need.
-  deps: [ 'build-a-molecule-main' ],
+  deps: [ 'build-a-molecule-dev-main' ],
 
   paths: {
     // require.js plugins
