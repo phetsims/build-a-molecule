@@ -16,7 +16,7 @@
   <script type="text/javascript" src="../../phetcommon/js/util/query-parameters.js"></script>
 
   <!-- Our code, in either the concatenated 'with comments' version or the minified version -->
-  <script data-main="../js/build-a-molecule-config.js" src="../../sherpa/require-2.1.11.js"></script>
+  <script data-main="../js/build-a-molecule-dev-config.js" src="../../sherpa/require-2.1.11.js"></script>
 
   <style type="text/css">
     .scene {
@@ -75,311 +75,302 @@
   context.font = '20px sans-serif';
   context.fillText( 'loading...', 256, 256 );
 
-  function check() {
-    if ( window.loadedBuildAMoleculeConfig ) {
-      // make sure the full sim code doesn't launch immediately
-      window.delayBuildAMoleculeLaunch = true;
+  require( [ 'build-a-molecule-dev-config' ], function() {
+    require( [ 'build-a-molecule-dev-main', 'BAM/namespace', 'SCENERY/main', 'KITE/main', 'DOT/main', 'PHET_CORE/main', 'NITROGLYCERIN/Element', 'BAM/model/CompleteMolecule', 'DOT/Matrix3', 'DOT/Vector2', 'DOT/Vector3', 'KITE/segments/Arc', 'KITE/segments/EllipticalArc', 'SCENERY/util/Color', 'DOT/Util', 'DOT/Ray3', 'BAM/model/MoleculeList' ],
+        function( bleh, bam, scenery, kite, dot, core, Element, CompleteMolecule, Matrix3, Vector2, Vector3, Arc, EllipticalArc, Color, DotUtil, Ray3, MoleculeList ) {
 
-      require( [ 'build-a-molecule-main', 'BAM/namespace', 'SCENERY/main', 'KITE/main', 'DOT/main', 'PHET_CORE/main', 'NITROGLYCERIN/Element', 'BAM/model/CompleteMolecule', 'DOT/Matrix3', 'DOT/Vector2', 'DOT/Vector3', 'KITE/segments/Arc', 'KITE/segments/EllipticalArc', 'SCENERY/util/Color', 'DOT/Util', 'DOT/Ray3', 'BAM/model/MoleculeList' ],
-          function( bleh, bam, scenery, kite, dot, core, Element, CompleteMolecule, Matrix3, Vector2, Vector3, Arc, EllipticalArc, Color, DotUtil, Ray3, MoleculeList ) {
+          window.bam = bam;
+          window.scenery = scenery;
+          window.kite = kite;
+          window.dot = dot;
+          window.core = core;
 
-            window.bam = bam;
-            window.scenery = scenery;
-            window.kite = kite;
-            window.dot = dot;
-            window.core = core;
+          // var generalTest = MoleculeList.getMasterInstance().findMoleculeByCID( 23418945 );
+          // var hcn = MoleculeList.getMasterInstance().findMoleculeByCID( 768 );
+          var hcn = CompleteMolecule.fromSerial2( 'hydrogen cyanide|CHN|768|full|3|2|N 3.403 0.405 -0.58 0 0|C 2.5369 -0.095 0.58 0 0,0-3|H 2.0 -0.405 1.645 0 0,1-1' );
+          var big = CompleteMolecule.fromSerial2( 'dimethylphosphoryloxy(dimethyl)phosphine|C4H12O2P2|23418945|3d|20|19|P -1.2703 -0.0791 -0.0060|P 1.6184 0.0953 0.6201|O 0.2532 0.4317 -0.1773,0-1,1-1|O -1.4175 -1.5612 0.1777,0-2|C -1.9147 0.8899 1.3416,0-1|C -2.0608 0.5368 -1.4786,0-1|C 2.0317 -1.508 -0.1719,1-1|C 2.7599 1.1945 -0.3056,1-1|H -1.4013 0.645 2.2755,4-1|H -1.7872 1.9591 1.1492,4-1|H -2.9818 0.6925 1.4763,4-1|H -1.6306 0.0687 -2.3684,5-1|H -3.1319 0.3176 -1.4578,5-1|H -1.9348 1.6198 -1.5652,5-1|H 1.3532 -2.2924 0.1748,6-1|H 3.0516 -1.8082 0.0858,6-1|H 1.957 -1.45 -1.2619,6-1|H 2.5488 2.2424 -0.0728,7-1|H 2.6613 1.0599 -1.3869,7-1|H 3.7977 0.9883 -0.028,7-1' );
 
-            // var generalTest = MoleculeList.getMasterInstance().findMoleculeByCID( 23418945 );
-            // var hcn = MoleculeList.getMasterInstance().findMoleculeByCID( 768 );
-            var hcn = CompleteMolecule.fromSerial2( 'hydrogen cyanide|CHN|768|full|3|2|N 3.403 0.405 -0.58 0 0|C 2.5369 -0.095 0.58 0 0,0-3|H 2.0 -0.405 1.645 0 0,1-1' );
-            var big = CompleteMolecule.fromSerial2( 'dimethylphosphoryloxy(dimethyl)phosphine|C4H12O2P2|23418945|3d|20|19|P -1.2703 -0.0791 -0.0060|P 1.6184 0.0953 0.6201|O 0.2532 0.4317 -0.1773,0-1,1-1|O -1.4175 -1.5612 0.1777,0-2|C -1.9147 0.8899 1.3416,0-1|C -2.0608 0.5368 -1.4786,0-1|C 2.0317 -1.508 -0.1719,1-1|C 2.7599 1.1945 -0.3056,1-1|H -1.4013 0.645 2.2755,4-1|H -1.7872 1.9591 1.1492,4-1|H -2.9818 0.6925 1.4763,4-1|H -1.6306 0.0687 -2.3684,5-1|H -3.1319 0.3176 -1.4578,5-1|H -1.9348 1.6198 -1.5652,5-1|H 1.3532 -2.2924 0.1748,6-1|H 3.0516 -1.8082 0.0858,6-1|H 1.957 -1.45 -1.2619,6-1|H 2.5488 2.2424 -0.0728,7-1|H 2.6613 1.0599 -1.3869,7-1|H 3.7977 0.9883 -0.028,7-1' );
+          var table = document.getElementById( 'molecule-table' );
+          _.each( MoleculeList.getMasterInstance().completeMolecules, function( molecule ) {
+            var tr = document.createElement( 'tr' );
+            var nameCol = document.createElement( 'td' );
+            nameCol.innerHTML = '<a href="#" onclick="return switchTo(' + molecule.cid + ');">' + molecule.getDisplayName() + '</a>';
+            var formulaCol = document.createElement( 'td' );
+            formulaCol.innerHTML = molecule.getGeneralFormulaFragment();
+            tr.appendChild( nameCol );
+            tr.appendChild( formulaCol );
+            table.appendChild( tr );
+          } );
 
-            var table = document.getElementById( 'molecule-table' );
-            _.each( MoleculeList.getMasterInstance().completeMolecules, function( molecule ) {
-              var tr = document.createElement( 'tr' );
-              var nameCol = document.createElement( 'td' );
-              nameCol.innerHTML = '<a href="#" onclick="return switchTo(' + molecule.cid + ');">' + molecule.getDisplayName() + '</a>';
-              var formulaCol = document.createElement( 'td' );
-              formulaCol.innerHTML = molecule.getGeneralFormulaFragment();
-              tr.appendChild( nameCol );
-              tr.appendChild( formulaCol );
-              table.appendChild( tr );
-            } );
+          function to3d( atom ) {
+            var v = dot( atom.x3d(), atom.y3d(), atom.z3d() ).times( 75 ); // similar to picometers from angstroms? hopefully?
+            v.element = atom.element;
+            v.radius = atom.element.radius;
+            v.color = atom.element.color;
+            return v;
+          }
 
-            function to3d( atom ) {
-              var v = dot( atom.x3d(), atom.y3d(), atom.z3d() ).times( 75 ); // similar to picometers from angstroms? hopefully?
-              v.element = atom.element;
-              v.radius = atom.element.radius;
-              v.color = atom.element.color;
-              return v;
+          var hcnAtoms = hcn.atoms.map( to3d );
+          var bigAtoms = big.atoms.map( to3d );
+
+          var currentAtoms = bigAtoms;
+
+          window.switchTo = function( cid ) {
+            currentAtoms = MoleculeList.getMasterInstance().findMoleculeByCID( cid ).atoms.map( to3d );
+            return false;
+          };
+
+          function ellipticalArcCut( ra, rb, d, theta ) {
+            if ( theta > Math.PI / 2 ) {
+              // other one is in front, bail!
             }
 
-            var hcnAtoms = hcn.atoms.map( to3d );
-            var bigAtoms = big.atoms.map( to3d );
+            // 2d circle-circle intersection point
+            var ix = ( d * d + ra * ra - rb * rb ) / ( 2 * d );
+            var iy = ra * Math.sqrt( 1 - ix * ix / ( ra * ra ) );
 
-            var currentAtoms = bigAtoms;
+            // elliptical arc center
+            var cx = ix * Math.sin( theta );
+            var cy = 0;
 
-            window.switchTo = function( cid ) {
-              currentAtoms = MoleculeList.getMasterInstance().findMoleculeByCID( cid ).atoms.map( to3d );
-              return false;
+            // elliptical semi-minor/major axes
+            var rx = iy * Math.cos( theta );
+            var ry = iy;
+
+            var cutoffTheta = Math.atan2( ix, iy ); // yes, tan( ix/iy ) converts to this, don't let your instincts tell you otherwise
+
+            if ( theta < cutoffTheta - 1e-7 ) {
+              // no arc needed
+              return null;
+            }
+
+            var nx = ix / ( ra * Math.sin( theta ) );
+
+            // start angle for our elliptical arc (from our ra circle's parametric frame)
+            var psi = Math.acos( nx );
+
+            // start angle for our elliptical arc (from the elliptical arc's parametric frame)
+            var alpha = Math.atan2( ra * Math.sqrt( 1 - nx * nx ) / ry, ( ra * nx - cx ) / rx );
+
+            return {
+              ix: ix,
+              iy: iy,
+              cx: cx,
+              cy: cy,
+              rx: rx,
+              ry: ry,
+              nx: nx,
+              psi: psi,
+              alpha: alpha
             };
+          }
 
-            function ellipticalArcCut( ra, rb, d, theta ) {
-              if ( theta > Math.PI / 2 ) {
-                // other one is in front, bail!
+          var sunDirection = dot( -1, 0.5, 2 ).normalized();
+          var moonDirection = dot( 2, -1, 1 ).normalized();
+          var sunWeight = 0.8;
+          var moonWeight = 0.6;
+
+          function shade( element, normal ) {
+            var baseColor = new Color( element.color );
+            var sunTotal = Math.max( 0, normal.dot( sunDirection ) ) * sunWeight;
+            var moonTotal = Math.max( 0, normal.dot( moonDirection ) ) * moonWeight;
+
+            var weight = Math.min( 1, sunTotal + moonTotal );
+
+            return 'rgb(' +
+                   Math.floor( weight * baseColor.red ) + ',' +
+                   Math.floor( weight * baseColor.green ) + ',' +
+                   Math.floor( weight * baseColor.blue ) + ')';
+          }
+
+          function shadedCanvas( element, size ) {
+            var canvas = document.createElement( 'canvas' );
+            canvas.width = size;
+            canvas.height = size;
+            var context = canvas.getContext( '2d' );
+
+            var step = 2 / size; // sample at the centers of pixels
+            for ( var idx = 0; idx < size; idx++ ) {
+              var x = -1 + ( idx + 0.5 ) * step;
+              for ( var idy = 0; idy < size; idy++ ) {
+                var y = 1 - ( idy + 0.5 ) * step; // inverse Y for 3d style
+
+                var intersection = DotUtil.sphereRayIntersection( 1, new Ray3( new Vector3( x, y, 2 ), Vector3.Z_UNIT.negated() ) );
+                var normal = intersection ? intersection.normal : new Vector3( x, y, 0 ).normalized(); // shade as the closest point on the sphere if we miss
+
+                context.fillStyle = shade( element, normal );
+                context.fillRect( idx, idy, 1, 1 );
               }
-
-              // 2d circle-circle intersection point
-              var ix = ( d * d + ra * ra - rb * rb ) / ( 2 * d );
-              var iy = ra * Math.sqrt( 1 - ix * ix / ( ra * ra ) );
-
-              // elliptical arc center
-              var cx = ix * Math.sin( theta );
-              var cy = 0;
-
-              // elliptical semi-minor/major axes
-              var rx = iy * Math.cos( theta );
-              var ry = iy;
-
-              var cutoffTheta = Math.atan2( ix, iy ); // yes, tan( ix/iy ) converts to this, don't let your instincts tell you otherwise
-
-              if ( theta < cutoffTheta - 1e-7 ) {
-                // no arc needed
-                return null;
-              }
-
-              var nx = ix / ( ra * Math.sin( theta ) );
-
-              // start angle for our elliptical arc (from our ra circle's parametric frame)
-              var psi = Math.acos( nx );
-
-              // start angle for our elliptical arc (from the elliptical arc's parametric frame)
-              var alpha = Math.atan2( ra * Math.sqrt( 1 - nx * nx ) / ry, ( ra * nx - cx ) / rx );
-
-              return {
-                ix: ix,
-                iy: iy,
-                cx: cx,
-                cy: cy,
-                rx: rx,
-                ry: ry,
-                nx: nx,
-                psi: psi,
-                alpha: alpha
-              };
             }
+            return canvas;
+          }
 
-            var sunDirection = dot( -1, 0.5, 2 ).normalized();
-            var moonDirection = dot( 2, -1, 1 ).normalized();
-            var sunWeight = 0.8;
-            var moonWeight = 0.6;
+          var elementPatterns = {};
+          var elementPatternTransforms = {};
+          _.each( Element.elements, function( element ) {
+            var size = 128;
+            var canvas = shadedCanvas( element, size );
+            var pattern = context.createPattern( canvas, 'no-repeat' );
+            elementPatterns[ element.symbol ] = pattern;
+            var matrix = Matrix3.createFromPool( 2 * element.radius / size, 0, -element.radius,
+                0, 2 * element.radius / size, -element.radius,
+                0, 0, 1 );
+            elementPatternTransforms[ element.symbol ] = matrix.inverted();
+            // pattern.setTransform( matrix.toSVGMatrix() );
+          } );
 
-            function shade( element, normal ) {
-              var baseColor = new Color( element.color );
-              var sunTotal = Math.max( 0, normal.dot( sunDirection ) ) * sunWeight;
-              var moonTotal = Math.max( 0, normal.dot( moonDirection ) ) * moonWeight;
-
-              var weight = Math.min( 1, sunTotal + moonTotal );
-
-              return 'rgb(' +
-                     Math.floor( weight * baseColor.red ) + ',' +
-                     Math.floor( weight * baseColor.green ) + ',' +
-                     Math.floor( weight * baseColor.blue ) + ')';
-            }
-
-            function shadedCanvas( element, size ) {
-              var canvas = document.createElement( 'canvas' );
-              canvas.width = size;
-              canvas.height = size;
-              var context = canvas.getContext( '2d' );
-
-              var step = 2 / size; // sample at the centers of pixels
-              for ( var idx = 0; idx < size; idx++ ) {
-                var x = -1 + ( idx + 0.5 ) * step;
-                for ( var idy = 0; idy < size; idy++ ) {
-                  var y = 1 - ( idy + 0.5 ) * step; // inverse Y for 3d style
-
-                  var intersection = DotUtil.sphereRayIntersection( 1, new Ray3( new Vector3( x, y, 2 ), Vector3.Z_UNIT.negated() ) );
-                  var normal = intersection ? intersection.normal : new Vector3( x, y, 0 ).normalized(); // shade as the closest point on the sphere if we miss
-
-                  context.fillStyle = shade( element, normal );
-                  context.fillRect( idx, idy, 1, 1 );
-                }
-              }
-              return canvas;
-            }
-
-            var elementPatterns = {};
-            var elementPatternTransforms = {};
-            _.each( Element.elements, function( element ) {
-              var size = 128;
-              var canvas = shadedCanvas( element, size );
-              var pattern = context.createPattern( canvas, 'no-repeat' );
-              elementPatterns[ element.symbol ] = pattern;
-              var matrix = Matrix3.createFromPool( 2 * element.radius / size, 0, -element.radius,
-                  0, 2 * element.radius / size, -element.radius,
-                  0, 0, 1 );
-              elementPatternTransforms[ element.symbol ] = matrix.inverted();
-              // pattern.setTransform( matrix.toSVGMatrix() );
+          function step( timeElapsed ) {
+            var rot = Matrix3.rotationY( timeElapsed );
+            _.each( currentAtoms, function( atom ) {
+              rot.multiplyVector3( atom );
             } );
+          }
 
-            function step( timeElapsed ) {
-              var rot = Matrix3.rotationY( timeElapsed );
-              _.each( currentAtoms, function( atom ) {
-                rot.multiplyVector3( atom );
-              } );
-            }
+          function draw() {
+            var width = 512;
+            var height = 512;
+            var midX = width / 2;
+            var midY = height / 2;
+            // context.clearRect( 0, 0, width, height );
+            context.fillStyle = '#000';
+            context.setTransform( 1, 0, 0, 1, 0, 0 );
+            context.fillRect( 0, 0, width, height );
+            var bigScale = 0.7;
+            context.setTransform( bigScale, 0, 0, bigScale, midX - bigScale * midX, midY - bigScale * midY );
 
-            function draw() {
-              var width = 512;
-              var height = 512;
-              var midX = width / 2;
-              var midY = height / 2;
-              // context.clearRect( 0, 0, width, height );
-              context.fillStyle = '#000';
-              context.setTransform( 1, 0, 0, 1, 0, 0 );
-              context.fillRect( 0, 0, width, height );
-              var bigScale = 0.7;
-              context.setTransform( bigScale, 0, 0, bigScale, midX - bigScale * midX, midY - bigScale * midY );
+            var atoms = _.sortBy( currentAtoms, function( v ) { return v.z; } );
 
-              var atoms = _.sortBy( currentAtoms, function( v ) { return v.z; } );
+            for ( var i = 0; i < atoms.length; i++ ) {
+              var atom = atoms[ i ];
+              var element = atom.element;
 
-              for ( var i = 0; i < atoms.length; i++ ) {
-                var atom = atoms[ i ];
-                var element = atom.element;
+              var arcs = [];
 
-                var arcs = [];
+              // check each atom behind this one for occlusion
+              for ( var k = 0; k < i; k++ ) {
+                var otherAtom = atoms[ k ];
 
-                // check each atom behind this one for occlusion
-                for ( var k = 0; k < i; k++ ) {
-                  var otherAtom = atoms[ k ];
-
-                  var delta = otherAtom.minus( atom );
-                  var d = delta.magnitude();
-                  if ( d < atom.radius + otherAtom.radius - 1e-7 ) {
-                    var theta = delta.angleBetween( dot( 0, 0, -1 ) );
-                    var arcData = ellipticalArcCut( atom.radius, otherAtom.radius, d, theta );
-                    if ( arcData ) {
-                      // angle to center of ellipse
-                      var phi = Math.atan2( delta.y, delta.x );
-                      var center = dot( arcData.cx, arcData.cy ).rotated( phi );
-                      arcs.push( {
-                        center: center,
-                        rx: arcData.rx,
-                        ry: arcData.ry,
-                        rotation: phi,
-                        circleStart: phi - arcData.psi,
-                        circleEnd:   phi + arcData.psi,
-                        ellipseStart: -arcData.alpha,
-                        ellipseEnd: arcData.alpha
-                      } );
-                    }
+                var delta = otherAtom.minus( atom );
+                var d = delta.magnitude();
+                if ( d < atom.radius + otherAtom.radius - 1e-7 ) {
+                  var theta = delta.angleBetween( dot( 0, 0, -1 ) );
+                  var arcData = ellipticalArcCut( atom.radius, otherAtom.radius, d, theta );
+                  if ( arcData ) {
+                    // angle to center of ellipse
+                    var phi = Math.atan2( delta.y, delta.x );
+                    var center = dot( arcData.cx, arcData.cy ).rotated( phi );
+                    arcs.push( {
+                      center: center,
+                      rx: arcData.rx,
+                      ry: arcData.ry,
+                      rotation: phi,
+                      circleStart: phi - arcData.psi,
+                      circleEnd:   phi + arcData.psi,
+                      ellipseStart: -arcData.alpha,
+                      ellipseEnd: arcData.alpha
+                    } );
                   }
                 }
+              }
 
-                arcs = _.sortBy( arcs, function( arc ) { return arc.circleStart; } );
+              arcs = _.sortBy( arcs, function( arc ) { return arc.circleStart; } );
 
-                context.save();
-                context.translate( midX + atom.x, midY + atom.y );
-                context.beginPath();
-                var transformMatrix = fillMode === 1 ? elementPatternTransforms[ element.symbol ] : Matrix3.IDENTITY;
-                var inverseTransformMatrix = transformMatrix.inverted();
-                var arc, ellipticalArc;
-                if ( inverseTransformMatrix !== Matrix3.IDENTITY ) {
-                  inverseTransformMatrix.canvasAppendTransform( context );
-                }
-                if ( arcs.length ) {
-                  for ( var j = 0; j < arcs.length; j++ ) {
-                    ellipticalArc = new EllipticalArc( arcs[ j ].center,
-                        arcs[ j ].rx, arcs[ j ].ry,
-                        arcs[ j ].rotation,
-                        arcs[ j ].ellipseStart, arcs[ j ].ellipseEnd, false );
-                    var atEnd = j + 1 === arcs.length;
-                    arc = new Arc( Vector2.ZERO, atom.radius, arcs[ j ].circleEnd, atEnd ? ( arcs[ 0 ].circleStart + Math.PI * 2 ) : arcs[ j + 1 ].circleStart, false );
-                    if ( transformMatrix !== Matrix3.IDENTITY ) {
-                      ellipticalArc = ellipticalArc.transformed( transformMatrix );
-                      arc = arc.transformed( transformMatrix );
-                    }
-                    ellipticalArc.writeToContext( context );
-                    arc.writeToContext( context );
-                  }
-                }
-                else {
+              context.save();
+              context.translate( midX + atom.x, midY + atom.y );
+              context.beginPath();
+              var transformMatrix = fillMode === 1 ? elementPatternTransforms[ element.symbol ] : Matrix3.IDENTITY;
+              var inverseTransformMatrix = transformMatrix.inverted();
+              var arc, ellipticalArc;
+              if ( inverseTransformMatrix !== Matrix3.IDENTITY ) {
+                inverseTransformMatrix.canvasAppendTransform( context );
+              }
+              if ( arcs.length ) {
+                for ( var j = 0; j < arcs.length; j++ ) {
+                  ellipticalArc = new EllipticalArc( arcs[ j ].center,
+                      arcs[ j ].rx, arcs[ j ].ry,
+                      arcs[ j ].rotation,
+                      arcs[ j ].ellipseStart, arcs[ j ].ellipseEnd, false );
+                  var atEnd = j + 1 === arcs.length;
+                  arc = new Arc( Vector2.ZERO, atom.radius, arcs[ j ].circleEnd, atEnd ? ( arcs[ 0 ].circleStart + Math.PI * 2 ) : arcs[ j + 1 ].circleStart, false );
                   if ( transformMatrix !== Matrix3.IDENTITY ) {
-                    // workaround for
-                    arc = new Arc( transformMatrix.timesVector2( Vector2.ZERO ), transformMatrix.m00() * atom.radius, 0, Math.PI * 2, false );
+                    ellipticalArc = ellipticalArc.transformed( transformMatrix );
+                    arc = arc.transformed( transformMatrix );
                   }
-                  else {
-                    arc = new Arc( Vector2.ZERO, atom.radius, 0, Math.PI * 2, false );
-                  }
+                  ellipticalArc.writeToContext( context );
                   arc.writeToContext( context );
                 }
-                switch( fillMode ) {
-                  case 0:
-                    context.fillStyle = atom.color;
-                    break;
-                  case 1:
-                    context.fillStyle = elementPatterns[ element.symbol ];
-                    break;
-                  case 2:
-                    // copied from BAM's AtomNode
-                    var diameter = atom.radius * 2;
-                    var gCenter = new Vector2( -atom.radius / 3, -atom.radius / 3 );
-                    var middleRadius = diameter / 3;
-                    var fullRadius = middleRadius + 0.7 * diameter;
-                    var gradientFill = context.createRadialGradient( gCenter.x, gCenter.y, 0, gCenter.x, gCenter.y, fullRadius );
-                    gradientFill.addColorStop( 0, '#ffffff' );
-                    gradientFill.addColorStop( middleRadius / fullRadius, element.color );
-                    gradientFill.addColorStop( 1, '#000000' );
-                    context.fillStyle = gradientFill;
-                    break;
-                  case 3:
-                    // custom
-                    var diameter = atom.radius * 2;
-                    var gCenter = new Vector2( -atom.radius / 5, -atom.radius / 5 );
-                    var middleRadius = diameter / 3;
-                    var fullRadius = gCenter.minus( new Vector2( 1, 1 ).normalized().times( atom.radius ) ).magnitude();
-                    var gradientFill = context.createRadialGradient( gCenter.x, gCenter.y, 0, gCenter.x, gCenter.y, fullRadius );
-
-                    var baseColor = new Color( element.color );
-                    gradientFill.addColorStop( 0, baseColor.colorUtilsBrighter( 0.5 ).toCSS() );
-                    gradientFill.addColorStop( 0.08, baseColor.colorUtilsBrighter( 0.2 ).toCSS() );
-                    gradientFill.addColorStop( 0.4, baseColor.colorUtilsDarker( 0.1 ).toCSS() );
-                    gradientFill.addColorStop( 0.8, baseColor.colorUtilsDarker( 0.4 ).toCSS() );
-                    gradientFill.addColorStop( 0.95, baseColor.colorUtilsDarker( 0.6 ).toCSS() );
-                    gradientFill.addColorStop( 1, baseColor.colorUtilsDarker( 0.4 ).toCSS() );
-                    context.fillStyle = gradientFill;
-                    break;
+              }
+              else {
+                if ( transformMatrix !== Matrix3.IDENTITY ) {
+                  // workaround for
+                  arc = new Arc( transformMatrix.timesVector2( Vector2.ZERO ), transformMatrix.m00() * atom.radius, 0, Math.PI * 2, false );
                 }
-                context.fill();
-                context.restore();
+                else {
+                  arc = new Arc( Vector2.ZERO, atom.radius, 0, Math.PI * 2, false );
+                }
+                arc.writeToContext( context );
               }
-            }
+              switch( fillMode ) {
+                case 0:
+                  context.fillStyle = atom.color;
+                  break;
+                case 1:
+                  context.fillStyle = elementPatterns[ element.symbol ];
+                  break;
+                case 2:
+                  // copied from BAM's AtomNode
+                  var diameter = atom.radius * 2;
+                  var gCenter = new Vector2( -atom.radius / 3, -atom.radius / 3 );
+                  var middleRadius = diameter / 3;
+                  var fullRadius = middleRadius + 0.7 * diameter;
+                  var gradientFill = context.createRadialGradient( gCenter.x, gCenter.y, 0, gCenter.x, gCenter.y, fullRadius );
+                  gradientFill.addColorStop( 0, '#ffffff' );
+                  gradientFill.addColorStop( middleRadius / fullRadius, element.color );
+                  gradientFill.addColorStop( 1, '#000000' );
+                  context.fillStyle = gradientFill;
+                  break;
+                case 3:
+                  // custom
+                  var diameter = atom.radius * 2;
+                  var gCenter = new Vector2( -atom.radius / 5, -atom.radius / 5 );
+                  var middleRadius = diameter / 3;
+                  var fullRadius = gCenter.minus( new Vector2( 1, 1 ).normalized().times( atom.radius ) ).magnitude();
+                  var gradientFill = context.createRadialGradient( gCenter.x, gCenter.y, 0, gCenter.x, gCenter.y, fullRadius );
 
-            var lastTime = 0;
-            var timeElapsed = 0;
-
-            function tick() {
-              window.requestAnimationFrame( tick, canvas );
-
-              var timeNow = new Date().getTime();
-              if ( lastTime != 0 ) {
-                timeElapsed = (timeNow - lastTime) / 1000.0;
+                  var baseColor = new Color( element.color );
+                  gradientFill.addColorStop( 0, baseColor.colorUtilsBrighter( 0.5 ).toCSS() );
+                  gradientFill.addColorStop( 0.08, baseColor.colorUtilsBrighter( 0.2 ).toCSS() );
+                  gradientFill.addColorStop( 0.4, baseColor.colorUtilsDarker( 0.1 ).toCSS() );
+                  gradientFill.addColorStop( 0.8, baseColor.colorUtilsDarker( 0.4 ).toCSS() );
+                  gradientFill.addColorStop( 0.95, baseColor.colorUtilsDarker( 0.6 ).toCSS() );
+                  gradientFill.addColorStop( 1, baseColor.colorUtilsDarker( 0.4 ).toCSS() );
+                  context.fillStyle = gradientFill;
+                  break;
               }
-              lastTime = timeNow;
-
-              step( timeElapsed );
-              draw();
+              context.fill();
+              context.restore();
             }
+          }
 
+          var lastTime = 0;
+          var timeElapsed = 0;
+
+          function tick() {
             window.requestAnimationFrame( tick, canvas );
-          } );
-    }
-    else {
-      setTimeout( check, 4 );
-    }
-  }
-  setTimeout( check, 4 );
+
+            var timeNow = new Date().getTime();
+            if ( lastTime != 0 ) {
+              timeElapsed = (timeNow - lastTime) / 1000.0;
+            }
+            lastTime = timeNow;
+
+            step( timeElapsed );
+            draw();
+          }
+
+          window.requestAnimationFrame( tick, canvas );
+        } );
+  } );
 
 </script>
 
