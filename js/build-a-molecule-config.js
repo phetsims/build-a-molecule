@@ -38,5 +38,6 @@ require.config( {
 
   waitSeconds: 30, // because the sim's data files are big
 
-  urlArgs: new Date().getTime() // add cache buster query string to make browser refresh actually reload everything
+  // optional cache buster to make browser refresh load all included scripts, can be disabled with ?cacheBuster=false
+  urlArgs: phet.phetcommon.getCacheBusterArgs()
 } );
