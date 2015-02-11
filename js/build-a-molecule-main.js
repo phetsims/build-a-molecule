@@ -27,7 +27,7 @@ require( [
     };
 
     // Appending '?dev' to the URL will enable developer-only features.
-    if ( window.phet.phetcommon.getQueryParameter( 'dev' ) ) {
+    if ( window.phet.chipper.getQueryParameter( 'dev' ) ) {
       // put our development shortcuts for types and data into the global namespace
       _.extend( window, namespace );
 

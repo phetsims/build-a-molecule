@@ -39,5 +39,5 @@ require.config( {
   waitSeconds: 30, // because the sim's data files are big
 
   // optional cache buster to make browser refresh load all included scripts, can be disabled with ?cacheBuster=false
-  urlArgs: phet.phetcommon.getCacheBusterArgs()
+  urlArgs: phet.chipper.getCacheBusterArgs()
 } );
