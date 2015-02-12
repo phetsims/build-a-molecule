@@ -12,9 +12,9 @@ require.config( {
 
   paths: {
     // require.js plugins
-    image: '../../chipper/requirejs-plugins/image',
-    audio: '../../chipper/requirejs-plugins/audio',
-    string: '../../chipper/requirejs-plugins/string',
+    image: '../../chipper/js/requirejs-plugins/image',
+    audio: '../../chipper/js/requirejs-plugins/audio',
+    string: '../../chipper/js/requirejs-plugins/string',
     text: '../../sherpa/text',
 
     // PhET libs, uppercase names to identify them in require.js imports
