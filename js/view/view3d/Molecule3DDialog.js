@@ -58,7 +58,7 @@ define( function( require ) {
 
     var width = 0;
     var height = 0;
-    var matrix = trail.getMatrix();
+    var matrix = trail.getMatrix().copy();
     var stageWindowPadding = 35;
 
     var viewStyleProperty = new Property( 'spaceFill' ); // spaceFill or ballAndStick
@@ -160,7 +160,7 @@ define( function( require ) {
       }
       width = sceneWidth;
       height = sceneHeight;
-      matrix = newMatrix;
+      matrix = newMatrix.copy();
 
       var screenBounds = view.globalToLocalBounds( new Bounds2( 0, 0, width, height ) );
       outsideNode.setRectBounds( screenBounds.roundedOut() );
