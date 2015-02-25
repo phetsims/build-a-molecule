@@ -82,7 +82,7 @@ define( function( require ) {
       font: new PhetFont( 14 ),
       baseColor: Color.ORANGE
     } );
-    resetCollectionButton.touchArea = Shape.bounds( resetCollectionButton.bounds.dilate( 7 ) );
+    resetCollectionButton.touchArea = Shape.bounds( resetCollectionButton.bounds.dilated( 7 ) );
 
     function updateEnabled() {
       var enabled = false;
