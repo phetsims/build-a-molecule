@@ -15,8 +15,9 @@
 
   <script type="text/javascript" src="../../../sherpa/jquery-2.1.0.js"></script>
   <script type="text/javascript" src="../../../sherpa/lodash-2.4.1.js"></script>
+  <script type="text/javascript" src="../../../sherpa/pixi-2.2.3-dev.js"></script>
   <script type="text/javascript" src="../../../sherpa/has.js"></script>
-  <script src="../../../assert/js/assert.js"></script>
+  <script type="text/javascript" src="../../../assert/js/assert.js"></script>
   <script type="text/javascript">
     window.assertions.enableAssert();
     window.assertions.enableAssertSlow();
@@ -68,7 +69,10 @@
       runDotTests( '../../../dot/tests/qunit' );
       runPhetCoreTests( '../../../phet-core/tests/qunit' );
 
-      $( '#qunit-filter-pass' ).click();
+      var $checkbox = $( '#qunit-filter-pass' );
+      if ( !$checkbox[0].checked ) {
+        $checkbox.click();
+      }
     } );
   } );
 </script>
