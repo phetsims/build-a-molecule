@@ -18,7 +18,7 @@ define( function( require ) {
   var KitCollectionNode = require( 'BUILD_A_MOLECULE/view/KitCollectionNode' );
 
   var BAMView = namespace.BAMView = function BAMView( collectionList ) {
-    ScreenView.call( this, { renderer: 'svg', layoutBounds: new Rectangle( 0, 0, Constants.stageSize.width, Constants.stageSize.height ) } );
+    ScreenView.call( this, { layoutBounds: new Rectangle( 0, 0, Constants.stageSize.width, Constants.stageSize.height ) } );
     var view = this;
 
     this.baseNode = new Node();
