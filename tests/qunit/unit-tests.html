@@ -55,13 +55,13 @@
 <script src="../../../scenery/tests/qunit/prepare-fixture.js"></script>
 <script>
   require( [ 'build-a-molecule-dev-config' ], function() {
-    require( [ 'build-a-molecule-dev-main', 'SCENERY/main', 'KITE/main', 'DOT/main', 'AXON/main', 'PHET_CORE/main' ], function( bam, scenery, kite, dot, axon, core ) {
+    require( [ 'build-a-molecule-dev-main', 'SCENERY/main', 'KITE/main', 'DOT/main', 'AXON/main', 'PHET_CORE/main' ], function( bam, scenery, kite, dot, axon, phetCore ) {
       window.bam = bam;
       window.scenery = scenery;
       window.kite = kite;
       window.dot = dot;
       window.axon = axon;
-      window.core = core;
+      window.phetCore = phetCore;
 
       runBuildAMoleculeTests( '.' );
       runSceneryTests( '../../../scenery/tests/qunit' );

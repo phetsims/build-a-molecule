@@ -13,7 +13,7 @@ define( function( require ) {
     scenery: require( 'SCENERY/main' ),
     kite: require( 'KITE/main' ),
     dot: require( 'DOT/main' ),
-    core: require( 'PHET_CORE/main' ),
+    phetCore: require( 'PHET_CORE/main' ),
 
     Bucket: require( 'PHETCOMMON/model/Bucket' ),
     BucketFront: require( 'SCENERY_PHET/bucket/BucketFront' ),

@@ -77,13 +77,13 @@
 
   require( [ 'build-a-molecule-dev-config' ], function() {
     require( [ 'build-a-molecule-dev-main', 'BAM/namespace', 'SCENERY/main', 'KITE/main', 'DOT/main', 'PHET_CORE/main', 'NITROGLYCERIN/Element', 'BAM/model/CompleteMolecule', 'DOT/Matrix3', 'DOT/Vector2', 'DOT/Vector3', 'KITE/segments/Arc', 'KITE/segments/EllipticalArc', 'SCENERY/util/Color', 'DOT/Util', 'DOT/Ray3', 'BAM/model/MoleculeList' ],
-        function( bleh, bam, scenery, kite, dot, core, Element, CompleteMolecule, Matrix3, Vector2, Vector3, Arc, EllipticalArc, Color, DotUtil, Ray3, MoleculeList ) {
+        function( bleh, bam, scenery, kite, dot, phetCore, Element, CompleteMolecule, Matrix3, Vector2, Vector3, Arc, EllipticalArc, Color, DotUtil, Ray3, MoleculeList ) {
 
           window.bam = bam;
           window.scenery = scenery;
           window.kite = kite;
           window.dot = dot;
-          window.core = core;
+          window.phetCore = phetCore;
 
           // var generalTest = MoleculeList.getMasterInstance().findMoleculeByCID( 23418945 );
           // var hcn = MoleculeList.getMasterInstance().findMoleculeByCID( 768 );

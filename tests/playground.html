@@ -21,13 +21,13 @@
 <body>
 <script>
   require( [ 'build-a-molecule-dev-config' ], function() {
-    require( [ 'build-a-molecule-dev-main', 'SCENERY/main', 'KITE/main', 'DOT/main', 'AXON/main', 'PHET_CORE/main', 'model/Atom2' ], function( bam, scenery, kite, dot, axon, core, Atom2 ) {
+    require( [ 'build-a-molecule-dev-main', 'SCENERY/main', 'KITE/main', 'DOT/main', 'AXON/main', 'PHET_CORE/main', 'model/Atom2' ], function( bam, scenery, kite, dot, axon, phetCore, Atom2 ) {
       window.bam = bam;
       window.scenery = scenery;
       window.kite = kite;
       window.dot = dot;
       window.axon = axon;
-      window.core = core;
+      window.phetCore = phetCore;
       window.Atom2 = Atom2;
 
       console.log( 'loaded' );
