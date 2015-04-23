@@ -1,0 +1,179 @@
+{
+  "molecule.hydrogen_peroxide": {
+    "value": "Hydrogen Peroxide"
+  },
+  "molecule.formaldehyde": {
+    "value": "Formaldehyde"
+  },
+  "molecule.silane": {
+    "value": "Silane"
+  },
+  "molecule.molecular_fluorine": {
+    "value": "Fluorine"
+  },
+  "molecule.water": {
+    "value": "Water"
+  },
+  "molecule.borane": {
+    "value": "Borane"
+  },
+  "atom.iodine": {
+    "value": "Iodine"
+  },
+  "collection.multiple.goalFormat": {
+    "value": "Goal: {0}{1}"
+  },
+  "atom.fluorine": {
+    "value": "Fluorine"
+  },
+  "molecule.hydrogen_sulfide": {
+    "value": "Hydrogen Sulfide"
+  },
+  "molecule.carbon_dioxide": {
+    "value": "Carbon Dioxide"
+  },
+  "molecule.chloromethane": {
+    "value": "Chloromethane"
+  },
+  "molecule.molecular_chlorine": {
+    "value": "Chlorine"
+  },
+  "molecule.molecular_nitrogen": {
+    "value": "Nitrogen"
+  },
+  "collection.multiple.quantityFormat": {
+    "value": "You have: {0}{1}"
+  },
+  "collection.tryWithDifferentMolecules": {
+    "value": "Next Collection"
+  },
+  "atom.silicon": {
+    "value": "Silicon"
+  },
+  "atom.chlorine": {
+    "value": "Chlorine"
+  },
+  "atom.nitrogen": {
+    "value": "Nitrogen"
+  },
+  "3d.ballAndStick": {
+    "value": "Ball and Stick"
+  },
+  "resetCurrentTab": {
+    "value": "Reset current tab"
+  },
+  "molecule.phosphine": {
+    "value": "Phosphine"
+  },
+  "molecule.sulfur_dioxide": {
+    "value": "Sulfur Dioxide"
+  },
+  "molecule.ozone": {
+    "value": "Ozone"
+  },
+  "atom.bromine": {
+    "value": "Bromine"
+  },
+  "collection.single.format": {
+    "value": "{0} ({1})"
+  },
+  "molecule.fluoromethane": {
+    "value": "Fluoromethane"
+  },
+  "title.largerMolecules": {
+    "value": "Larger"
+  },
+  "collection.yourMoleculeCollection": {
+    "value": "Your Molecules"
+  },
+  "3d.icon": {
+    "value": "3D"
+  },
+  "atom.phosphorus": {
+    "value": "Phosphorus"
+  },
+  "collection.reset": {
+    "value": "Reset Collection"
+  },
+  "atom.boron": {
+    "value": "Boron"
+  },
+  "atom.oxygen": {
+    "value": "Oxygen"
+  },
+  "3d.spaceFilling": {
+    "value": "Space Filling"
+  },
+  "collection.label": {
+    "value": "Collection {0}"
+  },
+  "molecule.hydrogen_cyanide": {
+    "value": "Hydrogen Cyanide"
+  },
+  "molecule.molecular_hydrogen": {
+    "value": "Hydrogen"
+  },
+  "title.makeMolecule": {
+    "value": "Single"
+  },
+  "kit.resetKit": {
+    "value": "Refill Kit"
+  },
+  "atom.hydrogen": {
+    "value": "Hydrogen"
+  },
+  "collection.hint": {
+    "value": "Drag your molecule here"
+  },
+  "molecule.acetylene": {
+    "value": "Acetylene"
+  },
+  "kit.label": {
+    "value": "Kit #{0}"
+  },
+  "atom.sulphur": {
+    "value": "Sulfur"
+  },
+  "collection.multiple.quantityEmpty": {
+    "value": "You have: (empty)"
+  },
+  "3d.loading": {
+    "value": "Loading 3D..."
+  },
+  "molecule.trifluoroborane": {
+    "value": "Trifluoroborane"
+  },
+  "molecule.carbon_monoxide": {
+    "value": "Carbon Monoxide"
+  },
+  "molecule.molecular_oxygen": {
+    "value": "Oxygen"
+  },
+  "build-a-molecule.name": {
+    "value": "Build a Molecule"
+  },
+  "molecule.methane": {
+    "value": "Methane"
+  },
+  "title.collectMultiple": {
+    "value": "Multiple"
+  },
+  "molecule.ammonia": {
+    "value": "Ammonia"
+  },
+  "molecule.ethylene": {
+    "value": "Ethylene"
+  },
+  "molecule.nitrous_oxide": {
+    "value": "Nitrous Oxide"
+  },
+  "collection.allFilled": {
+    "value": "You completed your collection!"
+  },
+  "molecule.nitric_oxide": {
+    "value": "Nitric Oxide"
+  },
+  "atom.carbon": {
+    "value": "Carbon"
+  }
+}
