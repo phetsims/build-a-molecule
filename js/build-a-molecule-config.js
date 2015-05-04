@@ -26,6 +26,7 @@ require.config( {
     NITROGLYCERIN: '../../nitroglycerin/js',
     PHET_CORE: '../../phet-core/js',
     PHETCOMMON: '../../phetcommon/js',
+    REPOSITORY: '..',
     SCENERY: '../../scenery/js',
     SCENERY_PHET: '../../scenery-phet/js',
     SHERPA: '../../sherpa',
