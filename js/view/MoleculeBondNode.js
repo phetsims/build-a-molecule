@@ -61,7 +61,7 @@ define( function( require ) {
       openFile += '-up';
       closedFile += '-up';
     }
-    if ( platform.ie ) {
+    if ( platform.ie || platform.edge ) {
       openFile += '.cur';
       closedFile += '.cur';
     }
@@ -76,7 +76,7 @@ define( function( require ) {
 
     // offsets should center this
     var openCursor, closedCursor;
-    if ( platform.ie ) {
+    if ( platform.ie || platform.edge ) {
       openCursor = 'url(' + scissorsOpen.src + '), url(http://phetsims.github.io/build-a-molecule/images/' + openFile + '), ' + backup;
       closedCursor = 'url(' + scissorsClosed.src + '), url(http://phetsims.github.io/build-a-molecule/images/' + closedFile + '), ' + backup;
     }
