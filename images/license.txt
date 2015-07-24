@@ -1,1 +1,10 @@
-scissors.png source=Open Clip Art license=PUBLIC DOMAIN notes=Modified from http://www.openclipart.org/detail/32341
+{
+  "scissors.png": {
+    "text": [
+      "Public Domain"
+    ],
+    "projectURL": "Open Clip Art",
+    "license": "Public Domain",
+    "notes": "Modified from http://www.openclipart.org/detail/32341"
+  }
+}
