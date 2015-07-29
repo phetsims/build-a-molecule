@@ -1,10 +1,86 @@
 {
-  "scissors.png": {
+  "green-left.png": {
     "text": [
-      "Public Domain"
+    ],
+    "projectURL": "",
+    "license": "Unknown",
+    "notes": ""
+  },
+  "green-middle.png": {
+    "text": [
+    ],
+    "projectURL": "",
+    "license": "",
+    "notes": ""
+  },
+  "green-right.png": {
+    "text": [
+    ],
+    "projectURL": "",
+    "license": "",
+    "notes": ""
+  },
+  "scissors.cur": {
+    "text": [
     ],
     "projectURL": "http://www.openclipart.org/detail/32341",
     "license": "Public Domain",
     "notes": "Modified by PhET"
+  },
+  "scissors.png": {
+    "text": [
+    ],
+    "projectURL": "http://www.openclipart.org/detail/32341",
+    "license": "Public Domain",
+    "notes": "Modified by PhET"
+  },
+  "scissors-closed.cur": {
+    "text": [
+    ],
+    "projectURL": "",
+    "license": "",
+    "notes": ""
+  },
+  "scissors-closed.png": {
+    "text": [
+    ],
+    "projectURL": "",
+    "license": "",
+    "notes": ""
+  },
+  "scissors-closed-up.cur": {
+    "text": [
+    ],
+    "projectURL": "",
+    "license": "",
+    "notes": ""
+  },
+  "scissors-closed-up.png": {
+    "text": [
+    ],
+    "projectURL": "",
+    "license": "",
+    "notes": ""
+  },
+  "scissors-up.cur": {
+    "text": [
+    ],
+    "projectURL": "",
+    "license": "",
+    "notes": ""
+  },
+  "scissors-up.png": {
+    "text": [
+    ],
+    "projectURL": "",
+    "license": "",
+    "notes": ""
+  },
+  "split-blue.png": {
+    "text": [
+    ],
+    "projectURL": "",
+    "license": "",
+    "notes": ""
   }
 }
