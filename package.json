@@ -2,6 +2,7 @@
   "name": "build-a-molecule",
   "version": "0.0.0-dev.11",
   "license": "GPLv3",
+  "requirejsNamespace": "BUILD_A_MOLECULE",
   "simTitleStringKey": "BUILD_A_MOLECULE/build-a-molecule.name",
   "phetLibs": [
     "build-a-molecule",
