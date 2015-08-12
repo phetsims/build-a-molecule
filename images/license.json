@@ -2,23 +2,23 @@
   "green-left.png": {
     "text": [
     ],
-    "projectURL": "",
-    "license": "Unknown",
-    "notes": ""
+    "projectURL": "http://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": "Created by PhET (Jonathan Olson), see assets/split.xcf"
   },
   "green-middle.png": {
     "text": [
     ],
-    "projectURL": "",
-    "license": "",
-    "notes": ""
+    "projectURL": "http://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": "Created by PhET (Jonathan Olson), see assets/split.xcf"
   },
   "green-right.png": {
     "text": [
     ],
-    "projectURL": "",
-    "license": "",
-    "notes": ""
+    "projectURL": "http://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": "Created by PhET (Jonathan Olson), see assets/split.xcf"
   },
   "scissors.cur": {
     "text": [
@@ -37,50 +37,51 @@
   "scissors-closed.cur": {
     "text": [
     ],
-    "projectURL": "",
-    "license": "",
-    "notes": ""
+    "projectURL": "http://www.openclipart.org/detail/32341",
+    "license": "Public Domain",
+    "notes": "Modified by PhET"
   },
   "scissors-closed.png": {
     "text": [
     ],
-    "projectURL": "",
-    "license": "",
-    "notes": ""
+    "projectURL": "http://www.openclipart.org/detail/32341",
+    "license": "Public Domain",
+    "notes": "Modified by PhET"
   },
   "scissors-closed-up.cur": {
     "text": [
     ],
-    "projectURL": "",
-    "license": "",
-    "notes": ""
+    "projectURL": "http://www.openclipart.org/detail/32341",
+    "license": "Public Domain",
+    "notes": "Modified by PhET"
   },
   "scissors-closed-up.png": {
     "text": [
     ],
-    "projectURL": "",
-    "license": "",
-    "notes": ""
+    "projectURL": "http://www.openclipart.org/detail/32341",
+    "license": "Public Domain",
+    "notes": "Modified by PhET"
   },
   "scissors-up.cur": {
     "text": [
     ],
-    "projectURL": "",
-    "license": "",
-    "notes": ""
+    "projectURL": "http://www.openclipart.org/detail/32341",
+    "license": "Public Domain",
+    "notes": "Modified by PhET"
   },
   "scissors-up.png": {
     "text": [
     ],
-    "projectURL": "",
-    "license": "",
-    "notes": ""
+    "projectURL": "http://www.openclipart.org/detail/32341",
+    "license": "Public Domain",
+    "notes": "Modified by PhET"
   },
   "split-blue.png": {
     "text": [
+      "Copyright 2002-2015 University of Colorado Boulder"
     ],
-    "projectURL": "",
-    "license": "",
-    "notes": ""
+    "projectURL": "http://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": "Created by PhET (Jonathan Olson), see assets/split.xcf"
   }
 }
