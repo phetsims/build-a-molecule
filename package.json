@@ -2,14 +2,6 @@
   "name": "build-a-molecule",
   "version": "0.0.0-dev.11",
   "license": "GPLv3",
-  "requirejsNamespace": "BUILD_A_MOLECULE",
-  "simTitleStringKey": "BUILD_A_MOLECULE/build-a-molecule.name",
-  "phetLibs": [
-    "build-a-molecule",
-    "nitroglycerin",
-    "vegas",
-    "vibe"
-  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/phetsims/build-a-molecule.git"
@@ -20,5 +12,15 @@
     "grunt-contrib-jshint": "~0.6.4",
     "uglify-js": "~2.4.0",
     "requirejs": "~2.1.8"
+  },
+  "phet": {
+    "requirejsNamespace": "BUILD_A_MOLECULE",
+    "simTitleStringKey": "BUILD_A_MOLECULE/build-a-molecule.name",
+    "phetLibs": [
+      "build-a-molecule",
+      "nitroglycerin",
+      "vegas",
+      "vibe"
+    ]
   }
 }
