@@ -17,7 +17,6 @@
     "requirejsNamespace": "BUILD_A_MOLECULE",
     "simTitleStringKey": "BUILD_A_MOLECULE/build-a-molecule.name",
     "phetLibs": [
-      "build-a-molecule",
       "nitroglycerin",
       "vegas",
       "vibe"
