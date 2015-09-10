@@ -149,7 +149,7 @@
   "molecule.molecular_oxygen": {
     "value": "Oxygen"
   },
-  "build-a-molecule.name": {
+  "build-a-molecule.title": {
     "value": "Build a Molecule"
   },
   "molecule.methane": {
