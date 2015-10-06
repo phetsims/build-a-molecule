@@ -1,4 +1,4 @@
-// Copyright 2002-2014, University of Colorado
+// Copyright 2002-2014, University of Colorado Boulder
 
 /**
  * Displays the molecule name and 'X' to break apart the molecule

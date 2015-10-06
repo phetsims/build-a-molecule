@@ -1,4 +1,4 @@
-// Copyright 2002-2014, University of Colorado
+// Copyright 2002-2014, University of Colorado Boulder
 
 /**
  * A panel that shows collection areas for different collections, and allows switching between those collections

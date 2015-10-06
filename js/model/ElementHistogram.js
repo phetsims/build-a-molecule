@@ -1,4 +1,4 @@
-// Copyright 2002-2014, University of Colorado
+// Copyright 2002-2014, University of Colorado Boulder
 
 /**
  * Histogram of each element in a molecule, and allows fast comparison

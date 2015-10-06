@@ -1,4 +1,4 @@
-// Copyright 2002-2014, University of Colorado
+// Copyright 2002-2014, University of Colorado Boulder
 
 /**
  * Displays an atom and that labels it with the chemical symbol

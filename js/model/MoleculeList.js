@@ -1,4 +1,4 @@
-// Copyright 2002-2014, University of Colorado
+// Copyright 2002-2014, University of Colorado Boulder
 
 /**
  * Has functions relating to lists of molecules (e.g. is a molecule or submolecule allowed?) Uses static initialization to load in a small fraction
@@ -234,15 +234,15 @@ define( function( require ) {
    * molecule references and customized names
    *----------------------------------------------------------------------------*/
 
-  MoleculeList.CO2 = MoleculeList.getMoleculeByName( "Carbon Dioxide" );
-  MoleculeList.H2O = MoleculeList.getMoleculeByName( "Water" );
-  MoleculeList.N2 = MoleculeList.getMoleculeByName( "Nitrogen" );
-  MoleculeList.CO = MoleculeList.getMoleculeByName( "Carbon Monoxide" );
-  MoleculeList.NO = MoleculeList.getMoleculeByName( "Nitric Oxide" );
-  MoleculeList.O2 = MoleculeList.getMoleculeByName( "Oxygen" );
-  MoleculeList.H2 = MoleculeList.getMoleculeByName( "Hydrogen" );
-  MoleculeList.Cl2 = MoleculeList.getMoleculeByName( "Chlorine" );
-  MoleculeList.NH3 = MoleculeList.getMoleculeByName( "Ammonia" );
+  MoleculeList.CO2 = MoleculeList.getMoleculeByName( 'Carbon Dioxide' );
+  MoleculeList.H2O = MoleculeList.getMoleculeByName( 'Water' );
+  MoleculeList.N2 = MoleculeList.getMoleculeByName( 'Nitrogen' );
+  MoleculeList.CO = MoleculeList.getMoleculeByName( 'Carbon Monoxide' );
+  MoleculeList.NO = MoleculeList.getMoleculeByName( 'Nitric Oxide' );
+  MoleculeList.O2 = MoleculeList.getMoleculeByName( 'Oxygen' );
+  MoleculeList.H2 = MoleculeList.getMoleculeByName( 'Hydrogen' );
+  MoleculeList.Cl2 = MoleculeList.getMoleculeByName( 'Chlorine' );
+  MoleculeList.NH3 = MoleculeList.getMoleculeByName( 'Ammonia' );
 
   /**
    * Molecules that can be used for collection boxes
@@ -257,23 +257,23 @@ define( function( require ) {
     MoleculeList.NH3,
     MoleculeList.Cl2,
     MoleculeList.NO,
-    MoleculeList.getMoleculeByName( "Acetylene" ),
-    MoleculeList.getMoleculeByName( "Borane" ),
-    MoleculeList.getMoleculeByName( "Trifluoroborane" ),
-    MoleculeList.getMoleculeByName( "Chloromethane" ),
-    MoleculeList.getMoleculeByName( "Ethylene" ),
-    MoleculeList.getMoleculeByName( "Fluorine" ),
-    MoleculeList.getMoleculeByName( "Fluoromethane" ),
-    MoleculeList.getMoleculeByName( "Formaldehyde" ),
-    MoleculeList.getMoleculeByName( "Hydrogen Cyanide" ),
-    MoleculeList.getMoleculeByName( "Hydrogen Peroxide" ),
-    MoleculeList.getMoleculeByName( "Hydrogen Sulfide" ),
-    MoleculeList.getMoleculeByName( "Methane" ),
-    MoleculeList.getMoleculeByName( "Nitrous Oxide" ),
-    MoleculeList.getMoleculeByName( "Ozone" ),
-    MoleculeList.getMoleculeByName( "Phosphine" ),
-    MoleculeList.getMoleculeByName( "Silane" ),
-    MoleculeList.getMoleculeByName( "Sulfur Dioxide" )
+    MoleculeList.getMoleculeByName( 'Acetylene' ),
+    MoleculeList.getMoleculeByName( 'Borane' ),
+    MoleculeList.getMoleculeByName( 'Trifluoroborane' ),
+    MoleculeList.getMoleculeByName( 'Chloromethane' ),
+    MoleculeList.getMoleculeByName( 'Ethylene' ),
+    MoleculeList.getMoleculeByName( 'Fluorine' ),
+    MoleculeList.getMoleculeByName( 'Fluoromethane' ),
+    MoleculeList.getMoleculeByName( 'Formaldehyde' ),
+    MoleculeList.getMoleculeByName( 'Hydrogen Cyanide' ),
+    MoleculeList.getMoleculeByName( 'Hydrogen Peroxide' ),
+    MoleculeList.getMoleculeByName( 'Hydrogen Sulfide' ),
+    MoleculeList.getMoleculeByName( 'Methane' ),
+    MoleculeList.getMoleculeByName( 'Nitrous Oxide' ),
+    MoleculeList.getMoleculeByName( 'Ozone' ),
+    MoleculeList.getMoleculeByName( 'Phosphine' ),
+    MoleculeList.getMoleculeByName( 'Silane' ),
+    MoleculeList.getMoleculeByName( 'Sulfur Dioxide' )
   ];
 
   _.each( MoleculeList.collectionBoxMolecules, function( molecule ) {

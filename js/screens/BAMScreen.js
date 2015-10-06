@@ -155,7 +155,7 @@ define( function( require ) {
   // from array of CompleteMolecule, returns {CompleteMolecule}
   BAMScreen.pickRandomMoleculeNotIn = function( molecules ) {
     // Infinite loop. We're living on the edge now, baby!
-    while ( true ) {
+    while ( true ) { // eslint-disable-line no-constant-condition
       var molecule = MoleculeList.collectionBoxMolecules[ _.random( 0, MoleculeList.collectionBoxMolecules.length - 1 ) ]; // TODO: random numbers in
       if ( !_.contains( molecules, molecule ) ) {
         return molecule;

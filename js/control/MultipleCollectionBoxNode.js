@@ -1,4 +1,4 @@
-// Copyright 2002-2014, University of Colorado
+// Copyright 2002-2014, University of Colorado Boulder
 
 /**
  * Displays a collection box that can collect multiple molecules with two text labels above. One shows the "goal", and the other shows the current

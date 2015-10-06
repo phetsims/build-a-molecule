@@ -1,4 +1,4 @@
-// Copyright 2002-2014, University of Colorado
+// Copyright 2002-2014, University of Colorado Boulder
 
 /**
  * Represents a generic collection box node which is decorated by additional header nodes (probably text describing what can be put in, what is in it,
