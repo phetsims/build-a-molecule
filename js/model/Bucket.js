@@ -34,11 +34,11 @@ define( function( require ) {
     SphereBucket.call( this, {
       position: Vector2.ZERO,
       size: size,
-      sphereRadius: element.radius,
+      sphereRadius: element.covalentRadius,
       baseColor: element.color,
       caption: Strings.getAtomName( element ),
       captionColor: AtomNode.needsWhiteColor( new Color( element.color ) ) ? 'white' : 'black',
-      verticalParticleOffset: -30 + element.radius / 2
+      verticalParticleOffset: -30 + element.covalentRadius / 2
     } );
 
     this.element = element;
@@ -97,7 +97,7 @@ define( function( require ) {
   };
 
   Bucket.createAutoSized = function( clock, element, quantity ) {
-    return new Bucket( new Dimension2( Bucket.calculateIdealBucketWidth( element.radius, quantity ), 200 ), clock, element, quantity );
+    return new Bucket( new Dimension2( Bucket.calculateIdealBucketWidth( element.covalentRadius, quantity ), 200 ), clock, element, quantity );
   };
 
   return Bucket;

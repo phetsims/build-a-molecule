@@ -106,8 +106,8 @@ define( function( require ) {
         // include both the bucket's shape and its atoms in our bounds, so we can properly center the group
         bucketBounds.includeBounds( bucket.containerShape.bounds );
         _.each( bucket.atoms, function( atom ) {
-          bucketBounds.includeBounds( new Bounds2( atom.position.x - atom.radius, atom.position.y - atom.radius,
-            atom.position.x + atom.radius, atom.position.y + atom.radius ) );
+          bucketBounds.includeBounds( new Bounds2( atom.position.x - atom.covalentRadius, atom.position.y - atom.covalentRadius,
+            atom.position.x + atom.covalentRadius, atom.position.y + atom.covalentRadius ) );
         } );
         bucket.position = new Vector2( usedWidth, 0 );
         usedWidth += bucket.width;
@@ -596,7 +596,7 @@ define( function( require ) {
     this.b = b;
 
     // The location the atom should be placed
-    this.idealLocation = a.position.plus( direction.vector.times( a.radius + b.radius ) );
+    this.idealLocation = a.position.plus( direction.vector.times( a.covalentRadius + b.covalentRadius ) );
   };
 
   Kit.bondDistanceThreshold = 200;

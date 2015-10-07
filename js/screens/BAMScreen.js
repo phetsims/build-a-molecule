@@ -118,7 +118,7 @@ define( function( require ) {
         }
 
         // funky math part. sqrt scales it so that we can get two layers of atoms if the atom count is above 2
-        var bucketWidth = Bucket.calculateIdealBucketWidth( element.radius, atomCount );
+        var bucketWidth = Bucket.calculateIdealBucketWidth( element.covalentRadius, atomCount );
 
         buckets.push( new Bucket( new Dimension2( bucketWidth, 200 ), clock, element, atomCount ) );
       } );

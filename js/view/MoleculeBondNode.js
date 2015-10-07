@@ -110,7 +110,7 @@ define( function( require ) {
       if ( orientation.magnitude() > 0 ) {
         orientation.normalize();
       }
-      var location = orientation.times( a.radius ).plus( a.position );
+      var location = orientation.times( a.covalentRadius ).plus( a.position );
       self.setTranslation( Constants.modelViewTransform.modelToViewPosition( location ) );
     };
     a.positionProperty.link( this.positionListener );

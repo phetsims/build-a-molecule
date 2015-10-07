@@ -68,11 +68,11 @@ define( function( require ) {
 
   inherit( PropertySet, Atom2, extend( {}, Atom.prototype, {
     get positionBounds() {
-      return new Rectangle( this.position.x - this.radius, this.position.y - this.radius, this.diameter, this.diameter );
+      return new Rectangle( this.position.x - this.covalentRadius, this.position.y - this.covalentRadius, this.diameter, this.diameter );
     },
 
     get destinationBounds() {
-      return new Rectangle( this.destination.x - this.radius, this.destination.y - this.radius, this.diameter, this.diameter );
+      return new Rectangle( this.destination.x - this.covalentRadius, this.destination.y - this.covalentRadius, this.diameter, this.diameter );
     },
 
     stepInTime: function( dt ) {
