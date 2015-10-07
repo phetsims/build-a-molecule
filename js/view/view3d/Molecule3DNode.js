@@ -30,7 +30,7 @@ define( function( require ) {
   function to3d( atom ) {
     var v = new Vector3( atom.x3d(), atom.y3d(), atom.z3d() ).times( 75 ); // similar to picometers from angstroms? hopefully?
     v.element = atom.element;
-    v.radius = atom.element.radius;
+    v.radius = atom.element.covalentRadius;
     v.color = atom.element.color;
     return v;
   }
@@ -113,8 +113,9 @@ define( function( require ) {
     // center the bounds of the atoms
     var bounds3 = Bounds3.NOTHING.copy();
     _.each( this.currentAtoms, function( atom ) {
-      bounds3.includeBounds( new Bounds3( atom.x - atom.radius, atom.y - atom.radius, atom.z - atom.radius,
-        atom.x + atom.radius, atom.y + atom.radius, atom.z + atom.radius ) );
+      bounds3.includeBounds( new Bounds3( atom.x - atom.covalentRadius, atom.y - atom.covalentRadius,
+        atom.z - atom.covalentRadius, atom.x + atom.covalentRadius, atom.y + atom.covalentRadius,
+        atom.z + atom.covalentRadius ) );
     } );
     var center3 = bounds3.center;
     if ( center3.magnitude() ) {
@@ -126,7 +127,7 @@ define( function( require ) {
     // compute our outer bounds so we can properly scale our transform to fit
     var maxTotalRadius = 0;
     _.each( this.currentAtoms, function( atom ) {
-      maxTotalRadius = Math.max( maxTotalRadius, atom.magnitude() + atom.radius );
+      maxTotalRadius = Math.max( maxTotalRadius, atom.magnitude() + atom.covalentRadius );
     } );
     this.maxTotalRadius = maxTotalRadius;
 
@@ -224,9 +225,9 @@ define( function( require ) {
     },
 
     createGradient: function( element ) {
-      // var diameter = element.radius * 2;
-      var gCenter = new Vector2( -element.radius / 5, -element.radius / 5 );
-      var fullRadius = gCenter.minus( new Vector2( 1, 1 ).normalized().times( element.radius ) ).magnitude();
+      // var diameter = element.covalentRadius * 2;
+      var gCenter = new Vector2( -element.covalentRadius / 5, -element.covalentRadius / 5 );
+      var fullRadius = gCenter.minus( new Vector2( 1, 1 ).normalized().times( element.covalentRadius ) ).magnitude();
       var gradientFill = this.context.createRadialGradient( gCenter.x, gCenter.y, 0, gCenter.x, gCenter.y, fullRadius );
 
       var baseColor = new Color( element.color );
@@ -265,9 +266,9 @@ define( function( require ) {
 
           var delta = otherAtom.minus( atom );
           var d = delta.magnitude();
-          if ( d < atom.radius + otherAtom.radius - 1e-7 ) {
+          if ( d < atom.covalentRadius + otherAtom.covalentRadius - 1e-7 ) {
             var theta = delta.angleBetween( new Vector3( 0, 0, -1 ) );
-            var arcData = ellipticalArcCut( atom.radius, otherAtom.radius, d, theta );
+            var arcData = ellipticalArcCut( atom.covalentRadius, otherAtom.covalentRadius, d, theta );
             if ( arcData ) {
               // angle to center of ellipse
               var phi = Math.atan2( delta.y, delta.x );
@@ -299,13 +300,13 @@ define( function( require ) {
               arcs[ j ].rotation,
               arcs[ j ].ellipseStart, arcs[ j ].ellipseEnd, false );
             var atEnd = j + 1 === arcs.length;
-            arc = new Arc( Vector2.ZERO, atom.radius, arcs[ j ].circleEnd, atEnd ? ( arcs[ 0 ].circleStart + Math.PI * 2 ) : arcs[ j + 1 ].circleStart, false );
+            arc = new Arc( Vector2.ZERO, atom.covalentRadius, arcs[ j ].circleEnd, atEnd ? ( arcs[ 0 ].circleStart + Math.PI * 2 ) : arcs[ j + 1 ].circleStart, false );
             ellipticalArc.writeToContext( context );
             arc.writeToContext( context );
           }
         }
         else {
-          arc = new Arc( Vector2.ZERO, atom.radius, 0, Math.PI * 2, false );
+          arc = new Arc( Vector2.ZERO, atom.covalentRadius, 0, Math.PI * 2, false );
           arc.writeToContext( context );
         }
 

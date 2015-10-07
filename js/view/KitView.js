@@ -223,7 +223,7 @@ define( function( require ) {
         var dy = y - position.y;
 
         // not really distance, persay, since it can go negative
-        var distanceSquared = dx * dx + dy * dy - atom.radius * atom.radius;
+        var distanceSquared = dx * dx + dy * dy - atom.covalentRadius * atom.covalentRadius;
 
         if ( distanceSquared > bestDistanceSquared || ( element && atom.element !== element ) ) {
           continue;

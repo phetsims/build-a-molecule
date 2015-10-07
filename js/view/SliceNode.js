@@ -60,7 +60,7 @@ define( function( require ) {
               // TODO: also try out destination?
               aPos: bond.a.position,
               bPos: bond.b.position,
-              doubleMaxRadius: Math.max( bond.a.radius, bond.b.radius ) * Math.max( bond.a.radius, bond.b.radius ),
+              doubleMaxRadius: Math.max( bond.a.covalentRadius, bond.b.covalentRadius ) * Math.max( bond.a.covalentRadius, bond.b.covalentRadius ),
               center: bond.a.position.blend( bond.b.position, 0.5 ),
               delta: bond.b.position.minus( bond.a.position ) // don't reverse this
             } );

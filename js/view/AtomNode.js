@@ -51,7 +51,7 @@ define( function( require ) {
     }
 
     var color = new Color( element.color );
-    var radius = Constants.modelViewTransform.modelToViewDeltaX( element.radius );
+    var radius = Constants.modelViewTransform.modelToViewDeltaX( element.covalentRadius );
     var diameter = radius * 2;
 
     var gCenter = new Vector2( -radius / 3, -radius / 3 );
