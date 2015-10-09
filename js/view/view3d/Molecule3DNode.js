@@ -225,7 +225,7 @@ define( function( require ) {
     },
 
     createGradient: function( element ) {
-      // var diameter = element.covalentRadius * 2;
+      // var covalentDiameter = element.covalentRadius * 2;
       var gCenter = new Vector2( -element.covalentRadius / 5, -element.covalentRadius / 5 );
       var fullRadius = gCenter.minus( new Vector2( 1, 1 ).normalized().times( element.covalentRadius ) ).magnitude();
       var gradientFill = this.context.createRadialGradient( gCenter.x, gCenter.y, 0, gCenter.x, gCenter.y, fullRadius );
