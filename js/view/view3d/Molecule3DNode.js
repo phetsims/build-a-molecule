@@ -30,7 +30,7 @@ define( function( require ) {
   function to3d( atom ) {
     var v = new Vector3( atom.x3d(), atom.y3d(), atom.z3d() ).times( 75 ); // similar to picometers from angstroms? hopefully?
     v.element = atom.element;
-    v.radius = atom.element.covalentRadius;
+    v.covalentRadius = atom.element.covalentRadius;
     v.color = atom.element.color;
     return v;
   }
