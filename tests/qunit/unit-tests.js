@@ -12,5 +12,4 @@ function runBuildAMoleculeTests( pathToTestBase ) {
   }
 
   loadTestFile( 'js/model.js' );
-  loadTestFile( 'js/linting.js' );
 };
