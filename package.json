@@ -1,7 +1,7 @@
 {
   "name": "build-a-molecule",
   "version": "0.0.0-dev.11",
-  "license": "GPLv3",
+  "license": "GPL-3.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/phetsims/build-a-molecule.git"
