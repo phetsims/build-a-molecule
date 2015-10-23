@@ -75,7 +75,8 @@ define( function( require ) {
     var backup = ( isHorizontal ? 'col-resize' : 'row-resize' );
 
     // offsets should center this
-    var openCursor, closedCursor;
+    var openCursor;
+    var closedCursor;
     if ( platform.ie || platform.edge ) {
       openCursor = 'url(' + scissorsOpen.src + '), url(http://phetsims.github.io/build-a-molecule/images/' + openFile + '), ' + backup;
       closedCursor = 'url(' + scissorsClosed.src + '), url(http://phetsims.github.io/build-a-molecule/images/' + closedFile + '), ' + backup;
