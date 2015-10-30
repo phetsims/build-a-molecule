@@ -11,17 +11,14 @@ define( function( require ) {
 
   var namespace = require( 'BUILD_A_MOLECULE/namespace' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var Bounds2 = require( 'DOT/Bounds2' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Text = require( 'SCENERY/nodes/Text' );
+  var Color = require( 'SCENERY/util/Color' );
   var ButtonListener = require( 'SCENERY/input/ButtonListener' );
-  var MeterBodyNode = require( 'SCENERY_PHET/MeterBodyNode' );
+  var ShadedRectangle = require( 'SCENERY_PHET/ShadedRectangle' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Molecule3DDialog = require( 'BUILD_A_MOLECULE/view/view3d/Molecule3DDialog' );
-
-  // images
-  var greenLeft = require( 'image!BUILD_A_MOLECULE/green-left.png' );
-  var greenMiddle = require( 'image!BUILD_A_MOLECULE/green-middle.png' );
-  var greenRight = require( 'image!BUILD_A_MOLECULE/green-right.png' );
 
   // strings
   var iconString = require( 'string!BUILD_A_MOLECULE/3d.icon' );
@@ -60,7 +57,10 @@ define( function( require ) {
     label.centerX = width / 2;
     label.centerY = sqSize / 2;
 
-    var base = new MeterBodyNode( width, greenLeft, greenMiddle, greenRight, {} );
+    var base = new ShadedRectangle( new Bounds2( 0, 0, width, 19 ), {
+      baseColor: new Color( 112, 177, 84 ),
+      cornerRadius: 3
+    } );
 
     this.addChild( base );
     this.addChild( label );
