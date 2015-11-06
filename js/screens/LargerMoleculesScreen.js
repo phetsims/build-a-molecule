@@ -21,10 +21,10 @@ define( function( require ) {
   var BAMView = require( 'BUILD_A_MOLECULE/view/BAMView' );
 
   // strings
-  var title_largerMoleculesString = require( 'string!BUILD_A_MOLECULE/title.largerMolecules' );
+  var titleLargerMoleculesString = require( 'string!BUILD_A_MOLECULE/title.largerMolecules' );
 
   var LargerMoleculesScreen = namespace.LargerMoleculesScreen = function LargerMoleculesScreen() {
-    BAMScreen.call( this, title_largerMoleculesString, new Rectangle( 0, 0, 548, 373, { fill: 'blue' } ), function( bounds, clock ) {
+    BAMScreen.call( this, titleLargerMoleculesString, new Rectangle( 0, 0, 548, 373, { fill: 'blue' } ), function( bounds, clock ) {
       var kitCollection = new KitCollection();
 
       // NOTE: if kits are modified here, examine MAX_NUM_HEAVY_ATOMS in MoleculeSDFCombinedParser, as it may need to be changed

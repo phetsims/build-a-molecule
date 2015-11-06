@@ -23,10 +23,10 @@ define( function( require ) {
   var MoleculeCollectingView = require( 'BUILD_A_MOLECULE/view/MoleculeCollectingView' );
 
   // strings
-  var title_makeMoleculeString = require( 'string!BUILD_A_MOLECULE/title.makeMolecule' );
+  var titleMakeMoleculeString = require( 'string!BUILD_A_MOLECULE/title.makeMolecule' );
 
   var MakeMoleculeScreen = namespace.MakeMoleculeScreen = function MakeMoleculeScreen( collectionAreaWidth ) {
-    BAMScreen.call( this, title_makeMoleculeString, new Rectangle( 0, 0, 548, 373, { fill: 'red' } ), function( bounds, clock ) {
+    BAMScreen.call( this, titleMakeMoleculeString, new Rectangle( 0, 0, 548, 373, { fill: 'red' } ), function( bounds, clock ) {
       var kitCollection = new KitCollection();
       kitCollection.addKit( new Kit( bounds, [
         new Bucket( new Dimension2( 400, 200 ), clock, Element.H, 2 ),

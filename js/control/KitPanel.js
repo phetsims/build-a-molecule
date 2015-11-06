@@ -23,8 +23,8 @@ define( function( require ) {
   var TextPushButton = require( 'SUN/buttons/TextPushButton' );
 
   // strings
-  var kit_labelString = require( 'string!BUILD_A_MOLECULE/kit.label' );
-  var kit_resetKitString = require( 'string!BUILD_A_MOLECULE/kit.resetKit' );
+  var kitLabelString = require( 'string!BUILD_A_MOLECULE/kit.label' );
+  var kitResetKitString = require( 'string!BUILD_A_MOLECULE/kit.resetKit' );
 
   var kitArrowYOffset = 5; // vertical offset of the kit arrows from the top of the kit
 
@@ -55,7 +55,7 @@ define( function( require ) {
       } )
     } );
     kitCollectionModel.currentKitProperty.link( function() {
-      labelNode.text = StringUtils.format( kit_labelString, kitCollectionModel.currentKitIndex + 1 );
+      labelNode.text = StringUtils.format( kitLabelString, kitCollectionModel.currentKitIndex + 1 );
     } );
 
     var navigationNode = new NextPreviousNavigationNode( labelNode, {
@@ -88,7 +88,7 @@ define( function( require ) {
      * refill kit
      *----------------------------------------------------------------------------*/
 
-    var refillButton = new TextPushButton( kit_resetKitString, {
+    var refillButton = new TextPushButton( kitResetKitString, {
       listener: function() {
         kitCollectionModel.currentKit.resetKit();
       },

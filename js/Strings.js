@@ -7,18 +7,18 @@ define( function( require ) {
   var Strings = {};
 
   // strings
-  var hydrogen = require( 'string!BUILD_A_MOLECULE/atom.hydrogen' );
-  var oxygen = require( 'string!BUILD_A_MOLECULE/atom.oxygen' );
-  var carbon = require( 'string!BUILD_A_MOLECULE/atom.carbon' );
-  var nitrogen = require( 'string!BUILD_A_MOLECULE/atom.nitrogen' );
-  var fluorine = require( 'string!BUILD_A_MOLECULE/atom.fluorine' );
-  var chlorine = require( 'string!BUILD_A_MOLECULE/atom.chlorine' );
-  var boron = require( 'string!BUILD_A_MOLECULE/atom.boron' );
-  var sulphur = require( 'string!BUILD_A_MOLECULE/atom.sulphur' );
-  var silicon = require( 'string!BUILD_A_MOLECULE/atom.silicon' );
-  var phosphorus = require( 'string!BUILD_A_MOLECULE/atom.phosphorus' );
-  var iodine = require( 'string!BUILD_A_MOLECULE/atom.iodine' );
-  var bromine = require( 'string!BUILD_A_MOLECULE/atom.bromine' );
+  var atomHydrogenString = require( 'string!BUILD_A_MOLECULE/atom.hydrogen' );
+  var atomOxygenString = require( 'string!BUILD_A_MOLECULE/atom.oxygen' );
+  var atomCarbonString = require( 'string!BUILD_A_MOLECULE/atom.carbon' );
+  var atomNitrogenString = require( 'string!BUILD_A_MOLECULE/atom.nitrogen' );
+  var atomFluorineString = require( 'string!BUILD_A_MOLECULE/atom.fluorine' );
+  var atomChlorineString = require( 'string!BUILD_A_MOLECULE/atom.chlorine' );
+  var atomBoronString = require( 'string!BUILD_A_MOLECULE/atom.boron' );
+  var atomSulphurString = require( 'string!BUILD_A_MOLECULE/atom.sulphur' );
+  var atomSiliconString = require( 'string!BUILD_A_MOLECULE/atom.silicon' );
+  var atomPhosphorusString = require( 'string!BUILD_A_MOLECULE/atom.phosphorus' );
+  var atomIodineString = require( 'string!BUILD_A_MOLECULE/atom.iodine' );
+  var atomBromineString = require( 'string!BUILD_A_MOLECULE/atom.bromine' );
 
   Strings[ 'molecule.hydrogen_peroxide' ] = require( 'string!BUILD_A_MOLECULE/molecule.hydrogen_peroxide' );
   Strings[ 'molecule.formaldehyde' ] = require( 'string!BUILD_A_MOLECULE/molecule.formaldehyde' );
@@ -50,18 +50,18 @@ define( function( require ) {
   namespace.Strings = Strings;
 
   var elementMap = {
-    'H': hydrogen,
-    'O': oxygen,
-    'C': carbon,
-    'N': nitrogen,
-    'F': fluorine,
-    'Cl': chlorine,
-    'B': boron,
-    'S': sulphur,
-    'Si': silicon,
-    'P': phosphorus,
-    'I': iodine,
-    'Br': bromine
+    'H': atomHydrogenString,
+    'O': atomOxygenString,
+    'C': atomCarbonString,
+    'N': atomNitrogenString,
+    'F': atomFluorineString,
+    'Cl': atomChlorineString,
+    'B': atomBoronString,
+    'S': atomSulphurString,
+    'Si': atomSiliconString,
+    'P': atomPhosphorusString,
+    'I': atomIodineString,
+    'Br': atomBromineString
   };
 
   Strings.getAtomName = function getAtomName( element ) {

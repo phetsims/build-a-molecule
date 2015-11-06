@@ -20,14 +20,14 @@ define( function( require ) {
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
 
   // strings
-  var collection_single_formatString = require( 'string!BUILD_A_MOLECULE/collection.single.format' );
+  var collectionSingleFormatString = require( 'string!BUILD_A_MOLECULE/collection.single.format' );
 
   var SingleCollectionBoxNode = namespace.SingleCollectionBoxNode = function SingleCollectionBoxNode( box, toModelBounds ) {
     CollectionBoxNode.call( this, box, toModelBounds );
 
     assert && assert( box.capacity === 1 );
 
-    this.addHeaderNode( new SubSupText( StringUtils.format( collection_single_formatString,
+    this.addHeaderNode( new SubSupText( StringUtils.format( collectionSingleFormatString,
       box.moleculeType.getGeneralFormulaFragment(),
       box.moleculeType.getDisplayName() ), {
       font: new PhetFont( {

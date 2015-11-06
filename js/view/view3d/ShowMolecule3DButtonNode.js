@@ -21,7 +21,7 @@ define( function( require ) {
   var Molecule3DDialog = require( 'BUILD_A_MOLECULE/view/view3d/Molecule3DDialog' );
 
   // strings
-  var iconString = require( 'string!BUILD_A_MOLECULE/3d.icon' );
+  var iconString = require( 'string!BUILD_A_MOLECULE/3d.icon' ); // eslint-disable-line string-require-statement-match
 
   var ShowMolecule3DButtonNode = namespace.ShowMolecule3DButtonNode = function ShowMolecule3DButtonNode( completeMolecule, options ) {
     var that = this;

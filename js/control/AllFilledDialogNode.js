@@ -22,8 +22,8 @@ define( function( require ) {
   var Shape = require( 'KITE/Shape' );
 
   // strings
-  var collection_allFilledString = require( 'string!BUILD_A_MOLECULE/collection.allFilled' );
-  var collection_tryWithDifferentMoleculesString = require( 'string!BUILD_A_MOLECULE/collection.tryWithDifferentMolecules' );
+  var collectionAllFilledString = require( 'string!BUILD_A_MOLECULE/collection.allFilled' );
+  var collectionTryWithDifferentMoleculesString = require( 'string!BUILD_A_MOLECULE/collection.tryWithDifferentMolecules' );
 
   var AllFilledDialogNode = namespace.AllFilledDialogNode = function AllFilledDialogNode( availablePlayAreaBounds, regenerateCallback ) {
     Node.call( this, {} );
@@ -32,7 +32,7 @@ define( function( require ) {
     var smiley = new FaceNode( 120 ).smile();
     this.addChild( smiley );
 
-    var text = new Text( collection_allFilledString, {
+    var text = new Text( collectionAllFilledString, {
       font: new PhetFont( {
         size: 20,
         weight: 'bold'
@@ -40,7 +40,7 @@ define( function( require ) {
     } );
     this.addChild( text );
 
-    var button = new TextPushButton( collection_tryWithDifferentMoleculesString, {
+    var button = new TextPushButton( collectionTryWithDifferentMoleculesString, {
       listener: function() {
         regenerateCallback();
         dialog.visible = false;

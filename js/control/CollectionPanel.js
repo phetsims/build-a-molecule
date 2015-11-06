@@ -31,8 +31,8 @@ define( function( require ) {
   var PropertySet = require( 'AXON/PropertySet' );
 
   // strings
-  var collection_yourMoleculeCollectionString = require( 'string!BUILD_A_MOLECULE/collection.yourMoleculeCollection' );
-  var collection_labelString = require( 'string!BUILD_A_MOLECULE/collection.label' );
+  var collectionYourMoleculeCollectionString = require( 'string!BUILD_A_MOLECULE/collection.yourMoleculeCollection' );
+  var collectionLabelString = require( 'string!BUILD_A_MOLECULE/collection.label' );
 
   var containerPadding = 15;
 
@@ -52,7 +52,7 @@ define( function( require ) {
     this.layoutNode.setTranslation( containerPadding, containerPadding );
 
     // "Your Molecule Collection"
-    var moleculeCollectionText = new Text( collection_yourMoleculeCollectionString, {
+    var moleculeCollectionText = new Text( collectionYourMoleculeCollectionString, {
       font: new PhetFont( {
         size: 22
       } )
@@ -69,7 +69,7 @@ define( function( require ) {
       } )
     } );
     collectionList.currentCollectionProperty.link( function() {
-      currentCollectionText.text = StringUtils.format( collection_labelString, collectionList.currentIndex + 1 );
+      currentCollectionText.text = StringUtils.format( collectionLabelString, collectionList.currentIndex + 1 );
     } );
     var collectionSwitcher = new NextPreviousNavigationNode( currentCollectionText, {
       arrowColor: Constants.kitArrowBackgroundEnabled,

@@ -21,7 +21,7 @@ define( function( require ) {
   var MultipleCollectionBoxNode = require( 'BUILD_A_MOLECULE/control/MultipleCollectionBoxNode' );
 
   // strings
-  var collection_resetString = require( 'string!BUILD_A_MOLECULE/collection.reset' );
+  var collectionResetString = require( 'string!BUILD_A_MOLECULE/collection.reset' );
 
   var CollectionAreaNode = namespace.CollectionAreaNode = function CollectionAreaNode( collection, isSingleCollectionMode, toModelBounds ) {
     Node.call( this, {} );
@@ -69,7 +69,7 @@ define( function( require ) {
     /*---------------------------------------------------------------------------*
      * Reset Collection button
      *----------------------------------------------------------------------------*/
-    var resetCollectionButton = new TextPushButton( collection_resetString, {
+    var resetCollectionButton = new TextPushButton( collectionResetString, {
       listener: function() {
         // when clicked, empty collection boxes
         _.each( collection.collectionBoxes, function( box ) {
