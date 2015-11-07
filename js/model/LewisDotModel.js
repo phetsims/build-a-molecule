@@ -1,4 +1,4 @@
-// Copyright 2002-2014, University of Colorado Boulder
+// Copyright 2013-2015, University of Colorado Boulder
 
 /**
  * Represents the lewis-dot directional connections between atoms. Holds information for all atoms within a particular kit, but it is generic

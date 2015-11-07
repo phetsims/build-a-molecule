@@ -1,4 +1,4 @@
-// Copyright 2002-2014, University of Colorado Boulder
+// Copyright 2013-2015, University of Colorado Boulder
 
 /*
  * Screen for 2nd tab. Collection boxes take multiple molecules of the same type, and start off with a different kit collection each time

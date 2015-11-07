@@ -1,4 +1,4 @@
-// Copyright 2002-2014, University of Colorado Boulder
+// Copyright 2013-2015, University of Colorado Boulder
 
 /**
  * Allows slicing of bonds by swiping touches / mouse across the surface. Displays streak in high-performance way,
