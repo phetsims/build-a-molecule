@@ -42,7 +42,7 @@ define( function( require ) {
     } );
 
     this.element = element;
-    this.width = this.containerShape.computeBounds().width;
+    this.width = this.containerShape.bounds.width;
 
     for ( var i = 0; i < quantity; i++ ) {
       this.addParticleFirstOpen( new Atom2( element, clock ), false );
