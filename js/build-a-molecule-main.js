@@ -19,10 +19,7 @@ define( function( require ) {
   var simOptions = {
     credits: {
       //TODO (without scrolling credits, the BAM team refuses to take credit!)'
-    },
-
-    //on iPad3/iOS7 the default 'setVisible' screen switching strategy fails for this sim with an out of memory Safari crash.
-    screenDisplayStrategy: 'setChildren'
+    }
   };
 
   // Appending '?dev' to the URL will enable developer-only features.

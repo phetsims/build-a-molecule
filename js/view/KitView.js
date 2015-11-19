@@ -28,7 +28,7 @@ define( function( require ) {
   var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' ); // TODO: DragListener
 
   var KitView = namespace.KitView = function KitView( kit, view ) {
-    Node.call( this, { layerSplit: true } );
+    Node.call( this );
     var kitView = this;
 
     this.kit = kit;
@@ -44,7 +44,7 @@ define( function( require ) {
     var bottomLayer = this.bottomLayer = new Node();
 
     var viewSwipeBounds = Constants.modelViewTransform.modelToViewBounds( kit.layoutBounds.availablePlayAreaBounds );
-    var swipeCatch = this.swipeCatch = Rectangle.bounds( viewSwipeBounds.eroded( Constants.viewPadding ), { layerSplit: true } );
+    var swipeCatch = this.swipeCatch = Rectangle.bounds( viewSwipeBounds.eroded( Constants.viewPadding ) );
     var sliceNode = this.sliceNode = new SliceNode( kit, viewSwipeBounds, view );
 
     swipeCatch.addInputListener( sliceNode.sliceInputListener );
