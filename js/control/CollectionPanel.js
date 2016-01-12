@@ -82,7 +82,7 @@ define( function( require ) {
       previous: function() {
         collectionList.switchToPreviousCollection();
       },
-      touchAreaExtension: function( shape ) {
+      createTouchAreaShape: function( shape ) {
         // square touch area
         return Shape.bounds( shape.bounds.dilated( 7 ) );
       }

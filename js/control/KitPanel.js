@@ -69,7 +69,7 @@ define( function( require ) {
       previous: function() {
         kitCollectionModel.goToPreviousKit();
       },
-      touchAreaExtension: function( shape, isPrevious ) {
+      createTouchAreaShape: function( shape, isPrevious ) {
         // square touch area
         var dilatedShape = shape.bounds.dilated( 7 );
         return Shape.bounds( isPrevious ?
