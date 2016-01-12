@@ -59,9 +59,6 @@
   "3d.ballAndStick": {
     "value": "Ball and Stick"
   },
-  "resetCurrentTab": {
-    "value": "Reset current tab"
-  },
   "molecule.phosphine": {
     "value": "Phosphine"
   },
@@ -122,9 +119,6 @@
   "atom.hydrogen": {
     "value": "Hydrogen"
   },
-  "collection.hint": {
-    "value": "Drag your molecule here"
-  },
   "molecule.acetylene": {
     "value": "Acetylene"
   },
@@ -136,9 +130,6 @@
   },
   "collection.multiple.quantityEmpty": {
     "value": "You have: (empty)"
-  },
-  "3d.loading": {
-    "value": "Loading 3D..."
   },
   "molecule.trifluoroborane": {
     "value": "Trifluoroborane"
