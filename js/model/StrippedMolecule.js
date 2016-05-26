@@ -12,14 +12,14 @@
 define( function( require ) {
   'use strict';
 
-  var namespace = require( 'BUILD_A_MOLECULE/namespace' );
+  var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   var Atom = require( 'NITROGLYCERIN/Atom' );
   var Element = require( 'NITROGLYCERIN/Element' );
   var Bond = require( 'BUILD_A_MOLECULE/model/Bond' );
   var MoleculeStructure = require( 'BUILD_A_MOLECULE/model/MoleculeStructure' );
 
   // @param {MoleculeStructure} original
-  var StrippedMolecule = namespace.StrippedMolecule = function StrippedMolecule( original ) {
+  function StrippedMolecule( original ) {
     var that = this;
 
     // var atomsToAdd = [];
@@ -59,7 +59,8 @@ define( function( require ) {
     this.stripped = new MoleculeStructure( atomsToAdd.length, bondsToAdd.length );
     _.each( atomsToAdd, this.stripped.addAtom.bind( this.stripped ) );
     _.each( bondsToAdd, this.stripped.addBond.bind( this.stripped ) );
-  };
+  }
+  buildAMolecule.register( 'StrippedMolecule', StrippedMolecule );
 
   StrippedMolecule.prototype = {
     constructor: StrippedMolecule,

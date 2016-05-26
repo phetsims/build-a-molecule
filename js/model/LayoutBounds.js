@@ -9,7 +9,7 @@
 define( function( require ) {
   'use strict';
 
-  var namespace = require( 'BUILD_A_MOLECULE/namespace' );
+  var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   var Constants = require( 'BUILD_A_MOLECULE/Constants' );
   var Rectangle = require( 'DOT/Rectangle' );
 
@@ -19,7 +19,7 @@ define( function( require ) {
    * @param isWide                   Whether the kit should take up the entire width
    * @param collectionAreaModelWidth The model width of the collection area (computed, as it varies from tab to tab)
    */
-  var LayoutBounds = namespace.LayoutBounds = function LayoutBounds( isWide, collectionAreaModelWidth ) {
+  function LayoutBounds( isWide, collectionAreaModelWidth ) {
     var availableWidth = Constants.modelSize.width - 2 * Constants.modelPadding; // minus padding
     var halfWidth = availableWidth / 2;
 
@@ -40,7 +40,8 @@ define( function( require ) {
       kitTop, // top of kit
       this.availableKitBounds.width + Constants.modelPadding * 2, // add in padding, since there is padding in-between the kit and collection area
       Constants.modelSize.height / 2 - kitTop );
-  };
+  }
+  buildAMolecule.register( 'LayoutBounds', LayoutBounds );
 
   return LayoutBounds;
 } );

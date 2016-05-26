@@ -9,7 +9,7 @@
 define( function( require ) {
   'use strict';
 
-  var namespace = require( 'BUILD_A_MOLECULE/namespace' );
+  var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   var Atom2 = require( 'BUILD_A_MOLECULE/model/Atom2' );
   var AtomNode = require( 'BUILD_A_MOLECULE/view/AtomNode' );
   var inherit = require( 'PHET_CORE/inherit' );
@@ -28,7 +28,7 @@ define( function( require ) {
    * @param element  The element of the atoms in the bucket
    * @param quantity The number of atoms starting in the bucket
    */
-  var Bucket = namespace.Bucket = function Bucket( size, clock, element, quantity ) {
+  function Bucket( size, clock, element, quantity ) {
     this._position = null;
 
     SphereBucket.call( this, {
@@ -47,7 +47,8 @@ define( function( require ) {
     for ( var i = 0; i < quantity; i++ ) {
       this.addParticleFirstOpen( new Atom2( element, clock ), false );
     }
-  };
+  }
+  buildAMolecule.register( 'Bucket', Bucket );
 
   inherit( SphereBucket, Bucket, {
     get atoms() {

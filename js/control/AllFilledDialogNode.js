@@ -9,7 +9,7 @@
 define( function( require ) {
   'use strict';
 
-  var namespace = require( 'BUILD_A_MOLECULE/namespace' );
+  var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   var Constants = require( 'BUILD_A_MOLECULE/Constants' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
@@ -25,7 +25,7 @@ define( function( require ) {
   var collectionAllFilledString = require( 'string!BUILD_A_MOLECULE/collection.allFilled' );
   var collectionTryWithDifferentMoleculesString = require( 'string!BUILD_A_MOLECULE/collection.tryWithDifferentMolecules' );
 
-  var AllFilledDialogNode = namespace.AllFilledDialogNode = function AllFilledDialogNode( availablePlayAreaBounds, regenerateCallback ) {
+  function AllFilledDialogNode( availablePlayAreaBounds, regenerateCallback ) {
     Node.call( this, {} );
     var dialog = this;
 
@@ -66,7 +66,8 @@ define( function( require ) {
     this.insertChild( 0, background );
 
     this.center = Constants.modelViewTransform.modelToViewBounds( availablePlayAreaBounds ).center;
-  };
+  }
+  buildAMolecule.register( 'AllFilledDialogNode', AllFilledDialogNode );
 
   return inherit( Node, AllFilledDialogNode );
 } );

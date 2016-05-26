@@ -9,13 +9,13 @@
 define( function( require ) {
   'use strict';
 
-  var namespace = require( 'BUILD_A_MOLECULE/namespace' );
+  var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   var inherit = require( 'PHET_CORE/inherit' );
   var NodesPushButton = require( 'SUN/buttons/NodesPushButton' );
   var Path = require( 'SCENERY/nodes/Path' );
   var Shape = require( 'KITE/Shape' );
 
-  var CloseButton = namespace.CloseButton = function CloseButton( callback, options ) {
+  function CloseButton( callback, options ) {
     var outside = 20;
     var inside = 9;
     var shape = new Shape()
@@ -36,7 +36,8 @@ define( function( require ) {
     options.listener = callback; //TODO consider replacing the constructor callback parameter with an option so we don't need to do this.
     NodesPushButton.call( this, idleNode, overNode, pressedNode, disabledNode, options );
     this.touchArea = new Shape().circle( 0, 0, outside + 40 );
-  };
+  }
+  buildAMolecule.register( 'CloseButton', CloseButton );
 
   return inherit( NodesPushButton, CloseButton );
 } );

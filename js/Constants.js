@@ -4,7 +4,7 @@ define( function( require ) {
   'use strict';
 
   // imports
-  var namespace = require( 'BUILD_A_MOLECULE/namespace' );
+  var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   var Element = require( 'NITROGLYCERIN/Element' );
   var Color = require( 'SCENERY/util/Color' );
   var Dimension2 = require( 'DOT/Dimension2' );
@@ -24,7 +24,7 @@ define( function( require ) {
   var viewPadding = 18;
   var modelPadding = mvt.viewToModelDeltaX( viewPadding );
 
-  namespace.Constants = {
+  var Constants = {
 
     projectName: 'build-a-molecule',
 
@@ -76,6 +76,7 @@ define( function( require ) {
       Element.B, Element.Br, Element.C, Element.Cl, Element.F, Element.H, Element.I, Element.N, Element.O, Element.P, Element.S, Element.Si
     ]
   };
+  buildAMolecule.register( 'Constants', Constants );
 
-  return namespace.Constants;
+  return Constants;
 } );

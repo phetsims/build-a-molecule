@@ -11,7 +11,7 @@
 define( function( require ) {
   'use strict';
 
-  var namespace = require( 'BUILD_A_MOLECULE/namespace' );
+  var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   var Constants = require( 'BUILD_A_MOLECULE/Constants' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Vector2 = require( 'DOT/Vector2' );
@@ -23,7 +23,7 @@ define( function( require ) {
 
   var Shape = require( 'KITE/Shape' );
 
-  var AtomNode = namespace.AtomNode = function AtomNode( atom, options ) {
+  function AtomNode( atom, options ) {
     Node.call( this, _.extend( {
       cursor: 'pointer'
     }, options ) );
@@ -40,7 +40,8 @@ define( function( require ) {
     atom.on( 'removedFromModel', function() {
       that.detach(); // removes us from all parents
     } );
-  };
+  }
+  buildAMolecule.register( 'AtomNode', AtomNode );
 
   // map from element symbol => graphical node for the atom, so that we can use the DAG to save overhead and costs
   var elementMap = {};

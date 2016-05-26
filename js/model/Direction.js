@@ -9,13 +9,14 @@
 define( function( require ) {
   'use strict';
 
-  var namespace = require( 'BUILD_A_MOLECULE/namespace' );
+  var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   var Vector2 = require( 'DOT/Vector2' );
 
-  var Direction = namespace.Direction = function Direction( vector, id ) {
+  function Direction( vector, id ) {
     this.vector = vector;
     this.id = id;
-  };
+  }
+  buildAMolecule.register( 'Direction', Direction );
 
   Direction.North = new Direction( new Vector2( 0, 1 ), 'north' );
   Direction.East = new Direction( new Vector2( 1, 0 ), 'east' );

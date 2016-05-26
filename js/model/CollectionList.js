@@ -11,7 +11,7 @@
 define( function( require ) {
   'use strict';
 
-  var namespace = require( 'BUILD_A_MOLECULE/namespace' );
+  var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   var inherit = require( 'PHET_CORE/inherit' );
   var PropertySet = require( 'AXON/PropertySet' );
 
@@ -23,7 +23,7 @@ define( function( require ) {
    * addedCollection: function( kitCollection )
    * removedCollection: function( kitCollection )
    */
-  var CollectionList = namespace.CollectionList = function CollectionList( firstCollection, layoutBounds, clock ) {
+  function CollectionList( firstCollection, layoutBounds, clock ) {
     PropertySet.call( this, {
       currentCollection: firstCollection
     } );
@@ -33,7 +33,8 @@ define( function( require ) {
     this.collections = [];
     this.currentIndex = 0;
     this.addCollection( firstCollection );
-  };
+  }
+  buildAMolecule.register( 'CollectionList', CollectionList );
 
   inherit( PropertySet, CollectionList, {
     switchTo: function( collection ) {

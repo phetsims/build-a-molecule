@@ -9,8 +9,8 @@
 define( function( require ) {
   'use strict';
 
+  var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var namespace = require( 'BUILD_A_MOLECULE/namespace' );
   var Constants = require( 'BUILD_A_MOLECULE/Constants' );
   var Shape = require( 'KITE/Shape' );
   var Node = require( 'SCENERY/nodes/Node' );
@@ -19,11 +19,12 @@ define( function( require ) {
   var ButtonListener = require( 'SCENERY/input/ButtonListener' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var ShowMolecule3DButtonNode = require( 'BUILD_A_MOLECULE/view/view3d/ShowMolecule3DButtonNode' );
+  var MoleculeList = require( 'BUILD_A_MOLECULE/model/MoleculeList' );
 
   // images
   var splitIconImage = require( 'image!BUILD_A_MOLECULE/split-blue.png' );
 
-  var MoleculeMetadataNode = namespace.MoleculeMetadataNode = function MoleculeMetadataNode( kit, molecule ) {
+  function MoleculeMetadataNode( kit, molecule ) {
     Node.call( this, {} );
 
     var selfNode = this;
@@ -35,7 +36,7 @@ define( function( require ) {
       return;
     }
 
-    var completeMolecule = molecule.getMatchingCompleteMolecule();
+    var completeMolecule = MoleculeList.getMasterInstance().findMatchingCompleteMolecule( molecule );
 
     var currentX = 0;
 
@@ -94,7 +95,8 @@ define( function( require ) {
         // TODO: incomplete: throw new Error( 'dialog.hideDialogIfShown' );
       }
     } );
-  };
+  }
+  buildAMolecule.register( 'MoleculeMetadataNode', MoleculeMetadataNode );
 
   inherit( Node, MoleculeMetadataNode, {
     destruct: function() {

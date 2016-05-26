@@ -10,7 +10,7 @@
 define( function( require ) {
   'use strict';
 
-  var namespace = require( 'BUILD_A_MOLECULE/namespace' );
+  var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   var Constants = require( 'BUILD_A_MOLECULE/Constants' );
   var Bounds2 = require( 'DOT/Bounds2' );
   var Shape = require( 'KITE/Shape' );
@@ -21,6 +21,7 @@ define( function( require ) {
   var Property = require( 'AXON/Property' );
   var ShowMolecule3DButtonNode = require( 'BUILD_A_MOLECULE/view/view3d/ShowMolecule3DButtonNode' );
   var Molecule3DNode = require( 'BUILD_A_MOLECULE/view/view3d/Molecule3DNode' );
+  var MoleculeList = require( 'BUILD_A_MOLECULE/model/MoleculeList' );
 
   var moleculePadding = 5;
   var blackBoxPaddingFor3D = Constants.has3d ? 10 : 0;
@@ -44,7 +45,7 @@ define( function( require ) {
     return wrapperNode;
   }
 
-  var CollectionBoxNode = namespace.CollectionBoxNode = function CollectionBoxNode( box, toModelBounds ) {
+  function CollectionBoxNode( box, toModelBounds ) {
     Node.call( this, {} );
     var selfNode = this;
 
@@ -111,7 +112,8 @@ define( function( require ) {
 
     this.boxNode.y = 3;
     this.addChild( this.boxNode );
-  };
+  }
+  buildAMolecule.register( 'CollectionBoxNode', CollectionBoxNode );
 
   return inherit( Node, CollectionBoxNode, {
     /**
@@ -155,7 +157,8 @@ define( function( require ) {
       this.cancelBlinksInProgress();
       this.updateBoxGraphics();
 
-      var pseudo3DNode = lookupThumbnail( molecule.getMatchingCompleteMolecule() );
+      var completeMolecule = MoleculeList.getMasterInstance().findMatchingCompleteMolecule( molecule );
+      var pseudo3DNode = lookupThumbnail( completeMolecule );
       this.moleculeLayer.addChild( pseudo3DNode );
       this.moleculeNodes.push( pseudo3DNode );
       this.moleculeNodeMap[ molecule.moleculeId ] = pseudo3DNode;

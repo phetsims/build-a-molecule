@@ -9,7 +9,7 @@
 define( function( require ) {
   'use strict';
 
-  var namespace = require( 'BUILD_A_MOLECULE/namespace' );
+  var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   var Constants = require( 'BUILD_A_MOLECULE/Constants' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
@@ -43,7 +43,7 @@ define( function( require ) {
 
   var bondRadius = 5; // "Radius" of the bond target that will break the bond
 
-  var MoleculeBondNode = namespace.MoleculeBondNode = function MoleculeBondNode( bond, kit, view ) {
+  function MoleculeBondNode( bond, kit, view ) {
     var self = this;
 
     Node.call( this, {} );
@@ -116,7 +116,8 @@ define( function( require ) {
     };
     a.positionProperty.link( this.positionListener );
     b.positionProperty.link( this.positionListener );
-  };
+  }
+  buildAMolecule.register( 'MoleculeBondNode', MoleculeBondNode );
 
   inherit( Node, MoleculeBondNode, {
     destruct: function() {

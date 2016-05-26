@@ -9,15 +9,16 @@
 define( function( require ) {
   'use strict';
 
+  var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   var inherit = require( 'PHET_CORE/inherit' );
   var cleanArray = require( 'PHET_CORE/cleanArray' );
-  var namespace = require( 'BUILD_A_MOLECULE/namespace' );
   var PropertySet = require( 'AXON/PropertySet' );
   var Vector2 = require( 'DOT/Vector2' );
   var Bounds2 = require( 'DOT/Bounds2' );
   var Rectangle = require( 'DOT/Rectangle' );
   var Molecule = require( 'BUILD_A_MOLECULE/model/Molecule' );
   var MoleculeStructure = require( 'BUILD_A_MOLECULE/model/MoleculeStructure' );
+  var MoleculeList = require( 'BUILD_A_MOLECULE/model/MoleculeList' );
   var LewisDotModel = require( 'BUILD_A_MOLECULE/model/LewisDotModel' );
 
   var kitIdCounter = 0;
@@ -27,7 +28,7 @@ define( function( require ) {
    *   addedMolecule: function( molecule )
    *   removedMolecule: function( molecule )
    */
-  var Kit = namespace.Kit = function Kit( layoutBounds, buckets ) {
+  function Kit( layoutBounds, buckets ) {
     PropertySet.call( this, {
       visible: false,
       hasMoleculesInBoxes: false // we record this so we know when the "reset kit" should be shown
@@ -46,7 +47,8 @@ define( function( require ) {
     this.resetKit();
 
     this.layoutBuckets( buckets );
-  };
+  }
+  buildAMolecule.register( 'Kit', Kit );
 
   inherit( PropertySet, Kit, {
     resetKit: function() {
@@ -476,7 +478,7 @@ define( function( require ) {
         window.console && console.log && console.log( 'combined' );
         window.console && console.log && console.log( newMolecule.getDebuggingDump() );
 
-        window.console && console.log && console.log( 'found: ' + newMolecule.isAllowedStructure() );
+        window.console && console.log && console.log( 'found: ' + this.isAllowedStructure( newMolecule ) );
 
         // just exit out for now
         return;
@@ -585,7 +587,12 @@ define( function( require ) {
 
     // {Atom2}s
     canBond: function( a, b ) {
-      return this.getMolecule( a ) !== this.getMolecule( b ) && this.getPossibleMoleculeStructureFromBond( a, b ).isAllowedStructure();
+      return this.getMolecule( a ) !== this.getMolecule( b ) && this.isAllowedStructure( this.getPossibleMoleculeStructureFromBond( a, b ) );
+    },
+
+    isAllowedStructure: function( moleculeStructure ) {
+      return moleculeStructure.atoms.length < 2 ||
+             MoleculeList.getMasterInstance().isAllowedStructure( moleculeStructure );
     }
   } );
 

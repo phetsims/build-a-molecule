@@ -10,13 +10,13 @@
 define( function( require ) {
   'use strict';
 
-  var namespace = require( 'BUILD_A_MOLECULE/namespace' );
+  var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   var inherit = require( 'PHET_CORE/inherit' );
   var PropertySet = require( 'AXON/PropertySet' );
 
   var currentId = 0;
 
-  var KitCollection = namespace.KitCollection = function KitCollection() {
+  function KitCollection() {
     PropertySet.call( this, {
       currentKit: null,
       allCollectionBoxesFilled: false // this will remain false if we have no collection boxes
@@ -25,7 +25,8 @@ define( function( require ) {
     this.id = currentId++;
     this.kits = [];
     this.collectionBoxes = [];
-  };
+  }
+  buildAMolecule.register( 'KitCollection', KitCollection );
 
   inherit( PropertySet, KitCollection, {
     addKit: function( kit ) {

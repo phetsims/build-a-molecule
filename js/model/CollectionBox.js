@@ -9,10 +9,11 @@
 define( function( require ) {
   'use strict';
 
-  var namespace = require( 'BUILD_A_MOLECULE/namespace' );
+  var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   var inherit = require( 'PHET_CORE/inherit' );
   var PropertySet = require( 'AXON/PropertySet' );
   var Bounds2 = require( 'DOT/Bounds2' );
+  var Globals = require( 'BUILD_A_MOLECULE/Globals' );
 
   /*
    * @param {CompleteMolecule} moleculeType
@@ -23,7 +24,7 @@ define( function( require ) {
    * removedMolecule: function( molecule )
    * acceptedMoleculeCreation: function( molecule )       // triggered from KitCollection
    */
-  var CollectionBox = namespace.CollectionBox = function CollectionBox( moleculeType, capacity ) {
+  function CollectionBox( moleculeType, capacity ) {
     PropertySet.call( this, {
       quantity: 0
     } );
@@ -36,10 +37,11 @@ define( function( require ) {
 
     this.on( 'addedMolecule', function( molecule ) {
       if ( box.quantity === capacity ) {
-        namespace.gameAudioPlayer.correctAnswer();
+        Globals.gameAudioPlayer.correctAnswer();
       }
     } );
-  };
+  }
+  buildAMolecule.register( 'CollectionBox', CollectionBox );
 
   inherit( PropertySet, CollectionBox, {
     set dropBounds( value ) {

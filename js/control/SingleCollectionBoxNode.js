@@ -9,7 +9,7 @@
 define( function( require ) {
   'use strict';
 
-  var namespace = require( 'BUILD_A_MOLECULE/namespace' );
+  var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   var Bounds2 = require( 'DOT/Bounds2' );
   var inherit = require( 'PHET_CORE/inherit' );
   var SubSupText = require( 'SCENERY_PHET/SubSupText' );
@@ -22,7 +22,7 @@ define( function( require ) {
   // strings
   var collectionSingleFormatString = require( 'string!BUILD_A_MOLECULE/collection.single.format' );
 
-  var SingleCollectionBoxNode = namespace.SingleCollectionBoxNode = function SingleCollectionBoxNode( box, toModelBounds ) {
+  function SingleCollectionBoxNode( box, toModelBounds ) {
     CollectionBoxNode.call( this, box, toModelBounds );
 
     assert && assert( box.capacity === 1 );
@@ -35,7 +35,8 @@ define( function( require ) {
         weight: 'bold'
       } )
     } ) );
-  };
+  }
+  buildAMolecule.register( 'SingleCollectionBoxNode', SingleCollectionBoxNode );
 
   inherit( CollectionBoxNode, SingleCollectionBoxNode );
 

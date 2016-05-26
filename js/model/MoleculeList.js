@@ -15,8 +15,7 @@ define( function( require ) {
 
   //REVIEW use logging instead of System.out throughout, since this happens at startup in production product.
 
-  var namespace = require( 'BUILD_A_MOLECULE/namespace' );
-
+  var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   var collectionMoleculesData = require( 'BUILD_A_MOLECULE/model/data/collectionMoleculesData' );
   var otherMoleculesData = require( 'BUILD_A_MOLECULE/model/data/otherMoleculesData' );
   var structuresData = require( 'BUILD_A_MOLECULE/model/data/structuresData' );
@@ -24,12 +23,13 @@ define( function( require ) {
   var StrippedMolecule = require( 'BUILD_A_MOLECULE/model/StrippedMolecule' );
   var MoleculeStructure = require( 'BUILD_A_MOLECULE/model/MoleculeStructure' );
 
-  var MoleculeList = namespace.MoleculeList = function MoleculeList() {
+  function MoleculeList() {
     this.completeMolecules = []; // all complete molecules
     this.moleculeNameMap = {}; // unique name => complete molecule
 
     this.allowedStructureFormulaMap = {}; // formula => allowed stripped molecules (array)
-  };
+  }
+  buildAMolecule.register( 'MoleculeList', MoleculeList );
 
   MoleculeList.prototype = {
     constructor: MoleculeList,

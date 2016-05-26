@@ -8,9 +8,9 @@
 define( function( require ) {
   'use strict';
 
+  var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Dimension2 = require( 'DOT/Dimension2' );
-  var namespace = require( 'BUILD_A_MOLECULE/namespace' );
   var BAMScreen = require( 'BUILD_A_MOLECULE/screens/BAMScreen' );
   var KitCollection = require( 'BUILD_A_MOLECULE/model/KitCollection' );
   var Kit = require( 'BUILD_A_MOLECULE/model/Kit' );
@@ -23,7 +23,7 @@ define( function( require ) {
   // strings
   var titleLargerMoleculesString = require( 'string!BUILD_A_MOLECULE/title.largerMolecules' );
 
-  var LargerMoleculesScreen = namespace.LargerMoleculesScreen = function LargerMoleculesScreen() {
+  function LargerMoleculesScreen() {
     BAMScreen.call( this, titleLargerMoleculesString, new Rectangle( 0, 0, 548, 373, { fill: 'blue' } ), function( bounds, clock ) {
       var kitCollection = new KitCollection();
 
@@ -94,7 +94,8 @@ define( function( require ) {
       // create the view
       return new BAMView( model );
     } );
-  };
+  }
+  buildAMolecule.register( 'LargerMoleculesScreen', LargerMoleculesScreen );
 
   inherit( BAMScreen, LargerMoleculesScreen );
 

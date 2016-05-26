@@ -11,8 +11,8 @@
 define( function( require ) {
   'use strict';
 
+  var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var namespace = require( 'BUILD_A_MOLECULE/namespace' );
   var Constants = require( 'BUILD_A_MOLECULE/Constants' );
   var Shape = require( 'KITE/Shape' );
   var BucketFront = require( 'SCENERY_PHET/bucket/BucketFront' );
@@ -27,7 +27,7 @@ define( function( require ) {
   var SliceNode = require( 'BUILD_A_MOLECULE/view/SliceNode' );
   var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' ); // TODO: DragListener
 
-  var KitView = namespace.KitView = function KitView( kit, view ) {
+  function KitView( kit, view ) {
     Node.call( this );
     var kitView = this;
 
@@ -196,7 +196,8 @@ define( function( require ) {
     } );
 
     assert && assert( kit.molecules.length === 0 );
-  };
+  }
+  buildAMolecule.register( 'KitView', KitView );
 
   inherit( Node, KitView, {
     // distance needs to be within threshold, and if an element is provided, the element must match

@@ -10,7 +10,7 @@
 define( function( require ) {
   'use strict';
 
-  var namespace = require( 'BUILD_A_MOLECULE/namespace' );
+  var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   var Bounds2 = require( 'DOT/Bounds2' );
   var inherit = require( 'PHET_CORE/inherit' );
   var SubSupText = require( 'SCENERY_PHET/SubSupText' );
@@ -25,7 +25,7 @@ define( function( require ) {
   var collectionMultipleQuantityEmptyString = require( 'string!BUILD_A_MOLECULE/collection.multiple.quantityEmpty' );
   var collectionMultipleQuantityFormatString = require( 'string!BUILD_A_MOLECULE/collection.multiple.quantityFormat' );
 
-  var MultipleCollectionBoxNode = namespace.MultipleCollectionBoxNode = function MultipleCollectionBoxNode( box, toModelBounds ) {
+  function MultipleCollectionBoxNode( box, toModelBounds ) {
     CollectionBoxNode.call( this, box, toModelBounds );
 
     this.addHeaderNode( new SubSupText( StringUtils.format( collectionMultipleGoalFormatString,
@@ -53,7 +53,8 @@ define( function( require ) {
     } );
 
     this.addHeaderNode( quantityNode );
-  };
+  }
+  buildAMolecule.register( 'MultipleCollectionBoxNode', MultipleCollectionBoxNode );
 
   inherit( CollectionBoxNode, MultipleCollectionBoxNode );
 

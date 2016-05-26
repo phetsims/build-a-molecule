@@ -9,12 +9,12 @@
 define( function( require ) {
   'use strict';
 
-  var namespace = require( 'BUILD_A_MOLECULE/namespace' );
+  var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
   var MoleculeBondNode = require( 'BUILD_A_MOLECULE/view/MoleculeBondNode' );
 
-  var MoleculeBondContainerNode = namespace.MoleculeBondContainerNode = function MoleculeBondContainerNode( kit, molecule, view ) {
+  function MoleculeBondContainerNode( kit, molecule, view ) {
     Node.call( this, {} );
     var that = this;
 
@@ -25,7 +25,8 @@ define( function( require ) {
       that.addChild( node );
       that.bondNodes.push( node );
     } );
-  };
+  }
+  buildAMolecule.register( 'MoleculeBondContainerNode', MoleculeBondContainerNode );
 
   inherit( Node, MoleculeBondContainerNode, {
     destruct: function() {

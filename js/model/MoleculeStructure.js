@@ -14,9 +14,8 @@
 define( function( require ) {
   'use strict';
 
-  var namespace = require( 'BUILD_A_MOLECULE/namespace' );
+  var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   var Bond = require( 'BUILD_A_MOLECULE/model/Bond' );
-  // var MoleculeList = require( 'BUILD_A_MOLECULE/model/MoleculeList' );
   var ElementHistogram = require( 'BUILD_A_MOLECULE/model/ElementHistogram' );
   var ChemUtils = require( 'NITROGLYCERIN/ChemUtils' );
   var Element = require( 'NITROGLYCERIN/Element' );
@@ -28,7 +27,7 @@ define( function( require ) {
   // NOTE from porting: StrippedMolecule relies on the ordering of atoms, and possibly bonds
 
   // TODO: Molecule calls with (12,12)
-  var MoleculeStructure = namespace.MoleculeStructure = function MoleculeStructure( numAtoms, numBonds ) {
+  function MoleculeStructure( numAtoms, numBonds ) {
     assert && assert( numAtoms !== undefined && numBonds !== undefined, 'numAtoms and numBonds required' );
 
     this.moleculeId = nextMoleculeId++; // used for molecule identification and ordering for optimization
@@ -38,7 +37,8 @@ define( function( require ) {
     this.atoms = [];
     // this.bonds = new Array( numBonds );
     this.bonds = [];
-  };
+  }
+  buildAMolecule.register( 'MoleculeStructure', MoleculeStructure );
 
   MoleculeStructure.prototype = {
     constructor: MoleculeStructure,
@@ -67,14 +67,6 @@ define( function( require ) {
     getBondsInvolving: function( atom ) {
       // TODO: performance: optimize out function allocation here?
       return _.filter( this.bonds, function( bond ) { return bond.contains( atom ); } );
-    },
-
-    getMatchingCompleteMolecule: function() {
-      return namespace.MoleculeList.getMasterInstance().findMatchingCompleteMolecule( this );
-    },
-
-    isAllowedStructure: function() {
-      return this.atoms.length < 2 || namespace.MoleculeList.getMasterInstance().isAllowedStructure( this );
     },
 
     getHillSystemFormulaFragment: function() {

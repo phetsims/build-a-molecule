@@ -3,7 +3,7 @@
 define( function( require ) {
   'use strict';
 
-  var namespace = require( 'BUILD_A_MOLECULE/namespace' );
+  var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   var Strings = {};
 
   // strings
@@ -47,7 +47,7 @@ define( function( require ) {
   Strings[ 'molecule.nitrous_oxide' ] = require( 'string!BUILD_A_MOLECULE/molecule.nitrous_oxide' );
   Strings[ 'molecule.nitric_oxide' ] = require( 'string!BUILD_A_MOLECULE/molecule.nitric_oxide' );
 
-  namespace.Strings = Strings;
+  buildAMolecule.register( 'Strings', Strings );
 
   var elementMap = {
     'H': atomHydrogenString,

@@ -8,9 +8,9 @@
 define( function( require ) {
   'use strict';
 
+  var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Dimension2 = require( 'DOT/Dimension2' );
-  var namespace = require( 'BUILD_A_MOLECULE/namespace' );
   var BAMScreen = require( 'BUILD_A_MOLECULE/screens/BAMScreen' );
   var KitCollection = require( 'BUILD_A_MOLECULE/model/KitCollection' );
   var Kit = require( 'BUILD_A_MOLECULE/model/Kit' );
@@ -25,7 +25,7 @@ define( function( require ) {
   // strings
   var titleCollectMultipleString = require( 'string!BUILD_A_MOLECULE/title.collectMultiple' );
 
-  var CollectMultipleScreen = namespace.CollectMultipleScreen = function CollectMultipleScreen( collectionAreaWidth ) {
+  function CollectMultipleScreen( collectionAreaWidth ) {
     BAMScreen.call( this, titleCollectMultipleString, new Rectangle( 0, 0, 548, 373, { fill: 'green' } ), function( bounds, clock ) {
       var kitCollection = new KitCollection();
       kitCollection.addKit( new Kit( bounds, [
@@ -57,7 +57,8 @@ define( function( require ) {
         model.addCollection( BAMScreen.generateKitCollection( true, 4, model.clock, model.layoutBounds ) );
       } );
     } );
-  };
+  }
+  buildAMolecule.register( 'CollectMultipleScreen', CollectMultipleScreen );
 
   inherit( BAMScreen, CollectMultipleScreen );
 

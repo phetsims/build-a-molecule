@@ -8,9 +8,8 @@
 define( function( require ) {
   'use strict';
 
-  var namespace = require( 'BUILD_A_MOLECULE/namespace' );
+  var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   var inherit = require( 'PHET_CORE/inherit' );
-
   var Screen = require( 'JOIST/Screen' );
   var Dimension2 = require( 'DOT/Dimension2' );
   var Constants = require( 'BUILD_A_MOLECULE/Constants' );
@@ -23,7 +22,7 @@ define( function( require ) {
   var CollectionBox = require( 'BUILD_A_MOLECULE/model/CollectionBox' );
   var PropertySet = require( 'AXON/PropertySet' );
 
-  var BAMScreen = namespace.BAMScreen = function BAMScreen( name, icon, createInitialKitCollection, layoutBounds, createKitCollection, createView ) {
+  function BAMScreen( name, icon, createInitialKitCollection, layoutBounds, createKitCollection, createView ) {
     Screen.call( this, name, icon, function() {
       var clock = new PropertySet( {} );
       var model = new CollectionList( createInitialKitCollection( layoutBounds, clock ), layoutBounds, clock );
@@ -35,7 +34,8 @@ define( function( require ) {
       };
       return model;
     }, createView, { backgroundColor: Constants.canvasBackgroundColor } );
-  };
+  }
+  buildAMolecule.register( 'BAMScreen', BAMScreen );
 
   /**
    * Generate a group of collection boxes and kits such that the boxes can be filled.

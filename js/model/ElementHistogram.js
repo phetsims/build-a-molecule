@@ -9,10 +9,10 @@
 define( function( require ) {
   'use strict';
 
-  var namespace = require( 'BUILD_A_MOLECULE/namespace' );
+  var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   var Constants = require( 'BUILD_A_MOLECULE/Constants' );
 
-  var ElementHistogram = namespace.ElementHistogram = function ElementHistogram( molecule ) {
+  function ElementHistogram( molecule ) {
     var histogram = this;
 
     this.quantities = {};
@@ -23,7 +23,8 @@ define( function( require ) {
     if ( molecule ) {
       this.addMolecule( molecule );
     }
-  };
+  }
+  buildAMolecule.register( 'ElementHistogram', ElementHistogram );
 
   ElementHistogram.prototype = {
     constructor: ElementHistogram,

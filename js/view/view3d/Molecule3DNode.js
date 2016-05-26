@@ -11,7 +11,7 @@
 define( function( require ) {
   'use strict';
 
-  var namespace = require( 'BUILD_A_MOLECULE/namespace' );
+  var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Vector2 = require( 'DOT/Vector2' );
   var Vector3 = require( 'DOT/Vector3' );
@@ -87,7 +87,7 @@ define( function( require ) {
     };
   }
 
-  var Molecule3DNode = namespace.Molecule3DNode = function Molecule3DNode( completeMolecule, initialBounds, useHighRes ) {
+  function Molecule3DNode( completeMolecule, initialBounds, useHighRes ) {
     var moleculeNode = this;
 
     this.draggingProperty = new Property( false );
@@ -147,7 +147,8 @@ define( function( require ) {
     if ( grabInitialTransforms ) {
       this.masterMatrix = Matrix3.identity();
     }
-  };
+  }
+  buildAMolecule.register( 'Molecule3DNode', Molecule3DNode );
 
   // TODO: CH3Cl, CH3F, CH2O, H2O2, CH4, SiH4?, PH3?, BH3!!!
   Molecule3DNode.initialTransforms = {

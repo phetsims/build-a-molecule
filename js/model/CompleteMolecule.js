@@ -12,8 +12,8 @@
 define( function( require ) {
   'use strict';
 
+  var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var namespace = require( 'BUILD_A_MOLECULE/namespace' );
   var Strings = require( 'BUILD_A_MOLECULE/Strings' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Element = require( 'NITROGLYCERIN/Element' );
@@ -43,7 +43,7 @@ define( function( require ) {
    * @param {Boolean} has2d
    * @param {Boolean} has3d
    */
-  var CompleteMolecule = namespace.CompleteMolecule = function CompleteMolecule( commonName, molecularFormula, atomCount, bondCount, has2d, has3d ) {
+  function CompleteMolecule( commonName, molecularFormula, atomCount, bondCount, has2d, has3d ) {
     MoleculeStructure.call( this, atomCount, bondCount );
 
     this._commonName = commonName; // as said by pubchem (or overridden)
@@ -51,7 +51,8 @@ define( function( require ) {
     this.has2d = has2d;
     this.has3d = has3d;
     // this.cid = null;
-  };
+  }
+  buildAMolecule.register( 'CompleteMolecule', CompleteMolecule );
 
   inherit( MoleculeStructure, CompleteMolecule, {
     get commonName() {

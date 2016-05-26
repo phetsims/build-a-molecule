@@ -9,13 +9,13 @@
 define( function( require ) {
   'use strict';
 
-  var namespace = require( 'BUILD_A_MOLECULE/namespace' );
+  var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   var inherit = require( 'PHET_CORE/inherit' );
   var KitView = require( 'BUILD_A_MOLECULE/view/KitView' );
   var KitPanel = require( 'BUILD_A_MOLECULE/control/KitPanel' );
   var Node = require( 'SCENERY/nodes/Node' );
 
-  var KitCollectionNode = namespace.KitCollectionNode = function KitCollectionNode( collectionList, collection, view ) {
+  function KitCollectionNode( collectionList, collection, view ) {
     Node.call( this, {} );
     var that = this;
 
@@ -36,7 +36,8 @@ define( function( require ) {
         that.addChild( kitMap[ newKit.id ] );
       }
     } );
-  };
+  }
+  buildAMolecule.register( 'KitCollectionNode', KitCollectionNode );
 
   inherit( Node, KitCollectionNode );
 

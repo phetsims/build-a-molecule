@@ -9,7 +9,7 @@
 define( function( require ) {
   'use strict';
 
-  var namespace = require( 'BUILD_A_MOLECULE/namespace' );
+  var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   var Constants = require( 'BUILD_A_MOLECULE/Constants' );
   var BAMScreen = require( 'BUILD_A_MOLECULE/screens/BAMScreen' );
   var Bounds2 = require( 'DOT/Bounds2' );
@@ -28,6 +28,7 @@ define( function( require ) {
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var SoundToggleButton = require( 'SCENERY_PHET/buttons/SoundToggleButton' );
   var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
+  var Globals = require( 'BUILD_A_MOLECULE/Globals' );
   var PropertySet = require( 'AXON/PropertySet' );
 
   // strings
@@ -36,7 +37,7 @@ define( function( require ) {
 
   var containerPadding = 15;
 
-  var CollectionPanel = namespace.CollectionPanel = function CollectionPanel( collectionList, isSingleCollectionMode, collectionAttachmentCallbacks, toModelBounds ) {
+  function CollectionPanel( collectionList, isSingleCollectionMode, collectionAttachmentCallbacks, toModelBounds ) {
     var panel = this;
     Node.call( this, {} );
 
@@ -106,7 +107,7 @@ define( function( require ) {
     y += 5; // TODO: height?
 
     // sound on/off
-    this.soundToggleButton = new SoundToggleButton( namespace.soundEnabled );
+    this.soundToggleButton = new SoundToggleButton( Globals.soundEnabled );
     this.soundToggleButton.touchArea = Shape.bounds( this.soundToggleButton.bounds.dilated( 7 ) );
     this.layoutNode.addChild( this.soundToggleButton );
     this.soundToggleButton.top = y;
@@ -136,7 +137,8 @@ define( function( require ) {
     collectionList.currentCollectionProperty.link( function( newCollection ) {
       panel.useCollection( newCollection );
     } );
-  };
+  }
+  buildAMolecule.register( 'CollectionPanel', CollectionPanel );
 
   /**
    * Used to get the panel width so that we can construct the model (and thus kit) beforehand

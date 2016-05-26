@@ -9,7 +9,7 @@
 define( function( require ) {
   'use strict';
 
-  var namespace = require( 'BUILD_A_MOLECULE/namespace' );
+  var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Bounds2 = require( 'DOT/Bounds2' );
   var Node = require( 'SCENERY/nodes/Node' );
@@ -23,7 +23,7 @@ define( function( require ) {
   // strings
   var iconString = require( 'string!BUILD_A_MOLECULE/3d.icon' ); // eslint-disable-line string-require-statement-match
 
-  var ShowMolecule3DButtonNode = namespace.ShowMolecule3DButtonNode = function ShowMolecule3DButtonNode( completeMolecule, options ) {
+  function ShowMolecule3DButtonNode( completeMolecule, options ) {
     var that = this;
     Node.call( this, _.extend( {
       cursor: 'pointer'
@@ -64,7 +64,8 @@ define( function( require ) {
 
     this.addChild( base );
     this.addChild( label );
-  };
+  }
+  buildAMolecule.register( 'ShowMolecule3DButtonNode', ShowMolecule3DButtonNode );
 
   return inherit( Node, ShowMolecule3DButtonNode );
 } );

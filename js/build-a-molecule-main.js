@@ -13,7 +13,6 @@ define( function( require ) {
   var MakeMoleculeScreen = require( 'BUILD_A_MOLECULE/screens/MakeMoleculeScreen' );
   var CollectMultipleScreen = require( 'BUILD_A_MOLECULE/screens/CollectMultipleScreen' );
   var LargerMoleculesScreen = require( 'BUILD_A_MOLECULE/screens/LargerMoleculesScreen' );
-  var namespace = require( 'BUILD_A_MOLECULE/namespace' );
   var CollectionPanel = require( 'BUILD_A_MOLECULE/control/CollectionPanel' );
 
   var simOptions = {
@@ -24,10 +23,6 @@ define( function( require ) {
 
   // Appending '?dev' to the URL will enable developer-only features.
   if ( window.phet.chipper.getQueryParameter( 'dev' ) ) {
-    // put our development shortcuts for types and data into the global namespace
-    _.extend( window, namespace );
-
-    window.namespace = namespace;
 
     // TODO: developer features as necessary
     // var kit = sim.screens[0].model.collections[0].kits[0]

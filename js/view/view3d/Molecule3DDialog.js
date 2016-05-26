@@ -11,7 +11,7 @@
 define( function( require ) {
   'use strict';
 
-  var namespace = require( 'BUILD_A_MOLECULE/namespace' );
+  var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   var Constants = require( 'BUILD_A_MOLECULE/Constants' );
   var Molecule3DNode = require( 'BUILD_A_MOLECULE/view/view3d/Molecule3DNode' );
   var CloseButton = require( 'BUILD_A_MOLECULE/view/view3d/CloseButton' );
@@ -37,7 +37,7 @@ define( function( require ) {
   var stageCenterY = Constants.stageSize.height / 2;
   var optionsHorizontalPadding = 40;
 
-  var Molecule3DDialog = namespace.Molecule3DDialog = function Molecule3DDialog( completeMolecule, trail, view ) {
+  function Molecule3DDialog( completeMolecule, trail, view ) {
     var dialog = this;
     Node.call( this );
 
@@ -197,7 +197,8 @@ define( function( require ) {
       view.removeChild( dialog );
       clock.off( 'tick', tick );
     };
-  };
+  }
+  buildAMolecule.register( 'Molecule3DDialog', Molecule3DDialog );
 
   return inherit( Node, Molecule3DDialog, {
     getLocalCanvasBounds: function() {

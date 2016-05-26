@@ -9,10 +9,10 @@
 define( function( require ) {
   'use strict';
 
+  var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   var Atom = require( 'NITROGLYCERIN/Atom' );
   var extend = require( 'PHET_CORE/extend' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var namespace = require( 'BUILD_A_MOLECULE/namespace' );
   var PropertySet = require( 'AXON/PropertySet' );
   var Rectangle = require( 'DOT/Rectangle' );
   var Strings = require( 'BUILD_A_MOLECULE/Strings' );
@@ -26,7 +26,7 @@ define( function( require ) {
    *   droppedByUser:    function( particle ) {}
    *   removedFromModel: function( particle ) {}
    */
-  var Atom2 = namespace.Atom2 = function Atom2( element, clock ) {
+  function Atom2( element, clock ) {
     var atom = this;
 
     PropertySet.call( this, {
@@ -64,7 +64,8 @@ define( function( require ) {
         clock.off( 'tick', atom.clockListener );
       }
     } );
-  };
+  }
+  buildAMolecule.register( 'Atom2', Atom2 );
 
   inherit( PropertySet, Atom2, extend( {}, Atom.prototype, {
     get positionBounds() {

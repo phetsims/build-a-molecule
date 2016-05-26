@@ -9,14 +9,14 @@
 define( function( require ) {
   'use strict';
 
-  var namespace = require( 'BUILD_A_MOLECULE/namespace' );
+  var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   var Constants = require( 'BUILD_A_MOLECULE/Constants' );
   var inherit = require( 'PHET_CORE/inherit' );
   var BAMView = require( 'BUILD_A_MOLECULE/view/BAMView' );
   var CollectionPanel = require( 'BUILD_A_MOLECULE/control/CollectionPanel' );
   var AllFilledDialogNode = require( 'BUILD_A_MOLECULE/control/AllFilledDialogNode' );
 
-  var MoleculeCollectingView = namespace.MoleculeCollectingView = function MoleculeCollectingView( collectionList, isSingleCollectionMode, regenerateCallback ) {
+  function MoleculeCollectingView( collectionList, isSingleCollectionMode, regenerateCallback ) {
     var view = this;
 
     BAMView.call( this, collectionList );
@@ -76,7 +76,8 @@ define( function( require ) {
     //         }
     //     } );
     // }
-  };
+  }
+  buildAMolecule.register( 'MoleculeCollectingView', MoleculeCollectingView );
 
   return inherit( BAMView, MoleculeCollectingView, {
     addCollection: function( collection ) {

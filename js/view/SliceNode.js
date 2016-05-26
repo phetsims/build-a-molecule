@@ -10,7 +10,7 @@
 define( function( require ) {
   'use strict';
 
-  var namespace = require( 'BUILD_A_MOLECULE/namespace' );
+  var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   var Constants = require( 'BUILD_A_MOLECULE/Constants' );
   var Vector2 = require( 'DOT/Vector2' );
   var Transform3 = require( 'DOT/Transform3' );
@@ -20,7 +20,7 @@ define( function( require ) {
 
   var sliceDistanceLimit = 1000;
 
-  var SliceNode = namespace.SliceNode = function SliceNode( kit, viewSwipeBounds, view ) {
+  function SliceNode( kit, viewSwipeBounds, view ) {
     var sliceNode = this;
 
     this.kit = kit;
@@ -111,7 +111,8 @@ define( function( require ) {
         context.clearRect( 0, 0, globalBounds.width, globalBounds.height );
       }
     } );
-  };
+  }
+  buildAMolecule.register( 'SliceNode', SliceNode );
 
   return inherit( DOM, SliceNode, {
     cut: function( oldModelPoint, newModelPoint, event ) {

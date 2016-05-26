@@ -9,14 +9,15 @@
 define( function( require ) {
   'use strict';
 
+  var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Bounds2 = require( 'DOT/Bounds2' );
-  var namespace = require( 'BUILD_A_MOLECULE/namespace' );
   var MoleculeStructure = require( 'BUILD_A_MOLECULE/model/MoleculeStructure' );
 
-  var Molecule = namespace.Molecule = function Molecule( numAtoms, numBonds ) {
+  function Molecule( numAtoms, numBonds ) {
     MoleculeStructure.call( this, numAtoms || 0, numBonds || 0 );
-  };
+  }
+  buildAMolecule.register( 'Molecule', Molecule );
 
   inherit( MoleculeStructure, Molecule, {
     // Where the molecule is right now

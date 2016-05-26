@@ -9,13 +9,14 @@
 define( function( require ) {
   'use strict';
 
-  var namespace = require( 'BUILD_A_MOLECULE/namespace' );
+  var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
 
-  var Bond = namespace.Bond = function Bond( a, b ) {
+  function Bond( a, b ) {
     assert && assert( a !== b, 'Bonds cannot connect an atom to itself' );
     this.a = a;
     this.b = b;
-  };
+  }
+  buildAMolecule.register( 'Bond', Bond );
 
   Bond.prototype = {
     constructor: Bond,

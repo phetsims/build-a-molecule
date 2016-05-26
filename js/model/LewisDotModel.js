@@ -10,16 +10,17 @@
 define( function( require ) {
   'use strict';
 
-  var namespace = require( 'BUILD_A_MOLECULE/namespace' );
+  var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   var Direction = require( 'BUILD_A_MOLECULE/model/Direction' );
   var Vector2 = require( 'DOT/Vector2' );
 
-  var LewisDotModel = namespace.LewisDotModel = function LewisDotModel() {
+  function LewisDotModel() {
     // maps atom ID => LewisDotAtom
     this.atomMap = {};
-  };
+  }
+  buildAMolecule.register( 'LewisDotModel', LewisDotModel );
 
-  var LewisDotAtom = namespace.LewisDotAtom = function( atom ) {
+  function LewisDotAtom( atom ) {
     var lewisDotAtom = this;
 
     this.atom = atom;
@@ -27,7 +28,8 @@ define( function( require ) {
     _.each( Direction.values, function( direction ) {
       lewisDotAtom.connections[ direction.id ] = null; // nothing in this direction
     } );
-  };
+  }
+  buildAMolecule.register( 'LewisDotAtom', LewisDotAtom );
 
   LewisDotAtom.prototype = {
     constructor: LewisDotAtom,

@@ -9,7 +9,7 @@
 define( function( require ) {
   'use strict';
 
-  var namespace = require( 'BUILD_A_MOLECULE/namespace' );
+  var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Shape = require( 'KITE/Shape' );
   var Color = require( 'SCENERY/util/Color' );
@@ -23,7 +23,7 @@ define( function( require ) {
   // strings
   var collectionResetString = require( 'string!BUILD_A_MOLECULE/collection.reset' );
 
-  var CollectionAreaNode = namespace.CollectionAreaNode = function CollectionAreaNode( collection, isSingleCollectionMode, toModelBounds ) {
+  function CollectionAreaNode( collection, isSingleCollectionMode, toModelBounds ) {
     Node.call( this, {} );
     var selfNode = this;
 
@@ -107,7 +107,8 @@ define( function( require ) {
     _.each( this.children, function( child ) {
       child.centerX = centerX;
     } );
-  };
+  }
+  buildAMolecule.register( 'CollectionAreaNode', CollectionAreaNode );
 
   return inherit( Node, CollectionAreaNode, {
     updateCollectionBoxLocations: function() {

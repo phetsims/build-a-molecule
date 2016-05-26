@@ -57,8 +57,4 @@ define( function( require ) {
   require( 'BUILD_A_MOLECULE/model/data/collectionMoleculesData' );
   require( 'BUILD_A_MOLECULE/model/data/otherMoleculesData' );
   require( 'BUILD_A_MOLECULE/model/data/structuresData' );
-
-  var namespace = require( 'BUILD_A_MOLECULE/namespace' );
-
-  _.extend( window, namespace );
 } );

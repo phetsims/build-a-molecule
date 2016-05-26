@@ -9,7 +9,7 @@
 define( function( require ) {
   'use strict';
 
-  var namespace = require( 'BUILD_A_MOLECULE/namespace' );
+  var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   var Constants = require( 'BUILD_A_MOLECULE/Constants' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
@@ -28,7 +28,7 @@ define( function( require ) {
 
   var kitArrowYOffset = 5; // vertical offset of the kit arrows from the top of the kit
 
-  var KitPanel = namespace.KitPanel = function KitPanel( kitCollectionModel, availableKitBounds ) {
+  function KitPanel( kitCollectionModel, availableKitBounds ) {
     Node.call( this, {} );
 
     assert && assert( Constants.modelViewTransform.getMatrix().m11() < 0 ); // we assume this and correct for the inversed Y
@@ -107,7 +107,8 @@ define( function( require ) {
     } );
     kitCollectionModel.currentKitProperty.link( updateRefillButton );
     this.addChild( refillButton );
-  };
+  }
+  buildAMolecule.register( 'KitPanel', KitPanel );
 
   return inherit( Node, KitPanel );
 } );
