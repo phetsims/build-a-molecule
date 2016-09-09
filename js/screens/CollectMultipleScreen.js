@@ -26,38 +26,56 @@ define( function( require ) {
   var titleCollectMultipleString = require( 'string!BUILD_A_MOLECULE/title.collectMultiple' );
 
   function CollectMultipleScreen( collectionAreaWidth ) {
-    BAMScreen.call( this, titleCollectMultipleString, new Rectangle( 0, 0, 548, 373, { fill: 'green' } ), function( bounds, clock ) {
-      var kitCollection = new KitCollection();
-      kitCollection.addKit( new Kit( bounds, [
-        new Bucket( new Dimension2( 400, 200 ), clock, Element.H, 2 ),
-        new Bucket( new Dimension2( 450, 200 ), clock, Element.O, 2 )
-      ] ) );
 
-      kitCollection.addKit( new Kit( bounds, [
-        new Bucket( new Dimension2( 500, 200 ), clock, Element.C, 2 ),
-        new Bucket( new Dimension2( 600, 200 ), clock, Element.O, 4 ),
-        new Bucket( new Dimension2( 500, 200 ), clock, Element.N, 2 )
-      ] ) );
-      kitCollection.addKit( new Kit( bounds, [
-        new Bucket( new Dimension2( 600, 200 ), clock, Element.H, 12 ),
-        new Bucket( new Dimension2( 600, 200 ), clock, Element.O, 4 ),
-        new Bucket( new Dimension2( 500, 200 ), clock, Element.N, 2 )
-      ] ) );
-      kitCollection.addCollectionBox( new CollectionBox( MoleculeList.CO2, 2 ) );
-      kitCollection.addCollectionBox( new CollectionBox( MoleculeList.O2, 2 ) );
-      kitCollection.addCollectionBox( new CollectionBox( MoleculeList.H2, 4 ) );
-      kitCollection.addCollectionBox( new CollectionBox( MoleculeList.NH3, 2 ) );
-      return kitCollection;
-    }, new LayoutBounds( false, collectionAreaWidth ), function( bounds, clock ) {
-      return BAMScreen.generateKitCollection( true, 4, clock, bounds );
-    }, function( model ) {
-      // create the view
-      return new MoleculeCollectingView( model, false, function() {
-        // next collection callback
-        model.addCollection( BAMScreen.generateKitCollection( true, 4, model.clock, model.layoutBounds ) );
-      } );
-    } );
+    var options = {
+      name: titleCollectMultipleString,
+      homeScreenIcon: new Rectangle( 0, 0, 548, 373, { fill: 'green' } )
+    };
+
+    BAMScreen.call( this,
+
+      // createInitialKitCollection
+      function( bounds, clock ) {
+        var kitCollection = new KitCollection();
+        kitCollection.addKit( new Kit( bounds, [
+          new Bucket( new Dimension2( 400, 200 ), clock, Element.H, 2 ),
+          new Bucket( new Dimension2( 450, 200 ), clock, Element.O, 2 )
+        ] ) );
+
+        kitCollection.addKit( new Kit( bounds, [
+          new Bucket( new Dimension2( 500, 200 ), clock, Element.C, 2 ),
+          new Bucket( new Dimension2( 600, 200 ), clock, Element.O, 4 ),
+          new Bucket( new Dimension2( 500, 200 ), clock, Element.N, 2 )
+        ] ) );
+        kitCollection.addKit( new Kit( bounds, [
+          new Bucket( new Dimension2( 600, 200 ), clock, Element.H, 12 ),
+          new Bucket( new Dimension2( 600, 200 ), clock, Element.O, 4 ),
+          new Bucket( new Dimension2( 500, 200 ), clock, Element.N, 2 )
+        ] ) );
+        kitCollection.addCollectionBox( new CollectionBox( MoleculeList.CO2, 2 ) );
+        kitCollection.addCollectionBox( new CollectionBox( MoleculeList.O2, 2 ) );
+        kitCollection.addCollectionBox( new CollectionBox( MoleculeList.H2, 4 ) );
+        kitCollection.addCollectionBox( new CollectionBox( MoleculeList.NH3, 2 ) );
+        return kitCollection;
+      },
+
+      // layoutBounds
+      new LayoutBounds( false, collectionAreaWidth ), function( bounds, clock ) {
+        return BAMScreen.generateKitCollection( true, 4, clock, bounds );
+      },
+
+      // createKitCollection
+      function( model ) {
+        // create the view
+        return new MoleculeCollectingView( model, false, function() {
+          // next collection callback
+          model.addCollection( BAMScreen.generateKitCollection( true, 4, model.clock, model.layoutBounds ) );
+        } );
+      },
+
+      options );
   }
+
   buildAMolecule.register( 'CollectMultipleScreen', CollectMultipleScreen );
 
   inherit( BAMScreen, CollectMultipleScreen );

@@ -24,77 +24,95 @@ define( function( require ) {
   var titleLargerMoleculesString = require( 'string!BUILD_A_MOLECULE/title.largerMolecules' );
 
   function LargerMoleculesScreen() {
-    BAMScreen.call( this, titleLargerMoleculesString, new Rectangle( 0, 0, 548, 373, { fill: 'blue' } ), function( bounds, clock ) {
-      var kitCollection = new KitCollection();
 
-      // NOTE: if kits are modified here, examine MAX_NUM_HEAVY_ATOMS in MoleculeSDFCombinedParser, as it may need to be changed
+    var options = {
+      name: titleLargerMoleculesString,
+      homeScreenIcon: new Rectangle( 0, 0, 548, 373, { fill: 'blue' } )
+    };
 
-      // general kit
-      kitCollection.addKit( new Kit( bounds, [
-        Bucket.createAutoSized( clock, Element.H, 13 ),
-        Bucket.createAutoSized( clock, Element.O, 3 ),
-        Bucket.createAutoSized( clock, Element.C, 3 ),
-        Bucket.createAutoSized( clock, Element.N, 3 ),
-        Bucket.createAutoSized( clock, Element.Cl, 2 )
-      ] ) );
+    BAMScreen.call( this,
 
-      // organics kit
-      kitCollection.addKit( new Kit( bounds, [
-        new Bucket( new Dimension2( 700, 200 ), clock, Element.H, 21 ),
-        Bucket.createAutoSized( clock, Element.O, 4 ),
-        Bucket.createAutoSized( clock, Element.C, 4 ),
-        Bucket.createAutoSized( clock, Element.N, 4 )
-      ] ) );
+      // createInitialKitCollection
+      function( bounds, clock ) {
+        var kitCollection = new KitCollection();
 
-      // chlorine / fluorine
-      kitCollection.addKit( new Kit( bounds, [
-        new Bucket( new Dimension2( 700, 200 ), clock, Element.H, 21 ),
-        Bucket.createAutoSized( clock, Element.C, 4 ),
-        Bucket.createAutoSized( clock, Element.Cl, 4 ),
-        Bucket.createAutoSized( clock, Element.F, 4 )
-      ] ) );
+        // NOTE: if kits are modified here, examine MAX_NUM_HEAVY_ATOMS in MoleculeSDFCombinedParser, as it may need to be changed
 
-      // boron / silicon
-      kitCollection.addKit( new Kit( bounds, [
-        new Bucket( new Dimension2( 700, 200 ), clock, Element.H, 21 ),
-        Bucket.createAutoSized( clock, Element.C, 3 ),
-        Bucket.createAutoSized( clock, Element.B, 2 ),
-        Bucket.createAutoSized( clock, Element.Si, 2 )
-      ] ) );
+        // general kit
+        kitCollection.addKit( new Kit( bounds, [
+          Bucket.createAutoSized( clock, Element.H, 13 ),
+          Bucket.createAutoSized( clock, Element.O, 3 ),
+          Bucket.createAutoSized( clock, Element.C, 3 ),
+          Bucket.createAutoSized( clock, Element.N, 3 ),
+          Bucket.createAutoSized( clock, Element.Cl, 2 )
+        ] ) );
 
-      // sulphur / oxygen
-      kitCollection.addKit( new Kit( bounds, [
-        new Bucket( new Dimension2( 700, 200 ), clock, Element.H, 21 ),
-        Bucket.createAutoSized( clock, Element.B, 1 ),
-        Bucket.createAutoSized( clock, Element.S, 2 ),
-        Bucket.createAutoSized( clock, Element.Si, 1 ),
-        Bucket.createAutoSized( clock, Element.P, 1 )
-      ] ) );
+        // organics kit
+        kitCollection.addKit( new Kit( bounds, [
+          new Bucket( new Dimension2( 700, 200 ), clock, Element.H, 21 ),
+          Bucket.createAutoSized( clock, Element.O, 4 ),
+          Bucket.createAutoSized( clock, Element.C, 4 ),
+          Bucket.createAutoSized( clock, Element.N, 4 )
+        ] ) );
 
-      // phosphorus
-      kitCollection.addKit( new Kit( bounds, [
-        new Bucket( new Dimension2( 700, 200 ), clock, Element.H, 21 ),
-        Bucket.createAutoSized( clock, Element.C, 4 ),
-        Bucket.createAutoSized( clock, Element.O, 2 ),
-        Bucket.createAutoSized( clock, Element.P, 2 )
-      ] ) );
+        // chlorine / fluorine
+        kitCollection.addKit( new Kit( bounds, [
+          new Bucket( new Dimension2( 700, 200 ), clock, Element.H, 21 ),
+          Bucket.createAutoSized( clock, Element.C, 4 ),
+          Bucket.createAutoSized( clock, Element.Cl, 4 ),
+          Bucket.createAutoSized( clock, Element.F, 4 )
+        ] ) );
 
-      // bromine kit?
-      kitCollection.addKit( new Kit( bounds, [
-        new Bucket( new Dimension2( 700, 200 ), clock, Element.H, 21 ),
-        Bucket.createAutoSized( clock, Element.Br, 2 ),
-        Bucket.createAutoSized( clock, Element.N, 3 ),
-        Bucket.createAutoSized( clock, Element.C, 3 )
-      ] ) );
+        // boron / silicon
+        kitCollection.addKit( new Kit( bounds, [
+          new Bucket( new Dimension2( 700, 200 ), clock, Element.H, 21 ),
+          Bucket.createAutoSized( clock, Element.C, 3 ),
+          Bucket.createAutoSized( clock, Element.B, 2 ),
+          Bucket.createAutoSized( clock, Element.Si, 2 )
+        ] ) );
 
-      return kitCollection;
-    }, new LayoutBounds( true, 0 ), function( bounds, clock ) {
-      throw new Error( 'There are no more kit collections in the 3rd tab' );
-    }, function( model ) {
-      // create the view
-      return new BAMView( model );
-    } );
+        // sulphur / oxygen
+        kitCollection.addKit( new Kit( bounds, [
+          new Bucket( new Dimension2( 700, 200 ), clock, Element.H, 21 ),
+          Bucket.createAutoSized( clock, Element.B, 1 ),
+          Bucket.createAutoSized( clock, Element.S, 2 ),
+          Bucket.createAutoSized( clock, Element.Si, 1 ),
+          Bucket.createAutoSized( clock, Element.P, 1 )
+        ] ) );
+
+        // phosphorus
+        kitCollection.addKit( new Kit( bounds, [
+          new Bucket( new Dimension2( 700, 200 ), clock, Element.H, 21 ),
+          Bucket.createAutoSized( clock, Element.C, 4 ),
+          Bucket.createAutoSized( clock, Element.O, 2 ),
+          Bucket.createAutoSized( clock, Element.P, 2 )
+        ] ) );
+
+        // bromine kit?
+        kitCollection.addKit( new Kit( bounds, [
+          new Bucket( new Dimension2( 700, 200 ), clock, Element.H, 21 ),
+          Bucket.createAutoSized( clock, Element.Br, 2 ),
+          Bucket.createAutoSized( clock, Element.N, 3 ),
+          Bucket.createAutoSized( clock, Element.C, 3 )
+        ] ) );
+
+        return kitCollection;
+      },
+
+      // layoutBounds
+      new LayoutBounds( true, 0 ), function( bounds, clock ) {
+        throw new Error( 'There are no more kit collections in the 3rd tab' );
+      },
+
+      // createKitCollection
+      function( model ) {
+        // create the view
+        return new BAMView( model );
+      },
+
+      options );
   }
+
   buildAMolecule.register( 'LargerMoleculesScreen', LargerMoleculesScreen );
 
   inherit( BAMScreen, LargerMoleculesScreen );

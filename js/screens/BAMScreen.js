@@ -22,8 +22,13 @@ define( function( require ) {
   var CollectionBox = require( 'BUILD_A_MOLECULE/model/CollectionBox' );
   var PropertySet = require( 'AXON/PropertySet' );
 
-  function BAMScreen( name, icon, createInitialKitCollection, layoutBounds, createKitCollection, createView ) {
-    Screen.call( this, name, icon, function() {
+  function BAMScreen( createInitialKitCollection, layoutBounds, createKitCollection, createView, options ) {
+
+    options = _.extend( {
+      backgroundColor: Constants.canvasBackgroundColor
+    }, options );
+
+    var createModel = function() {
       var clock = new PropertySet( {} );
       var model = new CollectionList( createInitialKitCollection( layoutBounds, clock ), layoutBounds, clock );
       model.step = function step( timeElapsed ) {
@@ -33,8 +38,11 @@ define( function( require ) {
         return createKitCollection( layoutBounds, clock );
       };
       return model;
-    }, createView, { backgroundColor: Constants.canvasBackgroundColor } );
+    };
+
+    Screen.call( this,createModel, createView, options );
   }
+
   buildAMolecule.register( 'BAMScreen', BAMScreen );
 
   /**
