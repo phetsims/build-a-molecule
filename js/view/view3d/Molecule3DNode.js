@@ -186,27 +186,27 @@ define( function( require ) {
 
   return inherit( DOM, Molecule3DNode, {
     initializeDrag: function( target ) {
-      var moleculeNode = this;
+      var self = this;
 
       var dragListener = {
         up: function( event ) {
-          moleculeNode.dragging = false;
+          self.dragging = false;
           event.pointer.removeInputListener( dragListener );
           event.handle();
-          moleculeNode.draggingProperty.set( false );
+          self.draggingProperty.set( false );
           if ( grabInitialTransforms ) {
-            console.log( moleculeNode.masterMatrix.toString() );
+            console.log( self.masterMatrix.toString() );
           }
         },
 
         cancel: function( event ) {
-          moleculeNode.dragging = false;
+          self.dragging = false;
           event.pointer.removeInputListener( dragListener );
-          moleculeNode.draggingProperty.set( false );
+          self.draggingProperty.set( false );
         },
 
         move: function( event ) {
-          moleculeNode.currentPosition = event.pointer.point.copy();
+          self.currentPosition = event.pointer.point.copy();
         }
       };
       target.addInputListener( {
@@ -215,11 +215,11 @@ define( function( require ) {
         },
 
         down: function( event ) {
-          if ( !moleculeNode.dragging ) {
-            moleculeNode.dragging = true;
-            moleculeNode.lastPosition = moleculeNode.currentPosition = event.pointer.point.copy();
+          if ( !self.dragging ) {
+            self.dragging = true;
+            self.lastPosition = self.currentPosition = event.pointer.point.copy();
             event.pointer.addInputListener( dragListener );
-            moleculeNode.draggingProperty.set( true );
+            self.draggingProperty.set( true );
           }
         }
       } );
