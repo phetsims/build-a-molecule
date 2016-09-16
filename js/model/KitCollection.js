@@ -30,7 +30,7 @@ define( function( require ) {
 
   inherit( PropertySet, KitCollection, {
     addKit: function( kit ) {
-      var kitCollection = this;
+      var self = this;
 
       if ( this.currentKit ) {
         kit.hide();
@@ -57,9 +57,9 @@ define( function( require ) {
           var molecule = kit.getMolecule( atom );
 
           // check to see if we are trying to drop it in a collection box.
-          var numBoxes = kitCollection.collectionBoxes.length;
+          var numBoxes = self.collectionBoxes.length;
           for ( var i = 0; i < numBoxes; i++ ) {
-            var box = kitCollection.collectionBoxes[ i ];
+            var box = self.collectionBoxes[ i ];
 
             // permissive, so that if the box bounds and molecule bounds intersect, we call it a 'hit'
             if ( box.dropBounds.intersectsBounds( molecule.positionBounds ) ) {
@@ -84,7 +84,7 @@ define( function( require ) {
       } );
 
       kit.on( 'addedMolecule', function( molecule ) {
-        _.each( kitCollection.collectionBoxes, function( box ) {
+        _.each( self.collectionBoxes, function( box ) {
           if ( box.willAllowMoleculeDrop( molecule ) ) {
             box.trigger( 'acceptedMoleculeCreation', molecule );
           }
@@ -98,13 +98,13 @@ define( function( require ) {
     },
 
     addCollectionBox: function( box ) {
-      var kitCollection = this;
+      var self = this;
       this.collectionBoxes.push( box );
 
       // listen to when our collection boxes change, so that we can identify when all of our collection boxes are filled
       box.quantityProperty.link( function() {
-        var allFull = _.every( kitCollection.collectionBoxes, function( collectionBox ) { return collectionBox.isFull(); } );
-        kitCollection.allCollectionBoxesFilled = kitCollection.collectionBoxes.length && allFull;
+        var allFull = _.every( self.collectionBoxes, function( collectionBox ) { return collectionBox.isFull(); } );
+        self.allCollectionBoxesFilled = self.collectionBoxes.length && allFull;
       } );
     },
 

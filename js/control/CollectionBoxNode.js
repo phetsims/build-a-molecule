@@ -47,7 +47,7 @@ define( function( require ) {
 
   function CollectionBoxNode( box, toModelBounds ) {
     Node.call( this, {} );
-    var selfNode = this;
+    var self = this;
 
     this.box = box;
     this.dialog = new Property( null ); // will reference the dialog showing a 3d model of this molecule
@@ -61,7 +61,7 @@ define( function( require ) {
       fill: Constants.moleculeCollectionBoxBackground
     } );
     this.locationUpdateObserver = function() {
-      box.dropBounds = toModelBounds( selfNode.blackBox );
+      box.dropBounds = toModelBounds( self.blackBox );
     };
 
     if ( Constants.has3d ) {
@@ -128,7 +128,7 @@ define( function( require ) {
      *----------------------------------------------------------------------------*/
 
     addHeaderNode: function( headerNode ) {
-      var selfNode = this;
+      var self = this;
 
       // headerNode.top = this.children[this.children.length-1].bottom - ( this.children.length > 1 ? 3 : 0 ); // more compact padding in general below the box node
       this.addChild( headerNode );
@@ -144,7 +144,7 @@ define( function( require ) {
         var child = this._children[ i ];
         child.centerX = centerX;
         child.top = y;
-        y += child.height + 5 + ( child === selfNode.boxNode ? 3 : -3 );
+        y += child.height + 5 + ( child === self.boxNode ? 3 : -3 );
         if ( i === 0 ) {
           break;
         }
@@ -239,7 +239,7 @@ define( function( require ) {
      * Sets up a blinking box to register that a molecule was created that can go into a box
      */
     blink: function() {
-      var selfNode = this;
+      var self = this;
 
       var blinkLengthInSeconds = 1.3;
 
@@ -254,7 +254,7 @@ define( function( require ) {
 
       function tick() {
         // precautionarily set this to null so we never cancel a timeout that has occurred
-        selfNode.blinkTimeout = null;
+        self.blinkTimeout = null;
 
         // decrement and check
         counts--;
@@ -262,7 +262,7 @@ define( function( require ) {
 
         if ( counts === 0 ) {
           // set up our normal graphics (border/background)
-          selfNode.updateBoxGraphics();
+          self.updateBoxGraphics();
 
           // setTimeout not re-set
         }
@@ -272,16 +272,16 @@ define( function( require ) {
 
           // draw graphics
           if ( on ) {
-            selfNode.blackBox.fill = Constants.moleculeCollectionBoxBackgroundBlink;
-            selfNode.blackBox.stroke = Constants.moleculeCollectionBoxBorderBlink;
+            self.blackBox.fill = Constants.moleculeCollectionBoxBackgroundBlink;
+            self.blackBox.stroke = Constants.moleculeCollectionBoxBorderBlink;
           }
           else {
-            selfNode.blackBox.fill = Constants.moleculeCollectionBoxBackground;
-            selfNode.blackBox.stroke = Constants.moleculeCollectionBackground;
+            self.blackBox.fill = Constants.moleculeCollectionBoxBackground;
+            self.blackBox.stroke = Constants.moleculeCollectionBackground;
           }
 
           // set the blinkTimeout so it can be canceled
-          selfNode.blinkTimeout = window.setTimeout( tick, blinkDelayInMs );
+          self.blinkTimeout = window.setTimeout( tick, blinkDelayInMs );
         }
       }
 

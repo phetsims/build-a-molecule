@@ -25,7 +25,7 @@ define( function( require ) {
 
   function CollectionAreaNode( collection, isSingleCollectionMode, toModelBounds ) {
     Node.call( this, {} );
-    var selfNode = this;
+    var self = this;
 
     this.collectionBoxNodes = [];
 
@@ -37,7 +37,7 @@ define( function( require ) {
     // add nodes for all of our collection boxes.
     _.each( collection.collectionBoxes, function( collectionBox ) {
       var collectionBoxNode = isSingleCollectionMode ? new SingleCollectionBoxNode( collectionBox, toModelBounds ) : new MultipleCollectionBoxNode( collectionBox, toModelBounds );
-      selfNode.collectionBoxNodes.push( collectionBoxNode );
+      self.collectionBoxNodes.push( collectionBoxNode );
 
       // TODO: can we fix this up somehow to be better? easier way to force height?
       // center box horizontally and put at bottom vertically in our holder
@@ -61,7 +61,7 @@ define( function( require ) {
       // enforce consistent bounds of the maximum size. reason: we don't want switching between collections to alter the positions of the collection boxes
       collectionBoxHolder.addChild( new Rectangle( 0, 0, maximumBoxWidth, maximumBoxHeight, { visible: false, stroke: null } ) ); // TODO: Spacer node for Scenery?
       collectionBoxHolder.addChild( collectionBoxNode );
-      selfNode.addChild( collectionBoxHolder );
+      self.addChild( collectionBoxHolder );
       collectionBoxHolder.top = y;
       y += collectionBoxHolder.height + 15; // TODO: GeneralLayoutNode for Scenery?
     } );

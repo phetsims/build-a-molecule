@@ -19,7 +19,7 @@ define( function( require ) {
 
   function BAMView( collectionList ) {
     ScreenView.call( this, { layoutBounds: new Rectangle( 0, 0, Constants.stageSize.width, Constants.stageSize.height ) } );
-    var view = this;
+    var self = this;
 
     this.baseNode = new Node();
     this.addChild( this.baseNode );
@@ -32,10 +32,10 @@ define( function( require ) {
 
     collectionList.currentCollectionProperty.link( function( newCollection, oldCollection ) {
       if ( oldCollection ) {
-        view.removeChild( view.kitCollectionMap[ oldCollection.id ] );
+        self.removeChild( self.kitCollectionMap[ oldCollection.id ] );
       }
       if ( newCollection ) {
-        view.addChild( view.kitCollectionMap[ newCollection.id ] );
+        self.addChild( self.kitCollectionMap[ newCollection.id ] );
       }
     } );
 

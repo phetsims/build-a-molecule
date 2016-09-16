@@ -21,12 +21,12 @@ define( function( require ) {
   buildAMolecule.register( 'LewisDotModel', LewisDotModel );
 
   function LewisDotAtom( atom ) {
-    var lewisDotAtom = this;
+    var self = this;
 
     this.atom = atom;
     this.connections = {}; // maps Direction ID => LewisDotAtom
     _.each( Direction.values, function( direction ) {
-      lewisDotAtom.connections[ direction.id ] = null; // nothing in this direction
+      self.connections[ direction.id ] = null; // nothing in this direction
     } );
   }
   buildAMolecule.register( 'LewisDotAtom', LewisDotAtom );
@@ -59,7 +59,7 @@ define( function( require ) {
     },
 
     breakBondsOfAtom: function( atom ) {
-      var model = this;
+      var self = this;
 
       var dotAtom = this.getLewisDotAtom( atom );
 
@@ -67,7 +67,7 @@ define( function( require ) {
       _.each( Direction.values, function( direction ) {
         if ( dotAtom.hasConnection( direction ) ) {
           var otherDotAtom = dotAtom.getLewisDotAtom( direction );
-          model.breakBond( dotAtom.atom, otherDotAtom.atom );
+          self.breakBond( dotAtom.atom, otherDotAtom.atom );
         }
       } );
     },
@@ -176,7 +176,7 @@ define( function( require ) {
      * @return {Boolean} Success. Will return false if any heavy atom overlaps on another atom. If it returns false, the coordinate map may be inconsistent
      */
     mapMolecule: function( coordinates, atom, excludedAtom, coordinateMap ) {
-      var model = this;
+      var self = this;
 
       var dotAtom = this.getLewisDotAtom( atom );
 
@@ -207,7 +207,7 @@ define( function( require ) {
 
           // if this atom isn't excluded
           if ( otherDot.atom !== excludedAtom ) {
-            success = model.mapMolecule( coordinates.plus( direction.vector ), otherDot.atom, atom, coordinateMap );
+            success = self.mapMolecule( coordinates.plus( direction.vector ), otherDot.atom, atom, coordinateMap );
 
             // if we had a failure mapping that one, bail out
             if ( !success ) {

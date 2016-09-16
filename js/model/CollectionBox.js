@@ -29,14 +29,14 @@ define( function( require ) {
       quantity: 0
     } );
 
-    var box = this;
+    var self = this;
     this.moleculeType = moleculeType;
     this.capacity = capacity;
     this.molecules = [];
     this._dropBounds = Bounds2.NOTHING;
 
     this.on( 'addedMolecule', function( molecule ) {
-      if ( box.quantity === capacity ) {
+      if ( self.quantity === capacity ) {
         Globals.gameAudioPlayer.correctAnswer();
       }
     } );

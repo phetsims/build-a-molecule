@@ -27,7 +27,7 @@ define( function( require ) {
 
   function AllFilledDialogNode( availablePlayAreaBounds, regenerateCallback ) {
     Node.call( this, {} );
-    var dialog = this;
+    var self = this;
 
     var smiley = new FaceNode( 120 ).smile();
     this.addChild( smiley );
@@ -43,7 +43,7 @@ define( function( require ) {
     var button = new TextPushButton( collectionTryWithDifferentMoleculesString, {
       listener: function() {
         regenerateCallback();
-        dialog.visible = false;
+        self.visible = false;
       },
       font: new PhetFont( {
         size: 18,

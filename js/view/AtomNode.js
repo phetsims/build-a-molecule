@@ -30,15 +30,15 @@ define( function( require ) {
 
     this.addChild( AtomNode.getGraphics( atom.element ) );
 
-    var that = this;
+    var self = this;
     atom.positionProperty.link( function( modelPosition ) {
-      that.setTranslation( Constants.modelViewTransform.modelToViewPosition( modelPosition ) );
+      self.setTranslation( Constants.modelViewTransform.modelToViewPosition( modelPosition ) );
     } );
     atom.visibleProperty.link( function( visible ) {
-      that.visible = visible;
+      self.visible = visible;
     } );
     atom.on( 'removedFromModel', function() {
-      that.detach(); // removes us from all parents
+      self.detach(); // removes us from all parents
     } );
   }
   buildAMolecule.register( 'AtomNode', AtomNode );

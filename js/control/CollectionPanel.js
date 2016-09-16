@@ -38,7 +38,7 @@ define( function( require ) {
   var containerPadding = 15;
 
   function CollectionPanel( collectionList, isSingleCollectionMode, collectionAttachmentCallbacks, toModelBounds ) {
-    var panel = this;
+    var self = this;
     Node.call( this, {} );
 
     var y = 0; // TODO: improve layout code using GeneralLayoutNode?
@@ -118,7 +118,7 @@ define( function( require ) {
 
     // anonymous function here, so we don't create a bunch of fields
     function createCollectionNode( collection ) {
-      panel.collectionAreaMap[ collection.id ] = new CollectionAreaNode( collection, isSingleCollectionMode, toModelBounds );
+      self.collectionAreaMap[ collection.id ] = new CollectionAreaNode( collection, isSingleCollectionMode, toModelBounds );
     }
 
     // create nodes for all current collections
@@ -135,7 +135,7 @@ define( function( require ) {
     this.useCollection( collectionList.currentCollection );
 
     collectionList.currentCollectionProperty.link( function( newCollection ) {
-      panel.useCollection( newCollection );
+      self.useCollection( newCollection );
     } );
   }
   buildAMolecule.register( 'CollectionPanel', CollectionPanel );
@@ -199,10 +199,10 @@ define( function( require ) {
     /**
      * Walk up the scene graph, looking to see if we are a (grand)child of a canvas
      *
-     * @return If an ancestor is a BuildAMoleculeCanvas
+     * @return {boolean} If an ancestor is a BuildAMoleculeCanvas
      */
     hasCanvasAsParent: function() {
-      var node = this;
+      var node = this; // eslint-disable-line consistent-this
       while ( node.getParent() !== null ) {
         node = node.getParent();
         if ( node instanceof BAMScreen ) {

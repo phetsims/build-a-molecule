@@ -21,7 +21,7 @@ define( function( require ) {
   var sliceDistanceLimit = 1000;
 
   function SliceNode( kit, viewSwipeBounds, view ) {
-    var sliceNode = this;
+    var self = this;
 
     this.kit = kit;
     this.bondData = [];
@@ -54,7 +54,7 @@ define( function( require ) {
 
         _.each( kit.molecules, function( molecule ) {
           _.each( molecule.bonds, function( bond ) {
-            sliceNode.bondData.push( {
+            self.bondData.push( {
               bond: bond,
               cut: false,
               // TODO: also try out destination?
@@ -91,13 +91,13 @@ define( function( require ) {
 
         if ( isStep ) {
           // handle the point and delta here
-          sliceNode.cut( oldModelPoint, lastModelPoint, event );
+          self.cut( oldModelPoint, lastModelPoint, event );
         }
       },
       end: function( event, trail ) {
         lastPoint = null;
         var cutCount = 0;
-        _.each( sliceNode.bondData, function( dat ) {
+        _.each( self.bondData, function( dat ) {
           if ( dat.cut ) {
             cutCount++;
             kit.breakBond( dat.bond.a, dat.bond.b, true ); // skip the destination separation
@@ -106,8 +106,8 @@ define( function( require ) {
         if ( cutCount ) {
           kit.separateMoleculeDestinations();
         }
-        sliceNode.traveledDistance = 0;
-        sliceNode.bondData = [];
+        self.traveledDistance = 0;
+        self.bondData = [];
         context.clearRect( 0, 0, globalBounds.width, globalBounds.height );
       }
     } );

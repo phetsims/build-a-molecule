@@ -88,7 +88,7 @@ define( function( require ) {
   }
 
   function Molecule3DNode( completeMolecule, initialBounds, useHighRes ) {
-    var moleculeNode = this;
+    var self = this;
 
     this.draggingProperty = new Property( false );
 
@@ -134,7 +134,7 @@ define( function( require ) {
     var gradientMap = {}; // element symbol => gradient
     _.each( this.currentAtoms, function( atom ) {
       if ( !gradientMap[ atom.element.symbol ] ) {
-        gradientMap[ atom.element.symbol ] = moleculeNode.createGradient( atom.element );
+        gradientMap[ atom.element.symbol ] = self.createGradient( atom.element );
       }
     } );
     this.gradientMap = gradientMap;

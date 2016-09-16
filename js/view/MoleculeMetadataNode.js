@@ -27,9 +27,9 @@ define( function( require ) {
   function MoleculeMetadataNode( kit, molecule ) {
     Node.call( this, {} );
 
-    var selfNode = this;
+    var self = this;
     this.molecule = molecule;
-    this.updatePositionListener = selfNode.updatePosition.bind( selfNode );
+    this.updatePositionListener = self.updatePosition.bind( self );
 
     if ( molecule.atoms.length < 2 ) {
       // we don't need anything at all if it is not a "molecule"
@@ -84,7 +84,7 @@ define( function( require ) {
     this.addChild( buttonBreak );
 
     _.each( molecule.atoms, function( atom ) {
-      atom.positionProperty.link( selfNode.updatePositionListener );
+      atom.positionProperty.link( self.updatePositionListener );
     } );
 
     this.updatePosition(); // sanity check. should update (unfortunately) a number of times above
@@ -100,9 +100,9 @@ define( function( require ) {
 
   inherit( Node, MoleculeMetadataNode, {
     destruct: function() {
-      var selfNode = this;
+      var self = this;
       _.each( this.molecule.atoms, function( atom ) {
-        atom.positionProperty.unlink( selfNode.updatePositionListener );
+        atom.positionProperty.unlink( self.updatePositionListener );
       } );
       // TODO: incomplete: throw new Error( 'dialog.hideDialogIfShown' );
     },

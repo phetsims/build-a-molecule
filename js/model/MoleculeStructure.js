@@ -103,7 +103,7 @@ define( function( require ) {
      * @return {String} Text which is the structural formula
      */
     getStructuralFormula: function() {
-      var structure = this;
+      var self = this;
 
       // scan for alcohols (OH bonded to C)
       var alcoholCount = 0;
@@ -113,7 +113,7 @@ define( function( require ) {
       _.each( this.atoms, function( oxygenAtom ) {
         // only process if it is an oxygen atom
         if ( oxygenAtom.isOxygen() ) {
-          var neighbors = structure.getNeighbors( oxygenAtom );
+          var neighbors = self.getNeighbors( oxygenAtom );
 
           // for an alcohol subgroup (hydroxyl) we need:
           if ( neighbors.length === 2 && // 2 neighbors
@@ -418,15 +418,15 @@ define( function( require ) {
      *         for each bond, two zero-indexed indices of atoms above
      */
     toSerial: function() {
-      var structure = this;
+      var self = this;
 
       var ret = this.atoms.length + '|' + this.bonds.length;
       _.each( this.atoms, function( atom ) {
         ret += '|' + atom.symbol;
       } );
       _.each( this.bonds, function( bond ) {
-        var a = structure.atoms.indexOf( bond.a );
-        var b = structure.atoms.indexOf( bond.b );
+        var a = self.atoms.indexOf( bond.a );
+        var b = self.atoms.indexOf( bond.b );
         ret += '|' + a + '|' + b;
       } );
 
@@ -444,7 +444,7 @@ define( function( require ) {
      * @return
      */
     toSerial2: function() {
-      var structure = this;
+      var self = this;
       var result = '';
 
       // serializing and the following builder appends are not a performance bottleneck. they are left in a more readable form
@@ -457,7 +457,7 @@ define( function( require ) {
         _.each( this.bonds, function( bond ) {
           if ( bond.contains( atom ) ) {
             var otherAtom = bond.getOtherAtom( atom );
-            var index = structure.atoms.indexOf( otherAtom );
+            var index = self.atoms.indexOf( otherAtom );
             if ( index < i ) {
               result += ',' + bond.toSerial2( index );
             }

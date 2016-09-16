@@ -13,11 +13,11 @@ define( function( require ) {
   var Constants = require( 'BUILD_A_MOLECULE/Constants' );
 
   function ElementHistogram( molecule ) {
-    var histogram = this;
+    var self = this;
 
     this.quantities = {};
     _.each( Constants.supportedElements, function( element ) {
-      histogram.quantities[ element.symbol ] = 0;
+      self.quantities[ element.symbol ] = 0;
     } );
 
     if ( molecule ) {
@@ -38,10 +38,10 @@ define( function( require ) {
     },
 
     addMolecule: function( molecule ) {
-      var histogram = this;
+      var self = this;
 
       _.each( molecule.atoms, function( atom ) {
-        histogram.addElement( atom.element );
+        self.addElement( atom.element );
       } );
     },
 
@@ -50,13 +50,13 @@ define( function( require ) {
      * @return Whether otherHistogram is a subset of this histogram (i.e. for all elements e, this.count( e ) >= other.count( e )
      */
     containsAsSubset: function( otherHistogram ) {
-      var histogram = this;
+      var self = this;
 
       var length = Constants.supportedElements.length;
       for ( var i = 0; i < length; i++ ) {
         var element = Constants.supportedElements[ i ];
 
-        if ( histogram.getQuantity( element ) < otherHistogram.getQuantity( element ) ) {
+        if ( self.getQuantity( element ) < otherHistogram.getQuantity( element ) ) {
           return false;
         }
       }
@@ -67,24 +67,24 @@ define( function( require ) {
      * @return A hash string that should be unique for each unique histogram, and the same for each equivalent histogram
      */
     getHashString: function() {
-      var histogram = this;
+      var self = this;
       var hashString = '';
 
       _.each( Constants.supportedElements, function( element ) {
-        hashString += '_' + histogram.getQuantity( element );
+        hashString += '_' + self.getQuantity( element );
       } );
       return hashString;
     },
 
     equals: function( otherHistogram ) {
-      var histogram = this;
+      var self = this;
 
       if ( otherHistogram instanceof ElementHistogram ) {
         var length = Constants.supportedElements.length;
         for ( var i = 0; i < length; i++ ) {
           var element = Constants.supportedElements[ i ];
 
-          if ( histogram.getQuantity( element ) !== otherHistogram.getQuantity( element ) ) {
+          if ( self.getQuantity( element ) !== otherHistogram.getQuantity( element ) ) {
             return false;
           }
         }

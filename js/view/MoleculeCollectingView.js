@@ -17,7 +17,7 @@ define( function( require ) {
   var AllFilledDialogNode = require( 'BUILD_A_MOLECULE/control/AllFilledDialogNode' );
 
   function MoleculeCollectingView( collectionList, isSingleCollectionMode, regenerateCallback ) {
-    var view = this;
+    var self = this;
 
     BAMView.call( this, collectionList );
 
@@ -27,7 +27,7 @@ define( function( require ) {
 
     var collectionPanel = new CollectionPanel( collectionList, isSingleCollectionMode, collectionAttachmentCallbacks, function( node ) {
       // returns model bounds from a node, given local coordinates on a node
-      var viewBounds = node.getParent().getUniqueTrail().getTransformTo( view.getUniqueTrail() ).transformBounds2( node.bounds );
+      var viewBounds = node.getParent().getUniqueTrail().getTransformTo( self.getUniqueTrail() ).transformBounds2( node.bounds );
       return Constants.modelViewTransform.viewToModelBounds( viewBounds );
     } );
     collectionPanel.right = Constants.stageSize.width - Constants.viewPadding;
@@ -81,7 +81,7 @@ define( function( require ) {
 
   return inherit( BAMView, MoleculeCollectingView, {
     addCollection: function( collection ) {
-      var view = this;
+      var self = this;
       var kitCollectionNode = BAMView.prototype.addCollection.call( this, collection );
 
       var hasShownOnce = false;
@@ -91,7 +91,7 @@ define( function( require ) {
       collection.allCollectionBoxesFilledProperty.link( function() {
         if ( collection.allCollectionBoxesFilled ) {
           if ( !hasShownOnce ) {
-            allFilledDialogNode = new AllFilledDialogNode( view.collectionList.availablePlayAreaBounds, view.regenerateCallback );
+            allFilledDialogNode = new AllFilledDialogNode( self.collectionList.availablePlayAreaBounds, self.regenerateCallback );
             hasShownOnce = true;
           }
           if ( !allFilledDialogNode.hasParent() ) {

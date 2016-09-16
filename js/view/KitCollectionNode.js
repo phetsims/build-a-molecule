@@ -17,7 +17,7 @@ define( function( require ) {
 
   function KitCollectionNode( collectionList, collection, view ) {
     Node.call( this, {} );
-    var that = this;
+    var self = this;
 
     this.addChild( new KitPanel( collection, collectionList.availableKitBounds ) );
 
@@ -30,10 +30,10 @@ define( function( require ) {
     // NOTE: appends to the KitCollectionNode. This works because the KitPanel is always behind (we have a shallower tree this way)
     collection.currentKitProperty.link( function( newKit, oldKit ) {
       if ( oldKit ) {
-        that.removeChild( kitMap[ oldKit.id ] );
+        self.removeChild( kitMap[ oldKit.id ] );
       }
       if ( newKit ) {
-        that.addChild( kitMap[ newKit.id ] );
+        self.addChild( kitMap[ newKit.id ] );
       }
     } );
   }

@@ -24,14 +24,14 @@ define( function( require ) {
   var iconString = require( 'string!BUILD_A_MOLECULE/3d.icon' ); // eslint-disable-line string-require-statement-match
 
   function ShowMolecule3DButtonNode( completeMolecule, options ) {
-    var that = this;
+    var self = this;
     Node.call( this, _.extend( {
       cursor: 'pointer'
     }, options ) );
 
     this.addInputListener( new ButtonListener( {
       fire: function( evt ) {
-        var trail = that.getUniqueTrail();
+        var trail = self.getUniqueTrail();
         var view = _.find( trail.nodes, function( node ) { return node.isBAMView; } );
         view.addChild( new Molecule3DDialog( completeMolecule, trail, view ) );
       }

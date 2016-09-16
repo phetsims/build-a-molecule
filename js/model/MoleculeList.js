@@ -43,7 +43,7 @@ define( function( require ) {
 
     loadMasterData: function() {
       var startTime = Date.now();
-      var that = this;
+      var self = this;
       // load in our collection molecules first
       _.each( initialList.getAllCompleteMolecules(), this.addCompleteMolecule.bind( this ) );
 
@@ -56,7 +56,7 @@ define( function( require ) {
           molecule = initialListLookup;
         }
 
-        that.addCompleteMolecule( molecule );
+        self.addCompleteMolecule( molecule );
       } );
 
       // then load structures

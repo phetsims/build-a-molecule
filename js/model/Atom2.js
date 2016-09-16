@@ -27,7 +27,7 @@ define( function( require ) {
    *   removedFromModel: function( particle ) {}
    */
   function Atom2( element, clock ) {
-    var atom = this;
+    var self = this;
 
     PropertySet.call( this, {
       position: Vector2.ZERO,
@@ -47,21 +47,21 @@ define( function( require ) {
 
     this.userControlledProperty.lazyLink( function( controlled ) {
       if ( controlled ) {
-        atom.trigger( 'grabbedByUser', atom );
+        self.trigger( 'grabbedByUser', self );
       }
       else {
-        atom.trigger( 'droppedByUser', atom );
+        self.trigger( 'droppedByUser', self );
       }
     } );
 
     this.addedToModelProperty.link( function( isAddedToModel ) {
       if ( isAddedToModel ) {
         // added to the model
-        clock.on( 'tick', atom.clockListener );
+        clock.on( 'tick', self.clockListener );
       }
       else {
         // removed from the model
-        clock.off( 'tick', atom.clockListener );
+        clock.off( 'tick', self.clockListener );
       }
     } );
   }

@@ -20,7 +20,7 @@ define( function( require ) {
 
   // @param {MoleculeStructure} original
   function StrippedMolecule( original ) {
-    var that = this;
+    var self = this;
 
     // var atomsToAdd = [];
     var bondsToAdd = [];
@@ -46,7 +46,7 @@ define( function( require ) {
 
         if ( aIsHydrogen || bIsHydrogen ) {
           // increment hydrogen count of either A or B, if the bond contains hydrogen
-          that.hydrogenCount[ atomsToAdd.indexOf( aIsHydrogen ? bond.b : bond.a ) ]++;
+          self.hydrogenCount[ atomsToAdd.indexOf( aIsHydrogen ? bond.b : bond.a ) ]++;
         }
         else {
           // bond doesn't involve hydrogen, so we add it to our stripped version
@@ -69,10 +69,10 @@ define( function( require ) {
      * @return MoleculeStructure, where the hydrogen atoms are not the original hydrogen atoms
      */
     toMoleculeStructure: function() {
-      var that = this;
+      var self = this;
       var result = this.stripped.getAtomCopy();
       _.each( this.stripped.atoms, function( atom ) {
-        var count = that.getHydrogenCount( atom );
+        var count = self.getHydrogenCount( atom );
         for ( var i = 0; i < count; i++ ) {
           var hydrogenAtom = new Atom( Element.H );
           result.addAtom( hydrogenAtom );
@@ -94,7 +94,7 @@ define( function( require ) {
 
     // @param {StrippedMolecule} other
     isEquivalent: function( other ) { // I know this isn't used, but it might be useful in the future (comment from before the port, still kept for that reason)
-      var that = this;
+      var self = this;
       if ( this === other ) {
         // same instance
         return true;
@@ -111,7 +111,7 @@ define( function( require ) {
       var length = other.stripped.atoms.length;
       for ( var i = 0; i < length; i++ ) {
         var otherAtom = other.stripped.atoms[ i ];
-        if ( that.checkEquivalency( other, myVisited, otherVisited, firstAtom, otherAtom, false ) ) {
+        if ( self.checkEquivalency( other, myVisited, otherVisited, firstAtom, otherAtom, false ) ) {
           // we found an isomorphism with firstAtom => otherAtom
           return true;
         }
@@ -131,7 +131,7 @@ define( function( require ) {
      * @return Whether "other" is a hydrogen submolecule of this instance
      */
     isHydrogenSubmolecule: function( other ) {
-      var that = this;
+      var self = this;
       if ( this === other ) {
         // same instance
         return true;
@@ -147,7 +147,7 @@ define( function( require ) {
       var length = other.stripped.atoms.length;
       for ( var i = 0; i < length; i++ ) {
         var otherAtom = other.stripped.atoms[ i ];
-        if ( that.checkEquivalency( other, myVisited, otherVisited, firstAtom, otherAtom, true ) ) {
+        if ( self.checkEquivalency( other, myVisited, otherVisited, firstAtom, otherAtom, true ) ) {
           // we found an isomorphism with firstAtom => otherAtom
           return true;
         }
@@ -230,10 +230,10 @@ define( function( require ) {
     },
 
     getCopyWithAtomRemoved: function( atom ) {
-      var that = this;
+      var self = this;
       var result = new StrippedMolecule( this.stripped.getCopyWithAtomRemoved( atom ) );
       _.each( result.stripped.atoms, function( resultAtom ) {
-        result.hydrogenCount[ result.getIndex( resultAtom ) ] = that.getHydrogenCount( resultAtom );
+        result.hydrogenCount[ result.getIndex( resultAtom ) ] = self.getHydrogenCount( resultAtom );
       } );
       return result;
     }

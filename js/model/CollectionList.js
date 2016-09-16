@@ -61,7 +61,7 @@ define( function( require ) {
     },
 
     reset: function() {
-      var list = this;
+      var self = this;
 
       // switch to the first collection
       this.switchTo( this.collections[ 0 ] );
@@ -71,8 +71,8 @@ define( function( require ) {
 
       // remove all the other collections
       _.each( this.collections.slice( 0 ), function( collection ) {
-        if ( collection !== list.currentCollection ) {
-          list.removeCollection( collection );
+        if ( collection !== self.currentCollection ) {
+          self.removeCollection( collection );
         }
       } );
     },

@@ -16,14 +16,14 @@ define( function( require ) {
 
   function MoleculeBondContainerNode( kit, molecule, view ) {
     Node.call( this, {} );
-    var that = this;
+    var self = this;
 
     this.bondNodes = [];
 
     _.each( molecule.bonds, function( bond ) {
       var node = new MoleculeBondNode( bond, kit, view );
-      that.addChild( node );
-      that.bondNodes.push( node );
+      self.addChild( node );
+      self.bondNodes.push( node );
     } );
   }
   buildAMolecule.register( 'MoleculeBondContainerNode', MoleculeBondContainerNode );

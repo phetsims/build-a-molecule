@@ -29,7 +29,7 @@ define( function( require ) {
 
   function KitView( kit, view ) {
     Node.call( this );
-    var kitView = this;
+    var self = this;
 
     this.kit = kit;
     this.view = view;
@@ -65,10 +65,10 @@ define( function( require ) {
 
       // probably a touch or something we will target
       var modelPoint = Constants.modelViewTransform.viewToModelPosition( point );
-      var atom = kitView.closestAtom( modelPoint, 100 );
+      var atom = self.closestAtom( modelPoint, 100 );
       if ( atom ) {
         // TODO: this is somewhat hackish. better way of doing this?
-        return new Trail( [ atomLayer, kitView.atomNodeMap[ atom.id ] ] );
+        return new Trail( [ atomLayer, self.atomNodeMap[ atom.id ] ] );
       }
       else {
         return null;
@@ -113,7 +113,7 @@ define( function( require ) {
           // coordinate transforms to get our atom
           var viewPoint = view.globalToLocalPoint( event.pointer.point );
           var modelPoint = Constants.modelViewTransform.viewToModelPosition( viewPoint );
-          var atom = kitView.closestAtom( modelPoint, Number.POSITIVE_INFINITY, bucket.element ); // filter by the element
+          var atom = self.closestAtom( modelPoint, Number.POSITIVE_INFINITY, bucket.element ); // filter by the element
 
           // if it's not in our bucket, ignore it (could skip weird cases where an atom outside of the bucket is technically closer)
           if ( !_.contains( bucket.atoms, atom ) ) {
@@ -123,7 +123,7 @@ define( function( require ) {
           // move the atom to right under the pointer for this assisted drag - otherwise the offset would be too noticeable
           atom.position = atom.destination = modelPoint;
 
-          var atomNode = kitView.atomNodeMap[ atom.id ];
+          var atomNode = self.atomNodeMap[ atom.id ];
           // TODO: use a new DragListener
           event.target = event.currentTarget = atomNode; // for now, modify the event directly so we can "point" it towards the atom node instead
 
@@ -140,7 +140,7 @@ define( function( require ) {
           // renderer: 'svg',
           // rendererOptions: { cssTransform: true }
         } );
-        kitView.atomNodeMap[ atom.id ] = atomNode;
+        self.atomNodeMap[ atom.id ] = atomNode;
         atomLayer.addChild( atomNode );
 
         // Add a drag listener that will move the model element when the user
@@ -152,7 +152,7 @@ define( function( require ) {
             var molecule = kit.getMolecule( atom );
             if ( molecule ) {
               _.each( molecule.atoms, function( moleculeAtom ) {
-                kitView.atomNodeMap[ moleculeAtom.id ].moveToFront();
+                self.atomNodeMap[ moleculeAtom.id ].moveToFront();
               } );
             }
             else {
@@ -178,20 +178,20 @@ define( function( require ) {
     kit.on( 'addedMolecule', function( molecule ) {
       var moleculeMetadataNode = new MoleculeMetadataNode( kit, molecule );
       metadataLayer.addChild( moleculeMetadataNode );
-      kitView.metadataMap[ molecule.moleculeId ] = moleculeMetadataNode;
+      self.metadataMap[ molecule.moleculeId ] = moleculeMetadataNode;
 
       if ( Constants.allowBondBreaking ) {
-        kitView.addMoleculeBondNodes( molecule );
+        self.addMoleculeBondNodes( molecule );
       }
     } );
     kit.on( 'removedMolecule', function( molecule ) {
-      var moleculeMetadataNode = kitView.metadataMap[ molecule.moleculeId ];
+      var moleculeMetadataNode = self.metadataMap[ molecule.moleculeId ];
       moleculeMetadataNode.destruct();
       metadataLayer.removeChild( moleculeMetadataNode );
-      delete kitView.metadataMap[ molecule.moleculeId ];
+      delete self.metadataMap[ molecule.moleculeId ];
 
       if ( Constants.allowBondBreaking ) {
-        kitView.removeMoleculeBondNodes( molecule );
+        self.removeMoleculeBondNodes( molecule );
       }
     } );
 
