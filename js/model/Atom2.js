@@ -31,6 +31,8 @@ define( function( require ) {
 
     PropertySet.call( this, {
       position: Vector2.ZERO,
+      // considered mutable, public
+      destination: Vector2.ZERO,
       userControlled: false, //True if the particle is being dragged by the user
       visible: true,
       addedToModel: true
@@ -42,8 +44,7 @@ define( function( require ) {
 
     this.name = Strings.getAtomName( element );
 
-    // considered mutable, public
-    this.destination = this.position;
+
 
     this.userControlledProperty.lazyLink( function( controlled ) {
       if ( controlled ) {
