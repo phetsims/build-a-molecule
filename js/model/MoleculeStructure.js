@@ -77,7 +77,7 @@ define( function( require ) {
      * Our best attempt at getting a general molecular naming algorithm that handles organic and non-organic compounds.
      * <p/>
      *
-     * @return {String} Text which is the molecular formula
+     * @return {string} Text which is the molecular formula
      */
     getGeneralFormula: function() {
       var containsCarbon = this.containsElement( Element.C );
@@ -100,7 +100,7 @@ define( function( require ) {
      * Return the molecular formula, with structural information available if possible. Currently handles alcohol structure based on
      * https://secure.wikimedia.org/wikipedia/en/wiki/Alcohols#Common_Names
      *
-     * @return {String} Text which is the structural formula
+     * @return {string} Text which is the structural formula
      */
     getStructuralFormula: function() {
       var self = this;
@@ -150,7 +150,7 @@ define( function( require ) {
     /**
      * Use the above general molecular formula, but return it with HTML subscripts
      *
-     * @return {String} Molecular formula with HTML subscripts
+     * @return {string} Molecular formula with HTML subscripts
      */
     getGeneralFormulaFragment: function() {
       return ChemUtils.toSubscript( this.getGeneralFormula() );
@@ -676,7 +676,7 @@ define( function( require ) {
   /**
    * Deserialize a molecule structure
    *
-   * @param {String}            line              The data (string) to deserialize
+   * @param {string}            line              The data (string) to deserialize
    * @param {MoleculeGenerator} moleculeGenerator function( atomCount, bondCount ):MoleculeStructure. Creates a molecule with properties that we can fill with atoms/bonds
    * @param {AtomParser}        atomParser        function( atomString ):Atom. Creates an atom from a string representing an atom
    * @param {BondParser}        bondParser        function( bondString, connectedAtom, moleculeStructure ):Bond. Creates a bond from a string representing a bond

@@ -36,8 +36,8 @@ define( function( require ) {
   ];
 
   /*
-   * @param {String} commonName
-   * @param {String} molecularFormula
+   * @param {string} commonName
+   * @param {string} molecularFormula
    * @param {Int} atomCount
    * @param {Int} bondCount
    * @param {boolean} has2d
@@ -154,7 +154,7 @@ define( function( require ) {
    *
    * WARNING: this always writes out in a "full" configuration, even if the data wasn't contained before
    *
-   * @param {String} line A string that is essentially a serialized molecule
+   * @param {string} line A string that is essentially a serialized molecule
    * @return {CompleteMolecule} that is properly constructed
    */
   CompleteMolecule.fromString = function( line ) {
