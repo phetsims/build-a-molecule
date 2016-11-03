@@ -161,7 +161,7 @@ define( function( require ) {
      * @param {Array[Atom]}      otherVisited
      * @param {Atom}             myAtom
      * @param {Atom}             otherAtom
-     * @param {Boolean}          subCheck
+     * @param {boolean}          subCheck
      */
     checkEquivalency: function( other, myVisited, otherVisited, myAtom, otherAtom, subCheck ) {
       // basically this checks whether two different sub-trees of two different molecules are "equivalent"

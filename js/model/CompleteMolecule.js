@@ -40,8 +40,8 @@ define( function( require ) {
    * @param {String} molecularFormula
    * @param {Int} atomCount
    * @param {Int} bondCount
-   * @param {Boolean} has2d
-   * @param {Boolean} has3d
+   * @param {boolean} has2d
+   * @param {boolean} has3d
    */
   function CompleteMolecule( commonName, molecularFormula, atomCount, bondCount, has2d, has3d ) {
     MoleculeStructure.call( this, atomCount, bondCount );

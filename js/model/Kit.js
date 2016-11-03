@@ -349,7 +349,7 @@ define( function( require ) {
      * Takes an atom, invalidates the structural bonds it may have, and puts it in the correct bucket
      *
      * @param {Atom2} atom    The atom to recycle
-     * @param {Boolean} animate Whether we should display animation
+     * @param {boolean} animate Whether we should display animation
      */
     recycleAtomIntoBuckets: function( atom, animate ) {
       this.lewisDotModel.breakBondsOfAtom( atom );

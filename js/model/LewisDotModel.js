@@ -138,7 +138,7 @@ define( function( require ) {
      * @param {Atom}      a         A
      * @param {Direction} direction Direction from A to B
      * @param {Atom}      b         B
-     * @return {Boolean} Whether this bond is considered acceptable
+     * @return {boolean} Whether this bond is considered acceptable
      */
     willAllowBond: function( a, direction, b ) {
 
@@ -173,7 +173,7 @@ define( function( require ) {
      * @param {Atom}                atom          Atom to add
      * @param {Atom}                excludedAtom  Atom not to
      * @param {Map x+','+y => Atom} coordinateMap Coordinate map to which we add the atoms to
-     * @return {Boolean} Success. Will return false if any heavy atom overlaps on another atom. If it returns false, the coordinate map may be inconsistent
+     * @return {boolean} Success. Will return false if any heavy atom overlaps on another atom. If it returns false, the coordinate map may be inconsistent
      */
     mapMolecule: function( coordinates, atom, excludedAtom, coordinateMap ) {
       var self = this;
