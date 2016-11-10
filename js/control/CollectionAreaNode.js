@@ -55,7 +55,7 @@ define( function( require ) {
       layoutBoxNode();
 
       // also position if its size changes in the future
-      collectionBoxNode.addEventListener( 'bounds', layoutBoxNode );
+      collectionBoxNode.on( 'bounds', layoutBoxNode );
 
       var collectionBoxHolder = new Node();
       // enforce consistent bounds of the maximum size. reason: we don't want switching between collections to alter the positions of the collection boxes

@@ -178,8 +178,7 @@ define( function( require ) {
     }
 
     updateLayout();
-    scene.addEventListener( 'resize', updateLayout );
-    view.addEventListener( 'bounds', updateLayout );
+    view.on( 'bounds', updateLayout );
 
     moleculeNode.draggingProperty.link( function( dragging ) {
       var cursor = dragging ? 'scenery-grabbing-pointer' : 'scenery-grab-pointer';
@@ -192,8 +191,7 @@ define( function( require ) {
     clock.on( 'tick', tick );
 
     this.disposeView = function() {
-      scene.removeEventListener( 'resize', updateLayout );
-      view.removeEventListener( 'bounds', updateLayout );
+      view.off( 'bounds', updateLayout );
       view.removeChild( self );
       clock.off( 'tick', tick );
     };
