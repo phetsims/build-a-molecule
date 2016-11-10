@@ -136,10 +136,7 @@ define( function( require ) {
       bottomLayer.addChild( bucketHole );
 
       _.each( bucket.atoms, function( atom ) {
-        var atomNode = new AtomNode( atom, {
-          // renderer: 'svg',
-          // rendererOptions: { cssTransform: true }
-        } );
+        var atomNode = new AtomNode( atom, {} );
         self.atomNodeMap[ atom.id ] = atomNode;
         atomLayer.addChild( atomNode );
 
