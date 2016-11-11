@@ -43,8 +43,6 @@ define( function( require ) {
 
     this.initialTrail = trail;
 
-    var scene = trail.rootNode();
-
     var outsideNode = new Rectangle( 0, 0, 50, 50, { fill: 'rgba(0,0,0,0.5)' } );
     outsideNode.addInputListener( {
       down: function( event ) {
