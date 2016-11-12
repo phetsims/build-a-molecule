@@ -46,7 +46,7 @@ define( function( require ) {
     var outsideNode = new Rectangle( 0, 0, 50, 50, { fill: 'rgba(0,0,0,0.5)' } );
     outsideNode.addInputListener( {
       down: function( event ) {
-        self.disposeView();
+        self.disposeMolecule3DDialog();
       }
     } );
     this.addChild( outsideNode );
@@ -125,7 +125,7 @@ define( function( require ) {
      * Close button
      *----------------------------------------------------------------------------*/
 
-    var closeButton = new CloseButton( function() { self.disposeView(); }, {
+    var closeButton = new CloseButton( function() { self.disposeMolecule3DDialog(); }, {
       centerX: Constants.stageSize.width - stageWindowPadding,
       centerY: stageWindowPadding
     } );
@@ -188,7 +188,7 @@ define( function( require ) {
     var clock = view.collectionList.clock;
     clock.on( 'tick', tick );
 
-    this.disposeView = function() {
+    this.disposeMolecule3DDialog = function() {
       view.off( 'bounds', updateLayout );
       view.removeChild( self );
       clock.off( 'tick', tick );
