@@ -22,7 +22,7 @@ define( function( require ) {
   };
 
   // Appending '?dev' to the URL will enable developer-only features.
-  if ( window.phet.chipper.getQueryParameter( 'dev' ) ) {
+  if ( window.phet.chipper.queryParameters.dev ) {
 
     // TODO: developer features as necessary
     // var kit = sim.screens[0].model.collections[0].kits[0]
