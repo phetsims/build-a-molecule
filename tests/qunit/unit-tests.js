@@ -1,3 +1,5 @@
+// Copyright 2016, University of Colorado Boulder
+
 // path to test base, without a slash, e.g. '../../common/scenery/tests/qunit'
 function runBuildAMoleculeTests( pathToTestBase ) {
   function loadTestFile( src ) {
