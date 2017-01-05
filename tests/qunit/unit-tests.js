@@ -2,6 +2,8 @@
 
 // path to test base, without a slash, e.g. '../../common/scenery/tests/qunit'
 function runBuildAMoleculeTests( pathToTestBase ) {
+  'use strict';
+  
   function loadTestFile( src ) {
     var script = document.createElement( 'script' );
     script.type = 'text/javascript';
@@ -14,4 +16,4 @@ function runBuildAMoleculeTests( pathToTestBase ) {
   }
 
   loadTestFile( 'js/model.js' );
-};
+}
