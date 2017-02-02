@@ -22,12 +22,11 @@ define( function( require ) {
   var CollectionBox = require( 'BUILD_A_MOLECULE/model/CollectionBox' );
   var PropertySet = require( 'AXON/PropertySet' );
   var Property = require( 'AXON/Property' );
-  var Color = require( 'SCENERY/util/Color' );
 
   function BAMScreen( createInitialKitCollection, layoutBounds, createKitCollection, createView, options ) {
 
     options = _.extend( {
-      backgroundColorProperty: new Property( Color.toColor( Constants.canvasBackgroundColor ) )
+      backgroundColorProperty: new Property( Constants.canvasBackgroundColor )
     }, options );
 
     var createModel = function() {
