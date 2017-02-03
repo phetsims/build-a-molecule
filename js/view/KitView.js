@@ -116,7 +116,7 @@ define( function( require ) {
           var atom = self.closestAtom( modelPoint, Number.POSITIVE_INFINITY, bucket.element ); // filter by the element
 
           // if it's not in our bucket, ignore it (could skip weird cases where an atom outside of the bucket is technically closer)
-          if ( !_.contains( bucket.atoms, atom ) ) {
+          if ( !_.includes( bucket.atoms, atom ) ) {
             return;
           }
 

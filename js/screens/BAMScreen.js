@@ -109,7 +109,7 @@ define( function( require ) {
       var atomMultiple = 1 + ( ableToIncreaseMultiple ? equivalentMoleculesRemaining : 0 );
 
       // for each type of atom
-      _.each( _.unique( molecule.getElementList() ), function( element ) {
+      _.each( _.uniq( molecule.getElementList() ), function( element ) {
         // find out how many atoms of this type we need
         var requiredAtomCount = 0;
         _.each( molecule.atoms, function( atom ) {
@@ -166,7 +166,7 @@ define( function( require ) {
     // Infinite loop. We're living on the edge now, baby!
     while ( true ) { // eslint-disable-line no-constant-condition
       var molecule = MoleculeList.collectionBoxMolecules[ _.random( 0, MoleculeList.collectionBoxMolecules.length - 1 ) ]; // TODO: random numbers in
-      if ( !_.contains( molecules, molecule ) ) {
+      if ( !_.includes( molecules, molecule ) ) {
         return molecule;
       }
     }

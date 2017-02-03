@@ -544,7 +544,7 @@ define( function( require ) {
 
             _.each( self.lewisDotModel.getOpenDirections( otherAtom ), function( otherDirection ) {
               var direction = otherDirection.opposite;
-              if ( !_.contains( self.lewisDotModel.getOpenDirections( ourAtom ), direction ) ) {
+              if ( !_.includes( self.lewisDotModel.getOpenDirections( ourAtom ), direction ) ) {
                 // the spot on otherAtom was open, but the corresponding spot on our main atom was not
                 return; // continue, in the inner loop
               }

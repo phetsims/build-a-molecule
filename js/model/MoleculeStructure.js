@@ -44,7 +44,7 @@ define( function( require ) {
     constructor: MoleculeStructure,
 
     addAtom: function( atom ) {
-      assert && assert( !_.contains( this.atoms, atom ), 'Cannot add an already existing atom' );
+      assert && assert( !_.includes( this.atoms, atom ), 'Cannot add an already existing atom' );
       this.atoms.push( atom ); // NOTE: don't mess with the order
       return atom;
     },
@@ -59,8 +59,8 @@ define( function( require ) {
       else {
         bond = new Bond( a, b );
       }
-      assert && assert( _.contains( this.atoms, bond.a ) );
-      assert && assert( _.contains( this.atoms, bond.b ) );
+      assert && assert( _.includes( this.atoms, bond.a ) );
+      assert && assert( _.includes( this.atoms, bond.b ) );
       this.bonds.push( bond );
     },
 
@@ -200,7 +200,7 @@ define( function( require ) {
         // for each neighbor, make 'unvisited' atoms dirty and count 'visited' atoms
         var visitedCount = 0;
         _.each( this.getNeighbors( atom ), function( otherAtom ) {
-          if ( _.contains( visitedAtoms, otherAtom ) ) {
+          if ( _.includes( visitedAtoms, otherAtom ) ) {
             visitedCount += 1;
           }
           else {
@@ -342,7 +342,7 @@ define( function( require ) {
      */
     getNeighborsNotInSet: function( atom, exclusionSet ) {
       // TODO: performance: hashset with fast lookup?
-      return _.filter( this.getNeighbors( atom ), function( otherAtom ) { return !_.contains( exclusionSet, otherAtom ); } );
+      return _.filter( this.getNeighbors( atom ), function( otherAtom ) { return !_.includes( exclusionSet, otherAtom ); } );
     },
 
     /*
@@ -567,7 +567,7 @@ define( function( require ) {
           var neighbor = otherBond.getOtherAtom( atom );
 
           // pick out our neighbor, mark it as in 'A', and mark it as dirty so we can process its neighbors
-          if ( _.contains( remainingAtoms, neighbor ) ) {
+          if ( _.includes( remainingAtoms, neighbor ) ) {
             remainingAtoms.splice( remainingAtoms.indexOf( neighbor ), 1 ); // TODO: replace with remove()
             dirtyAtoms.push( neighbor );
             atomsInA.push( neighbor );
@@ -581,7 +581,7 @@ define( function( require ) {
      *----------------------------------------------------------------------------*/
 
     _.each( structure.atoms, function( atom ) {
-      if ( _.contains( atomsInA, atom ) ) {
+      if ( _.includes( atomsInA, atom ) ) {
         molA.addAtom( atom );
       }
       else {
@@ -591,8 +591,8 @@ define( function( require ) {
 
     _.each( structure.bonds, function( otherBond ) {
       if ( otherBond !== bond ) {
-        if ( _.contains( atomsInA, otherBond.a ) ) {
-          assert && assert( _.contains( atomsInA, otherBond.b ) );
+        if ( _.includes( atomsInA, otherBond.a ) ) {
+          assert && assert( _.includes( atomsInA, otherBond.b ) );
           molA.addBond( otherBond );
         }
         else {
