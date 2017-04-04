@@ -33,6 +33,10 @@ define( function( require ) {
     else {
       // leave room for collection area
       this.availableKitBounds = new Rectangle( -halfWidth, kitBottom, availableWidth - Constants.modelPadding - collectionAreaModelWidth, kitHeight );
+      if ( this.availableKitBounds.width < 0 ) {
+        console.log( 'TODO: Fix i18n sizing...' ); // workaround for xss test, etc. for now
+        this.availableKitBounds = new Rectangle( -halfWidth, kitBottom, availableWidth, kitHeight );
+      }
     }
 
     this.availablePlayAreaBounds = new Rectangle(
