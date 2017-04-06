@@ -155,7 +155,7 @@ define( function( require ) {
    * WARNING: this always writes out in a "full" configuration, even if the data wasn't contained before
    *
    * @param {string} line A string that is essentially a serialized molecule
-   * @return {CompleteMolecule} that is properly constructed
+   * @returns {CompleteMolecule} that is properly constructed
    */
   CompleteMolecule.fromString = function( line ) {
     var i;

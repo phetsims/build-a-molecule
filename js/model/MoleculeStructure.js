@@ -77,7 +77,7 @@ define( function( require ) {
      * Our best attempt at getting a general molecular naming algorithm that handles organic and non-organic compounds.
      * <p/>
      *
-     * @return {string} Text which is the molecular formula
+     * @returns {string} Text which is the molecular formula
      */
     getGeneralFormula: function() {
       var containsCarbon = this.containsElement( Element.C );
@@ -100,7 +100,7 @@ define( function( require ) {
      * Return the molecular formula, with structural information available if possible. Currently handles alcohol structure based on
      * https://secure.wikimedia.org/wikipedia/en/wiki/Alcohols#Common_Names
      *
-     * @return {string} Text which is the structural formula
+     * @returns {string} Text which is the structural formula
      */
     getStructuralFormula: function() {
       var self = this;
@@ -150,7 +150,7 @@ define( function( require ) {
     /**
      * Use the above general molecular formula, but return it with HTML subscripts
      *
-     * @return {string} Molecular formula with HTML subscripts
+     * @returns {string} Molecular formula with HTML subscripts
      */
     getGeneralFormulaFragment: function() {
       return ChemUtils.toSubscript( this.getGeneralFormula() );
@@ -338,7 +338,7 @@ define( function( require ) {
     /**
      * @param atom         An atom
      * @param exclusionSet A set of atoms that should not be in the return value
-     * @return {Array[Atom]} All neighboring atoms that are connected by bonds to the passed in atom AND aren't in the exclusionSet
+     * @returns {Array[Atom]} All neighboring atoms that are connected by bonds to the passed in atom AND aren't in the exclusionSet
      */
     getNeighborsNotInSet: function( atom, exclusionSet ) {
       // TODO: performance: hashset with fast lookup?
@@ -523,7 +523,7 @@ define( function( require ) {
    * @param {Atom}              a      Atom A
    * @param {Atom}              b      Atom B
    * @param {MoleculeStructure} result An empty molecule to fill
-   * @return {MoleculeStructure} A completely new molecule with all atoms in A and B, where atom A is joined to atom B
+   * @returns {MoleculeStructure} A completely new molecule with all atoms in A and B, where atom A is joined to atom B
    */
   MoleculeStructure.getCombinedMoleculeFromBond = function( molA, molB, a, b, result ) {
     _.each( molA.atoms, function( atom ) { result.addAtom( atom ); } );
@@ -541,7 +541,7 @@ define( function( require ) {
    * @param {Bond}              bond      The bond to break
    * @param {MoleculeStructure} molA      An empty molecule for the 1st broken part
    * @param {MoleculeStructure} molB      An empty molecule for the 2nd broken part
-   * @return {Array[MoleculeStructure]}   A list of remaining structures
+   * @returns {Array[MoleculeStructure]}   A list of remaining structures
    */
   MoleculeStructure.getMoleculesFromBrokenBond = function( structure, bond, molA, molB ) {
     // NOTE: in the future when we have loops, we can't assume that this will break a molecule into two separate molecules!
@@ -680,7 +680,7 @@ define( function( require ) {
    * @param {MoleculeGenerator} moleculeGenerator function( atomCount, bondCount ):MoleculeStructure. Creates a molecule with properties that we can fill with atoms/bonds
    * @param {AtomParser}        atomParser        function( atomString ):Atom. Creates an atom from a string representing an atom
    * @param {BondParser}        bondParser        function( bondString, connectedAtom, moleculeStructure ):Bond. Creates a bond from a string representing a bond
-   * @return {MoleculeStructure} A constructed molecule
+   * @returns {MoleculeStructure} A constructed molecule
    */
   MoleculeStructure.fromSerial2 = function( line, moleculeGenerator, atomParser, bondParser ) {
     var tokens = line.split( '|' );

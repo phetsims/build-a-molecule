@@ -199,7 +199,7 @@ define( function( require ) {
     /**
      * Walk up the scene graph, looking to see if we are a (grand)child of a canvas
      *
-     * @return {boolean} If an ancestor is a BuildAMoleculeCanvas
+     * @returns {boolean} If an ancestor is a BuildAMoleculeCanvas
      */
     hasCanvasAsParent: function() {
       var node = this; // eslint-disable-line consistent-this

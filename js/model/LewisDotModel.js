@@ -102,7 +102,7 @@ define( function( require ) {
 
     /**
      * @param {Atom} atom An atom
-     * @return {Array[Direction]} All of the directions that are open (not bonded to another) on the atom
+     * @returns {Array[Direction]} All of the directions that are open (not bonded to another) on the atom
      */
     getOpenDirections: function( atom ) {
       var result = [];
@@ -118,7 +118,7 @@ define( function( require ) {
     /**
      * @param {Atom} a A
      * @param {Atom} b B
-     * @return {Direction} The bond direction from A to B. If it doesn't exist, an exception is thrown
+     * @returns {Direction} The bond direction from A to B. If it doesn't exist, an exception is thrown
      */
     getBondDirection: function( a, b ) {
       var dotA = this.getLewisDotAtom( a );
@@ -138,7 +138,7 @@ define( function( require ) {
      * @param {Atom}      a         A
      * @param {Direction} direction Direction from A to B
      * @param {Atom}      b         B
-     * @return {boolean} Whether this bond is considered acceptable
+     * @returns {boolean} Whether this bond is considered acceptable
      */
     willAllowBond: function( a, direction, b ) {
 
@@ -173,7 +173,7 @@ define( function( require ) {
      * @param {Atom}                atom          Atom to add
      * @param {Atom}                excludedAtom  Atom not to
      * @param {Map x+','+y => Atom} coordinateMap Coordinate map to which we add the atoms to
-     * @return {boolean} Success. Will return false if any heavy atom overlaps on another atom. If it returns false, the coordinate map may be inconsistent
+     * @returns {boolean} Success. Will return false if any heavy atom overlaps on another atom. If it returns false, the coordinate map may be inconsistent
      */
     mapMolecule: function( coordinates, atom, excludedAtom, coordinateMap ) {
       var self = this;

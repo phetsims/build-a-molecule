@@ -206,7 +206,7 @@ define( function( require ) {
     },
 
     /**
-     * @return {Bounds2} Molecule area. Excludes the area in the black box where the 3D button needs to go
+     * @returns {Bounds2} Molecule area. Excludes the area in the black box where the 3D button needs to go
      */
     getMoleculeAreaInBlackBox: function() {
       var bounds = this.blackBox.bounds;
