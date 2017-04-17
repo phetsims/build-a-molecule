@@ -12,7 +12,7 @@ define( function( require ) {
   var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   var Bounds2 = require( 'DOT/Bounds2' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var SubSupText = require( 'SCENERY_PHET/SubSupText' );
+  var RichText = require( 'SCENERY_PHET/RichText' );
   var CollectionBoxNode = require( 'BUILD_A_MOLECULE/control/CollectionBoxNode' );
   var MoleculeList = require( 'BUILD_A_MOLECULE/model/MoleculeList' );
   var CollectionBox = require( 'BUILD_A_MOLECULE/model/CollectionBox' );
@@ -27,7 +27,7 @@ define( function( require ) {
 
     assert && assert( box.capacity === 1 );
 
-    this.addHeaderNode( new SubSupText( StringUtils.format( collectionSingleFormatString,
+    this.addHeaderNode( new RichText( StringUtils.format( collectionSingleFormatString,
       box.moleculeType.getGeneralFormulaFragment(),
       box.moleculeType.getDisplayName() ), {
       font: new PhetFont( {
