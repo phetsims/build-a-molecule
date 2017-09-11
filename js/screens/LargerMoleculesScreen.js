@@ -8,17 +8,17 @@
 define( function( require ) {
   'use strict';
 
-  var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var Dimension2 = require( 'DOT/Dimension2' );
   var BAMScreen = require( 'BUILD_A_MOLECULE/screens/BAMScreen' );
-  var KitCollection = require( 'BUILD_A_MOLECULE/model/KitCollection' );
-  var Kit = require( 'BUILD_A_MOLECULE/model/Kit' );
-  var LayoutBounds = require( 'BUILD_A_MOLECULE/model/LayoutBounds' );
-  var Bucket = require( 'BUILD_A_MOLECULE/model/Bucket' );
-  var Element = require( 'NITROGLYCERIN/Element' );
-  var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var BAMView = require( 'BUILD_A_MOLECULE/view/BAMView' );
+  var Bucket = require( 'BUILD_A_MOLECULE/model/Bucket' );
+  var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
+  var Dimension2 = require( 'DOT/Dimension2' );
+  var Element = require( 'NITROGLYCERIN/Element' );
+  var inherit = require( 'PHET_CORE/inherit' );
+  var Kit = require( 'BUILD_A_MOLECULE/model/Kit' );
+  var KitCollection = require( 'BUILD_A_MOLECULE/model/KitCollection' );
+  var LayoutBounds = require( 'BUILD_A_MOLECULE/model/LayoutBounds' );
+  var Rectangle = require( 'SCENERY/nodes/Rectangle' );
 
   // strings
   var titleLargerMoleculesString = require( 'string!BUILD_A_MOLECULE/title.largerMolecules' );

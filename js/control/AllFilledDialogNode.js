@@ -10,16 +10,16 @@ define( function( require ) {
   'use strict';
 
   var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
+  var Color = require( 'SCENERY/util/Color' );
   var Constants = require( 'BUILD_A_MOLECULE/Constants' );
+  var FaceNode = require( 'SCENERY_PHET/FaceNode' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
-  var Text = require( 'SCENERY/nodes/Text' );
-  var Rectangle = require( 'SCENERY/nodes/Rectangle' );
-  var Color = require( 'SCENERY/util/Color' );
-  var FaceNode = require( 'SCENERY_PHET/FaceNode' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  var TextPushButton = require( 'SUN/buttons/TextPushButton' );
+  var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var Shape = require( 'KITE/Shape' );
+  var Text = require( 'SCENERY/nodes/Text' );
+  var TextPushButton = require( 'SUN/buttons/TextPushButton' );
 
   // strings
   var collectionAllFilledString = require( 'string!BUILD_A_MOLECULE/collection.allFilled' );

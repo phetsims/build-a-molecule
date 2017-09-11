@@ -9,17 +9,17 @@
 define( function( require ) {
   'use strict';
 
-  var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var cleanArray = require( 'PHET_CORE/cleanArray' );
-  var PropertySet = require( 'AXON/PropertySet' );
-  var Vector2 = require( 'DOT/Vector2' );
   var Bounds2 = require( 'DOT/Bounds2' );
-  var Rectangle = require( 'DOT/Rectangle' );
-  var Molecule = require( 'BUILD_A_MOLECULE/model/Molecule' );
-  var MoleculeStructure = require( 'BUILD_A_MOLECULE/model/MoleculeStructure' );
-  var MoleculeList = require( 'BUILD_A_MOLECULE/model/MoleculeList' );
+  var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
+  var cleanArray = require( 'PHET_CORE/cleanArray' );
+  var inherit = require( 'PHET_CORE/inherit' );
   var LewisDotModel = require( 'BUILD_A_MOLECULE/model/LewisDotModel' );
+  var Molecule = require( 'BUILD_A_MOLECULE/model/Molecule' );
+  var MoleculeList = require( 'BUILD_A_MOLECULE/model/MoleculeList' );
+  var MoleculeStructure = require( 'BUILD_A_MOLECULE/model/MoleculeStructure' );
+  var PropertySet = require( 'AXON/PropertySet' );
+  var Rectangle = require( 'DOT/Rectangle' );
+  var Vector2 = require( 'DOT/Vector2' );
 
   var kitIdCounter = 0;
 

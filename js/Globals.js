@@ -5,8 +5,8 @@ define( function( require ) {
 
   // imports
   var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
-  var Property = require( 'AXON/Property' );
   var GameAudioPlayer = require( 'VEGAS/GameAudioPlayer' );
+  var Property = require( 'AXON/Property' );
 
   var soundEnabled = new Property( false );
 

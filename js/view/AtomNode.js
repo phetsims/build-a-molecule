@@ -12,14 +12,14 @@ define( function( require ) {
   'use strict';
 
   var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
+  var Color = require( 'SCENERY/util/Color' );
   var Constants = require( 'BUILD_A_MOLECULE/Constants' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var Vector2 = require( 'DOT/Vector2' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Path = require( 'SCENERY/nodes/Path' );
-  var Text = require( 'SCENERY/nodes/Text' );
-  var Color = require( 'SCENERY/util/Color' );
   var RadialGradient = require( 'SCENERY/util/RadialGradient' );
+  var Text = require( 'SCENERY/nodes/Text' );
+  var Vector2 = require( 'DOT/Vector2' );
 
   var Shape = require( 'KITE/Shape' );
 

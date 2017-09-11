@@ -12,11 +12,11 @@ define( function( require ) {
 
   var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   var Constants = require( 'BUILD_A_MOLECULE/Constants' );
-  var Vector2 = require( 'DOT/Vector2' );
-  var Transform3 = require( 'DOT/Transform3' );
-  var inherit = require( 'PHET_CORE/inherit' );
   var DOM = require( 'SCENERY/nodes/DOM' );
+  var inherit = require( 'PHET_CORE/inherit' );
   var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' ); // TODO: DragListener
+  var Transform3 = require( 'DOT/Transform3' );
+  var Vector2 = require( 'DOT/Vector2' );
 
   var sliceDistanceLimit = 1000;
 

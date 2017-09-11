@@ -11,25 +11,25 @@
 define( function( require ) {
   'use strict';
 
-  var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
-  var Constants = require( 'BUILD_A_MOLECULE/Constants' );
-  var Molecule3DNode = require( 'BUILD_A_MOLECULE/view/view3d/Molecule3DNode' );
-  var CloseButton = require( 'BUILD_A_MOLECULE/view/view3d/CloseButton' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var Bounds2 = require( 'DOT/Bounds2' );
-  var Node = require( 'SCENERY/nodes/Node' );
-  var Text = require( 'SCENERY/nodes/Text' );
-  var RichText = require( 'SCENERY/nodes/RichText' );
-  var Rectangle = require( 'SCENERY/nodes/Rectangle' );
-  var RadialGradient = require( 'SCENERY/util/RadialGradient' );
-  var Shape = require( 'KITE/Shape' );
-  var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var AquaRadioButton = require( 'SUN/AquaRadioButton' );
+  var Bounds2 = require( 'DOT/Bounds2' );
+  var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
+  var CloseButton = require( 'BUILD_A_MOLECULE/view/view3d/CloseButton' );
+  var Constants = require( 'BUILD_A_MOLECULE/Constants' );
+  var inherit = require( 'PHET_CORE/inherit' );
+  var Molecule3DNode = require( 'BUILD_A_MOLECULE/view/view3d/Molecule3DNode' );
+  var Node = require( 'SCENERY/nodes/Node' );
+  var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Property = require( 'AXON/Property' );
+  var RadialGradient = require( 'SCENERY/util/RadialGradient' );
+  var Rectangle = require( 'SCENERY/nodes/Rectangle' );
+  var RichText = require( 'SCENERY/nodes/RichText' );
+  var Shape = require( 'KITE/Shape' );
+  var Text = require( 'SCENERY/nodes/Text' );
 
   // strings
-  var spaceFillString = require( 'string!BUILD_A_MOLECULE/3d.spaceFilling' ); // eslint-disable-line string-require-statement-match
   var ballAndStickString = require( 'string!BUILD_A_MOLECULE/3d.ballAndStick' ); // eslint-disable-line string-require-statement-match
+  var spaceFillString = require( 'string!BUILD_A_MOLECULE/3d.spaceFilling' ); // eslint-disable-line string-require-statement-match
 
   var size = 200;
   var verticalOffset = size + 5;

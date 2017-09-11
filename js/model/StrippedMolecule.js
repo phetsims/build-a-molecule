@@ -12,10 +12,10 @@
 define( function( require ) {
   'use strict';
 
-  var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   var Atom = require( 'NITROGLYCERIN/Atom' );
-  var Element = require( 'NITROGLYCERIN/Element' );
   var Bond = require( 'BUILD_A_MOLECULE/model/Bond' );
+  var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
+  var Element = require( 'NITROGLYCERIN/Element' );
   var MoleculeStructure = require( 'BUILD_A_MOLECULE/model/MoleculeStructure' );
 
   // @param {MoleculeStructure} original

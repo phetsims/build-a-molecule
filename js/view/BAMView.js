@@ -12,10 +12,10 @@ define( function( require ) {
   var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   var Constants = require( 'BUILD_A_MOLECULE/Constants' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var Rectangle = require( 'DOT/Rectangle' );
-  var Node = require( 'SCENERY/nodes/Node' );
-  var ScreenView = require( 'JOIST/ScreenView' );
   var KitCollectionNode = require( 'BUILD_A_MOLECULE/view/KitCollectionNode' );
+  var Node = require( 'SCENERY/nodes/Node' );
+  var Rectangle = require( 'DOT/Rectangle' );
+  var ScreenView = require( 'JOIST/ScreenView' );
 
   function BAMView( collectionList ) {
     ScreenView.call( this, { layoutBounds: new Rectangle( 0, 0, Constants.stageSize.width, Constants.stageSize.height ) } );

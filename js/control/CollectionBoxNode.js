@@ -10,18 +10,18 @@
 define( function( require ) {
   'use strict';
 
+  var Bounds2 = require( 'DOT/Bounds2' );
   var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   var Constants = require( 'BUILD_A_MOLECULE/Constants' );
-  var Bounds2 = require( 'DOT/Bounds2' );
-  var Shape = require( 'KITE/Shape' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var Node = require( 'SCENERY/nodes/Node' );
   var Image = require( 'SCENERY/nodes/Image' );
-  var Rectangle = require( 'SCENERY/nodes/Rectangle' );
-  var Property = require( 'AXON/Property' );
-  var ShowMolecule3DButtonNode = require( 'BUILD_A_MOLECULE/view/view3d/ShowMolecule3DButtonNode' );
+  var inherit = require( 'PHET_CORE/inherit' );
   var Molecule3DNode = require( 'BUILD_A_MOLECULE/view/view3d/Molecule3DNode' );
   var MoleculeList = require( 'BUILD_A_MOLECULE/model/MoleculeList' );
+  var Node = require( 'SCENERY/nodes/Node' );
+  var Property = require( 'AXON/Property' );
+  var Rectangle = require( 'SCENERY/nodes/Rectangle' );
+  var Shape = require( 'KITE/Shape' );
+  var ShowMolecule3DButtonNode = require( 'BUILD_A_MOLECULE/view/view3d/ShowMolecule3DButtonNode' );
 
   var moleculePadding = 5;
   var blackBoxPaddingFor3D = Constants.has3d ? 10 : 0;

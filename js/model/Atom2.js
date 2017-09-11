@@ -9,8 +9,8 @@
 define( function( require ) {
   'use strict';
 
-  var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   var Atom = require( 'NITROGLYCERIN/Atom' );
+  var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   var extend = require( 'PHET_CORE/extend' );
   var inherit = require( 'PHET_CORE/inherit' );
   var PropertySet = require( 'AXON/PropertySet' );

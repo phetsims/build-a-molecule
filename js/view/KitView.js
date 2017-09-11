@@ -11,21 +11,21 @@
 define( function( require ) {
   'use strict';
 
-  var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var Constants = require( 'BUILD_A_MOLECULE/Constants' );
-  var Shape = require( 'KITE/Shape' );
+  var AtomNode = require( 'BUILD_A_MOLECULE/view/AtomNode' );
   var BucketFront = require( 'SCENERY_PHET/bucket/BucketFront' );
   var BucketHole = require( 'SCENERY_PHET/bucket/BucketHole' );
-  var PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  var Node = require( 'SCENERY/nodes/Node' );
-  var Rectangle = require( 'SCENERY/nodes/Rectangle' );
-  var Trail = require( 'SCENERY/util/Trail' );
-  var AtomNode = require( 'BUILD_A_MOLECULE/view/AtomNode' );
+  var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
+  var Constants = require( 'BUILD_A_MOLECULE/Constants' );
+  var inherit = require( 'PHET_CORE/inherit' );
   var MoleculeBondContainerNode = require( 'BUILD_A_MOLECULE/view/MoleculeBondContainerNode' );
   var MoleculeMetadataNode = require( 'BUILD_A_MOLECULE/view/MoleculeMetadataNode' );
-  var SliceNode = require( 'BUILD_A_MOLECULE/view/SliceNode' );
+  var Node = require( 'SCENERY/nodes/Node' );
+  var PhetFont = require( 'SCENERY_PHET/PhetFont' );
+  var Rectangle = require( 'SCENERY/nodes/Rectangle' );
+  var Shape = require( 'KITE/Shape' );
   var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' ); // TODO: DragListener
+  var SliceNode = require( 'BUILD_A_MOLECULE/view/SliceNode' );
+  var Trail = require( 'SCENERY/util/Trail' );
 
   function KitView( kit, view ) {
     Node.call( this );

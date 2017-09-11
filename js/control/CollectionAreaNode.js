@@ -10,15 +10,15 @@ define( function( require ) {
   'use strict';
 
   var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var Shape = require( 'KITE/Shape' );
   var Color = require( 'SCENERY/util/Color' );
-  var Node = require( 'SCENERY/nodes/Node' );
-  var Rectangle = require( 'SCENERY/nodes/Rectangle' );
-  var TextPushButton = require( 'SUN/buttons/TextPushButton' );
-  var PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  var SingleCollectionBoxNode = require( 'BUILD_A_MOLECULE/control/SingleCollectionBoxNode' );
+  var inherit = require( 'PHET_CORE/inherit' );
   var MultipleCollectionBoxNode = require( 'BUILD_A_MOLECULE/control/MultipleCollectionBoxNode' );
+  var Node = require( 'SCENERY/nodes/Node' );
+  var PhetFont = require( 'SCENERY_PHET/PhetFont' );
+  var Rectangle = require( 'SCENERY/nodes/Rectangle' );
+  var Shape = require( 'KITE/Shape' );
+  var SingleCollectionBoxNode = require( 'BUILD_A_MOLECULE/control/SingleCollectionBoxNode' );
+  var TextPushButton = require( 'SUN/buttons/TextPushButton' );
 
   // strings
   var collectionResetString = require( 'string!BUILD_A_MOLECULE/collection.reset' );

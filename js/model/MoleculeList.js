@@ -17,11 +17,11 @@ define( function( require ) {
 
   var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   var collectionMoleculesData = require( 'BUILD_A_MOLECULE/model/data/collectionMoleculesData' );
-  var otherMoleculesData = require( 'BUILD_A_MOLECULE/model/data/otherMoleculesData' );
-  var structuresData = require( 'BUILD_A_MOLECULE/model/data/structuresData' );
   var CompleteMolecule = require( 'BUILD_A_MOLECULE/model/CompleteMolecule' );
-  var StrippedMolecule = require( 'BUILD_A_MOLECULE/model/StrippedMolecule' );
   var MoleculeStructure = require( 'BUILD_A_MOLECULE/model/MoleculeStructure' );
+  var otherMoleculesData = require( 'BUILD_A_MOLECULE/model/data/otherMoleculesData' );
+  var StrippedMolecule = require( 'BUILD_A_MOLECULE/model/StrippedMolecule' );
+  var structuresData = require( 'BUILD_A_MOLECULE/model/data/structuresData' );
 
   function MoleculeList() {
     this.completeMolecules = []; // all complete molecules

@@ -10,16 +10,16 @@ define( function( require ) {
   'use strict';
 
   var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var Constants = require( 'BUILD_A_MOLECULE/Constants' );
-  var Shape = require( 'KITE/Shape' );
-  var Node = require( 'SCENERY/nodes/Node' );
-  var Text = require( 'SCENERY/nodes/Text' );
-  var Image = require( 'SCENERY/nodes/Image' );
   var ButtonListener = require( 'SCENERY/input/ButtonListener' );
-  var PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  var ShowMolecule3DButtonNode = require( 'BUILD_A_MOLECULE/view/view3d/ShowMolecule3DButtonNode' );
+  var Constants = require( 'BUILD_A_MOLECULE/Constants' );
+  var Image = require( 'SCENERY/nodes/Image' );
+  var inherit = require( 'PHET_CORE/inherit' );
   var MoleculeList = require( 'BUILD_A_MOLECULE/model/MoleculeList' );
+  var Node = require( 'SCENERY/nodes/Node' );
+  var PhetFont = require( 'SCENERY_PHET/PhetFont' );
+  var Shape = require( 'KITE/Shape' );
+  var ShowMolecule3DButtonNode = require( 'BUILD_A_MOLECULE/view/view3d/ShowMolecule3DButtonNode' );
+  var Text = require( 'SCENERY/nodes/Text' );
 
   // images
   var splitIconImage = require( 'image!BUILD_A_MOLECULE/split-blue.png' );

@@ -9,11 +9,11 @@
 define( function( require ) {
   'use strict';
 
+  var Bounds2 = require( 'DOT/Bounds2' );
   var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
+  var Globals = require( 'BUILD_A_MOLECULE/Globals' );
   var inherit = require( 'PHET_CORE/inherit' );
   var PropertySet = require( 'AXON/PropertySet' );
-  var Bounds2 = require( 'DOT/Bounds2' );
-  var Globals = require( 'BUILD_A_MOLECULE/Globals' );
 
   /*
    * @param {CompleteMolecule} moleculeType

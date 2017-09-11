@@ -9,31 +9,31 @@
 define( function( require ) {
   'use strict';
 
-  var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
-  var Constants = require( 'BUILD_A_MOLECULE/Constants' );
   var BAMScreen = require( 'BUILD_A_MOLECULE/screens/BAMScreen' );
   var Bounds2 = require( 'DOT/Bounds2' );
-  var Shape = require( 'KITE/Shape' );
+  var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   var CollectionAreaNode = require( 'BUILD_A_MOLECULE/control/CollectionAreaNode' );
-  var CollectionList = require( 'BUILD_A_MOLECULE/model/CollectionList' );
-  var LayoutBounds = require( 'BUILD_A_MOLECULE/model/LayoutBounds' );
-  var KitCollection = require( 'BUILD_A_MOLECULE/model/KitCollection' );
   var CollectionBox = require( 'BUILD_A_MOLECULE/model/CollectionBox' );
-  var MoleculeList = require( 'BUILD_A_MOLECULE/model/MoleculeList' );
+  var CollectionList = require( 'BUILD_A_MOLECULE/model/CollectionList' );
+  var Constants = require( 'BUILD_A_MOLECULE/Constants' );
+  var Globals = require( 'BUILD_A_MOLECULE/Globals' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var Node = require( 'SCENERY/nodes/Node' );
-  var Rectangle = require( 'SCENERY/nodes/Rectangle' );
-  var Text = require( 'SCENERY/nodes/Text' );
+  var KitCollection = require( 'BUILD_A_MOLECULE/model/KitCollection' );
+  var LayoutBounds = require( 'BUILD_A_MOLECULE/model/LayoutBounds' );
+  var MoleculeList = require( 'BUILD_A_MOLECULE/model/MoleculeList' );
   var NextPreviousNavigationNode = require( 'SCENERY_PHET/NextPreviousNavigationNode' );
+  var Node = require( 'SCENERY/nodes/Node' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
+  var PropertySet = require( 'AXON/PropertySet' );
+  var Rectangle = require( 'SCENERY/nodes/Rectangle' );
+  var Shape = require( 'KITE/Shape' );
   var SoundToggleButton = require( 'SCENERY_PHET/buttons/SoundToggleButton' );
   var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
-  var Globals = require( 'BUILD_A_MOLECULE/Globals' );
-  var PropertySet = require( 'AXON/PropertySet' );
+  var Text = require( 'SCENERY/nodes/Text' );
 
   // strings
-  var collectionYourMoleculeCollectionString = require( 'string!BUILD_A_MOLECULE/collection.yourMoleculeCollection' );
   var collectionLabelString = require( 'string!BUILD_A_MOLECULE/collection.label' );
+  var collectionYourMoleculeCollectionString = require( 'string!BUILD_A_MOLECULE/collection.yourMoleculeCollection' );
 
   var containerPadding = 15;
 

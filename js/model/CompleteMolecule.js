@@ -12,15 +12,15 @@
 define( function( require ) {
   'use strict';
 
-  var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var Strings = require( 'BUILD_A_MOLECULE/Strings' );
-  var Node = require( 'SCENERY/nodes/Node' );
-  var Element = require( 'NITROGLYCERIN/Element' );
   var Atom = require( 'NITROGLYCERIN/Atom' );
   var AtomNode = require( 'NITROGLYCERIN/nodes/AtomNode' );
   var Bond = require( 'BUILD_A_MOLECULE/model/Bond' );
+  var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
+  var Element = require( 'NITROGLYCERIN/Element' );
+  var inherit = require( 'PHET_CORE/inherit' );
   var MoleculeStructure = require( 'BUILD_A_MOLECULE/model/MoleculeStructure' );
+  var Node = require( 'SCENERY/nodes/Node' );
+  var Strings = require( 'BUILD_A_MOLECULE/Strings' );
   var nodeTypes = [
     require( 'NITROGLYCERIN/nodes/Cl2Node' ), require( 'NITROGLYCERIN/nodes/CO2Node' ), require( 'NITROGLYCERIN/nodes/CO2Node' ),
     require( 'NITROGLYCERIN/nodes/CS2Node' ), require( 'NITROGLYCERIN/nodes/F2Node' ), require( 'NITROGLYCERIN/nodes/H2Node' ),

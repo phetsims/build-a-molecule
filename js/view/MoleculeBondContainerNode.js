@@ -11,8 +11,8 @@ define( function( require ) {
 
   var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var Node = require( 'SCENERY/nodes/Node' );
   var MoleculeBondNode = require( 'BUILD_A_MOLECULE/view/MoleculeBondNode' );
+  var Node = require( 'SCENERY/nodes/Node' );
 
   function MoleculeBondContainerNode( kit, molecule, view ) {
     Node.call( this, {} );

@@ -9,16 +9,16 @@
 define( function( require ) {
   'use strict';
 
-  var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
-  var inherit = require( 'PHET_CORE/inherit' );
   var Bounds2 = require( 'DOT/Bounds2' );
-  var Node = require( 'SCENERY/nodes/Node' );
-  var Text = require( 'SCENERY/nodes/Text' );
-  var Color = require( 'SCENERY/util/Color' );
+  var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   var ButtonListener = require( 'SCENERY/input/ButtonListener' );
-  var ShadedRectangle = require( 'SCENERY_PHET/ShadedRectangle' );
-  var PhetFont = require( 'SCENERY_PHET/PhetFont' );
+  var Color = require( 'SCENERY/util/Color' );
+  var inherit = require( 'PHET_CORE/inherit' );
   var Molecule3DDialog = require( 'BUILD_A_MOLECULE/view/view3d/Molecule3DDialog' );
+  var Node = require( 'SCENERY/nodes/Node' );
+  var PhetFont = require( 'SCENERY_PHET/PhetFont' );
+  var ShadedRectangle = require( 'SCENERY_PHET/ShadedRectangle' );
+  var Text = require( 'SCENERY/nodes/Text' );
 
   // strings
   var iconString = require( 'string!BUILD_A_MOLECULE/3d.icon' ); // eslint-disable-line string-require-statement-match

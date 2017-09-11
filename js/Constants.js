@@ -5,11 +5,11 @@ define( function( require ) {
 
   // imports
   var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
-  var Element = require( 'NITROGLYCERIN/Element' );
   var Color = require( 'SCENERY/util/Color' );
   var Dimension2 = require( 'DOT/Dimension2' );
-  var Vector2 = require( 'DOT/Vector2' );
+  var Element = require( 'NITROGLYCERIN/Element' );
   var ModelViewTransform2 = require( 'PHETCOMMON/view/ModelViewTransform2' );
+  var Vector2 = require( 'DOT/Vector2' );
 
   var viewSize = new Dimension2( 1100, 679 );
   var mvt = ModelViewTransform2.createSinglePointScaleInvertedYMapping(

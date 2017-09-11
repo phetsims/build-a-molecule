@@ -10,15 +10,15 @@
 define( function( require ) {
   'use strict';
 
-  var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   var Bounds2 = require( 'DOT/Bounds2' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var RichText = require( 'SCENERY/nodes/RichText' );
-  var CollectionBoxNode = require( 'BUILD_A_MOLECULE/control/CollectionBoxNode' );
-  var MoleculeList = require( 'BUILD_A_MOLECULE/model/MoleculeList' );
+  var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   var CollectionBox = require( 'BUILD_A_MOLECULE/model/CollectionBox' );
-  var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
+  var CollectionBoxNode = require( 'BUILD_A_MOLECULE/control/CollectionBoxNode' );
+  var inherit = require( 'PHET_CORE/inherit' );
+  var MoleculeList = require( 'BUILD_A_MOLECULE/model/MoleculeList' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
+  var RichText = require( 'SCENERY/nodes/RichText' );
+  var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
 
   // strings
   var collectionMultipleGoalFormatString = require( 'string!BUILD_A_MOLECULE/collection.multiple.goalFormat' );

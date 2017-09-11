@@ -8,20 +8,20 @@
 define( function( require ) {
   'use strict';
 
-  var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var Screen = require( 'JOIST/Screen' );
-  var Dimension2 = require( 'DOT/Dimension2' );
-  var Constants = require( 'BUILD_A_MOLECULE/Constants' );
-  var Element = require( 'NITROGLYCERIN/Element' );
-  var MoleculeList = require( 'BUILD_A_MOLECULE/model/MoleculeList' );
-  var CollectionList = require( 'BUILD_A_MOLECULE/model/CollectionList' );
-  var KitCollection = require( 'BUILD_A_MOLECULE/model/KitCollection' );
   var Bucket = require( 'BUILD_A_MOLECULE/model/Bucket' );
-  var Kit = require( 'BUILD_A_MOLECULE/model/Kit' );
+  var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   var CollectionBox = require( 'BUILD_A_MOLECULE/model/CollectionBox' );
-  var PropertySet = require( 'AXON/PropertySet' );
+  var CollectionList = require( 'BUILD_A_MOLECULE/model/CollectionList' );
+  var Constants = require( 'BUILD_A_MOLECULE/Constants' );
+  var Dimension2 = require( 'DOT/Dimension2' );
+  var Element = require( 'NITROGLYCERIN/Element' );
+  var inherit = require( 'PHET_CORE/inherit' );
+  var Kit = require( 'BUILD_A_MOLECULE/model/Kit' );
+  var KitCollection = require( 'BUILD_A_MOLECULE/model/KitCollection' );
+  var MoleculeList = require( 'BUILD_A_MOLECULE/model/MoleculeList' );
   var Property = require( 'AXON/Property' );
+  var PropertySet = require( 'AXON/PropertySet' );
+  var Screen = require( 'JOIST/Screen' );
 
   function BAMScreen( createInitialKitCollection, layoutBounds, createKitCollection, createView, options ) {
 

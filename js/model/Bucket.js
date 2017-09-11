@@ -9,15 +9,15 @@
 define( function( require ) {
   'use strict';
 
-  var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   var Atom2 = require( 'BUILD_A_MOLECULE/model/Atom2' );
   var AtomNode = require( 'BUILD_A_MOLECULE/view/AtomNode' );
+  var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
+  var Color = require( 'SCENERY/util/Color' );
+  var Dimension2 = require( 'DOT/Dimension2' );
   var inherit = require( 'PHET_CORE/inherit' );
   var SphereBucket = require( 'PHETCOMMON/model/SphereBucket' );
-  var Vector2 = require( 'DOT/Vector2' );
-  var Dimension2 = require( 'DOT/Dimension2' );
   var Strings = require( 'BUILD_A_MOLECULE/Strings' );
-  var Color = require( 'SCENERY/util/Color' );
+  var Vector2 = require( 'DOT/Vector2' );
 
   /**
    * Constructor.  The dimensions used are just numbers, i.e. they are not

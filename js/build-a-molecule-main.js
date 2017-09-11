@@ -7,13 +7,13 @@
 define( function( require ) {
   'use strict';
 
-  var SimLauncher = require( 'JOIST/SimLauncher' );
-  var Sim = require( 'JOIST/Sim' );
   var buildAMoleculeTitleString = require( 'string!BUILD_A_MOLECULE/build-a-molecule.title' );
-  var MakeMoleculeScreen = require( 'BUILD_A_MOLECULE/screens/MakeMoleculeScreen' );
+  var CollectionPanel = require( 'BUILD_A_MOLECULE/control/CollectionPanel' );
   var CollectMultipleScreen = require( 'BUILD_A_MOLECULE/screens/CollectMultipleScreen' );
   var LargerMoleculesScreen = require( 'BUILD_A_MOLECULE/screens/LargerMoleculesScreen' );
-  var CollectionPanel = require( 'BUILD_A_MOLECULE/control/CollectionPanel' );
+  var MakeMoleculeScreen = require( 'BUILD_A_MOLECULE/screens/MakeMoleculeScreen' );
+  var Sim = require( 'JOIST/Sim' );
+  var SimLauncher = require( 'JOIST/SimLauncher' );
 
   var simOptions = {
     credits: {

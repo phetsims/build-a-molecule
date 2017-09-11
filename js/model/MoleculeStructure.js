@@ -14,12 +14,12 @@
 define( function( require ) {
   'use strict';
 
-  var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
+  var Atom = require( 'NITROGLYCERIN/Atom' );
   var Bond = require( 'BUILD_A_MOLECULE/model/Bond' );
-  var ElementHistogram = require( 'BUILD_A_MOLECULE/model/ElementHistogram' );
+  var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   var ChemUtils = require( 'NITROGLYCERIN/ChemUtils' );
   var Element = require( 'NITROGLYCERIN/Element' );
-  var Atom = require( 'NITROGLYCERIN/Atom' );
+  var ElementHistogram = require( 'BUILD_A_MOLECULE/model/ElementHistogram' );
 
   var nextMoleculeId = 0;
 
