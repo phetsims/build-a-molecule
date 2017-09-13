@@ -11,6 +11,7 @@ define( function( require ) {
 
   var Bounds2 = require( 'DOT/Bounds2' );
   var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
+  var Emitter = require( 'AXON/Emitter' );
   var Globals = require( 'BUILD_A_MOLECULE/Globals' );
   var inherit = require( 'PHET_CORE/inherit' );
   var PropertySet = require( 'AXON/PropertySet' );
@@ -18,16 +19,16 @@ define( function( require ) {
   /*
    * @param {CompleteMolecule} moleculeType
    * @param {Int}              capacity
-   *
-   * events:
-   * addedMolecule: function( molecule )
-   * removedMolecule: function( molecule )
-   * acceptedMoleculeCreation: function( molecule )       // triggered from KitCollection
    */
   function CollectionBox( moleculeType, capacity ) {
     PropertySet.call( this, {
       quantity: 0
     } );
+
+    // @public {Emitter} - Called with a single molecule parameter
+    this.addedMoleculeEmitter = new Emitter();
+    this.removedMoleculeEmitter = new Emitter();
+    this.acceptedMoleculeCreationEmitter = new Emitter(); // triggered from KitCollection
 
     var self = this;
     this.moleculeType = moleculeType;
@@ -35,7 +36,7 @@ define( function( require ) {
     this.molecules = [];
     this._dropBounds = Bounds2.NOTHING;
 
-    this.on( 'addedMolecule', function( molecule ) {
+    this.addedMoleculeEmitter.addListener( function( molecule ) {
       if ( self.quantity === capacity ) {
         Globals.gameAudioPlayer.correctAnswer();
       }
@@ -75,14 +76,14 @@ define( function( require ) {
       this.quantity++;
       this.molecules.push( molecule );
 
-      this.trigger( 'addedMolecule', molecule );
+      this.addedMoleculeEmitter.emit1( molecule );
     },
 
     removeMolecule: function( molecule ) {
       this.quantity--;
       this.molecules.splice( this.molecules.indexOf( molecule ), 1 ); // TODO: remove() instead of splice()
 
-      this.trigger( 'removedMolecule', molecule );
+      this.removedMoleculeEmitter.emit1( molecule );
     },
 
     clear: function() {

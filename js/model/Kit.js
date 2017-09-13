@@ -12,6 +12,7 @@ define( function( require ) {
   var Bounds2 = require( 'DOT/Bounds2' );
   var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   var cleanArray = require( 'PHET_CORE/cleanArray' );
+  var Emitter = require( 'AXON/Emitter' );
   var inherit = require( 'PHET_CORE/inherit' );
   var LewisDotModel = require( 'BUILD_A_MOLECULE/model/LewisDotModel' );
   var Molecule = require( 'BUILD_A_MOLECULE/model/Molecule' );
@@ -23,17 +24,16 @@ define( function( require ) {
 
   var kitIdCounter = 0;
 
-  /*
-   * Events:
-   *   addedMolecule: function( molecule )
-   *   removedMolecule: function( molecule )
-   */
   function Kit( layoutBounds, buckets ) {
     PropertySet.call( this, {
       visible: false,
       hasMoleculesInBoxes: false // we record this so we know when the "reset kit" should be shown
     } );
     this.id = kitIdCounter++;
+
+    // @public {Emitter} - Called with a single parameter molecule
+    this.addedMoleculeEmitter = new Emitter();
+    this.removedMoleculeEmitter = new Emitter();
 
     this.buckets = buckets;
     this.layoutBounds = layoutBounds;
@@ -319,13 +319,13 @@ define( function( require ) {
     addMolecule: function( molecule ) {
       this.molecules.push( molecule );
 
-      this.trigger( 'addedMolecule', molecule );
+      this.addedMoleculeEmitter.emit1( molecule );
     },
 
     removeMolecule: function( molecule ) {
       this.molecules.splice( this.molecules.indexOf( molecule ), 1 ); // TODO: remove() instead of splice()
 
-      this.trigger( 'removedMolecule', molecule );
+      this.removedMoleculeEmitter.emit1( molecule );
     },
 
     /**

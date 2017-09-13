@@ -100,8 +100,8 @@ define( function( require ) {
         bucketHole.cursor = bucket.atoms.length ? 'pointer' : 'default';
       }
 
-      kit.on( 'addedMolecule', bucketHoleCursorUpdate );
-      kit.on( 'removedMolecule', bucketHoleCursorUpdate );
+      kit.addedMoleculeEmitter.addListener( bucketHoleCursorUpdate );
+      kit.removedMoleculeEmitter.addListener( bucketHoleCursorUpdate );
       bucketHoleCursorUpdate();
 
       // but don't pick the elliptical paths in the hole (that would be expensive to compute so often)
@@ -172,7 +172,7 @@ define( function( require ) {
     } );
 
     // handle molecule creation and destruction
-    kit.on( 'addedMolecule', function( molecule ) {
+    kit.addedMoleculeEmitter.addListener( function( molecule ) {
       var moleculeMetadataNode = new MoleculeMetadataNode( kit, molecule );
       metadataLayer.addChild( moleculeMetadataNode );
       self.metadataMap[ molecule.moleculeId ] = moleculeMetadataNode;
@@ -181,7 +181,7 @@ define( function( require ) {
         self.addMoleculeBondNodes( molecule );
       }
     } );
-    kit.on( 'removedMolecule', function( molecule ) {
+    kit.removedMoleculeEmitter.addListener( function( molecule ) {
       var moleculeMetadataNode = self.metadataMap[ molecule.moleculeId ];
       moleculeMetadataNode.destruct();
       metadataLayer.removeChild( moleculeMetadataNode );

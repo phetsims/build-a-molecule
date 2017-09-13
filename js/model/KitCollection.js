@@ -83,10 +83,10 @@ define( function( require ) {
         atomModel.on( 'droppedByUser', dropListener );
       } );
 
-      kit.on( 'addedMolecule', function( molecule ) {
+      kit.addedMoleculeEmitter.addListener( function( molecule ) {
         _.each( self.collectionBoxes, function( box ) {
           if ( box.willAllowMoleculeDrop( molecule ) ) {
-            box.trigger( 'acceptedMoleculeCreation', molecule );
+            box.acceptedMoleculeCreationEmitter.emit1( molecule );
           }
         } );
       } );

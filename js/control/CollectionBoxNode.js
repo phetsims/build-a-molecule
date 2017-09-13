@@ -73,8 +73,8 @@ define( function( require ) {
       var update3dVisibility = function() {
         show3dButton.visible = box.quantity > 0;
       };
-      box.on( 'addedMolecule', update3dVisibility );
-      box.on( 'removedMolecule', update3dVisibility );
+      box.addedMoleculeEmitter.addListener( update3dVisibility );
+      box.removedMoleculeEmitter.addListener( update3dVisibility );
       update3dVisibility();
       this.blackBox.addChild( show3dButton );
     }
@@ -89,9 +89,9 @@ define( function( require ) {
 
     this.updateBoxGraphics();
 
-    box.on( 'addedMolecule', this.addMolecule.bind( this ) );
-    box.on( 'removedMolecule', this.removeMolecule.bind( this ) );
-    box.on( 'acceptedMoleculeCreation', this.blink.bind( this ) );
+    box.addedMoleculeEmitter.addListener( this.addMolecule.bind( this ) );
+    box.removedMoleculeEmitter.addListener( this.removeMolecule.bind( this ) );
+    box.acceptedMoleculeCreationEmitter.addListener( this.blink.bind( this ) );
 
     // TODO: this is somewhat of an ugly way of getting the fixed layout (where the molecules don't resize). consider changing
     // kept for now since it is much easier to revert back to the old behavior

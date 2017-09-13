@@ -102,8 +102,8 @@ define( function( require ) {
       refillButton.enabled = kitCollectionModel.currentKit.hasAtomsOutsideOfBuckets();
     };
     _.each( kitCollectionModel.kits, function( kit ) {
-      kit.on( 'addedMolecule', updateRefillButton );
-      kit.on( 'removedMolecule', updateRefillButton );
+      kit.addedMoleculeEmitter.addListener( updateRefillButton );
+      kit.removedMoleculeEmitter.addListener( updateRefillButton );
     } );
     kitCollectionModel.currentKitProperty.link( updateRefillButton );
     this.addChild( refillButton );
