@@ -24,8 +24,6 @@ define( function( require ) {
     // @public {Property.<KitCollection>}
     this.currentCollectionProperty = new Property( firstCollection );
 
-    Property.preventGetSet( this, 'currentCollection' );
-
     // @public {Emitter} - Fires single parameter of {KitCollection}
     this.addedCollectionEmitter = new Emitter();
     this.removedCollectionEmitter = new Emitter();

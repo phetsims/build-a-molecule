@@ -28,10 +28,6 @@ define( function( require ) {
 
     // @public {Property.<boolean>} - this will remain false if we have no collection boxes
     this.allCollectionBoxesFilledProperty = new BooleanProperty( false );
-
-    // XXX
-    Property.preventGetSet( this, 'currentKit' );
-    Property.preventGetSet( this, 'allCollectionBoxesFilled' );
   }
   buildAMolecule.register( 'KitCollection', KitCollection );
 

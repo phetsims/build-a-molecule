@@ -19,7 +19,6 @@ define( function( require ) {
   var Molecule = require( 'BUILD_A_MOLECULE/model/Molecule' );
   var MoleculeList = require( 'BUILD_A_MOLECULE/model/MoleculeList' );
   var MoleculeStructure = require( 'BUILD_A_MOLECULE/model/MoleculeStructure' );
-  var Property = require( 'AXON/Property' );
   var Rectangle = require( 'DOT/Rectangle' );
   var Vector2 = require( 'DOT/Vector2' );
 
@@ -31,9 +30,6 @@ define( function( require ) {
     // @public {Property.<boolean>}
     this.visibleProperty = new BooleanProperty( false );
     this.hasMoleculesInBoxesProperty = new BooleanProperty( false ); // we record this so we know when the "reset kit" should be shown
-
-    Property.preventGetSet( this, 'visible' );
-    Property.preventGetSet( this, 'hasMoleculesInBoxes' );
 
     // @public {Emitter} - Called with a single parameter molecule
     this.addedMoleculeEmitter = new Emitter();

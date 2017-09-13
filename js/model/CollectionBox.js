@@ -15,7 +15,6 @@ define( function( require ) {
   var Globals = require( 'BUILD_A_MOLECULE/Globals' );
   var inherit = require( 'PHET_CORE/inherit' );
   var NumberProperty = require( 'AXON/NumberProperty' );
-  var Property = require( 'AXON/Property' );
 
   /*
    * @param {CompleteMolecule} moleculeType
@@ -24,8 +23,6 @@ define( function( require ) {
   function CollectionBox( moleculeType, capacity ) {
     // @public {Property.<number>}
     this.quantityProperty = new NumberProperty( 0 );
-
-    Property.preventGetSet( this, 'quantity' );
 
     // @public {Emitter} - Called with a single molecule parameter
     this.addedMoleculeEmitter = new Emitter();

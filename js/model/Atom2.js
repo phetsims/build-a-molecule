@@ -36,12 +36,6 @@ define( function( require ) {
     this.visibleProperty = new BooleanProperty( true );
     this.addedToModelProperty = new BooleanProperty( true );
 
-    Property.preventGetSet( this, 'position' );
-    Property.preventGetSet( this, 'destination' );
-    Property.preventGetSet( this, 'userControlled' );
-    Property.preventGetSet( this, 'visible' );
-    Property.preventGetSet( this, 'addedToModel' );
-
     // @public {Emitter} - Called with one parameter: particle
     this.grabbedByUserEmitter = new Emitter();
     this.droppedByUserEmitter = new Emitter();
