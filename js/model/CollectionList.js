@@ -20,7 +20,7 @@ define( function( require ) {
    * @param {KitCollection} firstCollection
    * @param {LayoutBounds}  layoutBounds
    */
-  function CollectionList( firstCollection, layoutBounds, clock ) {
+  function CollectionList( firstCollection, layoutBounds, tickEmitter ) {
     PropertySet.call( this, {
       currentCollection: firstCollection
     } );
@@ -30,7 +30,7 @@ define( function( require ) {
     this.removedCollectionEmitter = new Emitter();
 
     this.layoutBounds = layoutBounds;
-    this.clock = clock;
+    this.tickEmitter = tickEmitter;
     this.collections = [];
     this.currentIndex = 0;
     this.addCollection( firstCollection );

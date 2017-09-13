@@ -35,22 +35,22 @@ define( function( require ) {
     BAMScreen.call( this,
 
       // createInitialKitCollection
-      function( bounds, clock ) {
+      function( bounds, tickEmitter ) {
         var kitCollection = new KitCollection();
         kitCollection.addKit( new Kit( bounds, [
-          new Bucket( new Dimension2( 400, 200 ), clock, Element.H, 2 ),
-          new Bucket( new Dimension2( 450, 200 ), clock, Element.O, 2 )
+          new Bucket( new Dimension2( 400, 200 ), tickEmitter, Element.H, 2 ),
+          new Bucket( new Dimension2( 450, 200 ), tickEmitter, Element.O, 2 )
         ] ) );
 
         kitCollection.addKit( new Kit( bounds, [
-          new Bucket( new Dimension2( 500, 200 ), clock, Element.C, 2 ),
-          new Bucket( new Dimension2( 600, 200 ), clock, Element.O, 4 ),
-          new Bucket( new Dimension2( 500, 200 ), clock, Element.N, 2 )
+          new Bucket( new Dimension2( 500, 200 ), tickEmitter, Element.C, 2 ),
+          new Bucket( new Dimension2( 600, 200 ), tickEmitter, Element.O, 4 ),
+          new Bucket( new Dimension2( 500, 200 ), tickEmitter, Element.N, 2 )
         ] ) );
         kitCollection.addKit( new Kit( bounds, [
-          new Bucket( new Dimension2( 600, 200 ), clock, Element.H, 12 ),
-          new Bucket( new Dimension2( 600, 200 ), clock, Element.O, 4 ),
-          new Bucket( new Dimension2( 500, 200 ), clock, Element.N, 2 )
+          new Bucket( new Dimension2( 600, 200 ), tickEmitter, Element.H, 12 ),
+          new Bucket( new Dimension2( 600, 200 ), tickEmitter, Element.O, 4 ),
+          new Bucket( new Dimension2( 500, 200 ), tickEmitter, Element.N, 2 )
         ] ) );
         kitCollection.addCollectionBox( new CollectionBox( MoleculeList.CO2, 2 ) );
         kitCollection.addCollectionBox( new CollectionBox( MoleculeList.O2, 2 ) );
@@ -60,8 +60,8 @@ define( function( require ) {
       },
 
       // layoutBounds
-      new LayoutBounds( false, collectionAreaWidth ), function( bounds, clock ) {
-        return BAMScreen.generateKitCollection( true, 4, clock, bounds );
+      new LayoutBounds( false, collectionAreaWidth ), function( bounds, tickEmitter ) {
+        return BAMScreen.generateKitCollection( true, 4, tickEmitter, bounds );
       },
 
       // createKitCollection
@@ -69,7 +69,7 @@ define( function( require ) {
         // create the view
         return new MoleculeCollectingView( model, false, function() {
           // next collection callback
-          model.addCollection( BAMScreen.generateKitCollection( true, 4, model.clock, model.layoutBounds ) );
+          model.addCollection( BAMScreen.generateKitCollection( true, 4, model.tickEmitter, model.layoutBounds ) );
         } );
       },
 

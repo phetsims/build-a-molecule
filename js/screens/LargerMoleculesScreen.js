@@ -33,74 +33,74 @@ define( function( require ) {
     BAMScreen.call( this,
 
       // createInitialKitCollection
-      function( bounds, clock ) {
+      function( bounds, tickEmitter ) {
         var kitCollection = new KitCollection();
 
         // NOTE: if kits are modified here, examine MAX_NUM_HEAVY_ATOMS in MoleculeSDFCombinedParser, as it may need to be changed
 
         // general kit
         kitCollection.addKit( new Kit( bounds, [
-          Bucket.createAutoSized( clock, Element.H, 13 ),
-          Bucket.createAutoSized( clock, Element.O, 3 ),
-          Bucket.createAutoSized( clock, Element.C, 3 ),
-          Bucket.createAutoSized( clock, Element.N, 3 ),
-          Bucket.createAutoSized( clock, Element.Cl, 2 )
+          Bucket.createAutoSized( tickEmitter, Element.H, 13 ),
+          Bucket.createAutoSized( tickEmitter, Element.O, 3 ),
+          Bucket.createAutoSized( tickEmitter, Element.C, 3 ),
+          Bucket.createAutoSized( tickEmitter, Element.N, 3 ),
+          Bucket.createAutoSized( tickEmitter, Element.Cl, 2 )
         ] ) );
 
         // organics kit
         kitCollection.addKit( new Kit( bounds, [
-          new Bucket( new Dimension2( 700, 200 ), clock, Element.H, 21 ),
-          Bucket.createAutoSized( clock, Element.O, 4 ),
-          Bucket.createAutoSized( clock, Element.C, 4 ),
-          Bucket.createAutoSized( clock, Element.N, 4 )
+          new Bucket( new Dimension2( 700, 200 ), tickEmitter, Element.H, 21 ),
+          Bucket.createAutoSized( tickEmitter, Element.O, 4 ),
+          Bucket.createAutoSized( tickEmitter, Element.C, 4 ),
+          Bucket.createAutoSized( tickEmitter, Element.N, 4 )
         ] ) );
 
         // chlorine / fluorine
         kitCollection.addKit( new Kit( bounds, [
-          new Bucket( new Dimension2( 700, 200 ), clock, Element.H, 21 ),
-          Bucket.createAutoSized( clock, Element.C, 4 ),
-          Bucket.createAutoSized( clock, Element.Cl, 4 ),
-          Bucket.createAutoSized( clock, Element.F, 4 )
+          new Bucket( new Dimension2( 700, 200 ), tickEmitter, Element.H, 21 ),
+          Bucket.createAutoSized( tickEmitter, Element.C, 4 ),
+          Bucket.createAutoSized( tickEmitter, Element.Cl, 4 ),
+          Bucket.createAutoSized( tickEmitter, Element.F, 4 )
         ] ) );
 
         // boron / silicon
         kitCollection.addKit( new Kit( bounds, [
-          new Bucket( new Dimension2( 700, 200 ), clock, Element.H, 21 ),
-          Bucket.createAutoSized( clock, Element.C, 3 ),
-          Bucket.createAutoSized( clock, Element.B, 2 ),
-          Bucket.createAutoSized( clock, Element.Si, 2 )
+          new Bucket( new Dimension2( 700, 200 ), tickEmitter, Element.H, 21 ),
+          Bucket.createAutoSized( tickEmitter, Element.C, 3 ),
+          Bucket.createAutoSized( tickEmitter, Element.B, 2 ),
+          Bucket.createAutoSized( tickEmitter, Element.Si, 2 )
         ] ) );
 
         // sulphur / oxygen
         kitCollection.addKit( new Kit( bounds, [
-          new Bucket( new Dimension2( 700, 200 ), clock, Element.H, 21 ),
-          Bucket.createAutoSized( clock, Element.B, 1 ),
-          Bucket.createAutoSized( clock, Element.S, 2 ),
-          Bucket.createAutoSized( clock, Element.Si, 1 ),
-          Bucket.createAutoSized( clock, Element.P, 1 )
+          new Bucket( new Dimension2( 700, 200 ), tickEmitter, Element.H, 21 ),
+          Bucket.createAutoSized( tickEmitter, Element.B, 1 ),
+          Bucket.createAutoSized( tickEmitter, Element.S, 2 ),
+          Bucket.createAutoSized( tickEmitter, Element.Si, 1 ),
+          Bucket.createAutoSized( tickEmitter, Element.P, 1 )
         ] ) );
 
         // phosphorus
         kitCollection.addKit( new Kit( bounds, [
-          new Bucket( new Dimension2( 700, 200 ), clock, Element.H, 21 ),
-          Bucket.createAutoSized( clock, Element.C, 4 ),
-          Bucket.createAutoSized( clock, Element.O, 2 ),
-          Bucket.createAutoSized( clock, Element.P, 2 )
+          new Bucket( new Dimension2( 700, 200 ), tickEmitter, Element.H, 21 ),
+          Bucket.createAutoSized( tickEmitter, Element.C, 4 ),
+          Bucket.createAutoSized( tickEmitter, Element.O, 2 ),
+          Bucket.createAutoSized( tickEmitter, Element.P, 2 )
         ] ) );
 
         // bromine kit?
         kitCollection.addKit( new Kit( bounds, [
-          new Bucket( new Dimension2( 700, 200 ), clock, Element.H, 21 ),
-          Bucket.createAutoSized( clock, Element.Br, 2 ),
-          Bucket.createAutoSized( clock, Element.N, 3 ),
-          Bucket.createAutoSized( clock, Element.C, 3 )
+          new Bucket( new Dimension2( 700, 200 ), tickEmitter, Element.H, 21 ),
+          Bucket.createAutoSized( tickEmitter, Element.Br, 2 ),
+          Bucket.createAutoSized( tickEmitter, Element.N, 3 ),
+          Bucket.createAutoSized( tickEmitter, Element.C, 3 )
         ] ) );
 
         return kitCollection;
       },
 
       // layoutBounds
-      new LayoutBounds( true, 0 ), function( bounds, clock ) {
+      new LayoutBounds( true, 0 ), function( bounds, tickEmitter ) {
         throw new Error( 'There are no more kit collections in the 3rd tab' );
       },
 

@@ -21,7 +21,7 @@ define( function( require ) {
 
   var motionVelocity = 800; // In picometers per second of sim time.
 
-  function Atom2( element, clock ) {
+  function Atom2( element, tickEmitter ) {
     var self = this;
 
     PropertySet.call( this, {
@@ -39,7 +39,7 @@ define( function( require ) {
     this.droppedByUserEmitter = new Emitter();
     this.removedFromModelEmitter = new Emitter(); //REVIEW: Umm, not triggered?
 
-    this.clock = clock;
+    this.tickEmitter = tickEmitter;
     this.clockListener = this.stepInTime.bind( this );
 
     this.name = Strings.getAtomName( element );
@@ -56,11 +56,11 @@ define( function( require ) {
     this.addedToModelProperty.link( function( isAddedToModel ) {
       if ( isAddedToModel ) {
         // added to the model
-        clock.on( 'tick', self.clockListener );
+        tickEmitter.addListener( self.clockListener );
       }
       else {
         // removed from the model
-        clock.off( 'tick', self.clockListener );
+        tickEmitter.removeListener( self.clockListener );
       }
     } );
   }

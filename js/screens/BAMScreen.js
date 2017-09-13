@@ -15,12 +15,12 @@ define( function( require ) {
   var Constants = require( 'BUILD_A_MOLECULE/Constants' );
   var Dimension2 = require( 'DOT/Dimension2' );
   var Element = require( 'NITROGLYCERIN/Element' );
+  var Emitter = require( 'AXON/Emitter' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Kit = require( 'BUILD_A_MOLECULE/model/Kit' );
   var KitCollection = require( 'BUILD_A_MOLECULE/model/KitCollection' );
   var MoleculeList = require( 'BUILD_A_MOLECULE/model/MoleculeList' );
   var Property = require( 'AXON/Property' );
-  var PropertySet = require( 'AXON/PropertySet' );
   var Screen = require( 'JOIST/Screen' );
 
   function BAMScreen( createInitialKitCollection, layoutBounds, createKitCollection, createView, options ) {
@@ -30,13 +30,13 @@ define( function( require ) {
     }, options );
 
     var createModel = function() {
-      var clock = new PropertySet( {} );
-      var model = new CollectionList( createInitialKitCollection( layoutBounds, clock ), layoutBounds, clock );
+      var tickEmitter = new Emitter(); // emits 1 parameter, timeElapsed
+      var model = new CollectionList( createInitialKitCollection( layoutBounds, tickEmitter ), layoutBounds, tickEmitter );
       model.step = function step( timeElapsed ) {
-        clock.trigger( 'tick', timeElapsed );
+        tickEmitter.emit1( timeElapsed );
       };
       model.generateKitCollection = function generateKitCollection() {
-        return createKitCollection( layoutBounds, clock );
+        return createKitCollection( layoutBounds, tickEmitter );
       };
       return model;
     };
@@ -53,7 +53,7 @@ define( function( require ) {
    * @param numBoxes               Number of collection boxes
    * @return A consistent kitCollection
    */
-  BAMScreen.generateKitCollection = function( allowMultipleMolecules, numBoxes, clock, layoutBounds ) {
+  BAMScreen.generateKitCollection = function( allowMultipleMolecules, numBoxes, tickEmitter, layoutBounds ) {
     var maxInBox = 3;
 
     var usedMolecules = []; // [CompleteMolecule]
@@ -129,7 +129,7 @@ define( function( require ) {
         // funky math part. sqrt scales it so that we can get two layers of atoms if the atom count is above 2
         var bucketWidth = Bucket.calculateIdealBucketWidth( element.covalentRadius, atomCount );
 
-        buckets.push( new Bucket( new Dimension2( bucketWidth, 200 ), clock, element, atomCount ) );
+        buckets.push( new Bucket( new Dimension2( bucketWidth, 200 ), tickEmitter, element, atomCount ) );
       } );
 
       // add the kit
