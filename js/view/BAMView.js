@@ -28,7 +28,7 @@ define( function( require ) {
 
     this.collectionList = collectionList;
 
-    this.addCollection( collectionList.currentCollection );
+    this.addCollection( collectionList.currentCollectionProperty.value );
 
     collectionList.currentCollectionProperty.link( function( newCollection, oldCollection ) {
       if ( oldCollection ) {

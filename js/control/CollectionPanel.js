@@ -132,7 +132,7 @@ define( function( require ) {
     } );
 
     // use the current collection
-    this.useCollection( collectionList.currentCollection );
+    this.useCollection( collectionList.currentCollectionProperty.value );
 
     collectionList.currentCollectionProperty.link( function( newCollection ) {
       self.useCollection( newCollection );

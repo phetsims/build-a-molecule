@@ -14,16 +14,17 @@ define( function( require ) {
   var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   var Emitter = require( 'AXON/Emitter' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var PropertySet = require( 'AXON/PropertySet' );
+  var Property = require( 'AXON/Property' );
 
   /*
    * @param {KitCollection} firstCollection
    * @param {LayoutBounds}  layoutBounds
    */
   function CollectionList( firstCollection, layoutBounds, tickEmitter ) {
-    PropertySet.call( this, {
-      currentCollection: firstCollection
-    } );
+    // @public {Property.<KitCollection>}
+    this.currentCollectionProperty = new Property( firstCollection );
+
+    Property.preventGetSet( this, 'currentCollection' );
 
     // @public {Emitter} - Fires single parameter of {KitCollection}
     this.addedCollectionEmitter = new Emitter();
@@ -37,10 +38,10 @@ define( function( require ) {
   }
   buildAMolecule.register( 'CollectionList', CollectionList );
 
-  inherit( PropertySet, CollectionList, {
+  inherit( Object, CollectionList, {
     switchTo: function( collection ) {
       this.currentIndex = this.collections.indexOf( collection );
-      this.currentCollection = collection;
+      this.currentCollectionProperty.value = collection;
     },
 
     addCollection: function( collection ) {
@@ -51,11 +52,11 @@ define( function( require ) {
 
       // switch to collection
       this.currentIndex = this.collections.indexOf( collection );
-      this.currentCollection = collection;
+      this.currentCollectionProperty.value = collection;
     },
 
     removeCollection: function( collection ) {
-      assert && assert( this.currentCollection !== collection );
+      assert && assert( this.currentCollectionProperty.value !== collection );
       this.collections.splice( this.collections.indexOf( collection ), 1 ); // TODO: use remove() instead of splice()
 
       this.removedCollectionEmitter.emit1( collection );
@@ -72,7 +73,7 @@ define( function( require ) {
 
       // remove all the other collections
       _.each( this.collections.slice( 0 ), function( collection ) {
-        if ( collection !== self.currentCollection ) {
+        if ( collection !== self.currentCollectionProperty.value ) {
           self.removeCollection( collection );
         }
       } );
