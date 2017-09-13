@@ -39,7 +39,7 @@ define( function( require ) {
       }
     } );
 
-    collectionList.on( 'addedCollection', this.addCollection.bind( this ) );
+    collectionList.addedCollectionEmitter.addListener( this.addCollection.bind( this ) );
   }
   buildAMolecule.register( 'BAMView', BAMView );
 

@@ -12,21 +12,22 @@ define( function( require ) {
   'use strict';
 
   var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
+  var Emitter = require( 'AXON/Emitter' );
   var inherit = require( 'PHET_CORE/inherit' );
   var PropertySet = require( 'AXON/PropertySet' );
 
   /*
    * @param {KitCollection} firstCollection
    * @param {LayoutBounds}  layoutBounds
-   *
-   * events:
-   * addedCollection: function( kitCollection )
-   * removedCollection: function( kitCollection )
    */
   function CollectionList( firstCollection, layoutBounds, clock ) {
     PropertySet.call( this, {
       currentCollection: firstCollection
     } );
+
+    // @public {Emitter} - Fires single parameter of {KitCollection}
+    this.addedCollectionEmitter = new Emitter();
+    this.removedCollectionEmitter = new Emitter();
 
     this.layoutBounds = layoutBounds;
     this.clock = clock;
@@ -46,7 +47,7 @@ define( function( require ) {
       this.collections.push( collection );
 
       // TODO: notifications before changing current collection - is this desired? may be
-      this.trigger( 'addedCollection', collection );
+      this.addedCollectionEmitter.emit1( collection );
 
       // switch to collection
       this.currentIndex = this.collections.indexOf( collection );
@@ -57,7 +58,7 @@ define( function( require ) {
       assert && assert( this.currentCollection !== collection );
       this.collections.splice( this.collections.indexOf( collection ), 1 ); // TODO: use remove() instead of splice()
 
-      this.trigger( 'removedCollection', collection );
+      this.removedCollectionEmitter.emit1( collection );
     },
 
     reset: function() {

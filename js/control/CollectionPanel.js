@@ -95,8 +95,8 @@ define( function( require ) {
     }
 
     collectionList.currentCollectionProperty.link( updateSwitcher );
-    collectionList.on( 'addedCollection', updateSwitcher );
-    collectionList.on( 'removedCollection', updateSwitcher );
+    collectionList.addedCollectionEmitter.addListener( updateSwitcher );
+    collectionList.removedCollectionEmitter.addListener( updateSwitcher );
     this.layoutNode.addChild( collectionSwitcher );
     collectionSwitcher.top = y;
     y += collectionSwitcher.height + 10;
@@ -127,7 +127,7 @@ define( function( require ) {
     } );
 
     // if a new collection is added, create one for it
-    collectionList.on( 'addedCollection', function( collection ) {
+    collectionList.addedCollectionEmitter.addListener( function( collection ) {
       createCollectionNode( collection );
     } );
 
