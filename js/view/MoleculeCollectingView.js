@@ -88,8 +88,8 @@ define( function( require ) {
       var allFilledDialogNode = null;
 
       // show dialog the 1st time all collection boxes are filled
-      collection.allCollectionBoxesFilledProperty.link( function() {
-        if ( collection.allCollectionBoxesFilled ) {
+      collection.allCollectionBoxesFilledProperty.link( function( filled ) {
+        if ( filled ) {
           if ( !hasShownOnce ) {
             allFilledDialogNode = new AllFilledDialogNode( self.collectionList.availablePlayAreaBounds, self.regenerateCallback );
             hasShownOnce = true;

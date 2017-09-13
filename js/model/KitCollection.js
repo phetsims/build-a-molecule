@@ -10,34 +10,41 @@
 define( function( require ) {
   'use strict';
 
+  var BooleanProperty = require( 'AXON/BooleanProperty' );
   var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var PropertySet = require( 'AXON/PropertySet' );
+  var Property = require( 'AXON/Property' );
 
   var currentId = 0;
 
   function KitCollection() {
-    PropertySet.call( this, {
-      currentKit: null,
-      allCollectionBoxesFilled: false // this will remain false if we have no collection boxes
-    } );
-
     this.id = currentId++;
+
     this.kits = [];
     this.collectionBoxes = [];
+
+    // @public {Property.<Kit|null>}
+    this.currentKitProperty = new Property( null );
+
+    // @public {Property.<boolean>} - this will remain false if we have no collection boxes
+    this.allCollectionBoxesFilledProperty = new BooleanProperty( false );
+
+    // XXX
+    Property.preventGetSet( this, 'currentKit' );
+    Property.preventGetSet( this, 'allCollectionBoxesFilled' );
   }
   buildAMolecule.register( 'KitCollection', KitCollection );
 
-  inherit( PropertySet, KitCollection, {
+  inherit( Object, KitCollection, {
     addKit: function( kit ) {
       var self = this;
 
-      if ( this.currentKit ) {
+      if ( this.currentKitProperty.value ) {
         kit.hide();
       }
       else {
         // first kit, generally
-        this.currentKit = kit;
+        this.currentKitProperty.value = kit;
         kit.show();
 
         // handle kit visibility when this changes
@@ -104,13 +111,13 @@ define( function( require ) {
       // listen to when our collection boxes change, so that we can identify when all of our collection boxes are filled
       box.quantityProperty.link( function() {
         var allFull = _.every( self.collectionBoxes, function( collectionBox ) { return collectionBox.isFull(); } );
-        self.allCollectionBoxesFilled = self.collectionBoxes.length && allFull;
+        self.allCollectionBoxesFilledProperty.value = self.collectionBoxes.length && allFull;
       } );
     },
 
     get currentKitIndex() {
       // TODO: consider a direct reference to the index?
-      return _.indexOf( this.kits, this.currentKit );
+      return _.indexOf( this.kits, this.currentKitProperty.value );
     },
 
     hasNextKit: function() {
@@ -123,13 +130,13 @@ define( function( require ) {
 
     goToNextKit: function() {
       if ( this.hasNextKit() ) {
-        this.currentKit = this.kits[ this.currentKitIndex + 1 ];
+        this.currentKitProperty.value = this.kits[ this.currentKitIndex + 1 ];
       }
     },
 
     goToPreviousKit: function() {
       if ( this.hasPreviousKit() ) {
-        this.currentKit = this.kits[ this.currentKitIndex - 1 ];
+        this.currentKitProperty.value = this.kits[ this.currentKitIndex - 1 ];
       }
     },
 

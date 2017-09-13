@@ -90,7 +90,7 @@ define( function( require ) {
 
     var refillButton = new TextPushButton( kitResetKitString, {
       listener: function() {
-        kitCollectionModel.currentKit.resetKit();
+        kitCollectionModel.currentKitProperty.value.resetKit();
       },
       baseColor: Color.ORANGE,
       font: new PhetFont( { size: 12, weight: 'bold' } ),
@@ -99,7 +99,7 @@ define( function( require ) {
     } );
     refillButton.touchArea = Shape.bounds( refillButton.selfBounds.union( refillButton.childBounds ).dilated( 10 ) );
     var updateRefillButton = function() {
-      refillButton.enabled = kitCollectionModel.currentKit.hasAtomsOutsideOfBuckets();
+      refillButton.enabled = kitCollectionModel.currentKitProperty.value.hasAtomsOutsideOfBuckets();
     };
     _.each( kitCollectionModel.kits, function( kit ) {
       kit.addedMoleculeEmitter.addListener( updateRefillButton );
