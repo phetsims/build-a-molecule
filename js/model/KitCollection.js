@@ -80,7 +80,7 @@ define( function( require ) {
       };
 
       _.each( kit.atoms, function( atomModel ) {
-        atomModel.on( 'droppedByUser', dropListener );
+        atomModel.droppedByUserEmitter.addListener( dropListener );
       } );
 
       kit.addedMoleculeEmitter.addListener( function( molecule ) {

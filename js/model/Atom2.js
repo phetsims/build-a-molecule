@@ -11,6 +11,7 @@ define( function( require ) {
 
   var Atom = require( 'NITROGLYCERIN/Atom' );
   var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
+  var Emitter = require( 'AXON/Emitter' );
   var extend = require( 'PHET_CORE/extend' );
   var inherit = require( 'PHET_CORE/inherit' );
   var PropertySet = require( 'AXON/PropertySet' );
@@ -20,12 +21,6 @@ define( function( require ) {
 
   var motionVelocity = 800; // In picometers per second of sim time.
 
-  /*
-   * Events:
-   *   grabbedByUser:    function( particle ) {}
-   *   droppedByUser:    function( particle ) {}
-   *   removedFromModel: function( particle ) {}
-   */
   function Atom2( element, clock ) {
     var self = this;
 
@@ -39,19 +34,22 @@ define( function( require ) {
     } );
     Atom.call( this, element );
 
+    // @public {Emitter} - Called with one parameter: particle
+    this.grabbedByUserEmitter = new Emitter();
+    this.droppedByUserEmitter = new Emitter();
+    this.removedFromModelEmitter = new Emitter(); //REVIEW: Umm, not triggered?
+
     this.clock = clock;
     this.clockListener = this.stepInTime.bind( this );
 
     this.name = Strings.getAtomName( element );
 
-
-
     this.userControlledProperty.lazyLink( function( controlled ) {
       if ( controlled ) {
-        self.trigger( 'grabbedByUser', self );
+        self.grabbedByUserEmitter.emit1( self );
       }
       else {
-        self.trigger( 'droppedByUser', self );
+        self.droppedByUserEmitter.emit1( self );
       }
     } );
 

@@ -37,7 +37,8 @@ define( function( require ) {
     atom.visibleProperty.link( function( visible ) {
       self.visible = visible;
     } );
-    atom.on( 'removedFromModel', function() {
+    //REVIEW*: Not used?
+    atom.removedFromModelEmitter.addListener( function() {
       self.detach(); // removes us from all parents
     } );
   }
