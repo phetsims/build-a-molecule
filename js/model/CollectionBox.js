@@ -14,16 +14,18 @@ define( function( require ) {
   var Emitter = require( 'AXON/Emitter' );
   var Globals = require( 'BUILD_A_MOLECULE/Globals' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var PropertySet = require( 'AXON/PropertySet' );
+  var NumberProperty = require( 'AXON/NumberProperty' );
+  var Property = require( 'AXON/Property' );
 
   /*
    * @param {CompleteMolecule} moleculeType
    * @param {Int}              capacity
    */
   function CollectionBox( moleculeType, capacity ) {
-    PropertySet.call( this, {
-      quantity: 0
-    } );
+    // @public {Property.<number>}
+    this.quantityProperty = new NumberProperty( 0 );
+
+    Property.preventGetSet( this, 'quantity' );
 
     // @public {Emitter} - Called with a single molecule parameter
     this.addedMoleculeEmitter = new Emitter();
@@ -37,14 +39,14 @@ define( function( require ) {
     this._dropBounds = Bounds2.NOTHING;
 
     this.addedMoleculeEmitter.addListener( function( molecule ) {
-      if ( self.quantity === capacity ) {
+      if ( self.quantityProperty.value === capacity ) {
         Globals.gameAudioPlayer.correctAnswer();
       }
     } );
   }
   buildAMolecule.register( 'CollectionBox', CollectionBox );
 
-  inherit( PropertySet, CollectionBox, {
+  inherit( Object, CollectionBox, {
     set dropBounds( value ) {
       // TODO: consider removing ES5 getter/setter here
       assert && assert( value );
@@ -56,7 +58,7 @@ define( function( require ) {
     },
 
     isFull: function() {
-      return this.capacity === this.quantity;
+      return this.capacity === this.quantityProperty.value;
     },
 
     /**
@@ -69,18 +71,18 @@ define( function( require ) {
       var equivalent = this.moleculeType.isEquivalent( moleculeStructure );
 
       // whether the structure is acceptable
-      return equivalent && this.quantity < this.capacity;
+      return equivalent && this.quantityProperty.value < this.capacity;
     },
 
     addMolecule: function( molecule ) {
-      this.quantity++;
+      this.quantityProperty.value++;
       this.molecules.push( molecule );
 
       this.addedMoleculeEmitter.emit1( molecule );
     },
 
     removeMolecule: function( molecule ) {
-      this.quantity--;
+      this.quantityProperty.value--;
       this.molecules.splice( this.molecules.indexOf( molecule ), 1 ); // TODO: remove() instead of splice()
 
       this.removedMoleculeEmitter.emit1( molecule );

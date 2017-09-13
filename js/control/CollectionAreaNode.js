@@ -87,7 +87,7 @@ define( function( require ) {
     function updateEnabled() {
       var enabled = false;
       _.each( collection.collectionBoxes, function( box ) {
-        if ( box.quantity > 0 ) {
+        if ( box.quantityProperty.value > 0 ) {
           enabled = true;
         }
       } );

@@ -71,7 +71,7 @@ define( function( require ) {
       show3dButton.centerY = this.blackBox.centerY;
       this.button3dWidth = show3dButton.width;
       var update3dVisibility = function() {
-        show3dButton.visible = box.quantity > 0;
+        show3dButton.visible = box.quantityProperty.value > 0;
       };
       box.addedMoleculeEmitter.addListener( update3dVisibility );
       box.removedMoleculeEmitter.addListener( update3dVisibility );
@@ -183,7 +183,7 @@ define( function( require ) {
       this.layOutMoleculeList( this.moleculeNodes );
 
       // center in the black box
-      if ( this.box.quantity > 0 ) {
+      if ( this.box.quantityProperty.value > 0 ) {
         this.centerMoleculesInBlackBox();
       }
     },
