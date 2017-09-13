@@ -16,6 +16,7 @@ define( function( require ) {
   var CollectionBox = require( 'BUILD_A_MOLECULE/model/CollectionBox' );
   var CollectionList = require( 'BUILD_A_MOLECULE/model/CollectionList' );
   var Constants = require( 'BUILD_A_MOLECULE/Constants' );
+  var Emitter = require( 'AXON/Emitter' );
   var Globals = require( 'BUILD_A_MOLECULE/Globals' );
   var inherit = require( 'PHET_CORE/inherit' );
   var KitCollection = require( 'BUILD_A_MOLECULE/model/KitCollection' );
@@ -24,7 +25,6 @@ define( function( require ) {
   var NextPreviousNavigationNode = require( 'SCENERY_PHET/NextPreviousNavigationNode' );
   var Node = require( 'SCENERY/nodes/Node' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  var PropertySet = require( 'AXON/PropertySet' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var Shape = require( 'KITE/Shape' );
   var SoundToggleButton = require( 'SCENERY_PHET/buttons/SoundToggleButton' );
@@ -150,7 +150,7 @@ define( function( require ) {
     // construct a dummy collection panel and check its width
     var collection = new KitCollection();
     collection.addCollectionBox( new CollectionBox( MoleculeList.H2O, 1 ) );
-    var collectionList = new CollectionList( collection, new LayoutBounds( false, 0 ), new PropertySet( {} ) );
+    var collectionList = new CollectionList( collection, new LayoutBounds( false, 0 ), new Emitter() );
     var collectionPanel = new CollectionPanel( collectionList, isSingleCollectionMode, [], function() { return Bounds2.NOTHING; } );
 
     return Constants.modelViewTransform.viewToModelDeltaX( collectionPanel.width );
