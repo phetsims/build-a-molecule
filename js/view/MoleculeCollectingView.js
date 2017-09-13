@@ -36,46 +36,6 @@ define( function( require ) {
 
     // notify attachment
     _.each( collectionAttachmentCallbacks, function( callback ) { callback(); } );
-
-    /*---------------------------------------------------------------------------*
-     * collection box hint arrow. add this only to the 1st collection
-     *----------------------------------------------------------------------------*/
-
-    // final KitCollection firstCollection = collectionList.currentCollection.get();
-    // for ( final Kit kit : firstCollection.getKits() ) {
-    //     kit.addMoleculeListener( new Kit.MoleculeAdapter() {
-    //         @Override public void addedMolecule( Molecule molecule ) {
-    //             CollectionBox targetBox = firstCollection.getFirstTargetBox( molecule );
-
-    //             // if a hint doesn't exist AND we have a target box, add it
-    //             if ( collectionBoxHintNode == null && targetBox != null ) {
-    //                 collectionBoxHintNode = new CollectionBoxHintNode( molecule, targetBox );
-    //                 addWorldChild( collectionBoxHintNode );
-    //             }
-    //             else if ( collectionBoxHintNode != null ) {
-    //                 // otherwise clear any other hint nodes
-    //                 collectionBoxHintNode.disperse();
-    //             }
-    //         }
-
-    //         @Override public void removedMolecule( Molecule molecule ) {
-    //             // clear any existing hint node on molecule removal
-    //             if ( collectionBoxHintNode != null ) {
-    //                 collectionBoxHintNode.disperse();
-    //             }
-    //         }
-    //     } );
-
-    //     // whenever a kit switch happens, remove the arrow
-    //     kit.visible.addObserver( new SimpleObserver() {
-    //         public void update() {
-    //             // clear any existing hint node on molecule removal
-    //             if ( collectionBoxHintNode != null ) {
-    //                 collectionBoxHintNode.disperse();
-    //             }
-    //         }
-    //     } );
-    // }
   }
   buildAMolecule.register( 'MoleculeCollectingView', MoleculeCollectingView );
 

@@ -9,6 +9,7 @@
 define( function( require ) {
   'use strict';
 
+  var BooleanProperty = require( 'AXON/BooleanProperty' );
   var Bounds2 = require( 'DOT/Bounds2' );
   var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   var cleanArray = require( 'PHET_CORE/cleanArray' );
@@ -18,18 +19,21 @@ define( function( require ) {
   var Molecule = require( 'BUILD_A_MOLECULE/model/Molecule' );
   var MoleculeList = require( 'BUILD_A_MOLECULE/model/MoleculeList' );
   var MoleculeStructure = require( 'BUILD_A_MOLECULE/model/MoleculeStructure' );
-  var PropertySet = require( 'AXON/PropertySet' );
+  var Property = require( 'AXON/Property' );
   var Rectangle = require( 'DOT/Rectangle' );
   var Vector2 = require( 'DOT/Vector2' );
 
   var kitIdCounter = 0;
 
   function Kit( layoutBounds, buckets ) {
-    PropertySet.call( this, {
-      visible: false,
-      hasMoleculesInBoxes: false // we record this so we know when the "reset kit" should be shown
-    } );
     this.id = kitIdCounter++;
+
+    // @public {Property.<boolean>}
+    this.visibleProperty = new BooleanProperty( false );
+    this.hasMoleculesInBoxesProperty = new BooleanProperty( false ); // we record this so we know when the "reset kit" should be shown
+
+    Property.preventGetSet( this, 'visible' );
+    Property.preventGetSet( this, 'hasMoleculesInBoxes' );
 
     // @public {Emitter} - Called with a single parameter molecule
     this.addedMoleculeEmitter = new Emitter();
@@ -50,7 +54,7 @@ define( function( require ) {
   }
   buildAMolecule.register( 'Kit', Kit );
 
-  inherit( PropertySet, Kit, {
+  inherit( Object, Kit, {
     resetKit: function() {
       var self = this;
 
@@ -132,11 +136,11 @@ define( function( require ) {
     },
 
     show: function() {
-      this.visible = true;
+      this.visibleProperty.value = true;
     },
 
     hide: function() {
-      this.visible = false;
+      this.visibleProperty.value = false;
     },
 
     isContainedInBucket: function( atom ) {
@@ -222,7 +226,7 @@ define( function( require ) {
     moleculePutInCollectionBox: function( molecule, box ) {
       var self = this;
       window.console && console.log && console.log( 'You have collected: ' + box.moleculeType.commonName );
-      this.hasMoleculesInBoxes = true;
+      this.hasMoleculesInBoxesProperty.value = true;
       this.removeMolecule( molecule );
       _.each( molecule.atoms, function( atom ) {
         self.atoms.splice( self.atoms.indexOf( atom ), 1 ); // TODO: remove() instead of splice()
@@ -309,7 +313,7 @@ define( function( require ) {
     },
 
     hasAtomsOutsideOfBuckets: function() {
-      return !!( this.molecules.length || this.hasMoleculesInBoxes );
+      return !!( this.molecules.length || this.hasMoleculesInBoxesProperty.value );
     },
 
     /*---------------------------------------------------------------------------*
