@@ -44,7 +44,7 @@ define( function( require ) {
     shiftDestination: function( delta ) {
       _.each( this.atoms, function( atom ) {
         // TODO: memory: consider alternate mutable form atom.destination.add( delta )
-        atom.destination = atom.destination.plus( delta );
+        atom.destinationProperty.value = atom.destinationProperty.value.plus( delta );
       } );
     }
   } );

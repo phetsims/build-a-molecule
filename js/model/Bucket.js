@@ -62,7 +62,7 @@ define( function( require ) {
       var delta = point.minus( this.position );
 
       _.each( this.atoms, function( atom ) {
-        atom.setPositionAndDestination( atom.position.plus( delta ) );
+        atom.setPositionAndDestination( atom.positionProperty.value.plus( delta ) );
       } );
     },
 

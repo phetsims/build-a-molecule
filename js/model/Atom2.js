@@ -10,11 +10,12 @@ define( function( require ) {
   'use strict';
 
   var Atom = require( 'NITROGLYCERIN/Atom' );
+  var BooleanProperty = require( 'AXON/BooleanProperty' );
   var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   var Emitter = require( 'AXON/Emitter' );
   var extend = require( 'PHET_CORE/extend' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var PropertySet = require( 'AXON/PropertySet' );
+  var Property = require( 'AXON/Property' );
   var Rectangle = require( 'DOT/Rectangle' );
   var Strings = require( 'BUILD_A_MOLECULE/Strings' );
   var Vector2 = require( 'DOT/Vector2' );
@@ -24,15 +25,22 @@ define( function( require ) {
   function Atom2( element, tickEmitter ) {
     var self = this;
 
-    PropertySet.call( this, {
-      position: Vector2.ZERO,
-      // considered mutable, public
-      destination: Vector2.ZERO,
-      userControlled: false, //True if the particle is being dragged by the user
-      visible: true,
-      addedToModel: true
-    } );
     Atom.call( this, element );
+
+    // @public {Property.<Vector2>}
+    this.positionProperty = new Property( Vector2.ZERO );
+    this.destinationProperty = new Property( Vector2.ZERO );
+
+    // @public {Property.<boolean>}
+    this.userControlledProperty = new BooleanProperty( false );
+    this.visibleProperty = new BooleanProperty( true );
+    this.addedToModelProperty = new BooleanProperty( true );
+
+    Property.preventGetSet( this, 'position' );
+    Property.preventGetSet( this, 'destination' );
+    Property.preventGetSet( this, 'userControlled' );
+    Property.preventGetSet( this, 'visible' );
+    Property.preventGetSet( this, 'addedToModel' );
 
     // @public {Emitter} - Called with one parameter: particle
     this.grabbedByUserEmitter = new Emitter();
@@ -66,20 +74,20 @@ define( function( require ) {
   }
   buildAMolecule.register( 'Atom2', Atom2 );
 
-  inherit( PropertySet, Atom2, extend( {}, Atom.prototype, {
+  inherit( Object, Atom2, extend( {}, Atom.prototype, {
     get positionBounds() {
-      return new Rectangle( this.position.x - this.covalentRadius, this.position.y - this.covalentRadius, this.covalentDiameter, this.covalentDiameter );
+      return new Rectangle( this.positionProperty.value.x - this.covalentRadius, this.positionProperty.value.y - this.covalentRadius, this.covalentDiameter, this.covalentDiameter );
     },
 
     get destinationBounds() {
-      return new Rectangle( this.destination.x - this.covalentRadius, this.destination.y - this.covalentRadius, this.covalentDiameter, this.covalentDiameter );
+      return new Rectangle( this.destinationProperty.value.x - this.covalentRadius, this.destinationProperty.value.y - this.covalentRadius, this.covalentDiameter, this.covalentDiameter );
     },
 
     stepInTime: function( dt ) {
-      if ( this.position.distance( this.destination ) !== 0 ) {
+      if ( this.positionProperty.value.distance( this.destinationProperty.value ) !== 0 ) {
         // Move towards the current destination
         var distanceToTravel = motionVelocity * dt;
-        var distanceToTarget = this.position.distance( this.destination );
+        var distanceToTarget = this.positionProperty.value.distance( this.destinationProperty.value );
 
         var farDistanceMultiple = 10; // if we are this many times away, we speed up
 
@@ -91,35 +99,40 @@ define( function( require ) {
 
         if ( distanceToTravel >= distanceToTarget ) {
           // Closer than one step, so just go there.
-          this.position = this.destination;
+          this.positionProperty.value = this.destinationProperty.value;
         }
         else {
           // Move towards the destination.
-          var angle = Math.atan2( this.destination.y - this.position.y,
-            this.destination.x - this.position.x );
+          var angle = Math.atan2( this.destinationProperty.value.y - this.positionProperty.value.y,
+            this.destinationProperty.value.x - this.positionProperty.value.x );
           this.translate( distanceToTravel * Math.cos( angle ), distanceToTravel * Math.sin( angle ) );
         }
       }
     },
 
-    setPosition: function( x, y ) { this.position = new Vector2( x, y ); },
+    setPosition: function( x, y ) { this.positionProperty.value = new Vector2( x, y ); },
 
     translatePositionAndDestination: function( delta ) {
-      this.position = this.position.plus( delta );
-      this.destination = this.destination.plus( delta );
+      this.positionProperty.value = this.positionProperty.value.plus( delta );
+      this.destinationProperty.value = this.destinationProperty.value.plus( delta );
     },
 
     setPositionAndDestination: function( point ) {
-      this.position = this.destination = point;
+      this.positionProperty.value = this.destinationProperty.value = point;
     },
 
     translate: function( x, y ) {
-      this.position = new Vector2( this.position.x + x, this.position.y + y );
+      this.positionProperty.value = new Vector2( this.positionProperty.value.x + x, this.positionProperty.value.y + y );
     },
 
     reset: function() {
-      PropertySet.prototype.reset.call( this );
-      this.destination = this.position;
+      this.positionProperty.reset();
+      this.destinationProperty.reset();
+      this.userControlledProperty.reset();
+      this.visibleProperty.reset();
+      this.addedToModelProperty.reset();
+
+      this.destinationProperty.value = this.positionProperty.value;
     }
   } ) );
 

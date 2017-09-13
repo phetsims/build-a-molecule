@@ -107,11 +107,11 @@ define( function( require ) {
 
     // listener that will update the position of our hit target
     this.positionListener = function() {
-      var orientation = b.position.minus( a.position );
+      var orientation = b.positionProperty.value.minus( a.positionProperty.value );
       if ( orientation.magnitude() > 0 ) {
         orientation.normalize();
       }
-      var location = orientation.times( a.covalentRadius ).plus( a.position );
+      var location = orientation.times( a.covalentRadius ).plus( a.positionProperty.value );
       self.setTranslation( Constants.modelViewTransform.modelToViewPosition( location ) );
     };
     a.positionProperty.link( this.positionListener );

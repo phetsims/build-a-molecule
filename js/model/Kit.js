@@ -112,8 +112,9 @@ define( function( require ) {
         // include both the bucket's shape and its atoms in our bounds, so we can properly center the group
         bucketBounds.includeBounds( bucket.containerShape.bounds );
         _.each( bucket.atoms, function( atom ) {
-          bucketBounds.includeBounds( new Bounds2( atom.position.x - atom.covalentRadius, atom.position.y - atom.covalentRadius,
-            atom.position.x + atom.covalentRadius, atom.position.y + atom.covalentRadius ) );
+          var atomPosition = atom.positionProperty.value;
+          bucketBounds.includeBounds( new Bounds2( atomPosition.x - atom.covalentRadius, atomPosition.y - atom.covalentRadius,
+            atomPosition.x + atom.covalentRadius, atomPosition.y + atom.covalentRadius ) );
         } );
         bucket.position = new Vector2( usedWidth, 0 );
         usedWidth += bucket.width;
@@ -172,7 +173,7 @@ define( function( require ) {
     atomDropped: function( atom ) {
       // dropped on kit, put it in a bucket
       var wasInPlay = this.isAtomInPlay( atom );
-      var droppedInKitArea = this.availableKitBounds.containsPoint( atom.position );
+      var droppedInKitArea = this.availableKitBounds.containsPoint( atom.positionProperty.value );
 
       if ( droppedInKitArea ) {
         if ( wasInPlay ) {
@@ -231,7 +232,7 @@ define( function( require ) {
       _.each( molecule.atoms, function( atom ) {
         self.atoms.splice( self.atoms.indexOf( atom ), 1 ); // TODO: remove() instead of splice()
         self.atomsInCollectionBox.push( atom );
-        atom.visible = false;
+        atom.visibleProperty.value = false;
       } );
       box.addMolecule( molecule );
       this.removedMolecules[ molecule.moleculeId ] = box;
@@ -559,7 +560,7 @@ define( function( require ) {
               }
 
               var location = new BondingOption( otherAtom, otherDirection, ourAtom );
-              var distance = ourAtom.position.distance( location.idealLocation );
+              var distance = ourAtom.positionProperty.value.distance( location.idealLocation );
               if ( distance < bestDistanceFromIdealLocation ) {
                 bestLocation = location;
                 bestDistanceFromIdealLocation = distance;
@@ -579,9 +580,9 @@ define( function( require ) {
       }
 
       // cause all atoms in the molecule to move to that location
-      var delta = bestLocation.idealLocation.minus( bestLocation.b.position );
+      var delta = bestLocation.idealLocation.minus( bestLocation.b.positionProperty.value );
       _.each( this.getMolecule( bestLocation.b ).atoms, function( atomInMolecule ) {
-        atomInMolecule.destination = atomInMolecule.position.plus( delta );
+        atomInMolecule.destinationProperty.value = atomInMolecule.positionProperty.value.plus( delta );
       } );
 
       // we now will bond the atom
@@ -607,7 +608,7 @@ define( function( require ) {
     this.b = b;
 
     // The location the atom should be placed
-    this.idealLocation = a.position.plus( direction.vector.times( a.covalentRadius + b.covalentRadius ) );
+    this.idealLocation = a.positionProperty.value.plus( direction.vector.times( a.covalentRadius + b.covalentRadius ) );
   };
 
   Kit.bondDistanceThreshold = 200;

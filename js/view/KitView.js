@@ -121,7 +121,7 @@ define( function( require ) {
           }
 
           // move the atom to right under the pointer for this assisted drag - otherwise the offset would be too noticeable
-          atom.position = atom.destination = modelPoint;
+          atom.positionProperty.value = atom.destinationProperty.value = modelPoint;
 
           var atomNode = self.atomNodeMap[ atom.id ];
           // TODO: use a new DragListener
@@ -144,7 +144,7 @@ define( function( require ) {
         // drags this atom.
         var atomListener = new SimpleDragHandler( {
           start: function( evt, trail ) {
-            atom.userControlled = true;
+            atom.userControlledProperty.value = true;
 
             var molecule = kit.getMolecule( atom );
             if ( molecule ) {
@@ -158,7 +158,7 @@ define( function( require ) {
           },
 
           end: function( evt, trail ) {
-            atom.userControlled = false;
+            atom.userControlledProperty.value = false;
           },
 
           translate: function( data ) {
