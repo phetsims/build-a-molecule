@@ -29,12 +29,13 @@ define( function( require ) {
 
     var self = this;
     this.molecule = molecule;
-    this.updatePositionListener = self.updatePosition.bind( self );
 
     if ( molecule.atoms.length < 2 ) {
       // we don't need anything at all if it is not a "molecule"
-      return;
+      return; // TODO: Horrible idea
     }
+
+    this.updatePositionListener = this.updatePosition.bind( this );
 
     var completeMolecule = MoleculeList.getMasterInstance().findMatchingCompleteMolecule( molecule );
 
@@ -100,10 +101,12 @@ define( function( require ) {
 
   inherit( Node, MoleculeMetadataNode, {
     destruct: function() {
-      var self = this;
-      _.each( this.molecule.atoms, function( atom ) {
-        atom.positionProperty.unlink( self.updatePositionListener );
-      } );
+      var listener = this.updatePositionListener;
+      if ( listener ) {
+        _.each( this.molecule.atoms, function( atom ) {
+          atom.positionProperty.unlink( listener );
+        } );
+      }
       // TODO: incomplete: throw new Error( 'dialog.hideDialogIfShown' );
     },
 
