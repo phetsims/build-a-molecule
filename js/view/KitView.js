@@ -57,10 +57,11 @@ define( function( require ) {
     this.addChild( sliceNode );
 
     // override its hit testing
-    atomLayer.trailUnderPoint = function( point, options, recursive, hasListener ) {
+    // TODO: REALLY don't do this. Super easy to break
+    atomLayer.hitTest = function( point, isMouse, isTouch ) {
       // return accurate hits for the mouse
-      if ( options && options.isMouse ) {
-        return Node.prototype.trailUnderPoint.call( atomLayer, point, options, recursive, hasListener );
+      if ( isMouse ) {
+        return Node.prototype.hitTest.call( atomLayer, point, isMouse, isTouch );
       }
 
       // probably a touch or something we will target
