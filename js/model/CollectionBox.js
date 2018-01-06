@@ -18,7 +18,7 @@ define( function( require ) {
 
   /*
    * @param {CompleteMolecule} moleculeType
-   * @param {Int}              capacity
+   * @param {Int}              capacity TODO: Should this be number?
    */
   function CollectionBox( moleculeType, capacity ) {
     // @public {Property.<number>}

@@ -616,7 +616,7 @@ define( function( require ) {
    * NOTE: equivalency matrices are stored in row-major format (compared to the Java version)
    *
    * @param {Array[Boolean]} equivalences          Equivalence Matrix, square!, row-major (stored as one boolean array)
-   * @param {Int}            myIndex               Index for the row (index into our atoms). calls with myIndex + 1 to children
+   * @param {Int}            myIndex               Index for the row (index into our atoms). calls with myIndex + 1 to children TODO: should this be number?
    * @param {Array[Int]}     otherRemainingIndices Remaining available 'other' indices
    * @param {Int}            size                  This square matrix is size x size in dimensions
    * @return Whether a successful matching permutation was found
