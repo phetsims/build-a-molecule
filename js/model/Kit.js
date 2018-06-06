@@ -425,8 +425,8 @@ define( function( require ) {
               foundOverlap = true;
 
               // get perturbed centers. this is so that if two molecules have the exact same centers, we will push them away
-              var aCenter = aBounds.center.plus( new Vector2( Math.random() - 0.5, Math.random() - 0.5 ) );
-              var bCenter = bBounds.center.plus( new Vector2( Math.random() - 0.5, Math.random() - 0.5 ) );
+              var aCenter = aBounds.center.plus( new Vector2( phet.joist.random.nextDouble() - 0.5, phet.joist.random.nextDouble() - 0.5 ) );
+              var bCenter = bBounds.center.plus( new Vector2( phet.joist.random.nextDouble() - 0.5, phet.joist.random.nextDouble() - 0.5 ) );
 
               // delta from center of A to center of B, scaled to half of our push amount.
               var delta = bCenter.minus( aCenter ).normalized().times( pushAmount );
