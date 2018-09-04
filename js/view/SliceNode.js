@@ -15,7 +15,7 @@ define( function( require ) {
   var DOM = require( 'SCENERY/nodes/DOM' );
   var inherit = require( 'PHET_CORE/inherit' );
   var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' ); // TODO: DragListener
-  var Timer = require( 'PHET_CORE/Timer' );
+  var timer = require( 'PHET_CORE/timer' );
   var Transform3 = require( 'DOT/Transform3' );
   var Vector2 = require( 'DOT/Vector2' );
 
@@ -157,7 +157,7 @@ define( function( require ) {
       this.traveledDistance += Math.sqrt( dragDeltaX * dragDeltaX + dragDeltaY * dragDeltaY );
       var self = this;
       if ( this.traveledDistance > sliceDistanceLimit && this.sliceInputListener.dragging ) {
-        Timer.setTimeout( function() {
+        timer.setTimeout( function() {
           self.sliceInputListener.endDrag( event );
         }, 0 );
       }
