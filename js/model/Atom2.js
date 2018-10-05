@@ -37,8 +37,8 @@ define( function( require ) {
     this.addedToModelProperty = new BooleanProperty( true );
 
     // @public {Emitter} - Called with one parameter: particle
-    this.grabbedByUserEmitter = new Emitter();
-    this.droppedByUserEmitter = new Emitter();
+    this.grabbedByUserEmitter = new Emitter( { validValues: [ Atom2 ] } );
+    this.droppedByUserEmitter = new Emitter( { validValues: [ Atom2 ] } );
     this.removedFromModelEmitter = new Emitter(); //REVIEW: Umm, not triggered?
 
     this.tickEmitter = tickEmitter;
@@ -48,10 +48,10 @@ define( function( require ) {
 
     this.userControlledProperty.lazyLink( function( controlled ) {
       if ( controlled ) {
-        self.grabbedByUserEmitter.emit1( self );
+        self.grabbedByUserEmitter.emit( self );
       }
       else {
-        self.droppedByUserEmitter.emit1( self );
+        self.droppedByUserEmitter.emit( self );
       }
     } );
 

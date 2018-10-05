@@ -30,7 +30,7 @@ define( function( require ) {
     }, options );
 
     var createModel = function() {
-      var tickEmitter = new Emitter(); // emits 1 parameter, timeElapsed
+      var tickEmitter = new Emitter( { validValues: [ 'number' ] } ); // emits 1 parameter, timeElapsed
       var model = new CollectionList( createInitialKitCollection( layoutBounds, tickEmitter ), layoutBounds, tickEmitter );
       model.step = function step( timeElapsed ) {
         tickEmitter.emit1( timeElapsed );
@@ -41,7 +41,7 @@ define( function( require ) {
       return model;
     };
 
-    Screen.call( this,createModel, createView, options );
+    Screen.call( this, createModel, createView, options );
   }
 
   buildAMolecule.register( 'BAMScreen', BAMScreen );
