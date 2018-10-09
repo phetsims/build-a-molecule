@@ -37,8 +37,8 @@ define( function( require ) {
     this.addedToModelProperty = new BooleanProperty( true );
 
     // @public {Emitter} - Called with one parameter: particle
-    this.grabbedByUserEmitter = new Emitter( { validValues: [ Atom2 ] } );
-    this.droppedByUserEmitter = new Emitter( { validValues: [ Atom2 ] } );
+    this.grabbedByUserEmitter = new Emitter( { valueTypes: [ Atom2 ] } );
+    this.droppedByUserEmitter = new Emitter( { valueTypes: [ Atom2 ] } );
     this.removedFromModelEmitter = new Emitter(); //REVIEW: Umm, not triggered?
 
     this.tickEmitter = tickEmitter;
@@ -66,6 +66,7 @@ define( function( require ) {
       }
     } );
   }
+
   buildAMolecule.register( 'Atom2', Atom2 );
 
   inherit( Object, Atom2, extend( {}, Atom.prototype, {
