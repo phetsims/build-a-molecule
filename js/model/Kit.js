@@ -284,8 +284,8 @@ define( function( require ) {
     /**
      * Breaks a bond between two atoms in a molecule.
      *
-     * @param {Atom2} a Atom A
-     * @param {Atom2} b Atom B
+     * @param {Atom2} a - Atom A
+     * @param {Atom2} b - Atom B
      */
     breakBond: function( a, b, skipSeparation ) {
       // get our old and new molecule structures
@@ -453,9 +453,9 @@ define( function( require ) {
     /**
      * Bonds one atom to another, and handles the corresponding structural changes between molecules.
      *
-     * @param {Atom2} a       An atom A
-     * @param {Direction} dirAtoB The direction from A that the bond will go in (for lewis-dot structure)
-     * @param {Atom2} b       An atom B
+     * @param {Atom2} a - An atom A
+     * @param {Direction} dirAtoB - The direction from A that the bond will go in (for lewis-dot structure)
+     * @param {Atom2} b - An atom B
      */
     bond: function( a, dirAtoB, b ) {
       this.lewisDotModel.bond( a, dirAtoB, b );

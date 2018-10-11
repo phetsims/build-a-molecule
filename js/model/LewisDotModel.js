@@ -75,8 +75,8 @@ define( function( require ) {
     /**
      * Break the bond between A and B (if it exists)
      *
-     * @param {Atom} a A
-     * @param {Atom} b B
+     * @param {Atom} a - A
+     * @param {Atom} b - B
      */
     breakBond: function( a, b ) {
       var dotA = this.getLewisDotAtom( a );
@@ -116,8 +116,8 @@ define( function( require ) {
     },
 
     /**
-     * @param {Atom} a A
-     * @param {Atom} b B
+     * @param {Atom} a - A
+     * @param {Atom} b - B
      * @returns {Direction} The bond direction from A to B. If it doesn't exist, an exception is thrown
      */
     getBondDirection: function( a, b ) {
