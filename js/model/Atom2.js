@@ -13,6 +13,7 @@ define( function( require ) {
   var BooleanProperty = require( 'AXON/BooleanProperty' );
   var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   var Emitter = require( 'AXON/Emitter' );
+  var EmitterIO = require( 'AXON/EmitterIO' );
   var extend = require( 'PHET_CORE/extend' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Property = require( 'AXON/Property' );
@@ -37,8 +38,8 @@ define( function( require ) {
     this.addedToModelProperty = new BooleanProperty( true );
 
     // @public {Emitter} - Called with one parameter: particle
-    this.grabbedByUserEmitter = new Emitter( { valueTypes: [ Atom2 ] } );
-    this.droppedByUserEmitter = new Emitter( { valueTypes: [ Atom2 ] } );
+    this.grabbedByUserEmitter = new Emitter( { phetioType: EmitterIO( [ { type: Atom2 } ] ) } );
+    this.droppedByUserEmitter = new Emitter( { phetioType: EmitterIO( [ { type: Atom2 } ] ) } );
     this.removedFromModelEmitter = new Emitter(); //REVIEW: Umm, not triggered?
 
     this.tickEmitter = tickEmitter;
