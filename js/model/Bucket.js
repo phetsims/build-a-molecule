@@ -84,7 +84,7 @@ define( function( require ) {
    *
    * @param radius   Atomic radius (picometers)
    * @param quantity Quantity of atoms in bucket
-   * @return Width of bucket
+   * @returns {number} Width of bucket
    */
   Bucket.calculateIdealBucketWidth = function( radius, quantity ) {
     // calculate atoms to go on the bottom row

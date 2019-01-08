@@ -66,7 +66,7 @@ define( function( require ) {
     constructor: StrippedMolecule,
 
     /**
-     * @return MoleculeStructure, where the hydrogen atoms are not the original hydrogen atoms
+     * @returns {MoleculeStructure} where the hydrogen atoms are not the original hydrogen atoms
      */
     toMoleculeStructure: function() {
       var self = this;
@@ -128,7 +128,7 @@ define( function( require ) {
      *
      * @param {StrippedMolecule} other   Other (potential) submolecule
      * @param <AtomU> Other atom type.
-     * @return Whether "other" is a hydrogen submolecule of this instance
+     * @returns {boolean} Whether "other" is a hydrogen submolecule of this instance
      */
     isHydrogenSubmolecule: function( other ) {
       var self = this;

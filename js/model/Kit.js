@@ -236,7 +236,7 @@ define( function( require ) {
 
     /**
      * @param atom An atom
-     * @return Is this atom registered in our molecule structures?
+     * @returns {boolean} Is this atom registered in our molecule structures?
      */
     isAtomInPlay: function( atom ) {
       return this.getMolecule( atom ) !== null;
@@ -518,7 +518,7 @@ define( function( require ) {
 
     /**
      * @param molecule A molecule that should attempt to bind to other atoms / molecules
-     * @return Success
+     * @returns {boolean} Success
      */
     attemptToBondMolecule: function( molecule ) {
       var self = this;

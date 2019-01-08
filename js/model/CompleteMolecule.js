@@ -64,14 +64,14 @@ define( function( require ) {
     },
 
     /**
-     * @return The translation string key that should be used to look up a translated value
+     * @returns {string} The translation string key that should be used to look up a translated value
      */
     get stringKey() {
       return 'molecule.' + this._commonName.replace( ' ', '_' );
     },
 
     /**
-     * @return A translated display name if possible. This does a weird lookup so that we can only list some of the names in the translation, but can
+     * @returns A translated display name if possible. This does a weird lookup so that we can only list some of the names in the translation, but can
      *         accept an even larger number of translated names in a translation file
      */
     getDisplayName: function() {
@@ -89,7 +89,7 @@ define( function( require ) {
       }
     },
 
-    // @return A node that represents a 2d but quasi-3D version
+    // @returns {Node} A node that represents a 2d but quasi-3D version
     createPseudo3DNode: function() {
       var molecularFormula = this.molecularFormula;
       var molecularFormulaType = molecularFormula + 'Node';

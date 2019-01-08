@@ -51,7 +51,7 @@ define( function( require ) {
    *
    * @param allowMultipleMolecules Whether collection boxes can have more than 1 molecule
    * @param numBoxes               Number of collection boxes
-   * @return A consistent kitCollection
+   * @returns {KitCollection} A consistent kitCollection
    */
   BAMScreen.generateKitCollection = function( allowMultipleMolecules, numBoxes, tickEmitter, layoutBounds ) {
     var maxInBox = 3;

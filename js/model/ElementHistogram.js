@@ -47,7 +47,7 @@ define( function( require ) {
 
     /**
      * @param otherHistogram Another histogram
-     * @return Whether otherHistogram is a subset of this histogram (i.e. for all elements e, this.count( e ) >= other.count( e )
+     * @returns {boolean} Whether otherHistogram is a subset of this histogram (i.e. for all elements e, this.count( e ) >= other.count( e )
      */
     containsAsSubset: function( otherHistogram ) {
       var self = this;
@@ -64,7 +64,7 @@ define( function( require ) {
     },
 
     /**
-     * @return A hash string that should be unique for each unique histogram, and the same for each equivalent histogram
+     * @returns {string} A hash string that should be unique for each unique histogram, and the same for each equivalent histogram
      */
     getHashString: function() {
       var self = this;

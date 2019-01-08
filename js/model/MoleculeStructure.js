@@ -158,7 +158,7 @@ define( function( require ) {
 
     /**
      * @param atom An atom
-     * @return All neighboring atoms that are connected by bonds to the passed in atom
+     * @returns All neighboring atoms that are connected by bonds to the passed in atom
      */
     getNeighbors: function( atom ) {
       return _.map( this.getBondsInvolving( atom ), function( bond ) { return bond.getOtherAtom( atom ); } );
@@ -263,7 +263,7 @@ define( function( require ) {
     },
 
     /**
-     * @return Gives us a copy that is typed to just Atom, even though it uses the same atom instances (but different bond instances)
+     * @returns {MoleculeStructure} Gives us a copy that is typed to just Atom, even though it uses the same atom instances (but different bond instances)
      */
     getAtomCopy: function() {
       var result = new MoleculeStructure( this.atoms.length, this.bonds.length );
@@ -296,7 +296,7 @@ define( function( require ) {
      * <p/>
      *
      * @param other Another molecular structure
-     * @return True, if there is an isomorphism between the two molecular structures
+     * @returns {boolean} True, if there is an isomorphism between the two molecular structures
      */
     isEquivalent: function( other ) {
       if ( this === other ) {
@@ -329,7 +329,7 @@ define( function( require ) {
 
     /**
      * @param other Other molecule
-     * @return Whether the two molecules are isomers (have the same molecular formula)
+     * @returns {boolean} Whether the two molecules are isomers (have the same molecular formula)
      */
     isIsomer: function( other ) {
       return this.getHillSystemFormulaFragment() === other.getHillSystemFormulaFragment();
@@ -411,7 +411,7 @@ define( function( require ) {
      *----------------------------------------------------------------------------*/
 
     /**
-     * @return A serialized form of this structure. It is |-separated tokens, with the format:
+     * @returns A serialized form of this structure. It is |-separated tokens, with the format:
      *         atom quantity
      *         bond quantity
      *         for each atom, it's symbol
@@ -468,7 +468,7 @@ define( function( require ) {
     },
 
     /**
-     * @return A new equivalent structure using simple atoms and bonds
+     * @returns A new equivalent structure using simple atoms and bonds
      */
     toSimple: function() {
       var result = new MoleculeStructure( this.atoms.length, this.bonds.length );
@@ -619,7 +619,7 @@ define( function( require ) {
    * @param {Int}            myIndex               Index for the row (index into our atoms). calls with myIndex + 1 to children TODO: should this be number?
    * @param {Array[Int]}     otherRemainingIndices Remaining available 'other' indices
    * @param {Int}            size                  This square matrix is size x size in dimensions
-   * @return Whether a successful matching permutation was found
+   * @returns {boolean} Whether a successful matching permutation was found
    */
   MoleculeStructure.checkEquivalencyMatrix = function( equivalences, myIndex, otherRemainingIndices, size ) {
     // var size = Math.sqrt( equivalences.length ); // it's square, so this technically works
@@ -653,7 +653,7 @@ define( function( require ) {
    * Reads in the serialized form produced above
    *
    * @param str Serialized form of a structure
-   * @return Molecule structure
+   * @returns {Molecule} structure
    */
   MoleculeStructure.fromSerial = function( str ) {
     var tokens = str.split( '|' );

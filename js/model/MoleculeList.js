@@ -70,7 +70,7 @@ define( function( require ) {
      * molecules
      *
      * @param moleculeStructure Molecule to check
-     * @return True if it is allowed
+     * @returns {boolean} True if it is allowed
      */
     isAllowedStructure: function( moleculeStructure ) {
       var strippedMolecule = new StrippedMolecule( moleculeStructure );
@@ -107,7 +107,7 @@ define( function( require ) {
      * Find a complete molecule with an equivalent structure to the passed in molecule
      *
      * @param moleculeStructure Molecule structure to match
-     * @return Either a matching CompleteMolecule, or null if none is found
+     * @returns {CompleteMolecule|null} Either a matching CompleteMolecule, or null if none is found
      */
     findMatchingCompleteMolecule: function( moleculeStructure ) {
       var length = this.completeMolecules.length;
@@ -197,7 +197,7 @@ define( function( require ) {
    *----------------------------------------------------------------------------*/
 
   /**
-   * @return A list of complete molecules
+   * @returns A list of complete molecules
    */
   MoleculeList.readCompleteMoleculesFromData = function( strings ) {
     return _.map( strings, function( string ) {
@@ -212,7 +212,7 @@ define( function( require ) {
 
   /**
    * @param filename File name relative to the sim's data directory
-   * @return A list of molecule structures
+   * @returns A list of molecule structures
    */
   MoleculeList.readMoleculeStructuresFromData = function( strings ) {
     var len = strings.length;

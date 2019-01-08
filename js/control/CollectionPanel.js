@@ -144,7 +144,7 @@ define( function( require ) {
    * Used to get the panel width so that we can construct the model (and thus kit) beforehand
    *
    * @param isSingleCollectionMode Whether we are on single (1st tab) or multiple (2nd tab) mode
-   * @return Width of the entire collection panel
+   * @returns {number} Width of the entire collection panel
    */
   CollectionPanel.getCollectionPanelModelWidth = function( isSingleCollectionMode ) {
     // construct a dummy collection panel and check its width
