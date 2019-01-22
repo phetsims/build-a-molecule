@@ -12,6 +12,7 @@ define( function( require ) {
 
   var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   var Direction = require( 'BUILD_A_MOLECULE/model/Direction' );
+  var Util = require( 'DOT/Util' );
   var Vector2 = require( 'DOT/Vector2' );
 
   function LewisDotModel() {
@@ -181,7 +182,7 @@ define( function( require ) {
       var dotAtom = this.getLewisDotAtom( atom );
 
       // for sanity and equality (negative zero equals zero, so don't worry about that)
-      var point = new Vector2( Math.round( coordinates.x ), Math.round( coordinates.y ) );
+      var point = new Vector2( Util.roundSymmetric( coordinates.x ), Util.roundSymmetric( coordinates.y ) );
 
       var idx = point.x + ',' + point.y;
 

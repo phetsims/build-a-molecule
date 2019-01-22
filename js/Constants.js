@@ -9,12 +9,13 @@ define( function( require ) {
   var Dimension2 = require( 'DOT/Dimension2' );
   var Element = require( 'NITROGLYCERIN/Element' );
   var ModelViewTransform2 = require( 'PHETCOMMON/view/ModelViewTransform2' );
+  var Util = require( 'DOT/Util' );
   var Vector2 = require( 'DOT/Vector2' );
 
   var viewSize = new Dimension2( 1100, 679 );
   var mvt = ModelViewTransform2.createSinglePointScaleInvertedYMapping(
     Vector2.ZERO,
-    new Vector2( Math.round( viewSize.width * 0.5 ), Math.round( viewSize.height * 0.5 ) ),
+    new Vector2( Util.roundSymmetric( viewSize.width * 0.5 ), Util.roundSymmetric( viewSize.height * 0.5 ) ),
     0.3 * 1.2 // "Zoom factor" - smaller zooms out, larger zooms in
   );
   var modelSize = new Dimension2(

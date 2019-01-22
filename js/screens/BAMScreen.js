@@ -67,7 +67,7 @@ define( function( require ) {
       molecule = BAMScreen.pickRandomMoleculeNotIn( usedMolecules );
       usedMolecules.push( molecule );
 
-      var numberInBox = allowMultipleMolecules ? _.random( 1, maxInBox ) : 1;
+      var numberInBox = allowMultipleMolecules ? phet.joist.random.nextIntBetween( 1, maxInBox ) : 1;
 
       // restrict the number of carbon that we can have
       var carbonCount = molecule.getHistogram().getQuantity( Element.C );
@@ -85,7 +85,7 @@ define( function( require ) {
     }
 
     // randomize the molecules that we will pull from
-    molecules = _.shuffle( molecules );
+    molecules = phet.joist.random.shuffle( molecules );
 
     // while more molecules to construct are left, create another kit
     while ( molecules.length ) {
@@ -123,7 +123,7 @@ define( function( require ) {
 
         // possibly add more, if we can only have 1 molecule per box
         if ( !element.isCarbon() && ( element.isHydrogen() || atomCount < 4 ) ) {
-          atomCount += _.random( 0, 1 );
+          atomCount += phet.joist.random.nextIntBetween( 0, 1 );
         }
 
         // funky math part. sqrt scales it so that we can get two layers of atoms if the atom count is above 2
@@ -165,7 +165,7 @@ define( function( require ) {
   BAMScreen.pickRandomMoleculeNotIn = function( molecules ) {
     // Infinite loop. We're living on the edge now, baby!
     while ( true ) { // eslint-disable-line no-constant-condition
-      var molecule = MoleculeList.collectionBoxMolecules[ _.random( 0, MoleculeList.collectionBoxMolecules.length - 1 ) ]; // TODO: random numbers in
+      var molecule = MoleculeList.collectionBoxMolecules[ phet.joist.random.nextIntBetween( 0, MoleculeList.collectionBoxMolecules.length - 1 ) ]; // TODO: random numbers in
       if ( !_.includes( molecules, molecule ) ) {
         return molecule;
       }
