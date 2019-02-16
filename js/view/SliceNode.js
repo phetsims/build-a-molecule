@@ -37,8 +37,8 @@ define( function( require ) {
     var globalBounds;
     var toModelTransform;
     var lastPoint = null;
-    var lastModelPoint = new Vector2();
-    var oldModelPoint = new Vector2();
+    var lastModelPoint = new Vector2( 0, 0 );
+    var oldModelPoint = new Vector2( 0, 0 );
 
     this.sliceInputListener = new SimpleDragHandler( {
       dragCursor: 'none',
@@ -75,7 +75,7 @@ define( function( require ) {
           context.moveTo( lastPoint.x, lastPoint.y );
         }
         else {
-          lastPoint = new Vector2();
+          lastPoint = new Vector2( 0, 0 );
         }
 
         // compute offset and draw the latest segment on the canvas
