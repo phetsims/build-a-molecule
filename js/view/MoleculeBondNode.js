@@ -108,7 +108,7 @@ define( function( require ) {
     // listener that will update the position of our hit target
     this.positionListener = function() {
       var orientation = b.positionProperty.value.minus( a.positionProperty.value );
-      if ( orientation.magnitude() > 0 ) {
+      if ( orientation.magnitude > 0 ) {
         orientation.normalize();
       }
       var location = orientation.times( a.covalentRadius ).plus( a.positionProperty.value );

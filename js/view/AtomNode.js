@@ -110,7 +110,7 @@ define( function( require ) {
   AtomNode.experimentalGradient = function( radius, baseColor ) {
     // var diameter = radius * 2;
     var gCenter = new Vector2( -radius / 5, -radius / 5 );
-    var fullRadius = gCenter.minus( new Vector2( 1, 1 ).normalize().multiply( radius ) ).magnitude();
+    var fullRadius = gCenter.minus( new Vector2( 1, 1 ).normalize().multiply( radius ) ).magnitude;
     var gradientFill = new RadialGradient( gCenter.x, gCenter.y, 0, gCenter.x, gCenter.y, fullRadius );
 
     gradientFill.addColorStop( 0, baseColor.colorUtilsBrighter( 0.5 ).toCSS() );
@@ -125,7 +125,7 @@ define( function( require ) {
   AtomNode.experimentalBrightGradient = function( radius, baseColor ) {
     // var diameter = radius * 2;
     var gCenter = new Vector2( -radius / 3, -radius / 3 );
-    var fullRadius = gCenter.minus( new Vector2( 1, 1 ).normalize().multiply( radius ) ).magnitude();
+    var fullRadius = gCenter.minus( new Vector2( 1, 1 ).normalize().multiply( radius ) ).magnitude;
     var gradientFill = new RadialGradient( gCenter.x, gCenter.y, 0, gCenter.x, gCenter.y, fullRadius );
 
     gradientFill.addColorStop( 0, baseColor.colorUtilsBrightness( 0.5 + 0.2 ).toCSS() );
@@ -141,7 +141,7 @@ define( function( require ) {
   AtomNode.experimentalBrighterGradient = function( radius, baseColor ) {
     // var diameter = radius * 2;
     var gCenter = new Vector2( -radius / 3, -radius / 3 );
-    var fullRadius = gCenter.minus( new Vector2( 1, 1 ).normalize().multiply( radius ) ).magnitude();
+    var fullRadius = gCenter.minus( new Vector2( 1, 1 ).normalize().multiply( radius ) ).magnitude;
     var gradientFill = new RadialGradient( gCenter.x, gCenter.y, 0, gCenter.x, gCenter.y, fullRadius );
 
     gradientFill.addColorStop( 0, baseColor.colorUtilsBrightness( 0.9 ).toCSS() );

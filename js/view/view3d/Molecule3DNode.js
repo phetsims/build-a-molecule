@@ -118,7 +118,7 @@ define( function( require ) {
         atom.z + atom.covalentRadius ) );
     } );
     var center3 = bounds3.center;
-    if ( center3.magnitude() ) {
+    if ( center3.magnitude ) {
       _.each( this.currentAtoms, function( atom ) {
         atom.subtract( center3 );
       } );
@@ -127,7 +127,7 @@ define( function( require ) {
     // compute our outer bounds so we can properly scale our transform to fit
     var maxTotalRadius = 0;
     _.each( this.currentAtoms, function( atom ) {
-      maxTotalRadius = Math.max( maxTotalRadius, atom.magnitude() + atom.covalentRadius );
+      maxTotalRadius = Math.max( maxTotalRadius, atom.magnitude + atom.covalentRadius );
     } );
     this.maxTotalRadius = maxTotalRadius;
 
@@ -228,7 +228,7 @@ define( function( require ) {
     createGradient: function( element ) {
       // var covalentDiameter = element.covalentRadius * 2;
       var gCenter = new Vector2( -element.covalentRadius / 5, -element.covalentRadius / 5 );
-      var fullRadius = gCenter.minus( new Vector2( 1, 1 ).normalized().times( element.covalentRadius ) ).magnitude();
+      var fullRadius = gCenter.minus( new Vector2( 1, 1 ).normalized().times( element.covalentRadius ) ).magnitude;
       var gradientFill = this.context.createRadialGradient( gCenter.x, gCenter.y, 0, gCenter.x, gCenter.y, fullRadius );
 
       var baseColor = new Color( element.color );
@@ -266,7 +266,7 @@ define( function( require ) {
           var otherAtom = atoms[ k ];
 
           var delta = otherAtom.minus( atom );
-          var d = delta.magnitude();
+          var d = delta.magnitude;
           if ( d < atom.covalentRadius + otherAtom.covalentRadius - 1e-7 ) {
             var theta = delta.angleBetween( new Vector3( 0, 0, -1 ) );
             var arcData = ellipticalArcCut( atom.covalentRadius, otherAtom.covalentRadius, d, theta );
