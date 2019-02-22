@@ -137,7 +137,7 @@ define( function( require ) {
       var centerX = this.width / 2;
       var y = 0;
       var len = this._children.length;
-      for ( var i = 1; i > 0; i++ ) {
+      for ( var i = 1; i > 0; i++ ) { // eslint-disable-line for-direction
         if ( i >= len ) {
           i = 0;
         }
