@@ -89,7 +89,7 @@ define( function( require ) {
       kit.addedMoleculeEmitter.addListener( function( molecule ) {
         _.each( self.collectionBoxes, function( box ) {
           if ( box.willAllowMoleculeDrop( molecule ) ) {
-            box.acceptedMoleculeCreationEmitter.emit1( molecule );
+            box.acceptedMoleculeCreationEmitter.emit( molecule );
           }
         } );
       } );

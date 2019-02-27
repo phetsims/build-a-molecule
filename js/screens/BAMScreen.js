@@ -30,10 +30,10 @@ define( function( require ) {
     }, options );
 
     var createModel = function() {
-      var tickEmitter = new Emitter( { validValues: [ 'number' ] } ); // emits 1 parameter, timeElapsed
+      var tickEmitter = new Emitter( { validators: [ { valueType: 'number' } ] } ); // emits 1 parameter, timeElapsed
       var model = new CollectionList( createInitialKitCollection( layoutBounds, tickEmitter ), layoutBounds, tickEmitter );
       model.step = function step( timeElapsed ) {
-        tickEmitter.emit1( timeElapsed );
+        tickEmitter.emit( timeElapsed );
       };
       model.generateKitCollection = function generateKitCollection() {
         return createKitCollection( layoutBounds, tickEmitter );

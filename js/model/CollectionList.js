@@ -25,8 +25,8 @@ define( function( require ) {
     this.currentCollectionProperty = new Property( firstCollection );
 
     // @public {Emitter} - Fires single parameter of {KitCollection}
-    this.addedCollectionEmitter = new Emitter();
-    this.removedCollectionEmitter = new Emitter();
+    this.addedCollectionEmitter = new Emitter( { validationEnabled: false } );
+    this.removedCollectionEmitter = new Emitter( { validationEnabled: false } );
 
     this.layoutBounds = layoutBounds;
     this.tickEmitter = tickEmitter;
@@ -34,6 +34,7 @@ define( function( require ) {
     this.currentIndex = 0;
     this.addCollection( firstCollection );
   }
+
   buildAMolecule.register( 'CollectionList', CollectionList );
 
   inherit( Object, CollectionList, {
@@ -46,7 +47,7 @@ define( function( require ) {
       this.collections.push( collection );
 
       // TODO: notifications before changing current collection - is this desired? may be
-      this.addedCollectionEmitter.emit1( collection );
+      this.addedCollectionEmitter.emit( collection );
 
       // switch to collection
       this.currentIndex = this.collections.indexOf( collection );
@@ -57,7 +58,7 @@ define( function( require ) {
       assert && assert( this.currentCollectionProperty.value !== collection );
       this.collections.splice( this.collections.indexOf( collection ), 1 ); // TODO: use remove() instead of splice()
 
-      this.removedCollectionEmitter.emit1( collection );
+      this.removedCollectionEmitter.emit( collection );
     },
 
     reset: function() {

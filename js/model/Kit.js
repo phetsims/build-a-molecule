@@ -32,8 +32,8 @@ define( function( require ) {
     this.hasMoleculesInBoxesProperty = new BooleanProperty( false ); // we record this so we know when the "reset kit" should be shown
 
     // @public {Emitter} - Called with a single parameter molecule
-    this.addedMoleculeEmitter = new Emitter();
-    this.removedMoleculeEmitter = new Emitter();
+    this.addedMoleculeEmitter = new Emitter( { validationEnabled: false } );
+    this.removedMoleculeEmitter = new Emitter( { validationEnabled: false } );
 
     this.buckets = buckets;
     this.layoutBounds = layoutBounds;
@@ -320,13 +320,13 @@ define( function( require ) {
     addMolecule: function( molecule ) {
       this.molecules.push( molecule );
 
-      this.addedMoleculeEmitter.emit1( molecule );
+      this.addedMoleculeEmitter.emit( molecule );
     },
 
     removeMolecule: function( molecule ) {
       this.molecules.splice( this.molecules.indexOf( molecule ), 1 ); // TODO: remove() instead of splice()
 
-      this.removedMoleculeEmitter.emit1( molecule );
+      this.removedMoleculeEmitter.emit( molecule );
     },
 
     /**

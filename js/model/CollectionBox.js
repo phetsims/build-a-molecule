@@ -25,9 +25,9 @@ define( function( require ) {
     this.quantityProperty = new NumberProperty( 0 );
 
     // @public {Emitter} - Called with a single molecule parameter
-    this.addedMoleculeEmitter = new Emitter();
-    this.removedMoleculeEmitter = new Emitter();
-    this.acceptedMoleculeCreationEmitter = new Emitter(); // triggered from KitCollection
+    this.addedMoleculeEmitter = new Emitter( { validationEnabled: false } );
+    this.removedMoleculeEmitter = new Emitter( { validationEnabled: false } );
+    this.acceptedMoleculeCreationEmitter = new Emitter( { validationEnabled: false } ); // triggered from KitCollection
 
     var self = this;
     this.moleculeType = moleculeType;
@@ -41,6 +41,7 @@ define( function( require ) {
       }
     } );
   }
+
   buildAMolecule.register( 'CollectionBox', CollectionBox );
 
   inherit( Object, CollectionBox, {
@@ -75,14 +76,14 @@ define( function( require ) {
       this.quantityProperty.value++;
       this.molecules.push( molecule );
 
-      this.addedMoleculeEmitter.emit1( molecule );
+      this.addedMoleculeEmitter.emit( molecule );
     },
 
     removeMolecule: function( molecule ) {
       this.quantityProperty.value--;
       this.molecules.splice( this.molecules.indexOf( molecule ), 1 ); // TODO: remove() instead of splice()
 
-      this.removedMoleculeEmitter.emit1( molecule );
+      this.removedMoleculeEmitter.emit( molecule );
     },
 
     clear: function() {
