@@ -15,10 +15,10 @@ define( function( require ) {
   var Emitter = require( 'AXON/Emitter' );
   var extend = require( 'PHET_CORE/extend' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var Property = require( 'AXON/Property' );
   var Rectangle = require( 'DOT/Rectangle' );
   var Strings = require( 'BUILD_A_MOLECULE/Strings' );
   var Vector2 = require( 'DOT/Vector2' );
+  var Vector2Property = require( 'DOT/Vector2Property' );
 
   var motionVelocity = 800; // In picometers per second of sim time.
 
@@ -27,9 +27,9 @@ define( function( require ) {
 
     Atom.call( this, element );
 
-    // @public {Property.<Vector2>}
-    this.positionProperty = new Property( Vector2.ZERO );
-    this.destinationProperty = new Property( Vector2.ZERO );
+    // @public
+    this.positionProperty = new Vector2Property( Vector2.ZERO );
+    this.destinationProperty = new Vector2Property( Vector2.ZERO );
 
     // @public {Property.<boolean>}
     this.userControlledProperty = new BooleanProperty( false );
