@@ -14,6 +14,7 @@ define( function( require ) {
   var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   var Emitter = require( 'AXON/Emitter' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var KitCollection = require( 'BUILD_A_MOLECULE/model/KitCollection' );
   var Property = require( 'AXON/Property' );
 
   /*
@@ -25,8 +26,8 @@ define( function( require ) {
     this.currentCollectionProperty = new Property( firstCollection );
 
     // @public {Emitter} - Fires single parameter of {KitCollection}
-    this.addedCollectionEmitter = new Emitter( { validationEnabled: false } );
-    this.removedCollectionEmitter = new Emitter( { validationEnabled: false } );
+    this.addedCollectionEmitter = new Emitter( { validators: [ { valueType: KitCollection } ] } );
+    this.removedCollectionEmitter = new Emitter( { validators: [ { valueType: KitCollection } ] } );
 
     this.layoutBounds = layoutBounds;
     this.tickEmitter = tickEmitter;

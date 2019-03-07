@@ -14,6 +14,7 @@ define( function( require ) {
   var Emitter = require( 'AXON/Emitter' );
   var Globals = require( 'BUILD_A_MOLECULE/Globals' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var Molecule = require( 'BUILD_A_MOLECULE/model/Molecule' );
   var NumberProperty = require( 'AXON/NumberProperty' );
 
   /*
@@ -25,9 +26,9 @@ define( function( require ) {
     this.quantityProperty = new NumberProperty( 0 );
 
     // @public {Emitter} - Called with a single molecule parameter
-    this.addedMoleculeEmitter = new Emitter( { validationEnabled: false } );
-    this.removedMoleculeEmitter = new Emitter( { validationEnabled: false } );
-    this.acceptedMoleculeCreationEmitter = new Emitter( { validationEnabled: false } ); // triggered from KitCollection
+    this.addedMoleculeEmitter = new Emitter( { validators: [ { valueType: Molecule } ] } );
+    this.removedMoleculeEmitter = new Emitter( { validators: [ { valueType: Molecule } ] } );
+    this.acceptedMoleculeCreationEmitter = new Emitter( { validators: [ { valueType: Molecule } ] } ); // triggered from KitCollection
 
     var self = this;
     this.moleculeType = moleculeType;
