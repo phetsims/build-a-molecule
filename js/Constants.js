@@ -13,17 +13,17 @@ define( function( require ) {
   var Vector2 = require( 'DOT/Vector2' );
 
   var viewSize = new Dimension2( 1100, 679 );
-  var mvt = ModelViewTransform2.createSinglePointScaleInvertedYMapping(
+  var modelViewTransform = ModelViewTransform2.createSinglePointScaleInvertedYMapping(
     Vector2.ZERO,
     new Vector2( Util.roundSymmetric( viewSize.width * 0.5 ), Util.roundSymmetric( viewSize.height * 0.5 ) ),
     0.3 * 1.2 // "Zoom factor" - smaller zooms out, larger zooms in
   );
   var modelSize = new Dimension2(
-    mvt.viewToModelDeltaX( viewSize.width ),
-    Math.abs( mvt.viewToModelDeltaY( viewSize.height ) )
+    modelViewTransform.viewToModelDeltaX( viewSize.width ),
+    Math.abs( modelViewTransform.viewToModelDeltaY( viewSize.height ) )
   );
   var viewPadding = 18;
-  var modelPadding = mvt.viewToModelDeltaX( viewPadding );
+  var modelPadding = modelViewTransform.viewToModelDeltaX( viewPadding );
 
   var Constants = {
 
@@ -40,7 +40,7 @@ define( function( require ) {
      *----------------------------------------------------------------------------*/
 
     stageSize: viewSize, // the size of our "view" coordinate area
-    modelViewTransform: mvt,
+    modelViewTransform: modelViewTransform,
     modelSize: modelSize,
     viewPadding: viewPadding,
     modelPadding: modelPadding,
