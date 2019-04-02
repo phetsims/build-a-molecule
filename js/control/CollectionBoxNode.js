@@ -50,7 +50,7 @@ define( function( require ) {
     var self = this;
 
     this.box = box;
-    this.dialog = new Property( null ); // will reference the dialog showing a 3d model of this molecule
+    this.dialogProperty = new Property( null ); // will reference the dialog showing a 3d model of this molecule
     this.headerCount = 0;
     this.moleculeNodes = [];
     this.moleculeNodeMap = {}; // molecule ID => node, stores nodes for each moecule
