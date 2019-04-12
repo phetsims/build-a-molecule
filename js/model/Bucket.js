@@ -24,11 +24,13 @@ define( function( require ) {
    * meant to be any specific size (such as meters).  This enabled
    * reusability in any 2D model.
    *
+   * REVIEW: type docs
    * @param size     Physical size of the bucket (model space)
    * @param element  The element of the atoms in the bucket
    * @param quantity The number of atoms starting in the bucket
    */
   function Bucket( size, tickEmitter, element, quantity ) {
+    //REVIEW: Probably doesn't need underscore. Does need docs
     this._position = null;
 
     SphereBucket.call( this, {
@@ -41,6 +43,7 @@ define( function( require ) {
       verticalParticleOffset: -30 + element.covalentRadius / 2
     } );
 
+    //REVIEW: docs
     this.element = element;
     this.width = this.containerShape.bounds.width;
 

@@ -32,6 +32,7 @@ define( function( require ) {
 
     this.moleculeId = nextMoleculeId++; // used for molecule identification and ordering for optimization
 
+    //REVIEW: Figure out types, and whether it's polymorphic
     // TODO: performance: figure out a way of preallocating the arrays, and instead of pushing, just set the proper index (higher performance)
     // this.atoms = new Array( numAtoms );
     this.atoms = [];
@@ -49,6 +50,7 @@ define( function( require ) {
       return atom;
     },
 
+    //REVIEW: Don't have this be polymorphic (looks like we can either add a bond or a pair of atoms)
     addBond: function( a, b ) {
       var bond;
 
@@ -250,6 +252,7 @@ define( function( require ) {
       return new ElementHistogram( this );
     },
 
+    //REVIEW: Why is this here. Is it ever even called?
     getMoleculeId: function() {
       return this.moleculeId;
     },

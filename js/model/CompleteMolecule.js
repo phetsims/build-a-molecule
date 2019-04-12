@@ -21,6 +21,7 @@ define( function( require ) {
   var MoleculeStructure = require( 'BUILD_A_MOLECULE/model/MoleculeStructure' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Strings = require( 'BUILD_A_MOLECULE/Strings' );
+  //REVIEW: Create the array AFTER the require statements (use the normal import style)
   var nodeTypes = [
     require( 'NITROGLYCERIN/nodes/Cl2Node' ), require( 'NITROGLYCERIN/nodes/CO2Node' ), require( 'NITROGLYCERIN/nodes/CO2Node' ),
     require( 'NITROGLYCERIN/nodes/CS2Node' ), require( 'NITROGLYCERIN/nodes/F2Node' ), require( 'NITROGLYCERIN/nodes/H2Node' ),
@@ -38,8 +39,8 @@ define( function( require ) {
   /*
    * @param {string} commonName
    * @param {string} molecularFormula
-   * @param {Int} atomCount TODO: should this be number?
-   * @param {Int} bondCount TODO: should this be number?
+   * @param {Int} atomCount TODO: should this be number? REVIEW: yes
+   * @param {Int} bondCount TODO: should this be number? REVIEW: yes
    * @param {boolean} has2d
    * @param {boolean} has3d
    */
@@ -50,6 +51,8 @@ define( function( require ) {
     this.molecularFormula = molecularFormula; // as said by pubchem
     this.has2d = has2d;
     this.has3d = has3d;
+
+    //REVIEW: This is filled in by parsing later? We should document it
     // this.cid = null;
   }
   buildAMolecule.register( 'CompleteMolecule', CompleteMolecule );

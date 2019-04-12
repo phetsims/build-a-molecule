@@ -15,11 +15,13 @@ define( function( require ) {
   function ElementHistogram( molecule ) {
     var self = this;
 
+    // REVIEW: map from element.symbol => count?
     this.quantities = {};
     _.each( Constants.supportedElements, function( element ) {
       self.quantities[ element.symbol ] = 0;
     } );
 
+    // REVIEW: Note the optional parameter in jsdoc
     if ( molecule ) {
       this.addMolecule( molecule );
     }
@@ -97,6 +99,7 @@ define( function( require ) {
   };
 
   // object with symbols as keys, result as true
+  //REVIEW: Is this used anywhere? I can't find it
   ElementHistogram.allowedChemicalSymbols = {};
   _.each( Constants.supportedElements, function( element ) {
     ElementHistogram.allowedChemicalSymbols[ element.symbol ] = true;

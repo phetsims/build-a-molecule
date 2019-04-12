@@ -12,6 +12,7 @@ define( function( require ) {
   var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   var Vector2 = require( 'DOT/Vector2' );
 
+  //REVIEW: Use Enumeration explicitly, but figure out how to use rich enumerations (talk to JO)
   function Direction( vector, id ) {
     this.vector = vector;
     this.id = id;

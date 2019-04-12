@@ -22,6 +22,8 @@ define( function( require ) {
 
   var motionVelocity = 800; // In picometers per second of sim time.
 
+  //REVIEW: docs
+  //REVIEW: rename tickEmitter => stepEmitter
   function Atom2( element, tickEmitter ) {
     var self = this;
 
@@ -41,9 +43,11 @@ define( function( require ) {
     this.droppedByUserEmitter = new Emitter( { validators: [ { valueType: Atom2 } ] } );
     this.removedFromModelEmitter = new Emitter(); //REVIEW: Umm, not triggered?
 
+    //REVIEW: docs
     this.tickEmitter = tickEmitter;
     this.clockListener = this.stepInTime.bind( this );
 
+    //REVIEW: docs
     this.name = Strings.getAtomName( element );
 
     this.userControlledProperty.lazyLink( function( controlled ) {
@@ -78,6 +82,7 @@ define( function( require ) {
       return new Rectangle( this.destinationProperty.value.x - this.covalentRadius, this.destinationProperty.value.y - this.covalentRadius, this.covalentDiameter, this.covalentDiameter );
     },
 
+    //REVIEW: rename to step
     stepInTime: function( dt ) {
       if ( this.positionProperty.value.distance( this.destinationProperty.value ) !== 0 ) {
         // Move towards the current destination

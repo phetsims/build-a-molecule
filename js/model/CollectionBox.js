@@ -47,7 +47,7 @@ define( function( require ) {
 
   inherit( Object, CollectionBox, {
     set dropBounds( value ) {
-      // TODO: consider removing ES5 getter/setter here
+      // TODO: consider removing ES5 getter/setter here REVIEW: Just a normal property sounds good
       assert && assert( value );
       this._dropBounds = value;
     },
