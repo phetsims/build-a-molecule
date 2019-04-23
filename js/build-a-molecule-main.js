@@ -18,9 +18,11 @@ define( function( require ) {
   var simOptions = {
     credits: {
       //TODO (without scrolling credits, the BAM team refuses to take credit!)'
+      //REVIEW: Take a first pass at credits
     }
   };
 
+  //REVIEW: This can be ditched
   // Appending '?dev' to the URL will enable developer-only features.
   if ( window.phet.chipper.queryParameters.dev ) {
 
@@ -34,10 +36,9 @@ define( function( require ) {
       //Create and start the sim
       new Sim( buildAMoleculeTitleString, [
         // TODO: replace these with the actual panel widths
+        //REVIEW: Not sure what is necessary here, looks like we're computing a dynamic layout
         new MakeMoleculeScreen( CollectionPanel.getCollectionPanelModelWidth( true ) ),
-        // new MakeMoleculeScreen( 400 ),
         new CollectMultipleScreen( CollectionPanel.getCollectionPanelModelWidth( false ) ),
-        // new CollectMultipleScreen( 400 ),
         new LargerMoleculesScreen()
       ], simOptions ).start();
     } );

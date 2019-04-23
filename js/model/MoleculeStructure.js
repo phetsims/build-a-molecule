@@ -710,6 +710,7 @@ define( function( require ) {
     return MoleculeStructure.fromSerial2( line, MoleculeStructure.defaultMoleculeGenerator, MoleculeStructure.defaultAtomParser, MoleculeStructure.defaultBondParser );
   };
 
+  //REVIEW: Remove dead code/docs
   /*---------------------------------------------------------------------------*
    * parser classes and default implementations
    *----------------------------------------------------------------------------*/

@@ -41,7 +41,7 @@ define( function( require ) {
     var self = this;
     Node.call( this, {} );
 
-    var y = 0; // TODO: improve layout code using GeneralLayoutNode?
+    var y = 0; // TODO: improve layout code
 
     this.layoutNode = new Node();
     this.collectionAreaHolder = new Node();
@@ -205,6 +205,7 @@ define( function( require ) {
       var node = this; // eslint-disable-line consistent-this
       while ( node.getParent() !== null ) {
         node = node.getParent();
+        //REVIEW: Check for ScreenView instead?
         if ( node instanceof BAMScreen ) {
           return true;
         }

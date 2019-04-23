@@ -21,6 +21,7 @@ define( function( require ) {
   var MoleculeStructure = require( 'BUILD_A_MOLECULE/model/MoleculeStructure' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Strings = require( 'BUILD_A_MOLECULE/Strings' );
+
   //REVIEW: Create the array AFTER the require statements (use the normal import style)
   var nodeTypes = [
     require( 'NITROGLYCERIN/nodes/Cl2Node' ), require( 'NITROGLYCERIN/nodes/CO2Node' ), require( 'NITROGLYCERIN/nodes/CO2Node' ),
@@ -258,6 +259,7 @@ define( function( require ) {
     x2d: function() { return this._x2d; },
     y2d: function() { return this._y2d; },
 
+    //REVIEW: Do we need another "rich" atom subtype that has this information?
     x3d: function() { return this._x2d; },
     y3d: function() { return this._y2d; },
     z3d: function() { return 0; },

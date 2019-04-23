@@ -32,6 +32,7 @@ define( function( require ) {
       homeScreenIcon: new Rectangle( 0, 0, 548, 373, { fill: 'red' } )
     };
 
+    //REVIEW: Formatting could use some changes here
     BAMScreen.call( this,
 
       // createInitialKitCollection

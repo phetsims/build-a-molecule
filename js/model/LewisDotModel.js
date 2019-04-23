@@ -30,6 +30,7 @@ define( function( require ) {
       self.connections[ direction.id ] = null; // nothing in this direction
     } );
   }
+  //REVIEW: Don't register inner classes now
   buildAMolecule.register( 'LewisDotAtom', LewisDotAtom );
 
   LewisDotAtom.prototype = {

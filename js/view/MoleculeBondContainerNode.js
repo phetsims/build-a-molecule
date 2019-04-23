@@ -20,6 +20,7 @@ define( function( require ) {
 
     this.bondNodes = [];
 
+    //REVIEW: Could do this.bondNodes = molecule.bonds.map( ... )
     _.each( molecule.bonds, function( bond ) {
       var node = new MoleculeBondNode( bond, kit, view );
       self.addChild( node );

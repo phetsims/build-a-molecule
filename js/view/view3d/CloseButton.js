@@ -15,6 +15,7 @@ define( function( require ) {
   var Path = require( 'SCENERY/nodes/Path' );
   var Shape = require( 'KITE/Shape' );
 
+  //REVIEW: Can we replace this with common code if possible?
   function CloseButton( callback, options ) {
     var outside = 20;
     var inside = 9;

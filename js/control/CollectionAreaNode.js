@@ -59,11 +59,12 @@ define( function( require ) {
 
       var collectionBoxHolder = new Node();
       // enforce consistent bounds of the maximum size. reason: we don't want switching between collections to alter the positions of the collection boxes
+      //REVIEW: Use Spacer
       collectionBoxHolder.addChild( new Rectangle( 0, 0, maximumBoxWidth, maximumBoxHeight, { visible: false, stroke: null } ) ); // TODO: Spacer node for Scenery?
       collectionBoxHolder.addChild( collectionBoxNode );
       self.addChild( collectionBoxHolder );
       collectionBoxHolder.top = y;
-      y += collectionBoxHolder.height + 15; // TODO: GeneralLayoutNode for Scenery?
+      y += collectionBoxHolder.height + 15; //REVIEW: VBox?
     } );
 
     /*---------------------------------------------------------------------------*

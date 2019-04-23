@@ -21,6 +21,7 @@ define( function( require ) {
   var Text = require( 'SCENERY/nodes/Text' );
 
   // strings
+  //REVIEW: Could rename the string key so we don't have to disable the lint rule here?
   var iconString = require( 'string!BUILD_A_MOLECULE/3d.icon' ); // eslint-disable-line string-require-statement-match
 
   function ShowMolecule3DButtonNode( completeMolecule, options ) {
@@ -32,6 +33,7 @@ define( function( require ) {
     this.addInputListener( new ButtonListener( {
       fire: function( evt ) {
         var trail = self.getUniqueTrail();
+        //REVIEW: See if we can just check for a ScreenView, so that we don't use this special check.
         var view = _.find( trail.nodes, function( node ) { return node.isBAMView; } );
         view.addChild( new Molecule3DDialog( completeMolecule, trail, view ) );
       }

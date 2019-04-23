@@ -112,6 +112,7 @@ define( function( require ) {
      */
     findMatchingCompleteMolecule: function( moleculeStructure ) {
       var length = this.completeMolecules.length;
+      //REVIEW: Can we replace this with _.find?
       for ( var i = 0; i < length; i++ ) {
         var completeMolecule = this.completeMolecules[ i ];
         if ( moleculeStructure.isEquivalent( completeMolecule ) ) {
@@ -124,6 +125,7 @@ define( function( require ) {
     // by pubchem compound ID (CID)
     findMoleculeByCID: function( cid ) {
       var length = this.completeMolecules.length;
+      //REVIEW: Can we replace this with _.find?
       for ( var i = 0; i < length; i++ ) {
         var completeMolecule = this.completeMolecules[ i ];
         if ( completeMolecule.cid === cid ) {

@@ -39,6 +39,7 @@ define( function( require ) {
      * Layout
      *----------------------------------------------------------------------------*/
 
+    //REVIEW: Use the ScreenView's layoutBounds instead if possible (with passing through)
     stageSize: viewSize, // the size of our "view" coordinate area
     modelViewTransform: modelViewTransform,
     modelSize: modelSize,

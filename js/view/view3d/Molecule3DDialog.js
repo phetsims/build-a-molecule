@@ -37,6 +37,8 @@ define( function( require ) {
   var stageCenterY = Constants.stageSize.height / 2;
   var optionsHorizontalPadding = 40;
 
+  //REVIEW: Note that this may change significantly if we go with a three.js/webgl solution
+  //REVIEW: Also, can we just use a Dialog?
   function Molecule3DDialog( completeMolecule, trail, view ) {
     var self = this;
     Node.call( this );

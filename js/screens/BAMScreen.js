@@ -32,6 +32,7 @@ define( function( require ) {
     var createModel = function() {
       var tickEmitter = new Emitter( { validators: [ { valueType: 'number' } ] } ); // emits 1 parameter, timeElapsed
       var model = new CollectionList( createInitialKitCollection( layoutBounds, tickEmitter ), layoutBounds, tickEmitter );
+      //REVIEW: This seems like the wrong way to handle things. Don't implement methods on things externally.
       model.step = function step( timeElapsed ) {
         tickEmitter.emit( timeElapsed );
       };
@@ -165,7 +166,7 @@ define( function( require ) {
   BAMScreen.pickRandomMoleculeNotIn = function( molecules ) {
     // Infinite loop. We're living on the edge now, baby!
     while ( true ) { // eslint-disable-line no-constant-condition
-      var molecule = MoleculeList.collectionBoxMolecules[ phet.joist.random.nextIntBetween( 0, MoleculeList.collectionBoxMolecules.length - 1 ) ]; // TODO: random numbers in
+      var molecule = MoleculeList.collectionBoxMolecules[ phet.joist.random.nextIntBetween( 0, MoleculeList.collectionBoxMolecules.length - 1 ) ];
       if ( !_.includes( molecules, molecule ) ) {
         return molecule;
       }

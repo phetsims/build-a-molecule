@@ -27,6 +27,7 @@ define( function( require ) {
   var SliceNode = require( 'BUILD_A_MOLECULE/view/SliceNode' );
   var Trail = require( 'SCENERY/util/Trail' );
 
+  //REVIEW: See if it's possible to NOT pass through the entire screen view. And if not, we can rename it.
   function KitView( kit, view ) {
     Node.call( this );
     var self = this;
@@ -58,6 +59,7 @@ define( function( require ) {
 
     // override its hit testing
     // TODO: REALLY don't do this. Super easy to break
+    //REVIEW: Definitely replace with a better way
     atomLayer.hitTest = function( point, isMouse, isTouch ) {
       // return accurate hits for the mouse
       if ( isMouse ) {
@@ -83,6 +85,7 @@ define( function( require ) {
         labelFont: new PhetFont( {
           weight: 'bold',
           size: 18,
+          //REVIEW: Do NOT replace the family in PhetFont?
           family: 'Arial, sans-serif'
         } ) // matching the old look for now
       } );
@@ -143,6 +146,7 @@ define( function( require ) {
 
         // Add a drag listener that will move the model element when the user
         // drags this atom.
+        //REVIEW: Can we use the newer drag listeners?
         var atomListener = new SimpleDragHandler( {
           start: function( evt, trail ) {
             atom.userControlledProperty.value = true;

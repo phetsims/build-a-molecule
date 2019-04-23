@@ -87,6 +87,7 @@ define( function( require ) {
       this.removedMoleculeEmitter.emit( molecule );
     },
 
+    //REVIEW: Should this be called `reset`?
     clear: function() {
       _.each( this.molecules.slice( 0 ), this.removeMolecule.bind( this ) );
     }

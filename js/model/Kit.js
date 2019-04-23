@@ -51,6 +51,7 @@ define( function( require ) {
   buildAMolecule.register( 'Kit', Kit );
 
   inherit( Object, Kit, {
+    //REVIEW: Can this just become `reset`?
     resetKit: function() {
       var self = this;
 

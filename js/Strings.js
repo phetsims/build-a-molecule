@@ -20,6 +20,8 @@ define( function( require ) {
   var atomSiliconString = require( 'string!BUILD_A_MOLECULE/atom.silicon' );
   var atomSulphurString = require( 'string!BUILD_A_MOLECULE/atom.sulphur' );
 
+  //REVIEW: Generally we'll have imports up top, and THEN put them into a map
+  //REVIEW: e.g. later, just have `var Strings = { 'molecule.acetylene': ... }. Capitalization of 'Strings' should be
   Strings[ 'molecule.acetylene' ] = require( 'string!BUILD_A_MOLECULE/molecule.acetylene' );
   Strings[ 'molecule.ammonia' ] = require( 'string!BUILD_A_MOLECULE/molecule.ammonia' );
   Strings[ 'molecule.borane' ] = require( 'string!BUILD_A_MOLECULE/molecule.borane' );

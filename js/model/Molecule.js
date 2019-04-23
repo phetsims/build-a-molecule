@@ -14,6 +14,7 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var MoleculeStructure = require( 'BUILD_A_MOLECULE/model/MoleculeStructure' );
 
+  //REVIEW: Do we really want default parameters here?
   function Molecule( numAtoms, numBonds ) {
     MoleculeStructure.call( this, numAtoms || 0, numBonds || 0 );
   }

@@ -4,6 +4,8 @@
  * 3D Molecule display that takes up the entire screen
  *
  * TODO: custom rotation, ball and stick view, perspective, optimization
+ * REVIEW: Probably ignore perspective. Work with JO to use three.js for this, and potentially keeping in the
+ * REVIEW: Canvas-only view (adding ball-and-stick mode to it)
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
@@ -74,6 +76,7 @@ define( function( require ) {
 
     assert && assert( isFinite( rx ) );
 
+    //REVIEW: Maybe work this out with JO (Not the best example of documentation)
     return {
       ix: ix,
       iy: iy,
@@ -87,6 +90,7 @@ define( function( require ) {
     };
   }
 
+  //REVIEW: Note that this may change significantly if we go with a three.js/webgl solution
   function Molecule3DNode( completeMolecule, initialBounds, useHighRes ) {
     var self = this;
 

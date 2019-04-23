@@ -40,6 +40,7 @@ define( function( require ) {
   buildAMolecule.register( 'MoleculeCollectingView', MoleculeCollectingView );
 
   return inherit( BAMView, MoleculeCollectingView, {
+    //REVIEW: doc as overridden
     addCollection: function( collection ) {
       var self = this;
       var kitCollectionNode = BAMView.prototype.addCollection.call( this, collection );

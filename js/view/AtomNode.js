@@ -31,6 +31,7 @@ define( function( require ) {
     this.addChild( AtomNode.getGraphics( atom.element ) );
 
     var self = this;
+    //REVIEW: This looks like it may leak memory. Worth checking into
     atom.positionProperty.link( function( modelPosition ) {
       self.setTranslation( Constants.modelViewTransform.modelToViewPosition( modelPosition ) );
     } );
@@ -46,6 +47,7 @@ define( function( require ) {
 
   // map from element symbol => graphical node for the atom, so that we can use the DAG to save overhead and costs
   var elementMap = {};
+  //REVIEW: We don't use the term 'graphics', maybe icon/node/etc. would be better.
   AtomNode.getGraphics = function( element ) {
     var node = elementMap[ element.symbol ];
     if ( node ) {
@@ -58,7 +60,7 @@ define( function( require ) {
 
     var gCenter = new Vector2( -radius / 3, -radius / 3 );
 
-    // copying ShadedSphereNode
+    // copying ShadedSphereNode REVIEW: Can we just use ShadedSphereNode, and place something over it?
     var middleRadius = diameter / 3;
     var fullRadius = middleRadius + 0.7 * diameter;
 
@@ -73,6 +75,7 @@ define( function( require ) {
 
     var isTextWhite = AtomNode.needsWhiteColor( color );
 
+    //REVIEW: Don't use custom fonts. Use PhetFont?
     var text = new Text( element.symbol, {
       fontWeight: 'bold',
       fontFamily: 'Arial, sans-serif',
@@ -92,6 +95,7 @@ define( function( require ) {
     return 0.30 * color.r + 0.59 * color.g + 0.11 * color.b < 125;
   };
 
+  //REVIEW: Looks unused?
   AtomNode.oldGradient = function( radius, color ) {
     var diameter = radius * 2;
     var gCenter = new Vector2( -radius / 3, -radius / 3 );
@@ -107,6 +111,7 @@ define( function( require ) {
     return gradientFill;
   };
 
+  //REVIEW: Is this unused?
   AtomNode.experimentalGradient = function( radius, baseColor ) {
     // var diameter = radius * 2;
     var gCenter = new Vector2( -radius / 5, -radius / 5 );
@@ -122,6 +127,7 @@ define( function( require ) {
     return gradientFill;
   };
 
+  //REVIEW: Is this unused?
   AtomNode.experimentalBrightGradient = function( radius, baseColor ) {
     // var diameter = radius * 2;
     var gCenter = new Vector2( -radius / 3, -radius / 3 );
@@ -137,7 +143,7 @@ define( function( require ) {
     return gradientFill;
   };
 
-
+  //REVIEW: This can be renamed, since it is the main thing being used. Get rid of the other unused options
   AtomNode.experimentalBrighterGradient = function( radius, baseColor ) {
     // var diameter = radius * 2;
     var gCenter = new Vector2( -radius / 3, -radius / 3 );

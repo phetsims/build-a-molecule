@@ -35,6 +35,7 @@ define( function( require ) {
         moleculeNode.transformMolecule( transformMatrix );
       }
       moleculeNode.draw();
+      //REVIEW: Can we factor all of this out to a static call on Molecule3DNode?
       moleculeIdThumbnailMap[ completeMolecule.moleculeId ] = new Image( moleculeNode.canvas.toDataURL() );
     }
 
@@ -130,10 +131,12 @@ define( function( require ) {
     addHeaderNode: function( headerNode ) {
       var self = this;
 
+      //REVIEW: Remove dead code
       // headerNode.top = this.children[this.children.length-1].bottom - ( this.children.length > 1 ? 3 : 0 ); // more compact padding in general below the box node
       this.addChild( headerNode );
       // this.insertChild( this.headerCount++, headerNode );
 
+      //REVIEW: layout containers? VBox?
       var centerX = this.width / 2;
       var y = 0;
       var len = this._children.length;
@@ -285,6 +288,7 @@ define( function( require ) {
         }
       }
 
+      //REVIEW: Use timer.setTimeout (or another thing that is hooked to the simulation step)
       this.blinkTimeout = window.setTimeout( tick, blinkDelayInMs );
     },
 

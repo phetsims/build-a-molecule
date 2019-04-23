@@ -29,6 +29,8 @@ define( function( require ) {
    ./ico2cur.py scissors-up.ico -x 10 -y 11
    ./ico2cur.py scissors-closed-up.ico -x 7 -y 13
    */
+  //REVIEW: It would be good to look at the current custom cursor support for supported platforms. Can we get rid of
+  //REVIEW: the duplication here?
 
   var images = {
     'scissors.png': require( 'image!BUILD_A_MOLECULE/scissors.png' ),
@@ -48,6 +50,7 @@ define( function( require ) {
 
     Node.call( this, {} );
 
+    //REVIEW: This pattern should be avoided. Just accessing `this.a` isn't too verbose and is recommended
     var a = this.a = bond.a;
     var b = this.b = bond.b;
 

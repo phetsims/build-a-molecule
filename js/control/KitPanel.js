@@ -31,6 +31,7 @@ define( function( require ) {
   function KitPanel( kitCollectionModel, availableKitBounds ) {
     Node.call( this, {} );
 
+    //REVIEW: With layout containers, can we avoid making this assumption?
     assert && assert( Constants.modelViewTransform.getMatrix().m11() < 0 ); // we assume this and correct for the inversed Y
 
     var kitViewBounds = Constants.modelViewTransform.modelToViewBounds( availableKitBounds );
@@ -58,6 +59,7 @@ define( function( require ) {
       labelNode.text = StringUtils.format( kitLabelString, kitCollectionModel.currentKitIndex + 1 );
     } );
 
+    //REVIEW: Replace with the Carousel common type, so we don't have to do so much (and it has a better appearance)
     var navigationNode = new NextPreviousNavigationNode( labelNode, {
       arrowColor: Constants.kitArrowBackgroundEnabled,
       arrowStrokeColor: Constants.kitArrowBorderEnabled,

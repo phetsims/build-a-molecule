@@ -24,7 +24,9 @@ define( function( require ) {
   // images
   var splitIconImage = require( 'image!BUILD_A_MOLECULE/split-blue.png' );
 
+  //REVIEW: "Controls" may be a better word rather than "Metadata"
   function MoleculeMetadataNode( kit, molecule ) {
+    //REVIEW: No need to have empty objects in cases like this
     Node.call( this, {} );
 
     var self = this;
@@ -33,6 +35,7 @@ define( function( require ) {
     if ( molecule.atoms.length < 2 ) {
       // we don't need anything at all if it is not a "molecule"
       return; // TODO: Horrible idea
+      //REVIEW: Not sure why this is horrible. Maybe we shouldn't be creating this in the first place?
     }
 
     this.updatePositionListener = this.updatePosition.bind( this );
@@ -61,6 +64,7 @@ define( function( require ) {
           x: currentX,
           scale: 1.2
         } );
+        //REVIEW: Should factor out constants if possible, like the 1.2, and 4 / 1.2.
         button3d.touchArea = Shape.bounds( button3d.childBounds.dilated( 4 / 1.2 ) );
         this.addChild( button3d );
         currentX += button3d.width + 8;
@@ -94,6 +98,7 @@ define( function( require ) {
     kit.visibleProperty.link( function( isVisible ) {
       if ( !isVisible ) {
         // TODO: incomplete: throw new Error( 'dialog.hideDialogIfShown' );
+        //REVIEW: Is this something that should never be run into? Worth investigating
       }
     } );
   }

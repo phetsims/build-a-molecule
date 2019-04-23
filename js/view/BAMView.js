@@ -18,6 +18,7 @@ define( function( require ) {
   var ScreenView = require( 'JOIST/ScreenView' );
 
   function BAMView( collectionList ) {
+    //REVIEW: Get rid of custom layoutBounds
     ScreenView.call( this, { layoutBounds: new Rectangle( 0, 0, Constants.stageSize.width, Constants.stageSize.height ) } );
     var self = this;
 
@@ -44,6 +45,7 @@ define( function( require ) {
   buildAMolecule.register( 'BAMView', BAMView );
 
   return inherit( ScreenView, BAMView, {
+    //REVIEW: See if it's possible to remove this workaround (should be, just check for a ScreenView instead)
     isBAMView: true, // because require.js doesn't like to load us in some places!
 
     addCollection: function( collection ) {
