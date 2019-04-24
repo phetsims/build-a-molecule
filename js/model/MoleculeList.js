@@ -123,6 +123,7 @@ define( function( require ) {
     },
 
     // by pubchem compound ID (CID)
+    //REVIEW: Dead code?
     findMoleculeByCID: function( cid ) {
       var length = this.completeMolecules.length;
       //REVIEW: Can we replace this with _.find?
