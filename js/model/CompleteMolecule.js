@@ -40,8 +40,8 @@ define( function( require ) {
   /*
    * @param {string} commonName
    * @param {string} molecularFormula
-   * @param {Int} atomCount TODO: should this be number? REVIEW: yes
-   * @param {Int} bondCount TODO: should this be number? REVIEW: yes
+   * @param {number} atomCount
+   * @param {number} bondCount
    * @param {boolean} has2d
    * @param {boolean} has3d
    */
