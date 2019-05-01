@@ -12,12 +12,12 @@ define( function( require ) {
   var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   var Color = require( 'SCENERY/util/Color' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var MultipleCollectionBoxNode = require( 'BUILD_A_MOLECULE/control/MultipleCollectionBoxNode' );
+  var MultipleCollectionBoxNode = require( 'BUILD_A_MOLECULE/view/MultipleCollectionBoxNode' );
   var Node = require( 'SCENERY/nodes/Node' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var Shape = require( 'KITE/Shape' );
-  var SingleCollectionBoxNode = require( 'BUILD_A_MOLECULE/control/SingleCollectionBoxNode' );
+  var SingleCollectionBoxNode = require( 'BUILD_A_MOLECULE/view/SingleCollectionBoxNode' );
   var TextPushButton = require( 'SUN/buttons/TextPushButton' );
 
   // strings

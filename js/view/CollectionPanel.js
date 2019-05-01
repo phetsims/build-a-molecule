@@ -12,7 +12,7 @@ define( function( require ) {
   var BAMScreen = require( 'BUILD_A_MOLECULE/screens/BAMScreen' );
   var Bounds2 = require( 'DOT/Bounds2' );
   var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
-  var CollectionAreaNode = require( 'BUILD_A_MOLECULE/control/CollectionAreaNode' );
+  var CollectionAreaNode = require( 'BUILD_A_MOLECULE/view/CollectionAreaNode' );
   var CollectionBox = require( 'BUILD_A_MOLECULE/model/CollectionBox' );
   var CollectionList = require( 'BUILD_A_MOLECULE/model/CollectionList' );
   var Constants = require( 'BUILD_A_MOLECULE/Constants' );

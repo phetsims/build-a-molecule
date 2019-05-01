@@ -12,7 +12,7 @@ define( function( require ) {
   var Bounds2 = require( 'DOT/Bounds2' );
   var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   var CollectionBox = require( 'BUILD_A_MOLECULE/model/CollectionBox' );
-  var CollectionBoxNode = require( 'BUILD_A_MOLECULE/control/CollectionBoxNode' );
+  var CollectionBoxNode = require( 'BUILD_A_MOLECULE/view/CollectionBoxNode' );
   var inherit = require( 'PHET_CORE/inherit' );
   var MoleculeList = require( 'BUILD_A_MOLECULE/model/MoleculeList' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );

@@ -11,7 +11,7 @@ define( function( require ) {
 
   var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var KitPanel = require( 'BUILD_A_MOLECULE/control/KitPanel' );
+  var KitPanel = require( 'BUILD_A_MOLECULE/view/KitPanel' );
   var KitView = require( 'BUILD_A_MOLECULE/view/KitView' );
   var Node = require( 'SCENERY/nodes/Node' );
 

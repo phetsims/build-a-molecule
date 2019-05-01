@@ -9,10 +9,10 @@
 define( function( require ) {
   'use strict';
 
-  var AllFilledDialogNode = require( 'BUILD_A_MOLECULE/control/AllFilledDialogNode' );
+  var AllFilledDialogNode = require( 'BUILD_A_MOLECULE/view/AllFilledDialogNode' );
   var BAMView = require( 'BUILD_A_MOLECULE/view/BAMView' );
   var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
-  var CollectionPanel = require( 'BUILD_A_MOLECULE/control/CollectionPanel' );
+  var CollectionPanel = require( 'BUILD_A_MOLECULE/view/CollectionPanel' );
   var Constants = require( 'BUILD_A_MOLECULE/Constants' );
   var inherit = require( 'PHET_CORE/inherit' );
 
