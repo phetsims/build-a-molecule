@@ -176,7 +176,7 @@ define( function( require ) {
       } );
     } );
 
-    // handle molecule creation and disposal
+    // handle molecule creation and destruction
     kit.addedMoleculeEmitter.addListener( function( molecule ) {
       var moleculeMetadataNode = new MoleculeMetadataNode( kit, molecule );
       metadataLayer.addChild( moleculeMetadataNode );
@@ -188,7 +188,7 @@ define( function( require ) {
     } );
     kit.removedMoleculeEmitter.addListener( function( molecule ) {
       var moleculeMetadataNode = self.metadataMap[ molecule.moleculeId ];
-      moleculeMetadataNode.dispose();
+      moleculeMetadataNode.destruct();
       metadataLayer.removeChild( moleculeMetadataNode );
       delete self.metadataMap[ molecule.moleculeId ];
 
@@ -247,7 +247,7 @@ define( function( require ) {
 
     removeMoleculeBondNodes: function( molecule ) {
       var moleculeBondContainerNode = this.bondMap[ molecule.moleculeId ];
-      moleculeBondContainerNode.dispose();
+      moleculeBondContainerNode.destruct();
       this.metadataLayer.removeChild( moleculeBondContainerNode );
       delete this.bondMap[ molecule.moleculeId ];
     }

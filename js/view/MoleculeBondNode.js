@@ -123,7 +123,7 @@ define( function( require ) {
   buildAMolecule.register( 'MoleculeBondNode', MoleculeBondNode );
 
   inherit( Node, MoleculeBondNode, {
-    dispose: function() {
+    destruct: function() {
       this.a.positionProperty.unlink( this.positionListener );
       this.b.positionProperty.unlink( this.positionListener );
     }
