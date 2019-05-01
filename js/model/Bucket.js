@@ -15,6 +15,7 @@ define( function( require ) {
   var Color = require( 'SCENERY/util/Color' );
   var Dimension2 = require( 'DOT/Dimension2' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var Vector2Property = require( 'DOT/Vector2Property' );
   var SphereBucket = require( 'PHETCOMMON/model/SphereBucket' );
   var Strings = require( 'BUILD_A_MOLECULE/Strings' );
   var Vector2 = require( 'DOT/Vector2' );
@@ -30,9 +31,6 @@ define( function( require ) {
    * @param quantity The number of atoms starting in the bucket
    */
   function Bucket( size, tickEmitter, element, quantity ) {
-    //REVIEW: Probably doesn't need underscore. Does need docs
-    this._position = null;
-
     SphereBucket.call( this, {
       position: Vector2.ZERO,
       size: size,
@@ -42,6 +40,10 @@ define( function( require ) {
       captionColor: AtomNode.needsWhiteColor( new Color( element.color ) ) ? 'white' : 'black',
       verticalParticleOffset: -30 + element.covalentRadius / 2
     } );
+    var self = this;
+
+    // @private {Property.<Vector2>}
+    this.positionProperty = new Vector2Property( this.position );
 
     //REVIEW: docs
     this.element = element;
@@ -50,29 +52,25 @@ define( function( require ) {
     for ( var i = 0; i < quantity; i++ ) {
       this.addParticleFirstOpen( new Atom2( element, tickEmitter ), false );
     }
+
+    this.positionProperty.link( function( point ) {
+
+      // when we move the bucket, we must also move our contained atoms
+      var delta = point.minus( self.position );
+
+      if ( self.atoms ) {
+        self.atoms.forEach( function( atom ) {
+          atom.setPositionAndDestination( atom.positionProperty.value.plus( delta ) );
+        } );
+      }
+    } );
   }
+
   buildAMolecule.register( 'Bucket', Bucket );
 
   inherit( SphereBucket, Bucket, {
     get atoms() {
       return this.getParticleList();
-    },
-
-    set position( point ) {
-      this._position = point;
-
-      // when we move the bucket, we must also move our contained atoms
-      var delta = point.minus( this.position );
-
-      if ( this.atoms ) {
-        this.atoms.forEach( function( atom ) {
-          atom.setPositionAndDestination( atom.positionProperty.value.plus( delta ) );
-        } );
-      }
-    },
-
-    get position() {
-      return this._position;
     },
 
     // Instantly place the atom in the correct position, whether or not it is in the bucket
