@@ -56,6 +56,7 @@ define( function( require ) {
     //REVIEW: This is filled in by parsing later? We should document it
     // this.cid = null;
   }
+
   buildAMolecule.register( 'CompleteMolecule', CompleteMolecule );
 
   inherit( MoleculeStructure, CompleteMolecule, {
@@ -112,7 +113,7 @@ define( function( require ) {
       var wrappers = _.sortBy( this.atoms, function( atom ) {
         return atom.z3d;
       } );
-      _.each( wrappers, function( atomWrapper ) {
+      wrappers.forEach( function( atomWrapper ) {
         node.addChild( new AtomNode( atomWrapper.element, {
           // custom scale for now
           x: atomWrapper.x2d() * 15,

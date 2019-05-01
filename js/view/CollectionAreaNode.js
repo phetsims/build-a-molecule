@@ -35,7 +35,7 @@ define( function( require ) {
     var y = 0;
 
     // add nodes for all of our collection boxes.
-    _.each( collection.collectionBoxes, function( collectionBox ) {
+    collection.collectionBoxes.forEach( function( collectionBox ) {
       var collectionBoxNode = isSingleCollectionMode ? new SingleCollectionBoxNode( collectionBox, toModelBounds ) : new MultipleCollectionBoxNode( collectionBox, toModelBounds );
       self.collectionBoxNodes.push( collectionBoxNode );
 
@@ -60,7 +60,10 @@ define( function( require ) {
       var collectionBoxHolder = new Node();
       // enforce consistent bounds of the maximum size. reason: we don't want switching between collections to alter the positions of the collection boxes
       //REVIEW: Use Spacer
-      collectionBoxHolder.addChild( new Rectangle( 0, 0, maximumBoxWidth, maximumBoxHeight, { visible: false, stroke: null } ) ); // TODO: Spacer node for Scenery?
+      collectionBoxHolder.addChild( new Rectangle( 0, 0, maximumBoxWidth, maximumBoxHeight, {
+        visible: false,
+        stroke: null
+      } ) ); // TODO: Spacer node for Scenery?
       collectionBoxHolder.addChild( collectionBoxNode );
       self.addChild( collectionBoxHolder );
       collectionBoxHolder.top = y;
@@ -73,10 +76,10 @@ define( function( require ) {
     var resetCollectionButton = new TextPushButton( resetCollectionString, {
       listener: function() {
         // when clicked, empty collection boxes
-        _.each( collection.collectionBoxes, function( box ) {
+        collection.collectionBoxes.forEach( function( box ) {
           box.clear();
         } );
-        _.each( collection.kits, function( kit ) {
+        collection.kits.forEach( function( kit ) {
           kit.resetKit();
         } );
       },
@@ -87,7 +90,7 @@ define( function( require ) {
 
     function updateEnabled() {
       var enabled = false;
-      _.each( collection.collectionBoxes, function( box ) {
+      collection.collectionBoxes.forEach( function( box ) {
         if ( box.quantityProperty.value > 0 ) {
           enabled = true;
         }
@@ -96,7 +99,7 @@ define( function( require ) {
     }
 
     // when any collection box quantity changes, re-update whether we are enabled
-    _.each( collection.collectionBoxes, function( box ) {
+    collection.collectionBoxes.forEach( function( box ) {
       box.quantityProperty.link( updateEnabled );
     } );
 
@@ -105,15 +108,15 @@ define( function( require ) {
 
     // center everything
     var centerX = this.width / 2; // TODO: better layout code
-    _.each( this.children, function( child ) {
+    this.children.forEach( function( child ) {
       child.centerX = centerX;
     } );
   }
-  buildAMolecule.register( 'CollectionAreaNode', CollectionAreaNode );
 
+  buildAMolecule.register( 'CollectionAreaNode', CollectionAreaNode );
   return inherit( Node, CollectionAreaNode, {
     updateCollectionBoxLocations: function() {
-      _.each( this.collectionBoxNodes, function( collectionBoxNode ) {
+      this.collectionBoxNodes.forEach( function( collectionBoxNode ) {
         collectionBoxNode.updateLocation();
       } );
     }

@@ -35,7 +35,7 @@ define( function( require ) {
     this.baseNode.addChild( collectionPanel );
 
     // notify attachment
-    _.each( collectionAttachmentCallbacks, function( callback ) { callback(); } );
+    collectionAttachmentCallbacks.forEach( function( callback ) { callback(); } );
   }
   buildAMolecule.register( 'MoleculeCollectingView', MoleculeCollectingView );
 

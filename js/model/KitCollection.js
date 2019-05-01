@@ -29,6 +29,7 @@ define( function( require ) {
     // @public {Property.<boolean>} - this will remain false if we have no collection boxes
     this.allCollectionBoxesFilledProperty = new BooleanProperty( false );
   }
+
   buildAMolecule.register( 'KitCollection', KitCollection );
 
   inherit( Object, KitCollection, {
@@ -82,12 +83,12 @@ define( function( require ) {
         }
       };
 
-      _.each( kit.atoms, function( atomModel ) {
+      kit.atoms.forEach( function( atomModel ) {
         atomModel.droppedByUserEmitter.addListener( dropListener );
       } );
 
       kit.addedMoleculeEmitter.addListener( function( molecule ) {
-        _.each( self.collectionBoxes, function( box ) {
+        self.collectionBoxes.forEach( function( box ) {
           if ( box.willAllowMoleculeDrop( molecule ) ) {
             box.acceptedMoleculeCreationEmitter.emit( molecule );
           }
@@ -137,8 +138,8 @@ define( function( require ) {
     },
 
     resetAll: function() {
-      _.each( this.collectionBoxes, function( box ) { box.clear(); } );
-      _.each( this.kits, function( kit ) { kit.resetKit(); } );
+      this.collectionBoxes.forEach( function( box ) { box.clear(); } );
+      this.kits.forEach( function( kit ) { kit.resetKit(); } );
       while ( this.hasPreviousKit() ) {
         this.goToPreviousKit();
       }

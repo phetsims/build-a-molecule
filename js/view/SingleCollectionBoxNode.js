@@ -49,7 +49,7 @@ define( function( require ) {
    *----------------------------------------------------------------------------*/
   var maxBounds = Bounds2.NOTHING;
 
-  _.each( MoleculeList.collectionBoxMolecules, function( molecule ) {
+  MoleculeList.collectionBoxMolecules.forEach( function( molecule ) {
     // fake boxes
     var boxBounds = new SingleCollectionBoxNode( new CollectionBox( molecule, 1 ), function( node ) {
       return node.bounds;

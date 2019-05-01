@@ -53,8 +53,8 @@ define( function( require ) {
         canvas.style.top = globalBounds.y + 'px';
         toModelTransform = new Transform3( Constants.modelViewTransform.getInverse().timesMatrix( view.getUniqueTrail().getMatrix().inverted() ) );
 
-        _.each( kit.molecules, function( molecule ) {
-          _.each( molecule.bonds, function( bond ) {
+        kit.molecules.forEach( function( molecule ) {
+          molecule.bonds.forEach( function( bond ) {
             self.bondData.push( {
               bond: bond,
               cut: false,
@@ -98,7 +98,7 @@ define( function( require ) {
       end: function( event, trail ) {
         lastPoint = null;
         var cutCount = 0;
-        _.each( self.bondData, function( dat ) {
+        self.bondData.forEach( function( dat ) {
           if ( dat.cut ) {
             cutCount++;
             kit.breakBond( dat.bond.a, dat.bond.b, true ); // skip the destination separation
@@ -121,7 +121,7 @@ define( function( require ) {
       var dragDeltaX = newModelPoint.x - oldModelPoint.x;
       var dragDeltaY = newModelPoint.y - oldModelPoint.y;
 
-      _.each( this.bondData, function( dat ) {
+      this.bondData.forEach( function( dat ) {
         // skip already-cut bonds
         if ( dat.cut ) {
           return;

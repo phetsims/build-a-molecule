@@ -152,7 +152,7 @@ define( function( require ) {
           break;
         }
       }
-      _.each( this.children, function( child ) {
+      this.children.forEach( function( child ) {
       } );
     },
 
@@ -198,11 +198,11 @@ define( function( require ) {
      */
     layOutMoleculeList: function( moleculeNodes ) {
       var maxHeight = 0;
-      _.each( moleculeNodes, function( moleculeNode ) {
+      moleculeNodes.forEach( function( moleculeNode ) {
         maxHeight = Math.max( maxHeight, moleculeNode.height );
       } );
       var x = 0;
-      _.each( moleculeNodes, function( moleculeNode ) {
+      moleculeNodes.forEach( function( moleculeNode ) {
         moleculeNode.setTranslation( x, ( maxHeight - moleculeNode.height ) / 2 );
         x += moleculeNode.width + moleculePadding;
       } );

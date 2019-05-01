@@ -103,7 +103,7 @@ define( function( require ) {
     var updateRefillButton = function() {
       refillButton.enabled = kitCollectionModel.currentKitProperty.value.hasAtomsOutsideOfBuckets();
     };
-    _.each( kitCollectionModel.kits, function( kit ) {
+    kitCollectionModel.kits.forEach( function( kit ) {
       kit.addedMoleculeEmitter.addListener( updateRefillButton );
       kit.removedMoleculeEmitter.addListener( updateRefillButton );
     } );

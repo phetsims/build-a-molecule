@@ -116,27 +116,27 @@ define( function( require ) {
 
     // center the bounds of the atoms
     var bounds3 = Bounds3.NOTHING.copy();
-    _.each( this.currentAtoms, function( atom ) {
+    this.currentAtoms.forEach( function( atom ) {
       bounds3.includeBounds( new Bounds3( atom.x - atom.covalentRadius, atom.y - atom.covalentRadius,
         atom.z - atom.covalentRadius, atom.x + atom.covalentRadius, atom.y + atom.covalentRadius,
         atom.z + atom.covalentRadius ) );
     } );
     var center3 = bounds3.center;
     if ( center3.magnitude ) {
-      _.each( this.currentAtoms, function( atom ) {
+      this.currentAtoms.forEach( function( atom ) {
         atom.subtract( center3 );
       } );
     }
 
     // compute our outer bounds so we can properly scale our transform to fit
     var maxTotalRadius = 0;
-    _.each( this.currentAtoms, function( atom ) {
+    this.currentAtoms.forEach( function( atom ) {
       maxTotalRadius = Math.max( maxTotalRadius, atom.magnitude + atom.covalentRadius );
     } );
     this.maxTotalRadius = maxTotalRadius;
 
     var gradientMap = {}; // element symbol => gradient
-    _.each( this.currentAtoms, function( atom ) {
+    this.currentAtoms.forEach( function( atom ) {
       if ( !gradientMap[ atom.element.symbol ] ) {
         gradientMap[ atom.element.symbol ] = self.createGradient( atom.element );
       }
@@ -345,7 +345,7 @@ define( function( require ) {
     },
 
     transformMolecule: function( matrix ) {
-      _.each( this.currentAtoms, function( atom ) {
+      this.currentAtoms.forEach( function( atom ) {
         matrix.multiplyVector3( atom );
       } );
       if ( grabInitialTransforms ) {

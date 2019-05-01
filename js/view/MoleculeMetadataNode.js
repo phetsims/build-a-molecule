@@ -88,7 +88,7 @@ define( function( require ) {
     } ) );
     this.addChild( buttonBreak );
 
-    _.each( molecule.atoms, function( atom ) {
+    molecule.atoms.forEach( function( atom ) {
       atom.positionProperty.link( self.updatePositionListener );
     } );
 

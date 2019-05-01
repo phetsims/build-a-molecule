@@ -26,7 +26,7 @@ define( function( require ) {
 
     this.atom = atom;
     this.connections = {}; // maps Direction ID => LewisDotAtom
-    _.each( Direction.values, function( direction ) {
+    Direction.values.forEach( function( direction ) {
       self.connections[ direction.id ] = null; // nothing in this direction
     } );
   }
@@ -66,7 +66,7 @@ define( function( require ) {
       var dotAtom = this.getLewisDotAtom( atom );
 
       // disconnect all of its bonds
-      _.each( Direction.values, function( direction ) {
+      Direction.values.forEach( function( direction ) {
         if ( dotAtom.hasConnection( direction ) ) {
           var otherDotAtom = dotAtom.getLewisDotAtom( direction );
           self.breakBond( dotAtom.atom, otherDotAtom.atom );
@@ -109,7 +109,7 @@ define( function( require ) {
     getOpenDirections: function( atom ) {
       var result = [];
       var dotAtom = this.getLewisDotAtom( atom );
-      _.each( Direction.values, function( direction ) {
+      Direction.values.forEach( function( direction ) {
         if ( !dotAtom.hasConnection( direction ) ) {
           result.push( direction );
         }

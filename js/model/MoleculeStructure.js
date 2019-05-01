@@ -39,6 +39,7 @@ define( function( require ) {
     // this.bonds = new Array( numBonds );
     this.bonds = [];
   }
+
   buildAMolecule.register( 'MoleculeStructure', MoleculeStructure );
 
   MoleculeStructure.prototype = {
@@ -88,7 +89,7 @@ define( function( require ) {
       var organic = containsCarbon && containsHydrogen;
 
       var sortedElements = _.sortBy( this.getElementList(), organic ? MoleculeStructure.organicSortValue         // carbon first, then hydrogen, then others alphabetically
-          : MoleculeStructure.electronegativeSortValue // sort by increasing electronegativity
+        : MoleculeStructure.electronegativeSortValue // sort by increasing electronegativity
       );
 
       // grab our formula out
@@ -112,7 +113,7 @@ define( function( require ) {
 
       // we pull of the alcohols so we can get that molecular formula (and we append the alcohols afterwards)
       var structureWithoutAlcohols = this.getCopy();
-      _.each( this.atoms, function( oxygenAtom ) {
+      this.atoms.forEach( function( oxygenAtom ) {
         // only process if it is an oxygen atom
         if ( oxygenAtom.isOxygen() ) {
           var neighbors = self.getNeighbors( oxygenAtom );
@@ -201,7 +202,7 @@ define( function( require ) {
 
         // for each neighbor, make 'unvisited' atoms dirty and count 'visited' atoms
         var visitedCount = 0;
-        _.each( this.getNeighbors( atom ), function( otherAtom ) {
+        this.getNeighbors( atom ).forEach( function( otherAtom ) {
           if ( _.includes( visitedAtoms, otherAtom ) ) {
             visitedCount += 1;
           }
@@ -226,11 +227,11 @@ define( function( require ) {
 
     getDebuggingDump: function() {
       var str = 'Molecule\n';
-      _.each( this.atoms, function( atom ) {
+      this.atoms.forEach( function( atom ) {
         // TODO: was using hashcode, may need to create IDs for Atom instances (not Atom2, those have IDs)
         str += 'atom: ' + atom.symbol + ' ' + atom.id + '\n';
       } );
-      _.each( this.bonds, function( bond ) {
+      this.bonds.forEach( function( bond ) {
         str += 'bond: ' + bond.a.id + ' - ' + bond.b.id + '\n';
       } );
       return str;
@@ -260,8 +261,8 @@ define( function( require ) {
     // TODO: rename copy()
     getCopy: function() {
       var result = new MoleculeStructure( this.atoms.length, this.bonds.length );
-      _.each( this.atoms, result.addAtom.bind( result ) );
-      _.each( this.bonds, result.addBond.bind( result ) );
+      this.atoms.forEach( result.addAtom.bind( result ) );
+      this.bonds.forEach( result.addBond.bind( result ) );
       return result;
     },
 
@@ -270,8 +271,8 @@ define( function( require ) {
      */
     getAtomCopy: function() {
       var result = new MoleculeStructure( this.atoms.length, this.bonds.length );
-      _.each( this.atoms, result.addAtom.bind( result ) );
-      _.each( this.bonds, function( bond ) {
+      this.atoms.forEach( result.addAtom.bind( result ) );
+      this.bonds.forEach( function( bond ) {
         // new bonds. TODO: document why necessary if we find out
         result.addBond( new Bond( bond.a, bond.b ) );
       } );
@@ -280,12 +281,12 @@ define( function( require ) {
 
     getCopyWithAtomRemoved: function( atomToRemove ) {
       var result = new MoleculeStructure( this.atoms.length - 1, 12 ); // default to 12 bonds, probably more?
-      _.each( this.atoms, function( atom ) {
+      this.atoms.forEach( function( atom ) {
         if ( atom !== atomToRemove ) {
           result.addAtom( atom );
         }
       } );
-      _.each( this.bonds, function( bond ) {
+      this.bonds.forEach( function( bond ) {
         if ( !bond.contains( atomToRemove ) ) {
           result.addBond( bond );
         }
@@ -424,10 +425,10 @@ define( function( require ) {
       var self = this;
 
       var ret = this.atoms.length + '|' + this.bonds.length;
-      _.each( this.atoms, function( atom ) {
+      this.atoms.forEach( function( atom ) {
         ret += '|' + atom.symbol;
       } );
-      _.each( this.bonds, function( bond ) {
+      this.bonds.forEach( function( bond ) {
         var a = self.atoms.indexOf( bond.a );
         var b = self.atoms.indexOf( bond.b );
         ret += '|' + a + '|' + b;
@@ -457,7 +458,7 @@ define( function( require ) {
       for ( var i = 0; i < this.atoms.length; i++ ) {
         var atom = this.atoms[ i ];
         result += '|' + atom.toString();
-        _.each( this.bonds, function( bond ) {
+        this.bonds.forEach( function( bond ) {
           if ( bond.contains( atom ) ) {
             var otherAtom = bond.getOtherAtom( atom );
             var index = self.atoms.indexOf( otherAtom );
@@ -477,12 +478,12 @@ define( function( require ) {
       var result = new MoleculeStructure( this.atoms.length, this.bonds.length );
 
       var newMap = {}; // old atom ID => new atom
-      _.each( this.atoms, function( atom ) {
+      this.atoms.forEach( function( atom ) {
         var newAtom = new Atom( atom.element );
         result.addAtom( newAtom );
         newMap[ atom.id ] = newAtom;
       } );
-      _.each( this.bonds, function( bond ) {
+      this.bonds.forEach( function( bond ) {
         result.addBond( new Bond( newMap[ bond.a.id ], newMap[ bond.b.id ] ) );
       } );
       return result;
@@ -529,10 +530,10 @@ define( function( require ) {
    * @returns {MoleculeStructure} A completely new molecule with all atoms in A and B, where atom A is joined to atom B
    */
   MoleculeStructure.getCombinedMoleculeFromBond = function( molA, molB, a, b, result ) {
-    _.each( molA.atoms, function( atom ) { result.addAtom( atom ); } );
-    _.each( molB.atoms, function( atom ) { result.addAtom( atom ); } );
-    _.each( molA.bonds, function( bond ) { result.addBond( bond ); } );
-    _.each( molB.bonds, function( bond ) { result.addBond( bond ); } );
+    molA.atoms.forEach( function( atom ) { result.addAtom( atom ); } );
+    molB.atoms.forEach( function( atom ) { result.addAtom( atom ); } );
+    molA.bonds.forEach( function( bond ) { result.addBond( bond ); } );
+    molB.bonds.forEach( function( bond ) { result.addBond( bond ); } );
     result.addBond( new Bond( a, b ) );
     return result;
   };
@@ -565,7 +566,7 @@ define( function( require ) {
       // dirtyAtoms.splice( dirtyAtoms.indexOf( atom ), 1 ); // TODO: replace with remove()
 
       // for all neighbors that don't use our 'bond'
-      _.each( structure.bonds, function( otherBond ) {
+      structure.bonds.forEach( function( otherBond ) {
         if ( otherBond !== bond && otherBond.contains( atom ) ) {
           var neighbor = otherBond.getOtherAtom( atom );
 
@@ -583,7 +584,7 @@ define( function( require ) {
      * construct our two molecules
      *----------------------------------------------------------------------------*/
 
-    _.each( structure.atoms, function( atom ) {
+    structure.atoms.forEach( function( atom ) {
       if ( _.includes( atomsInA, atom ) ) {
         molA.addAtom( atom );
       }
@@ -592,7 +593,7 @@ define( function( require ) {
       }
     } );
 
-    _.each( structure.bonds, function( otherBond ) {
+    structure.bonds.forEach( function( otherBond ) {
       if ( otherBond !== bond ) {
         if ( _.includes( atomsInA, otherBond.a ) ) {
           assert && assert( _.includes( atomsInA, otherBond.b ) );

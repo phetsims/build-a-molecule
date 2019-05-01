@@ -17,7 +17,7 @@ define( function( require ) {
 
     // REVIEW: map from element.symbol => count?
     this.quantities = {};
-    _.each( Constants.supportedElements, function( element ) {
+    Constants.supportedElements.forEach( function( element ) {
       self.quantities[ element.symbol ] = 0;
     } );
 
@@ -26,6 +26,7 @@ define( function( require ) {
       this.addMolecule( molecule );
     }
   }
+
   buildAMolecule.register( 'ElementHistogram', ElementHistogram );
 
   ElementHistogram.prototype = {
@@ -42,7 +43,7 @@ define( function( require ) {
     addMolecule: function( molecule ) {
       var self = this;
 
-      _.each( molecule.atoms, function( atom ) {
+      molecule.atoms.forEach( function( atom ) {
         self.addElement( atom.element );
       } );
     },
@@ -72,7 +73,7 @@ define( function( require ) {
       var self = this;
       var hashString = '';
 
-      _.each( Constants.supportedElements, function( element ) {
+      Constants.supportedElements.forEach( function( element ) {
         hashString += '_' + self.getQuantity( element );
       } );
       return hashString;
@@ -101,7 +102,7 @@ define( function( require ) {
   // object with symbols as keys, result as true
   //REVIEW: Is this used anywhere? I can't find it
   ElementHistogram.allowedChemicalSymbols = {};
-  _.each( Constants.supportedElements, function( element ) {
+  Constants.supportedElements.forEach( function( element ) {
     ElementHistogram.allowedChemicalSymbols[ element.symbol ] = true;
   } );
 

@@ -22,7 +22,7 @@ define( function( require ) {
     this.addChild( new KitPanel( collection, collectionList.availableKitBounds ) );
 
     var kitMap = {}; // maps kit ID => KitView
-    _.each( collection.kits, function( kit ) {
+    collection.kits.forEach( function( kit ) {
       var kitView = new KitView( kit, view );
       kitMap[ kit.id ] = kitView;
     } );

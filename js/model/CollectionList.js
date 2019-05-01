@@ -72,7 +72,7 @@ define( function( require ) {
       this.collections[ 0 ].resetAll();
 
       // remove all the other collections
-      _.each( this.collections.slice( 0 ), function( collection ) {
+      this.collections.slice( 0 ).forEach( function( collection ) {
         if ( collection !== self.currentCollectionProperty.value ) {
           self.removeCollection( collection );
         }

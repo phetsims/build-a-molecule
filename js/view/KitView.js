@@ -80,7 +80,7 @@ define( function( require ) {
     // ensure that touches don't get pruned before this point
     atomLayer.touchArea = Shape.bounds( Constants.stageSize.toBounds() );
 
-    _.each( kit.buckets, function( bucket ) {
+    kit.buckets.forEach( function( bucket ) {
       var bucketFront = new BucketFront( bucket, Constants.modelViewTransform, {
         labelFont: new PhetFont( {
           weight: 'bold',
@@ -109,7 +109,7 @@ define( function( require ) {
       bucketHoleCursorUpdate();
 
       // but don't pick the elliptical paths in the hole (that would be expensive to compute so often)
-      _.each( bucketHole.children, function( child ) { child.pickable = false; } );
+      bucketHole.children.forEach( function( child ) { child.pickable = false; } );
 
       // our hook to start dragging an atom (if available in the bucket)
       bucketHole.addInputListener( {
@@ -139,7 +139,7 @@ define( function( require ) {
       topLayer.addChild( bucketFront );
       bottomLayer.addChild( bucketHole );
 
-      _.each( bucket.atoms, function( atom ) {
+      bucket.atoms.forEach( function( atom ) {
         var atomNode = new AtomNode( atom, {} );
         self.atomNodeMap[ atom.id ] = atomNode;
         atomLayer.addChild( atomNode );
@@ -153,7 +153,7 @@ define( function( require ) {
 
             var molecule = kit.getMolecule( atom );
             if ( molecule ) {
-              _.each( molecule.atoms, function( moleculeAtom ) {
+              molecule.atoms.forEach( function( moleculeAtom ) {
                 self.atomNodeMap[ moleculeAtom.id ].moveToFront();
               } );
             }

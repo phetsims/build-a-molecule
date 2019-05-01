@@ -99,7 +99,7 @@ define( function( require ) {
 
       var equivalentMoleculesRemaining = 0;
       // TODO: we include the current molecule in this list, maybe that was unintended?
-      _.each( molecules, function( moleculeStructure ) {
+      molecules.forEach( function( moleculeStructure ) {
         if ( moleculeStructure.getHillSystemFormulaFragment() === molecule.getHillSystemFormulaFragment() ) {
           equivalentMoleculesRemaining++;
         }
@@ -110,10 +110,10 @@ define( function( require ) {
       var atomMultiple = 1 + ( ableToIncreaseMultiple ? equivalentMoleculesRemaining : 0 );
 
       // for each type of atom
-      _.each( _.uniq( molecule.getElementList() ), function( element ) {
+      _.uniq( molecule.getElementList() ).forEach( function( element ) {
         // find out how many atoms of this type we need
         var requiredAtomCount = 0;
-        _.each( molecule.atoms, function( atom ) {
+        molecule.atoms.forEach( function( atom ) {
           if ( atom.element.isSameElement( element ) ) {
             requiredAtomCount++;
           }
@@ -155,8 +155,8 @@ define( function( require ) {
     }
 
     var collection = new KitCollection();
-    _.each( kits, collection.addKit.bind( collection ) );
-    _.each( boxes, collection.addCollectionBox.bind( collection ) );
+    kits.forEach( collection.addKit.bind( collection ) );
+    boxes.forEach( collection.addCollectionBox.bind( collection ) );
     return collection;
   };
 

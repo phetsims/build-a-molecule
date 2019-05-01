@@ -89,7 +89,7 @@ define( function( require ) {
 
     //REVIEW: Should this be called `reset`?
     clear: function() {
-      _.each( this.molecules.slice( 0 ), this.removeMolecule.bind( this ) );
+      this.molecules.slice( 0 ).forEach( this.removeMolecule.bind( this ) );
     }
   } );
 

@@ -64,9 +64,11 @@ define( function( require ) {
       // when we move the bucket, we must also move our contained atoms
       var delta = point.minus( this.position );
 
-      _.each( this.atoms, function( atom ) {
-        atom.setPositionAndDestination( atom.positionProperty.value.plus( delta ) );
-      } );
+      if ( this.atoms ) {
+        this.atoms.forEach( function( atom ) {
+          atom.setPositionAndDestination( atom.positionProperty.value.plus( delta ) );
+        } );
+      }
     },
 
     get position() {

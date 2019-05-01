@@ -25,7 +25,7 @@ define( function( require ) {
     get positionBounds() {
       // mutable way of handling this, so we need to make a copy
       var bounds = Bounds2.NOTHING.copy();
-      _.each( this.atoms, function( atom ) {
+      this.atoms.forEach( function( atom ) {
         bounds.includeBounds( atom.positionBounds );
       } );
       return bounds;
@@ -35,7 +35,7 @@ define( function( require ) {
     get destinationBounds() {
       // mutable way of handling this, so we need to make a copy
       var bounds = Bounds2.NOTHING.copy();
-      _.each( this.atoms, function( atom ) {
+      this.atoms.forEach( function( atom ) {
         bounds.includeBounds( atom.destinationBounds );
       } );
       return bounds;
@@ -43,7 +43,7 @@ define( function( require ) {
 
     // @param {Vector2}
     shiftDestination: function( delta ) {
-      _.each( this.atoms, function( atom ) {
+      this.atoms.forEach( function( atom ) {
         // TODO: memory: consider alternate mutable form atom.destination.add( delta )
         atom.destinationProperty.value = atom.destinationProperty.value.plus( delta );
       } );

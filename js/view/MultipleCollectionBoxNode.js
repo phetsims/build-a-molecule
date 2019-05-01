@@ -68,7 +68,7 @@ define( function( require ) {
   // TODO: simplify this code from single/multiple into one
   var maxBounds = Bounds2.NOTHING;
 
-  _.each( MoleculeList.collectionBoxMolecules, function( molecule ) {
+  MoleculeList.collectionBoxMolecules.forEach( function( molecule ) {
     // fake boxes
     var boxBounds = new MultipleCollectionBoxNode( new CollectionBox( molecule, 1 ), function( node ) {
       return node.bounds;

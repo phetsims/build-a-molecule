@@ -122,7 +122,7 @@ define( function( require ) {
     }
 
     // create nodes for all current collections
-    _.each( collectionList.collections, function( collection ) {
+    collectionList.collections.forEach( function( collection ) {
       createCollectionNode( collection );
     } );
 
@@ -160,7 +160,7 @@ define( function( require ) {
     updateLayout: function() {
       this.soundToggleButton.top = this.collectionAreaHolder.bottom + 25;
       var centerX = this.layoutNode.width / 2;
-      _.each( this.layoutNode.children, function( child ) {
+      this.layoutNode.children.forEach( function( child ) {
         child.centerX = centerX;
       } );
     },

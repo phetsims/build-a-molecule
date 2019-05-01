@@ -38,7 +38,7 @@ define( function( require ) {
     loadInitialData: function() {
       var startTime = Date.now();
       var mainMolecules = MoleculeList.readCompleteMoleculesFromData( collectionMoleculesData );
-      _.each( mainMolecules, this.addCompleteMolecule.bind( this ) );
+      mainMolecules.forEach( this.addCompleteMolecule.bind( this ) );
       console.log( 'loaded initial data in ' + ( Date.now() - startTime ) + 'ms' );
     },
 
@@ -46,11 +46,11 @@ define( function( require ) {
       var startTime = Date.now();
       var self = this;
       // load in our collection molecules first
-      _.each( initialList.getAllCompleteMolecules(), this.addCompleteMolecule.bind( this ) );
+      initialList.getAllCompleteMolecules().forEach( this.addCompleteMolecule.bind( this ) );
 
       // then load other molecules
       var mainMolecules = MoleculeList.readCompleteMoleculesFromData( otherMoleculesData );
-      _.each( mainMolecules, function( molecule ) {
+      mainMolecules.forEach( function( molecule ) {
         // if our molecule was included in the initial lookup, use that initial version instead so we can have instance equality preserved
         var initialListLookup = initialList.moleculeNameMap[ molecule.commonName ];
         if ( initialListLookup && molecule.isEquivalent( initialListLookup ) ) {
@@ -62,7 +62,7 @@ define( function( require ) {
 
       // then load structures
       var mainStructures = MoleculeList.readMoleculeStructuresFromData( structuresData );
-      _.each( mainStructures, this.addAllowedStructure.bind( this ) );
+      mainStructures.forEach( this.addAllowedStructure.bind( this ) );
       console.log( 'loaded master data in ' + ( Date.now() - startTime ) + 'ms' );
     },
 
@@ -280,7 +280,7 @@ define( function( require ) {
     MoleculeList.getMoleculeByName( 'Sulfur Dioxide' )
   ];
 
-  _.each( MoleculeList.collectionBoxMolecules, function( molecule ) {
+  MoleculeList.collectionBoxMolecules.forEach( function( molecule ) {
     assert && assert( !!molecule );
   } );
 

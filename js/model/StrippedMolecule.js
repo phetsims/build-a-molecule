@@ -37,7 +37,7 @@ define( function( require ) {
     }
 
     // copy non-hydrogen honds, and mark hydrogen bonds
-    _.each( original.bonds, function( bond ) {
+    original.bonds.forEach( function( bond ) {
       var aIsHydrogen = bond.a.isHydrogen();
       var bIsHydrogen = bond.b.isHydrogen();
 
@@ -57,8 +57,8 @@ define( function( require ) {
 
     // construct the stripped structure
     this.stripped = new MoleculeStructure( atomsToAdd.length, bondsToAdd.length );
-    _.each( atomsToAdd, this.stripped.addAtom.bind( this.stripped ) );
-    _.each( bondsToAdd, this.stripped.addBond.bind( this.stripped ) );
+    atomsToAdd.forEach( this.stripped.addAtom.bind( this.stripped ) );
+    bondsToAdd.forEach( this.stripped.addBond.bind( this.stripped ) );
   }
   buildAMolecule.register( 'StrippedMolecule', StrippedMolecule );
 
@@ -71,7 +71,7 @@ define( function( require ) {
     toMoleculeStructure: function() {
       var self = this;
       var result = this.stripped.getAtomCopy();
-      _.each( this.stripped.atoms, function( atom ) {
+      this.stripped.atoms.forEach( function( atom ) {
         var count = self.getHydrogenCount( atom );
         for ( var i = 0; i < count; i++ ) {
           var hydrogenAtom = new Atom( Element.H );
@@ -232,7 +232,7 @@ define( function( require ) {
     getCopyWithAtomRemoved: function( atom ) {
       var self = this;
       var result = new StrippedMolecule( this.stripped.getCopyWithAtomRemoved( atom ) );
-      _.each( result.stripped.atoms, function( resultAtom ) {
+      result.stripped.atoms.forEach( function( resultAtom ) {
         result.hydrogenCount[ result.getIndex( resultAtom ) ] = self.getHydrogenCount( resultAtom );
       } );
       return result;

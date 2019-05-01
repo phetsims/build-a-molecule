@@ -48,6 +48,7 @@ define( function( require ) {
 
     this.layoutBuckets( buckets );
   }
+
   buildAMolecule.register( 'Kit', Kit );
 
   inherit( Object, Kit, {
@@ -64,10 +65,10 @@ define( function( require ) {
 //          }
 
       // send out notifications for all removed molecules
-      _.each( this.molecules.slice( 0 ), this.removeMolecule.bind( this ) );
+      this.molecules.slice( 0 ).forEach( this.removeMolecule.bind( this ) );
 
       // put everything back in buckets
-      _.each( this.atoms.concat( this.atomsInCollectionBox ), function( atom ) {
+      this.atoms.concat( this.atomsInCollectionBox ).forEach( function( atom ) {
         // reset the actual atom
         atom.reset();
 
@@ -86,10 +87,10 @@ define( function( require ) {
       this.removedMolecules = {};
 
       // keep track of all atoms in our kit
-      _.each( this.buckets, function( bucket ) {
+      this.buckets.forEach( function( bucket ) {
         self.atoms = self.atoms.concat( bucket.atoms );
 
-        _.each( bucket.atoms, function( atom ) {
+        bucket.atoms.forEach( function( atom ) {
           self.lewisDotModel.addAtom( atom );
         } );
       } );
@@ -108,7 +109,7 @@ define( function( require ) {
 
         // include both the bucket's shape and its atoms in our bounds, so we can properly center the group
         bucketBounds.includeBounds( bucket.containerShape.bounds );
-        _.each( bucket.atoms, function( atom ) {
+        bucket.atoms.forEach( function( atom ) {
           var atomPosition = atom.positionProperty.value;
           bucketBounds.includeBounds( new Bounds2( atomPosition.x - atom.covalentRadius, atomPosition.y - atom.covalentRadius,
             atomPosition.x + atom.covalentRadius, atomPosition.y + atom.covalentRadius ) );
@@ -121,13 +122,13 @@ define( function( require ) {
       var kitY = this.availableKitBounds.centerY - bucketBounds.centerY;
 
       // centers the buckets horizontally within the kit
-      _.each( buckets, function( bucket ) {
+      buckets.forEach( function( bucket ) {
         // also note: this moves the atoms also!
         bucket.position = new Vector2( bucket.position.x - usedWidth / 2 + kitXCenter + bucket.width / 2, kitY );
 
         // since changing the bucket's position doesn't change contained atoms!
         // TODO: have the bucket position change do this?
-        _.each( bucket.atoms, function( atom ) {
+        bucket.atoms.forEach( function( atom ) {
           atom.translatePositionAndDestination( bucket.position );
         } );
       } );
@@ -226,7 +227,7 @@ define( function( require ) {
       window.console && console.log && console.log( 'You have collected: ' + box.moleculeType.commonName );
       this.hasMoleculesInBoxesProperty.value = true;
       this.removeMolecule( molecule );
-      _.each( molecule.atoms, function( atom ) {
+      molecule.atoms.forEach( function( atom ) {
         self.atoms.splice( self.atoms.indexOf( atom ), 1 ); // TODO: remove() instead of splice()
         self.atomsInCollectionBox.push( atom );
         atom.visibleProperty.value = false;
@@ -270,7 +271,7 @@ define( function( require ) {
       var createdMolecules = [];
 
       this.removeMolecule( molecule );
-      _.each( molecule.atoms, function( atom ) {
+      molecule.atoms.forEach( function( atom ) {
         self.lewisDotModel.breakBondsOfAtom( atom );
 
         var newMolecule = new Molecule();
@@ -298,7 +299,7 @@ define( function( require ) {
 
       // remove the old one, add the new ones (firing listeners)
       this.removeMolecule( oldMolecule );
-      _.each( newMolecules, this.addMolecule.bind( this ) );
+      newMolecules.forEach( this.addMolecule.bind( this ) );
 
       // push the new separate molecules away
       if ( !skipSeparation ) {
@@ -366,7 +367,7 @@ define( function( require ) {
      */
     recycleMoleculeIntoBuckets: function( molecule ) {
       var self = this;
-      _.each( molecule.atoms, function( atom ) {
+      molecule.atoms.forEach( function( atom ) {
         self.recycleAtomIntoBuckets( atom, true );
       } );
       this.removeMolecule( molecule );
@@ -498,7 +499,7 @@ define( function( require ) {
       window.console && console.log && console.log( 'created structure: ' + serializedForm );
       var structure = this.getMolecule( a );
       if ( structure.atoms.length > 2 ) {
-        _.each( structure.bonds, function( bond ) {
+        structure.bonds.forEach( function( bond ) {
           if ( bond.a.hasSameElement( bond.b ) && bond.a.symbol === 'H' ) {
             window.console && console.log && console.log( 'WARNING: Hydrogen bonded to another hydrogen in a molecule which is not diatomic hydrogen' );
           }
@@ -527,10 +528,10 @@ define( function( require ) {
       var bestDistanceFromIdealLocation = Number.POSITIVE_INFINITY;
 
       // for each atom in our molecule, we try to see if it can bond to other atoms
-      _.each( molecule.atoms, function( ourAtom ) {
+      molecule.atoms.forEach( function( ourAtom ) {
 
         // all other atoms
-        _.each( self.atoms, function( otherAtom ) {
+        self.atoms.forEach( function( otherAtom ) {
           // disallow loops in an already-connected molecule
           if ( self.getMolecule( otherAtom ) === molecule ) {
             return; // continue, in the inner loop
@@ -544,7 +545,7 @@ define( function( require ) {
               return; // continue, in the inner loop
             }
 
-            _.each( self.lewisDotModel.getOpenDirections( otherAtom ), function( otherDirection ) {
+            self.lewisDotModel.getOpenDirections( otherAtom ).forEach( function( otherDirection ) {
               var direction = otherDirection.opposite;
               if ( !_.includes( self.lewisDotModel.getOpenDirections( ourAtom ), direction ) ) {
                 // the spot on otherAtom was open, but the corresponding spot on our main atom was not
@@ -578,7 +579,7 @@ define( function( require ) {
 
       // cause all atoms in the molecule to move to that location
       var delta = bestLocation.idealLocation.minus( bestLocation.b.positionProperty.value );
-      _.each( this.getMolecule( bestLocation.b ).atoms, function( atomInMolecule ) {
+      this.getMolecule( bestLocation.b ).atoms.forEach( function( atomInMolecule ) {
         atomInMolecule.destinationProperty.value = atomInMolecule.positionProperty.value.plus( delta );
       } );
 
