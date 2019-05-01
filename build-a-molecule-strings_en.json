@@ -1,170 +1,155 @@
 {
-  "molecule.hydrogen_peroxide": {
+  "hydrogenPeroxide": {
     "value": "Hydrogen Peroxide"
   },
-  "molecule.formaldehyde": {
+  "formaldehyde": {
     "value": "Formaldehyde"
   },
-  "molecule.silane": {
+  "silane": {
     "value": "Silane"
   },
-  "molecule.molecular_fluorine": {
+  "fluorine": {
     "value": "Fluorine"
   },
-  "molecule.water": {
+  "water": {
     "value": "Water"
   },
-  "molecule.borane": {
+  "borane": {
     "value": "Borane"
   },
-  "atom.iodine": {
+  "iodine": {
     "value": "Iodine"
   },
   "collectionMultipleGoalPattern": {
     "value": "Goal: {{number}}{{formula}}"
   },
-  "atom.fluorine": {
-    "value": "Fluorine"
-  },
-  "molecule.hydrogen_sulfide": {
+  "hydrogenSulfide": {
     "value": "Hydrogen Sulfide"
   },
-  "molecule.carbon_dioxide": {
+  "carbonDioxide": {
     "value": "Carbon Dioxide"
   },
-  "molecule.chloromethane": {
+  "chloromethane": {
     "value": "Chloromethane"
   },
-  "molecule.molecular_chlorine": {
+  "chlorine": {
     "value": "Chlorine"
   },
-  "molecule.molecular_nitrogen": {
+  "nitrogen": {
     "value": "Nitrogen"
   },
   "collectionMultipleQuantityPattern": {
     "value": "You have: {{number}}{{formula}}"
   },
-  "collection.tryWithDifferentMolecules": {
+  "nextCollection": {
     "value": "Next Collection"
   },
-  "atom.silicon": {
+  "silicon": {
     "value": "Silicon"
   },
-  "atom.chlorine": {
-    "value": "Chlorine"
-  },
-  "atom.nitrogen": {
-    "value": "Nitrogen"
-  },
-  "3d.ballAndStick": {
+  "ballAndStick": {
     "value": "Ball and Stick"
   },
-  "molecule.phosphine": {
+  "phosphine": {
     "value": "Phosphine"
   },
-  "molecule.sulfur_dioxide": {
+  "sulfurDioxide": {
     "value": "Sulfur Dioxide"
   },
-  "molecule.ozone": {
+  "ozone": {
     "value": "Ozone"
   },
-  "atom.bromine": {
+  "bromine": {
     "value": "Bromine"
   },
   "collectionSinglePattern": {
     "value": "{{general}} ({{display}})"
   },
-  "molecule.fluoromethane": {
+  "fluoromethane": {
     "value": "Fluoromethane"
   },
-  "title.largerMolecules": {
+  "title.larger": {
     "value": "Larger"
   },
-  "collection.yourMoleculeCollection": {
+  "yourMolecules": {
     "value": "Your Molecules"
   },
-  "3d.icon": {
+  "threeD": {
     "value": "3D"
   },
-  "atom.phosphorus": {
+  "phosphorus": {
     "value": "Phosphorus"
   },
-  "collection.reset": {
+  "resetCollection": {
     "value": "Reset Collection"
   },
-  "atom.boron": {
+  "boron": {
     "value": "Boron"
   },
-  "atom.oxygen": {
+  "oxygen": {
     "value": "Oxygen"
   },
-  "3d.spaceFilling": {
+  "spaceFilling": {
     "value": "Space Filling"
   },
-  "collectionLabelPattern": {
+  "collectionPattern": {
     "value": "Collection {{number}}"
   },
-  "molecule.hydrogen_cyanide": {
+  "hydrogenCyanide": {
     "value": "Hydrogen Cyanide"
   },
-  "molecule.molecular_hydrogen": {
+  "hydrogen": {
     "value": "Hydrogen"
   },
-  "title.makeMolecule": {
+  "title.single": {
     "value": "Single"
   },
-  "kit.resetKit": {
+  "resetKit": {
     "value": "Refill Kit"
   },
-  "atom.hydrogen": {
-    "value": "Hydrogen"
-  },
-  "molecule.acetylene": {
+  "acetylene": {
     "value": "Acetylene"
   },
-  "kitLabelPattern": {
+  "kitPattern": {
     "value": "Kit #{{number}}"
   },
-  "atom.sulphur": {
+  "sulphur": {
     "value": "Sulfur"
   },
-  "collection.multiple.quantityEmpty": {
+  "collectionMultipleQuantityEmpty": {
     "value": "You have: (empty)"
   },
-  "molecule.trifluoroborane": {
+  "trifluoroborane": {
     "value": "Trifluoroborane"
   },
-  "molecule.carbon_monoxide": {
+  "carbonMonoxide": {
     "value": "Carbon Monoxide"
-  },
-  "molecule.molecular_oxygen": {
-    "value": "Oxygen"
   },
   "build-a-molecule.title": {
     "value": "Build a Molecule"
   },
-  "molecule.methane": {
+  "methane": {
     "value": "Methane"
   },
-  "title.collectMultiple": {
+  "title.multiple": {
     "value": "Multiple"
   },
-  "molecule.ammonia": {
+  "ammonia": {
     "value": "Ammonia"
   },
-  "molecule.ethylene": {
+  "ethylene": {
     "value": "Ethylene"
   },
-  "molecule.nitrous_oxide": {
+  "nitrousOxide": {
     "value": "Nitrous Oxide"
   },
-  "collection.allFilled": {
+  "youCompletedYourCollection": {
     "value": "You completed your collection!"
   },
-  "molecule.nitric_oxide": {
+  "nitricOxide": {
     "value": "Nitric Oxide"
   },
-  "atom.carbon": {
+  "carbon": {
     "value": "Carbon"
   }
 }

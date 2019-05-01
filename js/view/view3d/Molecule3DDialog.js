@@ -28,8 +28,8 @@ define( function( require ) {
   var Text = require( 'SCENERY/nodes/Text' );
 
   // strings
-  var ballAndStickString = require( 'string!BUILD_A_MOLECULE/3d.ballAndStick' ); // eslint-disable-line string-require-statement-match
-  var spaceFillString = require( 'string!BUILD_A_MOLECULE/3d.spaceFilling' ); // eslint-disable-line string-require-statement-match
+  var ballAndStickString = require( 'string!BUILD_A_MOLECULE/ballAndStick' ); // eslint-disable-line string-require-statement-match
+  var spaceFillString = require( 'string!BUILD_A_MOLECULE/spaceFilling' ); // eslint-disable-line string-require-statement-match
 
   var size = 200;
   var verticalOffset = size + 5;

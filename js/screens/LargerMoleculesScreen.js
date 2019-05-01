@@ -21,12 +21,12 @@ define( function( require ) {
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
 
   // strings
-  var titleLargerMoleculesString = require( 'string!BUILD_A_MOLECULE/title.largerMolecules' );
+  var titleLargerString = require( 'string!BUILD_A_MOLECULE/title.larger' );
 
   function LargerMoleculesScreen() {
 
     var options = {
-      name: titleLargerMoleculesString,
+      name: titleLargerString,
       homeScreenIcon: new Rectangle( 0, 0, 548, 373, { fill: 'blue' } )
     };
 

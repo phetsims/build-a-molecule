@@ -22,7 +22,7 @@ define( function( require ) {
 
   // strings
   //REVIEW: Could rename the string key so we don't have to disable the lint rule here?
-  var iconString = require( 'string!BUILD_A_MOLECULE/3d.icon' ); // eslint-disable-line string-require-statement-match
+  var threeDString = require( 'string!BUILD_A_MOLECULE/threeD' ); // eslint-disable-line string-require-statement-match
 
   function ShowMolecule3DButtonNode( completeMolecule, options ) {
     var self = this;
@@ -41,7 +41,7 @@ define( function( require ) {
 
     var sqSize = 19; // 19 is a hard-coded constant to make it square
 
-    var label = new Text( iconString, {
+    var label = new Text( threeDString, {
       font: new PhetFont( {
         size: 12,
         weight: 'bold'

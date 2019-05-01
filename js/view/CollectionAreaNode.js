@@ -21,7 +21,7 @@ define( function( require ) {
   var TextPushButton = require( 'SUN/buttons/TextPushButton' );
 
   // strings
-  var collectionResetString = require( 'string!BUILD_A_MOLECULE/collection.reset' );
+  var resetCollectionString = require( 'string!BUILD_A_MOLECULE/resetCollection' );
 
   function CollectionAreaNode( collection, isSingleCollectionMode, toModelBounds ) {
     Node.call( this, {} );
@@ -70,7 +70,7 @@ define( function( require ) {
     /*---------------------------------------------------------------------------*
      * Reset Collection button
      *----------------------------------------------------------------------------*/
-    var resetCollectionButton = new TextPushButton( collectionResetString, {
+    var resetCollectionButton = new TextPushButton( resetCollectionString, {
       listener: function() {
         // when clicked, empty collection boxes
         _.each( collection.collectionBoxes, function( box ) {

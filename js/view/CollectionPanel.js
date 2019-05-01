@@ -32,8 +32,8 @@ define( function( require ) {
   var Text = require( 'SCENERY/nodes/Text' );
 
   // strings
-  var collectionLabelPatternString = require( 'string!BUILD_A_MOLECULE/collectionLabelPattern' );
-  var collectionYourMoleculeCollectionString = require( 'string!BUILD_A_MOLECULE/collection.yourMoleculeCollection' );
+  var collectionPatternString = require( 'string!BUILD_A_MOLECULE/collectionPattern' );
+  var yourMoleculesString = require( 'string!BUILD_A_MOLECULE/yourMolecules' );
 
   var containerPadding = 15;
 
@@ -53,7 +53,7 @@ define( function( require ) {
     this.layoutNode.setTranslation( containerPadding, containerPadding );
 
     // "Your Molecule Collection"
-    var moleculeCollectionText = new Text( collectionYourMoleculeCollectionString, {
+    var moleculeCollectionText = new Text( yourMoleculesString, {
       font: new PhetFont( {
         size: 22
       } )
@@ -70,7 +70,7 @@ define( function( require ) {
       } )
     } );
     collectionList.currentCollectionProperty.link( function() {
-      currentCollectionText.text = StringUtils.fillIn( collectionLabelPatternString, { number: collectionList.currentIndex + 1 } );
+      currentCollectionText.text = StringUtils.fillIn( collectionPatternString, { number: collectionList.currentIndex + 1 } );
     } );
     var collectionSwitcher = new NextPreviousNavigationNode( currentCollectionText, {
       arrowColor: Constants.kitArrowBackgroundEnabled,

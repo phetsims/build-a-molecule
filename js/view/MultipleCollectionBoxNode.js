@@ -22,7 +22,7 @@ define( function( require ) {
 
   // strings
   var collectionMultipleGoalPatternString = require( 'string!BUILD_A_MOLECULE/collectionMultipleGoalPattern' );
-  var collectionMultipleQuantityEmptyString = require( 'string!BUILD_A_MOLECULE/collection.multiple.quantityEmpty' );
+  var collectionMultipleQuantityEmptyString = require( 'string!BUILD_A_MOLECULE/collectionMultipleQuantityEmpty' );
   var collectionMultipleQuantityPatternString = require( 'string!BUILD_A_MOLECULE/collectionMultipleQuantityPattern' );
 
   function MultipleCollectionBoxNode( box, toModelBounds ) {

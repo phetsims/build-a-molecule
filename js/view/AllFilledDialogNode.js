@@ -22,8 +22,8 @@ define( function( require ) {
   var TextPushButton = require( 'SUN/buttons/TextPushButton' );
 
   // strings
-  var collectionAllFilledString = require( 'string!BUILD_A_MOLECULE/collection.allFilled' );
-  var collectionTryWithDifferentMoleculesString = require( 'string!BUILD_A_MOLECULE/collection.tryWithDifferentMolecules' );
+  var youCompletedYourCollectionString = require( 'string!BUILD_A_MOLECULE/youCompletedYourCollection' );
+  var nextCollectionString = require( 'string!BUILD_A_MOLECULE/nextCollection' );
 
   function AllFilledDialogNode( availablePlayAreaBounds, regenerateCallback ) {
     Node.call( this, {} );
@@ -32,7 +32,7 @@ define( function( require ) {
     var smiley = new FaceNode( 120 ).smile();
     this.addChild( smiley );
 
-    var text = new Text( collectionAllFilledString, {
+    var text = new Text( youCompletedYourCollectionString, {
       font: new PhetFont( {
         size: 20,
         weight: 'bold'
@@ -40,7 +40,7 @@ define( function( require ) {
     } );
     this.addChild( text );
 
-    var button = new TextPushButton( collectionTryWithDifferentMoleculesString, {
+    var button = new TextPushButton( nextCollectionString, {
       listener: function() {
         regenerateCallback();
         self.visible = false;

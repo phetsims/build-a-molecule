@@ -23,12 +23,12 @@ define( function( require ) {
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
 
   // strings
-  var titleMakeMoleculeString = require( 'string!BUILD_A_MOLECULE/title.makeMolecule' );
+  var titleSingleString = require( 'string!BUILD_A_MOLECULE/title.single' );
 
   function MakeMoleculeScreen( collectionAreaWidth ) {
 
     var options = {
-      name: titleMakeMoleculeString,
+      name: titleSingleString,
       homeScreenIcon: new Rectangle( 0, 0, 548, 373, { fill: 'red' } )
     };
 

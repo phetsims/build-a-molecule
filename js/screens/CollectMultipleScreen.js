@@ -23,12 +23,12 @@ define( function( require ) {
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
 
   // strings
-  var titleCollectMultipleString = require( 'string!BUILD_A_MOLECULE/title.collectMultiple' );
+  var titleMultipleString = require( 'string!BUILD_A_MOLECULE/title.multiple' );
 
   function CollectMultipleScreen( collectionAreaWidth ) {
 
     var options = {
-      name: titleCollectMultipleString,
+      name: titleMultipleString,
       homeScreenIcon: new Rectangle( 0, 0, 548, 373, { fill: 'green' } )
     };
 
