@@ -30,9 +30,9 @@ define( function( require ) {
   buildAMolecule.register( 'MoleculeBondContainerNode', MoleculeBondContainerNode );
 
   inherit( Node, MoleculeBondContainerNode, {
-    destruct: function() {
-      _.each( this.bondNodes, function( bondNode ) {
-        bondNode.destruct();
+    dispose: function() {
+      this.bondNodes.forEach( function( bondNode ) {
+        bondNode.dispose();
       } );
     }
   } );

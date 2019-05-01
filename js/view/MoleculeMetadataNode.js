@@ -105,10 +105,10 @@ define( function( require ) {
   buildAMolecule.register( 'MoleculeMetadataNode', MoleculeMetadataNode );
 
   inherit( Node, MoleculeMetadataNode, {
-    destruct: function() {
+    dispose: function() {
       var listener = this.updatePositionListener;
       if ( listener ) {
-        _.each( this.molecule.atoms, function( atom ) {
+        this.molecule.atoms.forEach( function( atom ) {
           atom.positionProperty.unlink( listener );
         } );
       }
