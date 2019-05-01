@@ -21,16 +21,17 @@ define( function( require ) {
   var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
 
   // strings
-  var collectionMultipleGoalFormatString = require( 'string!BUILD_A_MOLECULE/collection.multiple.goalFormat' );
+  var collectionMultipleGoalPatternString = require( 'string!BUILD_A_MOLECULE/collectionMultipleGoalPattern' );
   var collectionMultipleQuantityEmptyString = require( 'string!BUILD_A_MOLECULE/collection.multiple.quantityEmpty' );
-  var collectionMultipleQuantityFormatString = require( 'string!BUILD_A_MOLECULE/collection.multiple.quantityFormat' );
+  var collectionMultipleQuantityPatternString = require( 'string!BUILD_A_MOLECULE/collectionMultipleQuantityPattern' );
 
   function MultipleCollectionBoxNode( box, toModelBounds ) {
     CollectionBoxNode.call( this, box, toModelBounds );
 
-    this.addHeaderNode( new RichText( StringUtils.format( collectionMultipleGoalFormatString,
-      box.capacity,
-      box.moleculeType.getGeneralFormulaFragment() ), {
+    this.addHeaderNode( new RichText( StringUtils.fillIn( collectionMultipleGoalPatternString, {
+      number: box.capacity,
+      formula: box.moleculeType.getGeneralFormulaFragment()
+    } ), {
       font: new PhetFont( {
         size: 15,
         weight: 'bold'
@@ -48,7 +49,10 @@ define( function( require ) {
         quantityNode.text = collectionMultipleQuantityEmptyString;
       }
       else {
-        quantityNode.text = StringUtils.format( collectionMultipleQuantityFormatString, quantity, box.moleculeType.getGeneralFormulaFragment() );
+        quantityNode.text = StringUtils.fillIn( collectionMultipleQuantityPatternString, {
+          number: quantity,
+          formula: box.moleculeType.getGeneralFormulaFragment()
+        } );
       }
     } );
 

@@ -23,7 +23,7 @@ define( function( require ) {
   var TextPushButton = require( 'SUN/buttons/TextPushButton' );
 
   // strings
-  var kitLabelString = require( 'string!BUILD_A_MOLECULE/kit.label' );
+  var kitLabelPatternString = require( 'string!BUILD_A_MOLECULE/kitLabelPattern' );
   var kitResetKitString = require( 'string!BUILD_A_MOLECULE/kit.resetKit' );
 
   var kitArrowYOffset = 5; // vertical offset of the kit arrows from the top of the kit
@@ -56,7 +56,7 @@ define( function( require ) {
       } )
     } );
     kitCollectionModel.currentKitProperty.link( function() {
-      labelNode.text = StringUtils.format( kitLabelString, kitCollectionModel.currentKitIndex + 1 );
+      labelNode.text = StringUtils.fillIn( kitLabelPatternString, { number: kitCollectionModel.currentKitIndex + 1 } );
     } );
 
     //REVIEW: Replace with the Carousel common type, so we don't have to do so much (and it has a better appearance)

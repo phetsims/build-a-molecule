@@ -32,7 +32,7 @@ define( function( require ) {
   var Text = require( 'SCENERY/nodes/Text' );
 
   // strings
-  var collectionLabelString = require( 'string!BUILD_A_MOLECULE/collection.label' );
+  var collectionLabelPatternString = require( 'string!BUILD_A_MOLECULE/collectionLabelPattern' );
   var collectionYourMoleculeCollectionString = require( 'string!BUILD_A_MOLECULE/collection.yourMoleculeCollection' );
 
   var containerPadding = 15;
@@ -70,7 +70,7 @@ define( function( require ) {
       } )
     } );
     collectionList.currentCollectionProperty.link( function() {
-      currentCollectionText.text = StringUtils.format( collectionLabelString, collectionList.currentIndex + 1 );
+      currentCollectionText.text = StringUtils.fillIn( collectionLabelPatternString, { number: collectionList.currentIndex + 1 } );
     } );
     var collectionSwitcher = new NextPreviousNavigationNode( currentCollectionText, {
       arrowColor: Constants.kitArrowBackgroundEnabled,

@@ -20,22 +20,26 @@ define( function( require ) {
   var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
 
   // strings
-  var collectionSingleFormatString = require( 'string!BUILD_A_MOLECULE/collection.single.format' );
+  var collectionSinglePatternString = require( 'string!BUILD_A_MOLECULE/collectionSinglePattern' );
 
   function SingleCollectionBoxNode( box, toModelBounds ) {
     CollectionBoxNode.call( this, box, toModelBounds );
 
     assert && assert( box.capacity === 1 );
 
-    this.addHeaderNode( new RichText( StringUtils.format( collectionSingleFormatString,
-      box.moleculeType.getGeneralFormulaFragment(),
-      box.moleculeType.getDisplayName() ), {
-      font: new PhetFont( {
-        size: 15,
-        weight: 'bold'
-      } )
-    } ) );
+    this.addHeaderNode( new RichText( StringUtils.fillIn( collectionSinglePatternString,
+      {
+        general: box.moleculeType.getGeneralFormulaFragment(),
+        display: box.moleculeType.getDisplayName()
+      }, {
+        font: new PhetFont( {
+          size: 15,
+          weight: 'bold'
+        } )
+      }
+    ) ) );
   }
+
   buildAMolecule.register( 'SingleCollectionBoxNode', SingleCollectionBoxNode );
 
   inherit( CollectionBoxNode, SingleCollectionBoxNode );

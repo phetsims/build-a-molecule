@@ -20,8 +20,8 @@
   "atom.iodine": {
     "value": "Iodine"
   },
-  "collection.multiple.goalFormat": {
-    "value": "Goal: {0}{1}"
+  "collectionMultipleGoalPattern": {
+    "value": "Goal: {{number}}{{formula}}"
   },
   "atom.fluorine": {
     "value": "Fluorine"
@@ -41,8 +41,8 @@
   "molecule.molecular_nitrogen": {
     "value": "Nitrogen"
   },
-  "collection.multiple.quantityFormat": {
-    "value": "You have: {0}{1}"
+  "collectionMultipleQuantityPattern": {
+    "value": "You have: {{number}}{{formula}}"
   },
   "collection.tryWithDifferentMolecules": {
     "value": "Next Collection"
@@ -71,8 +71,8 @@
   "atom.bromine": {
     "value": "Bromine"
   },
-  "collection.single.format": {
-    "value": "{0} ({1})"
+  "collectionSinglePattern": {
+    "value": "{{general}} ({{display}})"
   },
   "molecule.fluoromethane": {
     "value": "Fluoromethane"
@@ -101,8 +101,8 @@
   "3d.spaceFilling": {
     "value": "Space Filling"
   },
-  "collection.label": {
-    "value": "Collection {0}"
+  "collectionLabelPattern": {
+    "value": "Collection {{number}}"
   },
   "molecule.hydrogen_cyanide": {
     "value": "Hydrogen Cyanide"
@@ -122,8 +122,8 @@
   "molecule.acetylene": {
     "value": "Acetylene"
   },
-  "kit.label": {
-    "value": "Kit #{0}"
+  "kitLabelPattern": {
+    "value": "Kit #{{number}}"
   },
   "atom.sulphur": {
     "value": "Sulfur"
