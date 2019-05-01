@@ -102,16 +102,22 @@ define( function( require ) {
       }
     } );
   }
+
   buildAMolecule.register( 'MoleculeMetadataNode', MoleculeMetadataNode );
 
   inherit( Node, MoleculeMetadataNode, {
-    destruct: function() {
+    /**
+     * @override
+     */
+    dispose: function() {
       var listener = this.updatePositionListener;
       if ( listener ) {
-        _.each( this.molecule.atoms, function( atom ) {
+        this.molecule.atoms.forEach( function( atom ) {
           atom.positionProperty.unlink( listener );
         } );
       }
+      Node.prototype.dispose.call( this );
+
       // TODO: incomplete: throw new Error( 'dialog.hideDialogIfShown' );
     },
 

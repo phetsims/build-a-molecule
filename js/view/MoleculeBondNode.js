@@ -123,9 +123,13 @@ define( function( require ) {
   buildAMolecule.register( 'MoleculeBondNode', MoleculeBondNode );
 
   inherit( Node, MoleculeBondNode, {
-    destruct: function() {
+    /**
+     * @override
+     */
+    dispose: function() {
       this.a.positionProperty.unlink( this.positionListener );
       this.b.positionProperty.unlink( this.positionListener );
+      Node.prototype.dispose.call( this );
     }
   } );
 

@@ -188,8 +188,7 @@ define( function( require ) {
     } );
     kit.removedMoleculeEmitter.addListener( function( molecule ) {
       var moleculeMetadataNode = self.metadataMap[ molecule.moleculeId ];
-      moleculeMetadataNode.destruct();
-      metadataLayer.removeChild( moleculeMetadataNode );
+      moleculeMetadataNode.dispose();
       delete self.metadataMap[ molecule.moleculeId ];
 
       if ( Constants.allowBondBreaking ) {
@@ -247,8 +246,7 @@ define( function( require ) {
 
     removeMoleculeBondNodes: function( molecule ) {
       var moleculeBondContainerNode = this.bondMap[ molecule.moleculeId ];
-      moleculeBondContainerNode.destruct();
-      this.metadataLayer.removeChild( moleculeBondContainerNode );
+      moleculeBondContainerNode.dispose();
       delete this.bondMap[ molecule.moleculeId ];
     }
   } );
