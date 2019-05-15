@@ -30,6 +30,7 @@ define( function( require ) {
 
     this.allowedStructureFormulaMap = {}; // formula => allowed stripped molecules (array)
   }
+
   buildAMolecule.register( 'MoleculeList', MoleculeList );
 
   MoleculeList.prototype = {
@@ -52,7 +53,7 @@ define( function( require ) {
       var mainMolecules = MoleculeList.readCompleteMoleculesFromData( otherMoleculesData );
       mainMolecules.forEach( function( molecule ) {
         // if our molecule was included in the initial lookup, use that initial version instead so we can have instance equality preserved
-        var initialListLookup = initialList.moleculeNameMap[ molecule.commonName ];
+        var initialListLookup = initialList.moleculeNameMap[ molecule.filterCommonName( molecule.commonNameProperty.value ) ];
         if ( initialListLookup && molecule.isEquivalent( initialListLookup ) ) {
           molecule = initialListLookup;
         }
@@ -147,7 +148,7 @@ define( function( require ) {
 
     addCompleteMolecule: function( completeMolecule ) {
       this.completeMolecules.push( completeMolecule );
-      this.moleculeNameMap[ completeMolecule.commonName ] = completeMolecule;
+      this.moleculeNameMap[ completeMolecule.filterCommonName( completeMolecule.commonNameProperty.value ) ] = completeMolecule;
     },
 
     addAllowedStructure: function( structure ) {
@@ -208,8 +209,10 @@ define( function( require ) {
       var molecule = CompleteMolecule.fromSerial2( string );
 
       // sanity checks
-      assert && assert( !molecule.hasLoopsOrIsDisconnected(), 'has loops or is disconnected: ' + molecule.commonName );
-      assert && assert( !molecule.hasWeirdHydrogenProperties(), 'has weird hydrogen pattern in: ' + molecule.commonName );
+      assert && assert( !molecule.hasLoopsOrIsDisconnected(),
+        'has loops or is disconnected: ' + molecule.filterCommonName( molecule.commonNameProperty.value ) );
+      assert && assert( !molecule.hasWeirdHydrogenProperties(),
+        'has weird hydrogen pattern in: ' + molecule.filterCommonName( molecule.commonNameProperty.value ) );
       return molecule;
     } );
   };

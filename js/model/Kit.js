@@ -224,7 +224,7 @@ define( function( require ) {
      */
     moleculePutInCollectionBox: function( molecule, box ) {
       var self = this;
-      window.console && console.log && console.log( 'You have collected: ' + box.moleculeType.commonName );
+      window.console && console.log && console.log( 'You have collected: ' + box.moleculeType.commonNameProperty.value );
       this.hasMoleculesInBoxesProperty.value = true;
       this.removeMolecule( molecule );
       molecule.atoms.forEach( function( atom ) {

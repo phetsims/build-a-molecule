@@ -75,12 +75,12 @@ define( function( require ) {
   function CompleteMolecule( commonName, molecularFormula, atomCount, bondCount, has2d, has3d ) {
     MoleculeStructure.call( this, atomCount, bondCount );
 
-    // @private {Property.<string>}
+    // @public {Property.<string>}
     this.commonNameProperty = new StringProperty( commonName ); // as said by pubchem (or overridden)
+
     this.molecularFormula = molecularFormula; // as said by pubchem
     this.has2d = has2d;
     this.has3d = has3d;
-    // debugger;
 
     //REVIEW: This is filled in by parsing later? We should document it
     // this.cid = null;
@@ -89,7 +89,13 @@ define( function( require ) {
   buildAMolecule.register( 'CompleteMolecule', CompleteMolecule );
 
   inherit( MoleculeStructure, CompleteMolecule, {
-    get commonName() {
+
+    /**
+     * Strip out the 'molecular ' part of the string and process the result.
+     *
+     * @public
+     */
+    filterCommonName: function() {
       var result = this.commonNameProperty.value;
       if ( result.indexOf( 'molecular ' ) === 0 ) {
         result = result.slice( 'molecular '.length );
@@ -119,7 +125,7 @@ define( function( require ) {
       }
       else {
         // if we didn't find it, pull it from our English data
-        return this.commonName;
+        return this.commonNameProperty.value;
       }
     },
 
@@ -155,7 +161,7 @@ define( function( require ) {
     toSerial2: function() {
       // add in a header
       var format = ( this.has3d ? ( this.has2d ? 'full' : '3d' ) : '2d' );
-      return this.commonName + '|' + this.molecularFormula + '|' + this.cid + '|' + format + '|' + MoleculeStructure.prototype.toSerial2.call( this );
+      return this.commonNameProperty.value + '|' + this.molecularFormula + '|' + this.cid + '|' + format + '|' + MoleculeStructure.prototype.toSerial2.call( this );
     }
   } );
 
