@@ -10,6 +10,9 @@ define( function( require ) {
   'use strict';
 
   var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
+  var inherit = require( 'PHET_CORE/inherit' );
+  var PhetioObject = require( 'TANDEM/PhetioObject' );
+
 
   //REVIEW: This is polymorphic, just requires things with IDs (a.id, b.id). I THINK it is used on Atom subtypes, so
   //REVIEW: Just use {Atom}
@@ -20,9 +23,7 @@ define( function( require ) {
   }
   buildAMolecule.register( 'Bond', Bond );
 
-  Bond.prototype = {
-    constructor: Bond,
-
+  return inherit( PhetioObject, Bond, {
     get id() {
       return this.a.id + '-' + this.b.id;
     },
@@ -44,7 +45,5 @@ define( function( require ) {
     toSerial2: function( index ) {
       return index + '';
     }
-  };
-
-  return Bond;
+  } );
 } );

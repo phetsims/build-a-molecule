@@ -16,7 +16,9 @@ define( function( require ) {
   var Bond = require( 'BUILD_A_MOLECULE/model/Bond' );
   var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   var Element = require( 'NITROGLYCERIN/Element' );
+  var inherit = require( 'PHET_CORE/inherit' );
   var MoleculeStructure = require( 'BUILD_A_MOLECULE/model/MoleculeStructure' );
+  var PhetioObject = require( 'TANDEM/PhetioObject' );
 
   // @param {MoleculeStructure} original
   function StrippedMolecule( original ) {
@@ -62,8 +64,7 @@ define( function( require ) {
   }
   buildAMolecule.register( 'StrippedMolecule', StrippedMolecule );
 
-  StrippedMolecule.prototype = {
-    constructor: StrippedMolecule,
+  return inherit( PhetioObject, StrippedMolecule, {
 
     /**
      * @returns {MoleculeStructure} where the hydrogen atoms are not the original hydrogen atoms
@@ -237,7 +238,5 @@ define( function( require ) {
       } );
       return result;
     }
-  };
-
-  return StrippedMolecule;
+  } );
 } );

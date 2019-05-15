@@ -11,6 +11,8 @@ define( function( require ) {
 
   var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   var Constants = require( 'BUILD_A_MOLECULE/Constants' );
+  var inherit = require( 'PHET_CORE/inherit' );
+  var PhetioObject = require( 'TANDEM/PhetioObject' );
 
   function ElementHistogram( molecule ) {
     var self = this;
@@ -29,8 +31,7 @@ define( function( require ) {
 
   buildAMolecule.register( 'ElementHistogram', ElementHistogram );
 
-  ElementHistogram.prototype = {
-    constructor: ElementHistogram,
+  return inherit( PhetioObject, ElementHistogram, {
 
     getQuantity: function( element ) {
       return this.quantities[ element.symbol ];
@@ -97,14 +98,12 @@ define( function( require ) {
         return false;
       }
     }
-  };
-
-  // object with symbols as keys, result as true
-  //REVIEW: Is this used anywhere? I can't find it
-  ElementHistogram.allowedChemicalSymbols = {};
-  Constants.supportedElements.forEach( function( element ) {
-    ElementHistogram.allowedChemicalSymbols[ element.symbol ] = true;
   } );
-
-  return ElementHistogram;
+  //
+  // // object with symbols as keys, result as true
+  // //REVIEW: Is this used anywhere? I can't find it
+  // ElementHistogram.allowedChemicalSymbols = {};
+  // Constants.supportedElements.forEach( function( element ) {
+  //   ElementHistogram.allowedChemicalSymbols[ element.symbol ] = true;
+  // } );
 } );
