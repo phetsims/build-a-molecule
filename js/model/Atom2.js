@@ -23,8 +23,7 @@ define( function( require ) {
   var motionVelocity = 800; // In picometers per second of sim time.
 
   //REVIEW: docs
-  //REVIEW: rename tickEmitter => stepEmitter
-  function Atom2( element, tickEmitter ) {
+  function Atom2( element, stepEmitter ) {
     var self = this;
 
     Atom.call( this, element );
@@ -44,7 +43,7 @@ define( function( require ) {
     this.removedFromModelEmitter = new Emitter(); //REVIEW: Umm, not triggered?
 
     //REVIEW: docs
-    this.tickEmitter = tickEmitter;
+    this.stepEmitter = stepEmitter;
     this.clockListener = this.stepInTime.bind( this );
 
     //REVIEW: docs
@@ -62,11 +61,11 @@ define( function( require ) {
     this.addedToModelProperty.link( function( isAddedToModel ) {
       if ( isAddedToModel ) {
         // added to the model
-        tickEmitter.addListener( self.clockListener );
+        stepEmitter.addListener( self.clockListener );
       }
       else {
         // removed from the model
-        tickEmitter.removeListener( self.clockListener );
+        stepEmitter.removeListener( self.clockListener );
       }
     } );
   }

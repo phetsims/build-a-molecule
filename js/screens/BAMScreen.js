@@ -30,14 +30,14 @@ define( function( require ) {
     }, options );
 
     var createModel = function() {
-      var tickEmitter = new Emitter( { validators: [ { valueType: 'number' } ] } ); // emits 1 parameter, timeElapsed
-      var model = new CollectionList( createInitialKitCollection( layoutBounds, tickEmitter ), layoutBounds, tickEmitter );
+      var stepEmitter = new Emitter( { validators: [ { valueType: 'number' } ] } ); // emits 1 parameter, timeElapsed
+      var model = new CollectionList( createInitialKitCollection( layoutBounds, stepEmitter ), layoutBounds, stepEmitter );
       //REVIEW: This seems like the wrong way to handle things. Don't implement methods on things externally.
       model.step = function step( timeElapsed ) {
-        tickEmitter.emit( timeElapsed );
+        stepEmitter.emit( timeElapsed );
       };
       model.generateKitCollection = function generateKitCollection() {
-        return createKitCollection( layoutBounds, tickEmitter );
+        return createKitCollection( layoutBounds, stepEmitter );
       };
       return model;
     };
@@ -54,7 +54,7 @@ define( function( require ) {
    * @param numBoxes               Number of collection boxes
    * @returns {KitCollection} A consistent kitCollection
    */
-  BAMScreen.generateKitCollection = function( allowMultipleMolecules, numBoxes, tickEmitter, layoutBounds ) {
+  BAMScreen.generateKitCollection = function( allowMultipleMolecules, numBoxes, stepEmitter, layoutBounds ) {
     var maxInBox = 3;
 
     var usedMolecules = []; // [CompleteMolecule]
@@ -130,7 +130,7 @@ define( function( require ) {
         // funky math part. sqrt scales it so that we can get two layers of atoms if the atom count is above 2
         var bucketWidth = Bucket.calculateIdealBucketWidth( element.covalentRadius, atomCount );
 
-        buckets.push( new Bucket( new Dimension2( bucketWidth, 200 ), tickEmitter, element, atomCount ) );
+        buckets.push( new Bucket( new Dimension2( bucketWidth, 200 ), stepEmitter, element, atomCount ) );
       } );
 
       // add the kit

@@ -21,7 +21,7 @@ define( function( require ) {
    * @param {KitCollection} firstCollection
    * @param {LayoutBounds}  layoutBounds
    */
-  function CollectionList( firstCollection, layoutBounds, tickEmitter ) {
+  function CollectionList( firstCollection, layoutBounds, stepEmitter ) {
     // @public {Property.<KitCollection>}
     this.currentCollectionProperty = new Property( firstCollection );
 
@@ -30,7 +30,7 @@ define( function( require ) {
     this.removedCollectionEmitter = new Emitter( { validators: [ { valueType: KitCollection } ] } );
 
     this.layoutBounds = layoutBounds;
-    this.tickEmitter = tickEmitter;
+    this.stepEmitter = stepEmitter;
     this.collections = [];
     this.currentIndex = 0;
     this.addCollection( firstCollection );

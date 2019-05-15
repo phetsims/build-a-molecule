@@ -187,13 +187,13 @@ define( function( require ) {
     } );
 
     var tick = moleculeNode.tick.bind( moleculeNode );
-    var tickEmitter = view.collectionList.tickEmitter;
-    tickEmitter.addListener( tick );
+    var stepEmitter = view.collectionList.stepEmitter;
+    stepEmitter.addListener( tick );
 
     this.disposeMolecule3DDialog = function() {
       view.off( 'bounds', updateLayout );
       view.removeChild( self );
-      tickEmitter.removeListener( tick );
+      stepEmitter.removeListener( tick );
     };
   }
   buildAMolecule.register( 'Molecule3DDialog', Molecule3DDialog );

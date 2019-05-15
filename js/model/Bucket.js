@@ -30,7 +30,7 @@ define( function( require ) {
    * @param element  The element of the atoms in the bucket
    * @param quantity The number of atoms starting in the bucket
    */
-  function Bucket( size, tickEmitter, element, quantity ) {
+  function Bucket( size, stepEmitter, element, quantity ) {
     SphereBucket.call( this, {
       position: Vector2.ZERO,
       size: size,
@@ -50,7 +50,7 @@ define( function( require ) {
     this.width = this.containerShape.bounds.width;
 
     for ( var i = 0; i < quantity; i++ ) {
-      this.addParticleFirstOpen( new Atom2( element, tickEmitter ), false );
+      this.addParticleFirstOpen( new Atom2( element, stepEmitter ), false );
     }
 
     this.positionProperty.link( function( point ) {
@@ -100,8 +100,8 @@ define( function( require ) {
     return Math.floor( Math.max( 350, width + 1 ) );
   };
 
-  Bucket.createAutoSized = function( tickEmitter, element, quantity ) {
-    return new Bucket( new Dimension2( Bucket.calculateIdealBucketWidth( element.covalentRadius, quantity ), 200 ), tickEmitter, element, quantity );
+  Bucket.createAutoSized = function( stepEmitter, element, quantity ) {
+    return new Bucket( new Dimension2( Bucket.calculateIdealBucketWidth( element.covalentRadius, quantity ), 200 ), stepEmitter, element, quantity );
   };
 
   return Bucket;
