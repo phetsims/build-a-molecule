@@ -48,9 +48,8 @@ define( function( require ) {
     // @public {string}
     this.name = Strings.getAtomName( element );
 
-    // @private {Function} Passed in
-    this.clockListener = this.stepInTime.bind( this );
-
+    // @private {Function} Passed into step function.
+    this.clockListener = this.step.bind( this );
 
     this.addedToModelProperty.link( function( isAddedToModel ) {
       if ( isAddedToModel ) {
@@ -84,9 +83,14 @@ define( function( require ) {
       return new Rectangle( this.destinationProperty.value.x - this.covalentRadius, this.destinationProperty.value.y - this.covalentRadius, this.covalentDiameter, this.covalentDiameter );
     },
 
-    //REVIEW: rename to step
-    stepInTime: function( dt ) {
+    /**
+     * @param dt {number}: time elapsed in seconds
+     *
+     * @public
+     */
+    step: function( dt ) {
       if ( this.positionProperty.value.distance( this.destinationProperty.value ) !== 0 ) {
+
         // Move towards the current destination
         var distanceToTravel = motionVelocity * dt;
         var distanceToTarget = this.positionProperty.value.distance( this.destinationProperty.value );
@@ -100,10 +104,12 @@ define( function( require ) {
         }
 
         if ( distanceToTravel >= distanceToTarget ) {
+
           // Closer than one step, so just go there.
           this.positionProperty.value = this.destinationProperty.value;
         }
         else {
+
           // Move towards the destination.
           var angle = Math.atan2( this.destinationProperty.value.y - this.positionProperty.value.y,
             this.destinationProperty.value.x - this.positionProperty.value.x );
