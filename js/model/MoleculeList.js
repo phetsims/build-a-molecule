@@ -112,29 +112,17 @@ define( function( require ) {
      * @returns {CompleteMolecule|null} Either a matching CompleteMolecule, or null if none is found
      */
     findMatchingCompleteMolecule: function( moleculeStructure ) {
-      var length = this.completeMolecules.length;
-      //REVIEW: Can we replace this with _.find?
-      for ( var i = 0; i < length; i++ ) {
-        var completeMolecule = this.completeMolecules[ i ];
-        if ( moleculeStructure.isEquivalent( completeMolecule ) ) {
-          return completeMolecule;
-        }
-      }
-      return null;
+      return _.find( this.completeMolecules, function( completeMolecule ) {
+        return moleculeStructure.isEquivalent( completeMolecule ) ? completeMolecule : null;
+      } );
     },
 
     // by pubchem compound ID (CID)
     //REVIEW: Dead code?
     findMoleculeByCID: function( cid ) {
-      var length = this.completeMolecules.length;
-      //REVIEW: Can we replace this with _.find?
-      for ( var i = 0; i < length; i++ ) {
-        var completeMolecule = this.completeMolecules[ i ];
-        if ( completeMolecule.cid === cid ) {
-          return completeMolecule;
-        }
-      }
-      return null;
+      return _.find( this.completeMolecules, function( completeMolecule ) {
+        return completeMolecule.cid === cid ? completeMolecule : null;
+      } );
     },
 
     getAllCompleteMolecules: function() {
