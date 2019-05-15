@@ -22,6 +22,7 @@ define( function( require ) {
   var MoleculeStructure = require( 'BUILD_A_MOLECULE/model/MoleculeStructure' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Strings = require( 'BUILD_A_MOLECULE/Strings' );
+  var StringProperty = require( 'AXON/StringProperty' );
 
   // Node type modules
   var Cl2Node = require( 'NITROGLYCERIN/nodes/Cl2Node' );
@@ -63,7 +64,7 @@ define( function( require ) {
     P4Node, PCl3Node, PCl5Node, PF3Node, PH3Node, SO2Node, SO3Node
   ];
 
-  /*
+  /**
    * @param {string} commonName
    * @param {string} molecularFormula
    * @param {number} atomCount
@@ -74,10 +75,12 @@ define( function( require ) {
   function CompleteMolecule( commonName, molecularFormula, atomCount, bondCount, has2d, has3d ) {
     MoleculeStructure.call( this, atomCount, bondCount );
 
-    this._commonName = commonName; // as said by pubchem (or overridden)
+    // @private {Property.<string>}
+    this.commonNameProperty = new StringProperty( commonName ); // as said by pubchem (or overridden)
     this.molecularFormula = molecularFormula; // as said by pubchem
     this.has2d = has2d;
     this.has3d = has3d;
+    // debugger;
 
     //REVIEW: This is filled in by parsing later? We should document it
     // this.cid = null;
@@ -87,7 +90,7 @@ define( function( require ) {
 
   inherit( MoleculeStructure, CompleteMolecule, {
     get commonName() {
-      var result = this._commonName;
+      var result = this.commonNameProperty.value;
       if ( result.indexOf( 'molecular ' ) === 0 ) {
         result = result.slice( 'molecular '.length );
       }
@@ -98,7 +101,7 @@ define( function( require ) {
      * @returns {string} The translation string key that should be used to look up a translated value
      */
     get stringKey() {
-      return 'molecule.' + this._commonName.replace( ' ', '_' );
+      return 'molecule.' + this.commonNameProperty.value.replace( ' ', '_' );
     },
 
     /**
