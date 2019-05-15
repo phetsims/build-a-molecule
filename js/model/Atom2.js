@@ -42,21 +42,15 @@ define( function( require ) {
     this.droppedByUserEmitter = new Emitter( { validators: [ { valueType: Atom2 } ] } );
     this.removedFromModelEmitter = new Emitter(); //REVIEW: Umm, not triggered?
 
-    //REVIEW: docs
+    // @public {Emitter}
     this.stepEmitter = stepEmitter;
-    this.clockListener = this.stepInTime.bind( this );
 
-    //REVIEW: docs
+    // @public {string}
     this.name = Strings.getAtomName( element );
 
-    this.userControlledProperty.lazyLink( function( controlled ) {
-      if ( controlled ) {
-        self.grabbedByUserEmitter.emit( self );
-      }
-      else {
-        self.droppedByUserEmitter.emit( self );
-      }
-    } );
+    // @private {Function} Passed in
+    this.clockListener = this.stepInTime.bind( this );
+
 
     this.addedToModelProperty.link( function( isAddedToModel ) {
       if ( isAddedToModel ) {
@@ -66,6 +60,15 @@ define( function( require ) {
       else {
         // removed from the model
         stepEmitter.removeListener( self.clockListener );
+      }
+    } );
+
+    this.userControlledProperty.lazyLink( function( controlled ) {
+      if ( controlled ) {
+        self.grabbedByUserEmitter.emit( self );
+      }
+      else {
+        self.droppedByUserEmitter.emit( self );
       }
     } );
   }
