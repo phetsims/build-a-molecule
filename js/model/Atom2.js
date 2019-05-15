@@ -9,6 +9,7 @@
 define( function( require ) {
   'use strict';
 
+  //modules
   var Atom = require( 'NITROGLYCERIN/Atom' );
   var BooleanProperty = require( 'AXON/BooleanProperty' );
   var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
@@ -20,7 +21,8 @@ define( function( require ) {
   var Vector2 = require( 'DOT/Vector2' );
   var Vector2Property = require( 'DOT/Vector2Property' );
 
-  var motionVelocity = 800; // In picometers per second of sim time.
+  // constants
+  var MOTION_VELOCITY = 800; // In picometers per second of sim time.
 
   //REVIEW: docs
   function Atom2( element, stepEmitter ) {
@@ -92,7 +94,7 @@ define( function( require ) {
       if ( this.positionProperty.value.distance( this.destinationProperty.value ) !== 0 ) {
 
         // Move towards the current destination
-        var distanceToTravel = motionVelocity * dt;
+        var distanceToTravel = MOTION_VELOCITY * dt;
         var distanceToTarget = this.positionProperty.value.distance( this.destinationProperty.value );
 
         var farDistanceMultiple = 10; // if we are this many times away, we speed up
