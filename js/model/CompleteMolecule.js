@@ -12,6 +12,7 @@
 define( function( require ) {
   'use strict';
 
+  // Modules
   var Atom = require( 'NITROGLYCERIN/Atom' );
   var AtomNode = require( 'NITROGLYCERIN/nodes/AtomNode' );
   var Bond = require( 'BUILD_A_MOLECULE/model/Bond' );
@@ -22,19 +23,44 @@ define( function( require ) {
   var Node = require( 'SCENERY/nodes/Node' );
   var Strings = require( 'BUILD_A_MOLECULE/Strings' );
 
-  //REVIEW: Create the array AFTER the require statements (use the normal import style)
+  // Node type modules
+  var Cl2Node = require( 'NITROGLYCERIN/nodes/Cl2Node' );
+  var CO2Node = require( 'NITROGLYCERIN/nodes/CO2Node' );
+  var CS2Node = require( 'NITROGLYCERIN/nodes/CS2Node' );
+  var F2Node = require( 'NITROGLYCERIN/nodes/F2Node' );
+  var H2Node = require( 'NITROGLYCERIN/nodes/H2Node' );
+  var N2Node = require( 'NITROGLYCERIN/nodes/N2Node' );
+  var NONode = require( 'NITROGLYCERIN/nodes/NONode' );
+  var N2ONode = require( 'NITROGLYCERIN/nodes/N2ONode' );
+  var O2Node = require( 'NITROGLYCERIN/nodes/O2Node' );
+  var C2H2Node = require( 'NITROGLYCERIN/nodes/C2H2Node' );
+  var C2H4Node = require( 'NITROGLYCERIN/nodes/C2H4Node' );
+  var C2H5ClNode = require( 'NITROGLYCERIN/nodes/C2H5ClNode' );
+  var C2H5OHNode = require( 'NITROGLYCERIN/nodes/C2H5OHNode' );
+  var C2H6Node = require( 'NITROGLYCERIN/nodes/C2H6Node' );
+  var CH2ONode = require( 'NITROGLYCERIN/nodes/CH2ONode' );
+  var CH3OHNode = require( 'NITROGLYCERIN/nodes/CH3OHNode' );
+  var CH4Node = require( 'NITROGLYCERIN/nodes/CH4Node' );
+  var H2ONode = require( 'NITROGLYCERIN/nodes/H2ONode' );
+  var H2SNode = require( 'NITROGLYCERIN/nodes/H2SNode' );
+  var HClNode = require( 'NITROGLYCERIN/nodes/HClNode' );
+  var HFNode = require( 'NITROGLYCERIN/nodes/HFNode' );
+  var NH3Node = require( 'NITROGLYCERIN/nodes/NH3Node' );
+  var NO2Node = require( 'NITROGLYCERIN/nodes/NO2Node' );
+  var OF2Node = require( 'NITROGLYCERIN/nodes/OF2Node' );
+  var P4Node = require( 'NITROGLYCERIN/nodes/P4Node' );
+  var PCl3Node = require( 'NITROGLYCERIN/nodes/PCl3Node' );
+  var PCl5Node = require( 'NITROGLYCERIN/nodes/PCl5Node' );
+  var PF3Node = require( 'NITROGLYCERIN/nodes/PF3Node' );
+  var PH3Node = require( 'NITROGLYCERIN/nodes/PH3Node' );
+  var SO2Node = require( 'NITROGLYCERIN/nodes/SO2Node' );
+  var SO3Node = require( 'NITROGLYCERIN/nodes/SO3Node' );
+
+  // Node types used for molecules
   var nodeTypes = [
-    require( 'NITROGLYCERIN/nodes/Cl2Node' ), require( 'NITROGLYCERIN/nodes/CO2Node' ), require( 'NITROGLYCERIN/nodes/CO2Node' ),
-    require( 'NITROGLYCERIN/nodes/CS2Node' ), require( 'NITROGLYCERIN/nodes/F2Node' ), require( 'NITROGLYCERIN/nodes/H2Node' ),
-    require( 'NITROGLYCERIN/nodes/N2Node' ), require( 'NITROGLYCERIN/nodes/NONode' ), require( 'NITROGLYCERIN/nodes/N2ONode' ),
-    require( 'NITROGLYCERIN/nodes/O2Node' ), require( 'NITROGLYCERIN/nodes/C2H2Node' ), require( 'NITROGLYCERIN/nodes/C2H4Node' ),
-    require( 'NITROGLYCERIN/nodes/C2H5ClNode' ), require( 'NITROGLYCERIN/nodes/C2H5OHNode' ), require( 'NITROGLYCERIN/nodes/C2H6Node' ),
-    require( 'NITROGLYCERIN/nodes/CH2ONode' ), require( 'NITROGLYCERIN/nodes/CH3OHNode' ), require( 'NITROGLYCERIN/nodes/CH4Node' ),
-    require( 'NITROGLYCERIN/nodes/H2ONode' ), require( 'NITROGLYCERIN/nodes/H2SNode' ), require( 'NITROGLYCERIN/nodes/HClNode' ),
-    require( 'NITROGLYCERIN/nodes/HFNode' ), require( 'NITROGLYCERIN/nodes/NH3Node' ), require( 'NITROGLYCERIN/nodes/NO2Node' ),
-    require( 'NITROGLYCERIN/nodes/OF2Node' ), require( 'NITROGLYCERIN/nodes/P4Node' ), require( 'NITROGLYCERIN/nodes/PCl3Node' ),
-    require( 'NITROGLYCERIN/nodes/PCl5Node' ), require( 'NITROGLYCERIN/nodes/PF3Node' ), require( 'NITROGLYCERIN/nodes/PH3Node' ),
-    require( 'NITROGLYCERIN/nodes/SO2Node' ), require( 'NITROGLYCERIN/nodes/SO3Node' )
+    Cl2Node, CO2Node, CO2Node, CS2Node, F2Node, H2Node, N2Node, NONode, N2ONode, O2Node, C2H2Node, C2H4Node, C2H5ClNode,
+    C2H5OHNode, C2H6Node, CH2ONode, CH3OHNode, CH4Node, H2ONode, H2SNode, HClNode, HFNode, NH3Node, NO2Node, OF2Node,
+    P4Node, PCl3Node, PCl5Node, PF3Node, PH3Node, SO2Node, SO3Node
   ];
 
   /*
