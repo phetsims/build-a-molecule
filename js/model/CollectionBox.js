@@ -17,11 +17,12 @@ define( function( require ) {
   var Molecule = require( 'BUILD_A_MOLECULE/model/Molecule' );
   var NumberProperty = require( 'AXON/NumberProperty' );
 
-  /*
+  /**
    * @param {CompleteMolecule} moleculeType
-   * @param {Int}              capacity TODO: Should this be number?
+   * @param {number} capacity
    */
   function CollectionBox( moleculeType, capacity ) {
+
     // @public {Property.<number>}
     this.quantityProperty = new NumberProperty( 0 );
 
