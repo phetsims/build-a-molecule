@@ -47,7 +47,6 @@ define( function( require ) {
     // @public {Emitter} - Called with one parameter: particle
     this.grabbedByUserEmitter = new Emitter( { validators: [ { valueType: Atom2 } ] } );
     this.droppedByUserEmitter = new Emitter( { validators: [ { valueType: Atom2 } ] } );
-    this.removedFromModelEmitter = new Emitter(); //REVIEW: Umm, not triggered?
 
     // @public {Emitter}
     this.stepEmitter = stepEmitter;

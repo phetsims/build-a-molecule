@@ -38,10 +38,6 @@ define( function( require ) {
     atom.visibleProperty.link( function( visible ) {
       self.visible = visible;
     } );
-    //REVIEW*: Not used?
-    atom.removedFromModelEmitter.addListener( function() {
-      self.detach(); // removes us from all parents
-    } );
   }
   buildAMolecule.register( 'AtomNode', AtomNode );
 
