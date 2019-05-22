@@ -22,6 +22,7 @@ define( function( require ) {
    * @param {number} capacity
    */
   function CollectionBox( moleculeType, capacity ) {
+    var self = this;
 
     // @public {Property.<number>}
     this.quantityProperty = new NumberProperty( 0 );
@@ -31,12 +32,15 @@ define( function( require ) {
     this.removedMoleculeEmitter = new Emitter( { validators: [ { valueType: Molecule } ] } );
     this.acceptedMoleculeCreationEmitter = new Emitter( { validators: [ { valueType: Molecule } ] } ); // triggered from KitCollection
 
-    var self = this;
+    // @public {CompleteMolecule}
     this.moleculeType = moleculeType;
-    this.capacity = capacity;
-    this.molecules = [];
-    this._dropBounds = Bounds2.NOTHING;
 
+    // @public {number}
+    this.capacity = capacity;
+
+    // @private
+    this.molecules = [];
+    this.dropBounds = Bounds2.NOTHING;
     this.addedMoleculeEmitter.addListener( function() {
       if ( self.quantityProperty.value === capacity ) {
         Globals.gameAudioPlayer.correctAnswer();
@@ -50,11 +54,11 @@ define( function( require ) {
     set dropBounds( value ) {
       // TODO: consider removing ES5 getter/setter here REVIEW: Just a normal property sounds good
       assert && assert( value );
-      this._dropBounds = value;
+      this.dropBounds = value;
     },
 
     get dropBounds() {
-      return this._dropBounds;
+      return this.dropBounds;
     },
 
     isFull: function() {
