@@ -37,7 +37,7 @@ define( function( require ) {
     this.molecules = [];
     this._dropBounds = Bounds2.NOTHING;
 
-    this.addedMoleculeEmitter.addListener( function( molecule ) {
+    this.addedMoleculeEmitter.addListener( function() {
       if ( self.quantityProperty.value === capacity ) {
         Globals.gameAudioPlayer.correctAnswer();
       }
