@@ -62,7 +62,7 @@ define( function( require ) {
       fill: Constants.moleculeCollectionBoxBackground
     } );
     this.locationUpdateObserver = function() {
-      box.dropBounds = toModelBounds( self.blackBox );
+      box.dropBoundsProperty.set( toModelBounds( self.blackBox ) );
     };
 
     if ( Constants.has3d ) {
@@ -114,6 +114,7 @@ define( function( require ) {
     this.boxNode.y = 3;
     this.addChild( this.boxNode );
   }
+
   buildAMolecule.register( 'CollectionBoxNode', CollectionBoxNode );
 
   return inherit( Node, CollectionBoxNode, {

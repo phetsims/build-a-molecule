@@ -66,7 +66,7 @@ define( function( require ) {
             var box = self.collectionBoxes[ i ];
 
             // permissive, so that if the box bounds and molecule bounds intersect, we call it a 'hit'
-            if ( box.dropBounds.intersectsBounds( molecule.positionBounds ) ) {
+            if ( box.dropBoundsProperty.value.intersectsBounds( molecule.positionBounds ) ) {
 
               // if our box takes this type of molecule
               if ( box.willAllowMoleculeDrop( molecule ) ) {

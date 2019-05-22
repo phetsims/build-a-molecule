@@ -16,6 +16,7 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var Molecule = require( 'BUILD_A_MOLECULE/model/Molecule' );
   var NumberProperty = require( 'AXON/NumberProperty' );
+  var Property = require( 'AXON/Property' );
 
   /**
    * @param {CompleteMolecule} moleculeType
@@ -40,7 +41,7 @@ define( function( require ) {
 
     // @private
     this.molecules = [];
-    this.dropBounds = Bounds2.NOTHING;
+    this.dropBoundsProperty = new Property( Bounds2.NOTHING );
     this.addedMoleculeEmitter.addListener( function() {
       if ( self.quantityProperty.value === capacity ) {
         Globals.gameAudioPlayer.correctAnswer();
@@ -51,16 +52,6 @@ define( function( require ) {
   buildAMolecule.register( 'CollectionBox', CollectionBox );
 
   inherit( Object, CollectionBox, {
-    set dropBounds( value ) {
-      // TODO: consider removing ES5 getter/setter here REVIEW: Just a normal property sounds good
-      assert && assert( value );
-      this.dropBounds = value;
-    },
-
-    get dropBounds() {
-      return this.dropBounds;
-    },
-
     isFull: function() {
       return this.capacity === this.quantityProperty.value;
     },
