@@ -17,7 +17,12 @@ define( function( require ) {
   var Rectangle = require( 'DOT/Rectangle' );
   var ScreenView = require( 'JOIST/ScreenView' );
 
-  function BAMView( collectionList ) {
+  /**
+   * @param {KitCollectionList} kitCollectionList
+   * @constructor
+   */
+  function BAMView( kitCollectionList ) {
+
     //REVIEW: Get rid of custom layoutBounds
     ScreenView.call( this, { layoutBounds: new Rectangle( 0, 0, Constants.stageSize.width, Constants.stageSize.height ) } );
     var self = this;
@@ -27,11 +32,11 @@ define( function( require ) {
 
     this.kitCollectionMap = {}; // maps KitCollection ID => KitCollectionNode
 
-    this.collectionList = collectionList;
+    this.kitCollectionList = kitCollectionList;
 
-    this.addCollection( collectionList.currentCollectionProperty.value );
+    this.addCollection( kitCollectionList.currentCollectionProperty.value );
 
-    collectionList.currentCollectionProperty.link( function( newCollection, oldCollection ) {
+    kitCollectionList.currentCollectionProperty.link( function( newCollection, oldCollection ) {
       if ( oldCollection ) {
         self.removeChild( self.kitCollectionMap[ oldCollection.id ] );
       }
@@ -40,7 +45,7 @@ define( function( require ) {
       }
     } );
 
-    collectionList.addedCollectionEmitter.addListener( this.addCollection.bind( this ) );
+    kitCollectionList.addedCollectionEmitter.addListener( this.addCollection.bind( this ) );
   }
   buildAMolecule.register( 'BAMView', BAMView );
 
@@ -49,7 +54,7 @@ define( function( require ) {
     isBAMView: true, // because require.js doesn't like to load us in some places!
 
     addCollection: function( collection ) {
-      var kitCollectionNode = new KitCollectionNode( this.collectionList, collection, this );
+      var kitCollectionNode = new KitCollectionNode( this.kitCollectionList, collection, this );
       this.kitCollectionMap[ collection.id ] = kitCollectionNode;
 
       // supposedly: return this so we can manipulate it in an override....?

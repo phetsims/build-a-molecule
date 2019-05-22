@@ -3,8 +3,6 @@
 /**
  * An internal list of collections that a user will be able to scroll through using a control on the collection area
  *
- * TODO: rename to 'KitCollectionList'?
- *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 
@@ -17,11 +15,13 @@ define( function( require ) {
   var KitCollection = require( 'BUILD_A_MOLECULE/model/KitCollection' );
   var Property = require( 'AXON/Property' );
 
-  /*
+  /**
    * @param {KitCollection} firstCollection
-   * @param {LayoutBounds}  layoutBounds
+   * @param {LayoutBounds} layoutBounds
+   * @param {Emitter} stepEmitter
    */
-  function CollectionList( firstCollection, layoutBounds, stepEmitter ) {
+  function KitCollectionList( firstCollection, layoutBounds, stepEmitter ) {
+
     // @public {Property.<KitCollection>}
     this.currentCollectionProperty = new Property( firstCollection );
 
@@ -36,9 +36,9 @@ define( function( require ) {
     this.addCollection( firstCollection );
   }
 
-  buildAMolecule.register( 'CollectionList', CollectionList );
+  buildAMolecule.register( 'KitCollectionList', KitCollectionList );
 
-  inherit( Object, CollectionList, {
+  inherit( Object, KitCollectionList, {
     switchTo: function( collection ) {
       this.currentIndex = this.collections.indexOf( collection );
       this.currentCollectionProperty.value = collection;
@@ -104,5 +104,5 @@ define( function( require ) {
     }
   } );
 
-  return CollectionList;
+  return KitCollectionList;
 } );

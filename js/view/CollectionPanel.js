@@ -14,7 +14,7 @@ define( function( require ) {
   var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   var CollectionAreaNode = require( 'BUILD_A_MOLECULE/view/CollectionAreaNode' );
   var CollectionBox = require( 'BUILD_A_MOLECULE/model/CollectionBox' );
-  var CollectionList = require( 'BUILD_A_MOLECULE/model/CollectionList' );
+  var KitCollectionList = require( 'BUILD_A_MOLECULE/model/KitCollectionList' );
   var Constants = require( 'BUILD_A_MOLECULE/Constants' );
   var Emitter = require( 'AXON/Emitter' );
   var Globals = require( 'BUILD_A_MOLECULE/Globals' );
@@ -37,7 +37,14 @@ define( function( require ) {
 
   var containerPadding = 15;
 
-  function CollectionPanel( collectionList, isSingleCollectionMode, collectionAttachmentCallbacks, toModelBounds ) {
+  /**
+   * @param {KitCollectionList} kitCollectionList
+   * @param {boolean} isSingleCollectionMode
+   * @param {Array.<function>} collectionAttachmentCallbacks
+   * @param {Function} toModelBounds
+   * @constructor
+   */
+  function CollectionPanel( kitCollectionList, isSingleCollectionMode, collectionAttachmentCallbacks, toModelBounds ) {
     var self = this;
     Node.call( this, {} );
 
@@ -69,8 +76,8 @@ define( function( require ) {
         weight: 'bold'
       } )
     } );
-    collectionList.currentCollectionProperty.link( function() {
-      currentCollectionText.text = StringUtils.fillIn( collectionPatternString, { number: collectionList.currentIndex + 1 } );
+    kitCollectionList.currentCollectionProperty.link( function() {
+      currentCollectionText.text = StringUtils.fillIn( collectionPatternString, { number: kitCollectionList.currentIndex + 1 } );
     } );
     var collectionSwitcher = new NextPreviousNavigationNode( currentCollectionText, {
       arrowColor: Constants.kitArrowBackgroundEnabled,
@@ -78,10 +85,10 @@ define( function( require ) {
       arrowWidth: 14,
       arrowHeight: 18,
       next: function() {
-        collectionList.switchToNextCollection();
+        kitCollectionList.switchToNextCollection();
       },
       previous: function() {
-        collectionList.switchToPreviousCollection();
+        kitCollectionList.switchToPreviousCollection();
       },
       createTouchAreaShape: function( shape ) {
         // square touch area
@@ -90,13 +97,13 @@ define( function( require ) {
     } );
 
     function updateSwitcher() {
-      collectionSwitcher.hasNextProperty.value = collectionList.hasNextCollection();
-      collectionSwitcher.hasPreviousProperty.value = collectionList.hasPreviousCollection();
+      collectionSwitcher.hasNextProperty.value = kitCollectionList.hasNextCollection();
+      collectionSwitcher.hasPreviousProperty.value = kitCollectionList.hasPreviousCollection();
     }
 
-    collectionList.currentCollectionProperty.link( updateSwitcher );
-    collectionList.addedCollectionEmitter.addListener( updateSwitcher );
-    collectionList.removedCollectionEmitter.addListener( updateSwitcher );
+    kitCollectionList.currentCollectionProperty.link( updateSwitcher );
+    kitCollectionList.addedCollectionEmitter.addListener( updateSwitcher );
+    kitCollectionList.removedCollectionEmitter.addListener( updateSwitcher );
     this.layoutNode.addChild( collectionSwitcher );
     collectionSwitcher.top = y;
     y += collectionSwitcher.height + 10;
@@ -122,19 +129,19 @@ define( function( require ) {
     }
 
     // create nodes for all current collections
-    collectionList.collections.forEach( function( collection ) {
+    kitCollectionList.collections.forEach( function( collection ) {
       createCollectionNode( collection );
     } );
 
     // if a new collection is added, create one for it
-    collectionList.addedCollectionEmitter.addListener( function( collection ) {
+    kitCollectionList.addedCollectionEmitter.addListener( function( collection ) {
       createCollectionNode( collection );
     } );
 
     // use the current collection
-    this.useCollection( collectionList.currentCollectionProperty.value );
+    this.useCollection( kitCollectionList.currentCollectionProperty.value );
 
-    collectionList.currentCollectionProperty.link( function( newCollection ) {
+    kitCollectionList.currentCollectionProperty.link( function( newCollection ) {
       self.useCollection( newCollection );
     } );
   }
@@ -150,8 +157,8 @@ define( function( require ) {
     // construct a dummy collection panel and check its width
     var collection = new KitCollection();
     collection.addCollectionBox( new CollectionBox( MoleculeList.H2O, 1 ) );
-    var collectionList = new CollectionList( collection, new LayoutBounds( false, 0 ), new Emitter() );
-    var collectionPanel = new CollectionPanel( collectionList, isSingleCollectionMode, [], function() { return Bounds2.NOTHING; } );
+    var kitCollectionList = new KitCollectionList( collection, new LayoutBounds( false, 0 ), new Emitter() );
+    var collectionPanel = new CollectionPanel( kitCollectionList, isSingleCollectionMode, [], function() { return Bounds2.NOTHING; } );
 
     return Constants.modelViewTransform.viewToModelDeltaX( collectionPanel.width );
   };

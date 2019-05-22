@@ -11,7 +11,7 @@ define( function( require ) {
   var Bucket = require( 'BUILD_A_MOLECULE/model/Bucket' );
   var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   var CollectionBox = require( 'BUILD_A_MOLECULE/model/CollectionBox' );
-  var CollectionList = require( 'BUILD_A_MOLECULE/model/CollectionList' );
+  var KitCollectionList = require( 'BUILD_A_MOLECULE/model/KitCollectionList' );
   var Constants = require( 'BUILD_A_MOLECULE/Constants' );
   var Dimension2 = require( 'DOT/Dimension2' );
   var Element = require( 'NITROGLYCERIN/Element' );
@@ -31,7 +31,7 @@ define( function( require ) {
 
     var createModel = function() {
       var stepEmitter = new Emitter( { validators: [ { valueType: 'number' } ] } ); // emits 1 parameter, timeElapsed
-      var model = new CollectionList( createInitialKitCollection( layoutBounds, stepEmitter ), layoutBounds, stepEmitter );
+      var model = new KitCollectionList( createInitialKitCollection( layoutBounds, stepEmitter ), layoutBounds, stepEmitter );
       //REVIEW: This seems like the wrong way to handle things. Don't implement methods on things externally.
       model.step = function step( timeElapsed ) {
         stepEmitter.emit( timeElapsed );

@@ -15,11 +15,17 @@ define( function( require ) {
   var KitView = require( 'BUILD_A_MOLECULE/view/KitView' );
   var Node = require( 'SCENERY/nodes/Node' );
 
-  function KitCollectionNode( collectionList, collection, view ) {
+  /**
+   * @param {KitCollectionList} kitCollectionList
+   * @param {KitCollection} collection
+   * @param {MoleculeCollectingView} view
+   * @constructor
+   */
+  function KitCollectionNode( kitCollectionList, collection, view ) {
     Node.call( this, {} );
     var self = this;
 
-    this.addChild( new KitPanel( collection, collectionList.availableKitBounds ) );
+    this.addChild( new KitPanel( collection, kitCollectionList.availableKitBounds ) );
 
     var kitMap = {}; // maps kit ID => KitView
     collection.kits.forEach( function( kit ) {

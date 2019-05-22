@@ -16,16 +16,22 @@ define( function( require ) {
   var Constants = require( 'BUILD_A_MOLECULE/Constants' );
   var inherit = require( 'PHET_CORE/inherit' );
 
-  function MoleculeCollectingView( collectionList, isSingleCollectionMode, regenerateCallback ) {
+  /**
+   * @param {KitCollectionList} kitCollectionList
+   * @param {boolean} isSingleCollectionMode
+   * @param {Function} regenerateCallback
+   * @constructor
+   */
+  function MoleculeCollectingView( kitCollectionList, isSingleCollectionMode, regenerateCallback ) {
     var self = this;
 
-    BAMView.call( this, collectionList );
+    BAMView.call( this, kitCollectionList );
 
     this.regenerateCallback = regenerateCallback;
 
     var collectionAttachmentCallbacks = [];
 
-    var collectionPanel = new CollectionPanel( collectionList, isSingleCollectionMode, collectionAttachmentCallbacks, function( node ) {
+    var collectionPanel = new CollectionPanel( kitCollectionList, isSingleCollectionMode, collectionAttachmentCallbacks, function( node ) {
       // returns model bounds from a node, given local coordinates on a node
       var viewBounds = node.getParent().getUniqueTrail().getTransformTo( self.getUniqueTrail() ).transformBounds2( node.bounds );
       return Constants.modelViewTransform.viewToModelBounds( viewBounds );
@@ -52,7 +58,7 @@ define( function( require ) {
       collection.allCollectionBoxesFilledProperty.link( function( filled ) {
         if ( filled ) {
           if ( !hasShownOnce ) {
-            allFilledDialogNode = new AllFilledDialogNode( self.collectionList.availablePlayAreaBounds, self.regenerateCallback );
+            allFilledDialogNode = new AllFilledDialogNode( self.kitCollectionList.availablePlayAreaBounds, self.regenerateCallback );
             hasShownOnce = true;
           }
           if ( !allFilledDialogNode.hasParent() ) {
