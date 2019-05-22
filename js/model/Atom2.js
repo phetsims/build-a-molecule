@@ -24,7 +24,12 @@ define( function( require ) {
   // constants
   var MOTION_VELOCITY = 800; // In picometers per second of sim time.
 
-  //REVIEW: docs
+  /**
+   *
+   * @param {Element} element
+   * @param {Emitter} stepEmitter
+   * @constructor
+   */
   function Atom2( element, stepEmitter ) {
     var self = this;
 
