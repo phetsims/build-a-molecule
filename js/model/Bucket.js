@@ -24,11 +24,10 @@ define( function( require ) {
    * Constructor.  The dimensions used are just numbers, i.e. they are not
    * meant to be any specific size (such as meters).  This enabled
    * reusability in any 2D model.
-   *
-   * REVIEW: type docs
-   * @param size     Physical size of the bucket (model space)
-   * @param element  The element of the atoms in the bucket
-   * @param quantity The number of atoms starting in the bucket
+   * @param {Dimension2} size - Physical size of the bucket (model space)
+   * @param {Emitter} stepEmitter
+   * @param {Element} element - The element of the atoms in the bucket
+   * @param {number} quantity - The number of atoms starting in the bucket
    */
   function Bucket( size, stepEmitter, element, quantity ) {
     SphereBucket.call( this, {
@@ -45,7 +44,7 @@ define( function( require ) {
     // @private {Property.<Vector2>}
     this.positionProperty = new Vector2Property( this.position );
 
-    //REVIEW: docs
+    // @public
     this.element = element;
     this.width = this.containerShape.bounds.width;
 
