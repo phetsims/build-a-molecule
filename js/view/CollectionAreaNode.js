@@ -77,7 +77,7 @@ define( function( require ) {
       listener: function() {
         // when clicked, empty collection boxes
         collection.collectionBoxes.forEach( function( box ) {
-          box.clear();
+          box.reset();
         } );
         collection.kits.forEach( function( kit ) {
           kit.resetKit();
