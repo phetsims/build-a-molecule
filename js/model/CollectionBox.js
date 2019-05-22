@@ -78,7 +78,7 @@ define( function( require ) {
 
     removeMolecule: function( molecule ) {
       this.quantityProperty.value--;
-      this.molecules.splice( this.molecules.indexOf( molecule ), 1 ); // TODO: remove() instead of splice()
+      this.molecules.remove( this.molecules.indexOf( molecule ), 1 );
 
       this.removedMoleculeEmitter.emit( molecule );
     },
