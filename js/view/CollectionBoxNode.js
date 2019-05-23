@@ -12,7 +12,7 @@ define( function( require ) {
 
   var Bounds2 = require( 'DOT/Bounds2' );
   var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
-  var Constants = require( 'BUILD_A_MOLECULE/Constants' );
+  var BAMConstants = require( 'BUILD_A_MOLECULE/BAMConstants' );
   var Image = require( 'SCENERY/nodes/Image' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Molecule3DNode = require( 'BUILD_A_MOLECULE/view/view3d/Molecule3DNode' );
@@ -25,7 +25,7 @@ define( function( require ) {
 
   //REVIEW: Should these be constants or moved into constructor?
   var moleculePadding = 5;
-  var blackBoxPaddingFor3D = Constants.has3d ? 10 : 0;
+  var blackBoxPaddingFor3D = BAMConstants.HAS_3D ? 10 : 0;
 
   var moleculeIdThumbnailMap = {}; // maps moleculeId => Node (thumbnail view for the molecule)
 
@@ -71,13 +71,13 @@ define( function( require ) {
     this.boxNode = new Node();
 
     this.blackBox = new Rectangle( 0, 0, 160, 50, {
-      fill: Constants.moleculeCollectionBoxBackground
+      fill: BAMConstants.MOLECULE_COLLECTION_BOX_BACKGROUND
     } );
     this.locationUpdateObserver = function() {
       box.dropBoundsProperty.set( toModelBounds( self.blackBox ) );
     };
 
-    if ( Constants.has3d ) {
+    if ( BAMConstants.HAS_3D ) {
       var show3dButton = new ShowMolecule3DButtonNode( box.moleculeType );
       show3dButton.touchArea = Shape.bounds( show3dButton.bounds.dilated( 10 ) );
       show3dButton.right = this.blackBox.right - blackBoxPaddingFor3D;
@@ -244,10 +244,10 @@ define( function( require ) {
     updateBoxGraphics: function() {
       this.blackBox.lineWidth = 4;
       if ( this.box.isFull() ) {
-        this.blackBox.stroke = Constants.moleculeCollectionBoxHighlight;
+        this.blackBox.stroke = BAMConstants.MOLECULE_COLLECTION_BOX_HIGHLIGHT;
       }
       else {
-        this.blackBox.stroke = Constants.moleculeCollectionBackground;
+        this.blackBox.stroke = BAMConstants.MOLECULE_COLLECTION_BACKGROUND;
       }
     },
 
@@ -288,12 +288,12 @@ define( function( require ) {
 
           // draw graphics
           if ( on ) {
-            self.blackBox.fill = Constants.moleculeCollectionBoxBackgroundBlink;
-            self.blackBox.stroke = Constants.moleculeCollectionBoxBorderBlink;
+            self.blackBox.fill = BAMConstants.MOLECULE_COLLECTION_BOX_BACKGROUND_BLINK;
+            self.blackBox.stroke = BAMConstants.MOLECULE_COLLECTION_BOX_BORDER_BLINK;
           }
           else {
-            self.blackBox.fill = Constants.moleculeCollectionBoxBackground;
-            self.blackBox.stroke = Constants.moleculeCollectionBackground;
+            self.blackBox.fill = BAMConstants.MOLECULE_COLLECTION_BOX_BACKGROUND;
+            self.blackBox.stroke = BAMConstants.MOLECULE_COLLECTION_BACKGROUND;
           }
 
           // set the blinkTimeout so it can be canceled

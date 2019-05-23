@@ -13,7 +13,7 @@ define( function( require ) {
 
   var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   var Color = require( 'SCENERY/util/Color' );
-  var Constants = require( 'BUILD_A_MOLECULE/Constants' );
+  var BAMConstants = require( 'BUILD_A_MOLECULE/BAMConstants' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Path = require( 'SCENERY/nodes/Path' );
@@ -38,7 +38,7 @@ define( function( require ) {
     var self = this;
     //REVIEW: This looks like it may leak memory. Worth checking into
     atom.positionProperty.link( function( modelPosition ) {
-      self.setTranslation( Constants.modelViewTransform.modelToViewPosition( modelPosition ) );
+      self.setTranslation( BAMConstants.MODEL_VIEW_TRANSFORM.modelToViewPosition( modelPosition ) );
     } );
     atom.visibleProperty.link( function( visible ) {
       self.visible = visible;
@@ -56,7 +56,7 @@ define( function( require ) {
     }
 
     var color = new Color( element.color );
-    var radius = Constants.modelViewTransform.modelToViewDeltaX( element.covalentRadius );
+    var radius = BAMConstants.MODEL_VIEW_TRANSFORM.modelToViewDeltaX( element.covalentRadius );
     var diameter = radius * 2;
 
     var gCenter = new Vector2( -radius / 3, -radius / 3 );

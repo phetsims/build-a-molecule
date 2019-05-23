@@ -13,7 +13,7 @@ define( function( require ) {
   var BAMView = require( 'BUILD_A_MOLECULE/view/BAMView' );
   var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   var CollectionPanel = require( 'BUILD_A_MOLECULE/view/CollectionPanel' );
-  var Constants = require( 'BUILD_A_MOLECULE/Constants' );
+  var BAMConstants = require( 'BUILD_A_MOLECULE/BAMConstants' );
   var inherit = require( 'PHET_CORE/inherit' );
 
   /**
@@ -34,10 +34,10 @@ define( function( require ) {
     var collectionPanel = new CollectionPanel( kitCollectionList, isSingleCollectionMode, collectionAttachmentCallbacks, function( node ) {
       // returns model bounds from a node, given local coordinates on a node
       var viewBounds = node.getParent().getUniqueTrail().getTransformTo( self.getUniqueTrail() ).transformBounds2( node.bounds );
-      return Constants.modelViewTransform.viewToModelBounds( viewBounds );
+      return BAMConstants.MODEL_VIEW_TRANSFORM.viewToModelBounds( viewBounds );
     } );
-    collectionPanel.right = Constants.stageSize.width - Constants.viewPadding;
-    collectionPanel.top = Constants.viewPadding;
+    collectionPanel.right = BAMConstants.STAGE_SIZE.width - BAMConstants.VIEW_PADDING;
+    collectionPanel.top = BAMConstants.VIEW_PADDING;
     this.baseNode.addChild( collectionPanel );
 
     // notify attachment

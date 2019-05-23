@@ -15,7 +15,7 @@ define( function( require ) {
   var BucketFront = require( 'SCENERY_PHET/bucket/BucketFront' );
   var BucketHole = require( 'SCENERY_PHET/bucket/BucketHole' );
   var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
-  var Constants = require( 'BUILD_A_MOLECULE/Constants' );
+  var BAMConstants = require( 'BUILD_A_MOLECULE/BAMConstants' );
   var inherit = require( 'PHET_CORE/inherit' );
   var MoleculeBondContainerNode = require( 'BUILD_A_MOLECULE/view/MoleculeBondContainerNode' );
   var MoleculeMetadataNode = require( 'BUILD_A_MOLECULE/view/MoleculeMetadataNode' );
@@ -49,8 +49,8 @@ define( function( require ) {
     var atomLayer = this.atomLayer = new Node();
     var bottomLayer = this.bottomLayer = new Node();
 
-    var viewSwipeBounds = Constants.modelViewTransform.modelToViewBounds( kit.layoutBounds.availablePlayAreaBounds );
-    var swipeCatch = this.swipeCatch = Rectangle.bounds( viewSwipeBounds.eroded( Constants.viewPadding ) );
+    var viewSwipeBounds = BAMConstants.MODEL_VIEW_TRANSFORM.modelToViewBounds( kit.layoutBounds.availablePlayAreaBounds );
+    var swipeCatch = this.swipeCatch = Rectangle.bounds( viewSwipeBounds.eroded( BAMConstants.VIEW_PADDING ) );
     var sliceNode = this.sliceNode = new SliceNode( kit, viewSwipeBounds, view );
 
     swipeCatch.addInputListener( sliceNode.sliceInputListener );
@@ -72,7 +72,7 @@ define( function( require ) {
       }
 
       // probably a touch or something we will target
-      var modelPoint = Constants.modelViewTransform.viewToModelPosition( point );
+      var modelPoint = BAMConstants.MODEL_VIEW_TRANSFORM.viewToModelPosition( point );
       var atom = self.closestAtom( modelPoint, 100 );
       if ( atom ) {
         // TODO: this is somewhat hackish. better way of doing this?
@@ -83,10 +83,10 @@ define( function( require ) {
       }
     };
     // ensure that touches don't get pruned before this point
-    atomLayer.touchArea = Shape.bounds( Constants.stageSize.toBounds() );
+    atomLayer.touchArea = Shape.bounds( BAMConstants.STAGE_SIZE.toBounds() );
 
     kit.buckets.forEach( function( bucket ) {
-      var bucketFront = new BucketFront( bucket, Constants.modelViewTransform, {
+      var bucketFront = new BucketFront( bucket, BAMConstants.MODEL_VIEW_TRANSFORM, {
         labelFont: new PhetFont( {
           weight: 'bold',
           size: 18,
@@ -94,7 +94,7 @@ define( function( require ) {
           family: 'Arial, sans-serif'
         } ) // matching the old look for now
       } );
-      var bucketHole = new BucketHole( bucket, Constants.modelViewTransform );
+      var bucketHole = new BucketHole( bucket, BAMConstants.MODEL_VIEW_TRANSFORM );
       // NOTE: we will use the Bucket's hole with an expanded touch area to trigger the "grab by touching the bucket" behavior
       bucketHole.touchArea = bucketHole.mouseArea = new Shape()
         .moveTo( bucketHole.left - bucketHole.x, bucketHole.centerY - bucketHole.y )
@@ -122,7 +122,7 @@ define( function( require ) {
         down: function( event ) {
           // coordinate transforms to get our atom
           var viewPoint = view.globalToLocalPoint( event.pointer.point );
-          var modelPoint = Constants.modelViewTransform.viewToModelPosition( viewPoint );
+          var modelPoint = BAMConstants.MODEL_VIEW_TRANSFORM.viewToModelPosition( viewPoint );
           var atom = self.closestAtom( modelPoint, Number.POSITIVE_INFINITY, bucket.element ); // filter by the element
 
           // if it's not in our bucket, ignore it (could skip weird cases where an atom outside of the bucket is technically closer)
@@ -173,7 +173,7 @@ define( function( require ) {
           },
 
           translate: function( data ) {
-            var modelDelta = Constants.modelViewTransform.viewToModelDelta( data.delta );
+            var modelDelta = BAMConstants.MODEL_VIEW_TRANSFORM.viewToModelDelta( data.delta );
             kit.atomDragged( atom, modelDelta );
           }
         } );
@@ -188,7 +188,7 @@ define( function( require ) {
       metadataLayer.addChild( moleculeMetadataNode );
       self.metadataMap[ molecule.moleculeId ] = moleculeMetadataNode;
 
-      if ( Constants.allowBondBreaking ) {
+      if ( BAMConstants.ALLOW_BOND_BREAKING ) {
         self.addMoleculeBondNodes( molecule );
       }
     } );
@@ -197,7 +197,7 @@ define( function( require ) {
       moleculeMetadataNode.dispose();
       delete self.metadataMap[ molecule.moleculeId ];
 
-      if ( Constants.allowBondBreaking ) {
+      if ( BAMConstants.ALLOW_BOND_BREAKING ) {
         self.removeMoleculeBondNodes( molecule );
       }
     } );

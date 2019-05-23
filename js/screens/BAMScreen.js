@@ -12,7 +12,7 @@ define( function( require ) {
   var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   var CollectionBox = require( 'BUILD_A_MOLECULE/model/CollectionBox' );
   var KitCollectionList = require( 'BUILD_A_MOLECULE/model/KitCollectionList' );
-  var Constants = require( 'BUILD_A_MOLECULE/Constants' );
+  var BAMConstants = require( 'BUILD_A_MOLECULE/BAMConstants' );
   var Dimension2 = require( 'DOT/Dimension2' );
   var Element = require( 'NITROGLYCERIN/Element' );
   var Emitter = require( 'AXON/Emitter' );
@@ -33,7 +33,7 @@ define( function( require ) {
    */
   function BAMScreen( createInitialKitCollection, layoutBounds, createKitCollection, createView, options ) {
     options = _.extend( {
-      backgroundColorProperty: new Property( Constants.canvasBackgroundColor )
+      backgroundColorProperty: new Property( BAMConstants.CANVAS_BACKGROUND_COLOR )
     }, options );
 
     var createModel = function() {

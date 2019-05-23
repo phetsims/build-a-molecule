@@ -12,7 +12,7 @@ define( function( require ) {
   var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   var ButtonListener = require( 'SCENERY/input/ButtonListener' );
   var Circle = require( 'SCENERY/nodes/Circle' );
-  var Constants = require( 'BUILD_A_MOLECULE/Constants' );
+  var BAMConstants = require( 'BUILD_A_MOLECULE/BAMConstants' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
   var platform = require( 'PHET_CORE/platform' );
@@ -120,7 +120,7 @@ define( function( require ) {
         orientation.normalize();
       }
       var location = orientation.times( a.covalentRadius ).plus( a.positionProperty.value );
-      self.setTranslation( Constants.modelViewTransform.modelToViewPosition( location ) );
+      self.setTranslation( BAMConstants.MODEL_VIEW_TRANSFORM.modelToViewPosition( location ) );
     };
     a.positionProperty.link( this.positionListener );
     b.positionProperty.link( this.positionListener );

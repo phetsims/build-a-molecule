@@ -11,7 +11,7 @@ define( function( require ) {
   'use strict';
 
   var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
-  var Constants = require( 'BUILD_A_MOLECULE/Constants' );
+  var BAMConstants = require( 'BUILD_A_MOLECULE/BAMConstants' );
   var DOM = require( 'SCENERY/nodes/DOM' );
   var inherit = require( 'PHET_CORE/inherit' );
   var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' ); // TODO: DragListener
@@ -57,7 +57,7 @@ define( function( require ) {
         canvas.style.position = 'absolute';
         canvas.style.left = globalBounds.x + 'px';
         canvas.style.top = globalBounds.y + 'px';
-        toModelTransform = new Transform3( Constants.modelViewTransform.getInverse().timesMatrix( view.getUniqueTrail().getMatrix().inverted() ) );
+        toModelTransform = new Transform3( BAMConstants.MODEL_VIEW_TRANSFORM.getInverse().timesMatrix( view.getUniqueTrail().getMatrix().inverted() ) );
 
         kit.molecules.forEach( function( molecule ) {
           molecule.bonds.forEach( function( bond ) {

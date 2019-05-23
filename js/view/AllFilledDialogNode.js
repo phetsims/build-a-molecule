@@ -11,7 +11,7 @@ define( function( require ) {
 
   var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   var Color = require( 'SCENERY/util/Color' );
-  var Constants = require( 'BUILD_A_MOLECULE/Constants' );
+  var BAMConstants = require( 'BUILD_A_MOLECULE/BAMConstants' );
   var FaceNode = require( 'SCENERY_PHET/FaceNode' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
@@ -68,11 +68,11 @@ define( function( require ) {
 
     var background = new Rectangle( this.bounds.dilated( 10 ), {
       stroke: 'black',
-      fill: Constants.completeBackgroundColor
+      fill: BAMConstants.COMPLETE_BACKGROUND_COLOR
     } );
     this.insertChild( 0, background );
 
-    this.center = Constants.modelViewTransform.modelToViewBounds( availablePlayAreaBounds ).center;
+    this.center = BAMConstants.MODEL_VIEW_TRANSFORM.modelToViewBounds( availablePlayAreaBounds ).center;
   }
   buildAMolecule.register( 'AllFilledDialogNode', AllFilledDialogNode );
 

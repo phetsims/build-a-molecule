@@ -11,7 +11,7 @@ define( function( require ) {
 
   var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   var ButtonListener = require( 'SCENERY/input/ButtonListener' );
-  var Constants = require( 'BUILD_A_MOLECULE/Constants' );
+  var BAMConstants = require( 'BUILD_A_MOLECULE/BAMConstants' );
   var Image = require( 'SCENERY/nodes/Image' );
   var inherit = require( 'PHET_CORE/inherit' );
   var MoleculeList = require( 'BUILD_A_MOLECULE/model/MoleculeList' );
@@ -63,7 +63,7 @@ define( function( require ) {
       /*---------------------------------------------------------------------------*
        * show 3d button
        *----------------------------------------------------------------------------*/
-      if ( Constants.has3d ) {
+      if ( BAMConstants.HAS_3D ) {
         // TODO: add dialog!
         var button3d = new ShowMolecule3DButtonNode( completeMolecule, {
           x: currentX,
@@ -128,10 +128,10 @@ define( function( require ) {
 
     updatePosition: function() {
       var modelPositionBounds = this.molecule.positionBounds;
-      var moleculeViewBounds = Constants.modelViewTransform.modelToViewBounds( modelPositionBounds );
+      var moleculeViewBounds = BAMConstants.MODEL_VIEW_TRANSFORM.modelToViewBounds( modelPositionBounds );
 
       this.setTranslation( moleculeViewBounds.centerX - this.width / 2, // horizontally center
-        moleculeViewBounds.minY - this.height - Constants.metadataPaddingBetweenNodeAndMolecule ); // offset from top of molecule
+        moleculeViewBounds.minY - this.height - BAMConstants.BUTTON_PADDING ); // offset from top of molecule
     }
   } );
 

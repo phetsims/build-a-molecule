@@ -10,7 +10,7 @@ define( function( require ) {
   'use strict';
 
   var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
-  var Constants = require( 'BUILD_A_MOLECULE/Constants' );
+  var BAMConstants = require( 'BUILD_A_MOLECULE/BAMConstants' );
   var inherit = require( 'PHET_CORE/inherit' );
   var PhetioObject = require( 'TANDEM/PhetioObject' );
 
@@ -23,7 +23,7 @@ define( function( require ) {
 
     // REVIEW: map from element.symbol => count?
     this.quantities = {};
-    Constants.supportedElements.forEach( function( element ) {
+    BAMConstants.SUPPORTED_ELEMENTS.forEach( function( element ) {
       self.quantities[ element.symbol ] = 0;
     } );
 
@@ -60,9 +60,9 @@ define( function( require ) {
     containsAsSubset: function( otherHistogram ) {
       var self = this;
 
-      var length = Constants.supportedElements.length;
+      var length = BAMConstants.SUPPORTED_ELEMENTS.length;
       for ( var i = 0; i < length; i++ ) {
-        var element = Constants.supportedElements[ i ];
+        var element = BAMConstants.SUPPORTED_ELEMENTS[ i ];
 
         if ( self.getQuantity( element ) < otherHistogram.getQuantity( element ) ) {
           return false;
@@ -78,7 +78,7 @@ define( function( require ) {
       var self = this;
       var hashString = '';
 
-      Constants.supportedElements.forEach( function( element ) {
+      BAMConstants.SUPPORTED_ELEMENTS.forEach( function( element ) {
         hashString += '_' + self.getQuantity( element );
       } );
       return hashString;
@@ -88,9 +88,9 @@ define( function( require ) {
       var self = this;
 
       if ( otherHistogram instanceof ElementHistogram ) {
-        var length = Constants.supportedElements.length;
+        var length = BAMConstants.SUPPORTED_ELEMENTS.length;
         for ( var i = 0; i < length; i++ ) {
-          var element = Constants.supportedElements[ i ];
+          var element = BAMConstants.SUPPORTED_ELEMENTS[ i ];
 
           if ( self.getQuantity( element ) !== otherHistogram.getQuantity( element ) ) {
             return false;
@@ -107,7 +107,7 @@ define( function( require ) {
   // // object with symbols as keys, result as true
   // //REVIEW: Is this used anywhere? I can't find it
   // ElementHistogram.allowedChemicalSymbols = {};
-  // Constants.supportedElements.forEach( function( element ) {
+  // BAMConstants.SUPPORTED_ELEMENTS.forEach( function( element ) {
   //   ElementHistogram.allowedChemicalSymbols[ element.symbol ] = true;
   // } );
 } );

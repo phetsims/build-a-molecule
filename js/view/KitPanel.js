@@ -11,7 +11,7 @@ define( function( require ) {
 
   var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   var Color = require( 'SCENERY/util/Color' );
-  var Constants = require( 'BUILD_A_MOLECULE/Constants' );
+  var BAMConstants = require( 'BUILD_A_MOLECULE/BAMConstants' );
   var inherit = require( 'PHET_CORE/inherit' );
   var NextPreviousNavigationNode = require( 'SCENERY_PHET/NextPreviousNavigationNode' );
   var Node = require( 'SCENERY/nodes/Node' );
@@ -37,17 +37,17 @@ define( function( require ) {
     Node.call( this, {} );
 
     //REVIEW: With layout containers, can we avoid making this assumption?
-    assert && assert( Constants.modelViewTransform.getMatrix().m11() < 0 ); // we assume this and correct for the inversed Y
+    assert && assert( BAMConstants.MODEL_VIEW_TRANSFORM.getMatrix().m11() < 0 ); // we assume this and correct for the inversed Y
 
-    var kitViewBounds = Constants.modelViewTransform.modelToViewBounds( availableKitBounds );
+    var kitViewBounds = BAMConstants.MODEL_VIEW_TRANSFORM.modelToViewBounds( availableKitBounds );
 
     /*---------------------------------------------------------------------------*
      * background
      *----------------------------------------------------------------------------*/
 
     this.addChild( new Path( Shape.bounds( kitViewBounds ), {
-      fill: Constants.kitBackground,
-      stroke: Constants.kitBorder
+      fill: BAMConstants.KIT_BACKGROUND,
+      stroke: BAMConstants.KIT_BORDER
     } ) );
 
     /*---------------------------------------------------------------------------*
@@ -66,8 +66,8 @@ define( function( require ) {
 
     //REVIEW: Replace with the Carousel common type, so we don't have to do so much (and it has a better appearance)
     var navigationNode = new NextPreviousNavigationNode( labelNode, {
-      arrowColor: Constants.kitArrowBackgroundEnabled,
-      arrowStrokeColor: Constants.kitArrowBorderEnabled,
+      arrowColor: BAMConstants.KIT_ARROW_BACKGROUND_ENABLED,
+      arrowStrokeColor: BAMConstants.KIT_ARROW_BORDER_ENABLED,
       arrowWidth: 17,
       arrowHeight: 24,
       next: function() {

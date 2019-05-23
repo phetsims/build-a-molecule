@@ -10,7 +10,7 @@ define( function( require ) {
   'use strict';
 
   var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
-  var Constants = require( 'BUILD_A_MOLECULE/Constants' );
+  var BAMConstants = require( 'BUILD_A_MOLECULE/BAMConstants' );
   var inherit = require( 'PHET_CORE/inherit' );
   var KitCollectionNode = require( 'BUILD_A_MOLECULE/view/KitCollectionNode' );
   var Node = require( 'SCENERY/nodes/Node' );
@@ -24,7 +24,7 @@ define( function( require ) {
   function BAMView( kitCollectionList ) {
 
     //REVIEW: Get rid of custom layoutBounds
-    ScreenView.call( this, { layoutBounds: new Rectangle( 0, 0, Constants.stageSize.width, Constants.stageSize.height ) } );
+    ScreenView.call( this, { layoutBounds: new Rectangle( 0, 0, BAMConstants.STAGE_SIZE.width, BAMConstants.STAGE_SIZE.height ) } );
     var self = this;
 
     this.baseNode = new Node();

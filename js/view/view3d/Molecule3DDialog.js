@@ -15,7 +15,7 @@ define( function( require ) {
   var Bounds2 = require( 'DOT/Bounds2' );
   var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   var CloseButton = require( 'BUILD_A_MOLECULE/view/view3d/CloseButton' );
-  var Constants = require( 'BUILD_A_MOLECULE/Constants' );
+  var BAMConstants = require( 'BUILD_A_MOLECULE/BAMConstants' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Molecule3DNode = require( 'BUILD_A_MOLECULE/view/view3d/Molecule3DNode' );
   var Node = require( 'SCENERY/nodes/Node' );
@@ -33,8 +33,8 @@ define( function( require ) {
 
   var size = 200;
   var verticalOffset = size + 5;
-  var stageCenterX = Constants.stageSize.width / 2;
-  var stageCenterY = Constants.stageSize.height / 2;
+  var stageCenterX = BAMConstants.STAGE_SIZE.width / 2;
+  var stageCenterY = BAMConstants.STAGE_SIZE.height / 2;
   var optionsHorizontalPadding = 40;
 
   //REVIEW: Note that this may change significantly if we go with a three.js/webgl solution
@@ -128,7 +128,7 @@ define( function( require ) {
      *----------------------------------------------------------------------------*/
 
     var closeButton = new CloseButton( function() { self.disposeMolecule3DDialog(); }, {
-      centerX: Constants.stageSize.width - stageWindowPadding,
+      centerX: BAMConstants.STAGE_SIZE.width - stageWindowPadding,
       centerY: stageWindowPadding
     } );
     closeButton.addInputListener( {
@@ -164,7 +164,7 @@ define( function( require ) {
 
       var screenBounds = view.globalToLocalBounds( new Bounds2( 0, 0, width, height ) );
       outsideNode.setRectBounds( screenBounds.roundedOut() );
-      var windowBounds = Constants.stageSize.toBounds().eroded( stageWindowPadding );
+      var windowBounds = BAMConstants.STAGE_SIZE.toBounds().eroded( stageWindowPadding );
       background.setRectBounds( windowBounds );
 
       var backgroundGradient = new RadialGradient( windowBounds.centerX, windowBounds.centerY, 0,

@@ -15,7 +15,7 @@ define( function( require ) {
   var CollectionAreaNode = require( 'BUILD_A_MOLECULE/view/CollectionAreaNode' );
   var CollectionBox = require( 'BUILD_A_MOLECULE/model/CollectionBox' );
   var KitCollectionList = require( 'BUILD_A_MOLECULE/model/KitCollectionList' );
-  var Constants = require( 'BUILD_A_MOLECULE/Constants' );
+  var BAMConstants = require( 'BUILD_A_MOLECULE/BAMConstants' );
   var Emitter = require( 'AXON/Emitter' );
   var Globals = require( 'BUILD_A_MOLECULE/Globals' );
   var inherit = require( 'PHET_CORE/inherit' );
@@ -35,7 +35,7 @@ define( function( require ) {
   var collectionPatternString = require( 'string!BUILD_A_MOLECULE/collectionPattern' );
   var yourMoleculesString = require( 'string!BUILD_A_MOLECULE/yourMolecules' );
 
-  // REVIEW: Constants?
+  // REVIEW: BAMConstants?
   var containerPadding = 15;
 
   /**
@@ -81,8 +81,8 @@ define( function( require ) {
       currentCollectionText.text = StringUtils.fillIn( collectionPatternString, { number: kitCollectionList.currentIndex + 1 } );
     } );
     var collectionSwitcher = new NextPreviousNavigationNode( currentCollectionText, {
-      arrowColor: Constants.kitArrowBackgroundEnabled,
-      arrowStrokeColor: Constants.kitArrowBorderEnabled,
+      arrowColor: BAMConstants.KIT_ARROW_BACKGROUND_ENABLED,
+      arrowStrokeColor: BAMConstants.KIT_ARROW_BORDER_ENABLED,
       arrowWidth: 14,
       arrowHeight: 18,
       next: function() {
@@ -161,7 +161,7 @@ define( function( require ) {
     var kitCollectionList = new KitCollectionList( collection, new LayoutBounds( false, 0 ), new Emitter() );
     var collectionPanel = new CollectionPanel( kitCollectionList, isSingleCollectionMode, [], function() { return Bounds2.NOTHING; } );
 
-    return Constants.modelViewTransform.viewToModelDeltaX( collectionPanel.width );
+    return BAMConstants.MODEL_VIEW_TRANSFORM.viewToModelDeltaX( collectionPanel.width );
   };
 
   return inherit( Node, CollectionPanel, {
@@ -198,8 +198,8 @@ define( function( require ) {
       this.backgroundHolder.removeAllChildren();
       // TODO: this is a major performance drain! just set the bounds!
       var background = new Rectangle( 0, 0, this.getPlacementWidth(), this.getPlacementHeight(), {
-        fill: Constants.moleculeCollectionBackground,
-        stroke: Constants.moleculeCollectionBorder
+        fill: BAMConstants.MOLECULE_COLLECTION_BACKGROUND,
+        stroke: BAMConstants.MOLECULE_COLLECTION_BORDER
       } );
       this.backgroundHolder.addChild( background );
     },
@@ -230,7 +230,7 @@ define( function( require ) {
       var requiredHeight = this.layoutNode.height + containerPadding * 2;
 
       // how much height we will take up to fit our vertical size perfectly
-      var fixedHeight = Constants.stageSize.height - Constants.viewPadding * 2; // we will have padding above and below
+      var fixedHeight = BAMConstants.STAGE_SIZE.height - BAMConstants.VIEW_PADDING * 2; // we will have padding above and below
 
       if ( requiredHeight > fixedHeight ) {
         console.log( 'Warning: collection panel is too tall. required: ' + requiredHeight + ', but has: ' + fixedHeight );
