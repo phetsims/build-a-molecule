@@ -23,6 +23,11 @@ define( function( require ) {
 
   var Shape = require( 'KITE/Shape' );
 
+  /**
+   * @param {Atom2} atom
+   * @param {Object} options
+   * @constructor
+   */
   function AtomNode( atom, options ) {
     Node.call( this, _.extend( {
       cursor: 'pointer'

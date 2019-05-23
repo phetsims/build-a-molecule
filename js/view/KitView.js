@@ -28,6 +28,11 @@ define( function( require ) {
   var Trail = require( 'SCENERY/util/Trail' );
 
   //REVIEW: See if it's possible to NOT pass through the entire screen view. And if not, we can rename it.
+  /**
+   * @param {Kit} kit
+   * @param {MoleculeCollectingView} view
+   * @constructor
+   */
   function KitView( kit, view ) {
     Node.call( this );
     var self = this;
@@ -99,6 +104,7 @@ define( function( require ) {
         .lineTo( bucketHole.right - bucketHole.x - 35, bucketHole.centerY - 10 - bucketHole.y )
         .lineTo( bucketHole.left - bucketHole.x + 35, bucketHole.centerY - 10 - bucketHole.y )
         .close();
+
       // we will be updating the bucket's cursor depending on whether it has atoms
       function bucketHoleCursorUpdate() {
         bucketHole.cursor = bucket.atoms.length ? 'pointer' : 'default';

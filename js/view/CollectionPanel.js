@@ -35,6 +35,7 @@ define( function( require ) {
   var collectionPatternString = require( 'string!BUILD_A_MOLECULE/collectionPattern' );
   var yourMoleculesString = require( 'string!BUILD_A_MOLECULE/yourMolecules' );
 
+  // REVIEW: Constants?
   var containerPadding = 15;
 
   /**

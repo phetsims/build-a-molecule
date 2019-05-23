@@ -23,6 +23,12 @@ define( function( require ) {
   // strings
   var resetCollectionString = require( 'string!BUILD_A_MOLECULE/resetCollection' );
 
+  /**
+   * @param {KitCollection} collection
+   * @param {boolean} isSingleCollectionMode
+   * @param {Function} toModelBounds
+   * @constructor
+   */
   function CollectionAreaNode( collection, isSingleCollectionMode, toModelBounds ) {
     Node.call( this, {} );
     var self = this;

@@ -14,6 +14,12 @@ define( function( require ) {
   var MoleculeBondNode = require( 'BUILD_A_MOLECULE/view/MoleculeBondNode' );
   var Node = require( 'SCENERY/nodes/Node' );
 
+  /**
+   * @param {Kit} kit
+   * @param {Molecule} molecule
+   * @param {MoleculeCollectingView} view
+   * @constructor
+   */
   function MoleculeBondContainerNode( kit, molecule, view ) {
     Node.call( this, {} );
     var self = this;

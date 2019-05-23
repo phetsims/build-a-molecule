@@ -23,10 +23,17 @@ define( function( require ) {
   var Shape = require( 'KITE/Shape' );
   var ShowMolecule3DButtonNode = require( 'BUILD_A_MOLECULE/view/view3d/ShowMolecule3DButtonNode' );
 
+  //REVIEW: Should these be constants or moved into constructor?
   var moleculePadding = 5;
   var blackBoxPaddingFor3D = Constants.has3d ? 10 : 0;
 
   var moleculeIdThumbnailMap = {}; // maps moleculeId => Node (thumbnail view for the molecule)
+
+  // REVIEW: This is in the wrong place. Constructors are first in file structure.
+  /**
+   * @param {CompleteMolecule} completeMolecule
+   * @returns {Node}
+   */
   function lookupThumbnail( completeMolecule ) {
     if ( !moleculeIdThumbnailMap[ completeMolecule.moleculeId ] ) {
       var moleculeNode = new Molecule3DNode( completeMolecule, new Bounds2( 0, 0, 50, 50 ), false );
@@ -46,6 +53,11 @@ define( function( require ) {
     return wrapperNode;
   }
 
+  /**
+   * @param {CollectionBox} box
+   * @param {Function} toModelBounds
+   * @constructor
+   */
   function CollectionBoxNode( box, toModelBounds ) {
     Node.call( this, {} );
     var self = this;

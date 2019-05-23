@@ -28,6 +28,11 @@ define( function( require ) {
 
   var kitArrowYOffset = 5; // vertical offset of the kit arrows from the top of the kit
 
+  /**
+   * @param {KitCollection} kitCollectionModel
+   * @param {Rectangle} availableKitBounds
+   * @constructor
+   */
   function KitPanel( kitCollectionModel, availableKitBounds ) {
     Node.call( this, {} );
 

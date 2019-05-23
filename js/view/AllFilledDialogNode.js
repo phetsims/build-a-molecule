@@ -25,7 +25,14 @@ define( function( require ) {
   var youCompletedYourCollectionString = require( 'string!BUILD_A_MOLECULE/youCompletedYourCollection' );
   var nextCollectionString = require( 'string!BUILD_A_MOLECULE/nextCollection' );
 
+  //REVIEW: Can we use dialog.js?
+  /**
+   * @param {Bounds2} availablePlayAreaBounds
+   * @param {Function} regenerateCallback
+   * @constructor
+   */
   function AllFilledDialogNode( availablePlayAreaBounds, regenerateCallback ) {
+
     Node.call( this, {} );
     var self = this;
 
