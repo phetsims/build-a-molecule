@@ -24,6 +24,9 @@ define( function( require ) {
   var StrippedMolecule = require( 'BUILD_A_MOLECULE/model/StrippedMolecule' );
   var structuresData = require( 'BUILD_A_MOLECULE/model/data/structuresData' );
 
+  /**
+   * @constructor
+   */
   function MoleculeList() {
     this.completeMolecules = []; // all complete molecules
     this.moleculeNameMap = {}; // unique name => complete molecule

@@ -27,6 +27,12 @@ define( function( require ) {
   // NOTE from porting: StrippedMolecule relies on the ordering of atoms, and possibly bonds
 
   // TODO: Molecule calls with (12,12)
+  /**
+   *
+   * @param {number} numAtoms
+   * @param {number} numBonds
+   * @constructor
+   */
   function MoleculeStructure( numAtoms, numBonds ) {
     assert && assert( numAtoms !== undefined && numBonds !== undefined, 'numAtoms and numBonds required' );
 

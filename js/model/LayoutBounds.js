@@ -18,8 +18,9 @@ define( function( require ) {
   /**
    * Construct the necessary layout. If isWide is true, the collectionAreaModelWidth is ignored
    *
-   * @param isWide                   Whether the kit should take up the entire width
-   * @param collectionAreaModelWidth The model width of the collection area (computed, as it varies from tab to tab)
+   * @param {boolean} isWide Whether the kit should take up the entire width
+   * @param {number} collectionAreaModelWidth The model width of the collection area (computed, as it varies from tab to tab)
+   * @constructor
    */
   function LayoutBounds( isWide, collectionAreaModelWidth ) {
     var availableWidth = Constants.modelSize.width - 2 * Constants.modelPadding; // minus padding

@@ -15,6 +15,9 @@ define( function( require ) {
   var Util = require( 'DOT/Util' );
   var Vector2 = require( 'DOT/Vector2' );
 
+  /**
+   * @constructor
+   */
   function LewisDotModel() {
     // maps atom ID => LewisDotAtom
     this.atomMap = {};

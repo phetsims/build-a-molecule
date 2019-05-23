@@ -15,6 +15,11 @@ define( function( require ) {
   var MoleculeStructure = require( 'BUILD_A_MOLECULE/model/MoleculeStructure' );
 
   //REVIEW: Do we really want default parameters here?
+  /**
+   * @param numAtoms
+   * @param numBonds
+   * @constructor
+   */
   function Molecule( numAtoms, numBonds ) {
     MoleculeStructure.call( this, numAtoms || 0, numBonds || 0 );
   }

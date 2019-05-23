@@ -20,7 +20,10 @@ define( function( require ) {
   var MoleculeStructure = require( 'BUILD_A_MOLECULE/model/MoleculeStructure' );
   var PhetioObject = require( 'TANDEM/PhetioObject' );
 
-  // @param {MoleculeStructure} original
+  /**
+   * @param {MoleculeStructure} original
+   * @constructor
+   */
   function StrippedMolecule( original ) {
     var self = this;
 

@@ -15,9 +15,13 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var Property = require( 'AXON/Property' );
 
-  var currentId = 0;
-
+  /**
+   * @constructor
+   */
   function KitCollection() {
+    var currentId = 0;
+
+    // @public {number}
     this.id = currentId++;
 
     this.kits = [];

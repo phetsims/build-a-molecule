@@ -23,7 +23,17 @@ define( function( require ) {
   var Property = require( 'AXON/Property' );
   var Screen = require( 'JOIST/Screen' );
 
+  /**
+   *
+   * @param createInitialKitCollection
+   * @param layoutBounds
+   * @param createKitCollection
+   * @param createView
+   * @param options
+   * @constructor
+   */
   function BAMScreen( createInitialKitCollection, layoutBounds, createKitCollection, createView, options ) {
+    // debugger;
 
     options = _.extend( {
       backgroundColorProperty: new Property( Constants.canvasBackgroundColor )
