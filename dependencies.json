@@ -1,0 +1,95 @@
+{
+  "comment": "# build-a-molecule 0.0.0-dev.12 Thu May 23 2019 10:22:00 GMT-0400 (EDT)",
+  "assert": {
+    "sha": "d8a2e8992420327ff72a6fc4bb93ec76549ded0e",
+    "branch": "master"
+  },
+  "axon": {
+    "sha": "40c3753ff9b804843e28563344bea61ec582d89e",
+    "branch": "master"
+  },
+  "brand": {
+    "sha": "40dd405ec950d10e15e957cbda3d97362e925bef",
+    "branch": "master"
+  },
+  "build-a-molecule": {
+    "sha": "f3e9f4375a42d2d47f3e4bc3cadc460afa9dd9ce",
+    "branch": "master"
+  },
+  "chipper": {
+    "sha": "f59672e93787410efd8a798204d331279c803263",
+    "branch": "master"
+  },
+  "dot": {
+    "sha": "68b93e5ac0aba144651fe8911f8b401705fda8d2",
+    "branch": "master"
+  },
+  "joist": {
+    "sha": "f49a5eca7774e936755a1e5c0a095fba11bc662a",
+    "branch": "master"
+  },
+  "kite": {
+    "sha": "bad3ede577f43c4e91dae7ffb787e33c64bd1f82",
+    "branch": "master"
+  },
+  "nitroglycerin": {
+    "sha": "02bb3655bd83d64983ccba41698949f5f6e50981",
+    "branch": "master"
+  },
+  "phet-core": {
+    "sha": "d69fce39187645c5a08719443b24005e16a2af95",
+    "branch": "master"
+  },
+  "phet-io": {
+    "sha": "292a136bfd9c5d1a1c504a895d923b33f6eba027",
+    "branch": "master"
+  },
+  "phet-io-wrappers": {
+    "sha": "983c891b95719d3d9de6acefbfd6dbf8a1a86c37",
+    "branch": "master"
+  },
+  "phetcommon": {
+    "sha": "21c25565a68799fbd87033144fb306e87a0b45c0",
+    "branch": "master"
+  },
+  "phetmarks": {
+    "sha": "01cbbd71ad4ca7d29bf68de518e0d3215acf3528",
+    "branch": "master"
+  },
+  "query-string-machine": {
+    "sha": "d0166956ed6078370b796a96751c57ce880866c5",
+    "branch": "master"
+  },
+  "scenery": {
+    "sha": "3835f8b53bfef2335c029e0acfa998076a846771",
+    "branch": "master"
+  },
+  "scenery-phet": {
+    "sha": "4afaef1af997969bb82afb35cb6e2e6351677958",
+    "branch": "master"
+  },
+  "sherpa": {
+    "sha": "2a32165bfe80cf50a85af442ff7073333418bd70",
+    "branch": "master"
+  },
+  "sun": {
+    "sha": "5de3b52095e4bbe23cedee39da134b547e1ec8d2",
+    "branch": "master"
+  },
+  "tambo": {
+    "sha": "3ac53c61aa31ec7c62d1716b8c57484322ced2ff",
+    "branch": "master"
+  },
+  "tandem": {
+    "sha": "ec4cbd4265f9d7aef52becc5759ae6abc0a651af",
+    "branch": "master"
+  },
+  "vegas": {
+    "sha": "720938c31ba3fdf285db08870c0b47823db20fab",
+    "branch": "master"
+  },
+  "vibe": {
+    "sha": "a241457feaac1d0d5c5547ec8ef3c6ba6998fe22",
+    "branch": "master"
+  }
+}
