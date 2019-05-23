@@ -21,7 +21,7 @@ define( function( require ) {
   var Vector2 = require( 'DOT/Vector2' );
 
   /**
-   * Constructor.  The dimensions used are just numbers, i.e. they are not
+   * The dimensions used are just numbers, i.e. they are not
    * meant to be any specific size (such as meters).  This enabled
    * reusability in any 2D model.
    * @param {Dimension2} size - Physical size of the bucket (model space)

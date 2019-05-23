@@ -14,6 +14,10 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var PhetioObject = require( 'TANDEM/PhetioObject' );
 
+  /**
+   * @param {MoleculeStructure} molecule
+   * @constructor
+   */
   function ElementHistogram( molecule ) {
     var self = this;
 

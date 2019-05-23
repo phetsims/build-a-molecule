@@ -16,6 +16,7 @@ define( function( require ) {
 
   //REVIEW: This is polymorphic, just requires things with IDs (a.id, b.id). I THINK it is used on Atom subtypes, so
   //REVIEW: Just use {Atom}
+
   function Bond( a, b ) {
     assert && assert( a !== b, 'Bonds cannot connect an atom to itself' );
     this.a = a;

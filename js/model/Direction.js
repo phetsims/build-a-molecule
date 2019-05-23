@@ -13,6 +13,11 @@ define( function( require ) {
   var Vector2 = require( 'DOT/Vector2' );
 
   //REVIEW: Use Enumeration explicitly, but figure out how to use rich enumerations (talk to JO)
+  /**
+   * @param {Vector2} vector
+   * @param {string} id
+   * @constructor
+   */
   function Direction( vector, id ) {
     this.vector = vector;
     this.id = id;
