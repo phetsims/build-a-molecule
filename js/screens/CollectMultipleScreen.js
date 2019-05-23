@@ -25,8 +25,11 @@ define( function( require ) {
   // strings
   var titleMultipleString = require( 'string!BUILD_A_MOLECULE/title.multiple' );
 
+  /**
+   * @param {number} collectionAreaWidth
+   * @constructor
+   */
   function CollectMultipleScreen( collectionAreaWidth ) {
-
     var options = {
       name: titleMultipleString,
       homeScreenIcon: new Rectangle( 0, 0, 548, 373, { fill: 'green' } )

@@ -23,8 +23,10 @@ define( function( require ) {
   // strings
   var titleLargerString = require( 'string!BUILD_A_MOLECULE/title.larger' );
 
+  /**
+   * @constructor
+   */
   function LargerMoleculesScreen() {
-
     var options = {
       name: titleLargerString,
       homeScreenIcon: new Rectangle( 0, 0, 548, 373, { fill: 'blue' } )

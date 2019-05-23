@@ -25,6 +25,10 @@ define( function( require ) {
   // strings
   var titleSingleString = require( 'string!BUILD_A_MOLECULE/title.single' );
 
+  /**
+   * @param {number} collectionAreaWidth
+   * @constructor
+   */
   function MakeMoleculeScreen( collectionAreaWidth ) {
 
     var options = {

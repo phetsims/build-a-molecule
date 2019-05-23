@@ -24,17 +24,14 @@ define( function( require ) {
   var Screen = require( 'JOIST/Screen' );
 
   /**
-   *
-   * @param createInitialKitCollection
-   * @param layoutBounds
-   * @param createKitCollection
-   * @param createView
-   * @param options
+   * @param {Function} createInitialKitCollection
+   * @param {LayoutBounds} layoutBounds
+   * @param {Function} createKitCollection
+   * @param {Function} createView
+   * @param {Object} options
    * @constructor
    */
   function BAMScreen( createInitialKitCollection, layoutBounds, createKitCollection, createView, options ) {
-    // debugger;
-
     options = _.extend( {
       backgroundColorProperty: new Property( Constants.canvasBackgroundColor )
     }, options );
