@@ -3,7 +3,7 @@
 /**
  * Displays an atom and that labels it with the chemical symbol
  *
- * NOTE: Iodine is unusable as its label is too large (very thin I). If needed, rework the scaling
+ * REVIEW: Iodine is unusable as its label is too large (very thin I). If needed, rework the scaling
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
@@ -20,7 +20,6 @@ define( function( require ) {
   var RadialGradient = require( 'SCENERY/util/RadialGradient' );
   var Text = require( 'SCENERY/nodes/Text' );
   var Vector2 = require( 'DOT/Vector2' );
-
   var Shape = require( 'KITE/Shape' );
 
   /**
@@ -33,7 +32,7 @@ define( function( require ) {
       cursor: 'pointer'
     }, options ) );
 
-    this.addChild( AtomNode.getGraphics( atom.element ) );
+    this.addChild( AtomNode.getIcon( atom.element ) );
 
     var self = this;
     //REVIEW: This looks like it may leak memory. Worth checking into
@@ -44,51 +43,55 @@ define( function( require ) {
       self.visible = visible;
     } );
   }
+
   buildAMolecule.register( 'AtomNode', AtomNode );
 
   // map from element symbol => graphical node for the atom, so that we can use the DAG to save overhead and costs
   var elementMap = {};
-  //REVIEW: We don't use the term 'graphics', maybe icon/node/etc. would be better.
-  AtomNode.getGraphics = function( element ) {
+
+  /**
+   * @param {Element} element
+   * @returns {Node}
+   */
+  AtomNode.getIcon = function( element ) {
     var node = elementMap[ element.symbol ];
-    if ( node ) {
-      return node;
+    if ( !node ) {
+
+      var color = new Color( element.color );
+      var radius = BAMConstants.MODEL_VIEW_TRANSFORM.modelToViewDeltaX( element.covalentRadius );
+      var diameter = radius * 2;
+
+      var gCenter = new Vector2( -radius / 3, -radius / 3 );
+
+      // copying ShadedSphereNode REVIEW: Can we just use ShadedSphereNode, and place something over it?
+      var middleRadius = diameter / 3;
+      var fullRadius = middleRadius + 0.7 * diameter;
+
+      var gradientFill = new RadialGradient( gCenter.x, gCenter.y, 0, gCenter.x, gCenter.y, fullRadius );
+      gradientFill.addColorStop( 0, '#ffffff' );
+      gradientFill.addColorStop( middleRadius / fullRadius, color.toCSS() );
+      gradientFill.addColorStop( 1, '#000000' );
+
+      node = new Path( Shape.circle( 0, 0, radius ), {
+        fill: AtomNode.experimentalBrighterGradient( radius, color )
+      } );
+
+      var isTextWhite = AtomNode.needsWhiteColor( color );
+
+      //REVIEW: Don't use custom fonts. Use PhetFont?
+      var text = new Text( element.symbol, {
+        fontWeight: 'bold',
+        fontFamily: 'Arial, sans-serif',
+        fontSize: 50,
+        fill: isTextWhite ? '#fff' : '#000'
+      } );
+      text.scale( Math.min( 0.75 * diameter / text.getBounds().width, 0.75 * diameter / text.getBounds().height ) );
+      text.centerX = 0;
+      text.centerY = 0;
+      node.addChild( text );
+
+      elementMap[ element.symbol ] = node;
     }
-
-    var color = new Color( element.color );
-    var radius = BAMConstants.MODEL_VIEW_TRANSFORM.modelToViewDeltaX( element.covalentRadius );
-    var diameter = radius * 2;
-
-    var gCenter = new Vector2( -radius / 3, -radius / 3 );
-
-    // copying ShadedSphereNode REVIEW: Can we just use ShadedSphereNode, and place something over it?
-    var middleRadius = diameter / 3;
-    var fullRadius = middleRadius + 0.7 * diameter;
-
-    var gradientFill = new RadialGradient( gCenter.x, gCenter.y, 0, gCenter.x, gCenter.y, fullRadius );
-    gradientFill.addColorStop( 0, '#ffffff' );
-    gradientFill.addColorStop( middleRadius / fullRadius, color.toCSS() );
-    gradientFill.addColorStop( 1, '#000000' );
-
-    node = new Path( Shape.circle( 0, 0, radius ), {
-      fill: AtomNode.experimentalBrighterGradient( radius, color )
-    } );
-
-    var isTextWhite = AtomNode.needsWhiteColor( color );
-
-    //REVIEW: Don't use custom fonts. Use PhetFont?
-    var text = new Text( element.symbol, {
-      fontWeight: 'bold',
-      fontFamily: 'Arial, sans-serif',
-      fontSize: 50,
-      fill: isTextWhite ? '#fff' : '#000'
-    } );
-    text.scale( Math.min( 0.75 * diameter / text.getBounds().width, 0.75 * diameter / text.getBounds().height ) );
-    text.centerX = 0;
-    text.centerY = 0;
-    node.addChild( text );
-
-    elementMap[ element.symbol ] = node;
     return node;
   };
 
