@@ -45,7 +45,12 @@ define( function( require ) {
 
   var bondRadius = 5; // "Radius" of the bond target that will break the bond
 
-  function MoleculeBondNode( bond, kit, view ) {
+  /**
+   * @param {Bond} bond
+   * @param {Kit} kit
+   * @constructor
+   */
+  function MoleculeBondNode( bond, kit ) {
     var self = this;
 
     Node.call( this, {} );

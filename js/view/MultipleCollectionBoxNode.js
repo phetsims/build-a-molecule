@@ -25,6 +25,11 @@ define( function( require ) {
   var collectionMultipleQuantityEmptyString = require( 'string!BUILD_A_MOLECULE/collectionMultipleQuantityEmpty' );
   var collectionMultipleQuantityPatternString = require( 'string!BUILD_A_MOLECULE/collectionMultipleQuantityPattern' );
 
+  /**
+   * @param {CollectionBox} box
+   * @param {Function} toModelBounds
+   * @constructor
+   */
   function MultipleCollectionBoxNode( box, toModelBounds ) {
     CollectionBoxNode.call( this, box, toModelBounds );
 

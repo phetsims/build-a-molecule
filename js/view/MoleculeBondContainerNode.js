@@ -28,7 +28,7 @@ define( function( require ) {
 
     //REVIEW: Could do this.bondNodes = molecule.bonds.map( ... )
     molecule.bonds.forEach( function( bond ) {
-      var node = new MoleculeBondNode( bond, kit, view );
+      var node = new MoleculeBondNode( bond, kit );
       self.addChild( node );
       self.bondNodes.push( node );
     } );

@@ -25,6 +25,11 @@ define( function( require ) {
   var splitIconImage = require( 'image!BUILD_A_MOLECULE/split-blue.png' );
 
   //REVIEW: "Controls" may be a better word rather than "Metadata"
+  /**
+   * @param {Kit} kit
+   * @param {Molecule} molecule
+   * @constructor
+   */
   function MoleculeMetadataNode( kit, molecule ) {
     //REVIEW: No need to have empty objects in cases like this
     Node.call( this, {} );

@@ -22,6 +22,11 @@ define( function( require ) {
   // strings
   var collectionSinglePatternString = require( 'string!BUILD_A_MOLECULE/collectionSinglePattern' );
 
+  /**
+   * @param {CollectionBox} box
+   * @param {Function} toModelBounds
+   * @constructor
+   */
   function SingleCollectionBoxNode( box, toModelBounds ) {
     CollectionBoxNode.call( this, box, toModelBounds );
 

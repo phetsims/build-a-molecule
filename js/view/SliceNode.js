@@ -21,6 +21,12 @@ define( function( require ) {
 
   var sliceDistanceLimit = 1000;
 
+  /**
+   * @param {Kit} kit
+   * @param {Bounds2} viewSwipeBounds
+   * @param {MoleculeCollectingView} view
+   * @constructor
+   */
   function SliceNode( kit, viewSwipeBounds, view ) {
     var self = this;
 
