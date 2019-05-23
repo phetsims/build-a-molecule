@@ -187,7 +187,7 @@ define( function( require ) {
     } );
 
     var tick = moleculeNode.tick.bind( moleculeNode );
-    var stepEmitter = view.collectionList.stepEmitter;
+    var stepEmitter = view.kitCollectionList.stepEmitter;
     stepEmitter.addListener( tick );
 
     this.disposeMolecule3DDialog = function() {
