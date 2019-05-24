@@ -103,11 +103,4 @@ define( function( require ) {
       }
     }
   } );
-  //
-  // // object with symbols as keys, result as true
-  // //REVIEW: Is this used anywhere? I can't find it
-  // ElementHistogram.allowedChemicalSymbols = {};
-  // BAMConstants.SUPPORTED_ELEMENTS.forEach( function( element ) {
-  //   ElementHistogram.allowedChemicalSymbols[ element.symbol ] = true;
-  // } );
 } );

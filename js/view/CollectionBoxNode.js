@@ -144,10 +144,7 @@ define( function( require ) {
     addHeaderNode: function( headerNode ) {
       var self = this;
 
-      //REVIEW: Remove dead code
-      // headerNode.top = this.children[this.children.length-1].bottom - ( this.children.length > 1 ? 3 : 0 ); // more compact padding in general below the box node
       this.addChild( headerNode );
-      // this.insertChild( this.headerCount++, headerNode );
 
       //REVIEW: layout containers? VBox?
       var centerX = this.width / 2;

@@ -717,25 +717,6 @@ define( function( require ) {
     return MoleculeStructure.fromSerial2( line, MoleculeStructure.defaultMoleculeGenerator, MoleculeStructure.defaultAtomParser, MoleculeStructure.defaultBondParser );
   };
 
-  //REVIEW: Remove dead code/docs
-  /*---------------------------------------------------------------------------*
-   * parser classes and default implementations
-   *----------------------------------------------------------------------------*/
-
-  /*
-   public static interface MoleculeGenerator<U extends Atom, M> {
-   public M createMolecule( int atomCount, int bondCount );
-   }
-
-   public static interface AtomParser<U extends Atom> {
-   public U parseAtom( String atomString );
-   }
-
-   public static interface BondParser<U extends Atom, B> {
-   public B parseBond( String bondString, U connectedAtom, MoleculeStructure<U> moleculeStructure );
-   }
-   */
-
   MoleculeStructure.defaultMoleculeGenerator = function( atomCount, bondCount ) {
     return new MoleculeStructure( atomCount, bondCount );
   };
