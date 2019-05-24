@@ -61,6 +61,7 @@ define( function( require ) {
     var matrix = trail.getMatrix().copy();
     var stageWindowPadding = 35;
 
+    // REVIEW: Use Enumeration.js
     var viewStyleProperty = new Property( 'spaceFill' ); // spaceFill or ballAndStick
 
     /*---------------------------------------------------------------------------*
