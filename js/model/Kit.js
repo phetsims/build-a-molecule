@@ -223,8 +223,8 @@ define( function( require ) {
     /**
      * Called when a molecule is dragged (successfully) into a collection box
      *
-     * @param molecule The molecule
-     * @param {CollectionBox{ box      Its collection box
+     * @param {Molecule} molecule
+     * @param {CollectionBox} box
      */
     moleculePutInCollectionBox: function( molecule, box ) {
       var self = this;
@@ -232,7 +232,7 @@ define( function( require ) {
       this.hasMoleculesInBoxesProperty.value = true;
       this.removeMolecule( molecule );
       molecule.atoms.forEach( function( atom ) {
-        self.atoms.splice( self.atoms.indexOf( atom ), 1 ); // TODO: remove() instead of splice()
+        self.atoms.shift();
         self.atomsInCollectionBox.push( atom );
         atom.visibleProperty.value = false;
       } );
