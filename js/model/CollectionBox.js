@@ -78,8 +78,7 @@ define( function( require ) {
 
     removeMolecule: function( molecule ) {
       this.quantityProperty.value--;
-      this.molecules.remove( this.molecules.indexOf( molecule ), 1 );
-
+      this.molecules.shift();
       this.removedMoleculeEmitter.emit( molecule );
     },
 
