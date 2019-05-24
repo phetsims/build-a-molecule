@@ -51,7 +51,7 @@ define( function( require ) {
     this.molecules = []; // molecule structures in the play area
     this.removedMolecules = {}; // moleculeId => CollectionBox, molecule structures that were put into the collection box. kept for now, since modifying the reset behavior will be much easier if we retain this
 
-    this.resetKit();
+    this.reset();
 
     this.layoutBuckets( buckets );
   }
@@ -59,17 +59,14 @@ define( function( require ) {
   buildAMolecule.register( 'Kit', Kit );
 
   inherit( Object, Kit, {
-    //REVIEW: Can this just become `reset`?
-    resetKit: function() {
+    /**
+     * @public
+     */
+    reset: function() {
       var self = this;
 
       // not resetting visible, since that is not handled by us
       this.hasMoleculesInBoxesProperty.reset();
-
-      // take molecules back from the collection boxes
-//          for ( Pair<MoleculeStructure, CollectionBox> removedMolecule : removedMolecules ) {
-//              removedMolecule._2.removeMolecule( removedMolecule._1 );
-//          }
 
       // send out notifications for all removed molecules
       this.molecules.slice( 0 ).forEach( this.removeMolecule.bind( this ) );

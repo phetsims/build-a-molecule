@@ -143,7 +143,7 @@ define( function( require ) {
 
     resetAll: function() {
       this.collectionBoxes.forEach( function( box ) { box.reset(); } );
-      this.kits.forEach( function( kit ) { kit.resetKit(); } );
+      this.kits.forEach( function( kit ) { kit.reset(); } );
       while ( this.hasPreviousKit() ) {
         this.goToPreviousKit();
       }

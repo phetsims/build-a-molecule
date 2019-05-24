@@ -97,7 +97,7 @@ define( function( require ) {
 
     var refillButton = new TextPushButton( resetKitString, {
       listener: function() {
-        kitCollectionModel.currentKitProperty.value.resetKit();
+        kitCollectionModel.currentKitProperty.value.reset();
       },
       baseColor: Color.ORANGE,
       font: new PhetFont( { size: 12, weight: 'bold' } ),

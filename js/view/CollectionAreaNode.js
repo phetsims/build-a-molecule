@@ -86,7 +86,7 @@ define( function( require ) {
           box.reset();
         } );
         collection.kits.forEach( function( kit ) {
-          kit.resetKit();
+          kit.reset();
         } );
       },
       font: new PhetFont( 14 ),
