@@ -22,16 +22,7 @@ define( function( require ) {
     }
   };
 
-  //REVIEW: This can be ditched
-  // Appending '?dev' to the URL will enable developer-only features.
-  if ( window.phet.chipper.queryParameters.dev ) {
-
-    // TODO: developer features as necessary
-    // var kit = sim.screens[0].model.collections[0].kits[0]
-  }
-
   // if the flag is set on window, don't launch the sim
-  if ( !window.delayBuildAMoleculeLaunch ) {
     SimLauncher.launch( function() {
       //Create and start the sim
       new Sim( buildAMoleculeTitleString, [
@@ -42,5 +33,4 @@ define( function( require ) {
         new LargerMoleculesScreen()
       ], simOptions ).start();
     } );
-  }
 } );
