@@ -16,11 +16,12 @@ define( function( require ) {
   var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   var CloseButton = require( 'BUILD_A_MOLECULE/view/view3d/CloseButton' );
   var BAMConstants = require( 'BUILD_A_MOLECULE/BAMConstants' );
+  var Enumeration = require( 'PHET_CORE/Enumeration' );
+  var EnumerationProperty = require( 'AXON/EnumerationProperty' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Molecule3DNode = require( 'BUILD_A_MOLECULE/view/view3d/Molecule3DNode' );
   var Node = require( 'SCENERY/nodes/Node' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  var Property = require( 'AXON/Property' );
   var RadialGradient = require( 'SCENERY/util/RadialGradient' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var RichText = require( 'SCENERY/nodes/RichText' );
@@ -43,6 +44,7 @@ define( function( require ) {
     var self = this;
     Node.call( this );
 
+
     this.initialTrail = trail;
 
     var outsideNode = new Rectangle( 0, 0, 50, 50, { fill: 'rgba(0,0,0,0.5)' } );
@@ -60,9 +62,6 @@ define( function( require ) {
     var height = 0;
     var matrix = trail.getMatrix().copy();
     var stageWindowPadding = 35;
-
-    // REVIEW: Use Enumeration.js
-    var viewStyleProperty = new Property( 'spaceFill' ); // spaceFill or ballAndStick
 
     /*---------------------------------------------------------------------------*
      * Chemical formula label
@@ -105,9 +104,13 @@ define( function( require ) {
       xSpacing: 8,
       stroke: 'white' // border
     };
-    var spaceFillButton = new AquaRadioButton( viewStyleProperty, 'spaceFill', spaceFillText, radioButtonOptions );
+    // Used for radio buttons
+    var viewStyle = new Enumeration( [ 'SPACE_FILL', 'BALL_AND_STICK' ] );
+    var viewStyleProperty = new EnumerationProperty( viewStyle, viewStyle.SPACE_FILL );
+
+    var spaceFillButton = new AquaRadioButton( viewStyleProperty, viewStyle.SPACE_FILL, spaceFillText, radioButtonOptions );
     spaceFillButton.touchArea = Shape.bounds( spaceFillButton.localBounds.dilated( optionsHorizontalPadding / 2 ) );
-    var ballAndStickButton = new AquaRadioButton( viewStyleProperty, 'ballAndStick', ballAndStickText, radioButtonOptions );
+    var ballAndStickButton = new AquaRadioButton( viewStyleProperty, viewStyle.BALL_AND_STICK, ballAndStickText, radioButtonOptions );
     ballAndStickButton.touchArea = Shape.bounds( ballAndStickButton.localBounds.dilated( optionsHorizontalPadding / 2 ) );
     ballAndStickButton.left = spaceFillButton.right + optionsHorizontalPadding;
     var buttonHolder = new Node( {
