@@ -6,95 +6,87 @@
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 
-define( function( require ) {
+define( require => {
   'use strict';
 
   //modules
-  var Atom = require( 'NITROGLYCERIN/Atom' );
-  var BooleanProperty = require( 'AXON/BooleanProperty' );
-  var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
-  var Emitter = require( 'AXON/Emitter' );
-  var extend = require( 'PHET_CORE/extend' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var Rectangle = require( 'DOT/Rectangle' );
-  var Strings = require( 'BUILD_A_MOLECULE/Strings' );
-  var Vector2 = require( 'DOT/Vector2' );
-  var Vector2Property = require( 'DOT/Vector2Property' );
+  const Atom = require( 'NITROGLYCERIN/Atom' );
+  const BooleanProperty = require( 'AXON/BooleanProperty' );
+  const buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
+  const Emitter = require( 'AXON/Emitter' );
+  const Rectangle = require( 'DOT/Rectangle' );
+  const Strings = require( 'BUILD_A_MOLECULE/Strings' );
+  const Vector2 = require( 'DOT/Vector2' );
+  const Vector2Property = require( 'DOT/Vector2Property' );
 
   // constants
-  var MOTION_VELOCITY = 800; // In picometers per second of sim time.
+  const MOTION_VELOCITY = 800; // In picometers per second of sim time.
 
-  /**
-   *
-   * @param {Element} element
-   * @param {Emitter} stepEmitter
-   * @constructor
-   */
-  function Atom2( element, stepEmitter ) {
-    var self = this;
+  class Atom2 extends Atom {
 
-    Atom.call( this, element );
+    //REVIEW: docs
+    constructor( element, stepEmitter ) {
 
-    // @public
-    this.positionProperty = new Vector2Property( Vector2.ZERO );
-    this.destinationProperty = new Vector2Property( Vector2.ZERO );
+      super( element );
 
-    // @public {Property.<boolean>}
-    this.userControlledProperty = new BooleanProperty( false );
-    this.visibleProperty = new BooleanProperty( true );
-    this.addedToModelProperty = new BooleanProperty( true );
+      // @public
+      this.positionProperty = new Vector2Property( Vector2.ZERO );
+      this.destinationProperty = new Vector2Property( Vector2.ZERO );
 
-    // @public {Emitter} - Called with one parameter: particle
-    this.grabbedByUserEmitter = new Emitter( { validators: [ { valueType: Atom2 } ] } );
-    this.droppedByUserEmitter = new Emitter( { validators: [ { valueType: Atom2 } ] } );
+      // @public {Property.<boolean>}
+      this.userControlledProperty = new BooleanProperty( false );
+      this.visibleProperty = new BooleanProperty( true );
+      this.addedToModelProperty = new BooleanProperty( true );
 
-    // @public {Emitter}
-    this.stepEmitter = stepEmitter;
+      // @public {Emitter} - Called with one parameter: particle
+      this.grabbedByUserEmitter = new Emitter( { validators: [ { valueType: Atom2 } ] } );
+      this.droppedByUserEmitter = new Emitter( { validators: [ { valueType: Atom2 } ] } );
+      this.removedFromModelEmitter = new Emitter(); //REVIEW: Umm, not triggered?
 
-    // @public {string}
-    this.name = Strings.getAtomName( element );
+      // @public {Emitter}
+      this.stepEmitter = stepEmitter;
 
-    // @private {Function} Passed into step function.
-    this.clockListener = this.step.bind( this );
+      // @public {string}
+      this.name = Strings.getAtomName( element );
 
-    this.addedToModelProperty.link( function( isAddedToModel ) {
-      if ( isAddedToModel ) {
-        // added to the model
-        stepEmitter.addListener( self.clockListener );
-      }
-      else {
-        // removed from the model
-        stepEmitter.removeListener( self.clockListener );
-      }
-    } );
+      // @private {Function} Passed into step function.
+      this.clockListener = this.step.bind( this );
 
-    this.userControlledProperty.lazyLink( function( controlled ) {
-      if ( controlled ) {
-        self.grabbedByUserEmitter.emit( self );
-      }
-      else {
-        self.droppedByUserEmitter.emit( self );
-      }
-    } );
-  }
+      this.addedToModelProperty.link( isAddedToModel => {
+        if ( isAddedToModel ) {
+          // added to the model
+          stepEmitter.addListener( this.clockListener );
+        }
+        else {
+          // removed from the model
+          stepEmitter.removeListener( this.clockListener );
+        }
+      } );
 
-  buildAMolecule.register( 'Atom2', Atom2 );
+      this.userControlledProperty.lazyLink( controlled => {
+        if ( controlled ) {
+          this.grabbedByUserEmitter.emit( this );
+        }
+        else {
+          this.droppedByUserEmitter.emit( this );
+        }
+      } );
+    }
 
-  inherit( Object, Atom2, extend( {}, Atom.prototype, {
     get positionBounds() {
       return new Rectangle( this.positionProperty.value.x - this.covalentRadius, this.positionProperty.value.y - this.covalentRadius, this.covalentDiameter, this.covalentDiameter );
-    },
+    }
 
     get destinationBounds() {
       return new Rectangle( this.destinationProperty.value.x - this.covalentRadius, this.destinationProperty.value.y - this.covalentRadius, this.covalentDiameter, this.covalentDiameter );
-    },
+    }
 
     /**
      * @param dt {number}: time elapsed in seconds
      *
      * @public
      */
-    step: function( dt ) {
+    step( dt ) {
       if ( this.positionProperty.value.distance( this.destinationProperty.value ) !== 0 ) {
 
         // Move towards the current destination
@@ -122,24 +114,26 @@ define( function( require ) {
           this.translate( distanceToTravel * Math.cos( angle ), distanceToTravel * Math.sin( angle ) );
         }
       }
-    },
+    }
 
-    setPosition: function( x, y ) { this.positionProperty.value = new Vector2( x, y ); },
+    setPosition( x, y ) {
+      this.positionProperty.value = new Vector2( x, y );
+    }
 
-    translatePositionAndDestination: function( delta ) {
+    translatePositionAndDestination( delta ) {
       this.positionProperty.value = this.positionProperty.value.plus( delta );
       this.destinationProperty.value = this.destinationProperty.value.plus( delta );
-    },
+    }
 
-    setPositionAndDestination: function( point ) {
+    setPositionAndDestination( point ) {
       this.positionProperty.value = this.destinationProperty.value = point;
-    },
+    }
 
-    translate: function( x, y ) {
+    translate( x, y ) {
       this.positionProperty.value = new Vector2( this.positionProperty.value.x + x, this.positionProperty.value.y + y );
-    },
+    }
 
-    reset: function() {
+    reset() {
       this.positionProperty.reset();
       this.destinationProperty.reset();
       this.userControlledProperty.reset();
@@ -148,7 +142,7 @@ define( function( require ) {
 
       this.destinationProperty.value = this.positionProperty.value;
     }
-  } ) );
+  }
 
-  return Atom2;
+  return buildAMolecule.register( 'Atom2', Atom2 );
 } );
