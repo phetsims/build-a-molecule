@@ -370,15 +370,19 @@ define( function( require ) {
   };
 
   // a,b are PubChemAtoms of some type
-  var PubChemBond = CompleteMolecule.PubChemBond = function( a, b, order ) {
-    Bond.call( this, a, b );
-    this.order = order;
-  };
-  inherit( Bond, PubChemBond, {
-    toSerial2: function( index ) {
+  class PubChemBond extends Bond {
+    constructor( a, b, order ) {
+      super( a, b );
+      this.order = order;
+    }
+
+    toSerial2( index ) {
       return index + '-' + this.order;
     }
-  } );
+  }
+
+  CompleteMolecule.PubChemBond = PubChemBond;
+
   PubChemBond.parser = function( bondString, connectedAtom, molecule ) {
     var tokens = bondString.split( '-' );
     var index = parseInt( tokens[ 0 ], 10 );
