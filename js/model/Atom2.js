@@ -24,7 +24,10 @@ define( require => {
 
   class Atom2 extends Atom {
 
-    //REVIEW: docs
+    /**
+     * @param {Element} element
+     * @param {Emitter} stepEmitter
+     */
     constructor( element, stepEmitter ) {
 
       super( element );
@@ -41,7 +44,6 @@ define( require => {
       // @public {Emitter} - Called with one parameter: particle
       this.grabbedByUserEmitter = new Emitter( { validators: [ { valueType: Atom2 } ] } );
       this.droppedByUserEmitter = new Emitter( { validators: [ { valueType: Atom2 } ] } );
-      this.removedFromModelEmitter = new Emitter(); //REVIEW: Umm, not triggered?
 
       // @public {Emitter}
       this.stepEmitter = stepEmitter;
