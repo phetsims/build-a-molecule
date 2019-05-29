@@ -264,21 +264,41 @@ define( function( require ) {
    * necessary.
    *----------------------------------------------------------------------------*/
 
-  // TODO: performance: get rid of ES5 here?
-  var PubChemAtom = CompleteMolecule.PubChemAtom = function( element ) {
-    Atom.call( this, element );
-  };
-  inherit( Atom, PubChemAtom, {
-    has2d: function() { return false; },
-    has3d: function() { return false; },
+  class PubChemAtom extends Atom {
+    constructor( element ) {
+      super( element );
+    }
 
-    x2d: function() { return 0; },
-    y2d: function() { return 0; },
+    static has2d() {
+      return false;
+    }
 
-    x3d: function() { return 0; },
-    y3d: function() { return 0; },
-    z3d: function() { return 0; }
-  } );
+    static has3d() {
+      return false;
+    }
+
+    static x2d() {
+      return 0;
+    }
+
+    static y2d() {
+      return 0;
+    }
+
+    static x3d() {
+      return 0;
+    }
+
+    static y3d() {
+      return 0;
+    }
+
+    static z3d() {
+      return 0;
+    }
+  }
+
+  CompleteMolecule.PubChemBond = PubChemAtom;
 
   var PubChemAtom2 = CompleteMolecule.PubChemAtom2 = function( element, x2d, y2d ) {
     Atom.call( this, element );
