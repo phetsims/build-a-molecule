@@ -58,7 +58,7 @@ define( require => {
         let delta = point.minus( this.position );
 
         if ( this.atoms ) {
-          this.atoms.forEach( function( atom ) {
+          this.atoms.forEach( ( atom ) => {
             atom.setPositionAndDestination( atom.positionProperty.value.plus( delta ) );
           } );
         }
