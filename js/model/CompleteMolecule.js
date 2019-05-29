@@ -319,7 +319,7 @@ define( function( require ) {
      * @returns {PubChemAtom2}
      */
     static parser( atomString ) {
-      let tokens = atomString.split( ' ' );
+      const tokens = atomString.split( ' ' );
       return new PubChemAtom2( Element.getElementBySymbol( tokens[ 0 ] ),
         parseFloat( tokens[ 1 ] ),
         parseFloat( tokens[ 2 ] ) );
@@ -364,7 +364,7 @@ define( function( require ) {
      * @returns {PubChemAtom3}
      */
     static parser( atomString ) {
-      let tokens = atomString.split( ' ' );
+      const tokens = atomString.split( ' ' );
       return new PubChemAtom3( Element.getElementBySymbol( tokens[ 0 ] ),
         parseFloat( tokens[ 1 ] ),
         parseFloat( tokens[ 2 ] ),
@@ -412,7 +412,7 @@ define( function( require ) {
      * @returns {PubChemAtomFull}
      */
     static parser( atomString ) {
-      let tokens = atomString.split( ' ' );
+      const tokens = atomString.split( ' ' );
       return new PubChemAtomFull( Element.getElementBySymbol( tokens[ 0 ] ),
         parseFloat( tokens[ 1 ] ),
         parseFloat( tokens[ 2 ] ),
@@ -448,9 +448,9 @@ define( function( require ) {
      * @returns {PubChemBond}
      */
     static parser( bondString, connectedAtom, molecule ) {
-      let tokens = bondString.split( '-' );
-      let index = parseInt( tokens[ 0 ], 10 );
-      let order = parseInt( tokens[ 1 ], 10 );
+      const tokens = bondString.split( '-' );
+      const index = parseInt( tokens[ 0 ], 10 );
+      const order = parseInt( tokens[ 1 ], 10 );
       return new PubChemBond( connectedAtom, molecule.atoms[ index ], order );
     }
   }

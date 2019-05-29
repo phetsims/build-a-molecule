@@ -14,7 +14,6 @@ define( require => {
   const buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   const Color = require( 'SCENERY/util/Color' );
   const Dimension2 = require( 'DOT/Dimension2' );
-  const inherit = require( 'PHET_CORE/inherit' );
   const Vector2Property = require( 'DOT/Vector2Property' );
   const SphereBucket = require( 'PHETCOMMON/model/SphereBucket' );
   const Strings = require( 'BUILD_A_MOLECULE/Strings' );
@@ -55,7 +54,7 @@ define( require => {
       this.positionProperty.link( point => {
 
         // when we move the bucket, we must also move our contained atoms
-        let delta = point.minus( this.position );
+        const delta = point.minus( this.position );
 
         if ( this.atoms ) {
           this.atoms.forEach( ( atom ) => {
@@ -86,10 +85,10 @@ define( require => {
      */
     static calculateIdealBucketWidth( radius, quantity ) {
       // calculate atoms to go on the bottom row
-      let numOnBottomRow = Math.floor( ( quantity <= 2 ) ? quantity : ( quantity / 2 + 1 ) );
+      const numOnBottomRow = Math.floor( ( quantity <= 2 ) ? quantity : ( quantity / 2 + 1 ) );
 
       // figure out our width, accounting for radius-padding on each side
-      let width = 2 * radius * ( numOnBottomRow + 1 );
+      const width = 2 * radius * ( numOnBottomRow + 1 );
 
       // add a bit, and make sure we don't go under 350
       return Math.floor( Math.max( 350, width + 1 ) );

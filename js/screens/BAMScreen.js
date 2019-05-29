@@ -35,10 +35,12 @@ define( function( require ) {
     options = _.extend( {
       backgroundColorProperty: new Property( BAMConstants.CANVAS_BACKGROUND_COLOR )
     }, options );
-      var stepEmitter = new Emitter( { validators: [ { valueType: 'number' } ] } ); // emits 1 parameter, timeElapsed
+    var stepEmitter = new Emitter( { validators: [ { valueType: 'number' } ] } ); // emits 1 parameter, timeElapsed
 
     Screen.call( this,
-      function() {return new KitCollectionList( createInitialKitCollection( layoutBounds, stepEmitter ), layoutBounds, stepEmitter, createKitCollection )},
+      function() {
+        return new KitCollectionList( createInitialKitCollection( layoutBounds, stepEmitter ), layoutBounds, stepEmitter, createKitCollection );
+      },
       createView, options );
   }
 

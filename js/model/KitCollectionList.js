@@ -19,6 +19,7 @@ define( function( require ) {
    * @param {KitCollection} firstCollection
    * @param {LayoutBounds} layoutBounds
    * @param {Emitter} stepEmitter
+   * @param {function} createKitCollection
    */
   function KitCollectionList( firstCollection, layoutBounds, stepEmitter, createKitCollection ) {
 
@@ -44,7 +45,7 @@ define( function( require ) {
       this.stepEmitter.emit( timeElapsed );
     },
     generateKitCollection: function generateKitCollection() {
-      return this.createKitCollection( layoutBounds, this.stepEmitter );
+      return this.createKitCollection( this.layoutBounds, this.stepEmitter );
     },
     switchTo: function( collection ) {
       this.currentIndex = this.collections.indexOf( collection );
