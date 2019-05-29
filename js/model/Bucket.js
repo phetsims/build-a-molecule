@@ -52,7 +52,7 @@ define( require => {
         this.addParticleFirstOpen( new Atom2( element, stepEmitter ), false );
       }
 
-      this.positionProperty.link( function( point ) {
+      this.positionProperty.link( point => {
 
         // when we move the bucket, we must also move our contained atoms
         let delta = point.minus( this.position );
@@ -84,7 +84,7 @@ define( require => {
      * @param quantity Quantity of atoms in bucket
      * @returns {number} Width of bucket
      */
-    calculateIdealBucketWidth( radius, quantity ) {
+    static calculateIdealBucketWidth( radius, quantity ) {
       // calculate atoms to go on the bottom row
       let numOnBottomRow = Math.floor( ( quantity <= 2 ) ? quantity : ( quantity / 2 + 1 ) );
 
@@ -95,7 +95,7 @@ define( require => {
       return Math.floor( Math.max( 350, width + 1 ) );
     }
 
-    createAutoSized( stepEmitter, element, quantity ) {
+    static createAutoSized( stepEmitter, element, quantity ) {
       return new Bucket( new Dimension2( Bucket.calculateIdealBucketWidth( element.covalentRadius, quantity ), 200 ), stepEmitter, element, quantity );
     }
   }

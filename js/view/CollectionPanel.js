@@ -158,7 +158,7 @@ define( function( require ) {
     // construct a dummy collection panel and check its width
     var collection = new KitCollection();
     collection.addCollectionBox( new CollectionBox( MoleculeList.H2O, 1 ) );
-    var kitCollectionList = new KitCollectionList( collection, new LayoutBounds( false, 0 ), new Emitter() );
+    var kitCollectionList = new KitCollectionList( collection, new LayoutBounds( false, 0 ), new Emitter(), function() {} );
     var collectionPanel = new CollectionPanel( kitCollectionList, isSingleCollectionMode, [], function() { return Bounds2.NOTHING; } );
 
     return BAMConstants.MODEL_VIEW_TRANSFORM.viewToModelDeltaX( collectionPanel.width );

@@ -20,7 +20,7 @@ define( function( require ) {
    * @param {LayoutBounds} layoutBounds
    * @param {Emitter} stepEmitter
    */
-  function KitCollectionList( firstCollection, layoutBounds, stepEmitter ) {
+  function KitCollectionList( firstCollection, layoutBounds, stepEmitter, createKitCollection ) {
 
     // @public {Property.<KitCollection>}
     this.currentCollectionProperty = new Property( firstCollection );
@@ -29,6 +29,7 @@ define( function( require ) {
     this.addedCollectionEmitter = new Emitter( { validators: [ { valueType: KitCollection } ] } );
     this.removedCollectionEmitter = new Emitter( { validators: [ { valueType: KitCollection } ] } );
 
+    this.createKitCollection = createKitCollection;
     this.layoutBounds = layoutBounds;
     this.stepEmitter = stepEmitter;
     this.collections = [];
@@ -39,6 +40,12 @@ define( function( require ) {
   buildAMolecule.register( 'KitCollectionList', KitCollectionList );
 
   inherit( Object, KitCollectionList, {
+    step: function step( timeElapsed ) {
+      this.stepEmitter.emit( timeElapsed );
+    },
+    generateKitCollection: function generateKitCollection() {
+      return this.createKitCollection( layoutBounds, this.stepEmitter );
+    },
     switchTo: function( collection ) {
       this.currentIndex = this.collections.indexOf( collection );
       this.currentCollectionProperty.value = collection;

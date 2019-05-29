@@ -35,21 +35,11 @@ define( function( require ) {
     options = _.extend( {
       backgroundColorProperty: new Property( BAMConstants.CANVAS_BACKGROUND_COLOR )
     }, options );
-
-    var createModel = function() {
       var stepEmitter = new Emitter( { validators: [ { valueType: 'number' } ] } ); // emits 1 parameter, timeElapsed
-      var model = new KitCollectionList( createInitialKitCollection( layoutBounds, stepEmitter ), layoutBounds, stepEmitter );
-      //REVIEW: This seems like the wrong way to handle things. Don't implement methods on things externally.
-      model.step = function step( timeElapsed ) {
-        stepEmitter.emit( timeElapsed );
-      };
-      model.generateKitCollection = function generateKitCollection() {
-        return createKitCollection( layoutBounds, stepEmitter );
-      };
-      return model;
-    };
 
-    Screen.call( this, createModel, createView, options );
+    Screen.call( this,
+      function() {return new KitCollectionList( createInitialKitCollection( layoutBounds, stepEmitter ), layoutBounds, stepEmitter, createKitCollection )},
+      createView, options );
   }
 
   buildAMolecule.register( 'BAMScreen', BAMScreen );
