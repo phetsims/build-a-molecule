@@ -309,7 +309,21 @@ define( function( require ) {
      * @returns {string}
      * @public
      */
-    toString() { return Atom.prototype.toString.call( this ) + ' ' + this.x2d + ' ' + this.y2d; }
+    toString() {
+      return Atom.prototype.toString.call( this ) + ' ' + this.x2d + ' ' + this.y2d;
+    }
+
+    /**
+     * Parser for PubChemAtom2
+     * @param {string} atomString
+     * @returns {PubChemAtom2}
+     */
+    static parser( atomString ) {
+      let tokens = atomString.split( ' ' );
+      return new PubChemAtom2( Element.getElementBySymbol( tokens[ 0 ] ),
+        parseFloat( tokens[ 1 ] ),
+        parseFloat( tokens[ 2 ] ) );
+    }
   }
 
   CompleteMolecule.PubChemAtom2 = PubChemAtom2;
@@ -340,7 +354,22 @@ define( function( require ) {
      * @returns {string}
      * @public
      */
-    toString() { return Atom.prototype.toString.call( this ) + ' ' + this.x3d + ' ' + this.y3d + ' ' + this.z3d; }
+    toString() {
+      return Atom.prototype.toString.call( this ) + ' ' + this.x3d + ' ' + this.y3d + ' ' + this.z3d;
+    }
+
+    /**
+     * Parser for PubChemAtom3
+     * @param {string} atomString
+     * @returns {PubChemAtom3}
+     */
+    static parser( atomString ) {
+      let tokens = atomString.split( ' ' );
+      return new PubChemAtom3( Element.getElementBySymbol( tokens[ 0 ] ),
+        parseFloat( tokens[ 1 ] ),
+        parseFloat( tokens[ 2 ] ),
+        parseFloat( tokens[ 3 ] ) );
+    }
   }
 
   CompleteMolecule.PubChemAtom3 = PubChemAtom3;
@@ -373,38 +402,35 @@ define( function( require ) {
      * @returns {string}
      * @public
      */
-    toString() { return Atom.prototype.toString.call( this ) + ' ' + this.x2d + ' ' + this.y2d + ' ' + this.x3d + ' ' + this.y3d + ' ' + this.z3d; }
+    toString() {
+      return Atom.prototype.toString.call( this ) + ' ' + this.x2d + ' ' + this.y2d + ' ' + this.x3d + ' ' + this.y3d + ' ' + this.z3d;
+    }
+
+    /**
+     * Parser for PubChemAtomFull
+     * @param atomString
+     * @returns {PubChemAtomFull}
+     */
+    static parser( atomString ) {
+      let tokens = atomString.split( ' ' );
+      return new PubChemAtomFull( Element.getElementBySymbol( tokens[ 0 ] ),
+        parseFloat( tokens[ 1 ] ),
+        parseFloat( tokens[ 2 ] ),
+        parseFloat( tokens[ 3 ] ),
+        parseFloat( tokens[ 4 ] ),
+        parseFloat( tokens[ 5 ] ) );
+    }
   }
 
   CompleteMolecule.PubChemAtomFull = PubChemAtomFull;
 
-  PubChemAtom2.parser = function( atomString ) {
-    var tokens = atomString.split( ' ' );
-    return new PubChemAtom2( Element.getElementBySymbol( tokens[ 0 ] ),
-      parseFloat( tokens[ 1 ] ),
-      parseFloat( tokens[ 2 ] ) );
-  };
-
-  PubChemAtom3.parser = function( atomString ) {
-    var tokens = atomString.split( ' ' );
-    return new PubChemAtom3( Element.getElementBySymbol( tokens[ 0 ] ),
-      parseFloat( tokens[ 1 ] ),
-      parseFloat( tokens[ 2 ] ),
-      parseFloat( tokens[ 3 ] ) );
-  };
-
-  PubChemAtomFull.parser = function( atomString ) {
-    var tokens = atomString.split( ' ' );
-    return new PubChemAtomFull( Element.getElementBySymbol( tokens[ 0 ] ),
-      parseFloat( tokens[ 1 ] ),
-      parseFloat( tokens[ 2 ] ),
-      parseFloat( tokens[ 3 ] ),
-      parseFloat( tokens[ 4 ] ),
-      parseFloat( tokens[ 5 ] ) );
-  };
-
-// a,b are PubChemAtoms of some type
+// Signature for bonds, where a and b are PubChemAtoms of some type
   class PubChemBond extends Bond {
+    /**
+     * @param {PubChemAtom*} a
+     * @param {PubChemAtoms*} b
+     * @param {number} order
+     */
     constructor( a, b, order ) {
       super( a, b );
       this.order = order;
@@ -413,16 +439,24 @@ define( function( require ) {
     toSerial2( index ) {
       return index + '-' + this.order;
     }
+
+    /**
+     * Parser for PubChemBond
+     * @param {string} bondString
+     * @param {Atom} connectedAtom
+     * @param {Molecule} molecule
+     * @returns {PubChemBond}
+     */
+    static parser( bondString, connectedAtom, molecule ) {
+      let tokens = bondString.split( '-' );
+      let index = parseInt( tokens[ 0 ], 10 );
+      let order = parseInt( tokens[ 1 ], 10 );
+      return new PubChemBond( connectedAtom, molecule.atoms[ index ], order );
+    }
   }
 
   CompleteMolecule.PubChemBond = PubChemBond;
 
-  PubChemBond.parser = function( bondString, connectedAtom, molecule ) {
-    var tokens = bondString.split( '-' );
-    var index = parseInt( tokens[ 0 ], 10 );
-    var order = parseInt( tokens[ 1 ], 10 );
-    return new PubChemBond( connectedAtom, molecule.atoms[ index ], order );
-  };
 
   return CompleteMolecule;
 } );
