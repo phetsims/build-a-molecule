@@ -228,6 +228,7 @@ define( function( require ) {
       completeMolecule.addBond( bond );
     }
 
+    // Filled in by parsing completeMolecule
     completeMolecule.cid = parseInt( tokens[ idx++ ], 10 );
 
     return completeMolecule;
