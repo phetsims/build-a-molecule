@@ -148,8 +148,8 @@ define( function( require ) {
       wrappers.forEach( function( atomWrapper ) {
         node.addChild( new AtomNode( atomWrapper.element, {
           // custom scale for now
-          x: atomWrapper.x2d() * 15,
-          y: atomWrapper.y2d() * 15
+          x: atomWrapper.x2d * 15,
+          y: atomWrapper.y2d * 15
         } ) );
       } );
       return node;
@@ -264,62 +264,120 @@ define( function( require ) {
    * necessary.
    *----------------------------------------------------------------------------*/
 
+  // Signature for Atom without 2d or 3d representation
   class PubChemAtom extends Atom {
+
+    /**
+     * @param {Element} element
+     */
     constructor( element ) {
       super( element );
-    }
-
-    static has2d() {
-      return false;
-    }
-
-    static has3d() {
-      return false;
-    }
-
-    static x2d() {
-      return 0;
-    }
-
-    static y2d() {
-      return 0;
-    }
-
-    static x3d() {
-      return 0;
-    }
-
-    static y3d() {
-      return 0;
-    }
-
-    static z3d() {
-      return 0;
+      this.has2d = false;
+      this.has3d = false;
+      this.x2d = 0;
+      this.y2d = 0;
+      this.x3d = 0;
+      this.y3d = 0;
+      this.z3d = 0;
     }
   }
 
-  CompleteMolecule.PubChemBond = PubChemAtom;
+  CompleteMolecule.PubChemAtom = PubChemAtom;
 
-  var PubChemAtom2 = CompleteMolecule.PubChemAtom2 = function( element, x2d, y2d ) {
-    Atom.call( this, element );
-    this._x2d = x2d;
-    this._y2d = y2d;
-  };
-  inherit( Atom, PubChemAtom2, {
-    has2d: function() { return true; },
-    has3d: function() { return false; },
+  // Signature for Atom with only a 2d representation
+  class PubChemAtom2 extends Atom {
+    /**
+     * @param {Element} element
+     * @param {number} x2d
+     * @param {number} y2d
+     */
+    constructor( element, x2d, y2d ) {
+      super( element );
+      this.has2d = true;
+      this.has3d = false;
+      this.x2d = x2d;
+      this.y2d = y2d;
 
-    // TODO: consider replacing with direct properties
-    x2d: function() { return this._x2d; },
-    y2d: function() { return this._y2d; },
+      // 3d representation uses only 2d data
+      this.x3d = x2d;
+      this.y3d = y2d;
+      this.z3d = 0;
+    }
 
-    //REVIEW: Do we need another "rich" atom subtype that has this information?
-    x3d: function() { return this._x2d; },
-    y3d: function() { return this._y2d; },
-    z3d: function() { return 0; },
+    /**
+     * Stringify the structure of the atom.
+     * @returns {string}
+     * @public
+     */
+    toString() { return Atom.prototype.toString.call( this ) + ' ' + this.x2d + ' ' + this.y2d; }
+  }
 
-    toString: function() { return Atom.prototype.toString.call( this ) + ' ' + this._x2d + ' ' + this._y2d; }
-  } );
+  CompleteMolecule.PubChemAtom2 = PubChemAtom2;
+
+  // Signature for Atom with only a 3d representation
+  class PubChemAtom3 extends Atom {
+
+    /**
+     *
+     * @param {Element} element
+     * @param {number} x3d
+     * @param {number} y3d
+     * @param {number} z3d
+     */
+    constructor( element, x3d, y3d, z3d ) {
+      super( element );
+      this.has2d = false;
+      this.has3d = true;
+      this.x2d = x3d;
+      this.y2d = 0;
+      this.x3d = x3d;
+      this.y3d = y3d;
+      this.z3d = z3d;
+    }
+
+    /**
+     * Stringify the structure of the atom.
+     * @returns {string}
+     * @public
+     */
+    toString() { return Atom.prototype.toString.call( this ) + ' ' + this.x3d + ' ' + this.y3d + ' ' + this.z3d; }
+  }
+
+  CompleteMolecule.PubChemAtom3 = PubChemAtom3;
+
+  // Signature for Atom with both a 2d and 3d representation
+  class PubChemAtomFull extends Atom {
+
+    /**
+     *
+     * @param {Element} element
+     * @param {number} x2d
+     * @param {number} y2d
+     * @param {number} x3d
+     * @param {number} y3d
+     * @param {number} z3d
+     */
+    constructor( element, x2d, y2d, x3d, y3d, z3d ) {
+      super( element );
+      this.has2d = true;
+      this.has3d = true;
+      this.x2d = x2d;
+      this.y2d = y2d;
+      this.x3d = x3d;
+      this.y3d = y3d;
+      this.z3d = z3d;
+    }
+
+    /**
+     * Stringify the structure of the atom.
+     * @returns {string}
+     * @public
+     */
+    toString() { return Atom.prototype.toString.call( this ) + ' ' + this.x2d + ' ' + this.y2d + ' ' + this.x3d + ' ' + this.y3d + ' ' + this.z3d; }
+  }
+
+  CompleteMolecule.PubChemAtomFull = PubChemAtomFull;
+
   PubChemAtom2.parser = function( atomString ) {
     var tokens = atomString.split( ' ' );
     return new PubChemAtom2( Element.getElementBySymbol( tokens[ 0 ] ),
@@ -327,26 +385,6 @@ define( function( require ) {
       parseFloat( tokens[ 2 ] ) );
   };
 
-  var PubChemAtom3 = CompleteMolecule.PubChemAtom3 = function( element, x3d, y3d, z3d ) {
-    Atom.call( this, element );
-    this._x3d = x3d;
-    this._y3d = y3d;
-    this._z3d = z3d;
-  };
-  inherit( Atom, PubChemAtom3, {
-    has2d: function() { return false; },
-    has3d: function() { return true; },
-
-    // TODO: consider replacing with direct properties
-    x2d: function() { return 0; },
-    y2d: function() { return 0; },
-
-    x3d: function() { return this._x3d; },
-    y3d: function() { return this._y3d; },
-    z3d: function() { return this._z3d; },
-
-    toString: function() { return Atom.prototype.toString.call( this ) + ' ' + this._x3d + ' ' + this._y3d + ' ' + this._z3d; }
-  } );
   PubChemAtom3.parser = function( atomString ) {
     var tokens = atomString.split( ' ' );
     return new PubChemAtom3( Element.getElementBySymbol( tokens[ 0 ] ),
@@ -355,28 +393,6 @@ define( function( require ) {
       parseFloat( tokens[ 3 ] ) );
   };
 
-  var PubChemAtomFull = CompleteMolecule.PubChemAtomFull = function( element, x2d, y2d, x3d, y3d, z3d ) {
-    Atom.call( this, element );
-    this._x2d = x2d;
-    this._y2d = y2d;
-    this._x3d = x3d;
-    this._y3d = y3d;
-    this._z3d = z3d;
-  };
-  inherit( Atom, PubChemAtomFull, {
-    has2d: function() { return true; },
-    has3d: function() { return true; },
-
-    // TODO: consider replacing with direct properties
-    x2d: function() { return this._x2d; },
-    y2d: function() { return this._y2d; },
-
-    x3d: function() { return this._x3d; },
-    y3d: function() { return this._y3d; },
-    z3d: function() { return this._z3d; },
-
-    toString: function() { return Atom.prototype.toString.call( this ) + ' ' + this._x2d + ' ' + this._y2d + ' ' + this._x3d + ' ' + this._y3d + ' ' + this._z3d; }
-  } );
   PubChemAtomFull.parser = function( atomString ) {
     var tokens = atomString.split( ' ' );
     return new PubChemAtomFull( Element.getElementBySymbol( tokens[ 0 ] ),
@@ -387,7 +403,7 @@ define( function( require ) {
       parseFloat( tokens[ 5 ] ) );
   };
 
-  // a,b are PubChemAtoms of some type
+// a,b are PubChemAtoms of some type
   class PubChemBond extends Bond {
     constructor( a, b, order ) {
       super( a, b );
