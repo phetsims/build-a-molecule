@@ -6,45 +6,43 @@
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 
-define( function( require ) {
+define( require => {
   'use strict';
 
-  var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var PhetioObject = require( 'TANDEM/PhetioObject' );
-
+  const buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
 
   //REVIEW: This is polymorphic, just requires things with IDs (a.id, b.id). I THINK it is used on Atom subtypes, so
   //REVIEW: Just use {Atom}
 
-  function Bond( a, b ) {
-    assert && assert( a !== b, 'Bonds cannot connect an atom to itself' );
-    this.a = a;
-    this.b = b;
-  }
-  buildAMolecule.register( 'Bond', Bond );
+  class Bond {
+    constructor( a, b ) {
+      assert && assert( a !== b, 'Bonds cannot connect an atom to itself' );
+      this.a = a;
+      this.b = b;
+    }
 
-  return inherit( PhetioObject, Bond, {
     get id() {
       return this.a.id + '-' + this.b.id;
-    },
+    }
 
-    equals: function( other ) {
+    equals( other ) {
       return this.a === other.a && this.b === other.b;
-    },
+    }
 
-    contains: function( atom ) {
+    contains( atom ) {
       return atom === this.a || atom === this.b;
-    },
+    }
 
-    getOtherAtom: function( atom ) {
+    getOtherAtom( atom ) {
       assert && assert( this.contains( atom ) );
 
       return ( this.a === atom ? this.b : this.a );
-    },
+    }
 
-    toSerial2: function( index ) {
+    toSerial2( index ) {
       return index + '';
     }
-  } );
+  }
+
+  return buildAMolecule.register( 'Bond', Bond );
 } );
