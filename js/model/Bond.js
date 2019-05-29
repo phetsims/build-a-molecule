@@ -21,7 +21,7 @@ define( require => {
       this.b = b;
     }
 
-    get id() {
+    id() {
       return this.a.id + '-' + this.b.id;
     }
 
