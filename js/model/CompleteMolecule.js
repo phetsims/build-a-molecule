@@ -81,9 +81,6 @@ define( function( require ) {
     this.molecularFormula = molecularFormula; // as said by pubchem
     this.has2d = has2d;
     this.has3d = has3d;
-
-    //REVIEW: This is filled in by parsing later? We should document it
-    // this.cid = null;
   }
 
   buildAMolecule.register( 'CompleteMolecule', CompleteMolecule );
