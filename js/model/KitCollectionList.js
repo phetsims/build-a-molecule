@@ -65,7 +65,7 @@ define( function( require ) {
 
     removeCollection: function( collection ) {
       assert && assert( this.currentCollectionProperty.value !== collection );
-      this.collections.splice( this.collections.indexOf( collection ), 1 ); // TODO: use remove() instead of splice()
+      this.collections.shift();
 
       this.removedCollectionEmitter.emit( collection );
     },

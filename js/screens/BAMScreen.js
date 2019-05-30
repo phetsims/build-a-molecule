@@ -136,7 +136,7 @@ define( function( require ) {
       kits.push( new Kit( layoutBounds, buckets ) );
 
       // remove our 1 main molecule
-      molecules.splice( molecules.indexOf( molecule ), 1 ); // TODO: replace splice() with remove()
+      molecules.shift();
       atomMultiple -= 1;
 
       // NOTE: for the future, we could sort through and find out if we can construct another whole atom within our larger margins

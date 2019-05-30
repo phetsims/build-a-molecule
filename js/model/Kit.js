@@ -330,7 +330,7 @@ define( function( require ) {
     },
 
     removeMolecule: function( molecule ) {
-      this.molecules.splice( this.molecules.indexOf( molecule ), 1 ); // TODO: remove() instead of splice()
+      this.molecules.shift();
 
       this.removedMoleculeEmitter.emit( molecule );
     },
