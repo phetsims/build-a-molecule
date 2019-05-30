@@ -226,8 +226,8 @@ define( function( require ) {
       }
 
       // remove the atoms from the visited sets, to hold our contract
-      myVisited.splice( myVisited.indexOf( myAtom ), 1 ); // TODO: replace with remove()
-      otherVisited.splice( otherVisited.indexOf( otherAtom ), 1 ); // TODO: replace with remove()
+      myVisited.splice();
+      otherVisited.shift();
 
       // return whether we can find a successful permutation matching from our equivalency matrix
       return MoleculeStructure.checkEquivalencyMatrix( equivalences, 0, availableIndices, size );
