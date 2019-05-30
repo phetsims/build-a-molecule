@@ -27,7 +27,6 @@ define( function( require ) {
       self.quantities[ element.symbol ] = 0;
     } );
 
-    // REVIEW: Note the optional parameter in jsdoc
     if ( molecule ) {
       this.addMolecule( molecule );
     }

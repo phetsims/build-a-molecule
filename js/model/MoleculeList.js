@@ -120,14 +120,6 @@ define( function( require ) {
       } );
     },
 
-    // by pubchem compound ID (CID)
-    //REVIEW: Dead code?
-    findMoleculeByCID: function( cid ) {
-      return _.find( this.completeMolecules, function( completeMolecule ) {
-        return completeMolecule.cid === cid ? completeMolecule : null;
-      } );
-    },
-
     getAllCompleteMolecules: function() {
       // TODO: performance: do we need a full copy here?
       return this.completeMolecules.slice( 0 );
