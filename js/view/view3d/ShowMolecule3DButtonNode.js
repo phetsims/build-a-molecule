@@ -17,6 +17,7 @@ define( function( require ) {
   var Molecule3DDialog = require( 'BUILD_A_MOLECULE/view/view3d/Molecule3DDialog' );
   var Node = require( 'SCENERY/nodes/Node' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
+  var ScreenView = require( 'JOIST/ScreenView' );
   var ShadedRectangle = require( 'SCENERY_PHET/ShadedRectangle' );
   var Text = require( 'SCENERY/nodes/Text' );
 
@@ -30,15 +31,23 @@ define( function( require ) {
       cursor: 'pointer'
     }, options ) );
 
+
     this.addInputListener( new ButtonListener( {
-      fire: function( evt ) {
+      fire: function() {
         var trail = self.getUniqueTrail();
         //REVIEW: See if we can just check for a ScreenView, so that we don't use this special check.
-        var view = _.find( trail.nodes, function( node ) { return node.isBAMView; } );
-        view.addChild( new Molecule3DDialog( completeMolecule, trail, view ) );
+        var view = _.find( trail.nodes, function( node ) {
+          if ( node instanceof ScreenView ) {
+            return node;
+          }
+        } );
+        var dialog = new Molecule3DDialog( completeMolecule, view );
+
+        dialog.show();
       }
     } ) );
 
+    // REVIEW: Move to constant
     var sqSize = 19; // 19 is a hard-coded constant to make it square
 
     var label = new Text( threeDString, {
@@ -67,6 +76,7 @@ define( function( require ) {
     this.addChild( base );
     this.addChild( label );
   }
+
   buildAMolecule.register( 'ShowMolecule3DButtonNode', ShowMolecule3DButtonNode );
 
   return inherit( Node, ShowMolecule3DButtonNode );
