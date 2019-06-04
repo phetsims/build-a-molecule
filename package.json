@@ -13,8 +13,7 @@
     "requirejsNamespace": "BUILD_A_MOLECULE",
     "phetLibs": [
       "nitroglycerin",
-      "vegas",
-      "vibe"
+      "vegas"
     ],
     "runnable": true,
     "supportedBrands": [
