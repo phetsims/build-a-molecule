@@ -17,7 +17,6 @@ define( function( require ) {
   var KitCollectionList = require( 'BUILD_A_MOLECULE/model/KitCollectionList' );
   var BAMConstants = require( 'BUILD_A_MOLECULE/BAMConstants' );
   var Emitter = require( 'AXON/Emitter' );
-  var Globals = require( 'BUILD_A_MOLECULE/Globals' );
   var inherit = require( 'PHET_CORE/inherit' );
   var KitCollection = require( 'BUILD_A_MOLECULE/model/KitCollection' );
   var LayoutBounds = require( 'BUILD_A_MOLECULE/model/LayoutBounds' );
@@ -27,7 +26,6 @@ define( function( require ) {
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var Shape = require( 'KITE/Shape' );
-  var SoundToggleButton = require( 'SCENERY_PHET/buttons/SoundToggleButton' );
   var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   var Text = require( 'SCENERY/nodes/Text' );
 
@@ -114,12 +112,6 @@ define( function( require ) {
     this.collectionAreaHolder.y = y;
     y += 5; // TODO: height?
 
-    // sound on/off
-    this.soundToggleButton = new SoundToggleButton( Globals.soundEnabled );
-    this.soundToggleButton.touchArea = Shape.bounds( this.soundToggleButton.bounds.dilated( 7 ) );
-    this.layoutNode.addChild( this.soundToggleButton );
-    this.soundToggleButton.top = y;
-
     // add our two layers: background and controls
     this.addChild( this.backgroundHolder );
     this.addChild( this.layoutNode );
@@ -166,7 +158,6 @@ define( function( require ) {
 
   return inherit( Node, CollectionPanel, {
     updateLayout: function() {
-      this.soundToggleButton.top = this.collectionAreaHolder.bottom + 25;
       var centerX = this.layoutNode.width / 2;
       this.layoutNode.children.forEach( function( child ) {
         child.centerX = centerX;

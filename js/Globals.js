@@ -5,14 +5,10 @@ define( function( require ) {
 
   // imports
   var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
-  var GameAudioPlayerOld = require( 'VEGAS/GameAudioPlayerOld' );
-  var BooleanProperty = require( 'AXON/BooleanProperty' );
-
-  var soundEnabledProperty = new BooleanProperty( false );
+  var GameAudioPlayer = require( 'VEGAS/GameAudioPlayer' );
 
   var Globals = {
-    soundEnabled: soundEnabledProperty,
-    gameAudioPlayer: new GameAudioPlayerOld( soundEnabledProperty )
+    gameAudioPlayer: new GameAudioPlayer()
   };
 
   buildAMolecule.register( 'Globals', Globals );
