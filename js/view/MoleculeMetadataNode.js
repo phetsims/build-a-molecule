@@ -69,6 +69,7 @@ define( function( require ) {
           scale: 1.2
         } );
         //REVIEW: Should factor out constants if possible, like the 1.2, and 4 / 1.2.
+        button3d.touchArea = Shape.bounds( button3d.childBounds.dilated( 4 / 1.2 ) );
         this.addChild( button3d );
         currentX += button3d.width + 8;
       }
