@@ -96,8 +96,6 @@ define( function( require ) {
     } );
 
     this.updatePosition(); // sanity check. should update (unfortunately) a number of times above
-
-    } );
   }
 
   buildAMolecule.register( 'MoleculeMetadataNode', MoleculeMetadataNode );
