@@ -16,6 +16,8 @@ define( function( require ) {
   var Bounds2 = require( 'DOT/Bounds2' );
   var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   var Dialog = require( 'SUN/Dialog' );
+  var Enumeration = require( 'PHET_CORE/Enumeration' );
+  var EnumerationProperty = require( 'AXON/EnumerationProperty' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Molecule3DNode = require( 'BUILD_A_MOLECULE/view/view3d/Molecule3DNode' );
   var Node = require( 'SCENERY/nodes/Node' );
@@ -56,9 +58,9 @@ define( function( require ) {
     } );
     // var self = this;
 
-
-    // REVIEW: Use Enumeration.js
-    var viewStyleProperty = new Property( 'spaceFill' ); // spaceFill or ballAndStick
+    // Used for radio buttons
+    var viewStyle = new Enumeration( [ 'SPACE_FILL', 'BALL_AND_STICK' ] );
+    var viewStyleProperty = new EnumerationProperty( viewStyle, viewStyle.SPACE_FILL );
 
     /*---------------------------------------------------------------------------*
      * Chemical formula label
@@ -99,10 +101,8 @@ define( function( require ) {
       xSpacing: 8,
       stroke: 'white' // border
     };
-    var spaceFillButton = new AquaRadioButton( viewStyleProperty, 'spaceFill', spaceFillText, radioButtonOptions );
-    // spaceFillButton.touchArea = Shape.bounds( spaceFillButton.localBounds.dilated( optionsHorizontalPadding / 2 ) );
-    var ballAndStickButton = new AquaRadioButton( viewStyleProperty, 'ballAndStick', ballAndStickText, radioButtonOptions );
-    // ballAndStickButton.touchArea = Shape.bounds( ballAndStickButton.localBounds.dilated( optionsHorizontalPadding / 2 ) );
+    var spaceFillButton = new AquaRadioButton( viewStyleProperty, viewStyle.SPACE_FILL, spaceFillText, radioButtonOptions );
+    var ballAndStickButton = new AquaRadioButton( viewStyleProperty, viewStyle.BALL_AND_STICK, ballAndStickText, radioButtonOptions );
     ballAndStickButton.left = spaceFillButton.right + optionsHorizontalPadding;
     var buttonHolder = new Node( {
       children: [ spaceFillButton, ballAndStickButton ],
