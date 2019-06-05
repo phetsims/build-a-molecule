@@ -12,7 +12,6 @@ define( function( require ) {
   'use strict';
 
   var AquaRadioButton = require( 'SUN/AquaRadioButton' );
-  // var BAMConstants = require( 'BUILD_A_MOLECULE/BAMConstants' );
   var Bounds2 = require( 'DOT/Bounds2' );
   var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   var Dialog = require( 'SUN/Dialog' );
@@ -22,9 +21,6 @@ define( function( require ) {
   var Molecule3DNode = require( 'BUILD_A_MOLECULE/view/view3d/Molecule3DNode' );
   var Node = require( 'SCENERY/nodes/Node' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  var Property = require( 'AXON/Property' );
-  // var RadialGradient = require( 'SCENERY/util/RadialGradient' );
-  // var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var RichText = require( 'SCENERY/nodes/RichText' );
   var Shape = require( 'KITE/Shape' );
   var Text = require( 'SCENERY/nodes/Text' );
@@ -34,9 +30,6 @@ define( function( require ) {
   var spaceFillString = require( 'string!BUILD_A_MOLECULE/spaceFilling' ); // eslint-disable-line string-require-statement-match
 
   var size = 200;
-  // var verticalOffset = size + 5;
-  // var stageCenterX = 0;
-  // var stageCenterY = 0;
   var optionsHorizontalPadding = 40;
 
   //REVIEW: Note that this may change significantly if we go with a three.js/webgl solution
@@ -49,8 +42,6 @@ define( function( require ) {
       modal: true,
       fill: 'black',
       xAlign: 'center',
-      // topMargin: 25,
-      // bottomMargin: 25,
       title: new Text( completeMolecule.getDisplayName(), {
         font: new PhetFont( 30 ),
         fill: 'white'
@@ -62,9 +53,7 @@ define( function( require ) {
     var viewStyle = new Enumeration( [ 'SPACE_FILL', 'BALL_AND_STICK' ] );
     var viewStyleProperty = new EnumerationProperty( viewStyle, viewStyle.SPACE_FILL );
 
-    /*---------------------------------------------------------------------------*
-     * Chemical formula label
-     *----------------------------------------------------------------------------*/
+    // Chemical formula label
     var formulaText = new RichText( completeMolecule.getGeneralFormulaFragment(), {
       font: new PhetFont( 20 ),
       fill: '#bbb',
@@ -72,20 +61,8 @@ define( function( require ) {
       top: this.top + 10
     } );
     contentNode.addChild( formulaText );
-    //
-    // /*---------------------------------------------------------------------------*
-    //  * Display name label
-    //  *----------------------------------------------------------------------------*/
-    // var nameText = new Text( completeMolecule.getDisplayName(), {
-    //   font: new PhetFont( 30 ),
-    //
-    // } );
-    // contentNode.addChild( nameText );
 
-    /*---------------------------------------------------------------------------*
-     * Space fill / Ball and stick radio buttons
-     *----------------------------------------------------------------------------*/
-
+    // Space fill / Ball and stick radio buttons
     var buttonTextOptions = {
       font: new PhetFont( 20 ),
       fill: 'white'
