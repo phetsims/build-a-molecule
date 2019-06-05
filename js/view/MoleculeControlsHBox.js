@@ -1,7 +1,7 @@
 // Copyright 2013-2017, University of Colorado Boulder
 
 /**
- * Displays the molecule name and 'X' to break apart the molecule
+ * Displays the molecule name, 3D button, and 'X' button to break apart the molecule
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
@@ -12,11 +12,12 @@ define( function( require ) {
   var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   var ButtonListener = require( 'SCENERY/input/ButtonListener' );
   var BAMConstants = require( 'BUILD_A_MOLECULE/BAMConstants' );
+  var HBox = require( 'SCENERY/nodes/HBox' );
   var Image = require( 'SCENERY/nodes/Image' );
   var inherit = require( 'PHET_CORE/inherit' );
   var MoleculeList = require( 'BUILD_A_MOLECULE/model/MoleculeList' );
-  var Node = require( 'SCENERY/nodes/Node' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
+  var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
   var Shape = require( 'KITE/Shape' );
   var ShowMolecule3DButtonNode = require( 'BUILD_A_MOLECULE/view/view3d/ShowMolecule3DButtonNode' );
   var Text = require( 'SCENERY/nodes/Text' );
@@ -24,15 +25,19 @@ define( function( require ) {
   // images
   var splitIconImage = require( 'image!BUILD_A_MOLECULE/split-blue.png' );
 
-  //REVIEW: "Controls" may be a better word rather than "Metadata"
+  // constants
+  var DILATION_FACTOR = 4 / 1.2;
+  var SCALE = 1.2;
+
   /**
    * @param {Kit} kit
    * @param {Molecule} molecule
    * @constructor
    */
-  function MoleculeMetadataNode( kit, molecule ) {
-    //REVIEW: No need to have empty objects in cases like this
-    Node.call( this, {} );
+  function MoleculeControlsHBox( kit, molecule ) {
+    HBox.call( this, {
+      spacing: 9
+    } );
 
     var self = this;
     this.molecule = molecule;
@@ -45,48 +50,37 @@ define( function( require ) {
 
     this.updatePositionListener = this.updatePosition.bind( this );
 
+    // Check if molecule data exists
     var completeMolecule = MoleculeList.getMasterInstance().findMatchingCompleteMolecule( molecule );
-
-    var currentX = 0;
-
     if ( completeMolecule ) {
-      /*---------------------------------------------------------------------------*
-       * label with chemical formula and common name
-       *----------------------------------------------------------------------------*/
+
+      // Label with chemical formula and common name
       var label = new Text( completeMolecule.getDisplayName(), {
         font: new PhetFont( { size: 17, weight: 'bold' } ),
-        centerY: 11
       } );
       this.addChild( label );
-      currentX += label.width + 10;
 
-      /*---------------------------------------------------------------------------*
-       * show 3d button
-       *----------------------------------------------------------------------------*/
+      // 3D button
       if ( BAMConstants.HAS_3D ) {
         var button3d = new ShowMolecule3DButtonNode( completeMolecule, {
-          x: currentX,
-          scale: 1.2
+          scale: SCALE
         } );
-        //REVIEW: Should factor out constants if possible, like the 1.2, and 4 / 1.2.
-        button3d.touchArea = Shape.bounds( button3d.childBounds.dilated( 4 / 1.2 ) );
+        button3d.touchArea = Shape.bounds( button3d.childBounds.dilated( DILATION_FACTOR ) );
         this.addChild( button3d );
-        currentX += button3d.width + 8;
       }
     }
 
-    /*---------------------------------------------------------------------------*
-     * break-up button
-     *----------------------------------------------------------------------------*/
-    var buttonBreak = new Node( {
-      children: [ new Image( splitIconImage ) ],
-      x: currentX,
-      scale: 1.2,
-      cursor: 'pointer'
+    // Break-up button 'X'
+    var buttonBreak = new RectangularPushButton( {
+      content: new Image( splitIconImage ),
+      scale: SCALE,
+      cursor: 'pointer',
+      xMargin: 0, // Setting margins to zero so the 'X' image takes up the whole button view
+      yMargin: 0
     } );
-    buttonBreak.touchArea = Shape.bounds( buttonBreak.childBounds.dilated( 4 / 1.2 ) );
+    buttonBreak.touchArea = Shape.bounds( buttonBreak.childBounds.dilated( DILATION_FACTOR ) );
     buttonBreak.addInputListener( new ButtonListener( {
-      fire: function( evt ) {
+      fire: function() {
         kit.breakMolecule( molecule );
       }
     } ) );
@@ -96,12 +90,13 @@ define( function( require ) {
       atom.positionProperty.link( self.updatePositionListener );
     } );
 
-    this.updatePosition(); // sanity check. should update (unfortunately) a number of times above
+    // sanity check. should update (unfortunately) a number of times above
+    this.updatePosition();
   }
 
-  buildAMolecule.register( 'MoleculeMetadataNode', MoleculeMetadataNode );
+  buildAMolecule.register( 'MoleculeControlsHBox', MoleculeControlsHBox );
 
-  inherit( Node, MoleculeMetadataNode, {
+  inherit( HBox, MoleculeControlsHBox, {
     /**
      * @override
      */
@@ -112,9 +107,7 @@ define( function( require ) {
           atom.positionProperty.unlink( listener );
         } );
       }
-      Node.prototype.dispose.call( this );
-
-      // TODO: incomplete: throw new Error( 'dialog.hideDialogIfShown' );
+      HBox.prototype.dispose.call( this );
     },
 
     updatePosition: function() {
@@ -125,6 +118,5 @@ define( function( require ) {
         moleculeViewBounds.minY - this.height - BAMConstants.BUTTON_PADDING ); // offset from top of molecule
     }
   } );
-
-  return MoleculeMetadataNode;
+  return MoleculeControlsHBox;
 } );

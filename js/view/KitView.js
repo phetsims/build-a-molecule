@@ -18,7 +18,7 @@ define( function( require ) {
   var BAMConstants = require( 'BUILD_A_MOLECULE/BAMConstants' );
   var inherit = require( 'PHET_CORE/inherit' );
   var MoleculeBondContainerNode = require( 'BUILD_A_MOLECULE/view/MoleculeBondContainerNode' );
-  var MoleculeMetadataNode = require( 'BUILD_A_MOLECULE/view/MoleculeMetadataNode' );
+  var MoleculeControlHBox = require( 'BUILD_A_MOLECULE/view/MoleculeControlsHBox' );
   var Node = require( 'SCENERY/nodes/Node' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
@@ -40,7 +40,7 @@ define( function( require ) {
     this.kit = kit;
     this.view = view;
 
-    this.metadataMap = {}; // moleculeId => MoleculeMetadataNode
+    this.metadataMap = {}; // moleculeId => MoleculeControlsHBox
     this.bondMap = {}; // moleculeId => MoleculeBondContainerNode
     this.atomNodeMap = {}; // atom.id => AtomNode
 
@@ -184,17 +184,17 @@ define( function( require ) {
 
     // handle molecule creation and destruction
     kit.addedMoleculeEmitter.addListener( function( molecule ) {
-      var moleculeMetadataNode = new MoleculeMetadataNode( kit, molecule );
-      metadataLayer.addChild( moleculeMetadataNode );
-      self.metadataMap[ molecule.moleculeId ] = moleculeMetadataNode;
+      var moleculeControlsHBox = new MoleculeControlHBox( kit, molecule );
+      metadataLayer.addChild( moleculeControlsHBox );
+      self.metadataMap[ molecule.moleculeId ] = moleculeControlsHBox;
 
       if ( BAMConstants.ALLOW_BOND_BREAKING ) {
         self.addMoleculeBondNodes( molecule );
       }
     } );
     kit.removedMoleculeEmitter.addListener( function( molecule ) {
-      var moleculeMetadataNode = self.metadataMap[ molecule.moleculeId ];
-      moleculeMetadataNode.dispose();
+      var moleculeControlsHBox = self.metadataMap[ molecule.moleculeId ];
+      moleculeControlsHBox.dispose();
       delete self.metadataMap[ molecule.moleculeId ];
 
       if ( BAMConstants.ALLOW_BOND_BREAKING ) {
