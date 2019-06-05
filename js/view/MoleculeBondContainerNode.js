@@ -26,13 +26,13 @@ define( function( require ) {
 
     this.bondNodes = [];
 
-    //REVIEW: Could do this.bondNodes = molecule.bonds.map( ... )
-    molecule.bonds.forEach( function( bond ) {
+    this.bondNodes = molecule.bonds.map( function( bond ) {
       var node = new MoleculeBondNode( bond, kit );
       self.addChild( node );
-      self.bondNodes.push( node );
+      return node;
     } );
   }
+
   buildAMolecule.register( 'MoleculeBondContainerNode', MoleculeBondContainerNode );
 
   inherit( Node, MoleculeBondContainerNode, {
