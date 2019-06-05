@@ -15,7 +15,6 @@ define( function( require ) {
   // var BAMConstants = require( 'BUILD_A_MOLECULE/BAMConstants' );
   var Bounds2 = require( 'DOT/Bounds2' );
   var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
-  // var CloseButton = require( 'BUILD_A_MOLECULE/view/view3d/CloseButton' );
   var Dialog = require( 'SUN/Dialog' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Molecule3DNode = require( 'BUILD_A_MOLECULE/view/view3d/Molecule3DNode' );
