@@ -24,6 +24,7 @@ define( function( require ) {
   var RichText = require( 'SCENERY/nodes/RichText' );
   var Shape = require( 'KITE/Shape' );
   var Text = require( 'SCENERY/nodes/Text' );
+  var HBox = require( 'SCENERY/nodes/HBox' );
 
   // strings
   var ballAndStickString = require( 'string!BUILD_A_MOLECULE/ballAndStick' ); // eslint-disable-line string-require-statement-match
@@ -47,7 +48,6 @@ define( function( require ) {
         fill: 'white'
       } )
     } );
-    // var self = this;
 
     // Used for radio buttons
     var viewStyle = new Enumeration( [ 'SPACE_FILL', 'BALL_AND_STICK' ] );
@@ -71,29 +71,23 @@ define( function( require ) {
     var ballAndStickText = new Text( ballAndStickString, buttonTextOptions );
 
     var radioButtonOptions = {
-      selectedColor: 'rgba(255,255,255,0.4)', // fill
-      deselectedColor: 'black', // center
-      centerColor: 'white', // center
+      selectedColor: 'rgba(255,255,255,0.4)',
+      deselectedColor: 'black',
+      centerColor: 'white',
       radius: 16,
       xSpacing: 8,
-      stroke: 'white' // border
+      stroke: 'white'
     };
     var spaceFillButton = new AquaRadioButton( viewStyleProperty, viewStyle.SPACE_FILL, spaceFillText, radioButtonOptions );
     var ballAndStickButton = new AquaRadioButton( viewStyleProperty, viewStyle.BALL_AND_STICK, ballAndStickText, radioButtonOptions );
-    ballAndStickButton.left = spaceFillButton.right + optionsHorizontalPadding;
-    var buttonHolder = new Node( {
+
+    var buttonHolder = new HBox( {
       children: [ spaceFillButton, ballAndStickButton ],
       centerX: this.centerX,
-      top: this.bottom
+      top: this.bottom,
+      spacing: optionsHorizontalPadding
     } );
-    buttonHolder.addInputListener( {
-      // REVIEW: Do we need this?
-      // don't start drags on the close button
-      down: function( event ) {
-        event.handle();
-      }
-    } );
-    buttonHolder.touchArea = Shape.bounds( buttonHolder.localBounds.dilated( 20 ) );
+
     contentNode.addChild( buttonHolder );
 
     // REVIEW: Ask for JO input on scaling molecule to fit within dialog. This may change if we use three.js
