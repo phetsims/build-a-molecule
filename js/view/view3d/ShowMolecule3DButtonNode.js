@@ -25,6 +25,10 @@ define( function( require ) {
   //REVIEW: Could rename the string key so we don't have to disable the lint rule here?
   var threeDString = require( 'string!BUILD_A_MOLECULE/threeD' ); // eslint-disable-line string-require-statement-match
 
+  // constants
+  var SQUARE_SIZE = 19; // 19 is a hard-coded constant to make it square
+
+
   function ShowMolecule3DButtonNode( completeMolecule, options ) {
     var self = this;
     Node.call( this, _.extend( {
@@ -35,7 +39,7 @@ define( function( require ) {
     this.addInputListener( new ButtonListener( {
       fire: function() {
         var trail = self.getUniqueTrail();
-        //REVIEW: See if we can just check for a ScreenView, so that we don't use this special check.
+        //REVIEW: (JO) See if we can just check for a ScreenView, so that we don't use this special check.
         var view = _.find( trail.nodes, function( node ) {
           if ( node instanceof ScreenView ) {
             return node;
@@ -46,9 +50,6 @@ define( function( require ) {
         dialog.show();
       }
     } ) );
-
-    // REVIEW: Move to constant
-    var sqSize = 19; // 19 is a hard-coded constant to make it square
 
     var label = new Text( threeDString, {
       font: new PhetFont( {
@@ -64,9 +65,9 @@ define( function( require ) {
     }
 
     var labelPadding = 2;
-    var width = Math.ceil( Math.max( sqSize, label.width + 2 * labelPadding ) );
+    var width = Math.ceil( Math.max( SQUARE_SIZE, label.width + 2 * labelPadding ) );
     label.centerX = width / 2;
-    label.centerY = sqSize / 2;
+    label.centerY = SQUARE_SIZE / 2;
 
     var base = new ShadedRectangle( new Bounds2( 0, 0, width, 19 ), {
       baseColor: new Color( 112, 177, 84 ),
