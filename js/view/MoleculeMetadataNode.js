@@ -64,13 +64,11 @@ define( function( require ) {
        * show 3d button
        *----------------------------------------------------------------------------*/
       if ( BAMConstants.HAS_3D ) {
-        // TODO: add dialog!
         var button3d = new ShowMolecule3DButtonNode( completeMolecule, {
           x: currentX,
           scale: 1.2
         } );
         //REVIEW: Should factor out constants if possible, like the 1.2, and 4 / 1.2.
-        button3d.touchArea = Shape.bounds( button3d.childBounds.dilated( 4 / 1.2 ) );
         this.addChild( button3d );
         currentX += button3d.width + 8;
       }
@@ -99,12 +97,6 @@ define( function( require ) {
 
     this.updatePosition(); // sanity check. should update (unfortunately) a number of times above
 
-    // hide 3D dialogs when the kit is hidden
-    kit.visibleProperty.link( function( isVisible ) {
-      if ( !isVisible ) {
-        // TODO: incomplete: throw new Error( 'dialog.hideDialogIfShown' );
-        //REVIEW: Is this something that should never be run into? Worth investigating
-      }
     } );
   }
 
