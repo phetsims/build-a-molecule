@@ -18,7 +18,7 @@ define( function( require ) {
   var BAMConstants = require( 'BUILD_A_MOLECULE/BAMConstants' );
   var inherit = require( 'PHET_CORE/inherit' );
   var MoleculeBondContainerNode = require( 'BUILD_A_MOLECULE/view/MoleculeBondContainerNode' );
-  var MoleculeControlHBox = require( 'BUILD_A_MOLECULE/view/MoleculeControlsHBox' );
+  var MoleculeControlsHBox = require( 'BUILD_A_MOLECULE/view/MoleculeControlsHBox' );
   var Node = require( 'SCENERY/nodes/Node' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
@@ -184,7 +184,7 @@ define( function( require ) {
 
     // handle molecule creation and destruction
     kit.addedMoleculeEmitter.addListener( function( molecule ) {
-      var moleculeControlsHBox = new MoleculeControlHBox( kit, molecule );
+      var moleculeControlsHBox = new MoleculeControlsHBox( kit, molecule );
       metadataLayer.addChild( moleculeControlsHBox );
       self.metadataMap[ molecule.moleculeId ] = moleculeControlsHBox;
 
