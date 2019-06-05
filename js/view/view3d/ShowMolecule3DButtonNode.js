@@ -9,7 +9,6 @@
 define( function( require ) {
   'use strict';
 
-  var Bounds2 = require( 'DOT/Bounds2' );
   var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   var ButtonListener = require( 'SCENERY/input/ButtonListener' );
   var Color = require( 'SCENERY/util/Color' );
@@ -17,24 +16,29 @@ define( function( require ) {
   var Molecule3DDialog = require( 'BUILD_A_MOLECULE/view/view3d/Molecule3DDialog' );
   var Node = require( 'SCENERY/nodes/Node' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
+  var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
   var ScreenView = require( 'JOIST/ScreenView' );
-  var ShadedRectangle = require( 'SCENERY_PHET/ShadedRectangle' );
   var Text = require( 'SCENERY/nodes/Text' );
 
   // strings
   //REVIEW: Could rename the string key so we don't have to disable the lint rule here?
   var threeDString = require( 'string!BUILD_A_MOLECULE/threeD' ); // eslint-disable-line string-require-statement-match
 
-  // constants
-  var SQUARE_SIZE = 19; // 19 is a hard-coded constant to make it square
-
-
   function ShowMolecule3DButtonNode( completeMolecule, options ) {
     var self = this;
-    Node.call( this, _.extend( {
+    RectangularPushButton.call( this, _.extend( {
+      content: new Text( threeDString, {
+        font: new PhetFont( {
+          size: 12,
+          weight: 'bold'
+        } ),
+        fill: 'white'
+      } ),
+      baseColor: new Color( 112, 177, 84 ),
+      xMargin: 3,  //
+      yMargin: 3,  //
       cursor: 'pointer'
     }, options ) );
-
 
     this.addInputListener( new ButtonListener( {
       fire: function() {
@@ -50,32 +54,6 @@ define( function( require ) {
         dialog.show();
       }
     } ) );
-
-    var label = new Text( threeDString, {
-      font: new PhetFont( {
-        size: 12,
-        weight: 'bold'
-      } ),
-      fill: 'white'
-    } );
-
-    // if the label is too wide, override it
-    if ( label.width > 35 ) {
-      label.text = '3D';
-    }
-
-    var labelPadding = 2;
-    var width = Math.ceil( Math.max( SQUARE_SIZE, label.width + 2 * labelPadding ) );
-    label.centerX = width / 2;
-    label.centerY = SQUARE_SIZE / 2;
-
-    var base = new ShadedRectangle( new Bounds2( 0, 0, width, 19 ), {
-      baseColor: new Color( 112, 177, 84 ),
-      cornerRadius: 3
-    } );
-
-    this.addChild( base );
-    this.addChild( label );
   }
 
   buildAMolecule.register( 'ShowMolecule3DButtonNode', ShowMolecule3DButtonNode );
