@@ -8,47 +8,49 @@
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 
-define( function( require ) {
+define( require => {
   'use strict';
 
   var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   var BAMConstants = require( 'BUILD_A_MOLECULE/BAMConstants' );
   var Rectangle = require( 'DOT/Rectangle' );
 
-  /**
-   * Construct the necessary layout. If isWide is true, the collectionAreaModelWidth is ignored
-   *
-   * @param {boolean} isWide Whether the kit should take up the entire width
-   * @param {number} collectionAreaModelWidth The model width of the collection area (computed, as it varies from tab to tab)
-   * @constructor
-   */
-  function LayoutBounds( isWide, collectionAreaModelWidth ) {
-    var availableWidth = BAMConstants.MODEL_SIZE.width - 2 * BAMConstants.MODEL_PADDING; // minus padding
-    var halfWidth = availableWidth / 2;
+  class LayoutBounds {
+    /**
+     * Construct the necessary layout. If isWide is true, the collectionAreaModelWidth is ignoredsim
+     *
+     * @param {boolean} isWide Whether the kit should take up the entire width
+     * @param {number} collectionAreaModelWidth The model width of the collection area (computed, as it varies from tab to tab)
+     * @constructor
+     */
+    constructor( isWide, collectionAreaModelWidth ) {
+      const availableWidth = BAMConstants.MODEL_SIZE.width - 2 * BAMConstants.MODEL_PADDING; // minus padding
+      const halfWidth = availableWidth / 2;
 
-    var kitBottom = -BAMConstants.MODEL_SIZE.height / 2 + BAMConstants.MODEL_PADDING; // Y is up, so this is the bottom (min y) value for the rectangle
-    var kitHeight = 550;
-    var kitTop = kitBottom + kitHeight;
+      const kitBottom = -BAMConstants.MODEL_SIZE.height / 2 + BAMConstants.MODEL_PADDING; // Y is up, so this is the bottom (min y) value for the rectangle
+      const kitHeight = 550;
+      const kitTop = kitBottom + kitHeight;
 
-    if ( isWide ) {
-      this.availableKitBounds = new Rectangle( -halfWidth, kitBottom, availableWidth, kitHeight );
-    }
-    else {
-      // leave room for collection area
-      this.availableKitBounds = new Rectangle( -halfWidth, kitBottom, availableWidth - BAMConstants.MODEL_PADDING - collectionAreaModelWidth, kitHeight );
-      if ( this.availableKitBounds.width < 0 ) {
-        console.log( 'TODO: Fix i18n sizing...' ); // workaround for xss test, etc. for now
+      if ( isWide ) {
         this.availableKitBounds = new Rectangle( -halfWidth, kitBottom, availableWidth, kitHeight );
       }
+      else {
+        // leave room for collection area
+        this.availableKitBounds = new Rectangle( -halfWidth, kitBottom, availableWidth - BAMConstants.MODEL_PADDING - collectionAreaModelWidth, kitHeight );
+        if ( this.availableKitBounds.width < 0 ) {
+          console.log( 'TODO: Fix i18n sizing...' ); // workaround for xss test, etc. for now
+          this.availableKitBounds = new Rectangle( -halfWidth, kitBottom, availableWidth, kitHeight );
+        }
+      }
+
+      this.availablePlayAreaBounds = new Rectangle(
+        -BAMConstants.MODEL_SIZE.width / 2, // far left part of model
+        kitTop, // top of kit
+        this.availableKitBounds.width + BAMConstants.MODEL_PADDING * 2, // add in padding, since there is padding in-between the kit and collection area
+        BAMConstants.MODEL_SIZE.height / 2 - kitTop );
     }
-
-    this.availablePlayAreaBounds = new Rectangle(
-      -BAMConstants.MODEL_SIZE.width / 2, // far left part of model
-      kitTop, // top of kit
-      this.availableKitBounds.width + BAMConstants.MODEL_PADDING * 2, // add in padding, since there is padding in-between the kit and collection area
-      BAMConstants.MODEL_SIZE.height / 2 - kitTop );
   }
-  buildAMolecule.register( 'LayoutBounds', LayoutBounds );
 
-  return LayoutBounds;
+  return buildAMolecule.register( 'LayoutBounds', LayoutBounds );
+
 } );
