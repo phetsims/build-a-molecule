@@ -17,7 +17,7 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var Kit = require( 'BUILD_A_MOLECULE/model/Kit' );
   var KitCollection = require( 'BUILD_A_MOLECULE/model/KitCollection' );
-  var LayoutBounds = require( 'BUILD_A_MOLECULE/model/LayoutBounds' );
+  var CollectionLayout = require( 'BUILD_A_MOLECULE/model/CollectionLayout' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
 
   // strings
@@ -101,8 +101,8 @@ define( function( require ) {
         return kitCollection;
       },
 
-      // layoutBounds
-      new LayoutBounds( true, 0 ), function( bounds, stepEmitter ) {
+      // CollectionLayout
+      new CollectionLayout( true, 0 ), function( bounds, stepEmitter ) {
         throw new Error( 'There are no more kit collections in the 3rd tab' );
       },
 

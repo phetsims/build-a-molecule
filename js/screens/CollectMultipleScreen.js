@@ -17,7 +17,7 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var Kit = require( 'BUILD_A_MOLECULE/model/Kit' );
   var KitCollection = require( 'BUILD_A_MOLECULE/model/KitCollection' );
-  var LayoutBounds = require( 'BUILD_A_MOLECULE/model/LayoutBounds' );
+  var CollectionLayout = require( 'BUILD_A_MOLECULE/model/CollectionLayout' );
   var MoleculeCollectingView = require( 'BUILD_A_MOLECULE/view/MoleculeCollectingView' );
   var MoleculeList = require( 'BUILD_A_MOLECULE/model/MoleculeList' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
@@ -62,8 +62,8 @@ define( function( require ) {
         return kitCollection;
       },
 
-      // layoutBounds
-      new LayoutBounds( false, collectionAreaWidth ), function( bounds, stepEmitter ) {
+      // CollectionLayout
+      new CollectionLayout( false, collectionAreaWidth ), function( bounds, stepEmitter ) {
         return BAMScreen.generateKitCollection( true, 4, stepEmitter, bounds );
       },
 
@@ -72,7 +72,7 @@ define( function( require ) {
         // create the view
         return new MoleculeCollectingView( model, false, function() {
           // next collection callback
-          model.addCollection( BAMScreen.generateKitCollection( true, 4, model.stepEmitter, model.layoutBounds ) );
+          model.addCollection( BAMScreen.generateKitCollection( true, 4, model.stepEmitter, model.collectionLayout ) );
         } );
       },
 

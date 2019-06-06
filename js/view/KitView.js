@@ -49,7 +49,7 @@ define( function( require ) {
     var atomLayer = this.atomLayer = new Node();
     var bottomLayer = this.bottomLayer = new Node();
 
-    var viewSwipeBounds = BAMConstants.MODEL_VIEW_TRANSFORM.modelToViewBounds( kit.layoutBounds.availablePlayAreaBounds );
+    var viewSwipeBounds = BAMConstants.MODEL_VIEW_TRANSFORM.modelToViewBounds( kit.collectionLayout.availablePlayAreaBounds );
     var swipeCatch = this.swipeCatch = Rectangle.bounds( viewSwipeBounds.eroded( BAMConstants.VIEW_PADDING ) );
     var sliceNode = this.sliceNode = new SliceNode( kit, viewSwipeBounds, view );
 

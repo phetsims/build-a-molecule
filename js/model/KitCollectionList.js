@@ -17,11 +17,11 @@ define( function( require ) {
 
   /**
    * @param {KitCollection} firstCollection
-   * @param {LayoutBounds} layoutBounds
+   * @param {CollectionLayout} collectionLayout
    * @param {Emitter} stepEmitter
    * @param {function} createKitCollection
    */
-  function KitCollectionList( firstCollection, layoutBounds, stepEmitter, createKitCollection ) {
+  function KitCollectionList( firstCollection, collectionLayout, stepEmitter, createKitCollection ) {
 
     // @public {Property.<KitCollection>}
     this.currentCollectionProperty = new Property( firstCollection );
@@ -31,7 +31,7 @@ define( function( require ) {
     this.removedCollectionEmitter = new Emitter( { validators: [ { valueType: KitCollection } ] } );
 
     this.createKitCollection = createKitCollection;
-    this.layoutBounds = layoutBounds;
+    this.collectionLayout = collectionLayout;
     this.stepEmitter = stepEmitter;
     this.collections = [];
     this.currentIndex = 0;
@@ -45,7 +45,7 @@ define( function( require ) {
       this.stepEmitter.emit( timeElapsed );
     },
     generateKitCollection: function generateKitCollection() {
-      return this.createKitCollection( this.layoutBounds, this.stepEmitter );
+      return this.createKitCollection( this.collectionLayout, this.stepEmitter );
     },
     switchTo: function( collection ) {
       this.currentIndex = this.collections.indexOf( collection );
@@ -88,11 +88,11 @@ define( function( require ) {
     },
 
     get availableKitBounds() {
-      return this.layoutBounds.availableKitBounds;
+      return this.collectionLayout.availableKitBounds;
     },
 
     get availablePlayAreaBounds() {
-      return this.layoutBounds.availablePlayAreaBounds;
+      return this.collectionLayout.availablePlayAreaBounds;
     },
 
     hasPreviousCollection: function() {

@@ -24,11 +24,11 @@ define( function( require ) {
 
 
   /**
-   * @param {LayoutBounds} layoutBounds
+   * @param {CollectionLayout} collectionLayout
    * @param {Array.<Buckets>} buckets
    * @constructor
    */
-  function Kit( layoutBounds, buckets ) {
+  function Kit( collectionLayout, buckets ) {
     var kitIdCounter = 0;
 
     //@public {number}
@@ -43,7 +43,7 @@ define( function( require ) {
     this.removedMoleculeEmitter = new Emitter( { validators: [ { valueType: Molecule } ] } );
 
     this.buckets = buckets;
-    this.layoutBounds = layoutBounds;
+    this.collectionLayout = collectionLayout;
 
     this.atoms = []; // our master list of atoms (in and out of buckets), but not ones in collection boxes
     this.atomsInCollectionBox = []; // atoms in the collection box
@@ -159,11 +159,11 @@ define( function( require ) {
     },
 
     get availableKitBounds() {
-      return this.layoutBounds.availableKitBounds;
+      return this.collectionLayout.availableKitBounds;
     },
 
     get availablePlayAreaBounds() {
-      return this.layoutBounds.availablePlayAreaBounds;
+      return this.collectionLayout.availablePlayAreaBounds;
     },
 
     /**

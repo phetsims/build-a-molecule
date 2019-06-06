@@ -19,7 +19,7 @@ define( function( require ) {
   var Emitter = require( 'AXON/Emitter' );
   var inherit = require( 'PHET_CORE/inherit' );
   var KitCollection = require( 'BUILD_A_MOLECULE/model/KitCollection' );
-  var LayoutBounds = require( 'BUILD_A_MOLECULE/model/LayoutBounds' );
+  var CollectionLayout = require( 'BUILD_A_MOLECULE/model/CollectionLayout' );
   var MoleculeList = require( 'BUILD_A_MOLECULE/model/MoleculeList' );
   var NextPreviousNavigationNode = require( 'SCENERY_PHET/NextPreviousNavigationNode' );
   var Node = require( 'SCENERY/nodes/Node' );
@@ -150,7 +150,7 @@ define( function( require ) {
     // construct a dummy collection panel and check its width
     var collection = new KitCollection();
     collection.addCollectionBox( new CollectionBox( MoleculeList.H2O, 1 ) );
-    var kitCollectionList = new KitCollectionList( collection, new LayoutBounds( false, 0 ), new Emitter(), function() {} );
+    var kitCollectionList = new KitCollectionList( collection, new CollectionLayout( false, 0 ), new Emitter(), function() {} );
     var collectionPanel = new CollectionPanel( kitCollectionList, isSingleCollectionMode, [], function() { return Bounds2.NOTHING; } );
 
     return BAMConstants.MODEL_VIEW_TRANSFORM.viewToModelDeltaX( collectionPanel.width );

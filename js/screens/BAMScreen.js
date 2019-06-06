@@ -25,13 +25,13 @@ define( function( require ) {
 
   /**
    * @param {Function} createInitialKitCollection
-   * @param {LayoutBounds} layoutBounds
+   * @param {CollectionLayout} collectionLayout
    * @param {Function} createKitCollection
    * @param {Function} createView
    * @param {Object} options
    * @constructor
    */
-  function BAMScreen( createInitialKitCollection, layoutBounds, createKitCollection, createView, options ) {
+  function BAMScreen( createInitialKitCollection, collectionLayout, createKitCollection, createView, options ) {
     options = _.extend( {
       backgroundColorProperty: new Property( BAMConstants.CANVAS_BACKGROUND_COLOR )
     }, options );
@@ -39,7 +39,7 @@ define( function( require ) {
 
     Screen.call( this,
       function() {
-        return new KitCollectionList( createInitialKitCollection( layoutBounds, stepEmitter ), layoutBounds, stepEmitter, createKitCollection );
+        return new KitCollectionList( createInitialKitCollection( collectionLayout, stepEmitter ), collectionLayout, stepEmitter, createKitCollection );
       },
       createView, options );
   }
@@ -53,7 +53,7 @@ define( function( require ) {
    * @param numBoxes               Number of collection boxes
    * @returns {KitCollection} A consistent kitCollection
    */
-  BAMScreen.generateKitCollection = function( allowMultipleMolecules, numBoxes, stepEmitter, layoutBounds ) {
+  BAMScreen.generateKitCollection = function( allowMultipleMolecules, numBoxes, stepEmitter, collectionLayout ) {
     var maxInBox = 3;
 
     var usedMolecules = []; // [CompleteMolecule]
@@ -133,7 +133,7 @@ define( function( require ) {
       } );
 
       // add the kit
-      kits.push( new Kit( layoutBounds, buckets ) );
+      kits.push( new Kit( collectionLayout, buckets ) );
 
       // remove our 1 main molecule
       molecules.shift();

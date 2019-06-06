@@ -3,8 +3,6 @@
 /**
  * Contains layout information relevant to where the kits are placed, where molecules can exist in the play area, etc.
  *
- * REVIEW: If this is kept, a rename might be beneficial, as we now use the term 'layoutBounds' for other things.
- *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 
@@ -15,7 +13,7 @@ define( require => {
   var BAMConstants = require( 'BUILD_A_MOLECULE/BAMConstants' );
   var Rectangle = require( 'DOT/Rectangle' );
 
-  class LayoutBounds {
+  class CollectionLayout {
     /**
      * Construct the necessary layout. If isWide is true, the collectionAreaModelWidth is ignoredsim
      *
@@ -51,6 +49,6 @@ define( require => {
     }
   }
 
-  return buildAMolecule.register( 'LayoutBounds', LayoutBounds );
+  return buildAMolecule.register( 'CollectionLayout', CollectionLayout );
 
 } );
