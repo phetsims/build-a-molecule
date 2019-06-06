@@ -90,9 +90,7 @@ define( function( require ) {
         labelFont: new PhetFont( {
           weight: 'bold',
           size: 18,
-          //REVIEW: Do NOT replace the family in PhetFont?
-          family: 'Arial, sans-serif'
-        } ) // matching the old look for now
+        } )
       } );
       var bucketHole = new BucketHole( bucket, BAMConstants.MODEL_VIEW_TRANSFORM );
       // NOTE: we will use the Bucket's hole with an expanded touch area to trigger the "grab by touching the bucket" behavior
