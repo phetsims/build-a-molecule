@@ -23,8 +23,7 @@ define( function( require ) {
    */
   function BAMView( kitCollectionList ) {
 
-    //REVIEW: Get rid of custom layoutBounds
-    ScreenView.call( this, { layoutBounds: new Rectangle( 0, 0, BAMConstants.STAGE_SIZE.width, BAMConstants.STAGE_SIZE.height ) } );
+    ScreenView.call( this );
     var self = this;
 
     this.baseNode = new Node();
