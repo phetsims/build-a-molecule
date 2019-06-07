@@ -7,75 +7,35 @@
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 
-define( function( require ) {
+define( require => {
   'use strict';
 
-  var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
-  var Direction = require( 'BUILD_A_MOLECULE/model/Direction' );
-  var Util = require( 'DOT/Util' );
-  var Vector2 = require( 'DOT/Vector2' );
+  const buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
+  const Direction = require( 'BUILD_A_MOLECULE/model/Direction' );
+  const Util = require( 'DOT/Util' );
+  const Vector2 = require( 'DOT/Vector2' );
 
-  /**
-   * @constructor
-   */
-  function LewisDotModel() {
-    // maps atom ID => LewisDotAtom
-    this.atomMap = {};
-  }
-  buildAMolecule.register( 'LewisDotModel', LewisDotModel );
-
-  function LewisDotAtom( atom ) {
-    var self = this;
-
-    this.atom = atom;
-    this.connections = {}; // maps Direction ID => LewisDotAtom
-    Direction.values.forEach( function( direction ) {
-      self.connections[ direction.id ] = null; // nothing in this direction
-    } );
-  }
-  //REVIEW: Don't register inner classes now
-  buildAMolecule.register( 'LewisDotAtom', LewisDotAtom );
-
-  LewisDotAtom.prototype = {
-    constructor: LewisDotAtom,
-
-    hasConnection: function( direction ) {
-      return this.connections[ direction.id ] !== null;
-    },
-
-    getLewisDotAtom: function( direction ) {
-      return this.connections[ direction.id ];
-    },
-
-    connect: function( direction, lewisDotAtom ) {
-      this.connections[ direction.id ] = lewisDotAtom;
-    },
-
-    disconnect: function( direction ) {
-      this.connections[ direction.id ] = null;
+  class LewisDotModel {
+    constructor() {
+      // maps atom ID => LewisDotAtom
+      this.atomMap = {};
     }
-  };
 
-  LewisDotModel.prototype = {
-    constructor: LewisDotModel,
-
-    addAtom: function( atom ) {
+    addAtom( atom ) {
       this.atomMap[ atom.id ] = new LewisDotAtom( atom );
-    },
+    }
 
-    breakBondsOfAtom: function( atom ) {
-      var self = this;
-
-      var dotAtom = this.getLewisDotAtom( atom );
+    breakBondsOfAtom( atom ) {
+      const dotAtom = this.getLewisDotAtom( atom );
 
       // disconnect all of its bonds
-      Direction.values.forEach( function( direction ) {
+      Direction.values.forEach( ( direction ) => {
         if ( dotAtom.hasConnection( direction ) ) {
-          var otherDotAtom = dotAtom.getLewisDotAtom( direction );
-          self.breakBond( dotAtom.atom, otherDotAtom.atom );
+          let otherDotAtom = dotAtom.getLewisDotAtom( direction );
+          this.breakBond( dotAtom.atom, otherDotAtom.atom );
         }
       } );
-    },
+    }
 
     /**
      * Break the bond between A and B (if it exists)
@@ -83,13 +43,13 @@ define( function( require ) {
      * @param {Atom} a - A
      * @param {Atom} b - B
      */
-    breakBond: function( a, b ) {
-      var dotA = this.getLewisDotAtom( a );
-      var dotB = this.getLewisDotAtom( b );
-      var direction = this.getBondDirection( a, b );
+    breakBond( a, b ) {
+      const dotA = this.getLewisDotAtom( a );
+      const dotB = this.getLewisDotAtom( b );
+      const direction = this.getBondDirection( a, b );
       dotA.disconnect( direction );
       dotB.disconnect( direction.opposite );
-    },
+    }
 
     /**
      * Bond together atoms A and B.
@@ -98,43 +58,43 @@ define( function( require ) {
      * @param {Direction} dirAtoB The direction from A to B. So if A is to the left, B is on the right, the direction would be East
      * @param {Atom}      b       B
      */
-    bond: function( a, dirAtoB, b ) {
-      var dotA = this.getLewisDotAtom( a );
-      var dotB = this.getLewisDotAtom( b );
+    bond( a, dirAtoB, b ) {
+      const dotA = this.getLewisDotAtom( a );
+      const dotB = this.getLewisDotAtom( b );
       dotA.connect( dirAtoB, dotB );
       dotB.connect( dirAtoB.opposite, dotA );
-    },
+    }
 
     /**
      * @param {Atom} atom An atom
      * @returns {Array[Direction]} All of the directions that are open (not bonded to another) on the atom
      */
-    getOpenDirections: function( atom ) {
-      var result = [];
-      var dotAtom = this.getLewisDotAtom( atom );
-      Direction.values.forEach( function( direction ) {
+    getOpenDirections( atom ) {
+      const result = [];
+      const dotAtom = this.getLewisDotAtom( atom );
+      Direction.values.forEach( ( direction ) => {
         if ( !dotAtom.hasConnection( direction ) ) {
           result.push( direction );
         }
       } );
       return result;
-    },
+    }
 
     /**
      * @param {Atom} a - A
      * @param {Atom} b - B
      * @returns {Direction} The bond direction from A to B. If it doesn't exist, an exception is thrown
      */
-    getBondDirection: function( a, b ) {
-      var dotA = this.getLewisDotAtom( a );
-      for ( var i = 0; i < 4; i++ ) {
-        var direction = Direction.values[ i ];
+    getBondDirection( a, b ) {
+      const dotA = this.getLewisDotAtom( a );
+      for ( let i = 0; i < 4; i++ ) {
+        let direction = Direction.values[ i ];
         if ( dotA.hasConnection( direction ) && dotA.getLewisDotAtom( direction ).atom === b ) {
           return direction;
         }
       }
       throw new Error( 'Bond not found' );
-    },
+    }
 
     /**
      * Decide whether this bonding would cause any layout issues. Does NOT detect loops, and will
@@ -145,7 +105,7 @@ define( function( require ) {
      * @param {Atom}      b         B
      * @returns {boolean} Whether this bond is considered acceptable
      */
-    willAllowBond: function( a, direction, b ) {
+    willAllowBond( a, direction, b ) {
 
       /*---------------------------------------------------------------------------*
        * We need to verify that if we bind these two together that no overlaps occur.
@@ -154,17 +114,17 @@ define( function( require ) {
        * hydrogen.
        *----------------------------------------------------------------------------*/
 
-      var coordinateMap = {};
+      const coordinateMap = {};
 
       // map the molecule on the A side, from the origin
-      var success = this.mapMolecule( Vector2.ZERO, a, null, coordinateMap );
+      let success = this.mapMolecule( Vector2.ZERO, a, null, coordinateMap );
 
       // map the molecule on the B side, with the offset from direction
       success = success && this.mapMolecule( direction.vector, b, null, coordinateMap );
 
       // we would have false if a conflict was found
       return success;
-    },
+    }
 
     /*---------------------------------------------------------------------------*
      * implementation details
@@ -180,15 +140,14 @@ define( function( require ) {
      * @param {Map x+','+y => Atom} coordinateMap Coordinate map to which we add the atoms to
      * @returns {boolean} Success. Will return false if any heavy atom overlaps on another atom. If it returns false, the coordinate map may be inconsistent
      */
-    mapMolecule: function( coordinates, atom, excludedAtom, coordinateMap ) {
-      var self = this;
+    mapMolecule( coordinates, atom, excludedAtom, coordinateMap ) {
 
-      var dotAtom = this.getLewisDotAtom( atom );
+      const dotAtom = this.getLewisDotAtom( atom );
 
       // for sanity and equality (negative zero equals zero, so don't worry about that)
-      var point = new Vector2( Util.roundSymmetric( coordinates.x ), Util.roundSymmetric( coordinates.y ) );
+      const point = new Vector2( Util.roundSymmetric( coordinates.x ), Util.roundSymmetric( coordinates.y ) );
 
-      var idx = point.x + ',' + point.y;
+      const idx = point.x + ',' + point.y;
 
       // if we have seen a different atom in this position
       if ( coordinateMap[ idx ] ) {
@@ -202,17 +161,17 @@ define( function( require ) {
         coordinateMap[ idx ] = atom;
       }
 
-      var success = true;
+      let success = true;
 
       // check all directions so we can explore all other atoms that need to be mapped
-      for ( var i = 0; i < 4; i++ ) {
-        var direction = Direction.values[ i ];
+      for ( let i = 0; i < 4; i++ ) {
+        let direction = Direction.values[ i ];
         if ( dotAtom.hasConnection( direction ) ) {
-          var otherDot = dotAtom.getLewisDotAtom( direction );
+          let otherDot = dotAtom.getLewisDotAtom( direction );
 
           // if this atom isn't excluded
           if ( otherDot.atom !== excludedAtom ) {
-            success = self.mapMolecule( coordinates.plus( direction.vector ), otherDot.atom, atom, coordinateMap );
+            success = this.mapMolecule( coordinates.plus( direction.vector ), otherDot.atom, atom, coordinateMap );
 
             // if we had a failure mapping that one, bail out
             if ( !success ) {
@@ -224,12 +183,62 @@ define( function( require ) {
 
       // everything worked
       return success;
-    },
+    }
 
-    getLewisDotAtom: function( atom ) {
+    getLewisDotAtom( atom ) {
       return this.atomMap[ atom.id ];
     }
-  };
+  }
 
-  return LewisDotModel;
+  class LewisDotAtom {
+    /**
+     * @param {Atom} atom
+     */
+    constructor( atom ) {
+      this.atom = atom;
+      this.connections = {}; // maps Direction ID => LewisDotAtom
+      Direction.values.forEach( ( direction ) => {
+        this.connections[ direction.id ] = null; // nothing in this direction
+      } );
+    }
+
+    /**
+     * @param {Direction} direction
+     * @public
+     *
+     * @returns {boolean}
+     */
+    hasConnection( direction ) {
+      return this.connections[ direction.id ] !== null;
+    }
+
+    /**
+     * @param {Direction} direction
+     * @public
+     *
+     * @returns {*}
+     */
+    getLewisDotAtom( direction ) {
+      return this.connections[ direction.id ];
+    }
+
+    /**
+     * @param {Direction} direction
+     * @param {LewisDotAtom} lewisDotAtom
+     * @private
+     */
+    connect( direction, lewisDotAtom ) {
+      this.connections[ direction.id ] = lewisDotAtom;
+    }
+
+    /**
+     * @param {Direction} direction
+     * @private
+     */
+    disconnect( direction ) {
+      this.connections[ direction.id ] = null;
+    }
+  }
+
+  return buildAMolecule.register( 'LewisDotModel', LewisDotModel );
 } );
