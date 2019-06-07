@@ -21,10 +21,9 @@ define( function( require ) {
   function ElementHistogram( molecule ) {
     var self = this;
 
-    // REVIEW: map from element.symbol => count?
     this.quantities = {};
-    BAMConstants.SUPPORTED_ELEMENTS.forEach( function( element ) {
-      self.quantities[ element.symbol ] = 0;
+    BAMConstants.SUPPORTED_ELEMENTS.map( ( element ) => {
+      return self.quantities[ element.symbol ] = 0;
     } );
 
     if ( molecule ) {
@@ -45,6 +44,7 @@ define( function( require ) {
     },
 
     addMolecule: function( molecule ) {
+      // REVIEW: Arrow function to remove self reference. Check other places
       var self = this;
 
       molecule.atoms.forEach( function( atom ) {
