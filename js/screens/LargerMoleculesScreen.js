@@ -102,7 +102,7 @@ define( function( require ) {
       },
 
       // CollectionLayout
-      new CollectionLayout( true, 0 ), function( bounds, stepEmitter ) {
+      new CollectionLayout( true, 0 ), function() {
         throw new Error( 'There are no more kit collections in the 3rd tab' );
       },
 

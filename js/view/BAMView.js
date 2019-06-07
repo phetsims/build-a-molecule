@@ -49,8 +49,6 @@ define( function( require ) {
   buildAMolecule.register( 'BAMView', BAMView );
 
   return inherit( ScreenView, BAMView, {
-    //REVIEW: See if it's possible to remove this workaround (should be, just check for a ScreenView instead)
-    isBAMView: true, // because require.js doesn't like to load us in some places!
 
     addCollection: function( collection ) {
       var kitCollectionNode = new KitCollectionNode( this.kitCollectionList, collection, this );
