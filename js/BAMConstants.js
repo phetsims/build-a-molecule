@@ -9,11 +9,12 @@ define( function( require ) {
   var Dimension2 = require( 'DOT/Dimension2' );
   var Element = require( 'NITROGLYCERIN/Element' );
   var ModelViewTransform2 = require( 'PHETCOMMON/view/ModelViewTransform2' );
+  var ScreenView = require( 'JOIST/ScreenView' );
   var Util = require( 'DOT/Util' );
   var Vector2 = require( 'DOT/Vector2' );
 
   // Constants
-  var VIEW_SIZE = new Dimension2( 1100, 679 );
+  var VIEW_SIZE = ScreenView.DEFAULT_LAYOUT_BOUNDS;
   var MODEL_VIEW_TRANSFORM = ModelViewTransform2.createSinglePointScaleInvertedYMapping(
     Vector2.ZERO,
     new Vector2( Util.roundSymmetric( VIEW_SIZE.width * 0.5 ), Util.roundSymmetric( VIEW_SIZE.height * 0.5 ) ),
@@ -39,7 +40,6 @@ define( function( require ) {
      * Layout
      *----------------------------------------------------------------------------*/
 
-    //REVIEW: Use the ScreenView's layoutBounds instead if possible (with passing through)
     STAGE_SIZE: VIEW_SIZE, // the size of our "view" coordinate area
     MODEL_VIEW_TRANSFORM: MODEL_VIEW_TRANSFORM,
     MODEL_SIZE: MODEL_SIZE,

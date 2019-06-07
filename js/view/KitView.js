@@ -83,7 +83,7 @@ define( function( require ) {
       }
     };
     // ensure that touches don't get pruned before this point
-    atomLayer.touchArea = Shape.bounds( BAMConstants.STAGE_SIZE.toBounds() );
+    atomLayer.touchArea = Shape.bounds( BAMConstants.STAGE_SIZE );
 
     kit.buckets.forEach( function( bucket ) {
       var bucketFront = new BucketFront( bucket, BAMConstants.MODEL_VIEW_TRANSFORM, {
