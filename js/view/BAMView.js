@@ -10,11 +10,9 @@ define( function( require ) {
   'use strict';
 
   var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
-  var BAMConstants = require( 'BUILD_A_MOLECULE/BAMConstants' );
   var inherit = require( 'PHET_CORE/inherit' );
   var KitCollectionNode = require( 'BUILD_A_MOLECULE/view/KitCollectionNode' );
   var Node = require( 'SCENERY/nodes/Node' );
-  var Rectangle = require( 'DOT/Rectangle' );
   var ScreenView = require( 'JOIST/ScreenView' );
 
   /**

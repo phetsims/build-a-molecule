@@ -21,8 +21,8 @@ define( require => {
     constructor( molecule ) {
       super();
       this.quantities = {};
-      BAMConstants.SUPPORTED_ELEMENTS.map( ( element ) => {
-        return this.quantities[ element.symbol ] = 0;
+      BAMConstants.SUPPORTED_ELEMENTS.forEach( ( element ) => {
+        this.quantities[ element.symbol ] = 0;
       } );
 
       if ( molecule ) {
@@ -86,7 +86,7 @@ define( require => {
       if ( otherHistogram instanceof ElementHistogram ) {
         const length = BAMConstants.SUPPORTED_ELEMENTS.length;
         for ( let i = 0; i < length; i++ ) {
-          let element = BAMConstants.SUPPORTED_ELEMENTS[ i ];
+          const element = BAMConstants.SUPPORTED_ELEMENTS[ i ];
 
           if ( this.getQuantity( element ) !== otherHistogram.getQuantity( element ) ) {
             return false;

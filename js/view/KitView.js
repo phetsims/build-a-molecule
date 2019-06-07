@@ -89,7 +89,7 @@ define( function( require ) {
       var bucketFront = new BucketFront( bucket, BAMConstants.MODEL_VIEW_TRANSFORM, {
         labelFont: new PhetFont( {
           weight: 'bold',
-          size: 18,
+          size: 18
         } )
       } );
       var bucketHole = new BucketHole( bucket, BAMConstants.MODEL_VIEW_TRANSFORM );
