@@ -6,92 +6,82 @@
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 
-define( function( require ) {
+define( require => {
   'use strict';
 
-  var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
-  var BAMConstants = require( 'BUILD_A_MOLECULE/BAMConstants' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var PhetioObject = require( 'TANDEM/PhetioObject' );
+  const buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
+  const BAMConstants = require( 'BUILD_A_MOLECULE/BAMConstants' );
+  const PhetioObject = require( 'TANDEM/PhetioObject' );
 
-  /**
-   * @param {MoleculeStructure} molecule
-   * @constructor
-   */
-  function ElementHistogram( molecule ) {
-    var self = this;
-
-    this.quantities = {};
-    BAMConstants.SUPPORTED_ELEMENTS.map( ( element ) => {
-      return self.quantities[ element.symbol ] = 0;
-    } );
-
-    if ( molecule ) {
-      this.addMolecule( molecule );
-    }
-  }
-
-  buildAMolecule.register( 'ElementHistogram', ElementHistogram );
-
-  return inherit( PhetioObject, ElementHistogram, {
-
-    getQuantity: function( element ) {
-      return this.quantities[ element.symbol ];
-    },
-
-    addElement: function( element ) {
-      this.quantities[ element.symbol ] += 1;
-    },
-
-    addMolecule: function( molecule ) {
-      // REVIEW: Arrow function to remove self reference. Check other places
-      var self = this;
-
-      molecule.atoms.forEach( function( atom ) {
-        self.addElement( atom.element );
+  class ElementHistogram extends PhetioObject {
+    /**
+     * @param {MoleculeStructure} molecule
+     * @constructor
+     */
+    constructor( molecule ) {
+      super();
+      this.quantities = {};
+      BAMConstants.SUPPORTED_ELEMENTS.map( ( element ) => {
+        return thihs.quantities[ element.symbol ] = 0;
       } );
-    },
+
+      if ( molecule ) {
+        this.addMolecule( molecule );
+      }
+    }
+
+    getQuantity( element ) {
+      return this.quantities[ element.symbol ];
+    }
+
+    addElement( element ) {
+      this.quantities[ element.symbol ] += 1;
+    }
+
+    addMolecule( molecule ) {
+
+      molecule.atoms.forEach( ( atom ) => {
+        this.addElement( atom.element );
+      } );
+    }
 
     /**
      * @param otherHistogram Another histogram
      * @returns {boolean} Whether otherHistogram is a subset of this histogram (i.e. for all elements e, this.count( e ) >= other.count( e )
      */
-    containsAsSubset: function( otherHistogram ) {
-      var self = this;
+    containsAsSubset( otherHistogram ) {
 
-      var length = BAMConstants.SUPPORTED_ELEMENTS.length;
-      for ( var i = 0; i < length; i++ ) {
-        var element = BAMConstants.SUPPORTED_ELEMENTS[ i ];
+      const length = BAMConstants.SUPPORTED_ELEMENTS.length;
+      for ( let i = 0; i < length; i++ ) {
+        let element = BAMConstants.SUPPORTED_ELEMENTS[ i ];
 
-        if ( self.getQuantity( element ) < otherHistogram.getQuantity( element ) ) {
+        if ( this.getQuantity( element ) < otherHistogram.getQuantity( element ) ) {
           return false;
         }
       }
       return true;
-    },
+    }
 
     /**
      * @returns {string} A hash string that should be unique for each unique histogram, and the same for each equivalent histogram
      */
-    getHashString: function() {
-      var self = this;
-      var hashString = '';
+    getHashString() {
+      let hashString = '';
 
-      BAMConstants.SUPPORTED_ELEMENTS.forEach( function( element ) {
+      BAMConstants.SUPPORTED_ELEMENTS.forEach( ( element ) => {
         hashString += '_' + self.getQuantity( element );
       } );
       return hashString;
-    },
+    }
 
-    equals: function( otherHistogram ) {
-      var self = this;
+    equals( otherHistogram ) {
 
       if ( otherHistogram instanceof ElementHistogram ) {
-        var length = BAMConstants.SUPPORTED_ELEMENTS.length;
-        for ( var i = 0; i < length; i++ ) {
-          var element = BAMConstants.SUPPORTED_ELEMENTS[ i ];
+        const length = BAMConstants.SUPPORTED_ELEMENTS.length;
+        for ( let i = 0; i < length; i++ ) {
+          let element = BAMConstants.SUPPORTED_ELEMENTS[ i ];
 
-          if ( self.getQuantity( element ) !== otherHistogram.getQuantity( element ) ) {
+          if ( this.getQuantity( element ) !== otherHistogram.getQuantity( element ) ) {
             return false;
           }
         }
@@ -101,5 +91,7 @@ define( function( require ) {
         return false;
       }
     }
-  } );
+  }
+
+  return buildAMolecule.register( 'ElementHistogram', ElementHistogram );
 } );
