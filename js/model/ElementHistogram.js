@@ -22,7 +22,7 @@ define( require => {
       super();
       this.quantities = {};
       BAMConstants.SUPPORTED_ELEMENTS.map( ( element ) => {
-        return thihs.quantities[ element.symbol ] = 0;
+        return this.quantities[ element.symbol ] = 0;
       } );
 
       if ( molecule ) {
@@ -30,52 +30,59 @@ define( require => {
       }
     }
 
+    /**
+     * Returns the amount of a specific element
+     * @param {Element} element
+     * @public
+     *
+     * @returns {number}
+     */
     getQuantity( element ) {
       return this.quantities[ element.symbol ];
     }
 
+    /**
+     * @param {Element} element
+     * @public
+     *
+     * @returns {number}
+     */
     addElement( element ) {
       this.quantities[ element.symbol ] += 1;
     }
 
+    /**
+     * Adds elements from molecule
+     *
+     * @param {MoleculeStructure} molecule
+     */
     addMolecule( molecule ) {
-
       molecule.atoms.forEach( ( atom ) => {
         this.addElement( atom.element );
       } );
     }
 
     /**
-     * @param otherHistogram Another histogram
-     * @returns {boolean} Whether otherHistogram is a subset of this histogram (i.e. for all elements e, this.count( e ) >= other.count( e )
-     */
-    containsAsSubset( otherHistogram ) {
-
-      const length = BAMConstants.SUPPORTED_ELEMENTS.length;
-      for ( let i = 0; i < length; i++ ) {
-        let element = BAMConstants.SUPPORTED_ELEMENTS[ i ];
-
-        if ( this.getQuantity( element ) < otherHistogram.getQuantity( element ) ) {
-          return false;
-        }
-      }
-      return true;
-    }
-
-    /**
-     * @returns {string} A hash string that should be unique for each unique histogram, and the same for each equivalent histogram
+     * A hash string that should be unique for each unique histogram, and the same for each equivalent histogram
+     *
+     * @returns {string}
      */
     getHashString() {
       let hashString = '';
 
       BAMConstants.SUPPORTED_ELEMENTS.forEach( ( element ) => {
-        hashString += '_' + self.getQuantity( element );
+        hashString += '_' + this.getQuantity( element );
       } );
       return hashString;
     }
 
+    /**
+     * Compares elements of each histogram
+     *
+     * @param {ElementHistogram} otherHistogram
+     * @returns {boolean}
+     */
     equals( otherHistogram ) {
-
       if ( otherHistogram instanceof ElementHistogram ) {
         const length = BAMConstants.SUPPORTED_ELEMENTS.length;
         for ( let i = 0; i < length; i++ ) {
