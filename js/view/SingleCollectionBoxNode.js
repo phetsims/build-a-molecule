@@ -32,7 +32,7 @@ define( function( require ) {
 
     assert && assert( box.capacity === 1 );
 
-    this.addHeaderNode( new RichText( StringUtils.fillIn( collectionSinglePatternString,
+    this.addChild( new RichText( StringUtils.fillIn( collectionSinglePatternString,
       {
         general: box.moleculeType.getGeneralFormulaFragment(),
         display: box.moleculeType.getDisplayName()

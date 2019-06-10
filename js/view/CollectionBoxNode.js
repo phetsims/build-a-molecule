@@ -22,7 +22,7 @@ define( function( require ) {
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var Shape = require( 'KITE/Shape' );
   var ShowMolecule3DButtonNode = require( 'BUILD_A_MOLECULE/view/view3d/ShowMolecule3DButtonNode' );
-
+  const VBox = require( 'SCENERY/nodes/VBox' );
 
   // constants
   var MOLECULE_PADDING = 5;
@@ -35,7 +35,7 @@ define( function( require ) {
    * @constructor
    */
   function CollectionBoxNode( box, toModelBounds ) {
-    Node.call( this, {} );
+    VBox.call( this );
     var self = this;
 
     this.box = box;
@@ -104,7 +104,7 @@ define( function( require ) {
 
   buildAMolecule.register( 'CollectionBoxNode', CollectionBoxNode );
 
-  return inherit( Node, CollectionBoxNode, {
+  return inherit( VBox, CollectionBoxNode, {
     /**
      * Allows us to set the model position of the collection boxes according to how they are laid out
      */
@@ -138,31 +138,6 @@ define( function( require ) {
     /*---------------------------------------------------------------------------*
      * Implementation
      *----------------------------------------------------------------------------*/
-
-    addHeaderNode: function( headerNode ) {
-      var self = this;
-
-      this.addChild( headerNode );
-
-      //REVIEW: layout containers? VBox?
-      var centerX = this.width / 2;
-      var y = 0;
-      var len = this._children.length;
-      for ( var i = 1; i > 0; i++ ) { // eslint-disable-line for-direction
-        if ( i >= len ) {
-          i = 0;
-        }
-        var child = this._children[ i ];
-        child.centerX = centerX;
-        child.top = y;
-        y += child.height + 5 + ( child === self.boxNode ? 3 : -3 );
-        if ( i === 0 ) {
-          break;
-        }
-      }
-      this.children.forEach( function( child ) {
-      } );
-    },
 
     addMolecule: function( molecule ) {
       this.cancelBlinksInProgress();

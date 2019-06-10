@@ -33,7 +33,7 @@ define( function( require ) {
   function MultipleCollectionBoxNode( box, toModelBounds ) {
     CollectionBoxNode.call( this, box, toModelBounds );
 
-    this.addHeaderNode( new RichText( StringUtils.fillIn( collectionMultipleGoalPatternString, {
+    this.addChild( new RichText( StringUtils.fillIn( collectionMultipleGoalPatternString, {
       number: box.capacity,
       formula: box.moleculeType.getGeneralFormulaFragment()
     } ), {
@@ -61,7 +61,7 @@ define( function( require ) {
       }
     } );
 
-    this.addHeaderNode( quantityNode );
+    this.addChild( quantityNode );
   }
   buildAMolecule.register( 'MultipleCollectionBoxNode', MultipleCollectionBoxNode );
 
