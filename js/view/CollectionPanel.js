@@ -33,8 +33,8 @@ define( function( require ) {
   var collectionPatternString = require( 'string!BUILD_A_MOLECULE/collectionPattern' );
   var yourMoleculesString = require( 'string!BUILD_A_MOLECULE/yourMolecules' );
 
-  // REVIEW: BAMConstants?
-  var containerPadding = 15;
+  // constants
+  var CONTAINER_PADDING = 15;
 
   /**
    * @param {KitCollectionList} kitCollectionList
@@ -56,7 +56,7 @@ define( function( require ) {
     this.collectionAttachmentCallbacks = collectionAttachmentCallbacks;
 
     // move it over so the background will have padding
-    this.layoutNode.setTranslation( containerPadding, containerPadding );
+    this.layoutNode.setTranslation( CONTAINER_PADDING, CONTAINER_PADDING );
 
     // "Your Molecule Collection"
     var moleculeCollectionText = new Text( yourMoleculesString, {
@@ -213,12 +213,12 @@ define( function( require ) {
     },
 
     getPlacementWidth: function() {
-      return this.layoutNode.width + containerPadding * 2;
+      return this.layoutNode.width + CONTAINER_PADDING * 2;
     },
 
     getPlacementHeight: function() {
       // how much height we need with proper padding
-      var requiredHeight = this.layoutNode.height + containerPadding * 2;
+      var requiredHeight = this.layoutNode.height + CONTAINER_PADDING * 2;
 
       // how much height we will take up to fit our vertical size perfectly
       var fixedHeight = BAMConstants.STAGE_SIZE.height - BAMConstants.VIEW_PADDING * 2; // we will have padding above and below
