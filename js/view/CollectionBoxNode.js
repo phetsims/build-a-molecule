@@ -10,6 +10,7 @@
 define( function( require ) {
   'use strict';
 
+  // constants
   var Bounds2 = require( 'DOT/Bounds2' );
   var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   var BAMConstants = require( 'BUILD_A_MOLECULE/BAMConstants' );
@@ -18,40 +19,18 @@ define( function( require ) {
   var Molecule3DNode = require( 'BUILD_A_MOLECULE/view/view3d/Molecule3DNode' );
   var MoleculeList = require( 'BUILD_A_MOLECULE/model/MoleculeList' );
   var Node = require( 'SCENERY/nodes/Node' );
-  var Property = require( 'AXON/Property' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var Shape = require( 'KITE/Shape' );
   var ShowMolecule3DButtonNode = require( 'BUILD_A_MOLECULE/view/view3d/ShowMolecule3DButtonNode' );
 
-  //REVIEW: Should these be constants or moved into constructor?
-  var moleculePadding = 5;
-  var blackBoxPaddingFor3D = BAMConstants.HAS_3D ? 10 : 0;
+
+  // constants
+  var MOLECULE_PADDING = 5;
+  var BLACK_BOX_PADDING = BAMConstants.HAS_3D ? 10 : 0;
 
   var moleculeIdThumbnailMap = {}; // maps moleculeId => Node (thumbnail view for the molecule)
 
-  // REVIEW: This is in the wrong place. Constructors are first in file structure.
-  /**
-   * @param {CompleteMolecule} completeMolecule
-   * @returns {Node}
-   */
-  function lookupThumbnail( completeMolecule ) {
-    if ( !moleculeIdThumbnailMap[ completeMolecule.moleculeId ] ) {
-      var moleculeNode = new Molecule3DNode( completeMolecule, new Bounds2( 0, 0, 50, 50 ), false );
-      var transformMatrix = Molecule3DNode.initialTransforms[ completeMolecule.getGeneralFormula() ];
-      if ( transformMatrix ) {
-        moleculeNode.transformMolecule( transformMatrix );
-      }
-      moleculeNode.draw();
-      //REVIEW: Can we factor all of this out to a static call on Molecule3DNode?
-      moleculeIdThumbnailMap[ completeMolecule.moleculeId ] = new Image( moleculeNode.canvas.toDataURL() );
-    }
 
-    // wrap the returned image in an extra node so we can transform them independently, and that takes up the proper amount of space
-    var node = moleculeIdThumbnailMap[ completeMolecule.moleculeId ];
-    var wrapperNode = new Rectangle( 0, 0, 50, 50 );
-    wrapperNode.addChild( node );
-    return wrapperNode;
-  }
 
   /**
    * @param {CollectionBox} box
@@ -63,8 +42,6 @@ define( function( require ) {
     var self = this;
 
     this.box = box;
-    this.dialogProperty = new Property( null ); // will reference the dialog showing a 3d model of this molecule
-    this.headerCount = 0;
     this.moleculeNodes = [];
     this.moleculeNodeMap = {}; // molecule ID => node, stores nodes for each moecule
     this.blinkTimeout = null; // NOT zero, since that could be a valid timeout ID for window.setTimeout!
@@ -80,7 +57,7 @@ define( function( require ) {
     if ( BAMConstants.HAS_3D ) {
       var show3dButton = new ShowMolecule3DButtonNode( box.moleculeType );
       show3dButton.touchArea = Shape.bounds( show3dButton.bounds.dilated( 10 ) );
-      show3dButton.right = this.blackBox.right - blackBoxPaddingFor3D;
+      show3dButton.right = this.blackBox.right - BLACK_BOX_PADDING;
       show3dButton.centerY = this.blackBox.centerY;
       this.button3dWidth = show3dButton.width;
       var update3dVisibility = function() {
@@ -112,7 +89,7 @@ define( function( require ) {
     // add invisible molecules to the molecule layer so that its size won't change later (fixes molecule positions)
     var nodes = [];
     for ( var i = 0; i < box.capacity; i++ ) {
-      var node = lookupThumbnail( box.moleculeType );
+      var node = this.lookupThumbnail( box.moleculeType );
       node.visible = false;
       nodes.push( node );
       this.moleculeLayer.addChild( node );
@@ -135,6 +112,29 @@ define( function( require ) {
      */
     updateLocation: function() {
       this.locationUpdateObserver();
+    },
+
+    /**
+     * @param {CompleteMolecule} completeMolecule
+     * @returns {Node}
+     */
+    lookupThumbnail: function( completeMolecule ) {
+      if ( !moleculeIdThumbnailMap[ completeMolecule.moleculeId ] ) {
+        var moleculeNode = new Molecule3DNode( completeMolecule, new Bounds2( 0, 0, 50, 50 ), false );
+        var transformMatrix = Molecule3DNode.initialTransforms[ completeMolecule.getGeneralFormula() ];
+        if ( transformMatrix ) {
+          moleculeNode.transformMolecule( transformMatrix );
+        }
+        moleculeNode.draw();
+        //REVIEW: Can we factor all of this out to a static call on Molecule3DNode?
+        moleculeIdThumbnailMap[ completeMolecule.moleculeId ] = new Image( moleculeNode.canvas.toDataURL() );
+      }
+
+      // wrap the returned image in an extra node so we can transform them independently, and that takes up the proper amount of space
+      var node = moleculeIdThumbnailMap[ completeMolecule.moleculeId ];
+      var wrapperNode = new Rectangle( 0, 0, 50, 50 );
+      wrapperNode.addChild( node );
+      return wrapperNode;
     },
 
     /*---------------------------------------------------------------------------*
@@ -171,7 +171,7 @@ define( function( require ) {
       this.updateBoxGraphics();
 
       var completeMolecule = MoleculeList.getMasterInstance().findMatchingCompleteMolecule( molecule );
-      var pseudo3DNode = lookupThumbnail( completeMolecule );
+      var pseudo3DNode = this.lookupThumbnail( completeMolecule );
       this.moleculeLayer.addChild( pseudo3DNode );
       this.moleculeNodes.push( pseudo3DNode );
       this.moleculeNodeMap[ molecule.moleculeId ] = pseudo3DNode;
@@ -214,7 +214,7 @@ define( function( require ) {
       var x = 0;
       moleculeNodes.forEach( function( moleculeNode ) {
         moleculeNode.setTranslation( x, ( maxHeight - moleculeNode.height ) / 2 );
-        x += moleculeNode.width + moleculePadding;
+        x += moleculeNode.width + MOLECULE_PADDING;
       } );
     },
 
@@ -223,7 +223,7 @@ define( function( require ) {
      */
     getMoleculeAreaInBlackBox: function() {
       var bounds = this.blackBox.bounds;
-      return bounds.withMaxX( bounds.maxX - blackBoxPaddingFor3D - this.button3dWidth ); // leave room for 3d button on RHS
+      return bounds.withMaxX( bounds.maxX - BLACK_BOX_PADDING - this.button3dWidth ); // leave room for 3d button on RHS
     },
 
     centerMoleculesInBlackBox: function() {
