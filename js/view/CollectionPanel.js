@@ -9,7 +9,6 @@
 define( function( require ) {
   'use strict';
 
-  var BAMScreen = require( 'BUILD_A_MOLECULE/screens/BAMScreen' );
   var Bounds2 = require( 'DOT/Bounds2' );
   var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   var CollectionAreaNode = require( 'BUILD_A_MOLECULE/view/CollectionAreaNode' );
@@ -25,6 +24,7 @@ define( function( require ) {
   var Node = require( 'SCENERY/nodes/Node' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
+  var ScreenView = require( 'JOIST/ScreenView' );
   var Shape = require( 'KITE/Shape' );
   var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   var Text = require( 'SCENERY/nodes/Text' );
@@ -204,8 +204,7 @@ define( function( require ) {
       var node = this; // eslint-disable-line consistent-this
       while ( node.getParent() !== null ) {
         node = node.getParent();
-        //REVIEW: Check for ScreenView instead?
-        if ( node instanceof BAMScreen ) {
+        if ( node instanceof ScreenView ) {
           return true;
         }
       }
