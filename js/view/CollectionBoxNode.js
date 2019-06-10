@@ -28,9 +28,6 @@ define( function( require ) {
   var MOLECULE_PADDING = 5;
   var BLACK_BOX_PADDING = BAMConstants.HAS_3D ? 10 : 0;
 
-  var moleculeIdThumbnailMap = {}; // maps moleculeId => Node (thumbnail view for the molecule)
-
-
 
   /**
    * @param {CollectionBox} box
@@ -46,6 +43,7 @@ define( function( require ) {
     this.moleculeNodeMap = {}; // molecule ID => node, stores nodes for each moecule
     this.blinkTimeout = null; // NOT zero, since that could be a valid timeout ID for window.setTimeout!
     this.boxNode = new Node();
+    this.moleculeIdThumbnailMap = {}; // maps moleculeId => Node (thumbnail view for the molecule)
 
     this.blackBox = new Rectangle( 0, 0, 160, 50, {
       fill: BAMConstants.MOLECULE_COLLECTION_BOX_BACKGROUND
@@ -119,7 +117,7 @@ define( function( require ) {
      * @returns {Node}
      */
     lookupThumbnail: function( completeMolecule ) {
-      if ( !moleculeIdThumbnailMap[ completeMolecule.moleculeId ] ) {
+      if ( !this.moleculeIdThumbnailMap[ completeMolecule.moleculeId ] ) {
         var moleculeNode = new Molecule3DNode( completeMolecule, new Bounds2( 0, 0, 50, 50 ), false );
         var transformMatrix = Molecule3DNode.initialTransforms[ completeMolecule.getGeneralFormula() ];
         if ( transformMatrix ) {
@@ -127,11 +125,11 @@ define( function( require ) {
         }
         moleculeNode.draw();
         //REVIEW: Can we factor all of this out to a static call on Molecule3DNode?
-        moleculeIdThumbnailMap[ completeMolecule.moleculeId ] = new Image( moleculeNode.canvas.toDataURL() );
+        this.moleculeIdThumbnailMap[ completeMolecule.moleculeId ] = new Image( moleculeNode.canvas.toDataURL() );
       }
 
       // wrap the returned image in an extra node so we can transform them independently, and that takes up the proper amount of space
-      var node = moleculeIdThumbnailMap[ completeMolecule.moleculeId ];
+      var node = this.moleculeIdThumbnailMap[ completeMolecule.moleculeId ];
       var wrapperNode = new Rectangle( 0, 0, 50, 50 );
       wrapperNode.addChild( node );
       return wrapperNode;
