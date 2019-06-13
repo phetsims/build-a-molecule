@@ -32,6 +32,7 @@ define( function( require ) {
     var collectionAttachmentCallbacks = [];
 
     var collectionPanel = new CollectionPanel( kitCollectionList, isSingleCollectionMode, collectionAttachmentCallbacks, function( node ) {
+
       // returns model bounds from a node, given local coordinates on a node
       var viewBounds = node.getParent().getUniqueTrail().getTransformTo( self.getUniqueTrail() ).transformBounds2( node.bounds );
       return BAMConstants.MODEL_VIEW_TRANSFORM.viewToModelBounds( viewBounds );
@@ -43,11 +44,11 @@ define( function( require ) {
     // notify attachment
     collectionAttachmentCallbacks.forEach( function( callback ) { callback(); } );
   }
+
   buildAMolecule.register( 'MoleculeCollectingView', MoleculeCollectingView );
 
   return inherit( BAMView, MoleculeCollectingView, {
     /**
-     *
      * @param {KitCollection} collection
      *
      * @override

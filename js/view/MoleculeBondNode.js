@@ -55,12 +55,12 @@ define( function( require ) {
 
     Node.call( this, {} );
 
-    //REVIEW: This pattern should be avoided. Just accessing `this.a` isn't too verbose and is recommended
-    var a = this.a = bond.a;
-    var b = this.b = bond.b;
+    // @private
+    this.a = bond.a;
+    this.b = bond.b;
 
     // use the lewis dot model to get our bond direction
-    var bondDirection = kit.getBondDirection( a, b );
+    var bondDirection = kit.getBondDirection( this.a, this.b );
     var isHorizontal = bondDirection.id === 'west' || bondDirection.id === 'east';
 
     var openFile = 'scissors';
@@ -101,13 +101,13 @@ define( function( require ) {
       touchArea: new Shape() // these areas don't respond to touch events
     } );
     target.addInputListener( new ButtonListener( {
-      fire: function( evt ) {
-        kit.breakBond( a, b );
+      fire: function() {
+        kit.breakBond( self.a, self.b );
       },
-      up: function( evt ) {
+      up: function() {
         target.cursor = openCursor;
       },
-      down: function( evt ) {
+      down: function() {
         target.cursor = closedCursor;
       }
     } ) );
@@ -115,15 +115,15 @@ define( function( require ) {
 
     // listener that will update the position of our hit target
     this.positionListener = function() {
-      var orientation = b.positionProperty.value.minus( a.positionProperty.value );
+      var orientation = self.b.positionProperty.value.minus( self.a.positionProperty.value );
       if ( orientation.magnitude > 0 ) {
         orientation.normalize();
       }
-      var location = orientation.times( a.covalentRadius ).plus( a.positionProperty.value );
+      var location = orientation.times( self.a.covalentRadius ).plus( self.a.positionProperty.value );
       self.setTranslation( BAMConstants.MODEL_VIEW_TRANSFORM.modelToViewPosition( location ) );
     };
-    a.positionProperty.link( this.positionListener );
-    b.positionProperty.link( this.positionListener );
+    this.a.positionProperty.link( this.positionListener );
+    this.b.positionProperty.link( this.positionListener );
   }
   buildAMolecule.register( 'MoleculeBondNode', MoleculeBondNode );
 
