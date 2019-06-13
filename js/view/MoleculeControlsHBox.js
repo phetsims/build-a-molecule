@@ -42,8 +42,7 @@ define( require => {
 
       if ( molecule.atoms.length < 2 ) {
         // we don't need anything at all if it is not a "molecule"
-        return; // TODO: Horrible idea
-        //REVIEW: Not sure why this is horrible. Maybe we shouldn't be creating this in the first place?
+        return;
       }
 
       this.updatePositionListener = this.updatePosition.bind( this );
