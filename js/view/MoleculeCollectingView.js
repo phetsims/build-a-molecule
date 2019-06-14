@@ -6,74 +6,70 @@
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 
-define( function( require ) {
+define( require => {
   'use strict';
 
-  var AllFilledDialogNode = require( 'BUILD_A_MOLECULE/view/AllFilledDialogNode' );
-  var BAMView = require( 'BUILD_A_MOLECULE/view/BAMView' );
-  var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
-  var CollectionPanel = require( 'BUILD_A_MOLECULE/view/CollectionPanel' );
-  var BAMConstants = require( 'BUILD_A_MOLECULE/BAMConstants' );
-  var inherit = require( 'PHET_CORE/inherit' );
+  const AllFilledDialogNode = require( 'BUILD_A_MOLECULE/view/AllFilledDialogNode' );
+  const BAMView = require( 'BUILD_A_MOLECULE/view/BAMView' );
+  const buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
+  const CollectionPanel = require( 'BUILD_A_MOLECULE/view/CollectionPanel' );
+  const BAMConstants = require( 'BUILD_A_MOLECULE/BAMConstants' );
 
-  /**
-   * @param {KitCollectionList} kitCollectionList
-   * @param {boolean} isSingleCollectionMode
-   * @param {Function} regenerateCallback
-   * @constructor
-   */
-  function MoleculeCollectingView( kitCollectionList, isSingleCollectionMode, regenerateCallback ) {
-    var self = this;
+  class MoleculeCollectingView extends BAMView {
+    /**
+     * @param {KitCollectionList} kitCollectionList
+     * @param {boolean} isSingleCollectionMode
+     * @param {Function} regenerateCallback
+     * @constructor
+     */
+    constructor( kitCollectionList, isSingleCollectionMode, regenerateCallback ) {
 
-    BAMView.call( this, kitCollectionList );
+      super( kitCollectionList );
 
-    this.regenerateCallback = regenerateCallback;
+      this.regenerateCallback = regenerateCallback;
 
-    var collectionAttachmentCallbacks = [];
+      const collectionAttachmentCallbacks = [];
 
-    var collectionPanel = new CollectionPanel(
-      kitCollectionList,
-      isSingleCollectionMode,
-      collectionAttachmentCallbacks,
-      function( node ) {
+      const collectionPanel = new CollectionPanel(
+        kitCollectionList,
+        isSingleCollectionMode,
+        collectionAttachmentCallbacks,
+        ( node ) => {
 
-        // returns model bounds from a node, given local coordinates on a node
-        var viewBounds = node.getParent().getUniqueTrail().getTransformTo( self.getUniqueTrail() ).transformBounds2( node.bounds );
-        return BAMConstants.MODEL_VIEW_TRANSFORM.viewToModelBounds( viewBounds );
-      }, {
-        xMargin: 10,
-        yMargin: 7,
-        align: 'center'
-      } );
-    collectionPanel.right = BAMConstants.STAGE_SIZE.width - BAMConstants.VIEW_PADDING / 2;
-    collectionPanel.bottom = this.kitCollectionMap[ 0 ].bottom;
-    this.addChild( collectionPanel );
+          // returns model bounds from a node, given local coordinates on a node
+          const viewBounds = node.getParent().getUniqueTrail().getTransformTo( this.getUniqueTrail() ).transformBounds2( node.bounds );
+          return BAMConstants.MODEL_VIEW_TRANSFORM.viewToModelBounds( viewBounds );
+        }, {
+          xMargin: 10,
+          yMargin: 7,
+          align: 'center'
+        } );
+      collectionPanel.right = BAMConstants.STAGE_SIZE.width - BAMConstants.VIEW_PADDING / 2;
+      collectionPanel.bottom = this.kitCollectionMap[ 0 ].bottom;
+      this.addChild( collectionPanel );
 
-    // notify attachment
-    collectionAttachmentCallbacks.forEach( function( callback ) { callback(); } );
-  }
 
-  buildAMolecule.register( 'MoleculeCollectingView', MoleculeCollectingView );
+      // notify attachment
+      collectionAttachmentCallbacks.forEach( ( callback ) => { callback(); } );
+    }
 
-  return inherit( BAMView, MoleculeCollectingView, {
     /**
      * @param {KitCollection} collection
      *
      * @override
      * @returns {Node}
      */
-    addCollection: function( collection ) {
-      var self = this;
-      var kitCollectionNode = BAMView.prototype.addCollection.call( this, collection );
+    addCollection( collection ) {
+      const kitCollectionNode = BAMView.prototype.addCollection.call( this, collection );
 
-      var hasShownOnce = false;
-      var allFilledDialogNode = null;
+      let hasShownOnce = false;
+      let allFilledDialogNode = null;
 
       // show dialog the 1st time all collection boxes are filled
-      collection.allCollectionBoxesFilledProperty.link( function( filled ) {
+      collection.allCollectionBoxesFilledProperty.link( ( filled ) => {
         if ( filled ) {
           if ( !hasShownOnce ) {
-            allFilledDialogNode = new AllFilledDialogNode( self.kitCollectionList.availablePlayAreaBounds, self.regenerateCallback );
+            allFilledDialogNode = new AllFilledDialogNode( this.kitCollectionList.availablePlayAreaBounds, this.regenerateCallback );
             hasShownOnce = true;
           }
           if ( !allFilledDialogNode.hasParent() ) {
@@ -89,5 +85,8 @@ define( function( require ) {
 
       return kitCollectionNode;
     }
-  } );
+  }
+
+  return buildAMolecule.register( 'MoleculeCollectingView', MoleculeCollectingView );
+
 } );
