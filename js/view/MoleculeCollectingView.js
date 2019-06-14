@@ -31,14 +31,22 @@ define( function( require ) {
 
     var collectionAttachmentCallbacks = [];
 
-    var collectionPanel = new CollectionPanel( kitCollectionList, isSingleCollectionMode, collectionAttachmentCallbacks, function( node ) {
+    var collectionPanel = new CollectionPanel(
+      kitCollectionList,
+      isSingleCollectionMode,
+      collectionAttachmentCallbacks,
+      function( node ) {
 
-      // returns model bounds from a node, given local coordinates on a node
-      var viewBounds = node.getParent().getUniqueTrail().getTransformTo( self.getUniqueTrail() ).transformBounds2( node.bounds );
-      return BAMConstants.MODEL_VIEW_TRANSFORM.viewToModelBounds( viewBounds );
-    } );
-    collectionPanel.right = BAMConstants.STAGE_SIZE.width - BAMConstants.VIEW_PADDING;
-    collectionPanel.top = BAMConstants.VIEW_PADDING;
+        // returns model bounds from a node, given local coordinates on a node
+        var viewBounds = node.getParent().getUniqueTrail().getTransformTo( self.getUniqueTrail() ).transformBounds2( node.bounds );
+        return BAMConstants.MODEL_VIEW_TRANSFORM.viewToModelBounds( viewBounds );
+      }, {
+        xMargin: 10,
+        yMargin: 7,
+        align: 'center'
+      } );
+    collectionPanel.right = BAMConstants.STAGE_SIZE.width - BAMConstants.VIEW_PADDING / 2;
+    collectionPanel.bottom = BAMConstants.MODEL_VIEW_TRANSFORM;
     this.baseNode.addChild( collectionPanel );
 
     // notify attachment
