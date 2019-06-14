@@ -12,41 +12,44 @@ define( function( require ) {
   var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   var Color = require( 'SCENERY/util/Color' );
   var BAMConstants = require( 'BUILD_A_MOLECULE/BAMConstants' );
+  var Dialog = require( 'SUN/Dialog' );
   var FaceNode = require( 'SCENERY_PHET/FaceNode' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var Node = require( 'SCENERY/nodes/Node' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var Shape = require( 'KITE/Shape' );
   var Text = require( 'SCENERY/nodes/Text' );
   var TextPushButton = require( 'SUN/buttons/TextPushButton' );
+  var VBox = require( 'SCENERY/nodes/VBox' );
+  var Vector2 = require( 'DOT/Vector2' );
+
 
   // strings
   var youCompletedYourCollectionString = require( 'string!BUILD_A_MOLECULE/youCompletedYourCollection' );
   var nextCollectionString = require( 'string!BUILD_A_MOLECULE/nextCollection' );
 
-  //REVIEW: Can we use dialog.js?
   /**
    * @param {Bounds2} availablePlayAreaBounds
    * @param {Function} regenerateCallback
    * @constructor
    */
-  function AllFilledDialogNode( availablePlayAreaBounds, regenerateCallback ) {
-
-    Node.call( this, {} );
+  function AllFilledDialogNode( regenerateCallback ) {
+    var contentVBox = new VBox( { spacing: 5, align: 'center' } );
     var self = this;
 
+    // Add smiley face
     var smiley = new FaceNode( 120 ).smile();
-    this.addChild( smiley );
+    contentVBox.addChild( smiley );
 
+    // Add text
     var text = new Text( youCompletedYourCollectionString, {
       font: new PhetFont( {
         size: 20,
         weight: 'bold'
       } )
     } );
-    this.addChild( text );
+    contentVBox.addChild( text );
 
+    // Add button
     var button = new TextPushButton( nextCollectionString, {
       listener: function() {
         regenerateCallback();
@@ -59,22 +62,16 @@ define( function( require ) {
       baseColor: Color.ORANGE
     } );
     button.touchArea = Shape.bounds( button.localBounds.dilated( 20 ) );
-    this.addChild( button );
+    contentVBox.addChild( button );
 
-    // layout
-    text.centerX = button.centerX = smiley.centerX = this.centerX;
-    text.top = smiley.bottom + 10;
-    button.top = text.bottom + 10;
-
-    var background = new Rectangle( this.bounds.dilated( 10 ), {
+    Dialog.call( this, contentVBox, {
       stroke: 'black',
-      fill: BAMConstants.COMPLETE_BACKGROUND_COLOR
+      fill: BAMConstants.COMPLETE_BACKGROUND_COLOR,
+      center: new Vector2( 0, 0 )
     } );
-    this.insertChild( 0, background );
-
-    this.center = BAMConstants.MODEL_VIEW_TRANSFORM.modelToViewBounds( availablePlayAreaBounds ).center;
   }
+
   buildAMolecule.register( 'AllFilledDialogNode', AllFilledDialogNode );
 
-  return inherit( Node, AllFilledDialogNode );
+  return inherit( Dialog, AllFilledDialogNode );
 } );
