@@ -47,7 +47,7 @@ define( require => {
       collectionPanel.right = BAMConstants.STAGE_SIZE.width - BAMConstants.VIEW_PADDING / 2;
       collectionPanel.bottom = this.kitCollectionMap[ 0 ].bottom;
       this.addChild( collectionPanel );
-
+      collectionPanel.moveToBack();
 
       // notify attachment
       collectionAttachmentCallbacks.forEach( ( callback ) => { callback(); } );
