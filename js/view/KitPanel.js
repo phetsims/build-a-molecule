@@ -36,8 +36,6 @@ define( require => {
     constructor( kitCollectionModel, availableKitBounds ) {
       super();
 
-      //REVIEW: With layout containers, can we avoid making this assumption?
-      assert && assert( BAMConstants.MODEL_VIEW_TRANSFORM.getMatrix().m11() < 0 ); // we assume this and correct for the inversed Y
 
       const kitViewBounds = BAMConstants.MODEL_VIEW_TRANSFORM.modelToViewBounds( availableKitBounds );
 
