@@ -46,7 +46,7 @@ define( function( require ) {
         align: 'center'
       } );
     collectionPanel.right = BAMConstants.STAGE_SIZE.width - BAMConstants.VIEW_PADDING / 2;
-    collectionPanel.top = BAMConstants.VIEW_PADDING;
+    collectionPanel.bottom = this.kitCollectionMap[ 0 ].bottom;
     this.addChild( collectionPanel );
 
     // notify attachment
