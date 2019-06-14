@@ -27,18 +27,17 @@ define( function( require ) {
   var SliceNode = require( 'BUILD_A_MOLECULE/view/SliceNode' );
   var Trail = require( 'SCENERY/util/Trail' );
 
-  //REVIEW: See if it's possible to NOT pass through the entire screen view. And if not, we can rename it.
   /**
    * @param {Kit} kit
-   * @param {MoleculeCollectingView} view
+   * @param {MoleculeCollectingView} moleculeCollectingView
    * @constructor
    */
-  function KitView( kit, view ) {
+  function KitView( kit, moleculeCollectingView ) {
     Node.call( this );
     var self = this;
 
     this.kit = kit;
-    this.view = view;
+    this.moleculeCollectingView = moleculeCollectingView;
 
     this.metadataMap = {}; // moleculeId => MoleculeControlsHBox
     this.bondMap = {}; // moleculeId => MoleculeBondContainerNode
@@ -51,7 +50,7 @@ define( function( require ) {
 
     var viewSwipeBounds = BAMConstants.MODEL_VIEW_TRANSFORM.modelToViewBounds( kit.collectionLayout.availablePlayAreaBounds );
     var swipeCatch = this.swipeCatch = Rectangle.bounds( viewSwipeBounds.eroded( BAMConstants.VIEW_PADDING ) );
-    var sliceNode = this.sliceNode = new SliceNode( kit, viewSwipeBounds, view );
+    var sliceNode = this.sliceNode = new SliceNode( kit, viewSwipeBounds, moleculeCollectingView );
 
     swipeCatch.addInputListener( sliceNode.sliceInputListener );
 
@@ -119,7 +118,7 @@ define( function( require ) {
       bucketHole.addInputListener( {
         down: function( event ) {
           // coordinate transforms to get our atom
-          var viewPoint = view.globalToLocalPoint( event.pointer.point );
+          var viewPoint = moleculeCollectingView.globalToLocalPoint( event.pointer.point );
           var modelPoint = BAMConstants.MODEL_VIEW_TRANSFORM.viewToModelPosition( viewPoint );
           var atom = self.closestAtom( modelPoint, Number.POSITIVE_INFINITY, bucket.element ); // filter by the element
 
@@ -243,7 +242,7 @@ define( function( require ) {
     },
 
     addMoleculeBondNodes: function( molecule ) {
-      var moleculeBondContainerNode = new MoleculeBondContainerNode( this.kit, molecule, this.view );
+      var moleculeBondContainerNode = new MoleculeBondContainerNode( this.kit, molecule, this.moleculeCollectingView );
       this.metadataLayer.addChild( moleculeBondContainerNode );
       this.bondMap[ molecule.moleculeId ] = moleculeBondContainerNode;
     },
