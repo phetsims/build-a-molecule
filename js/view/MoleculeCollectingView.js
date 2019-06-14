@@ -47,7 +47,7 @@ define( function( require ) {
       } );
     collectionPanel.right = BAMConstants.STAGE_SIZE.width - BAMConstants.VIEW_PADDING / 2;
     collectionPanel.top = BAMConstants.VIEW_PADDING;
-    this.baseNode.addChild( collectionPanel );
+    this.addChild( collectionPanel );
 
     // notify attachment
     collectionAttachmentCallbacks.forEach( function( callback ) { callback(); } );

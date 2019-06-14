@@ -12,7 +12,6 @@ define( function( require ) {
   var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   var inherit = require( 'PHET_CORE/inherit' );
   var KitCollectionNode = require( 'BUILD_A_MOLECULE/view/KitCollectionNode' );
-  var Node = require( 'SCENERY/nodes/Node' );
   var ScreenView = require( 'JOIST/ScreenView' );
 
   /**
@@ -23,9 +22,6 @@ define( function( require ) {
 
     ScreenView.call( this );
     var self = this;
-
-    this.baseNode = new Node();
-    this.addChild( this.baseNode );
 
     this.kitCollectionMap = {}; // maps KitCollection ID => KitCollectionNode
 
