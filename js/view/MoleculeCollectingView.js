@@ -46,7 +46,7 @@ define( function( require ) {
         align: 'center'
       } );
     collectionPanel.right = BAMConstants.STAGE_SIZE.width - BAMConstants.VIEW_PADDING / 2;
-    collectionPanel.bottom = BAMConstants.MODEL_VIEW_TRANSFORM;
+    collectionPanel.top = BAMConstants.VIEW_PADDING;
     this.baseNode.addChild( collectionPanel );
 
     // notify attachment
