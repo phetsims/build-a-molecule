@@ -12,6 +12,7 @@ define( require => {
   const buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   const Color = require( 'SCENERY/util/Color' );
   const BAMConstants = require( 'BUILD_A_MOLECULE/BAMConstants' );
+  const KitView = require( 'BUILD_A_MOLECULE/view/KitView' );
   const NextPreviousNavigationNode = require( 'SCENERY_PHET/NextPreviousNavigationNode' );
   const Node = require( 'SCENERY/nodes/Node' );
   const Path = require( 'SCENERY/nodes/Path' );
@@ -35,7 +36,6 @@ define( require => {
      */
     constructor( kitCollectionModel, availableKitBounds ) {
       super();
-
 
       const kitViewBounds = BAMConstants.MODEL_VIEW_TRANSFORM.modelToViewBounds( availableKitBounds );
 
@@ -62,7 +62,7 @@ define( require => {
         labelNode.text = StringUtils.fillIn( kitPatternString, { number: kitCollectionModel.currentKitIndex + 1 } );
       } );
 
-      //REVIEW: Replace with the Carousel common type, so we don't have to do so much (and it has a better appearance)
+      // REVIEW: Replace with the Carousel common type, so we don't have to do so much (and it has a better appearance)
       const navigationNode = new NextPreviousNavigationNode( labelNode, {
         arrowColor: BAMConstants.KIT_ARROW_BACKGROUND_ENABLED,
         arrowStrokeColor: BAMConstants.KIT_ARROW_BORDER_ENABLED,
@@ -92,6 +92,7 @@ define( require => {
       /*---------------------------------------------------------------------------*
        * refill kit
        *----------------------------------------------------------------------------*/
+
 
       const refillButton = new TextPushButton( resetKitString, {
         listener: () => {

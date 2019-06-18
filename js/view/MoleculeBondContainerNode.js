@@ -17,10 +17,9 @@ define( function( require ) {
   /**
    * @param {Kit} kit
    * @param {Molecule} molecule
-   * @param {MoleculeCollectingView} view
    * @constructor
    */
-  function MoleculeBondContainerNode( kit, molecule, view ) {
+  function MoleculeBondContainerNode( kit, molecule ) {
     Node.call( this, {} );
     var self = this;
 

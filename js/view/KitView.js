@@ -16,6 +16,7 @@ define( function( require ) {
   var BucketHole = require( 'SCENERY_PHET/bucket/BucketHole' );
   var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   var BAMConstants = require( 'BUILD_A_MOLECULE/BAMConstants' );
+  var DragListener = require( 'SCENERY/listeners/DragListener' );
   var inherit = require( 'PHET_CORE/inherit' );
   var MoleculeBondContainerNode = require( 'BUILD_A_MOLECULE/view/MoleculeBondContainerNode' );
   var MoleculeControlsHBox = require( 'BUILD_A_MOLECULE/view/MoleculeControlsHBox' );
@@ -37,7 +38,6 @@ define( function( require ) {
     var self = this;
 
     this.kit = kit;
-    this.moleculeCollectingView = moleculeCollectingView;
 
     this.metadataMap = {}; // moleculeId => MoleculeControlsHBox
     this.bondMap = {}; // moleculeId => MoleculeBondContainerNode
@@ -63,7 +63,7 @@ define( function( require ) {
 
     // override its hit testing
     // TODO: REALLY don't do this. Super easy to break
-    //REVIEW: Definitely replace with a better way
+    // REVIEW: Definitely replace with a better way
     atomLayer.hitTest = function( point, isMouse, isTouch ) {
       // return accurate hits for the mouse
       if ( isMouse ) {
@@ -242,7 +242,7 @@ define( function( require ) {
     },
 
     addMoleculeBondNodes: function( molecule ) {
-      var moleculeBondContainerNode = new MoleculeBondContainerNode( this.kit, molecule, this.moleculeCollectingView );
+      var moleculeBondContainerNode = new MoleculeBondContainerNode( this.kit, molecule );
       this.metadataLayer.addChild( moleculeBondContainerNode );
       this.bondMap[ molecule.moleculeId ] = moleculeBondContainerNode;
     },
