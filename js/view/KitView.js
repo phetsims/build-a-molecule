@@ -16,7 +16,7 @@ define( function( require ) {
   var BucketHole = require( 'SCENERY_PHET/bucket/BucketHole' );
   var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   var BAMConstants = require( 'BUILD_A_MOLECULE/BAMConstants' );
-  var DragListener = require( 'SCENERY/listeners/DragListener' );
+  // var DragListener = require( 'SCENERY/listeners/DragListener' );
   var inherit = require( 'PHET_CORE/inherit' );
   var MoleculeBondContainerNode = require( 'BUILD_A_MOLECULE/view/MoleculeBondContainerNode' );
   var MoleculeControlsHBox = require( 'BUILD_A_MOLECULE/view/MoleculeControlsHBox' );
