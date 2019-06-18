@@ -404,8 +404,8 @@ define( function( require ) {
       }
 
       // remove the atoms from the visited sets, to hold our contract
-      myVisited.shift();
-      otherVisited.shift();
+      myVisited.splice( myVisited.indexOf( myAtom ), 1 ); // TODO: replace with remove()
+      otherVisited.splice( otherVisited.indexOf( otherAtom ), 1 ); // TODO: replace with remove()
 
       // return whether we can find a successful permutation matching from our equivalency matrix
       return MoleculeStructure.checkEquivalencyMatrix( equivalences, 0, availableIndices, size );
@@ -565,10 +565,11 @@ define( function( require ) {
 
     // atoms left after removing atoms
     var remainingAtoms = structure.atoms.slice( 0 );
-    remainingAtoms.shift();
+    remainingAtoms.splice( remainingAtoms.indexOf( bond.a ), 1 ); // TODO: replace with remove()
     var dirtyAtoms = [ bond.a ];
     while ( dirtyAtoms.length > 0 ) {
       var atom = dirtyAtoms.pop();
+      // dirtyAtoms.splice( dirtyAtoms.indexOf( atom ), 1 ); // TODO: replace with remove()
 
       // for all neighbors that don't use our 'bond'
       structure.bonds.forEach( function( otherBond ) {
@@ -577,7 +578,7 @@ define( function( require ) {
 
           // pick out our neighbor, mark it as in 'A', and mark it as dirty so we can process its neighbors
           if ( _.includes( remainingAtoms, neighbor ) ) {
-            remainingAtoms.shift();
+            remainingAtoms.splice( remainingAtoms.indexOf( neighbor ), 1 ); // TODO: replace with remove()
             dirtyAtoms.push( neighbor );
             atomsInA.push( neighbor );
           }
@@ -642,7 +643,7 @@ define( function( require ) {
       if ( equivalences[ myIndex * size + otherIndex ] ) { // only follow path if it is true (equivalent)
 
         // remove the index from consideration for checking the following submatrix
-        otherRemainingIndices.shift();
+        otherRemainingIndices.splice( otherRemainingIndices.indexOf( otherIndex ), 1 ); // TODO: replace with remove()
 
         var success = ( myIndex === size - 1 ) || // there are no more permutations to check
                       MoleculeStructure.checkEquivalencyMatrix( equivalences, myIndex + 1, otherRemainingIndices, size ); // or we can find a good combination of the remaining indices
