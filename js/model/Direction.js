@@ -30,10 +30,10 @@ define( require => {
   }
 
   // Declare directions
-  Direction.North = new Direction( new Vector2( 0, 1 ), DIRECTION.north );
-  Direction.East = new Direction( new Vector2( 1, 0 ), DIRECTION.east );
-  Direction.South = new Direction( new Vector2( 0, -1 ), DIRECTION.south );
-  Direction.West = new Direction( new Vector2( -1, 0 ), DIRECTION.west );
+  Direction.North = new Direction( new Vector2( 0, 1 ), DIRECTION.NORTH );
+  Direction.East = new Direction( new Vector2( 1, 0 ), DIRECTION.EAST );
+  Direction.South = new Direction( new Vector2( 0, -1 ), DIRECTION.SOUTH );
+  Direction.West = new Direction( new Vector2( -1, 0 ), DIRECTION.WEST );
 
   // Declare direction opposites
   Direction.North.opposite = Direction.South;
