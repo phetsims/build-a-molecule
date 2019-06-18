@@ -232,7 +232,7 @@ define( function( require ) {
       this.hasMoleculesInBoxesProperty.value = true;
       this.removeMolecule( molecule );
       molecule.atoms.forEach( function( atom ) {
-        self.atoms.shift();
+        self.atoms.splice( self.atoms.indexOf( atom ), 1 );
         self.atomsInCollectionBox.push( atom );
         atom.visibleProperty.value = false;
       } );
