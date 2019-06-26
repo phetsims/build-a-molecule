@@ -9,17 +9,9 @@
 define( function( require ) {
   'use strict';
 
-  var Bounds2 = require( 'DOT/Bounds2' );
   var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   var CollectionAreaNode = require( 'BUILD_A_MOLECULE/view/CollectionAreaNode' );
-  var CollectionBox = require( 'BUILD_A_MOLECULE/model/CollectionBox' );
-  var KitCollectionList = require( 'BUILD_A_MOLECULE/model/KitCollectionList' );
-  var BAMConstants = require( 'BUILD_A_MOLECULE/BAMConstants' );
-  var Emitter = require( 'AXON/Emitter' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var KitCollection = require( 'BUILD_A_MOLECULE/model/KitCollection' );
-  var CollectionLayout = require( 'BUILD_A_MOLECULE/model/CollectionLayout' );
-  var MoleculeList = require( 'BUILD_A_MOLECULE/model/MoleculeList' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Panel = require( 'SUN/Panel' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
@@ -101,24 +93,6 @@ define( function( require ) {
   }
 
   buildAMolecule.register( 'CollectionPanel', CollectionPanel );
-
-  /**
-   * Used to get the panel width so that we can construct the model (and thus kit) beforehand
-   *
-   * @param isSingleCollectionMode Whether we are on single (1st tab) or multiple (2nd tab) mode
-   * @returns {number} Width of the entire collection panel
-   */
-  CollectionPanel.getCollectionPanelModelWidth = function( isSingleCollectionMode ) {
-
-    // construct a dummy collection panel and check its width
-    var collection = new KitCollection();
-    collection.addCollectionBox( new CollectionBox( MoleculeList.H2O, 1 ) );
-    var kitCollectionList = new KitCollectionList( collection, new CollectionLayout( false, 0 ), new Emitter(), function() {} );
-    var collectionPanel = new CollectionPanel( kitCollectionList, isSingleCollectionMode, [], function() { return Bounds2.NOTHING; } );
-
-    return BAMConstants.MODEL_VIEW_TRANSFORM.viewToModelDeltaX( collectionPanel.width );
-  };
-
   return inherit( Panel, CollectionPanel, {
 
     /**

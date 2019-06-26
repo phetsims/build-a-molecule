@@ -122,13 +122,10 @@ define( function( require ) {
         usedWidth += bucket.width;
       }
 
-      var kitXCenter = this.availableKitBounds.centerX;
-      var kitY = this.availableKitBounds.centerY - bucketBounds.centerY;
-
       // centers the buckets horizontally within the kit
       buckets.forEach( function( bucket ) {
         // also note: this moves the atoms also!
-        bucket.position = new Vector2( bucket.position.x - usedWidth / 2 + kitXCenter + bucket.width / 2, kitY );
+        bucket.position = new Vector2( bucket.position.x - usedWidth / 2 + bucket.width / 2, bucketBounds.centerY );
 
         // since changing the bucket's position doesn't change contained atoms!
         // TODO: have the bucket position change do this?
@@ -136,14 +133,6 @@ define( function( require ) {
           atom.translatePositionAndDestination( bucket.position );
         } );
       } );
-    },
-
-    show: function() {
-      this.visibleProperty.value = true;
-    },
-
-    hide: function() {
-      this.visibleProperty.value = false;
     },
 
     isContainedInBucket: function( atom ) {

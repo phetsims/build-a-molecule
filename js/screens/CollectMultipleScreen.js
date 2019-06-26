@@ -26,10 +26,9 @@ define( function( require ) {
   var titleMultipleString = require( 'string!BUILD_A_MOLECULE/title.multiple' );
 
   /**
-   * @param {number} collectionAreaWidth
    * @constructor
    */
-  function CollectMultipleScreen( collectionAreaWidth ) {
+  function CollectMultipleScreen() {
     var options = {
       name: titleMultipleString,
       homeScreenIcon: new Rectangle( 0, 0, 548, 373, { fill: 'green' } )
@@ -63,7 +62,7 @@ define( function( require ) {
       },
 
       // CollectionLayout
-      new CollectionLayout( false, collectionAreaWidth ), function( bounds, stepEmitter ) {
+      new CollectionLayout(), function( bounds, stepEmitter ) {
         return BAMScreen.generateKitCollection( true, 4, stepEmitter, bounds );
       },
 

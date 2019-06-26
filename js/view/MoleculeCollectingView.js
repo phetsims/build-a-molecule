@@ -48,7 +48,7 @@ define( require => {
           align: 'center'
         } );
       collectionPanel.right = BAMConstants.STAGE_SIZE.width - BAMConstants.VIEW_PADDING / 2;
-      collectionPanel.bottom = this.kitCollectionMap[ 0 ].bottom;
+      collectionPanel.top = BAMConstants.STAGE_SIZE.top;
       this.addChild( collectionPanel );
       collectionPanel.moveToBack();
 

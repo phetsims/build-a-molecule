@@ -40,21 +40,6 @@ define( function( require ) {
     addKit: function( kit ) {
       var self = this;
 
-      if ( this.currentKitProperty.value ) {
-        kit.hide();
-      }
-      else {
-        // first kit, generally
-        this.currentKitProperty.value = kit;
-        kit.show();
-
-        // handle kit visibility when this changes
-        this.currentKitProperty.lazyLink( function( newKit, oldKit ) {
-          newKit.show();
-          oldKit.hide();
-        } );
-      }
-
       this.kits.push( kit );
 
       var dropListener = function( atom ) {
@@ -100,10 +85,6 @@ define( function( require ) {
       } );
     },
 
-    // returns {CollectionBox} or undefined
-    getFirstTargetBox: function( molecule ) {
-      return _.first( this.collectionBoxes, function( box ) { return box.willAllowMoleculeDrop( molecule ); } );
-    },
 
     addCollectionBox: function( box ) {
       var self = this;
@@ -116,37 +97,12 @@ define( function( require ) {
       } );
     },
 
-    get currentKitIndex() {
-      // TODO: consider a direct reference to the index?
-      return _.indexOf( this.kits, this.currentKitProperty.value );
-    },
-
-    hasNextKit: function() {
-      return this.currentKitIndex + 1 < this.kits.length;
-    },
-
-    hasPreviousKit: function() {
-      return this.currentKitIndex - 1 >= 0;
-    },
-
-    goToNextKit: function() {
-      if ( this.hasNextKit() ) {
-        this.currentKitProperty.value = this.kits[ this.currentKitIndex + 1 ];
-      }
-    },
-
-    goToPreviousKit: function() {
-      if ( this.hasPreviousKit() ) {
-        this.currentKitProperty.value = this.kits[ this.currentKitIndex - 1 ];
-      }
-    },
-
     resetAll: function() {
       this.collectionBoxes.forEach( function( box ) { box.reset(); } );
       this.kits.forEach( function( kit ) { kit.reset(); } );
-      while ( this.hasPreviousKit() ) {
-        this.goToPreviousKit();
-      }
+      // while ( this.hasPreviousKit() ) {
+      //   this.goToPreviousKit();
+      // }
     }
   } );
 

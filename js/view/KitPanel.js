@@ -10,109 +10,38 @@ define( require => {
   'use strict';
 
   const buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
-  const Color = require( 'SCENERY/util/Color' );
+  const Carousel = require( 'SUN/Carousel' );
   const BAMConstants = require( 'BUILD_A_MOLECULE/BAMConstants' );
-  // const KitView = require( 'BUILD_A_MOLECULE/view/KitView' );
-  const NextPreviousNavigationNode = require( 'SCENERY_PHET/NextPreviousNavigationNode' );
+  const KitView = require( 'BUILD_A_MOLECULE/view/KitView' );
   const Node = require( 'SCENERY/nodes/Node' );
-  const Path = require( 'SCENERY/nodes/Path' );
-  const PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  const Shape = require( 'KITE/Shape' );
-  const StringUtils = require( 'PHETCOMMON/util/StringUtils' );
-  const Text = require( 'SCENERY/nodes/Text' );
-  const TextPushButton = require( 'SUN/buttons/TextPushButton' );
 
-  // strings
-  const kitPatternString = require( 'string!BUILD_A_MOLECULE/kitPattern' );
-  const resetKitString = require( 'string!BUILD_A_MOLECULE/resetKit' );
-
-  const kitArrowYOffset = 5; // vertical offset of the kit arrows from the top of the kit
+  // const Rectangle = require( 'SCENERY/nodes/Rectangle' );
 
   class KitPanel extends Node {
     /**
-     * @param {KitCollection} kitCollectionModel
+     * @param {KitCollection} kitCollection
      * @param {Rectangle} availableKitBounds
+     * @param {Rectangle} view
      * @constructor
      */
-    constructor( kitCollectionModel, availableKitBounds ) {
+    constructor( kitCollection, availableKitBounds, view ) {
       super();
+      // const kitViewBounds = BAMConstants.MODEL_VIEW_TRANSFORM.modelToViewBounds( availableKitBounds );
 
-      const kitViewBounds = BAMConstants.MODEL_VIEW_TRANSFORM.modelToViewBounds( availableKitBounds );
+      var kits = [];
+      kitCollection.kits.forEach( function( kit ) {
+        kits.push( new KitView( kit, view ) );
+        // kits.push(  new Rectangle( 0, 0, 60, 60, { fill: "pink", stroke: 'black' } ))
+      } );
+      // kits.push(  new KitView( kitCollection.kits[0], kitViewBounds ));
 
-      /*---------------------------------------------------------------------------*
-       * background
-       *----------------------------------------------------------------------------*/
 
-      this.addChild( new Path( Shape.bounds( kitViewBounds ), {
+      this.addChild( new Carousel( kits, {
         fill: BAMConstants.KIT_BACKGROUND,
-        stroke: BAMConstants.KIT_BORDER
+        stroke: BAMConstants.KIT_BORDER,
+        margin: 20,
+        itemsPerPage: 1
       } ) );
-
-      /*---------------------------------------------------------------------------*
-       * label and next/previous
-       *----------------------------------------------------------------------------*/
-
-      const labelNode = new Text( '', {
-        font: new PhetFont( {
-          size: 18,
-          weight: 'bold'
-        } )
-      } );
-      kitCollectionModel.currentKitProperty.link( () => {
-        labelNode.text = StringUtils.fillIn( kitPatternString, { number: kitCollectionModel.currentKitIndex + 1 } );
-      } );
-
-      // REVIEW: Replace with the Carousel common type, so we don't have to do so much (and it has a better appearance)
-      const navigationNode = new NextPreviousNavigationNode( labelNode, {
-        arrowColor: BAMConstants.KIT_ARROW_BACKGROUND_ENABLED,
-        arrowStrokeColor: BAMConstants.KIT_ARROW_BORDER_ENABLED,
-        arrowWidth: 17,
-        arrowHeight: 24,
-        next: () => {
-          kitCollectionModel.goToNextKit();
-        },
-        previous: () => {
-          kitCollectionModel.goToPreviousKit();
-        },
-        createTouchAreaShape: ( shape, isPrevious ) => {
-          // square touch area
-          const dilatedShape = shape.bounds.dilated( 7 );
-          return Shape.bounds( isPrevious ?
-                               dilatedShape.withMaxX( shape.bounds.right + labelNode.width / 2 ) :
-                               dilatedShape.withMinX( shape.bounds.left - labelNode.width / 2 ) );
-        }
-      } );
-      kitCollectionModel.currentKitProperty.link( () => {
-        navigationNode.hasNextProperty.value = kitCollectionModel.hasNextKit();
-        navigationNode.hasPreviousProperty.value = kitCollectionModel.hasPreviousKit();
-      } );
-      navigationNode.setTranslation( kitViewBounds.maxX - navigationNode.width - 5, kitViewBounds.minY + kitArrowYOffset );
-      this.addChild( navigationNode );
-
-      /*---------------------------------------------------------------------------*
-       * refill kit
-       *----------------------------------------------------------------------------*/
-
-
-      const refillButton = new TextPushButton( resetKitString, {
-        listener: () => {
-          kitCollectionModel.currentKitProperty.value.reset();
-        },
-        baseColor: Color.ORANGE,
-        font: new PhetFont( { size: 12, weight: 'bold' } ),
-        x: kitViewBounds.minX + 5,
-        y: kitViewBounds.minY + 5
-      } );
-      refillButton.touchArea = Shape.bounds( refillButton.selfBounds.union( refillButton.childBounds ).dilated( 10 ) );
-      const updateRefillButton = () => {
-        refillButton.enabled = kitCollectionModel.currentKitProperty.value.hasAtomsOutsideOfBuckets();
-      };
-      kitCollectionModel.kits.forEach( ( kit ) => {
-        kit.addedMoleculeEmitter.addListener( updateRefillButton );
-        kit.removedMoleculeEmitter.addListener( updateRefillButton );
-      } );
-      kitCollectionModel.currentKitProperty.link( updateRefillButton );
-      this.addChild( refillButton );
     }
   }
 

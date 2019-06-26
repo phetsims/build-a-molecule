@@ -26,10 +26,9 @@ define( function( require ) {
   var titleSingleString = require( 'string!BUILD_A_MOLECULE/title.single' );
 
   /**
-   * @param {number} collectionAreaWidth
    * @constructor
    */
-  function MakeMoleculeScreen( collectionAreaWidth ) {
+  function MakeMoleculeScreen() {
 
     var options = {
       name: titleSingleString,
@@ -64,7 +63,7 @@ define( function( require ) {
       },
 
       // CollectionLayout
-      new CollectionLayout( false, collectionAreaWidth ), function( bounds, stepEmitter ) {
+      new CollectionLayout(), function( bounds, stepEmitter ) {
         return BAMScreen.generateKitCollection( false, 5, stepEmitter, bounds );
       },
 

@@ -8,7 +8,6 @@ define( function( require ) {
   'use strict';
 
   var buildAMoleculeTitleString = require( 'string!BUILD_A_MOLECULE/build-a-molecule.title' );
-  var CollectionPanel = require( 'BUILD_A_MOLECULE/view/CollectionPanel' );
   var CollectMultipleScreen = require( 'BUILD_A_MOLECULE/screens/CollectMultipleScreen' );
   var LargerMoleculesScreen = require( 'BUILD_A_MOLECULE/screens/LargerMoleculesScreen' );
   var MakeMoleculeScreen = require( 'BUILD_A_MOLECULE/screens/MakeMoleculeScreen' );
@@ -26,10 +25,8 @@ define( function( require ) {
     SimLauncher.launch( function() {
       //Create and start the sim
       new Sim( buildAMoleculeTitleString, [
-        // TODO: replace these with the actual panel widths
-        //REVIEW: Not sure what is necessary here, looks like we're computing a dynamic layout
-        new MakeMoleculeScreen( CollectionPanel.getCollectionPanelModelWidth( true ) ),
-        new CollectMultipleScreen( CollectionPanel.getCollectionPanelModelWidth( false ) ),
+        new MakeMoleculeScreen(),
+        new CollectMultipleScreen(),
         new LargerMoleculesScreen()
       ], simOptions ).start();
     } );

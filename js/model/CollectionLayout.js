@@ -15,13 +15,11 @@ define( require => {
 
   class CollectionLayout {
     /**
-     * Construct the necessary layout. If isWide is true, the collectionAreaModelWidth is ignoredsim
+     * Construct the necessary layout.
      *
-     * @param {boolean} isWide Whether the kit should take up the entire width
-     * @param {number} collectionAreaModelWidth The model width of the collection area (computed, as it varies from tab to tab)
      * @constructor
      */
-    constructor( isWide, collectionAreaModelWidth ) {
+    constructor() {
       const availableWidth = BAMConstants.MODEL_SIZE.width - 2 * BAMConstants.MODEL_PADDING; // minus padding
       const halfWidth = availableWidth / 2;
 
@@ -29,17 +27,8 @@ define( require => {
       const kitHeight = 550;
       const kitTop = kitBottom + kitHeight;
 
-      if ( isWide ) {
-        this.availableKitBounds = new Rectangle( -halfWidth, kitBottom, availableWidth, kitHeight );
-      }
-      else {
-        // leave room for collection area
-        this.availableKitBounds = new Rectangle( -halfWidth, kitBottom, availableWidth - BAMConstants.MODEL_PADDING - collectionAreaModelWidth, kitHeight );
-        if ( this.availableKitBounds.width < 0 ) {
-          console.log( 'TODO: Fix i18n sizing...' ); // workaround for xss test, etc. for now
-          this.availableKitBounds = new Rectangle( -halfWidth, kitBottom, availableWidth, kitHeight );
-        }
-      }
+      // leave room for collection area
+      this.availableKitBounds = new Rectangle( -halfWidth, kitBottom, availableWidth * .75, kitHeight );
 
       this.availablePlayAreaBounds = new Rectangle(
         -BAMConstants.MODEL_SIZE.width / 2, // far left part of model
