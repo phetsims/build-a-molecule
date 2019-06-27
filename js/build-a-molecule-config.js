@@ -42,6 +42,7 @@ require.config( {
     SUN: '../../sun/js',
     TAMBO: '../../tambo/js',
     TANDEM: '../../tandem/js',
+    TWIXT: '../../twixt/js',
     VEGAS: '../../vegas/js'
   },
 
