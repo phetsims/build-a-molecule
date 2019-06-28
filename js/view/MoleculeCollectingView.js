@@ -45,10 +45,11 @@ define( require => {
         }, {
           xMargin: 10,
           yMargin: 7,
+          minWidth: 300,
           align: 'center'
         } );
       collectionPanel.right = BAMConstants.STAGE_SIZE.width - BAMConstants.VIEW_PADDING / 2;
-      collectionPanel.top = BAMConstants.STAGE_SIZE.top;
+      collectionPanel.bottom = BAMConstants.STAGE_SIZE.bottom - BAMConstants.VIEW_PADDING;
       this.addChild( collectionPanel );
       collectionPanel.moveToBack();
 
