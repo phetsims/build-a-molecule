@@ -36,7 +36,7 @@ define( require => {
         sphereRadius: element.covalentRadius,
         baseColor: element.color,
         captionText: Strings.getAtomName( element ),
-        captionColor: AtomNode.needsWhiteColor( new Color( element.color ) ) ? 'white' : 'black',
+        captionColor: AtomNode.getTextColor( new Color( element.color ) ),
         verticalParticleOffset: -30 + element.covalentRadius / 2
       } );
 
