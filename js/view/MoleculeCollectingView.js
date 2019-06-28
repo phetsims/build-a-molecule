@@ -45,7 +45,7 @@ define( require => {
         }, {
           xMargin: 10,
           yMargin: 7,
-          minWidth: 300,
+          minWidth: 250,
           align: 'center'
         } );
       collectionPanel.right = BAMConstants.STAGE_SIZE.width - BAMConstants.VIEW_PADDING / 2;
