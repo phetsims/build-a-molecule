@@ -9,13 +9,16 @@
 define( function( require ) {
   'use strict';
 
+  var BAMConstants = require( 'BUILD_A_MOLECULE/BAMConstants' );
   var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   var CollectionAreaNode = require( 'BUILD_A_MOLECULE/view/CollectionAreaNode' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var NextPreviousNavigationNode = require( 'SCENERY_PHET/NextPreviousNavigationNode' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Panel = require( 'SUN/Panel' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var ScreenView = require( 'JOIST/ScreenView' );
+  var Shape = require( 'KITE/Shape' );
   var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   var Text = require( 'SCENERY/nodes/Text' );
   var VBox = require( 'SCENERY/nodes/VBox' );
@@ -58,7 +61,34 @@ define( function( require ) {
     kitCollectionList.currentCollectionProperty.link( function() {
       currentCollectionText.text = StringUtils.fillIn( collectionPatternString, { number: kitCollectionList.currentIndex + 1 } );
     } );
-    this.layoutNode.addChild( currentCollectionText );
+
+    // Used to cycle through collections when a collection has bee completed.
+    var collectionSwitcher = new NextPreviousNavigationNode( currentCollectionText, {
+      arrowColor: BAMConstants.KIT_ARROW_BACKGROUND_ENABLED,
+      arrowStrokeColor: BAMConstants.KIT_ARROW_BORDER_ENABLED,
+      arrowWidth: 14,
+      arrowHeight: 18,
+      next: function() {
+        kitCollectionList.switchToNextCollection();
+      },
+      previous: function() {
+        kitCollectionList.switchToPreviousCollection();
+      },
+      createTouchAreaShape: function( shape ) {
+        // square touch area
+        return Shape.bounds( shape.bounds.dilated( 7 ) );
+      }
+    } );
+
+    function updateSwitcher() {
+      collectionSwitcher.hasNextProperty.value = kitCollectionList.hasNextCollection();
+      collectionSwitcher.hasPreviousProperty.value = kitCollectionList.hasPreviousCollection();
+    }
+
+    kitCollectionList.currentCollectionProperty.link( updateSwitcher );
+    kitCollectionList.addedCollectionEmitter.addListener( updateSwitcher );
+    kitCollectionList.removedCollectionEmitter.addListener( updateSwitcher );
+    this.layoutNode.addChild( collectionSwitcher );
 
     // all of the collection boxes themselves
     this.layoutNode.addChild( this.collectionAreaHolder );
