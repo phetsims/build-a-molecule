@@ -47,6 +47,7 @@ define( require => {
       this.element = element;
       this.width = this.containerShape.bounds.width;
 
+      // Create the atoms for each element and add them to the bucket.
       for ( let i = 0; i < quantity; i++ ) {
         this.addParticleFirstOpen( new Atom2( element, stepEmitter ), false );
       }
@@ -62,10 +63,6 @@ define( require => {
           } );
         }
       } );
-    }
-
-    get atoms() {
-      return this.getParticleList();
     }
 
     // Instantly place the atom in the correct position, whether or not it is in the bucket

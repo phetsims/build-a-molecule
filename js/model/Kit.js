@@ -92,9 +92,9 @@ define( function( require ) {
 
       // keep track of all atoms in our kit
       this.buckets.forEach( function( bucket ) {
-        self.atoms = self.atoms.concat( bucket.atoms );
+        self.atoms = self.atoms.concat( bucket.getParticleList() );
 
-        bucket.atoms.forEach( function( atom ) {
+        bucket.getParticleList().forEach( function( atom ) {
           self.lewisDotModel.addAtom( atom );
         } );
       } );
@@ -113,7 +113,7 @@ define( function( require ) {
 
         // include both the bucket's shape and its atoms in our bounds, so we can properly center the group
         bucketBounds.includeBounds( bucket.containerShape.bounds );
-        bucket.atoms.forEach( function( atom ) {
+        bucket.getParticleList().forEach( function( atom ) {
           var atomPosition = atom.positionProperty.value;
           bucketBounds.includeBounds( new Bounds2( atomPosition.x - atom.covalentRadius, atomPosition.y - atom.covalentRadius,
             atomPosition.x + atom.covalentRadius, atomPosition.y + atom.covalentRadius ) );
@@ -129,7 +129,7 @@ define( function( require ) {
 
         // since changing the bucket's position doesn't change contained atoms!
         // TODO: have the bucket position change do this?
-        bucket.atoms.forEach( function( atom ) {
+        bucket.getParticleList().forEach( function( atom ) {
           atom.translatePositionAndDestination( bucket.position );
         } );
       } );

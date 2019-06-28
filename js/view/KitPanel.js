@@ -39,7 +39,7 @@ define( require => {
       this.addChild( new Carousel( kits, {
         fill: BAMConstants.KIT_BACKGROUND,
         stroke: BAMConstants.KIT_BORDER,
-        margin: 20,
+        margin: 10,
         itemsPerPage: 1
       } ) );
     }

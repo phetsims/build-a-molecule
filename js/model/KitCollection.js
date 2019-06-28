@@ -72,8 +72,8 @@ define( function( require ) {
         }
       };
 
-      kit.atoms.forEach( function( atomModel ) {
-        atomModel.droppedByUserEmitter.addListener( dropListener );
+      kit.atoms.forEach( function( atom ) {
+        atom.droppedByUserEmitter.addListener( dropListener );
       } );
 
       kit.addedMoleculeEmitter.addListener( function( molecule ) {
@@ -100,9 +100,6 @@ define( function( require ) {
     resetAll: function() {
       this.collectionBoxes.forEach( function( box ) { box.reset(); } );
       this.kits.forEach( function( kit ) { kit.reset(); } );
-      // while ( this.hasPreviousKit() ) {
-      //   this.goToPreviousKit();
-      // }
     }
   } );
 

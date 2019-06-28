@@ -104,7 +104,7 @@ define( function( require ) {
 
       // we will be updating the bucket's cursor depending on whether it has atoms
       function bucketHoleCursorUpdate() {
-        bucketHole.cursor = bucket.atoms.length ? 'pointer' : 'default';
+        bucketHole.cursor = bucket.getParticleList().length ? 'pointer' : 'default';
       }
 
       kit.addedMoleculeEmitter.addListener( bucketHoleCursorUpdate );
@@ -123,7 +123,7 @@ define( function( require ) {
           // var atom = self.closestAtom( modelPoint, Number.POSITIVE_INFINITY, bucket.element ); // filter by the element
           //
           // // if it's not in our bucket, ignore it (could skip weird cases where an atom outside of the bucket is technically closer)
-          // if ( !_.includes( bucket.atoms, atom ) ) {
+          // if ( !_.includes( bucket.getParticleList(), atom ) ) {
           //   return;
           // }
           //
@@ -141,8 +141,8 @@ define( function( require ) {
 
       topLayer.addChild( bucketFront );
       bottomLayer.addChild( bucketHole );
+      bucket.getParticleList().forEach( function( atom ) {
 
-      bucket.atoms.forEach( function( atom ) {
         var atomNode = new AtomNode( atom, {} );
         self.atomNodeMap[ atom.id ] = atomNode;
         atomLayer.addChild( atomNode );
