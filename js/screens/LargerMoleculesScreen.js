@@ -23,6 +23,9 @@ define( function( require ) {
   // strings
   var titleLargerString = require( 'string!BUILD_A_MOLECULE/title.larger' );
 
+  // constants
+  const BUCKET_DIMENSIONS = new Dimension2( 670, 200 );
+
   /**
    * @constructor
    */
@@ -51,7 +54,7 @@ define( function( require ) {
 
         // organics kit
         kitCollection.addKit( new Kit( bounds, [
-          new Bucket( new Dimension2( 700, 200 ), stepEmitter, Element.H, 21 ),
+          new Bucket( BUCKET_DIMENSIONS, stepEmitter, Element.H, 21 ),
           Bucket.createAutoSized( stepEmitter, Element.O, 4 ),
           Bucket.createAutoSized( stepEmitter, Element.C, 4 ),
           Bucket.createAutoSized( stepEmitter, Element.N, 4 )
@@ -59,7 +62,7 @@ define( function( require ) {
 
         // chlorine / fluorine
         kitCollection.addKit( new Kit( bounds, [
-          new Bucket( new Dimension2( 700, 200 ), stepEmitter, Element.H, 21 ),
+          new Bucket( BUCKET_DIMENSIONS, stepEmitter, Element.H, 21 ),
           Bucket.createAutoSized( stepEmitter, Element.C, 4 ),
           Bucket.createAutoSized( stepEmitter, Element.Cl, 4 ),
           Bucket.createAutoSized( stepEmitter, Element.F, 4 )
@@ -67,7 +70,7 @@ define( function( require ) {
 
         // boron / silicon
         kitCollection.addKit( new Kit( bounds, [
-          new Bucket( new Dimension2( 700, 200 ), stepEmitter, Element.H, 21 ),
+          new Bucket( BUCKET_DIMENSIONS, stepEmitter, Element.H, 21 ),
           Bucket.createAutoSized( stepEmitter, Element.C, 3 ),
           Bucket.createAutoSized( stepEmitter, Element.B, 2 ),
           Bucket.createAutoSized( stepEmitter, Element.Si, 2 )
@@ -75,7 +78,7 @@ define( function( require ) {
 
         // sulphur / oxygen
         kitCollection.addKit( new Kit( bounds, [
-          new Bucket( new Dimension2( 700, 200 ), stepEmitter, Element.H, 21 ),
+          new Bucket( BUCKET_DIMENSIONS, stepEmitter, Element.H, 21 ),
           Bucket.createAutoSized( stepEmitter, Element.B, 1 ),
           Bucket.createAutoSized( stepEmitter, Element.S, 2 ),
           Bucket.createAutoSized( stepEmitter, Element.Si, 1 ),
@@ -84,7 +87,7 @@ define( function( require ) {
 
         // phosphorus
         kitCollection.addKit( new Kit( bounds, [
-          new Bucket( new Dimension2( 700, 200 ), stepEmitter, Element.H, 21 ),
+          new Bucket( BUCKET_DIMENSIONS, stepEmitter, Element.H, 21 ),
           Bucket.createAutoSized( stepEmitter, Element.C, 4 ),
           Bucket.createAutoSized( stepEmitter, Element.O, 2 ),
           Bucket.createAutoSized( stepEmitter, Element.P, 2 )
@@ -92,7 +95,7 @@ define( function( require ) {
 
         // bromine kit?
         kitCollection.addKit( new Kit( bounds, [
-          new Bucket( new Dimension2( 700, 200 ), stepEmitter, Element.H, 21 ),
+          new Bucket( BUCKET_DIMENSIONS, stepEmitter, Element.H, 21 ),
           Bucket.createAutoSized( stepEmitter, Element.Br, 2 ),
           Bucket.createAutoSized( stepEmitter, Element.N, 3 ),
           Bucket.createAutoSized( stepEmitter, Element.C, 3 )
@@ -106,7 +109,6 @@ define( function( require ) {
         throw new Error( 'There are no more kit collections in the 3rd tab' );
       },
 
-      // createKitCollection
       function( model ) {
         // create the view
         return new BAMView( model );
