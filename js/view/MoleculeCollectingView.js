@@ -29,9 +29,9 @@ define( require => {
       const collectionAttachmentCallbacks = [];
 
       // @private
-      this.allFilledDialogNode = new AllFilledDialogNode(
-        this.kitCollectionList.availablePlayAreaBounds, regenerateCallback
-      );
+      // this.allFilledDialogNode = new AllFilledDialogNode(regenerateCallback);
+      // this.allFilledDialogNode.show();
+
 
       const collectionPanel = new CollectionPanel(
         kitCollectionList,
@@ -65,18 +65,18 @@ define( require => {
     addCollection( collection ) {
       const kitCollectionNode = BAMView.prototype.addCollection.call( this, collection );
 
-      let hasShownOnce = false;
-
-      // show dialog the 1st time all collection boxes are filled
-      collection.allCollectionBoxesFilledProperty.link( ( filled ) => {
-        if ( filled ) {
-          if ( !hasShownOnce ) {
-            // REVIEW: "this" reference is referencing the constructor, allFilledDialogNode is undefined.
-            this.allFilledDialogNode.show();
-            hasShownOnce = true;
-          }
-        }
-      } );
+      // let hasShownOnce = false;
+      //
+      // // show dialog the 1st time all collection boxes are filled
+      // collection.allCollectionBoxesFilledProperty.link( ( filled ) => {
+      //   if ( !filled ) {
+      //     // if ( !hasShownOnce ) {
+      //       // REVIEW: "this" reference is referencing the constructor, allFilledDialogNode is undefined.
+      //       this.allFilledDialogNode.show();
+      //       hasShownOnce = true;
+      //     // }
+      //   }
+      // } );
 
       return kitCollectionNode;
     }
