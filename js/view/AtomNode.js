@@ -16,11 +16,11 @@ define( function( require ) {
   var BAMConstants = require( 'BUILD_A_MOLECULE/BAMConstants' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
-  var Path = require( 'SCENERY/nodes/Path' );
+  var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var RadialGradient = require( 'SCENERY/util/RadialGradient' );
+  var ShadedSphereNode = require( 'SCENERY_PHET/ShadedSphereNode' );
   var Text = require( 'SCENERY/nodes/Text' );
   var Vector2 = require( 'DOT/Vector2' );
-  var Shape = require( 'KITE/Shape' );
 
   /**
    * @param {Atom2} atom
@@ -51,52 +51,47 @@ define( function( require ) {
 
   /**
    * @param {Element} element
+   * @private
    * @returns {Node}
    */
   AtomNode.getIcon = function( element ) {
     var node = elementMap[ element.symbol ];
-    if ( !node ) {
 
+    if ( !node ) {
       var color = new Color( element.color );
       var radius = BAMConstants.MODEL_VIEW_TRANSFORM.modelToViewDeltaX( element.covalentRadius );
       var diameter = radius * 2;
 
-      var gCenter = new Vector2( -radius / 3, -radius / 3 );
-
-      // copying ShadedSphereNode REVIEW: Can we just use ShadedSphereNode, and place something over it?
-      var middleRadius = diameter / 3;
-      var fullRadius = middleRadius + 0.7 * diameter;
-
-      var gradientFill = new RadialGradient( gCenter.x, gCenter.y, 0, gCenter.x, gCenter.y, fullRadius );
-      gradientFill.addColorStop( 0, '#ffffff' );
-      gradientFill.addColorStop( middleRadius / fullRadius, color.toCSS() );
-      gradientFill.addColorStop( 1, '#000000' );
-
-      node = new Path( Shape.circle( 0, 0, radius ), {
-        fill: AtomNode.experimentalBrighterGradient( radius, color )
+      // The body of the node
+      node = new ShadedSphereNode( diameter, {
+        mainColor: color,
+        highlightColor: color.brighterColor( 0.5 )
       } );
 
-      var isTextWhite = AtomNode.needsWhiteColor( color );
-
-      //REVIEW: Don't use custom fonts. Use PhetFont?
+      // The label for the node
       var text = new Text( element.symbol, {
-        fontWeight: 'bold',
-        fontFamily: 'Arial, sans-serif',
-        fontSize: 50,
-        fill: isTextWhite ? '#fff' : '#000'
+        font: new PhetFont( { size: 50, weight: 'bold' } ),
+        fill: AtomNode.getTextColor( color )
       } );
       text.scale( Math.min( 0.75 * diameter / text.getBounds().width, 0.75 * diameter / text.getBounds().height ) );
-      text.centerX = 0;
-      text.centerY = 0;
+      text.center = Vector2.ZERO;
       node.addChild( text );
 
       elementMap[ element.symbol ] = node;
     }
+
     return node;
   };
 
-  AtomNode.needsWhiteColor = function( color ) {
-    return 0.30 * color.r + 0.59 * color.g + 0.11 * color.b < 125;
+  /**
+   * Decides whether the atom node needs white text or black text.
+   *
+   * @param {ColorDef} color
+   * @returns {ColorDef}
+   * @private
+   */
+  AtomNode.getTextColor = function( color ) {
+    return 0.30 * color.r + 0.59 * color.g + 0.11 * color.b < 125 ? '#fff' : '#000';
   };
 
   //REVIEW: Looks unused?
