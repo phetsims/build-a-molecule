@@ -14,6 +14,7 @@ define( require => {
   const buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   const Color = require( 'SCENERY/util/Color' );
   const Dimension2 = require( 'DOT/Dimension2' );
+  // const Property = require( 'AXON/Property' );
   const Vector2Property = require( 'DOT/Vector2Property' );
   const SphereBucket = require( 'PHETCOMMON/model/SphereBucket' );
   const Strings = require( 'BUILD_A_MOLECULE/Strings' );
@@ -46,6 +47,8 @@ define( require => {
       // @public
       this.element = element;
       this.width = this.containerShape.bounds.width;
+
+      // this.atomsProperty= new Property(null);
 
       // Create the atoms for each element and add them to the bucket.
       for ( let i = 0; i < quantity; i++ ) {

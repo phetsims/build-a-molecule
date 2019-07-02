@@ -15,13 +15,11 @@ define( require => {
   const KitView = require( 'BUILD_A_MOLECULE/view/KitView' );
   const Node = require( 'SCENERY/nodes/Node' );
 
-  // const Rectangle = require( 'SCENERY/nodes/Rectangle' );
-
   class KitPanel extends Node {
     /**
      * @param {KitCollection} kitCollection
      * @param {Rectangle} availableKitBounds
-     * @param {Rectangle} view
+     * @param {MoleculeCollectingView} view
      * @constructor
      */
     constructor( kitCollection, availableKitBounds, view ) {
