@@ -16,7 +16,7 @@ define( function( require ) {
   var BucketHole = require( 'SCENERY_PHET/bucket/BucketHole' );
   var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   var BAMConstants = require( 'BUILD_A_MOLECULE/BAMConstants' );
-  // var DragListener = require( 'SCENERY/listeners/DragListener' );
+  var DragListener = require( 'SCENERY/listeners/DragListener' );
   var inherit = require( 'PHET_CORE/inherit' );
   var MoleculeBondContainerNode = require( 'BUILD_A_MOLECULE/view/MoleculeBondContainerNode' );
   var MoleculeControlsHBox = require( 'BUILD_A_MOLECULE/view/MoleculeControlsHBox' );
@@ -24,9 +24,9 @@ define( function( require ) {
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   // var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var Shape = require( 'KITE/Shape' );
-  var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' ); // TODO: DragListener
+  // var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' ); // TODO: DragListener
   // var SliceNode = require( 'BUILD_A_MOLECULE/view/SliceNode' );
-  var Trail = require( 'SCENERY/util/Trail' );
+  // var Trail = require( 'SCENERY/util/Trail' );
 
   /**
    * @param {Kit} kit
@@ -56,32 +56,32 @@ define( function( require ) {
     // this.addChild( swipeCatch );
     this.addChild( bottomLayer );
     this.addChild( atomLayer );
-    this.addChild( metadataLayer );
+    // this.addChild( metadataLayer );
     this.addChild( topLayer );
     // this.addChild( sliceNode );
 
     // override its hit testing
-    // TODO: REALLY don't do this. Super easy to break
-    // REVIEW: Definitely replace with a better way
-    atomLayer.hitTest = function( point, isMouse, isTouch ) {
-      // return accurate hits for the mouse
-      if ( isMouse ) {
-        return Node.prototype.hitTest.call( atomLayer, point, isMouse, isTouch );
-      }
-
-      // probably a touch or something we will target
-      var modelPoint = BAMConstants.MODEL_VIEW_TRANSFORM.viewToModelPosition( point );
-      var atom = self.closestAtom( modelPoint, 100 );
-      if ( atom ) {
-        // TODO: this is somewhat hackish. better way of doing this?
-        return new Trail( [ atomLayer, self.atomNodeMap[ atom.id ] ] );
-      }
-      else {
-        return null;
-      }
-    };
+    // // TODO: REALLY don't do this. Super easy to break
+    // // REVIEW: Definitely replace with a better way
+    // atomLayer.hitTest = function( point, isMouse, isTouch ) {
+    //   // return accurate hits for the mouse
+    //   if ( isMouse ) {
+    //     return Node.prototype.hitTest.call( atomLayer, point, isMouse, isTouch );
+    //   }
+    //
+    //   // probably a touch or something we will target
+    //   var modelPoint = BAMConstants.MODEL_VIEW_TRANSFORM.viewToModelPosition( point );
+    //   var atom = self.closestAtom( modelPoint, 100 );
+    //   if ( atom ) {
+    //     // TODO: this is somewhat hackish. better way of doing this?
+    //     return new Trail( [ atomLayer, self.atomNodeMap[ atom.id ] ] );
+    //   }
+    //   else {
+    //     return null;
+    //   }
+    // };
     // ensure that touches don't get pruned before this point
-    atomLayer.touchArea = Shape.bounds( BAMConstants.STAGE_SIZE );
+    // atomLayer.touchArea = Shape.bounds( BAMConstants.STAGE_SIZE );
 
     kit.buckets.forEach( function( bucket ) {
       var bucketFront = new BucketFront( bucket, BAMConstants.MODEL_VIEW_TRANSFORM, {
@@ -114,29 +114,28 @@ define( function( require ) {
       bucketHole.children.forEach( function( child ) { child.pickable = false; } );
 
       // our hook to start dragging an atom (if available in the bucket)
-      bucketHole.addInputListener( {
-        down: function( event ) {
-          // coordinate transforms to get our atom
-          var viewPoint = moleculeCollectingView.globalToLocalPoint( event.pointer.point );
-          var modelPoint = BAMConstants.MODEL_VIEW_TRANSFORM.viewToModelPosition( viewPoint );
-          var atom = self.closestAtom( modelPoint, Number.POSITIVE_INFINITY, bucket.element ); // filter by the element
-
-          // if it's not in our bucket, ignore it (could skip weird cases where an atom outside of the bucket is technically closer)
-          if ( !_.includes( bucket.getParticleList(), atom ) ) {
-            return;
-          }
-
-          // move the atom to right under the pointer for this assisted drag - otherwise the offset would be too noticeable
-          atom.positionProperty.value = atom.destinationProperty.value = modelPoint;
-
-          var atomNode = self.atomNodeMap[ atom.id ];
-          // TODO: use a new DragListener
-          event.target = event.currentTarget = atomNode; // for now, modify the event directly so we can "point" it towards the atom node instead
-
-          // trigger the drag start
-          atomNode.atomDragListener.startDrag( event );
-        }
-      } );
+      // bucketHole.addInputListener( {
+      //   down: function( event ) {
+      //     // coordinate transforms to get our atom
+      //     var viewPoint = moleculeCollectingView.globalToLocalPoint( event.pointer.point );
+      //     var modelPoint = BAMConstants.MODEL_VIEW_TRANSFORM.viewToModelPosition( viewPoint );
+      //     var atom = self.closestAtom( modelPoint, Number.POSITIVE_INFINITY, bucket.element ); // filter by the element
+      //
+      //     // if it's not in our bucket, ignore it (could skip weird cases where an atom outside of the bucket is technically closer)
+      //     if ( !_.includes( bucket.getParticleList(), atom ) ) {
+      //       return;
+      //     }
+      //
+      //     // move the atom to right under the pointer for this assisted drag - otherwise the offset would be too noticeable
+      //     atom.positionProperty.value = atom.destinationProperty.value = modelPoint;
+      //
+      //     var atomNode = self.atomNodeMap[ atom.id ];
+      //     // TODO: use a new DragListener
+      //     event.target = event.currentTarget = atomNode; // for now, modify the event directly so we can "point" it towards the atom node instead
+      //
+      //     // trigger the drag start
+      //   }
+      // } );
 
       topLayer.addChild( bucketFront );
       bottomLayer.addChild( bucketHole );
@@ -149,9 +148,12 @@ define( function( require ) {
         // Add a drag listener that will move the model element when the user
         // drags this atom.
         //REVIEW: Can we use the newer drag listeners?
-        var atomListener = new SimpleDragHandler( {
-          start: function() {
-            moleculeCollectingView.addAtomToPlayArea( atom, kit, moleculeCollectingView );
+        var atomListener = new DragListener( {
+          transform: BAMConstants.MODEL_VIEW_TRANSFORM,
+          translateNode: true,
+          start: function( event ) {
+            // atomNode.center = event.pointer.point;
+            moleculeCollectingView.atomsInPlayArea.push( atom );
             if ( bucket.containsParticle( atom ) ) {
               bucket.removeParticle( atom, true );
               atomLayer.removeChild( atomNode );
@@ -159,16 +161,15 @@ define( function( require ) {
           },
           end: function() {
             atom.userControlledProperty.value = false;
-          },
-
-          translate: function( data ) {
-            // REVIEW: Forward translation to new instance of atom node. Toggle visibility
-            var modelDelta = BAMConstants.MODEL_VIEW_TRANSFORM.viewToModelDelta( data.delta );
-            kit.atomDragged( atom, modelDelta );
           }
+
+          // translate: function( data ) {
+          //   // REVIEW: Forward translation to new instance of atom node. Toggle visibility
+          //   var modelDelta = BAMConstants.MODEL_VIEW_TRANSFORM.viewToModelDelta( data.delta );
+          //   kit.atomDragged( atom, modelDelta );
+          // }
         } );
         atomNode.addInputListener( atomListener );
-        atomNode.atomDragListener = atomListener;
       } );
     } );
 

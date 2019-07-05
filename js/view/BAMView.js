@@ -16,11 +16,11 @@ define( function( require ) {
   var KitCollectionNode = require( 'BUILD_A_MOLECULE/view/KitCollectionNode' );
   // var Node = require( 'SCENERY/nodes/Node' );
   var ObservableArray = require( 'AXON/ObservableArray' );
-  var Rectangle = require( 'SCENERY/nodes/Rectangle' );
+  // var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var ScreenView = require( 'JOIST/ScreenView' );
   // var Shape = require( 'KITE/Shape' );
   var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' ); // TODO: DragListener
-  var SliceNode = require( 'BUILD_A_MOLECULE/view/SliceNode' );
+  // var SliceNode = require( 'BUILD_A_MOLECULE/view/SliceNode' );
 
   /**
    * @param {KitCollectionList} kitCollectionList
@@ -38,11 +38,11 @@ define( function( require ) {
     this.addCollection( kitCollectionList.currentCollectionProperty.value );
 
     this.atomsInPlayArea = new ObservableArray( [] );
-    this.atomsInPlayArea.addItemAddedListener( function( atom, kit ) {
-      this.addAtomToPlayArea( atom, kit );
+    this.atomsInPlayArea.addItemAddedListener( function( atom ) {
+      self.addAtomToPlayArea( atom );
     } );
     this.atomsInPlayArea.addItemRemovedListener( function( atom ) {
-      this.removeAtomFromPlayArea( atom );
+      self.removeAtomFromPlayArea( atom );
     } );
 
     kitCollectionList.currentCollectionProperty.link( function( newCollection, oldCollection ) {
@@ -68,12 +68,12 @@ define( function( require ) {
       return kitCollectionNode;
     },
     addAtomToPlayArea: function( atom, kit, view ) {
-      var viewSwipeBounds = BAMConstants.MODEL_VIEW_TRANSFORM.modelToViewBounds( kit.collectionLayout.availablePlayAreaBounds );
-      var sliceNode = new SliceNode( kit, viewSwipeBounds, view );
+      // var viewSwipeBounds = BAMConstants.MODEL_VIEW_TRANSFORM.modelToViewBounds( kit.collectionLayout.availablePlayAreaBounds );
+      // var sliceNode = new SliceNode( kit, viewSwipeBounds, view );
 
 
-      var swipeCatch = Rectangle.bounds( viewSwipeBounds.eroded( BAMConstants.VIEW_PADDING ) );
-      swipeCatch.addInputListener( sliceNode.sliceInputListener );
+      // var swipeCatch = Rectangle.bounds( viewSwipeBounds.eroded( BAMConstants.VIEW_PADDING ) );
+      // swipeCatch.addInputListener( sliceNode.sliceInputListener );
 
       //REVIEW: Can we use the newer drag listeners?
       var atomNode = new AtomNode( atom, {} );
@@ -84,7 +84,6 @@ define( function( require ) {
       var atomListener = new SimpleDragHandler( {
         start: function( event ) {
           atom.userControlledProperty.value = true;
-
           // var molecule = kit.getMolecule( atom );
           // if ( molecule ) {
           //   molecule.atoms.forEach( function( moleculeAtom ) {
