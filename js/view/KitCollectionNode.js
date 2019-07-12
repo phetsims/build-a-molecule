@@ -17,16 +17,16 @@ define( require => {
 
   class KitCollectionNode extends Node {
     /**
-     * @param {KitCollectionList} kitCollectionList
      * @param {KitCollection} collection
      * @param {MoleculeCollectingView} view
      * @constructor
      */
-    constructor( kitCollectionList, collection, view ) {
+    constructor( collection, view ) {
       super( {} );
 
-      const kitPanel = new KitPanel( collection, kitCollectionList.availableKitBounds, view );
+      const kitPanel = new KitPanel( collection, BAMConstants.KIT_VIEW_HEIGHT, view );
       kitPanel.bottom = BAMConstants.STAGE_SIZE.bottom - BAMConstants.VIEW_PADDING;
+      kitPanel.left = BAMConstants.STAGE_SIZE.left + BAMConstants.VIEW_PADDING;
 
       this.addChild( kitPanel );
 

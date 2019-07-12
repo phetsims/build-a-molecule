@@ -18,23 +18,23 @@ define( require => {
   class KitPanel extends Node {
     /**
      * @param {KitCollection} kitCollection
-     * @param {Rectangle} availableKitBounds
+     * @param {number} kitViewHeight
      * @param {MoleculeCollectingView} view
      * @constructor
      */
-    constructor( kitCollection, availableKitBounds, view ) {
+    constructor( kitCollection, kitViewHeight, view ) {
       super();
-      // const kitViewBounds = BAMConstants.MODEL_VIEW_TRANSFORM.modelToViewBounds( availableKitBounds );
 
-      var kits = [];
-      kitCollection.kits.forEach( function( kit ) {
-        kits.push( new KitView( kit, view ) );
-        // kits.push(  new Rectangle( 0, 0, 60, 60, { fill: "pink", stroke: 'black' } ))
+      // create kitViews and unify their heights
+      const kitViews = [];
+      kitCollection.kits.forEach( kit => {
+        const kitView = new KitView( kit, view );
+        const kitViewBounds = kitView.getLocalBounds();
+        kitView.setLocalBounds( kitViewBounds.dilatedY( ( kitViewHeight - kitViewBounds.getHeight() ) / 2 ) );
+        kitViews.push( kitView );
       } );
-      // kits.push(  new KitView( kitCollection.kits[0], kitViewBounds ));
 
-
-      this.addChild( new Carousel( kits, {
+      this.addChild( new Carousel( kitViews, {
         fill: BAMConstants.KIT_BACKGROUND,
         stroke: BAMConstants.KIT_BORDER,
         margin: 10,

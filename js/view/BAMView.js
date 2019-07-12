@@ -33,6 +33,7 @@ define( function( require ) {
 
     this.kitCollectionMap = {}; // maps KitCollection ID => KitCollectionNode
 
+    // @public {KitCollectionList}
     this.kitCollectionList = kitCollectionList;
 
     this.addCollection( kitCollectionList.currentCollectionProperty.value );
@@ -61,7 +62,7 @@ define( function( require ) {
   return inherit( ScreenView, BAMView, {
 
     addCollection: function( collection ) {
-      var kitCollectionNode = new KitCollectionNode( this.kitCollectionList, collection, this );
+      var kitCollectionNode = new KitCollectionNode( collection, this );
       this.kitCollectionMap[ collection.id ] = kitCollectionNode;
 
       // supposedly: return this so we can manipulate it in an override....?

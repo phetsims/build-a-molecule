@@ -45,6 +45,8 @@ define( function( require ) {
     MODEL_SIZE: MODEL_SIZE,
     VIEW_PADDING: VIEW_PADDING,
     MODEL_PADDING: MODEL_PADDING,
+    BUTTON_PADDING: 5, // vertical space between molecule and name/buttons
+    KIT_VIEW_HEIGHT: 148, // empirically determined as the height of the tallest bucket of atoms
 
     /*---------------------------------------------------------------------------*
      * Colors
@@ -62,12 +64,6 @@ define( function( require ) {
     KIT_ARROW_BACKGROUND_ENABLED: Color.YELLOW,                  // kit next/prev arrow background
     KIT_ARROW_BORDER_ENABLED: Color.BLACK,                       // kit next/prev arrow border
     COMPLETE_BACKGROUND_COLOR: new Color( 238, 238, 238 ),      // background when complete
-
-    /*---------------------------------------------------------------------------*
-     * Layout
-     *----------------------------------------------------------------------------*/
-
-    BUTTON_PADDING: 5, // vertical space between molecule and name/buttons
 
     /*---------------------------------------------------------------------------*
      * Misc
