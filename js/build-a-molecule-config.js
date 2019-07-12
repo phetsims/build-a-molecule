@@ -42,10 +42,9 @@ require.config( {
     SUN: '../../sun/js',
     TAMBO: '../../tambo/js',
     TANDEM: '../../tandem/js',
-    TWIXT: '../../twixt/js',
     VEGAS: '../../vegas/js'
   },
 
-  // optional cache bust to make browser refresh load all included scripts, can be disabled with ?cacheBust=false
+  // optional cache bust to make browser refresh load all included scripts, can be enabled with ?cacheBust
   urlArgs: phet.chipper.getCacheBustArgs()
 } );
