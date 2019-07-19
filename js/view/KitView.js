@@ -153,7 +153,7 @@ define( function( require ) {
           translateNode: true,
           start: function( event ) {
             // atomNode.center = event.pointer.point;
-            moleculeCollectingView.atomsInPlayArea.push( atom );
+            moleculeCollectingView.kitCollectionList.atomsInPlayArea.push( atom );
             if ( bucket.containsParticle( atom ) ) {
               bucket.removeParticle( atom, true );
               atomLayer.removeChild( atomNode );

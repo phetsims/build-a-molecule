@@ -13,6 +13,7 @@ define( function( require ) {
   var Emitter = require( 'AXON/Emitter' );
   var inherit = require( 'PHET_CORE/inherit' );
   var KitCollection = require( 'BUILD_A_MOLECULE/model/KitCollection' );
+  var ObservableArray = require( 'AXON/ObservableArray' );
   var Property = require( 'AXON/Property' );
 
   /**
@@ -29,6 +30,9 @@ define( function( require ) {
     // @public {Emitter} - Fires single parameter of {KitCollection}
     this.addedCollectionEmitter = new Emitter( { validators: [ { valueType: KitCollection } ] } );
     this.removedCollectionEmitter = new Emitter( { validators: [ { valueType: KitCollection } ] } );
+
+    // @public
+    this.atomsInPlayArea = new ObservableArray();
 
     this.createKitCollection = createKitCollection;
     this.collectionLayout = collectionLayout;

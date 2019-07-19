@@ -15,7 +15,6 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var KitCollectionNode = require( 'BUILD_A_MOLECULE/view/KitCollectionNode' );
   // var Node = require( 'SCENERY/nodes/Node' );
-  var ObservableArray = require( 'AXON/ObservableArray' );
   // var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var ScreenView = require( 'JOIST/ScreenView' );
   // var Shape = require( 'KITE/Shape' );
@@ -38,11 +37,10 @@ define( function( require ) {
 
     this.addCollection( kitCollectionList.currentCollectionProperty.value );
 
-    this.atomsInPlayArea = new ObservableArray( [] );
-    this.atomsInPlayArea.addItemAddedListener( function( atom ) {
-      self.addAtomToPlayArea( atom );
+    this.kitCollectionList.atomsInPlayArea.addItemAddedListener( function( atom ) {
+      self.addAtomNodeToPlayArea( atom );
     } );
-    this.atomsInPlayArea.addItemRemovedListener( function( atom ) {
+    this.kitCollectionList.atomsInPlayArea.addItemRemovedListener( function( atom ) {
       self.removeAtomFromPlayArea( atom );
     } );
 
@@ -68,7 +66,7 @@ define( function( require ) {
       // supposedly: return this so we can manipulate it in an override....?
       return kitCollectionNode;
     },
-    addAtomToPlayArea: function( atom, kit, view ) {
+    addAtomNodeToPlayArea: function( atom, kit, view ) {
       // var viewSwipeBounds = BAMConstants.MODEL_VIEW_TRANSFORM.modelToViewBounds( kit.collectionLayout.availablePlayAreaBounds );
       // var sliceNode = new SliceNode( kit, viewSwipeBounds, view );
 
@@ -112,7 +110,7 @@ define( function( require ) {
       atomNode.atomDragListener = atomListener;
     },
     removeAtomFromPlayArea: function( atom ) {
-      this.atomsInPlayArea.remove( atom );
+      this.kitCollectionList.atomsInPlayArea.remove( atom );
     }
   } );
 } );
