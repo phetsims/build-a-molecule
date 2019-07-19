@@ -48,24 +48,10 @@ define( require => {
       this.element = element;
       this.width = this.containerShape.bounds.width;
 
-      // this.atomsProperty= new Property(null);
-
       // Create the atoms for each element and add them to the bucket.
       for ( let i = 0; i < quantity; i++ ) {
         this.addParticleFirstOpen( new Atom2( element, stepEmitter ), false );
       }
-
-      this.positionProperty.link( point => {
-
-        // when we move the bucket, we must also move our contained atoms
-        const delta = point.minus( this.position );
-
-        if ( this.atoms ) {
-          this.atoms.forEach( ( atom ) => {
-            atom.setPositionAndDestination( atom.positionProperty.value.plus( delta ) );
-          } );
-        }
-      } );
     }
 
     // Instantly place the atom in the correct position, whether or not it is in the bucket
