@@ -39,8 +39,8 @@ define( function( require ) {
     this.hasMoleculesInBoxesProperty = new BooleanProperty( false ); // we record this so we know when the "reset kit" should be shown
 
     // @public {Emitter} - Called with a single parameter molecule
-    this.addedMoleculeEmitter = new Emitter( { validators: [ { valueType: Molecule } ] } );
-    this.removedMoleculeEmitter = new Emitter( { validators: [ { valueType: Molecule } ] } );
+    this.addedMoleculeEmitter = new Emitter( { parameters: [ { valueType: Molecule } ] } );
+    this.removedMoleculeEmitter = new Emitter( { parameters: [ { valueType: Molecule } ] } );
 
     this.buckets = buckets;
     this.collectionLayout = collectionLayout;

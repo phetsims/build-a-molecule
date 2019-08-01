@@ -28,8 +28,8 @@ define( function( require ) {
     this.currentCollectionProperty = new Property( firstCollection );
 
     // @public {Emitter} - Fires single parameter of {KitCollection}
-    this.addedCollectionEmitter = new Emitter( { validators: [ { valueType: KitCollection } ] } );
-    this.removedCollectionEmitter = new Emitter( { validators: [ { valueType: KitCollection } ] } );
+    this.addedCollectionEmitter = new Emitter( { parameters: [ { valueType: KitCollection } ] } );
+    this.removedCollectionEmitter = new Emitter( { parameters: [ { valueType: KitCollection } ] } );
 
     // @public
     this.atomsInPlayArea = new ObservableArray();

@@ -42,8 +42,8 @@ define( require => {
       this.addedToModelProperty = new BooleanProperty( true );
 
       // @public {Emitter} - Called with one parameter: particle
-      this.grabbedByUserEmitter = new Emitter( { validators: [ { valueType: Atom2 } ] } );
-      this.droppedByUserEmitter = new Emitter( { validators: [ { valueType: Atom2 } ] } );
+      this.grabbedByUserEmitter = new Emitter( { parameters: [ { valueType: Atom2 } ] } );
+      this.droppedByUserEmitter = new Emitter( { parameters: [ { valueType: Atom2 } ] } );
 
       // @public {Emitter}
       this.stepEmitter = stepEmitter;

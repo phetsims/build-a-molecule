@@ -29,9 +29,9 @@ define( function( require ) {
     this.quantityProperty = new NumberProperty( 0 );
 
     // @public {Emitter} - Called with a single molecule parameter
-    this.addedMoleculeEmitter = new Emitter( { validators: [ { valueType: Molecule } ] } );
-    this.removedMoleculeEmitter = new Emitter( { validators: [ { valueType: Molecule } ] } );
-    this.acceptedMoleculeCreationEmitter = new Emitter( { validators: [ { valueType: Molecule } ] } ); // triggered from KitCollection
+    this.addedMoleculeEmitter = new Emitter( { parameters: [ { valueType: Molecule } ] } );
+    this.removedMoleculeEmitter = new Emitter( { parameters: [ { valueType: Molecule } ] } );
+    this.acceptedMoleculeCreationEmitter = new Emitter( { parameters: [ { valueType: Molecule } ] } ); // triggered from KitCollection
 
     // @public {CompleteMolecule}
     this.moleculeType = moleculeType;
