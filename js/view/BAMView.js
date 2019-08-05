@@ -6,84 +6,81 @@
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 
-define( function( require ) {
+define( require => {
   'use strict';
 
-  var AtomNode = require( 'BUILD_A_MOLECULE/view/AtomNode' );
-  var BAMConstants = require( 'BUILD_A_MOLECULE/BAMConstants' );
-  var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var KitCollectionNode = require( 'BUILD_A_MOLECULE/view/KitCollectionNode' );
-  // var Node = require( 'SCENERY/nodes/Node' );
-  // var Rectangle = require( 'SCENERY/nodes/Rectangle' );
-  var ScreenView = require( 'JOIST/ScreenView' );
-  // var Shape = require( 'KITE/Shape' );
-  var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' ); // TODO: DragListener
-  // var SliceNode = require( 'BUILD_A_MOLECULE/view/SliceNode' );
+  const AtomNode = require( 'BUILD_A_MOLECULE/view/AtomNode' );
+  const BAMConstants = require( 'BUILD_A_MOLECULE/BAMConstants' );
+  const buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
+  const KitCollectionNode = require( 'BUILD_A_MOLECULE/view/KitCollectionNode' );
+  // const Node = require( 'SCENERY/nodes/Node' );
+  // const Rectangle = require( 'SCENERY/nodes/Rectangle' );
+  const ScreenView = require( 'JOIST/ScreenView' );
+  // const Shape = require( 'KITE/Shape' );
+  const SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' ); // TODO: DragListener
+  // const SliceNode = require( 'BUILD_A_MOLECULE/view/SliceNode' );
 
-  /**
-   * @param {KitCollectionList} kitCollectionList
-   * @constructor
-   */
-  function BAMView( kitCollectionList ) {
+  class BAMView extends ScreenView {
+    /**
+     * @param {KitCollectionList} kitCollectionList
+     * @constructor
+     */
+    constructor( kitCollectionList ) {
 
-    ScreenView.call( this );
-    var self = this;
+      super();
 
-    this.kitCollectionMap = {}; // maps KitCollection ID => KitCollectionNode
+      this.kitCollectionMap = {}; // maps KitCollection ID => KitCollectionNode
 
-    // @public {KitCollectionList}
-    this.kitCollectionList = kitCollectionList;
+      // @public {KitCollectionList}
+      this.kitCollectionList = kitCollectionList;
 
-    this.addCollection( kitCollectionList.currentCollectionProperty.value );
+      this.addCollection( kitCollectionList.currentCollectionProperty.value );
 
-    this.kitCollectionList.atomsInPlayArea.addItemAddedListener( function( atom ) {
-      self.addAtomNodeToPlayArea( atom );
-    } );
-    this.kitCollectionList.atomsInPlayArea.addItemRemovedListener( function( atom ) {
-      self.removeAtomFromPlayArea( atom );
-    } );
+      this.kitCollectionList.atomsInPlayArea.addItemAddedListener( atom => {
+        this.addAtomNodeToPlayArea( atom );
+      } );
+      this.kitCollectionList.atomsInPlayArea.addItemRemovedListener( atom => {
+        this.removeAtomFromPlayArea( atom );
+      } );
 
-    kitCollectionList.currentCollectionProperty.link( function( newCollection, oldCollection ) {
-      if ( oldCollection ) {
-        self.removeChild( self.kitCollectionMap[ oldCollection.id ] );
-      }
-      if ( newCollection ) {
-        self.addChild( self.kitCollectionMap[ newCollection.id ] );
-      }
-    } );
+      kitCollectionList.currentCollectionProperty.link( ( newCollection, oldCollection ) => {
+        if ( oldCollection ) {
+          this.removeChild( this.kitCollectionMap[ oldCollection.id ] );
+        }
+        if ( newCollection ) {
+          this.addChild( this.kitCollectionMap[ newCollection.id ] );
+        }
+      } );
 
-    kitCollectionList.addedCollectionEmitter.addListener( this.addCollection.bind( this ) );
-  }
-  buildAMolecule.register( 'BAMView', BAMView );
+      kitCollectionList.addedCollectionEmitter.addListener( this.addCollection.bind( this ) );
+    }
 
-  return inherit( ScreenView, BAMView, {
-
-    addCollection: function( collection ) {
-      var kitCollectionNode = new KitCollectionNode( collection, this );
+    addCollection( collection ) {
+      const kitCollectionNode = new KitCollectionNode( collection, this );
       this.kitCollectionMap[ collection.id ] = kitCollectionNode;
 
       // supposedly: return this so we can manipulate it in an override....?
       return kitCollectionNode;
-    },
-    addAtomNodeToPlayArea: function( atom, kit, view ) {
-      // var viewSwipeBounds = BAMConstants.MODEL_VIEW_TRANSFORM.modelToViewBounds( kit.collectionLayout.availablePlayAreaBounds );
-      // var sliceNode = new SliceNode( kit, viewSwipeBounds, view );
+    }
+
+    addAtomNodeToPlayArea( atom, kit, view ) {
+      // const viewSwipeBounds = BAMConstants.MODEL_VIEW_TRANSFORM.modelToViewBounds( kit.collectionLayout.availablePlayAreaBounds );
+      // const sliceNode = new SliceNode( kit, viewSwipeBounds, view );
 
 
-      // var swipeCatch = Rectangle.bounds( viewSwipeBounds.eroded( BAMConstants.VIEW_PADDING ) );
+      // const swipeCatch = Rectangle.bounds( viewSwipeBounds.eroded( BAMConstants.VIEW_PADDING ) );
       // swipeCatch.addInputListener( sliceNode.sliceInputListener );
 
       //REVIEW: Can we use the newer drag listeners?
-      var atomNode = new AtomNode( atom, {} );
+      const atomNode = new AtomNode( atom, {} );
       // this.addChild( swipeCatch );
       // this.addChild( sliceNode );
       // this.addChild( atomNode );
 
-      var atomListener = new SimpleDragHandler( {
-        start: function( event ) {
+      const atomListener = new SimpleDragHandler( {
+        start( event ) {
           atom.userControlledProperty.value = true;
-          // var molecule = kit.getMolecule( atom );
+          // const molecule = kit.getMolecule( atom );
           // if ( molecule ) {
           //   molecule.atoms.forEach( function( moleculeAtom ) {
           //     this.atomNodeMap[ moleculeAtom.id ].moveToFront();
@@ -94,23 +91,26 @@ define( function( require ) {
           // }
         },
 
-        end: function() {
+        end() {
           atom.userControlledProperty.value = false;
           // if ( !bucket.containsParticle( atom ) ) {
           // }
         },
 
-        translate: function( data ) {
+        translate( data ) {
           // REVIEW: Forward translation to new instance of atom node. Toggle visibility
-          var modelDelta = BAMConstants.MODEL_VIEW_TRANSFORM.viewToModelDelta( data.delta );
+          const modelDelta = BAMConstants.MODEL_VIEW_TRANSFORM.viewToModelDelta( data.delta );
           kit.atomDragged( atom, modelDelta );
         }
       } );
       atomNode.addInputListener( atomListener );
       atomNode.atomDragListener = atomListener;
-    },
-    removeAtomFromPlayArea: function( atom ) {
+    }
+
+    removeAtomFromPlayArea( atom ) {
       this.kitCollectionList.atomsInPlayArea.remove( atom );
     }
-  } );
+  }
+
+  return buildAMolecule.register( 'BAMView', BAMView );
 } );
