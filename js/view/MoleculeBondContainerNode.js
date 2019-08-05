@@ -6,45 +6,41 @@
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 
-define( function( require ) {
+define( require => {
   'use strict';
 
-  var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var MoleculeBondNode = require( 'BUILD_A_MOLECULE/view/MoleculeBondNode' );
-  var Node = require( 'SCENERY/nodes/Node' );
+  const buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
+  const MoleculeBondNode = require( 'BUILD_A_MOLECULE/view/MoleculeBondNode' );
+  const Node = require( 'SCENERY/nodes/Node' );
 
-  /**
-   * @param {Kit} kit
-   * @param {Molecule} molecule
-   * @constructor
-   */
-  function MoleculeBondContainerNode( kit, molecule ) {
-    Node.call( this, {} );
-    var self = this;
+  class MoleculeBondContainerNode extends Node {
+    /**
+     * @param {Kit} kit
+     * @param {Molecule} molecule
+     * @constructor
+     */
+    constructor( kit, molecule ) {
+      super();
+      this.bondNodes = [];
 
-    this.bondNodes = [];
+      this.bondNodes = molecule.bonds.map( bond => {
+        const node = new MoleculeBondNode( bond, kit );
+        this.addChild( node );
+        return node;
+      } );
+    }
 
-    this.bondNodes = molecule.bonds.map( function( bond ) {
-      var node = new MoleculeBondNode( bond, kit );
-      self.addChild( node );
-      return node;
-    } );
-  }
-
-  buildAMolecule.register( 'MoleculeBondContainerNode', MoleculeBondContainerNode );
-
-  inherit( Node, MoleculeBondContainerNode, {
     /**
      * @override
      */
-    dispose: function() {
-      this.bondNodes.forEach( function( bondNode ) {
+    dispose() {
+      this.bondNodes.forEach( bondNode => {
         bondNode.dispose();
       } );
       Node.prototype.dispose.call( this );
     }
-  } );
+  }
 
-  return MoleculeBondContainerNode;
+  return buildAMolecule.register( 'MoleculeBondContainerNode', MoleculeBondContainerNode );
+
 } );
