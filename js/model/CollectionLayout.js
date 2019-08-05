@@ -9,9 +9,9 @@
 define( require => {
   'use strict';
 
-  var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
-  var BAMConstants = require( 'BUILD_A_MOLECULE/BAMConstants' );
-  var Rectangle = require( 'DOT/Rectangle' );
+  const buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
+  const BAMConstants = require( 'BUILD_A_MOLECULE/BAMConstants' );
+  const Rectangle = require( 'DOT/Rectangle' );
 
   class CollectionLayout {
     /**
