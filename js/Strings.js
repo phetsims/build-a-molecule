@@ -1,28 +1,27 @@
 // Copyright 2013-2019, University of Colorado Boulder
 
-define( function( require ) {
+define( require => {
   'use strict';
 
-  var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
-  var Strings = {};
+  const buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
+  const Strings = {};
 
   // strings
-  var boronString = require( 'string!BUILD_A_MOLECULE/boron' );
-  var bromineString = require( 'string!BUILD_A_MOLECULE/bromine' );
-  var carbonString = require( 'string!BUILD_A_MOLECULE/carbon' );
-  var chlorineString = require( 'string!BUILD_A_MOLECULE/chlorine' );
-  var fluorineString = require( 'string!BUILD_A_MOLECULE/fluorine' );
-  var hydrogenString = require( 'string!BUILD_A_MOLECULE/hydrogen' );
-  var iodineString = require( 'string!BUILD_A_MOLECULE/iodine' );
-  var nitrogenString = require( 'string!BUILD_A_MOLECULE/nitrogen' );
-  var oxygenString = require( 'string!BUILD_A_MOLECULE/oxygen' );
-  var phosphorusString = require( 'string!BUILD_A_MOLECULE/phosphorus' );
-  var siliconString = require( 'string!BUILD_A_MOLECULE/silicon' );
-  var sulphurString = require( 'string!BUILD_A_MOLECULE/sulphur' );
+  const boronString = require( 'string!BUILD_A_MOLECULE/boron' );
+  const bromineString = require( 'string!BUILD_A_MOLECULE/bromine' );
+  const carbonString = require( 'string!BUILD_A_MOLECULE/carbon' );
+  const chlorineString = require( 'string!BUILD_A_MOLECULE/chlorine' );
+  const fluorineString = require( 'string!BUILD_A_MOLECULE/fluorine' );
+  const hydrogenString = require( 'string!BUILD_A_MOLECULE/hydrogen' );
+  const iodineString = require( 'string!BUILD_A_MOLECULE/iodine' );
+  const nitrogenString = require( 'string!BUILD_A_MOLECULE/nitrogen' );
+  const oxygenString = require( 'string!BUILD_A_MOLECULE/oxygen' );
+  const phosphorusString = require( 'string!BUILD_A_MOLECULE/phosphorus' );
+  const siliconString = require( 'string!BUILD_A_MOLECULE/silicon' );
+  const sulphurString = require( 'string!BUILD_A_MOLECULE/sulphur' );
 
-  buildAMolecule.register( 'Strings', Strings );
 
-  var elementMap = {
+  const elementMap = {
     'H': hydrogenString,
     'O': oxygenString,
     'C': carbonString,
@@ -41,5 +40,6 @@ define( function( require ) {
     return elementMap[ element.symbol ];
   };
 
-  return Strings;
+  return buildAMolecule.register( 'Strings', Strings );
+
 } );
