@@ -6,57 +6,56 @@
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 
-define( function( require ) {
+define( require => {
   'use strict';
 
-  var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
-  var Emitter = require( 'AXON/Emitter' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var KitCollection = require( 'BUILD_A_MOLECULE/model/KitCollection' );
-  var ObservableArray = require( 'AXON/ObservableArray' );
-  var Property = require( 'AXON/Property' );
+  const buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
+  const Emitter = require( 'AXON/Emitter' );
+  const KitCollection = require( 'BUILD_A_MOLECULE/model/KitCollection' );
+  const ObservableArray = require( 'AXON/ObservableArray' );
+  const Property = require( 'AXON/Property' );
 
-  /**
-   * @param {KitCollection} firstCollection
-   * @param {CollectionLayout} collectionLayout
-   * @param {Emitter} stepEmitter
-   * @param {function} createKitCollection
-   */
-  function KitCollectionList( firstCollection, collectionLayout, stepEmitter, createKitCollection ) {
+  class KitCollectionList {
 
-    // @public {Property.<KitCollection>}
-    this.currentCollectionProperty = new Property( firstCollection );
+    /**
+     * @param {KitCollection} firstCollection
+     * @param {CollectionLayout} collectionLayout
+     * @param {Emitter} stepEmitter
+     * @param {function} createKitCollection
+     */
+    constructor( firstCollection, collectionLayout, stepEmitter, createKitCollection ) {
 
-    // @public {Emitter} - Fires single parameter of {KitCollection}
-    this.addedCollectionEmitter = new Emitter( { parameters: [ { valueType: KitCollection } ] } );
-    this.removedCollectionEmitter = new Emitter( { parameters: [ { valueType: KitCollection } ] } );
+      // @public {Property.<KitCollection>}
+      this.currentCollectionProperty = new Property( firstCollection );
 
-    // @public
-    this.atomsInPlayArea = new ObservableArray();
+      // @public {Emitter} - Fires single parameter of {KitCollection}
+      this.addedCollectionEmitter = new Emitter( { parameters: [ { valueType: KitCollection } ] } );
+      this.removedCollectionEmitter = new Emitter( { parameters: [ { valueType: KitCollection } ] } );
 
-    this.createKitCollection = createKitCollection;
-    this.collectionLayout = collectionLayout;
-    this.stepEmitter = stepEmitter;
-    this.collections = [];
-    this.currentIndex = 0;
-    this.addCollection( firstCollection );
-  }
+      // @public
+      this.atomsInPlayArea = new ObservableArray();
+      this.createKitCollection = createKitCollection;
+      this.collectionLayout = collectionLayout;
+      this.stepEmitter = stepEmitter;
+      this.collections = [];
+      this.currentIndex = 0;
+      this.addCollection( firstCollection );
+    }
 
-  buildAMolecule.register( 'KitCollectionList', KitCollectionList );
-
-  inherit( Object, KitCollectionList, {
-    step: function step( timeElapsed ) {
+    step( timeElapsed ) {
       this.stepEmitter.emit( timeElapsed );
-    },
-    generateKitCollection: function generateKitCollection() {
+    }
+
+    generateKitCollection() {
       return this.createKitCollection( this.collectionLayout, this.stepEmitter );
-    },
-    switchTo: function( collection ) {
+    }
+
+    switchTo( collection ) {
       this.currentIndex = this.collections.indexOf( collection );
       this.currentCollectionProperty.value = collection;
-    },
+    }
 
-    addCollection: function( collection ) {
+    addCollection( collection ) {
       this.collections.push( collection );
 
       // TODO: notifications before changing current collection - is this desired? may be
@@ -65,17 +64,16 @@ define( function( require ) {
       // switch to collection
       this.currentIndex = this.collections.indexOf( collection );
       this.currentCollectionProperty.value = collection;
-    },
+    }
 
-    removeCollection: function( collection ) {
+    removeCollection( collection ) {
       assert && assert( this.currentCollectionProperty.value !== collection );
       this.collections.shift();
 
       this.removedCollectionEmitter.emit( collection );
-    },
+    }
 
-    reset: function() {
-      var self = this;
+    reset() {
 
       // switch to the first collection
       this.switchTo( this.collections[ 0 ] );
@@ -84,37 +82,37 @@ define( function( require ) {
       this.collections[ 0 ].resetAll();
 
       // remove all the other collections
-      this.collections.slice( 0 ).forEach( function( collection ) {
-        if ( collection !== self.currentCollectionProperty.value ) {
-          self.removeCollection( collection );
+      this.collections.slice( 0 ).forEach( collection => {
+        if ( collection !== this.currentCollectionProperty.value ) {
+          this.removeCollection( collection );
         }
       } );
-    },
+    }
 
-    get availableKitBounds() {
+    availableKitBounds() {
       return this.collectionLayout.availableKitBounds;
-    },
+    }
 
-    get availablePlayAreaBounds() {
+    availablePlayAreaBounds() {
       return this.collectionLayout.availablePlayAreaBounds;
-    },
+    }
 
-    hasPreviousCollection: function() {
+    hasPreviousCollection() {
       return this.currentIndex > 0;
-    },
+    }
 
-    hasNextCollection: function() {
+    hasNextCollection() {
       return this.currentIndex < this.collections.length - 1;
-    },
+    }
 
-    switchToPreviousCollection: function() {
+    switchToPreviousCollection() {
       this.switchTo( this.collections[ this.currentIndex - 1 ] );
-    },
+    }
 
-    switchToNextCollection: function() {
+    switchToNextCollection() {
       this.switchTo( this.collections[ this.currentIndex + 1 ] );
     }
-  } );
+  }
 
-  return KitCollectionList;
+  return buildAMolecule.register( 'KitCollectionList', KitCollectionList );
 } );
