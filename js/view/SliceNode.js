@@ -7,19 +7,20 @@
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 
-define( function( require ) {
+define( require => {
   'use strict';
 
-  var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
-  var BAMConstants = require( 'BUILD_A_MOLECULE/BAMConstants' );
-  var DOM = require( 'SCENERY/nodes/DOM' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' ); // TODO: DragListener
-  var timer = require( 'AXON/timer' );
-  var Transform3 = require( 'DOT/Transform3' );
-  var Vector2 = require( 'DOT/Vector2' );
+  const buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
+  const BAMConstants = require( 'BUILD_A_MOLECULE/BAMConstants' );
+  const DOM = require( 'SCENERY/nodes/DOM' );
+  const SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' ); // TODO: DragListener
+  const timer = require( 'AXON/timer' );
+  const Transform3 = require( 'DOT/Transform3' );
+  const Vector2 = require( 'DOT/Vector2' );
 
-  var sliceDistanceLimit = 1000;
+  const sliceDistanceLimit = 1000;
+
+  class SliceNode extends DOM {
 
   /**
    * @param {Kit} kit
@@ -27,28 +28,27 @@ define( function( require ) {
    * @param {MoleculeCollectingView} view
    * @constructor
    */
-  function SliceNode( kit, viewSwipeBounds, view ) {
-    var self = this;
-
+  constructor( kit, viewSwipeBounds, view ) {
+    super();
     this.kit = kit;
     this.bondData = [];
     this.traveledDistance = 0;
 
-    var canvas = document.createElement( 'canvas' );
-    var context = canvas.getContext( '2d' );
+    const canvas = document.createElement( 'canvas' );
+    const context = canvas.getContext( '2d' );
     DOM.call( this, canvas, {
       preventTransform: true
     } );
 
-    var globalBounds;
-    var toModelTransform;
-    var lastPoint = null;
-    var lastModelPoint = new Vector2( 0, 0 );
-    var oldModelPoint = new Vector2( 0, 0 );
+    let globalBounds;
+    let toModelTransform;
+    let lastPoint = null;
+    const lastModelPoint = new Vector2( 0, 0 );
+    const oldModelPoint = new Vector2( 0, 0 );
 
     this.sliceInputListener = new SimpleDragHandler( {
       dragCursor: 'none',
-      start: function( event, trail ) {
+      start: ( event, trail ) => {
         globalBounds = view.localToGlobalBounds( viewSwipeBounds ).roundedOut();
         canvas.width = globalBounds.width;
         canvas.height = globalBounds.height;
@@ -59,9 +59,9 @@ define( function( require ) {
         canvas.style.top = globalBounds.y + 'px';
         toModelTransform = new Transform3( BAMConstants.MODEL_VIEW_TRANSFORM.getInverse().timesMatrix( view.getUniqueTrail().getMatrix().inverted() ) );
 
-        kit.molecules.forEach( function( molecule ) {
-          molecule.bonds.forEach( function( bond ) {
-            self.bondData.push( {
+        kit.molecules.forEach( ( molecule ) => {
+          molecule.bonds.forEach( ( bond ) => {
+            this.bondData.push( {
               bond: bond,
               cut: false,
               // TODO: also try out destination?
@@ -74,9 +74,9 @@ define( function( require ) {
           } );
         } );
       },
-      drag: function( event, trail ) {
+      drag: ( event, trail ) => {
         context.beginPath();
-        var isStep = !!lastPoint;
+        const isStep = !!lastPoint;
         if ( lastPoint ) {
           context.moveTo( lastPoint.x, lastPoint.y );
         }
@@ -98,13 +98,13 @@ define( function( require ) {
 
         if ( isStep ) {
           // handle the point and delta here
-          self.cut( oldModelPoint, lastModelPoint, event );
+          this.cut( oldModelPoint, lastModelPoint, event );
         }
       },
-      end: function( event, trail ) {
+      end: ( event, trail ) => {
         lastPoint = null;
-        var cutCount = 0;
-        self.bondData.forEach( function( dat ) {
+        let cutCount = 0;
+        this.bondData.forEach( ( dat ) => {
           if ( dat.cut ) {
             cutCount++;
             kit.breakBond( dat.bond.a, dat.bond.b, true ); // skip the destination separation
@@ -113,21 +113,18 @@ define( function( require ) {
         if ( cutCount ) {
           kit.separateMoleculeDestinations();
         }
-        self.traveledDistance = 0;
-        self.bondData = [];
+        this.traveledDistance = 0;
+        this.bondData = [];
         context.clearRect( 0, 0, globalBounds.width, globalBounds.height );
       }
     } );
   }
 
-  buildAMolecule.register( 'SliceNode', SliceNode );
+    cut( oldModelPoint, newModelPoint, event ) {
+      const dragDeltaX = newModelPoint.x - oldModelPoint.x;
+      const dragDeltaY = newModelPoint.y - oldModelPoint.y;
 
-  return inherit( DOM, SliceNode, {
-    cut: function( oldModelPoint, newModelPoint, event ) {
-      var dragDeltaX = newModelPoint.x - oldModelPoint.x;
-      var dragDeltaY = newModelPoint.y - oldModelPoint.y;
-
-      this.bondData.forEach( function( dat ) {
+      this.bondData.forEach( ( dat ) => {
         // skip already-cut bonds
         if ( dat.cut ) {
           return;
@@ -139,38 +136,40 @@ define( function( require ) {
           return;
         }
 
-        var denom = -dragDeltaX * dat.delta.y + dat.delta.x * dragDeltaY;
+        const denom = -dragDeltaX * dat.delta.y + dat.delta.x * dragDeltaY;
 
         // too close to parallel
         if ( Math.abs( denom ) < 1e-5 ) {
           return;
         }
 
-        var dx = dat.aPos.x - oldModelPoint.x;
-        var dy = dat.aPos.y - oldModelPoint.y;
+        const dx = dat.aPos.x - oldModelPoint.x;
+        const dy = dat.aPos.y - oldModelPoint.y;
 
-        var s = ( -dat.delta.y * dx + dat.delta.x * dy ) / denom;
-        var t = ( dragDeltaX * dy - dragDeltaY * dx ) / denom;
+        const s = ( -dat.delta.y * dx + dat.delta.x * dy ) / denom;
+        const t = ( dragDeltaX * dy - dragDeltaY * dx ) / denom;
 
         // TODO: weight it so that we can exclude cuts that aren't close enough to the bond
         if ( s >= 0 && s <= 1 && t >= 0 && t <= 1 ) {
           dat.cut = true; // collision detected
-          // var ix = dat.aPos.x + t * dat.delta.x;
-          // var iy = dat.aPos.y + t * dat.delta.y;
+          // const ix = dat.aPos.x + t * dat.delta.x;
+          // const iy = dat.aPos.y + t * dat.delta.y;
         }
       } );
 
       this.traveledDistance += Math.sqrt( dragDeltaX * dragDeltaX + dragDeltaY * dragDeltaY );
-      var self = this;
       if ( this.traveledDistance > sliceDistanceLimit && this.sliceInputListener.dragging ) {
-        timer.setTimeout( function() {
-          self.sliceInputListener.endDrag( event );
+        timer.setTimeout( () => {
+          this.sliceInputListener.endDrag( event );
         }, 0 );
       }
-    },
+    }
 
-    updateCSSTransform: function( transform, element ) {
+    updateCSSTransform( transform, element ) {
       // prevent CSS transforms, we work in the global space
     }
-  } );
+  }
+
+  return buildAMolecule.register( 'SliceNode', SliceNode );
+
 } );
