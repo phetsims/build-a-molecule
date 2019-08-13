@@ -9,6 +9,7 @@
 define( function( require ) {
   'use strict';
 
+  var BAMConstants = require( 'BUILD_A_MOLECULE/BAMConstants' );
   var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   var Color = require( 'SCENERY/util/Color' );
   var inherit = require( 'PHET_CORE/inherit' );
@@ -59,6 +60,7 @@ define( function( require ) {
         } );
       },
       font: new PhetFont( 14 ),
+      maxWidth: BAMConstants.TEXT_MAX_WIDTH,
       baseColor: Color.ORANGE
     } );
     resetCollectionButton.touchArea = Shape.bounds( resetCollectionButton.bounds.dilated( 7 ) );

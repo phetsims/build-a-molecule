@@ -9,6 +9,7 @@
 define( function( require ) {
   'use strict';
 
+  var BAMConstants = require( 'BUILD_A_MOLECULE/BAMConstants' );
   var Bounds2 = require( 'DOT/Bounds2' );
   var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   var CollectionBox = require( 'BUILD_A_MOLECULE/model/CollectionBox' );
@@ -40,7 +41,9 @@ define( function( require ) {
         font: new PhetFont( {
           size: 15,
           weight: 'bold'
-        } )
+        } ),
+        maxWidth: BAMConstants.TEXT_MAX_WIDTH
+
       }
     ) ) );
   }

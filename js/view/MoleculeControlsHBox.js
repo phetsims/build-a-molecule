@@ -53,7 +53,8 @@ define( require => {
 
         // Label with chemical formula and common name
         const label = new Text( completeMolecule.getDisplayName(), {
-          font: new PhetFont( { size: 17, weight: 'bold' } )
+          font: new PhetFont( { size: 17, weight: 'bold' } ),
+          maxWidth: BAMConstants.TEXT_MAX_WIDTH
         } );
         this.addChild( label );
 

@@ -47,7 +47,8 @@ define( function( require ) {
     var moleculeCollectionText = new Text( yourMoleculesString, {
       font: new PhetFont( {
         size: 22
-      } )
+      } ),
+      maxWidth: BAMConstants.TEXT_MAX_WIDTH
     } );
     this.layoutNode.addChild( moleculeCollectionText );
 
@@ -56,7 +57,8 @@ define( function( require ) {
       font: new PhetFont( {
         size: 16,
         weight: 'bold'
-      } )
+      } ),
+      maxWidth: BAMConstants.TEXT_MAX_WIDTH
     } );
     kitCollectionList.currentCollectionProperty.link( function() {
       currentCollectionText.text = StringUtils.fillIn( collectionPatternString, { number: kitCollectionList.currentIndex + 1 } );

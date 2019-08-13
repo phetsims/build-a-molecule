@@ -58,6 +58,7 @@ define( function( require ) {
       fill: '#bbb',
       centerX: this.center.x,
       top: this.top + 10
+
     } );
     contentNode.addChild( formulaText );
 
