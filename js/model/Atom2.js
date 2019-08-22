@@ -32,11 +32,12 @@ define( require => {
 
       super( element );
 
-      // @public
+      // @public {Vector2Property}
       this.positionProperty = new Vector2Property( Vector2.ZERO );
       this.destinationProperty = new Vector2Property( Vector2.ZERO );
 
-      // @public {Property.<boolean>}
+      // @public {BooleanProperty} All atoms start off in the bucket and a link is used to trigger removal.
+      this.inBucketProperty = new BooleanProperty( true );
       this.userControlledProperty = new BooleanProperty( false );
       this.visibleProperty = new BooleanProperty( true );
       this.addedToModelProperty = new BooleanProperty( true );
@@ -106,7 +107,7 @@ define( require => {
         if ( distanceToTravel >= distanceToTarget ) {
 
           // Closer than one step, so just go there.
-          this.positionProperty.value = this.destinationProperty.value;
+          // this.positionProperty.value = this.destinationProperty.value;
         }
         else {
 
@@ -128,11 +129,12 @@ define( require => {
     }
 
     setPositionAndDestination( point ) {
-      this.positionProperty.value = this.destinationProperty.value = point;
+      this.positionProperty.value = point;
+      this.destinationProperty.value = point;
     }
 
     translate( x, y ) {
-      this.positionProperty.value = new Vector2( this.positionProperty.value.x + x, this.positionProperty.value.y + y );
+      // this.positionProperty.value = new Vector2( this.positionProperty.value.x + x, this.positionProperty.value.y + y );
     }
 
     reset() {

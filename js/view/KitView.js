@@ -45,7 +45,8 @@ define( function( require ) {
 
     var topLayer = this.topLayer = new Node();
     var metadataLayer = this.metadataLayer = new Node();
-    var atomLayer = this.atomLayer = new Node();
+    var atomLayer = new Node();
+    this.atomLayer = atomLayer;
     var bottomLayer = this.bottomLayer = new Node();
 
     // var viewSwipeBounds = BAMConstants.MODEL_VIEW_TRANSFORM.modelToViewBounds( kit.collectionLayout.availablePlayAreaBounds );
@@ -141,35 +142,45 @@ define( function( require ) {
       bottomLayer.addChild( bucketHole );
       bucket.getParticleList().forEach( function( atom ) {
 
+        // AtomNode created based on atoms in bucket
         var atomNode = new AtomNode( atom, {} );
+
+        // When an atom is not in a bucket it is removed from the buckets atom layer.
+        atom.inBucketProperty.link( function( inBucket ) {
+          if ( !inBucket ) {
+            atomLayer.removeChild( atomNode );
+          }
+        } );
+
+        // Keep track of the atomNode by mapping to its atom's ID then add to atom layer
         self.atomNodeMap[ atom.id ] = atomNode;
         atomLayer.addChild( atomNode );
 
         // Add a drag listener that will move the model element when the user
         // drags this atom.
-        //REVIEW: Can we use the newer drag listeners?
-        var atomListener = new DragListener( {
-          transform: BAMConstants.MODEL_VIEW_TRANSFORM,
-          translateNode: true,
-          start: function( event ) {
-            // atomNode.center = event.pointer.point;
-            moleculeCollectingView.kitCollectionList.atomsInPlayArea.push( atom );
-            if ( bucket.containsParticle( atom ) ) {
-              bucket.removeParticle( atom, true );
-              atomLayer.removeChild( atomNode );
-            }
-          },
-          end: function() {
-            atom.userControlledProperty.value = false;
-          }
+        atomNode.addInputListener( DragListener.createForwardingListener( event => {
 
-          // translate: function( data ) {
-          //   // REVIEW: Forward translation to new instance of atom node. Toggle visibility
-          //   var modelDelta = BAMConstants.MODEL_VIEW_TRANSFORM.viewToModelDelta( data.delta );
-          //   kit.atomDragged( atom, modelDelta );
-          // }
-        } );
-        atomNode.addInputListener( atomListener );
+          // Adjust position of atom
+          const viewPoint = moleculeCollectingView.globalToLocalPoint( event.pointer.point );
+          atom.positionProperty.value = BAMConstants.MODEL_VIEW_TRANSFORM.viewToModelPosition( viewPoint );
+
+          console.log( 'viewPoint = ' + viewPoint );
+
+          // Add new atom to the play area
+          moleculeCollectingView.kitCollectionList.atomsInPlayArea.push( atom );
+
+          // Handle removing particles from bucket
+          if ( bucket.containsParticle( atom ) ) {
+
+            // Remove the atom from the bucket's model and trigger its removal from the atomLayer in the view.
+            bucket.removeParticle( atom, true );
+            atom.inBucketProperty.value = false;
+
+            // Get reference to atomNode and call the dragListener
+            const atomNode = moleculeCollectingView.atomNodeMap[ atom.id ];
+            atomNode.dragListener.press( event, atomNode );
+          }
+        } ) );
       } );
     } );
 
@@ -196,6 +207,7 @@ define( function( require ) {
 
     assert && assert( kit.molecules.length === 0 );
   }
+
   buildAMolecule.register( 'KitView', KitView );
 
   inherit( Node, KitView, {
@@ -251,3 +263,4 @@ define( function( require ) {
 
   return KitView;
 } );
+

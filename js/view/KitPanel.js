@@ -25,6 +25,9 @@ define( require => {
     constructor( kitCollection, kitViewHeight, view ) {
       super();
 
+      // @private
+      this.kitCollection = kitCollection;
+
       // create kitViews and unify their heights
       const kitViews = [];
       kitCollection.kits.forEach( kit => {
@@ -34,12 +37,17 @@ define( require => {
         kitViews.push( kitView );
       } );
 
-      this.addChild( new Carousel( kitViews, {
+      this.kitCarousel = new Carousel( kitViews, {
         fill: BAMConstants.KIT_BACKGROUND,
         stroke: BAMConstants.KIT_BORDER,
         margin: 10,
         itemsPerPage: 1
-      } ) );
+      } );
+
+      this.kitCarousel.pageNumberProperty.link( page => {
+        this.kitCollection.currentKitProperty.value = this.kitCollection.kits[ page ];
+      } );
+      this.addChild( this.kitCarousel );
     }
   }
 
