@@ -26,7 +26,6 @@ define( require => {
      * @constructor
      */
     constructor( kitCollectionList ) {
-
       super();
 
       this.atomNodeMap = {};
@@ -42,7 +41,7 @@ define( require => {
         this.addAtomNodeToPlayArea( atom, kitCollectionList.currentCollectionProperty.value );
       } );
       this.kitCollectionList.atomsInPlayArea.addItemRemovedListener( atom => {
-        this.removeAtomFromPlayArea( atom );
+        this.onAtomRemovedFromPlayArea( atom );
       } );
 
       kitCollectionList.currentCollectionProperty.link( ( newCollection, oldCollection ) => {
@@ -53,7 +52,6 @@ define( require => {
           this.addChild( this.kitCollectionMap[ newCollection.id ] );
         }
       } );
-
       kitCollectionList.addedCollectionEmitter.addListener( this.addCollection.bind( this ) );
     }
 
@@ -94,7 +92,7 @@ define( require => {
         drag: ( event ) => {
 
           // Get delta from start of drag
-          let delta = atom.positionProperty.value.minus( lastPosition );
+          const delta = atom.positionProperty.value.minus( lastPosition );
 
           // Set the last position to the newly dragged position.
           lastPosition = atom.positionProperty.value;
@@ -105,7 +103,6 @@ define( require => {
             molecule.atoms.forEach( ( moleculeAtom ) => {
               if ( moleculeAtom !== atom ) {
                 moleculeAtom.positionProperty.value = moleculeAtom.positionProperty.value.plus( delta );
-                console.log( 'delta = ' + delta );
               }
             } );
           }
@@ -115,14 +112,29 @@ define( require => {
         },
         end: () => {
           atom.userControlledProperty.value = false;
+          const mappedAtomNode = this.atomNodeMap[ atom.id ];
+          const mappedKitCollectionBounds = this.kitCollectionMap[ this.kitCollectionList.currentCollectionProperty.value.id ].bounds;
+          if ( mappedAtomNode && mappedAtomNode.bounds.intersectsBounds( mappedKitCollectionBounds ) ) {
+            this.kitCollectionList.atomsInPlayArea.remove( atom );
+            const bucket = kit.currentKitProperty.value.getBucketForElement( atom.element );
+            if ( !bucket.particleList.contains( atom ) ) {
+              bucket.particleList.push( atom );
+            }
+          }
         }
       } );
       atomNode.dragListener = atomListener;
       atomNode.addInputListener( atomListener );
     }
 
-    removeAtomFromPlayArea( atom ) {
-      this.kitCollectionList.atomsInPlayArea.remove( atom );
+    /**
+     * Removes atom elements from view.
+     *
+     * @param atom {Atom2}
+     * @private
+     */
+    onAtomRemovedFromPlayArea( atom ) {
+      this.removeChild( this.atomNodeMap[ atom.id ] );
       delete this.atomNodeMap[ atom.id ];
     }
   }

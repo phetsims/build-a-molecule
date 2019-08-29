@@ -140,21 +140,35 @@ define( function( require ) {
 
       topLayer.addChild( bucketFront );
       bottomLayer.addChild( bucketHole );
-      bucket.getParticleList().forEach( function( atom ) {
+
+      // Listeners for bucket particle observable array.
+      const particleRemovedListener = function( atom ) {
+
+        // Remove atom view elements from bucket node and delete the reference from atom node map
+        if ( self.atomNodeMap[ atom.id ] ) {
+          atomLayer.removeChild( self.atomNodeMap[ atom.id ] );
+          delete self.atomNodeMap[ atom.id ];
+        }
+
+        // Remove the atom from the bucket particles
+        if ( bucket.containsParticle( atom ) ) {
+          bucket.removeParticle( atom, true );
+        }
+
+        // Remove atom from bucket particle observable array.
+        bucket.particleList.remove( atom );
+      };
+      const particleAddedListener = function( atom ) {
 
         // AtomNode created based on atoms in bucket
         var atomNode = new AtomNode( atom, {} );
 
-        // When an atom is not in a bucket it is removed from the buckets atom layer.
-        atom.inBucketProperty.link( function( inBucket ) {
-          if ( !inBucket ) {
-            atomLayer.removeChild( atomNode );
-          }
-        } );
-
         // Keep track of the atomNode by mapping to its atom's ID then add to atom layer
         self.atomNodeMap[ atom.id ] = atomNode;
+
+        // Add the particle to the bucket atom layer and the bucket's particles.
         atomLayer.addChild( atomNode );
+        bucket.placeAtom( atom );
 
         // Add a drag listener that will move the model element when the user
         // drags this atom.
@@ -164,8 +178,6 @@ define( function( require ) {
           const viewPoint = moleculeCollectingView.globalToLocalPoint( event.pointer.point );
           atom.positionProperty.value = BAMConstants.MODEL_VIEW_TRANSFORM.viewToModelPosition( viewPoint );
 
-          console.log( 'viewPoint = ' + viewPoint );
-
           // Add new atom to the play area
           moleculeCollectingView.kitCollectionList.atomsInPlayArea.push( atom );
 
@@ -173,7 +185,7 @@ define( function( require ) {
           if ( bucket.containsParticle( atom ) ) {
 
             // Remove the atom from the bucket's model and trigger its removal from the atomLayer in the view.
-            bucket.removeParticle( atom, true );
+            particleRemovedListener( atom );
             atom.inBucketProperty.value = false;
 
             // Get reference to atomNode and call the dragListener
@@ -181,9 +193,15 @@ define( function( require ) {
             atomNode.dragListener.press( event, atomNode );
           }
         } ) );
-      } );
-    } );
+      };
 
+      // Initial filling of the buckets
+      bucket.getParticleList().forEach( particleAddedListener );
+
+      // Add listeners to bucket particles observable array
+      bucket.particleList.addItemAddedListener( particleAddedListener );
+      bucket.particleList.addItemRemovedListener( particleRemovedListener );
+    } );
 
     // handle molecule creation and destruction
     kit.addedMoleculeEmitter.addListener( function( molecule ) {

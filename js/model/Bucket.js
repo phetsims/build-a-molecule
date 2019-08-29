@@ -16,6 +16,7 @@ define( require => {
   const Dimension2 = require( 'DOT/Dimension2' );
   // const Property = require( 'AXON/Property' );
   const Vector2Property = require( 'DOT/Vector2Property' );
+  const ObservableArray = require( 'AXON/ObservableArray' );
   const SphereBucket = require( 'PHETCOMMON/model/SphereBucket' );
   const Strings = require( 'BUILD_A_MOLECULE/Strings' );
   const Vector2 = require( 'DOT/Vector2' );
@@ -43,6 +44,9 @@ define( require => {
 
       // @private {Property.<Vector2>}
       this.positionProperty = new Vector2Property( this.position );
+
+      // @public {ObservableArray}
+      this.particleList = new ObservableArray();
 
       // @public
       this.element = element;
