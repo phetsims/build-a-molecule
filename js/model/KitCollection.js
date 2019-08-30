@@ -43,7 +43,7 @@ define( function( require ) {
       this.kits.push( kit );
 
       var dropListener = function( atom ) {
-        var wasDroppedInCollectionBox = false;
+        // var wasDroppedInCollectionBox = false;
 
         // don't drop an atom from the kit to the collection box directly
         if ( kit.isAtomInPlay( atom ) ) {
@@ -60,16 +60,16 @@ define( function( require ) {
               // if our box takes this type of molecule
               if ( box.willAllowMoleculeDrop( molecule ) ) {
                 kit.moleculePutInCollectionBox( molecule, box );
-                wasDroppedInCollectionBox = true;
+                // wasDroppedInCollectionBox = true;
                 break;
               }
             }
           }
         }
 
-        if ( !wasDroppedInCollectionBox ) {
-          kit.atomDropped( atom );
-        }
+        // if ( !wasDroppedInCollectionBox ) {
+        //   kit.atomDropped( atom );
+        // }
       };
 
       kit.atoms.forEach( function( atom ) {

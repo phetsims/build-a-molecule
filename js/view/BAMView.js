@@ -114,11 +114,41 @@ define( require => {
           atom.userControlledProperty.value = false;
           const mappedAtomNode = this.atomNodeMap[ atom.id ];
           const mappedKitCollectionBounds = this.kitCollectionMap[ this.kitCollectionList.currentCollectionProperty.value.id ].bounds;
-          if ( mappedAtomNode && mappedAtomNode.bounds.intersectsBounds( mappedKitCollectionBounds ) ) {
+          const currentKit = kit.currentKitProperty.value;
+
+          const returnToBucket = atom => {
             this.kitCollectionList.atomsInPlayArea.remove( atom );
-            const bucket = kit.currentKitProperty.value.getBucketForElement( atom.element );
+            const bucket = currentKit.getBucketForElement( atom.element );
             if ( !bucket.particleList.contains( atom ) ) {
               bucket.particleList.push( atom );
+            }
+          };
+
+          // responsible for bonding atoms into molecules in play area
+          var wasInPlay = currentKit.isAtomInPlay( atom );
+          if ( wasInPlay ) {
+            currentKit.attemptToBondMolecule( currentKit.getMolecule( atom ) );
+            currentKit.separateMoleculeDestinations();
+          }
+          else {
+            currentKit.addAtomToPlay( atom );
+          }
+
+          // responsible for breaking molecules up and returning atoms to their bucket
+          if ( mappedAtomNode && mappedAtomNode.bounds.intersectsBounds( mappedKitCollectionBounds ) ) {
+            const molecule = currentKit.getMolecule( atom );
+            const atomsToReturn = [];
+            if ( molecule ) {
+              molecule.atoms.forEach( ( moleculeAtom ) => {
+                atomsToReturn.push( moleculeAtom );
+              } );
+              currentKit.breakMolecule( molecule );
+              atomsToReturn.forEach( atomToReturn => {
+                returnToBucket( atomToReturn );
+              } );
+            }
+            else {
+              returnToBucket( atom );
             }
           }
         }
