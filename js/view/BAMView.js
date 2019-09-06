@@ -27,9 +27,7 @@ define( require => {
      */
     constructor( kitCollectionList ) {
       super();
-
       this.atomNodeMap = {};
-
       this.kitCollectionMap = {}; // maps KitCollection ID => KitCollectionNode
 
       // @public {KitCollectionList}
@@ -63,9 +61,9 @@ define( require => {
       return kitCollectionNode;
     }
 
-    addAtomNodeToPlayArea( atom, kit, view ) {
-      // const viewSwipeBounds = BAMConstants.MODEL_VIEW_TRANSFORM.modelToViewBounds( kit.collectionLayout.availablePlayAreaBounds );
-      // const sliceNode = new SliceNode( kit, viewSwipeBounds, view );
+    addAtomNodeToPlayArea( atom, kitCollection, view ) {
+      // const viewSwipeBounds = BAMConstants.MODEL_VIEW_TRANSFORM.modelToViewBounds( kitCollection.collectionLayout.availablePlayAreaBounds );
+      // const sliceNode = new SliceNode( kitCollection, viewSwipeBounds, view );
 
 
       // const swipeCatch = Rectangle.bounds( viewSwipeBounds.eroded( BAMConstants.VIEW_PADDING ) );
@@ -98,7 +96,7 @@ define( require => {
           lastPosition = atom.positionProperty.value;
 
           // Handles atoms with multiple molecules
-          const molecule = kit.currentKitProperty.value.getMolecule( atom );
+          const molecule = kitCollection.currentKitProperty.value.getMolecule( atom );
           if ( molecule ) {
             molecule.atoms.forEach( ( moleculeAtom ) => {
               if ( moleculeAtom !== atom ) {
@@ -114,7 +112,7 @@ define( require => {
           atom.userControlledProperty.value = false;
           const mappedAtomNode = this.atomNodeMap[ atom.id ];
           const mappedKitCollectionBounds = this.kitCollectionMap[ this.kitCollectionList.currentCollectionProperty.value.id ].bounds;
-          const currentKit = kit.currentKitProperty.value;
+          const currentKit = kitCollection.currentKitProperty.value;
 
           const returnToBucket = atom => {
             this.kitCollectionList.atomsInPlayArea.remove( atom );
@@ -152,6 +150,10 @@ define( require => {
             }
           }
         }
+      } );
+      // TODO: Check for memory leak. Unlink?
+      this.visibleBoundsProperty.link( visibleBounds => {
+        atomListener.setDragBounds( BAMConstants.MODEL_VIEW_TRANSFORM.viewToModelBounds( visibleBounds ) );
       } );
       atomNode.dragListener = atomListener;
       atomNode.addInputListener( atomListener );
