@@ -19,7 +19,7 @@ define( function( require ) {
   var DragListener = require( 'SCENERY/listeners/DragListener' );
   var inherit = require( 'PHET_CORE/inherit' );
   var MoleculeBondContainerNode = require( 'BUILD_A_MOLECULE/view/MoleculeBondContainerNode' );
-  var MoleculeControlsHBox = require( 'BUILD_A_MOLECULE/view/MoleculeControlsHBox' );
+  // var MoleculeControlsHBox = require( 'BUILD_A_MOLECULE/view/MoleculeControlsHBox' );
   var Node = require( 'SCENERY/nodes/Node' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   // var Rectangle = require( 'SCENERY/nodes/Rectangle' );
@@ -44,7 +44,7 @@ define( function( require ) {
     this.atomNodeMap = {}; // atom.id => AtomNode
 
     var topLayer = this.topLayer = new Node();
-    var metadataLayer = this.metadataLayer = new Node();
+    // var metadataLayer = this.metadataLayer = new Node();
     var atomLayer = new Node();
     this.atomLayer = atomLayer;
     var bottomLayer = this.bottomLayer = new Node();
@@ -178,8 +178,8 @@ define( function( require ) {
           const viewPoint = moleculeCollectingView.globalToLocalPoint( event.pointer.point );
           atom.positionProperty.value = BAMConstants.MODEL_VIEW_TRANSFORM.viewToModelPosition( viewPoint );
 
-          // Add new atom to the play area
-          moleculeCollectingView.kitCollectionList.atomsInPlayArea.push( atom );
+          // Add new atom to the play area.
+          moleculeCollectingView.kitCollectionList.currentCollectionProperty.value.currentKitProperty.value.atomsInPlayArea.push( atom );
 
           // Handle removing particles from bucket
           if ( bucket.containsParticle( atom ) ) {
@@ -189,7 +189,7 @@ define( function( require ) {
             atom.inBucketProperty.value = false;
 
             // Get reference to atomNode and call the dragListener
-            const atomNode = moleculeCollectingView.atomNodeMap[ atom.id ];
+            const atomNode = moleculeCollectingView.kitPlayAreaNode.atomNodeMap[ atom.id ];
             atomNode.dragListener.press( event, atomNode );
           }
         } ) );
@@ -205,17 +205,17 @@ define( function( require ) {
 
     // handle molecule creation and destruction
     kit.addedMoleculeEmitter.addListener( function( molecule ) {
-      var moleculeControlsHBox = new MoleculeControlsHBox( kit, molecule );
-      metadataLayer.addChild( moleculeControlsHBox );
-      self.metadataMap[ molecule.moleculeId ] = moleculeControlsHBox;
+      // var moleculeControlsHBox = new MoleculeControlsHBox( kit, molecule );
+      // metadataLayer.addChild( moleculeControlsHBox );
+      // self.metadataMap[ molecule.moleculeId ] = moleculeControlsHBox;
 
       if ( BAMConstants.ALLOW_BOND_BREAKING ) {
         self.addMoleculeBondNodes( molecule );
       }
     } );
     kit.removedMoleculeEmitter.addListener( function( molecule ) {
-      var moleculeControlsHBox = self.metadataMap[ molecule.moleculeId ];
-      moleculeControlsHBox.dispose();
+      // var moleculeControlsHBox = self.metadataMap[ molecule.moleculeId ];
+      // moleculeControlsHBox.dispose();
       delete self.metadataMap[ molecule.moleculeId ];
 
       if ( BAMConstants.ALLOW_BOND_BREAKING ) {
@@ -268,7 +268,7 @@ define( function( require ) {
 
     addMoleculeBondNodes: function( molecule ) {
       var moleculeBondContainerNode = new MoleculeBondContainerNode( this.kit, molecule );
-      this.metadataLayer.addChild( moleculeBondContainerNode );
+      // this.metadataLayer.addChild( moleculeBondContainerNode );
       this.bondMap[ molecule.moleculeId ] = moleculeBondContainerNode;
     },
 

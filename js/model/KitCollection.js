@@ -29,6 +29,12 @@ define( function( require ) {
 
     // @public {Property.<Kit|null>}
     this.currentKitProperty = new Property( null );
+    this.currentKitProperty.lazyLink( ( oldKit, newKit ) => {
+      oldKit.activeProperty.value = false;
+      if ( newKit ) {
+        newKit.activeProperty.value = true;
+      }
+    } );
 
     // @public {Property.<boolean>} - this will remain false if we have no collection boxes
     this.allCollectionBoxesFilledProperty = new BooleanProperty( false );

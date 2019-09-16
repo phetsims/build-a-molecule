@@ -14,6 +14,7 @@ define( require => {
   const buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   const DragListener = require( 'SCENERY/listeners/DragListener' );
   const KitCollectionNode = require( 'BUILD_A_MOLECULE/view/KitCollectionNode' );
+  const KitPlayAreaNode = require( 'BUILD_A_MOLECULE/view/KitPlayAreaNode' );
   // const Node = require( 'SCENERY/nodes/Node' );
   // const Rectangle = require( 'SCENERY/nodes/Rectangle' );
   const ScreenView = require( 'JOIST/ScreenView' );
@@ -35,11 +36,15 @@ define( require => {
 
       this.addCollection( kitCollectionList.currentCollectionProperty.value );
 
-      this.kitCollectionList.atomsInPlayArea.addItemAddedListener( atom => {
-        this.addAtomNodeToPlayArea( atom, kitCollectionList.currentCollectionProperty.value );
-      } );
-      this.kitCollectionList.atomsInPlayArea.addItemRemovedListener( atom => {
-        this.onAtomRemovedFromPlayArea( atom );
+      this.kitCollectionList.collections.forEach( collection => {
+        collection.kits.forEach( kit => {
+          kit.atomsInPlayArea.addItemAddedListener( atom => {
+            this.addAtomNodeToPlayArea( atom, kitCollectionList.currentCollectionProperty.value );
+          } );
+          kit.atomsInPlayArea.addItemRemovedListener( atom => {
+            this.onAtomRemovedFromPlayArea( atom );
+          } );
+        } );
       } );
 
       kitCollectionList.currentCollectionProperty.link( ( newCollection, oldCollection ) => {
@@ -51,6 +56,23 @@ define( require => {
         }
       } );
       kitCollectionList.addedCollectionEmitter.addListener( this.addCollection.bind( this ) );
+
+
+      this.kitCollectionList.currentCollectionProperty.value.currentKitProperty.link( kit => {
+        if ( kit ) {
+          this.kitPlayAreaNode = new KitPlayAreaNode( kit );
+          kit.atomsInPlayArea.getArray().forEach( atom => {
+            console.log( 'atom = ' + atom );
+
+
+            var atomNode2 = new AtomNode( atom );
+            this.kitPlayAreaNode.atomLayer.addChild( atomNode2 );
+            this.kitPlayAreaNode.atomNodeMap[ atom.id ] = atomNode2;
+          } );
+          // this.kitPlayerAreaNode.dispose();
+          this.addChild( this.kitPlayAreaNode );
+        }
+      } );
     }
 
     addCollection( collection ) {
@@ -73,8 +95,8 @@ define( require => {
       const atomNode = new AtomNode( atom, {} );
       // this.addChild( swipeCatch );
       // this.addChild( sliceNode );
-      this.addChild( atomNode );
-      this.atomNodeMap[ atom.id ] = atomNode;
+      this.kitPlayAreaNode.atomNodeMap[ atom.id ] = atomNode;
+      this.kitPlayAreaNode.atomLayer.addChild( atomNode );
 
       let lastPosition;
       var atomListener = new DragListener( {
@@ -110,12 +132,13 @@ define( require => {
         },
         end: () => {
           atom.userControlledProperty.value = false;
-          const mappedAtomNode = this.atomNodeMap[ atom.id ];
+          const mappedAtomNode = this.kitPlayAreaNode.atomNodeMap[ atom.id ];
           const mappedKitCollectionBounds = this.kitCollectionMap[ this.kitCollectionList.currentCollectionProperty.value.id ].bounds;
+          console.log( 'mappedAtomNode = ' + mappedAtomNode );
           const currentKit = kitCollection.currentKitProperty.value;
 
           const returnToBucket = atom => {
-            this.kitCollectionList.atomsInPlayArea.remove( atom );
+            this.kitCollectionList.currentCollectionProperty.value.currentKitProperty.value.atomsInPlayArea.remove( atom );
             const bucket = currentKit.getBucketForElement( atom.element );
             if ( !bucket.particleList.contains( atom ) ) {
               bucket.particleList.push( atom );
@@ -166,8 +189,8 @@ define( require => {
      * @private
      */
     onAtomRemovedFromPlayArea( atom ) {
-      this.removeChild( this.atomNodeMap[ atom.id ] );
-      delete this.atomNodeMap[ atom.id ];
+      this.kitPlayAreaNode.atomLayer.removeChild( this.kitPlayAreaNode.atomNodeMap[ atom.id ] );
+      delete this.kitPlayAreaNode.atomNodeMap[ atom.id ];
     }
   }
 

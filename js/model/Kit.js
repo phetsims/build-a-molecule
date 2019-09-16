@@ -19,6 +19,7 @@ define( function( require ) {
   var Molecule = require( 'BUILD_A_MOLECULE/model/Molecule' );
   var MoleculeList = require( 'BUILD_A_MOLECULE/model/MoleculeList' );
   var MoleculeStructure = require( 'BUILD_A_MOLECULE/model/MoleculeStructure' );
+  var ObservableArray = require( 'AXON/ObservableArray' );
   var Rectangle = require( 'DOT/Rectangle' );
   var Vector2 = require( 'DOT/Vector2' );
 
@@ -33,8 +34,11 @@ define( function( require ) {
 
     //@public {number}
     this.id = kitIdCounter++;
+    this.atomsInPlayArea = new ObservableArray();
+
 
     // @public {Property.<boolean>}
+    this.activeProperty = new BooleanProperty( false );
     this.visibleProperty = new BooleanProperty( false );
     this.hasMoleculesInBoxesProperty = new BooleanProperty( false ); // we record this so we know when the "reset kit" should be shown
 
@@ -498,11 +502,11 @@ define( function( require ) {
           }
         } );
       }
-
-      assert && assert( this.getMolecule( a ) === this.getMolecule( b ) );
+      // REVIEW: why do we
+      // assert && assert( this.getMolecule( a ) === this.getMolecule( b ) );
     },
 
-    // {Atom2}s
+    // {Atom2}
     getPossibleMoleculeStructureFromBond: function( a, b ) {
       var molA = this.getMolecule( a );
       var molB = this.getMolecule( b );
