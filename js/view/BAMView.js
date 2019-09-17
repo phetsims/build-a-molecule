@@ -146,14 +146,7 @@ define( require => {
           };
 
           // responsible for bonding atoms into molecules in play area
-          var wasInPlay = currentKit.isAtomInPlay( atom );
-          if ( wasInPlay ) {
-            currentKit.attemptToBondMolecule( currentKit.getMolecule( atom ) );
-            currentKit.separateMoleculeDestinations();
-          }
-          else {
-            currentKit.addAtomToPlay( atom );
-          }
+          currentKit.atomDropped( atom );
 
           // responsible for breaking molecules up and returning atoms to their bucket
           if ( mappedAtomNode && mappedAtomNode.bounds.intersectsBounds( mappedKitCollectionBounds ) ) {

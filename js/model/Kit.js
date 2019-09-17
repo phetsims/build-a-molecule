@@ -502,7 +502,7 @@ define( function( require ) {
           }
         } );
       }
-      // REVIEW: why do we
+      // REVIEW: Why do we want this check?
       // assert && assert( this.getMolecule( a ) === this.getMolecule( b ) );
     },
 
