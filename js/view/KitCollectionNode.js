@@ -34,16 +34,6 @@ define( require => {
       collection.kits.forEach( ( kit ) => {
         kitMap[ kit.id ] = new KitView( kit, view );
       } );
-
-      // NOTE: appends to the KitCollectionNode. This works because the KitPanel is always behind (we have a shallower tree this way)
-      collection.currentKitProperty.link( ( newKit, oldKit ) => {
-        if ( oldKit ) {
-          // self.removeChild( kitMap[ oldKit.id ] );
-        }
-        if ( newKit ) {
-          // self.addChild( kitMap[ newKit.id ] );
-        }
-      } );
     }
   }
 

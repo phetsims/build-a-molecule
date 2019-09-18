@@ -103,6 +103,7 @@ define( function( require ) {
       // wipe our internal state
       cleanArray( this.atoms );
       cleanArray( this.atomsInCollectionBox );
+      this.atomsInPlayArea.reset();
       this.lewisDotModel = new LewisDotModel();
       cleanArray( this.molecules );
       this.removedMolecules = {};
