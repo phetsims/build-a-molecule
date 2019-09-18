@@ -9,6 +9,7 @@
 define( function( require ) {
   'use strict';
 
+  var arrayRemove = require( 'PHET_CORE/arrayRemove' );
   var BooleanProperty = require( 'AXON/BooleanProperty' );
   var Bounds2 = require( 'DOT/Bounds2' );
   var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
@@ -36,7 +37,13 @@ define( function( require ) {
     this.id = kitIdCounter++;
     this.atomsInPlayArea = new ObservableArray();
 
-
+    // REVIEW: Used for debugging.
+    this.atomsInPlayArea.addItemAddedListener( atom => {
+      console.log( 'kit.atomsInPlayArea.added = ', this.atomsInPlayArea._array );
+    } );
+    this.atomsInPlayArea.addItemRemovedListener( atom => {
+      console.log( 'kit.atomsInPlayArea.removed = ', this.atomsInPlayArea._array );
+    } );
     // @public {Property.<boolean>}
     this.activeProperty = new BooleanProperty( false );
     this.visibleProperty = new BooleanProperty( false );
@@ -54,10 +61,16 @@ define( function( require ) {
     this.lewisDotModel = null; // created later, lewis-dot connections between atoms on the play area
     this.molecules = []; // molecule structures in the play area
     this.removedMolecules = {}; // moleculeId => CollectionBox, molecule structures that were put into the collection box. kept for now, since modifying the reset behavior will be much easier if we retain this
-
     this.reset();
-
     this.layoutBuckets( buckets );
+
+    // Add a molecule to the kit whenever we add an atom to the play area.
+    this.atomsInPlayArea.addItemAddedListener( atom => {
+      // Add a molecule to the kit with our newly added atom
+      const molecule = new Molecule();
+      molecule.addAtom( atom );
+      this.addMolecule( molecule );
+    } );
   }
 
   buildAMolecule.register( 'Kit', Kit );
@@ -163,29 +176,21 @@ define( function( require ) {
      * Called when an atom is dropped within either the play area OR the kit area. This will NOT be called for molecules
      * dropped into the collection area successfully
      *
-     * @param atom The dropped atom.
+     * @param {Atom2} atom - The dropped atom.
+     * @param {Boolean} droppedInKitArea - The dropped atom.
      */
-    atomDropped: function( atom ) {
-      // dropped on kit, put it in a bucket
-      var wasInPlay = this.isAtomInPlay( atom );
-      var droppedInKitArea = this.availableKitBounds.containsPoint( atom.positionProperty.value );
+    atomDropped: function( atom, droppedInKitArea ) {
 
+      // dropped on kit, put it in a bucket
       if ( droppedInKitArea ) {
-        if ( wasInPlay ) {
-          this.recycleMoleculeIntoBuckets( this.getMolecule( atom ) );
-        }
-        else {
-          this.recycleAtomIntoBuckets( atom, true ); // animate
-        }
+        this.recycleMoleculeIntoBuckets( this.getMolecule( atom ) );
       }
       else {
+
         // dropped in play area
-        if ( wasInPlay ) {
+        if ( this.getMolecule( atom ) ) {
           this.attemptToBondMolecule( this.getMolecule( atom ) );
           this.separateMoleculeDestinations();
-        }
-        else {
-          this.addAtomToPlay( atom );
         }
       }
     },
@@ -323,7 +328,7 @@ define( function( require ) {
     },
 
     removeMolecule: function( molecule ) {
-      this.molecules.shift();
+      arrayRemove( this.molecules, molecule );
 
       this.removedMoleculeEmitter.emit( molecule );
     },
@@ -353,8 +358,12 @@ define( function( require ) {
      */
     recycleAtomIntoBuckets: function( atom, animate ) {
       this.lewisDotModel.breakBondsOfAtom( atom );
+      this.atomsInPlayArea.remove( atom );
       var bucket = this.getBucketForElement( atom.element );
       bucket.addParticleNearestOpen( atom, animate );
+      if ( !bucket.particleList.contains( atom ) ) {
+        bucket.particleList.push( atom );
+      }
     },
 
     /**

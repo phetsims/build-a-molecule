@@ -48,6 +48,14 @@ define( require => {
       // @public {ObservableArray}
       this.particleList = new ObservableArray();
 
+      // REVIEW: Used for debugging.
+      this.particleList.addItemAddedListener( () => {
+        console.log( 'particleList.added = ', this.particleList._array );
+      } );
+      this.particleList.addItemRemovedListener( () => {
+        console.log( 'particleList.removed = ', this.particleList._array );
+      } );
+
       // @public
       this.element = element;
       this.width = this.containerShape.bounds.width;

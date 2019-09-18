@@ -179,7 +179,8 @@ define( function( require ) {
           atom.positionProperty.value = BAMConstants.MODEL_VIEW_TRANSFORM.viewToModelPosition( viewPoint );
 
           // Add new atom to the play area.
-          moleculeCollectingView.kitCollectionList.currentCollectionProperty.value.currentKitProperty.value.atomsInPlayArea.push( atom );
+          const currentKit = moleculeCollectingView.kitCollectionList.currentCollectionProperty.value.currentKitProperty.value;
+          currentKit.atomsInPlayArea.push( atom );
 
           // Handle removing particles from bucket
           if ( bucket.containsParticle( atom ) ) {

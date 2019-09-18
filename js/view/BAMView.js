@@ -36,6 +36,8 @@ define( require => {
 
       this.addCollection( kitCollectionList.currentCollectionProperty.value );
 
+      // KitPlayAreaNode for the main BAMView listens to the kitPlayArea of each kit in the model to fill or remove
+      // its content.
       this.kitCollectionList.collections.forEach( collection => {
         collection.kits.forEach( kit => {
           kit.atomsInPlayArea.addItemAddedListener( atom => {
@@ -57,17 +59,11 @@ define( require => {
       } );
       kitCollectionList.addedCollectionEmitter.addListener( this.addCollection.bind( this ) );
 
-
       this.kitCollectionList.currentCollectionProperty.value.currentKitProperty.link( kit => {
         if ( kit ) {
           this.kitPlayAreaNode = new KitPlayAreaNode( kit );
           kit.atomsInPlayArea.getArray().forEach( atom => {
-            console.log( 'atom = ' + atom );
-
-
-            var atomNode2 = new AtomNode( atom );
-            this.kitPlayAreaNode.atomLayer.addChild( atomNode2 );
-            this.kitPlayAreaNode.atomNodeMap[ atom.id ] = atomNode2;
+            this.addAtomNodeToPlayAreaNode( atom );
           } );
           // this.kitPlayerAreaNode.dispose();
           this.addChild( this.kitPlayAreaNode );
@@ -83,6 +79,20 @@ define( require => {
       return kitCollectionNode;
     }
 
+    /**
+     * Fill the play area with an atom and map the atom to an atomNode
+     * @param {Atom2} atom
+     *
+     * @private
+     * @returns {AtomNode}
+     */
+    addAtomNodeToPlayAreaNode( atom ) {
+      const atomNode = new AtomNode( atom );
+      this.kitPlayAreaNode.atomLayer.addChild( atomNode );
+      this.kitPlayAreaNode.atomNodeMap[ atom.id ] = atomNode;
+      return atomNode;
+    }
+
     addAtomNodeToPlayArea( atom, kitCollection, view ) {
       // const viewSwipeBounds = BAMConstants.MODEL_VIEW_TRANSFORM.modelToViewBounds( kitCollection.collectionLayout.availablePlayAreaBounds );
       // const sliceNode = new SliceNode( kitCollection, viewSwipeBounds, view );
@@ -92,12 +102,9 @@ define( require => {
       // swipeCatch.addInputListener( sliceNode.sliceInputListener );
 
       //REVIEW: Can we use the newer drag listeners?
-      const atomNode = new AtomNode( atom, {} );
       // this.addChild( swipeCatch );
       // this.addChild( sliceNode );
-      this.kitPlayAreaNode.atomNodeMap[ atom.id ] = atomNode;
-      this.kitPlayAreaNode.atomLayer.addChild( atomNode );
-
+      const atomNode = this.addAtomNodeToPlayAreaNode( atom );
       let lastPosition;
       var atomListener = new DragListener( {
         transform: BAMConstants.MODEL_VIEW_TRANSFORM,
@@ -134,37 +141,11 @@ define( require => {
           atom.userControlledProperty.value = false;
           const mappedAtomNode = this.kitPlayAreaNode.atomNodeMap[ atom.id ];
           const mappedKitCollectionBounds = this.kitCollectionMap[ this.kitCollectionList.currentCollectionProperty.value.id ].bounds;
-          console.log( 'mappedAtomNode = ' + mappedAtomNode );
           const currentKit = kitCollection.currentKitProperty.value;
 
-          const returnToBucket = atom => {
-            this.kitCollectionList.currentCollectionProperty.value.currentKitProperty.value.atomsInPlayArea.remove( atom );
-            const bucket = currentKit.getBucketForElement( atom.element );
-            if ( !bucket.particleList.contains( atom ) ) {
-              bucket.particleList.push( atom );
-            }
-          };
-
           // responsible for bonding atoms into molecules in play area
-          currentKit.atomDropped( atom );
-
-          // responsible for breaking molecules up and returning atoms to their bucket
-          if ( mappedAtomNode && mappedAtomNode.bounds.intersectsBounds( mappedKitCollectionBounds ) ) {
-            const molecule = currentKit.getMolecule( atom );
-            const atomsToReturn = [];
-            if ( molecule ) {
-              molecule.atoms.forEach( ( moleculeAtom ) => {
-                atomsToReturn.push( moleculeAtom );
-              } );
-              currentKit.breakMolecule( molecule );
-              atomsToReturn.forEach( atomToReturn => {
-                returnToBucket( atomToReturn );
-              } );
-            }
-            else {
-              returnToBucket( atom );
-            }
-          }
+          var droppedInKitArea = mappedAtomNode && mappedAtomNode.bounds.intersectsBounds( mappedKitCollectionBounds );
+          currentKit.atomDropped( atom, droppedInKitArea );
         }
       } );
       // TODO: Check for memory leak. Unlink?
@@ -182,6 +163,8 @@ define( require => {
      * @private
      */
     onAtomRemovedFromPlayArea( atom ) {
+
+      // Remove mapped atom node from the view and dispose it.
       this.kitPlayAreaNode.atomLayer.removeChild( this.kitPlayAreaNode.atomNodeMap[ atom.id ] );
       delete this.kitPlayAreaNode.atomNodeMap[ atom.id ];
     }
