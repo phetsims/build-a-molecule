@@ -586,7 +586,7 @@ define( function( require ) {
       // cause all atoms in the molecule to move to that location
       var delta = bestLocation.idealLocation.minus( bestLocation.b.positionProperty.value );
       this.getMolecule( bestLocation.b ).atoms.forEach( function( atomInMolecule ) {
-        atomInMolecule.destinationProperty.value = atomInMolecule.positionProperty.value.plus( delta );
+        atomInMolecule.setPositionAndDestination( atomInMolecule.positionProperty.value.plus( delta ) );
       } );
 
       // we now will bond the atom
