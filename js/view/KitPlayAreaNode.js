@@ -14,13 +14,12 @@ define( require => {
   // const Property = require( 'AXON/Property' );
   // const AtomNode = require( 'BUILD_A_MOLECULE/view/AtomNode' );
 
-
   class KitPlayAreaNode extends Node {
     /**
      *
-     * @param {kit} kit
+     * @param {array.<Kit>} kits
      */
-    constructor( kit ) {
+    constructor( kits ) {
       super();
 
       // Mapped atomNodes to kit play area.
@@ -30,35 +29,17 @@ define( require => {
       this.metaDataLayer = new Node();
       this.atomLayer = new Node();
 
-      kit.activeProperty.lazyLink( active => {
-        this.atomLayer.children.forEach( atomNode => {
-          atomNode.visible = !active;
+      // Every kit maps the visibility of its atoms in the play area to its active property. Active kits
+      // have visible atoms.
+      kits.forEach( kit => {
+        kit.activeProperty.link( active => {
+          this.atomLayer.children.forEach( atomNode => {
+            atomNode.visible = kit.atomsInPlayArea.contains( atomNode.atom ) && active;
+          } );
         } );
       } );
-
-
-      // Refill the play area node with the molecule atoms from this kit
-      // kit.molecules.forEach( molecule => {
-
-      // let molecule = kit.getMolecule( atom );
-      // if ( molecule ){
-      // molecule.atoms.forEach( moleculeAtom => {
-      //   if ( moleculeAtom !== atom ) {
-      //     moleculeAtom.positionProperty.value = moleculeAtom.positionProperty.value.plus( delta );
-      //     this.atomLayer.addChild( new AtomNode( moleculeAtom ) );
-      //   }
-      // } );
-      // }
-
-      // this.atomLayer.addChild( molecule );
-      // } );
       this.addChild( this.atomLayer );
-
     }
-
-    // dispose() {
-    //   super.dispose();
-    // }
   }
 
   return buildAMolecule.register( 'KitPlayAreaNode', KitPlayAreaNode );

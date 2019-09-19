@@ -38,8 +38,14 @@ define( require => {
 
       // KitPlayAreaNode for the main BAMView listens to the kitPlayArea of each kit in the model to fill or remove
       // its content.
+      const kits = [];
       this.kitCollectionList.collections.forEach( collection => {
         collection.kits.forEach( kit => {
+
+          // Used for tracking kits in KitPlayAreaNode
+          kits.push( kit );
+
+          // Each kit gets listeners for managing its play area.
           kit.atomsInPlayArea.addItemAddedListener( atom => {
             this.addAtomNodeToPlayArea( atom, kitCollectionList.currentCollectionProperty.value );
           } );
@@ -59,16 +65,25 @@ define( require => {
       } );
       kitCollectionList.addedCollectionEmitter.addListener( this.addCollection.bind( this ) );
 
-      this.kitCollectionList.currentCollectionProperty.value.currentKitProperty.link( kit => {
-        if ( kit ) {
-          this.kitPlayAreaNode = new KitPlayAreaNode( kit );
-          kit.atomsInPlayArea.getArray().forEach( atom => {
-            this.addAtomNodeToPlayAreaNode( atom );
-          } );
-          // this.kitPlayerAreaNode.dispose();
-          this.addChild( this.kitPlayAreaNode );
-        }
-      } );
+      // Create a play area to house the atomNodes.
+      this.kitPlayAreaNode = new KitPlayAreaNode( kits );
+      this.addChild( this.kitPlayAreaNode );
+
+      // When the kit changes reconstruct the kitPlayAreaNode
+      // this.kitCollectionList.currentCollectionProperty.value.currentKitProperty.link( kit => {
+      //   if ( kit ) {
+      //     if (this.kitPlayAreaNode) {
+      //       this.kitPlayAreaNode.dispose();
+      //     }
+      //     this.kitPlayAreaNode = new KitPlayAreaNode( this.kitCollectionList.currentCollectionProperty.value.currentKitProperty.value );
+      //     kit.atomsInPlayArea.getArray().forEach( atom => {
+      //       this.addAtomNodeToPlayAreaNode( atom );
+      //     } );
+      //     // this.kitPlayerAreaNode.dispose();
+      //     this.addChild( this.kitPlayAreaNode );
+      //
+      //   }
+      // } );
     }
 
     addCollection( collection ) {

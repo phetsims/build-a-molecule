@@ -37,6 +37,8 @@ define( require => {
         cursor: 'pointer'
       }, options ) );
 
+      // @public
+      this.atom = atom;
       this.addChild( AtomNode.createIcon( atom.element ) );
 
       //REVIEW: This looks like it may leak memory. Worth checking into

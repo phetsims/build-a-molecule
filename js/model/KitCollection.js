@@ -29,8 +29,10 @@ define( function( require ) {
 
     // @public {Property.<Kit|null>}
     this.currentKitProperty = new Property( null );
-    this.currentKitProperty.lazyLink( ( oldKit, newKit ) => {
-      oldKit.activeProperty.value = false;
+    this.currentKitProperty.lazyLink( ( newKit, oldKit ) => {
+      if ( oldKit ) {
+        oldKit.activeProperty.value = false;
+      }
       if ( newKit ) {
         newKit.activeProperty.value = true;
       }
