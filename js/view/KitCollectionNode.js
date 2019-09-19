@@ -31,7 +31,7 @@ define( require => {
       this.addChild( kitPanel );
 
       const kitMap = []; // maps kit ID => KitView
-      collection.kits.forEach( ( kit ) => {
+      collection.kits.forEach( kit => {
         kitMap[ kit.id ] = new KitView( kit, view );
       } );
     }

@@ -59,8 +59,8 @@ define( require => {
         canvas.style.top = globalBounds.y + 'px';
         toModelTransform = new Transform3( BAMConstants.MODEL_VIEW_TRANSFORM.getInverse().timesMatrix( view.getUniqueTrail().getMatrix().inverted() ) );
 
-        kit.molecules.forEach( ( molecule ) => {
-          molecule.bonds.forEach( ( bond ) => {
+        kit.molecules.forEach( molecule => {
+          molecule.bonds.forEach( bond => {
             this.bondData.push( {
               bond: bond,
               cut: false,
@@ -104,7 +104,7 @@ define( require => {
       end: ( event, trail ) => {
         lastPoint = null;
         let cutCount = 0;
-        this.bondData.forEach( ( dat ) => {
+        this.bondData.forEach( dat => {
           if ( dat.cut ) {
             cutCount++;
             kit.breakBond( dat.bond.a, dat.bond.b, true ); // skip the destination separation
@@ -124,7 +124,7 @@ define( require => {
       const dragDeltaX = newModelPoint.x - oldModelPoint.x;
       const dragDeltaY = newModelPoint.y - oldModelPoint.y;
 
-      this.bondData.forEach( ( dat ) => {
+      this.bondData.forEach( dat => {
         // skip already-cut bonds
         if ( dat.cut ) {
           return;

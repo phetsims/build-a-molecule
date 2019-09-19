@@ -21,7 +21,7 @@ define( require => {
     constructor( molecule ) {
       super();
       this.quantities = {};
-      BAMConstants.SUPPORTED_ELEMENTS.forEach( ( element ) => {
+      BAMConstants.SUPPORTED_ELEMENTS.forEach( element => {
         this.quantities[ element.symbol ] = 0;
       } );
 
@@ -57,7 +57,7 @@ define( require => {
      * @param {MoleculeStructure} molecule
      */
     addMolecule( molecule ) {
-      molecule.atoms.forEach( ( atom ) => {
+      molecule.atoms.forEach( atom => {
         this.addElement( atom.element );
       } );
     }
@@ -70,7 +70,7 @@ define( require => {
     getHashString() {
       let hashString = '';
 
-      BAMConstants.SUPPORTED_ELEMENTS.forEach( ( element ) => {
+      BAMConstants.SUPPORTED_ELEMENTS.forEach( element => {
         hashString += '_' + this.getQuantity( element );
       } );
       return hashString;

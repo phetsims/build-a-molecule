@@ -125,13 +125,13 @@ define( require => {
         transform: BAMConstants.MODEL_VIEW_TRANSFORM,
         targetNode: atomNode,
         locationProperty: atom.positionProperty,
-        start: ( event ) => {
+        start: event => {
 
           // Get atom position before drag
           lastPosition = atom.positionProperty.value;
           atom.userControlledProperty.value = true;
         },
-        drag: ( event ) => {
+        drag: event => {
 
           // Get delta from start of drag
           const delta = atom.positionProperty.value.minus( lastPosition );
@@ -142,7 +142,7 @@ define( require => {
           // Handles atoms with multiple molecules
           const molecule = kitCollection.currentKitProperty.value.getMolecule( atom );
           if ( molecule ) {
-            molecule.atoms.forEach( ( moleculeAtom ) => {
+            molecule.atoms.forEach( moleculeAtom => {
               if ( moleculeAtom !== atom ) {
                 moleculeAtom.positionProperty.value = moleculeAtom.positionProperty.value.plus( delta );
               }

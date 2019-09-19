@@ -29,7 +29,7 @@ define( require => {
       const dotAtom = this.getLewisDotAtom( atom );
 
       // disconnect all of its bonds
-      Direction.values.forEach( ( direction ) => {
+      Direction.values.forEach( direction => {
         if ( dotAtom.hasConnection( direction ) ) {
           const otherDotAtom = dotAtom.getLewisDotAtom( direction );
           this.breakBond( dotAtom.atom, otherDotAtom.atom );
@@ -72,7 +72,7 @@ define( require => {
     getOpenDirections( atom ) {
       const result = [];
       const dotAtom = this.getLewisDotAtom( atom );
-      Direction.values.forEach( ( direction ) => {
+      Direction.values.forEach( direction => {
         if ( !dotAtom.hasConnection( direction ) ) {
           result.push( direction );
         }
@@ -197,7 +197,7 @@ define( require => {
     constructor( atom ) {
       this.atom = atom;
       this.connections = {}; // maps Direction ID => LewisDotAtom
-      Direction.values.forEach( ( direction ) => {
+      Direction.values.forEach( direction => {
         this.connections[ direction.id ] = null; // nothing in this direction
       } );
     }

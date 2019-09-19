@@ -37,7 +37,7 @@ define( require => {
         kitCollectionList,
         isSingleCollectionMode,
         collectionAttachmentCallbacks,
-        ( node ) => {
+        node => {
 
           // returns model bounds from a node, given local coordinates on a node
           const viewBounds = node.getParent().getUniqueTrail().getTransformTo( this.getUniqueTrail() ).transformBounds2( node.bounds );
@@ -54,7 +54,7 @@ define( require => {
       collectionPanel.moveToBack();
 
       // notify attachment
-      collectionAttachmentCallbacks.forEach( ( callback ) => { callback(); } );
+      collectionAttachmentCallbacks.forEach( callback => { callback(); } );
     }
 
     /**
