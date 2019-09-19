@@ -6,23 +6,23 @@
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 
-define( function( require ) {
+define( require => {
   'use strict';
 
-  var arrayRemove = require( 'PHET_CORE/arrayRemove' );
-  var BooleanProperty = require( 'AXON/BooleanProperty' );
-  var Bounds2 = require( 'DOT/Bounds2' );
-  var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
-  var cleanArray = require( 'PHET_CORE/cleanArray' );
-  var Emitter = require( 'AXON/Emitter' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var LewisDotModel = require( 'BUILD_A_MOLECULE/model/LewisDotModel' );
-  var Molecule = require( 'BUILD_A_MOLECULE/model/Molecule' );
-  var MoleculeList = require( 'BUILD_A_MOLECULE/model/MoleculeList' );
-  var MoleculeStructure = require( 'BUILD_A_MOLECULE/model/MoleculeStructure' );
-  var ObservableArray = require( 'AXON/ObservableArray' );
-  var Rectangle = require( 'DOT/Rectangle' );
-  var Vector2 = require( 'DOT/Vector2' );
+  const arrayRemove = require( 'PHET_CORE/arrayRemove' );
+  const BooleanProperty = require( 'AXON/BooleanProperty' );
+  const Bounds2 = require( 'DOT/Bounds2' );
+  const buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
+  const cleanArray = require( 'PHET_CORE/cleanArray' );
+  const Emitter = require( 'AXON/Emitter' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const LewisDotModel = require( 'BUILD_A_MOLECULE/model/LewisDotModel' );
+  const Molecule = require( 'BUILD_A_MOLECULE/model/Molecule' );
+  const MoleculeList = require( 'BUILD_A_MOLECULE/model/MoleculeList' );
+  const MoleculeStructure = require( 'BUILD_A_MOLECULE/model/MoleculeStructure' );
+  const ObservableArray = require( 'AXON/ObservableArray' );
+  const Rectangle = require( 'DOT/Rectangle' );
+  const Vector2 = require( 'DOT/Vector2' );
 
   var kitIdCounter = 0;
 

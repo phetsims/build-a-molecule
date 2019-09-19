@@ -6,26 +6,26 @@
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 
-define( function( require ) {
+define( require => {
   'use strict';
 
-  var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
-  var Color = require( 'SCENERY/util/Color' );
-  var BAMConstants = require( 'BUILD_A_MOLECULE/BAMConstants' );
-  var Dialog = require( 'SUN/Dialog' );
-  var FaceNode = require( 'SCENERY_PHET/FaceNode' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  var Shape = require( 'KITE/Shape' );
-  var Text = require( 'SCENERY/nodes/Text' );
-  var TextPushButton = require( 'SUN/buttons/TextPushButton' );
-  var VBox = require( 'SCENERY/nodes/VBox' );
-  var Vector2 = require( 'DOT/Vector2' );
+  const buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
+  const Color = require( 'SCENERY/util/Color' );
+  const BAMConstants = require( 'BUILD_A_MOLECULE/BAMConstants' );
+  const Dialog = require( 'SUN/Dialog' );
+  const FaceNode = require( 'SCENERY_PHET/FaceNode' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const PhetFont = require( 'SCENERY_PHET/PhetFont' );
+  const Shape = require( 'KITE/Shape' );
+  const Text = require( 'SCENERY/nodes/Text' );
+  const TextPushButton = require( 'SUN/buttons/TextPushButton' );
+  const VBox = require( 'SCENERY/nodes/VBox' );
+  const Vector2 = require( 'DOT/Vector2' );
 
 
   // strings
-  var youCompletedYourCollectionString = require( 'string!BUILD_A_MOLECULE/youCompletedYourCollection' );
-  var nextCollectionString = require( 'string!BUILD_A_MOLECULE/nextCollection' );
+  const youCompletedYourCollectionString = require( 'string!BUILD_A_MOLECULE/youCompletedYourCollection' );
+  const nextCollectionString = require( 'string!BUILD_A_MOLECULE/nextCollection' );
 
   /**
    * @param {Bounds2} availablePlayAreaBounds

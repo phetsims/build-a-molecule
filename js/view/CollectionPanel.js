@@ -6,26 +6,26 @@
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 
-define( function( require ) {
+define( require => {
   'use strict';
 
-  var BAMConstants = require( 'BUILD_A_MOLECULE/BAMConstants' );
-  var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
-  var CollectionAreaNode = require( 'BUILD_A_MOLECULE/view/CollectionAreaNode' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var NextPreviousNavigationNode = require( 'SCENERY_PHET/NextPreviousNavigationNode' );
-  var Node = require( 'SCENERY/nodes/Node' );
-  var Panel = require( 'SUN/Panel' );
-  var PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  var ScreenView = require( 'JOIST/ScreenView' );
-  var Shape = require( 'KITE/Shape' );
-  var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
-  var Text = require( 'SCENERY/nodes/Text' );
-  var VBox = require( 'SCENERY/nodes/VBox' );
+  const BAMConstants = require( 'BUILD_A_MOLECULE/BAMConstants' );
+  const buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
+  const CollectionAreaNode = require( 'BUILD_A_MOLECULE/view/CollectionAreaNode' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const NextPreviousNavigationNode = require( 'SCENERY_PHET/NextPreviousNavigationNode' );
+  const Node = require( 'SCENERY/nodes/Node' );
+  const Panel = require( 'SUN/Panel' );
+  const PhetFont = require( 'SCENERY_PHET/PhetFont' );
+  const ScreenView = require( 'JOIST/ScreenView' );
+  const Shape = require( 'KITE/Shape' );
+  const StringUtils = require( 'PHETCOMMON/util/StringUtils' );
+  const Text = require( 'SCENERY/nodes/Text' );
+  const VBox = require( 'SCENERY/nodes/VBox' );
 
   // strings
-  var collectionPatternString = require( 'string!BUILD_A_MOLECULE/collectionPattern' );
-  var yourMoleculesString = require( 'string!BUILD_A_MOLECULE/yourMolecules' );
+  const collectionPatternString = require( 'string!BUILD_A_MOLECULE/collectionPattern' );
+  const yourMoleculesString = require( 'string!BUILD_A_MOLECULE/yourMolecules' );
 
   /**
    * @param {KitCollectionList} kitCollectionList

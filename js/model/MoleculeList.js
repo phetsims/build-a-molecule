@@ -11,18 +11,18 @@
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 
-define( function( require ) {
+define( require => {
   'use strict';
 
   //REVIEW use logging instead of System.out throughout, since this happens at startup in production product.
 
-  var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
-  var collectionMoleculesData = require( 'BUILD_A_MOLECULE/model/data/collectionMoleculesData' );
-  var CompleteMolecule = require( 'BUILD_A_MOLECULE/model/CompleteMolecule' );
-  var MoleculeStructure = require( 'BUILD_A_MOLECULE/model/MoleculeStructure' );
-  var otherMoleculesData = require( 'BUILD_A_MOLECULE/model/data/otherMoleculesData' );
-  var StrippedMolecule = require( 'BUILD_A_MOLECULE/model/StrippedMolecule' );
-  var structuresData = require( 'BUILD_A_MOLECULE/model/data/structuresData' );
+  const buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
+  const collectionMoleculesData = require( 'BUILD_A_MOLECULE/model/data/collectionMoleculesData' );
+  const CompleteMolecule = require( 'BUILD_A_MOLECULE/model/CompleteMolecule' );
+  const MoleculeStructure = require( 'BUILD_A_MOLECULE/model/MoleculeStructure' );
+  const otherMoleculesData = require( 'BUILD_A_MOLECULE/model/data/otherMoleculesData' );
+  const StrippedMolecule = require( 'BUILD_A_MOLECULE/model/StrippedMolecule' );
+  const structuresData = require( 'BUILD_A_MOLECULE/model/data/structuresData' );
 
   /**
    * @constructor

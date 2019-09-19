@@ -8,26 +8,26 @@
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 
-define( function( require ) {
+define( require => {
   'use strict';
 
-  var AquaRadioButton = require( 'SUN/AquaRadioButton' );
-  var Bounds2 = require( 'DOT/Bounds2' );
-  var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
-  var Dialog = require( 'SUN/Dialog' );
-  var Enumeration = require( 'PHET_CORE/Enumeration' );
-  var EnumerationProperty = require( 'AXON/EnumerationProperty' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var Molecule3DNode = require( 'BUILD_A_MOLECULE/view/view3d/Molecule3DNode' );
-  var Node = require( 'SCENERY/nodes/Node' );
-  var PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  var RichText = require( 'SCENERY/nodes/RichText' );
-  var Text = require( 'SCENERY/nodes/Text' );
-  var HBox = require( 'SCENERY/nodes/HBox' );
+  const AquaRadioButton = require( 'SUN/AquaRadioButton' );
+  const Bounds2 = require( 'DOT/Bounds2' );
+  const buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
+  const Dialog = require( 'SUN/Dialog' );
+  const Enumeration = require( 'PHET_CORE/Enumeration' );
+  const EnumerationProperty = require( 'AXON/EnumerationProperty' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const Molecule3DNode = require( 'BUILD_A_MOLECULE/view/view3d/Molecule3DNode' );
+  const Node = require( 'SCENERY/nodes/Node' );
+  const PhetFont = require( 'SCENERY_PHET/PhetFont' );
+  const RichText = require( 'SCENERY/nodes/RichText' );
+  const Text = require( 'SCENERY/nodes/Text' );
+  const HBox = require( 'SCENERY/nodes/HBox' );
 
   // strings
-  var ballAndStickString = require( 'string!BUILD_A_MOLECULE/ballAndStick' ); // eslint-disable-line string-require-statement-match
-  var spaceFillString = require( 'string!BUILD_A_MOLECULE/spaceFilling' ); // eslint-disable-line string-require-statement-match
+  const ballAndStickString = require( 'string!BUILD_A_MOLECULE/ballAndStick' ); // eslint-disable-line string-require-statement-match
+  const spaceFillString = require( 'string!BUILD_A_MOLECULE/spaceFilling' ); // eslint-disable-line string-require-statement-match
 
   var size = 200;
   var optionsHorizontalPadding = 40;

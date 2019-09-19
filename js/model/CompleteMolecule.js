@@ -9,53 +9,53 @@
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 
-define( function( require ) {
+define( require => {
   'use strict';
 
   // Modules
-  var Atom = require( 'NITROGLYCERIN/Atom' );
-  var AtomNode = require( 'NITROGLYCERIN/nodes/AtomNode' );
-  var Bond = require( 'BUILD_A_MOLECULE/model/Bond' );
-  var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
-  var Element = require( 'NITROGLYCERIN/Element' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var MoleculeStructure = require( 'BUILD_A_MOLECULE/model/MoleculeStructure' );
-  var Node = require( 'SCENERY/nodes/Node' );
-  var Strings = require( 'BUILD_A_MOLECULE/Strings' );
-  var StringProperty = require( 'AXON/StringProperty' );
+  const Atom = require( 'NITROGLYCERIN/Atom' );
+  const AtomNode = require( 'NITROGLYCERIN/nodes/AtomNode' );
+  const Bond = require( 'BUILD_A_MOLECULE/model/Bond' );
+  const buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
+  const Element = require( 'NITROGLYCERIN/Element' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const MoleculeStructure = require( 'BUILD_A_MOLECULE/model/MoleculeStructure' );
+  const Node = require( 'SCENERY/nodes/Node' );
+  const Strings = require( 'BUILD_A_MOLECULE/Strings' );
+  const StringProperty = require( 'AXON/StringProperty' );
 
   // Node type modules
-  var Cl2Node = require( 'NITROGLYCERIN/nodes/Cl2Node' );
-  var CO2Node = require( 'NITROGLYCERIN/nodes/CO2Node' );
-  var CS2Node = require( 'NITROGLYCERIN/nodes/CS2Node' );
-  var F2Node = require( 'NITROGLYCERIN/nodes/F2Node' );
-  var H2Node = require( 'NITROGLYCERIN/nodes/H2Node' );
-  var N2Node = require( 'NITROGLYCERIN/nodes/N2Node' );
-  var NONode = require( 'NITROGLYCERIN/nodes/NONode' );
-  var N2ONode = require( 'NITROGLYCERIN/nodes/N2ONode' );
-  var O2Node = require( 'NITROGLYCERIN/nodes/O2Node' );
-  var C2H2Node = require( 'NITROGLYCERIN/nodes/C2H2Node' );
-  var C2H4Node = require( 'NITROGLYCERIN/nodes/C2H4Node' );
-  var C2H5ClNode = require( 'NITROGLYCERIN/nodes/C2H5ClNode' );
-  var C2H5OHNode = require( 'NITROGLYCERIN/nodes/C2H5OHNode' );
-  var C2H6Node = require( 'NITROGLYCERIN/nodes/C2H6Node' );
-  var CH2ONode = require( 'NITROGLYCERIN/nodes/CH2ONode' );
-  var CH3OHNode = require( 'NITROGLYCERIN/nodes/CH3OHNode' );
-  var CH4Node = require( 'NITROGLYCERIN/nodes/CH4Node' );
-  var H2ONode = require( 'NITROGLYCERIN/nodes/H2ONode' );
-  var H2SNode = require( 'NITROGLYCERIN/nodes/H2SNode' );
-  var HClNode = require( 'NITROGLYCERIN/nodes/HClNode' );
-  var HFNode = require( 'NITROGLYCERIN/nodes/HFNode' );
-  var NH3Node = require( 'NITROGLYCERIN/nodes/NH3Node' );
-  var NO2Node = require( 'NITROGLYCERIN/nodes/NO2Node' );
-  var OF2Node = require( 'NITROGLYCERIN/nodes/OF2Node' );
-  var P4Node = require( 'NITROGLYCERIN/nodes/P4Node' );
-  var PCl3Node = require( 'NITROGLYCERIN/nodes/PCl3Node' );
-  var PCl5Node = require( 'NITROGLYCERIN/nodes/PCl5Node' );
-  var PF3Node = require( 'NITROGLYCERIN/nodes/PF3Node' );
-  var PH3Node = require( 'NITROGLYCERIN/nodes/PH3Node' );
-  var SO2Node = require( 'NITROGLYCERIN/nodes/SO2Node' );
-  var SO3Node = require( 'NITROGLYCERIN/nodes/SO3Node' );
+  const Cl2Node = require( 'NITROGLYCERIN/nodes/Cl2Node' );
+  const CO2Node = require( 'NITROGLYCERIN/nodes/CO2Node' );
+  const CS2Node = require( 'NITROGLYCERIN/nodes/CS2Node' );
+  const F2Node = require( 'NITROGLYCERIN/nodes/F2Node' );
+  const H2Node = require( 'NITROGLYCERIN/nodes/H2Node' );
+  const N2Node = require( 'NITROGLYCERIN/nodes/N2Node' );
+  const NONode = require( 'NITROGLYCERIN/nodes/NONode' );
+  const N2ONode = require( 'NITROGLYCERIN/nodes/N2ONode' );
+  const O2Node = require( 'NITROGLYCERIN/nodes/O2Node' );
+  const C2H2Node = require( 'NITROGLYCERIN/nodes/C2H2Node' );
+  const C2H4Node = require( 'NITROGLYCERIN/nodes/C2H4Node' );
+  const C2H5ClNode = require( 'NITROGLYCERIN/nodes/C2H5ClNode' );
+  const C2H5OHNode = require( 'NITROGLYCERIN/nodes/C2H5OHNode' );
+  const C2H6Node = require( 'NITROGLYCERIN/nodes/C2H6Node' );
+  const CH2ONode = require( 'NITROGLYCERIN/nodes/CH2ONode' );
+  const CH3OHNode = require( 'NITROGLYCERIN/nodes/CH3OHNode' );
+  const CH4Node = require( 'NITROGLYCERIN/nodes/CH4Node' );
+  const H2ONode = require( 'NITROGLYCERIN/nodes/H2ONode' );
+  const H2SNode = require( 'NITROGLYCERIN/nodes/H2SNode' );
+  const HClNode = require( 'NITROGLYCERIN/nodes/HClNode' );
+  const HFNode = require( 'NITROGLYCERIN/nodes/HFNode' );
+  const NH3Node = require( 'NITROGLYCERIN/nodes/NH3Node' );
+  const NO2Node = require( 'NITROGLYCERIN/nodes/NO2Node' );
+  const OF2Node = require( 'NITROGLYCERIN/nodes/OF2Node' );
+  const P4Node = require( 'NITROGLYCERIN/nodes/P4Node' );
+  const PCl3Node = require( 'NITROGLYCERIN/nodes/PCl3Node' );
+  const PCl5Node = require( 'NITROGLYCERIN/nodes/PCl5Node' );
+  const PF3Node = require( 'NITROGLYCERIN/nodes/PF3Node' );
+  const PH3Node = require( 'NITROGLYCERIN/nodes/PH3Node' );
+  const SO2Node = require( 'NITROGLYCERIN/nodes/SO2Node' );
+  const SO3Node = require( 'NITROGLYCERIN/nodes/SO3Node' );
 
   // Node types used for molecules
   var nodeTypes = [

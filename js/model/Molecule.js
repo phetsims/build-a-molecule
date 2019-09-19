@@ -6,13 +6,13 @@
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 
-define( function( require ) {
+define( require => {
   'use strict';
 
-  var Bounds2 = require( 'DOT/Bounds2' );
-  var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var MoleculeStructure = require( 'BUILD_A_MOLECULE/model/MoleculeStructure' );
+  const Bounds2 = require( 'DOT/Bounds2' );
+  const buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const MoleculeStructure = require( 'BUILD_A_MOLECULE/model/MoleculeStructure' );
 
   //REVIEW: Do we really want default parameters here?
   /**

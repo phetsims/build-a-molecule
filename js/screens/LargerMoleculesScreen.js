@@ -5,23 +5,23 @@
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
-  var BAMScreen = require( 'BUILD_A_MOLECULE/screens/BAMScreen' );
-  var BAMView = require( 'BUILD_A_MOLECULE/view/BAMView' );
-  var Bucket = require( 'BUILD_A_MOLECULE/model/Bucket' );
-  var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
-  var Dimension2 = require( 'DOT/Dimension2' );
-  var Element = require( 'NITROGLYCERIN/Element' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var Kit = require( 'BUILD_A_MOLECULE/model/Kit' );
-  var KitCollection = require( 'BUILD_A_MOLECULE/model/KitCollection' );
-  var CollectionLayout = require( 'BUILD_A_MOLECULE/model/CollectionLayout' );
-  var Rectangle = require( 'SCENERY/nodes/Rectangle' );
+  const BAMScreen = require( 'BUILD_A_MOLECULE/screens/BAMScreen' );
+  const BAMView = require( 'BUILD_A_MOLECULE/view/BAMView' );
+  const Bucket = require( 'BUILD_A_MOLECULE/model/Bucket' );
+  const buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
+  const Dimension2 = require( 'DOT/Dimension2' );
+  const Element = require( 'NITROGLYCERIN/Element' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const Kit = require( 'BUILD_A_MOLECULE/model/Kit' );
+  const KitCollection = require( 'BUILD_A_MOLECULE/model/KitCollection' );
+  const CollectionLayout = require( 'BUILD_A_MOLECULE/model/CollectionLayout' );
+  const Rectangle = require( 'SCENERY/nodes/Rectangle' );
 
   // strings
-  var titleLargerString = require( 'string!BUILD_A_MOLECULE/title.larger' );
+  const titleLargerString = require( 'string!BUILD_A_MOLECULE/title.larger' );
 
   // constants
   const BUCKET_DIMENSIONS = new Dimension2( 670, 200 );

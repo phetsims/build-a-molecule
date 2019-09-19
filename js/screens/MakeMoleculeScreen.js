@@ -5,25 +5,25 @@
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
-  var BAMScreen = require( 'BUILD_A_MOLECULE/screens/BAMScreen' );
-  var Bucket = require( 'BUILD_A_MOLECULE/model/Bucket' );
-  var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
-  var CollectionBox = require( 'BUILD_A_MOLECULE/model/CollectionBox' );
-  var Dimension2 = require( 'DOT/Dimension2' );
-  var Element = require( 'NITROGLYCERIN/Element' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var Kit = require( 'BUILD_A_MOLECULE/model/Kit' );
-  var KitCollection = require( 'BUILD_A_MOLECULE/model/KitCollection' );
-  var CollectionLayout = require( 'BUILD_A_MOLECULE/model/CollectionLayout' );
-  var MoleculeCollectingView = require( 'BUILD_A_MOLECULE/view/MoleculeCollectingView' );
-  var MoleculeList = require( 'BUILD_A_MOLECULE/model/MoleculeList' );
-  var Rectangle = require( 'SCENERY/nodes/Rectangle' );
+  const BAMScreen = require( 'BUILD_A_MOLECULE/screens/BAMScreen' );
+  const Bucket = require( 'BUILD_A_MOLECULE/model/Bucket' );
+  const buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
+  const CollectionBox = require( 'BUILD_A_MOLECULE/model/CollectionBox' );
+  const Dimension2 = require( 'DOT/Dimension2' );
+  const Element = require( 'NITROGLYCERIN/Element' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const Kit = require( 'BUILD_A_MOLECULE/model/Kit' );
+  const KitCollection = require( 'BUILD_A_MOLECULE/model/KitCollection' );
+  const CollectionLayout = require( 'BUILD_A_MOLECULE/model/CollectionLayout' );
+  const MoleculeCollectingView = require( 'BUILD_A_MOLECULE/view/MoleculeCollectingView' );
+  const MoleculeList = require( 'BUILD_A_MOLECULE/model/MoleculeList' );
+  const Rectangle = require( 'SCENERY/nodes/Rectangle' );
 
   // strings
-  var titleSingleString = require( 'string!BUILD_A_MOLECULE/title.single' );
+  const titleSingleString = require( 'string!BUILD_A_MOLECULE/title.single' );
 
   /**
    * @constructor

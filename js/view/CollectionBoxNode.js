@@ -7,21 +7,21 @@
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 
-define( function( require ) {
+define( require => {
   'use strict';
 
   // constants
-  var Bounds2 = require( 'DOT/Bounds2' );
-  var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
-  var BAMConstants = require( 'BUILD_A_MOLECULE/BAMConstants' );
-  var Image = require( 'SCENERY/nodes/Image' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var Molecule3DNode = require( 'BUILD_A_MOLECULE/view/view3d/Molecule3DNode' );
-  var MoleculeList = require( 'BUILD_A_MOLECULE/model/MoleculeList' );
-  var Node = require( 'SCENERY/nodes/Node' );
-  var Rectangle = require( 'SCENERY/nodes/Rectangle' );
-  var Shape = require( 'KITE/Shape' );
-  var ShowMolecule3DButtonNode = require( 'BUILD_A_MOLECULE/view/view3d/ShowMolecule3DButtonNode' );
+  const Bounds2 = require( 'DOT/Bounds2' );
+  const buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
+  const BAMConstants = require( 'BUILD_A_MOLECULE/BAMConstants' );
+  const Image = require( 'SCENERY/nodes/Image' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const Molecule3DNode = require( 'BUILD_A_MOLECULE/view/view3d/Molecule3DNode' );
+  const MoleculeList = require( 'BUILD_A_MOLECULE/model/MoleculeList' );
+  const Node = require( 'SCENERY/nodes/Node' );
+  const Rectangle = require( 'SCENERY/nodes/Rectangle' );
+  const Shape = require( 'KITE/Shape' );
+  const ShowMolecule3DButtonNode = require( 'BUILD_A_MOLECULE/view/view3d/ShowMolecule3DButtonNode' );
   const VBox = require( 'SCENERY/nodes/VBox' );
 
   // constants

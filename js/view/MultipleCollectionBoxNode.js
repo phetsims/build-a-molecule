@@ -7,24 +7,24 @@
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 
-define( function( require ) {
+define( require => {
   'use strict';
 
-  var BAMConstants = require( 'BUILD_A_MOLECULE/BAMConstants' );
-  var Bounds2 = require( 'DOT/Bounds2' );
-  var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
-  var CollectionBox = require( 'BUILD_A_MOLECULE/model/CollectionBox' );
-  var CollectionBoxNode = require( 'BUILD_A_MOLECULE/view/CollectionBoxNode' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var MoleculeList = require( 'BUILD_A_MOLECULE/model/MoleculeList' );
-  var PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  var RichText = require( 'SCENERY/nodes/RichText' );
-  var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
+  const BAMConstants = require( 'BUILD_A_MOLECULE/BAMConstants' );
+  const Bounds2 = require( 'DOT/Bounds2' );
+  const buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
+  const CollectionBox = require( 'BUILD_A_MOLECULE/model/CollectionBox' );
+  const CollectionBoxNode = require( 'BUILD_A_MOLECULE/view/CollectionBoxNode' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const MoleculeList = require( 'BUILD_A_MOLECULE/model/MoleculeList' );
+  const PhetFont = require( 'SCENERY_PHET/PhetFont' );
+  const RichText = require( 'SCENERY/nodes/RichText' );
+  const StringUtils = require( 'PHETCOMMON/util/StringUtils' );
 
   // strings
-  var collectionMultipleGoalPatternString = require( 'string!BUILD_A_MOLECULE/collectionMultipleGoalPattern' );
-  var collectionMultipleQuantityEmptyString = require( 'string!BUILD_A_MOLECULE/collectionMultipleQuantityEmpty' );
-  var collectionMultipleQuantityPatternString = require( 'string!BUILD_A_MOLECULE/collectionMultipleQuantityPattern' );
+  const collectionMultipleGoalPatternString = require( 'string!BUILD_A_MOLECULE/collectionMultipleGoalPattern' );
+  const collectionMultipleQuantityEmptyString = require( 'string!BUILD_A_MOLECULE/collectionMultipleQuantityEmpty' );
+  const collectionMultipleQuantityPatternString = require( 'string!BUILD_A_MOLECULE/collectionMultipleQuantityPattern' );
 
   /**
    * @param {CollectionBox} box

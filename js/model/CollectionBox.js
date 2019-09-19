@@ -6,17 +6,17 @@
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 
-define( function( require ) {
+define( require => {
   'use strict';
 
-  var Bounds2 = require( 'DOT/Bounds2' );
-  var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
-  var Emitter = require( 'AXON/Emitter' );
-  var Globals = require( 'BUILD_A_MOLECULE/Globals' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var Molecule = require( 'BUILD_A_MOLECULE/model/Molecule' );
-  var NumberProperty = require( 'AXON/NumberProperty' );
-  var Property = require( 'AXON/Property' );
+  const Bounds2 = require( 'DOT/Bounds2' );
+  const buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
+  const Emitter = require( 'AXON/Emitter' );
+  const Globals = require( 'BUILD_A_MOLECULE/Globals' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const Molecule = require( 'BUILD_A_MOLECULE/model/Molecule' );
+  const NumberProperty = require( 'AXON/NumberProperty' );
+  const Property = require( 'AXON/Property' );
 
   /**
    * @param {CompleteMolecule} moleculeType

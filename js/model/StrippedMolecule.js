@@ -9,16 +9,16 @@
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 
-define( function( require ) {
+define( require => {
   'use strict';
 
-  var Atom = require( 'NITROGLYCERIN/Atom' );
-  var Bond = require( 'BUILD_A_MOLECULE/model/Bond' );
-  var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
-  var Element = require( 'NITROGLYCERIN/Element' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var MoleculeStructure = require( 'BUILD_A_MOLECULE/model/MoleculeStructure' );
-  var PhetioObject = require( 'TANDEM/PhetioObject' );
+  const Atom = require( 'NITROGLYCERIN/Atom' );
+  const Bond = require( 'BUILD_A_MOLECULE/model/Bond' );
+  const buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
+  const Element = require( 'NITROGLYCERIN/Element' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const MoleculeStructure = require( 'BUILD_A_MOLECULE/model/MoleculeStructure' );
+  const PhetioObject = require( 'TANDEM/PhetioObject' );
 
   /**
    * @param {MoleculeStructure} original

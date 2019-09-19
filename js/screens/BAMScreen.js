@@ -5,23 +5,23 @@
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
-  var Bucket = require( 'BUILD_A_MOLECULE/model/Bucket' );
-  var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
-  var CollectionBox = require( 'BUILD_A_MOLECULE/model/CollectionBox' );
-  var KitCollectionList = require( 'BUILD_A_MOLECULE/model/KitCollectionList' );
-  var BAMConstants = require( 'BUILD_A_MOLECULE/BAMConstants' );
-  var Dimension2 = require( 'DOT/Dimension2' );
-  var Element = require( 'NITROGLYCERIN/Element' );
-  var Emitter = require( 'AXON/Emitter' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var Kit = require( 'BUILD_A_MOLECULE/model/Kit' );
-  var KitCollection = require( 'BUILD_A_MOLECULE/model/KitCollection' );
-  var MoleculeList = require( 'BUILD_A_MOLECULE/model/MoleculeList' );
-  var Property = require( 'AXON/Property' );
-  var Screen = require( 'JOIST/Screen' );
+  const Bucket = require( 'BUILD_A_MOLECULE/model/Bucket' );
+  const buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
+  const CollectionBox = require( 'BUILD_A_MOLECULE/model/CollectionBox' );
+  const KitCollectionList = require( 'BUILD_A_MOLECULE/model/KitCollectionList' );
+  const BAMConstants = require( 'BUILD_A_MOLECULE/BAMConstants' );
+  const Dimension2 = require( 'DOT/Dimension2' );
+  const Element = require( 'NITROGLYCERIN/Element' );
+  const Emitter = require( 'AXON/Emitter' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const Kit = require( 'BUILD_A_MOLECULE/model/Kit' );
+  const KitCollection = require( 'BUILD_A_MOLECULE/model/KitCollection' );
+  const MoleculeList = require( 'BUILD_A_MOLECULE/model/MoleculeList' );
+  const Property = require( 'AXON/Property' );
+  const Screen = require( 'JOIST/Screen' );
 
   /**
    * @param {Function} createInitialKitCollection

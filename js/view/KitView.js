@@ -8,25 +8,25 @@
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 
-define( function( require ) {
+define( require => {
   'use strict';
 
-  var AtomNode = require( 'BUILD_A_MOLECULE/view/AtomNode' );
-  var BucketFront = require( 'SCENERY_PHET/bucket/BucketFront' );
-  var BucketHole = require( 'SCENERY_PHET/bucket/BucketHole' );
-  var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
-  var BAMConstants = require( 'BUILD_A_MOLECULE/BAMConstants' );
-  var DragListener = require( 'SCENERY/listeners/DragListener' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var MoleculeBondContainerNode = require( 'BUILD_A_MOLECULE/view/MoleculeBondContainerNode' );
-  // var MoleculeControlsHBox = require( 'BUILD_A_MOLECULE/view/MoleculeControlsHBox' );
-  var Node = require( 'SCENERY/nodes/Node' );
-  var PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  // var Rectangle = require( 'SCENERY/nodes/Rectangle' );
-  var Shape = require( 'KITE/Shape' );
-  // var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' ); // TODO: DragListener
-  // var SliceNode = require( 'BUILD_A_MOLECULE/view/SliceNode' );
-  // var Trail = require( 'SCENERY/util/Trail' );
+  const AtomNode = require( 'BUILD_A_MOLECULE/view/AtomNode' );
+  const BucketFront = require( 'SCENERY_PHET/bucket/BucketFront' );
+  const BucketHole = require( 'SCENERY_PHET/bucket/BucketHole' );
+  const buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
+  const BAMConstants = require( 'BUILD_A_MOLECULE/BAMConstants' );
+  const DragListener = require( 'SCENERY/listeners/DragListener' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const MoleculeBondContainerNode = require( 'BUILD_A_MOLECULE/view/MoleculeBondContainerNode' );
+  // const MoleculeControlsHBox = require( 'BUILD_A_MOLECULE/view/MoleculeControlsHBox' );
+  const Node = require( 'SCENERY/nodes/Node' );
+  const PhetFont = require( 'SCENERY_PHET/PhetFont' );
+  // const Rectangle = require( 'SCENERY/nodes/Rectangle' );
+  const Shape = require( 'KITE/Shape' );
+  // const SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' ); // TODO: DragListener
+  // const SliceNode = require( 'BUILD_A_MOLECULE/view/SliceNode' );
+  // const Trail = require( 'SCENERY/util/Trail' );
 
   /**
    * @param {Kit} kit

@@ -11,15 +11,15 @@
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 
-define( function( require ) {
+define( require => {
   'use strict';
 
-  var Atom = require( 'NITROGLYCERIN/Atom' );
-  var Bond = require( 'BUILD_A_MOLECULE/model/Bond' );
-  var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
-  var ChemUtils = require( 'NITROGLYCERIN/ChemUtils' );
-  var Element = require( 'NITROGLYCERIN/Element' );
-  var ElementHistogram = require( 'BUILD_A_MOLECULE/model/ElementHistogram' );
+  const Atom = require( 'NITROGLYCERIN/Atom' );
+  const Bond = require( 'BUILD_A_MOLECULE/model/Bond' );
+  const buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
+  const ChemUtils = require( 'NITROGLYCERIN/ChemUtils' );
+  const Element = require( 'NITROGLYCERIN/Element' );
+  const ElementHistogram = require( 'BUILD_A_MOLECULE/model/ElementHistogram' );
 
   var nextMoleculeId = 0;
 

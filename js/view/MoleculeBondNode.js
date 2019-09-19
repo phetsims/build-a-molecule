@@ -6,17 +6,17 @@
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 
-define( function( require ) {
+define( require => {
   'use strict';
 
-  var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
-  var ButtonListener = require( 'SCENERY/input/ButtonListener' );
-  var Circle = require( 'SCENERY/nodes/Circle' );
-  var BAMConstants = require( 'BUILD_A_MOLECULE/BAMConstants' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var Node = require( 'SCENERY/nodes/Node' );
-  var platform = require( 'PHET_CORE/platform' );
-  var Shape = require( 'KITE/Shape' );
+  const buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
+  const ButtonListener = require( 'SCENERY/input/ButtonListener' );
+  const Circle = require( 'SCENERY/nodes/Circle' );
+  const BAMConstants = require( 'BUILD_A_MOLECULE/BAMConstants' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const Node = require( 'SCENERY/nodes/Node' );
+  const platform = require( 'PHET_CORE/platform' );
+  const Shape = require( 'KITE/Shape' );
 
   /* Notes on .cur file generation, all from the images directory, with "sudo apt-get install icoutils" for icotool:
    icotool -c -o scissors.ico scissors.png

@@ -10,22 +10,22 @@
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 
-define( function( require ) {
+define( require => {
   'use strict';
 
-  var Arc = require( 'KITE/segments/Arc' );
-  var Bounds3 = require( 'DOT/Bounds3' );
-  var buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
-  var Color = require( 'SCENERY/util/Color' );
-  var DOM = require( 'SCENERY/nodes/DOM' );
-  var EllipticalArc = require( 'KITE/segments/EllipticalArc' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var Matrix3 = require( 'DOT/Matrix3' );
-  var Property = require( 'AXON/Property' );
-  var Quaternion = require( 'DOT/Quaternion' );
-  var Util = require( 'SCENERY/util/Util' );
-  var Vector2 = require( 'DOT/Vector2' );
-  var Vector3 = require( 'DOT/Vector3' );
+  const Arc = require( 'KITE/segments/Arc' );
+  const Bounds3 = require( 'DOT/Bounds3' );
+  const buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
+  const Color = require( 'SCENERY/util/Color' );
+  const DOM = require( 'SCENERY/nodes/DOM' );
+  const EllipticalArc = require( 'KITE/segments/EllipticalArc' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const Matrix3 = require( 'DOT/Matrix3' );
+  const Property = require( 'AXON/Property' );
+  const Quaternion = require( 'DOT/Quaternion' );
+  const Util = require( 'SCENERY/util/Util' );
+  const Vector2 = require( 'DOT/Vector2' );
+  const Vector3 = require( 'DOT/Vector3' );
 
   var grabInitialTransforms = false; // debug flag, specifies whether master transforms are tracked and printed to determine "pretty" setup transformations
 
