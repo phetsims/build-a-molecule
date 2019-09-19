@@ -35,7 +35,7 @@ define( require => {
     options = _.extend( {
       backgroundColorProperty: new Property( BAMConstants.CANVAS_BACKGROUND_COLOR )
     }, options );
-    var stepEmitter = new Emitter( { parameters: [ { valueType: 'number' } ] } ); // emits 1 parameter, timeElapsed
+    const stepEmitter = new Emitter( { parameters: [ { valueType: 'number' } ] } ); // emits 1 parameter, timeElapsed
 
     Screen.call( this,
       function() {
@@ -54,32 +54,32 @@ define( require => {
    * @returns {KitCollection} A consistent kitCollection
    */
   BAMScreen.generateKitCollection = function( allowMultipleMolecules, numBoxes, stepEmitter, collectionLayout ) {
-    var maxInBox = 3;
+    const maxInBox = 3;
 
-    var usedMolecules = []; // [CompleteMolecule]
-    var kits = [];
-    var boxes = [];
-    var molecules = []; // store all the molecules that will need to be created
+    const usedMolecules = []; // [CompleteMolecule]
+    const kits = [];
+    const boxes = [];
+    let molecules = []; // store all the molecules that will need to be created
 
-    var molecule; // used twice in two different loops :(
+    let molecule; // used twice in two different loops :(
 
-    for ( var i = 0; i < numBoxes; i++ ) {
+    for ( let i = 0; i < numBoxes; i++ ) {
       molecule = BAMScreen.pickRandomMoleculeNotIn( usedMolecules );
       usedMolecules.push( molecule );
 
-      var numberInBox = allowMultipleMolecules ? phet.joist.random.nextIntBetween( 1, maxInBox ) : 1;
+      let numberInBox = allowMultipleMolecules ? phet.joist.random.nextIntBetween( 1, maxInBox ) : 1;
 
       // restrict the number of carbon that we can have
-      var carbonCount = molecule.getHistogram().getQuantity( Element.C );
+      const carbonCount = molecule.getHistogram().getQuantity( Element.C );
       if ( carbonCount > 1 ) {
         numberInBox = Math.min( 2, numberInBox );
       }
 
-      var box = new CollectionBox( molecule, numberInBox );
+      const box = new CollectionBox( molecule, numberInBox );
       boxes.push( box );
 
       // add in that many molecules
-      for ( var j = 0; j < box.capacity; j++ ) {
+      for ( let j = 0; j < box.capacity; j++ ) {
         molecules.push( molecule.getAtomCopy() );
       }
     }
@@ -104,14 +104,14 @@ define( require => {
         }
       } );
 
-      var ableToIncreaseMultiple = allowMultipleMolecules && equivalentMoleculesRemaining > 1;
+      const ableToIncreaseMultiple = allowMultipleMolecules && equivalentMoleculesRemaining > 1;
       // var atomMultiple = 1 + ( ableToIncreaseMultiple ? random.nextInt( equivalentMoleculesRemaining ) : 0 );
       var atomMultiple = 1 + ( ableToIncreaseMultiple ? equivalentMoleculesRemaining : 0 );
 
       // for each type of atom
       _.uniq( molecule.getElementList() ).forEach( function( element ) {
         // find out how many atoms of this type we need
-        var requiredAtomCount = 0;
+        let requiredAtomCount = 0;
         molecule.atoms.forEach( function( atom ) {
           if ( atom.element.isSameElement( element ) ) {
             requiredAtomCount++;
@@ -119,7 +119,7 @@ define( require => {
         } );
 
         // create a multiple of the required number of atoms, so they can construct 'atomMultiple' molecules with this
-        var atomCount = requiredAtomCount * atomMultiple;
+        let atomCount = requiredAtomCount * atomMultiple;
 
         // possibly add more, if we can only have 1 molecule per box
         if ( !element.isCarbon() && ( element.isHydrogen() || atomCount < 4 ) ) {
@@ -127,7 +127,7 @@ define( require => {
         }
 
         // funky math part. sqrt scales it so that we can get two layers of atoms if the atom count is above 2
-        var bucketWidth = Bucket.calculateIdealBucketWidth( element.covalentRadius, atomCount );
+        const bucketWidth = Bucket.calculateIdealBucketWidth( element.covalentRadius, atomCount );
 
         buckets.push( new Bucket( new Dimension2( bucketWidth, 200 ), stepEmitter, element, atomCount ) );
       } );
@@ -143,7 +143,7 @@ define( require => {
 
       // if we can remove others (due to an atom multiple), remove the others
       while ( atomMultiple > 0 ) {
-        for ( var k = 0; k < molecules.length; k++ ) {
+        for ( let k = 0; k < molecules.length; k++ ) {
           if ( molecules[ k ].getHillSystemFormulaFragment() === molecule.getHillSystemFormulaFragment() ) {
             molecules.splice( k, 1 );
             break;
@@ -153,7 +153,7 @@ define( require => {
       }
     }
 
-    var collection = new KitCollection();
+    const collection = new KitCollection();
     kits.forEach( collection.addKit.bind( collection ) );
     boxes.forEach( collection.addCollectionBox.bind( collection ) );
     return collection;
@@ -165,7 +165,7 @@ define( require => {
   BAMScreen.pickRandomMoleculeNotIn = function( molecules ) {
     // Infinite loop. We're living on the edge now, baby!
     while ( true ) { // eslint-disable-line no-constant-condition
-      var molecule = MoleculeList.collectionBoxMolecules[ phet.joist.random.nextIntBetween( 0, MoleculeList.collectionBoxMolecules.length - 1 ) ];
+      const molecule = MoleculeList.collectionBoxMolecules[ phet.joist.random.nextIntBetween( 0, MoleculeList.collectionBoxMolecules.length - 1 ) ];
       if ( !_.includes( molecules, molecule ) ) {
         return molecule;
       }

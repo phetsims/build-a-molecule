@@ -23,7 +23,7 @@ define( require => {
    * @param {number} capacity
    */
   function CollectionBox( moleculeType, capacity ) {
-    var self = this;
+    const self = this;
 
     // @public {Property.<number>}
     this.quantityProperty = new NumberProperty( 0 );
@@ -63,7 +63,7 @@ define( require => {
      * @returns {boolean} Whether it can be dropped in
      */
     willAllowMoleculeDrop: function( moleculeStructure ) {
-      var equivalent = this.moleculeType.isEquivalent( moleculeStructure );
+      const equivalent = this.moleculeType.isEquivalent( moleculeStructure );
 
       // whether the structure is acceptable
       return equivalent && this.quantityProperty.value < this.capacity;

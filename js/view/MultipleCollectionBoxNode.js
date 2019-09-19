@@ -45,7 +45,7 @@ define( require => {
       maxWidth: BAMConstants.TEXT_MAX_WIDTH
     } ) );
 
-    var quantityNode = new RichText( '', {
+    const quantityNode = new RichText( '', {
       font: new PhetFont( {
         size: 14
       } ),
@@ -74,11 +74,11 @@ define( require => {
    * precomputation of largest single collection box size
    *----------------------------------------------------------------------------*/
   // TODO: simplify this code from single/multiple into one
-  var maxBounds = Bounds2.NOTHING;
+  let maxBounds = Bounds2.NOTHING;
 
   MoleculeList.collectionBoxMolecules.forEach( function( molecule ) {
     // fake boxes
-    var boxBounds = new MultipleCollectionBoxNode( new CollectionBox( molecule, 1 ), function( node ) {
+    const boxBounds = new MultipleCollectionBoxNode( new CollectionBox( molecule, 1 ), function( node ) {
       return node.bounds;
     } ).bounds;
 

@@ -19,7 +19,7 @@ define( require => {
    * @constructor
    */
   function KitCollection() {
-    var currentId = 0;
+    let currentId = 0;
 
     // @public {number}
     this.id = currentId++;
@@ -46,21 +46,21 @@ define( require => {
 
   inherit( Object, KitCollection, {
     addKit: function( kit ) {
-      var self = this;
+      const self = this;
 
       this.kits.push( kit );
 
-      var dropListener = function( atom ) {
+      const dropListener = function( atom ) {
         // var wasDroppedInCollectionBox = false;
 
         // don't drop an atom from the kit to the collection box directly
         if ( kit.isAtomInPlay( atom ) ) {
-          var molecule = kit.getMolecule( atom );
+          const molecule = kit.getMolecule( atom );
 
           // check to see if we are trying to drop it in a collection box.
-          var numBoxes = self.collectionBoxes.length;
-          for ( var i = 0; i < numBoxes; i++ ) {
-            var box = self.collectionBoxes[ i ];
+          const numBoxes = self.collectionBoxes.length;
+          for ( let i = 0; i < numBoxes; i++ ) {
+            const box = self.collectionBoxes[ i ];
 
             // permissive, so that if the box bounds and molecule bounds intersect, we call it a 'hit'
             if ( box.dropBoundsProperty.value.intersectsBounds( molecule.positionBounds ) ) {
@@ -95,12 +95,12 @@ define( require => {
 
 
     addCollectionBox: function( box ) {
-      var self = this;
+      const self = this;
       this.collectionBoxes.push( box );
 
       // listen to when our collection boxes change, so that we can identify when all of our collection boxes are filled
       box.quantityProperty.link( function() {
-        var allFull = _.every( self.collectionBoxes, function( collectionBox ) { return collectionBox.isFull(); } );
+        const allFull = _.every( self.collectionBoxes, function( collectionBox ) { return collectionBox.isFull(); } );
         self.allCollectionBoxesFilledProperty.value = self.collectionBoxes.length && allFull;
       } );
     },

@@ -55,11 +55,11 @@ define( require => {
   /*---------------------------------------------------------------------------*
    * precomputation of largest single collection box size
    *----------------------------------------------------------------------------*/
-  var maxBounds = Bounds2.NOTHING;
+  let maxBounds = Bounds2.NOTHING;
 
   MoleculeList.collectionBoxMolecules.forEach( function( molecule ) {
     // fake boxes
-    var boxBounds = new SingleCollectionBoxNode( new CollectionBox( molecule, 1 ), function( node ) {
+    const boxBounds = new SingleCollectionBoxNode( new CollectionBox( molecule, 1 ), function( node ) {
       return node.bounds;
     } ).bounds;
 

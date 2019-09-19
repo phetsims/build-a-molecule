@@ -30,7 +30,7 @@ define( require => {
    * @constructor
    */
   function LargerMoleculesScreen() {
-    var options = {
+    const options = {
       name: titleLargerString,
       homeScreenIcon: new Rectangle( 0, 0, 548, 373, { fill: 'blue' } )
     };
@@ -39,7 +39,7 @@ define( require => {
 
       // createInitialKitCollection
       function( bounds, stepEmitter ) {
-        var kitCollection = new KitCollection();
+        const kitCollection = new KitCollection();
 
         // NOTE: if kits are modified here, examine MAX_NUM_HEAVY_ATOMS in MoleculeSDFCombinedParser, as it may need to be changed
 

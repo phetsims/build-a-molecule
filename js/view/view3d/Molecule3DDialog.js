@@ -29,14 +29,14 @@ define( require => {
   const ballAndStickString = require( 'string!BUILD_A_MOLECULE/ballAndStick' ); // eslint-disable-line string-require-statement-match
   const spaceFillString = require( 'string!BUILD_A_MOLECULE/spaceFilling' ); // eslint-disable-line string-require-statement-match
 
-  var size = 200;
-  var optionsHorizontalPadding = 40;
+  const size = 200;
+  const optionsHorizontalPadding = 40;
 
   //REVIEW: Note that this may change significantly if we go with a three.js/webgl solution
   function Molecule3DDialog( completeMolecule, view ) {
 
     // Holds all of the content within the dialog
-    var contentNode = new Node();
+    const contentNode = new Node();
 
     Dialog.call( this, contentNode, {
       modal: true,
@@ -49,11 +49,11 @@ define( require => {
     } );
 
     // Used for radio buttons
-    var viewStyle = new Enumeration( [ 'SPACE_FILL', 'BALL_AND_STICK' ] );
-    var viewStyleProperty = new EnumerationProperty( viewStyle, viewStyle.SPACE_FILL );
+    const viewStyle = new Enumeration( [ 'SPACE_FILL', 'BALL_AND_STICK' ] );
+    const viewStyleProperty = new EnumerationProperty( viewStyle, viewStyle.SPACE_FILL );
 
     // Chemical formula label
-    var formulaText = new RichText( completeMolecule.getGeneralFormulaFragment(), {
+    const formulaText = new RichText( completeMolecule.getGeneralFormulaFragment(), {
       font: new PhetFont( 20 ),
       fill: '#bbb',
       centerX: this.center.x,
@@ -63,14 +63,14 @@ define( require => {
     contentNode.addChild( formulaText );
 
     // Space fill / Ball and stick radio buttons
-    var buttonTextOptions = {
+    const buttonTextOptions = {
       font: new PhetFont( 20 ),
       fill: 'white'
     };
-    var spaceFillText = new Text( spaceFillString, buttonTextOptions );
-    var ballAndStickText = new Text( ballAndStickString, buttonTextOptions );
+    const spaceFillText = new Text( spaceFillString, buttonTextOptions );
+    const ballAndStickText = new Text( ballAndStickString, buttonTextOptions );
 
-    var radioButtonOptions = {
+    const radioButtonOptions = {
       selectedColor: 'rgba(255,255,255,0.4)',
       deselectedColor: 'black',
       centerColor: 'white',
@@ -78,10 +78,10 @@ define( require => {
       xSpacing: 8,
       stroke: 'white'
     };
-    var spaceFillButton = new AquaRadioButton( viewStyleProperty, viewStyle.SPACE_FILL, spaceFillText, radioButtonOptions );
-    var ballAndStickButton = new AquaRadioButton( viewStyleProperty, viewStyle.BALL_AND_STICK, ballAndStickText, radioButtonOptions );
+    const spaceFillButton = new AquaRadioButton( viewStyleProperty, viewStyle.SPACE_FILL, spaceFillText, radioButtonOptions );
+    const ballAndStickButton = new AquaRadioButton( viewStyleProperty, viewStyle.BALL_AND_STICK, ballAndStickText, radioButtonOptions );
 
-    var buttonHolder = new HBox( {
+    const buttonHolder = new HBox( {
       children: [ spaceFillButton, ballAndStickButton ],
       centerX: this.centerX,
       top: this.bottom,
@@ -94,7 +94,7 @@ define( require => {
     /*---------------------------------------------------------------------------*
      * 3D view
      *----------------------------------------------------------------------------*/
-    var moleculeNode = new Molecule3DNode( completeMolecule, view.layoutBounds, true );
+    const moleculeNode = new Molecule3DNode( completeMolecule, view.layoutBounds, true );
     // moleculeNode.updateCSSTransform = function( transform, element ) {}; // don't CSS transform it
     // moleculeNode.touchArea = moleculeNode.mouseArea = Shape.bounds( this.getLocalCanvasBounds() );
     moleculeNode.initializeDrag( this );
@@ -134,8 +134,8 @@ define( require => {
     //   moleculeNode.cursor = cursor;
     // } );
 
-    var tick = moleculeNode.tick.bind( moleculeNode );
-    var stepEmitter = view.kitCollectionList.stepEmitter;
+    const tick = moleculeNode.tick.bind( moleculeNode );
+    const stepEmitter = view.kitCollectionList.stepEmitter;
     stepEmitter.addListener( tick );
     //
     // this.disposeMolecule3DDialog = function() {
@@ -150,8 +150,8 @@ define( require => {
 
   return inherit( Dialog, Molecule3DDialog, {
     getLocalCanvasBounds: function() {
-      var centerX = this.center;
-      var centerY = this.center;
+      const centerX = this.center;
+      const centerY = this.center;
       return new Bounds2( centerX - size, centerY - size, centerX + size, centerY + size );
     },
 

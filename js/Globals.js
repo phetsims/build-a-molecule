@@ -7,7 +7,7 @@ define( require => {
   const buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   const GameAudioPlayer = require( 'VEGAS/GameAudioPlayer' );
 
-  var Globals = {
+  const Globals = {
     gameAudioPlayer: new GameAudioPlayer()
   };
 

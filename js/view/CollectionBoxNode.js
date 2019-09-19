@@ -25,8 +25,8 @@ define( require => {
   const VBox = require( 'SCENERY/nodes/VBox' );
 
   // constants
-  var MOLECULE_PADDING = 5;
-  var BLACK_BOX_PADDING = BAMConstants.HAS_3D ? 10 : 0;
+  const MOLECULE_PADDING = 5;
+  const BLACK_BOX_PADDING = BAMConstants.HAS_3D ? 10 : 0;
 
 
   /**
@@ -36,7 +36,7 @@ define( require => {
    */
   function CollectionBoxNode( box, toModelBounds ) {
     VBox.call( this );
-    var self = this;
+    const self = this;
 
     this.box = box;
     this.moleculeNodes = [];
@@ -53,12 +53,12 @@ define( require => {
     };
 
     if ( BAMConstants.HAS_3D ) {
-      var show3dButton = new ShowMolecule3DButtonNode( box.moleculeType );
+      const show3dButton = new ShowMolecule3DButtonNode( box.moleculeType );
       show3dButton.touchArea = Shape.bounds( show3dButton.bounds.dilated( 10 ) );
       show3dButton.right = this.blackBox.right - BLACK_BOX_PADDING;
       show3dButton.centerY = this.blackBox.centerY;
       this.button3dWidth = show3dButton.width;
-      var update3dVisibility = function() {
+      const update3dVisibility = function() {
         show3dButton.visible = box.quantityProperty.value > 0;
       };
       box.addedMoleculeEmitter.addListener( update3dVisibility );
@@ -85,9 +85,9 @@ define( require => {
     // kept for now since it is much easier to revert back to the old behavior
 
     // add invisible molecules to the molecule layer so that its size won't change later (fixes molecule positions)
-    var nodes = [];
-    for ( var i = 0; i < box.capacity; i++ ) {
-      var node = this.lookupThumbnail( box.moleculeType );
+    const nodes = [];
+    for ( let i = 0; i < box.capacity; i++ ) {
+      const node = this.lookupThumbnail( box.moleculeType );
       node.visible = false;
       nodes.push( node );
       this.moleculeLayer.addChild( node );
@@ -118,8 +118,8 @@ define( require => {
      */
     lookupThumbnail: function( completeMolecule ) {
       if ( !this.moleculeIdThumbnailMap[ completeMolecule.moleculeId ] ) {
-        var moleculeNode = new Molecule3DNode( completeMolecule, new Bounds2( 0, 0, 50, 50 ), false );
-        var transformMatrix = Molecule3DNode.initialTransforms[ completeMolecule.getGeneralFormula() ];
+        const moleculeNode = new Molecule3DNode( completeMolecule, new Bounds2( 0, 0, 50, 50 ), false );
+        const transformMatrix = Molecule3DNode.initialTransforms[ completeMolecule.getGeneralFormula() ];
         if ( transformMatrix ) {
           moleculeNode.transformMolecule( transformMatrix );
         }
@@ -129,8 +129,8 @@ define( require => {
       }
 
       // wrap the returned image in an extra node so we can transform them independently, and that takes up the proper amount of space
-      var node = this.moleculeIdThumbnailMap[ completeMolecule.moleculeId ];
-      var wrapperNode = new Rectangle( 0, 0, 50, 50 );
+      const node = this.moleculeIdThumbnailMap[ completeMolecule.moleculeId ];
+      const wrapperNode = new Rectangle( 0, 0, 50, 50 );
       wrapperNode.addChild( node );
       return wrapperNode;
     },
@@ -143,8 +143,8 @@ define( require => {
       this.cancelBlinksInProgress();
       this.updateBoxGraphics();
 
-      var completeMolecule = MoleculeList.getMasterInstance().findMatchingCompleteMolecule( molecule );
-      var pseudo3DNode = this.lookupThumbnail( completeMolecule );
+      const completeMolecule = MoleculeList.getMasterInstance().findMatchingCompleteMolecule( molecule );
+      const pseudo3DNode = this.lookupThumbnail( completeMolecule );
       this.moleculeLayer.addChild( pseudo3DNode );
       this.moleculeNodes.push( pseudo3DNode );
       this.moleculeNodeMap[ molecule.moleculeId ] = pseudo3DNode;
@@ -156,7 +156,7 @@ define( require => {
       this.cancelBlinksInProgress();
       this.updateBoxGraphics();
 
-      var lastMoleculeNode = this.moleculeNodeMap[ molecule.moleculeId ];
+      const lastMoleculeNode = this.moleculeNodeMap[ molecule.moleculeId ];
       this.moleculeLayer.removeChild( lastMoleculeNode );
       this.moleculeNodes.splice( this.moleculeNodes.indexOf( lastMoleculeNode ), 1 ); // TODO: replace splice with remove
       delete this.moleculeNodeMap[ molecule.moleculeId ];
@@ -180,11 +180,11 @@ define( require => {
      * @param {Array[Node]} moleculeNodes List of molecules to lay out
      */
     layOutMoleculeList: function( moleculeNodes ) {
-      var maxHeight = 0;
+      let maxHeight = 0;
       moleculeNodes.forEach( function( moleculeNode ) {
         maxHeight = Math.max( maxHeight, moleculeNode.height );
       } );
-      var x = 0;
+      let x = 0;
       moleculeNodes.forEach( function( moleculeNode ) {
         moleculeNode.setTranslation( x, ( maxHeight - moleculeNode.height ) / 2 );
         x += moleculeNode.width + MOLECULE_PADDING;
@@ -195,17 +195,17 @@ define( require => {
      * @returns {Bounds2} Molecule area. Excludes the area in the black box where the 3D button needs to go
      */
     getMoleculeAreaInBlackBox: function() {
-      var bounds = this.blackBox.bounds;
+      const bounds = this.blackBox.bounds;
       return bounds.withMaxX( bounds.maxX - BLACK_BOX_PADDING - this.button3dWidth ); // leave room for 3d button on RHS
     },
 
     centerMoleculesInBlackBox: function() {
-      var moleculeArea = this.getMoleculeAreaInBlackBox();
+      const moleculeArea = this.getMoleculeAreaInBlackBox();
 
       // for now, we scale the molecules up and down depending on their size
       this.moleculeLayer.setScaleMagnitude( 1 );
-      var xScale = ( moleculeArea.width - 5 ) / this.moleculeLayer.width;
-      var yScale = ( moleculeArea.height - 5 ) / this.moleculeLayer.height;
+      const xScale = ( moleculeArea.width - 5 ) / this.moleculeLayer.width;
+      const yScale = ( moleculeArea.height - 5 ) / this.moleculeLayer.height;
       this.moleculeLayer.setScaleMagnitude( Math.min( xScale, yScale ) );
 
       this.moleculeLayer.center = moleculeArea.center.minus( moleculeArea.leftTop );
@@ -225,16 +225,16 @@ define( require => {
      * Sets up a blinking box to register that a molecule was created that can go into a box
      */
     blink: function() {
-      var self = this;
+      const self = this;
 
-      var blinkLengthInSeconds = 1.3;
+      const blinkLengthInSeconds = 1.3;
 
       // our delay between states
-      var blinkDelayInMs = 100;
+      const blinkDelayInMs = 100;
 
       // properties that we will use over time in our blinker
-      var on = false; // on/off state
-      var counts = Math.floor( blinkLengthInSeconds * 1000 / blinkDelayInMs ); // decrements to zero to stop the blinker
+      let on = false; // on/off state
+      let counts = Math.floor( blinkLengthInSeconds * 1000 / blinkDelayInMs ); // decrements to zero to stop the blinker
 
       this.cancelBlinksInProgress();
 

@@ -29,7 +29,7 @@ define( require => {
     // Where the molecule is right now
     get positionBounds() {
       // mutable way of handling this, so we need to make a copy
-      var bounds = Bounds2.NOTHING.copy();
+      const bounds = Bounds2.NOTHING.copy();
       this.atoms.forEach( function( atom ) {
         bounds.includeBounds( atom.positionBounds );
       } );
@@ -39,7 +39,7 @@ define( require => {
     // Where the molecule will end up
     get destinationBounds() {
       // mutable way of handling this, so we need to make a copy
-      var bounds = Bounds2.NOTHING.copy();
+      const bounds = Bounds2.NOTHING.copy();
       this.atoms.forEach( function( atom ) {
         bounds.includeBounds( atom.destinationBounds );
       } );

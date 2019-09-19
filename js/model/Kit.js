@@ -24,7 +24,7 @@ define( require => {
   const Rectangle = require( 'DOT/Rectangle' );
   const Vector2 = require( 'DOT/Vector2' );
 
-  var kitIdCounter = 0;
+  let kitIdCounter = 0;
 
   /**
    * @param {CollectionLayout} collectionLayout
@@ -80,7 +80,7 @@ define( require => {
      * @public
      */
     reset: function() {
-      var self = this;
+      const self = this;
 
       // not resetting visible, since that is not handled by us
       this.hasMoleculesInBoxesProperty.reset();
@@ -119,12 +119,12 @@ define( require => {
     },
 
     layoutBuckets: function( buckets ) {
-      var usedWidth = 0;
-      var bucketBounds = Bounds2.NOTHING.copy(); // considered mutable, used to calculate the center bounds of a bucket AND its atoms
+      let usedWidth = 0;
+      const bucketBounds = Bounds2.NOTHING.copy(); // considered mutable, used to calculate the center bounds of a bucket AND its atoms
 
       // lays out all of the buckets from the left to right
-      for ( var i = 0; i < buckets.length; i++ ) {
-        var bucket = buckets[ i ];
+      for ( let i = 0; i < buckets.length; i++ ) {
+        const bucket = buckets[ i ];
         if ( i !== 0 ) {
           usedWidth += Kit.bucketPadding;
         }
@@ -132,7 +132,7 @@ define( require => {
         // include both the bucket's shape and its atoms in our bounds, so we can properly center the group
         bucketBounds.includeBounds( bucket.containerShape.bounds );
         bucket.getParticleList().forEach( function( atom ) {
-          var atomPosition = atom.positionProperty.value;
+          const atomPosition = atom.positionProperty.value;
           bucketBounds.includeBounds( new Bounds2( atomPosition.x - atom.covalentRadius, atomPosition.y - atom.covalentRadius,
             atomPosition.x + atom.covalentRadius, atomPosition.y + atom.covalentRadius ) );
         } );
@@ -208,9 +208,9 @@ define( require => {
 
       // move all other atoms in the molecule
       if ( this.isAtomInPlay( atom ) ) {
-        var atoms = this.getMolecule( atom ).atoms;
-        for ( var i = 0; i < atoms.length; i++ ) {
-          var atomInMolecule = atoms[ i ];
+        const atoms = this.getMolecule( atom ).atoms;
+        for ( let i = 0; i < atoms.length; i++ ) {
+          const atomInMolecule = atoms[ i ];
           if ( atom === atomInMolecule ) {
             continue;
           }
@@ -226,7 +226,7 @@ define( require => {
      * @param {CollectionBox} box
      */
     moleculePutInCollectionBox: function( molecule, box ) {
-      var self = this;
+      const self = this;
       window.console && console.log && console.log( 'You have collected: ' + box.moleculeType.commonNameProperty.value );
       this.hasMoleculesInBoxesProperty.value = true;
       this.removeMolecule( molecule );
@@ -249,13 +249,13 @@ define( require => {
 
     getMolecule: function( atom ) {
       // TODO: performance: seems like this could be a bottleneck? faster ways?
-      var numMolecules = this.molecules.length;
-      for ( var i = 0; i < numMolecules; i++ ) {
-        var molecule = this.molecules[ i ];
+      const numMolecules = this.molecules.length;
+      for ( let i = 0; i < numMolecules; i++ ) {
+        const molecule = this.molecules[ i ];
 
-        var numAtoms = molecule.atoms.length;
-        for ( var j = 0; j < numAtoms; j++ ) {
-          var otherAtom = molecule.atoms[ j ];
+        const numAtoms = molecule.atoms.length;
+        for ( let j = 0; j < numAtoms; j++ ) {
+          const otherAtom = molecule.atoms[ j ];
           if ( otherAtom === atom ) {
             return molecule;
           }
@@ -270,14 +270,14 @@ define( require => {
      * @param molecule The molecule to break
      */
     breakMolecule: function( molecule ) {
-      var self = this;
-      var createdMolecules = [];
+      const self = this;
+      const createdMolecules = [];
 
       this.removeMolecule( molecule );
       molecule.atoms.forEach( function( atom ) {
         self.lewisDotModel.breakBondsOfAtom( atom );
 
-        var newMolecule = new Molecule();
+        const newMolecule = new Molecule();
         newMolecule.addAtom( atom );
 
         self.addMolecule( newMolecule );
@@ -294,8 +294,8 @@ define( require => {
      */
     breakBond: function( a, b, skipSeparation ) {
       // get our old and new molecule structures
-      var oldMolecule = this.getMolecule( a );
-      var newMolecules = MoleculeStructure.getMoleculesFromBrokenBond( oldMolecule, oldMolecule.getBond( a, b ), new Molecule(), new Molecule() );
+      const oldMolecule = this.getMolecule( a );
+      const newMolecules = MoleculeStructure.getMoleculesFromBrokenBond( oldMolecule, oldMolecule.getBond( a, b ), new Molecule(), new Molecule() );
 
       // break the bond in our lewis dot model
       this.lewisDotModel.breakBond( a, b );
@@ -342,7 +342,7 @@ define( require => {
      */
     addAtomToPlay: function( atom ) {
       // add the atoms to our models
-      var molecule = new Molecule();
+      const molecule = new Molecule();
       molecule.addAtom( atom );
 
       this.addMolecule( molecule );
@@ -360,7 +360,7 @@ define( require => {
     recycleAtomIntoBuckets: function( atom, animate ) {
       this.lewisDotModel.breakBondsOfAtom( atom );
       this.atomsInPlayArea.remove( atom );
-      var bucket = this.getBucketForElement( atom.element );
+      const bucket = this.getBucketForElement( atom.element );
       bucket.addParticleNearestOpen( atom, animate );
       if ( !bucket.particleList.contains( atom ) ) {
         bucket.particleList.push( atom );
@@ -373,7 +373,7 @@ define( require => {
      * @param molecule The molecule to recycle
      */
     recycleMoleculeIntoBuckets: function( molecule ) {
-      var self = this;
+      const self = this;
       molecule.atoms.forEach( function( atom ) {
         self.recycleAtomIntoBuckets( atom, true );
       } );
@@ -381,7 +381,7 @@ define( require => {
     },
 
     padMoleculeBounds: function( bounds ) {
-      var halfPadding = Kit.interMoleculePadding / 2;
+      const halfPadding = Kit.interMoleculePadding / 2;
       return new Rectangle( bounds.x - halfPadding, bounds.y - halfPadding, bounds.width + Kit.interMoleculePadding, bounds.height + Kit.interMoleculePadding );
     },
 
@@ -390,19 +390,19 @@ define( require => {
      */
     separateMoleculeDestinations: function() {
       // TODO: performance: general optimization
-      var maxIterations = 500;
-      var pushAmount = 10; // how much to push two molecules away
+      let maxIterations = 500;
+      const pushAmount = 10; // how much to push two molecules away
 
-      var availablePlayAreaBounds = this.availablePlayAreaBounds;
+      const availablePlayAreaBounds = this.availablePlayAreaBounds;
 
-      var foundOverlap = true;
+      let foundOverlap = true;
       while ( foundOverlap && maxIterations-- >= 0 ) {
         foundOverlap = false;
-        var numMolecules = this.molecules.length;
-        for ( var i = 0; i < numMolecules; i++ ) {
-          var a = this.molecules[ i ];
+        const numMolecules = this.molecules.length;
+        for ( let i = 0; i < numMolecules; i++ ) {
+          const a = this.molecules[ i ];
 
-          var aBounds = this.padMoleculeBounds( a.destinationBounds );
+          let aBounds = this.padMoleculeBounds( a.destinationBounds );
 
           // push it away from the outsides
           if ( aBounds.minX < availablePlayAreaBounds.minX ) {
@@ -422,34 +422,34 @@ define( require => {
           }
 
           // then separate it from other molecules
-          for ( var k = 0; k < numMolecules; k++ ) {
-            var b = this.molecules[ k ];
+          for ( let k = 0; k < numMolecules; k++ ) {
+            const b = this.molecules[ k ];
 
             if ( a.moleculeId >= b.moleculeId ) {
               // this removes the case where a == b, and will make sure we don't run the following code twice for (a,b) and (b,a)
               continue;
             }
-            var bBounds = this.padMoleculeBounds( b.destinationBounds );
+            const bBounds = this.padMoleculeBounds( b.destinationBounds );
             if ( aBounds.intersectsBounds( bBounds ) ) {
               foundOverlap = true;
 
               // get perturbed centers. this is so that if two molecules have the exact same centers, we will push them away
-              var aCenter = aBounds.center.plus( new Vector2( phet.joist.random.nextDouble() - 0.5, phet.joist.random.nextDouble() - 0.5 ) );
-              var bCenter = bBounds.center.plus( new Vector2( phet.joist.random.nextDouble() - 0.5, phet.joist.random.nextDouble() - 0.5 ) );
+              const aCenter = aBounds.center.plus( new Vector2( phet.joist.random.nextDouble() - 0.5, phet.joist.random.nextDouble() - 0.5 ) );
+              const bCenter = bBounds.center.plus( new Vector2( phet.joist.random.nextDouble() - 0.5, phet.joist.random.nextDouble() - 0.5 ) );
 
               // delta from center of A to center of B, scaled to half of our push amount.
-              var delta = bCenter.minus( aCenter ).normalized().times( pushAmount );
+              const delta = bCenter.minus( aCenter ).normalized().times( pushAmount );
 
               // how hard B should be pushed (A will be pushed (1-pushRatio)). Heuristic, power is to make the ratio not too skewed
               // this is done so that heavier molecules will be pushed less, while lighter ones will be pushed more
-              var pushPower = 1;
-              var pushRatio = Math.pow( a.getApproximateMolecularWeight(), pushPower ) / ( Math.pow( a.getApproximateMolecularWeight(), pushPower ) + Math.pow( b.getApproximateMolecularWeight(), pushPower ) );
+              const pushPower = 1;
+              const pushRatio = Math.pow( a.getApproximateMolecularWeight(), pushPower ) / ( Math.pow( a.getApproximateMolecularWeight(), pushPower ) + Math.pow( b.getApproximateMolecularWeight(), pushPower ) );
 
               // push B by the pushRatio
               b.shiftDestination( delta.times( pushRatio ) );
 
               // push A the opposite way, by (1 - pushRatio)
-              var delta1 = delta.times( -1 * ( 1 - pushRatio ) );
+              const delta1 = delta.times( -1 * ( 1 - pushRatio ) );
               a.shiftDestination( delta1 );
 
               aBounds = this.padMoleculeBounds( a.destinationBounds );
@@ -468,13 +468,13 @@ define( require => {
      */
     bond: function( a, dirAtoB, b ) {
       this.lewisDotModel.bond( a, dirAtoB, b );
-      var molA = this.getMolecule( a );
-      var molB = this.getMolecule( b );
+      const molA = this.getMolecule( a );
+      const molB = this.getMolecule( b );
       if ( molA === molB ) {
         throw new Error( 'WARNING: loop or other invalid structure detected in a molecule' );
       }
 
-      var newMolecule = MoleculeStructure.getCombinedMoleculeFromBond( molA, molB, a, b, new Molecule() );
+      const newMolecule = MoleculeStructure.getCombinedMoleculeFromBond( molA, molB, a, b, new Molecule() );
 
       // sanity check and debugging information
       if ( !newMolecule.isValid() ) {
@@ -502,9 +502,9 @@ define( require => {
        * bonding diagnostics and sanity checks
        *----------------------------------------------------------------------------*/
 
-      var serializedForm = this.getMolecule( a ).toSerial2();
+      const serializedForm = this.getMolecule( a ).toSerial2();
       window.console && console.log && console.log( 'created structure: ' + serializedForm );
-      var structure = this.getMolecule( a );
+      const structure = this.getMolecule( a );
       if ( structure.atoms.length > 2 ) {
         structure.bonds.forEach( function( bond ) {
           if ( bond.a.hasSameElement( bond.b ) && bond.a.symbol === 'H' ) {
@@ -518,8 +518,8 @@ define( require => {
 
     // {Atom2}
     getPossibleMoleculeStructureFromBond: function( a, b ) {
-      var molA = this.getMolecule( a );
-      var molB = this.getMolecule( b );
+      const molA = this.getMolecule( a );
+      const molB = this.getMolecule( b );
       assert && assert( molA !== molB );
 
       return MoleculeStructure.getCombinedMoleculeFromBond( molA, molB, a, b, new Molecule() );
@@ -530,9 +530,9 @@ define( require => {
      * @returns {boolean} Success
      */
     attemptToBondMolecule: function( molecule ) {
-      var self = this;
-      var bestLocation = null; // {BondingOption}
-      var bestDistanceFromIdealLocation = Number.POSITIVE_INFINITY;
+      const self = this;
+      let bestLocation = null; // {BondingOption}
+      let bestDistanceFromIdealLocation = Number.POSITIVE_INFINITY;
 
       // for each atom in our molecule, we try to see if it can bond to other atoms
       molecule.atoms.forEach( function( ourAtom ) {
@@ -553,7 +553,7 @@ define( require => {
             }
 
             self.lewisDotModel.getOpenDirections( otherAtom ).forEach( function( otherDirection ) {
-              var direction = otherDirection.opposite;
+              const direction = otherDirection.opposite;
               if ( !_.includes( self.lewisDotModel.getOpenDirections( ourAtom ), direction ) ) {
                 // the spot on otherAtom was open, but the corresponding spot on our main atom was not
                 return; // continue, in the inner loop
@@ -564,8 +564,8 @@ define( require => {
                 return; // continue, in the inner loop
               }
 
-              var location = new BondingOption( otherAtom, otherDirection, ourAtom );
-              var distance = ourAtom.positionProperty.value.distance( location.idealLocation );
+              const location = new BondingOption( otherAtom, otherDirection, ourAtom );
+              const distance = ourAtom.positionProperty.value.distance( location.idealLocation );
               if ( distance < bestDistanceFromIdealLocation ) {
                 bestLocation = location;
                 bestDistanceFromIdealLocation = distance;
@@ -577,7 +577,7 @@ define( require => {
 
 
       // if our closest bond is too far, then ignore it
-      var isBondingInvalid = bestLocation === null || bestDistanceFromIdealLocation > Kit.bondDistanceThreshold;
+      const isBondingInvalid = bestLocation === null || bestDistanceFromIdealLocation > Kit.bondDistanceThreshold;
 
       if ( isBondingInvalid ) {
         this.separateMoleculeDestinations();
@@ -585,7 +585,7 @@ define( require => {
       }
 
       // cause all atoms in the molecule to move to that location
-      var delta = bestLocation.idealLocation.minus( bestLocation.b.positionProperty.value );
+      const delta = bestLocation.idealLocation.minus( bestLocation.b.positionProperty.value );
       this.getMolecule( bestLocation.b ).atoms.forEach( function( atomInMolecule ) {
         atomInMolecule.setPositionAndDestination( atomInMolecule.positionProperty.value.plus( delta ) );
       } );

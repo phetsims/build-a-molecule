@@ -35,7 +35,7 @@ define( require => {
    */
   function KitView( kit, moleculeCollectingView ) {
     Node.call( this );
-    var self = this;
+    const self = this;
 
     this.kit = kit;
 
@@ -43,11 +43,11 @@ define( require => {
     this.bondMap = {}; // moleculeId => MoleculeBondContainerNode
     this.atomNodeMap = {}; // atom.id => AtomNode
 
-    var topLayer = this.topLayer = new Node();
+    const topLayer = this.topLayer = new Node();
     // var metadataLayer = this.metadataLayer = new Node();
-    var atomLayer = new Node();
+    const atomLayer = new Node();
     this.atomLayer = atomLayer;
-    var bottomLayer = this.bottomLayer = new Node();
+    const bottomLayer = this.bottomLayer = new Node();
 
     // var viewSwipeBounds = BAMConstants.MODEL_VIEW_TRANSFORM.modelToViewBounds( kit.collectionLayout.availablePlayAreaBounds );
     // var sliceNode = this.sliceNode = new SliceNode( kit, viewSwipeBounds, moleculeCollectingView );
@@ -85,13 +85,13 @@ define( require => {
     // atomLayer.touchArea = Shape.bounds( BAMConstants.STAGE_SIZE );
 
     kit.buckets.forEach( function( bucket ) {
-      var bucketFront = new BucketFront( bucket, BAMConstants.MODEL_VIEW_TRANSFORM, {
+      const bucketFront = new BucketFront( bucket, BAMConstants.MODEL_VIEW_TRANSFORM, {
         labelFont: new PhetFont( {
           weight: 'bold',
           size: 18
         } )
       } );
-      var bucketHole = new BucketHole( bucket, BAMConstants.MODEL_VIEW_TRANSFORM );
+      const bucketHole = new BucketHole( bucket, BAMConstants.MODEL_VIEW_TRANSFORM );
       // NOTE: we will use the Bucket's hole with an expanded touch area to trigger the "grab by touching the bucket" behavior
       bucketHole.touchArea = bucketHole.mouseArea = new Shape()
         .moveTo( bucketHole.left - bucketHole.x, bucketHole.centerY - bucketHole.y )
@@ -161,7 +161,7 @@ define( require => {
       const particleAddedListener = function( atom ) {
 
         // AtomNode created based on atoms in bucket
-        var atomNode = new AtomNode( atom, {} );
+        const atomNode = new AtomNode( atom, {} );
 
         // Keep track of the atomNode by mapping to its atom's ID then add to atom layer
         self.atomNodeMap[ atom.id ] = atomNode;
@@ -234,27 +234,27 @@ define( require => {
     closestAtom: function( modelPoint, threshold, element ) {
       assert && assert( threshold );
 
-      var thresholdSquared = threshold * threshold;
+      const thresholdSquared = threshold * threshold;
 
-      var atoms = this.kit.atoms;
-      var numAtoms = atoms.length;
+      const atoms = this.kit.atoms;
+      const numAtoms = atoms.length;
 
-      var best = null;
-      var bestDistanceSquared = thresholdSquared; // limit ourselves at the threshold, and add this to the best distance so we only need one check in the loop
+      let best = null;
+      let bestDistanceSquared = thresholdSquared; // limit ourselves at the threshold, and add this to the best distance so we only need one check in the loop
 
-      var x = modelPoint.x;
-      var y = modelPoint.y;
+      const x = modelPoint.x;
+      const y = modelPoint.y;
 
       // ignore stacking order for this operation
-      for ( var i = 0; i < numAtoms; i++ ) {
-        var atom = atoms[ i ];
-        var position = atom.positionProperty.get(); // no ES5 setters so we have the fastest possible code in this inner loop (called during hit testing)
+      for ( let i = 0; i < numAtoms; i++ ) {
+        const atom = atoms[ i ];
+        const position = atom.positionProperty.get(); // no ES5 setters so we have the fastest possible code in this inner loop (called during hit testing)
 
-        var dx = x - position.x;
-        var dy = y - position.y;
+        const dx = x - position.x;
+        const dy = y - position.y;
 
         // not really distance, persay, since it can go negative
-        var distanceSquared = dx * dx + dy * dy - atom.covalentRadius * atom.covalentRadius;
+        const distanceSquared = dx * dx + dy * dy - atom.covalentRadius * atom.covalentRadius;
 
         if ( distanceSquared > bestDistanceSquared || ( element && atom.element !== element ) ) {
           continue;
@@ -268,13 +268,13 @@ define( require => {
     },
 
     addMoleculeBondNodes: function( molecule ) {
-      var moleculeBondContainerNode = new MoleculeBondContainerNode( this.kit, molecule );
+      const moleculeBondContainerNode = new MoleculeBondContainerNode( this.kit, molecule );
       // this.metadataLayer.addChild( moleculeBondContainerNode );
       this.bondMap[ molecule.moleculeId ] = moleculeBondContainerNode;
     },
 
     removeMoleculeBondNodes: function( molecule ) {
-      var moleculeBondContainerNode = this.bondMap[ molecule.moleculeId ];
+      const moleculeBondContainerNode = this.bondMap[ molecule.moleculeId ];
       moleculeBondContainerNode.dispose();
       delete this.bondMap[ molecule.moleculeId ];
     }

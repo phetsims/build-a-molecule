@@ -32,7 +32,7 @@ define( require => {
   //REVIEW: It would be good to look at the current custom cursor support for supported platforms. Can we get rid of
   //REVIEW: the duplication here?
 
-  var images = {
+  const images = {
     'scissors.png': require( 'image!BUILD_A_MOLECULE/scissors.png' ),
     'scissors-closed.png': require( 'image!BUILD_A_MOLECULE/scissors-closed.png' ),
     'scissors-up.png': require( 'image!BUILD_A_MOLECULE/scissors-up.png' ),
@@ -43,7 +43,7 @@ define( require => {
     'scissors-closed-up.cur': require( 'image!BUILD_A_MOLECULE/scissors-closed-up.cur' )
   };
 
-  var bondRadius = 5; // "Radius" of the bond target that will break the bond
+  const bondRadius = 5; // "Radius" of the bond target that will break the bond
 
   /**
    * @param {Bond} bond
@@ -51,7 +51,7 @@ define( require => {
    * @constructor
    */
   function MoleculeBondNode( bond, kit ) {
-    var self = this;
+    const self = this;
 
     Node.call( this, {} );
 
@@ -60,11 +60,11 @@ define( require => {
     this.b = bond.b;
 
     // use the lewis dot model to get our bond direction
-    var bondDirection = kit.getBondDirection( this.a, this.b );
-    var isHorizontal = bondDirection.id === 'west' || bondDirection.id === 'east';
+    const bondDirection = kit.getBondDirection( this.a, this.b );
+    const isHorizontal = bondDirection.id === 'west' || bondDirection.id === 'east';
 
-    var openFile = 'scissors';
-    var closedFile = 'scissors-closed';
+    let openFile = 'scissors';
+    let closedFile = 'scissors-closed';
     if ( isHorizontal ) {
       openFile += '-up';
       closedFile += '-up';
@@ -78,13 +78,13 @@ define( require => {
       closedFile += '.png';
     }
 
-    var scissorsOpen = images[ openFile ]; // 23x20 or 20x23
-    var scissorsClosed = images[ closedFile ]; //26x15 or 15x26
-    var backup = ( isHorizontal ? 'col-resize' : 'row-resize' );
+    const scissorsOpen = images[ openFile ]; // 23x20 or 20x23
+    const scissorsClosed = images[ closedFile ]; //26x15 or 15x26
+    const backup = ( isHorizontal ? 'col-resize' : 'row-resize' );
 
     // offsets should center this
-    var openCursor;
-    var closedCursor;
+    let openCursor;
+    let closedCursor;
     if ( platform.ie || platform.edge ) {
       openCursor = 'url(' + scissorsOpen.src + '), url(http://phetsims.github.io/build-a-molecule/images/' + openFile + '), ' + backup;
       closedCursor = 'url(' + scissorsClosed.src + '), url(http://phetsims.github.io/build-a-molecule/images/' + closedFile + '), ' + backup;
@@ -95,7 +95,7 @@ define( require => {
     }
 
     // hit target
-    var target = new Circle( bondRadius, {
+    const target = new Circle( bondRadius, {
       // no fill or stroke
       cursor: openCursor,
       touchArea: new Shape() // these areas don't respond to touch events
@@ -115,11 +115,11 @@ define( require => {
 
     // listener that will update the position of our hit target
     this.positionListener = function() {
-      var orientation = self.b.positionProperty.value.minus( self.a.positionProperty.value );
+      const orientation = self.b.positionProperty.value.minus( self.a.positionProperty.value );
       if ( orientation.magnitude > 0 ) {
         orientation.normalize();
       }
-      var location = orientation.times( self.a.covalentRadius ).plus( self.a.positionProperty.value );
+      const location = orientation.times( self.a.covalentRadius ).plus( self.a.positionProperty.value );
       self.setTranslation( BAMConstants.MODEL_VIEW_TRANSFORM.modelToViewPosition( location ) );
     };
     this.a.positionProperty.link( this.positionListener );

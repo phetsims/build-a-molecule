@@ -29,7 +29,7 @@ define( require => {
    * @constructor
    */
   function CollectMultipleScreen() {
-    var options = {
+    const options = {
       name: titleMultipleString,
       homeScreenIcon: new Rectangle( 0, 0, 548, 373, { fill: 'green' } )
     };
@@ -38,7 +38,7 @@ define( require => {
 
       // createInitialKitCollection
       function( bounds, stepEmitter ) {
-        var kitCollection = new KitCollection();
+        const kitCollection = new KitCollection();
         kitCollection.addKit( new Kit( bounds, [
           new Bucket( new Dimension2( 400, 200 ), stepEmitter, Element.H, 2 ),
           new Bucket( new Dimension2( 450, 200 ), stepEmitter, Element.O, 2 )

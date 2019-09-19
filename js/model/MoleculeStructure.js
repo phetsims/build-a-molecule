@@ -21,7 +21,7 @@ define( require => {
   const Element = require( 'NITROGLYCERIN/Element' );
   const ElementHistogram = require( 'BUILD_A_MOLECULE/model/ElementHistogram' );
 
-  var nextMoleculeId = 0;
+  let nextMoleculeId = 0;
 
   //REVIEW comments below indicate that ordering is important. Describe why ordering is significant.
   // NOTE from porting: StrippedMolecule relies on the ordering of atoms, and possibly bonds
@@ -59,7 +59,7 @@ define( require => {
 
     //REVIEW: Don't have this be polymorphic (looks like we can either add a bond or a pair of atoms)
     addBond: function( a, b ) {
-      var bond;
+      let bond;
 
       // TODO: optimize call-sites of this to just use one way (almost assuredly creating the bond first)
       if ( a instanceof Bond ) {
@@ -89,17 +89,17 @@ define( require => {
      * @returns {string} Text which is the molecular formula
      */
     getGeneralFormula: function() {
-      var containsCarbon = this.containsElement( Element.C );
-      var containsHydrogen = this.containsElement( Element.H );
+      const containsCarbon = this.containsElement( Element.C );
+      const containsHydrogen = this.containsElement( Element.H );
 
-      var organic = containsCarbon && containsHydrogen;
+      const organic = containsCarbon && containsHydrogen;
 
-      var sortedElements = _.sortBy( this.getElementList(), organic ? MoleculeStructure.organicSortValue         // carbon first, then hydrogen, then others alphabetically
+      const sortedElements = _.sortBy( this.getElementList(), organic ? MoleculeStructure.organicSortValue         // carbon first, then hydrogen, then others alphabetically
         : MoleculeStructure.electronegativeSortValue // sort by increasing electronegativity
       );
 
       // grab our formula out
-      var formula = ChemUtils.createSymbolWithoutSubscripts( sortedElements );
+      const formula = ChemUtils.createSymbolWithoutSubscripts( sortedElements );
 
       // return the formula, unless it is in our exception list (in which case, handle the exception case)
       return MoleculeStructure.formulaExceptions[ formula ] || formula;
@@ -112,17 +112,17 @@ define( require => {
      * @returns {string} Text which is the structural formula
      */
     getStructuralFormula: function() {
-      var self = this;
+      const self = this;
 
       // scan for alcohols (OH bonded to C)
-      var alcoholCount = 0;
+      let alcoholCount = 0;
 
       // we pull of the alcohols so we can get that molecular formula (and we append the alcohols afterwards)
-      var structureWithoutAlcohols = this.getCopy();
+      let structureWithoutAlcohols = this.getCopy();
       this.atoms.forEach( function( oxygenAtom ) {
         // only process if it is an oxygen atom
         if ( oxygenAtom.isOxygen() ) {
-          var neighbors = self.getNeighbors( oxygenAtom );
+          const neighbors = self.getNeighbors( oxygenAtom );
 
           // for an alcohol subgroup (hydroxyl) we need:
           if ( neighbors.length === 2 && // 2 neighbors
@@ -184,9 +184,9 @@ define( require => {
 
     hasWeirdHydrogenProperties: function() {
       // check for hydrogens that are bonded to more than 1 atom
-      var length = this.atoms.length;
-      for ( var i = 0; i < length; i++ ) {
-        var atom = this.atoms[ i ];
+      const length = this.atoms.length;
+      for ( let i = 0; i < length; i++ ) {
+        const atom = this.atoms[ i ];
         if ( atom.isHydrogen() && this.getNeighbors( atom ).length > 1 ) {
           return true;
         }
@@ -196,15 +196,15 @@ define( require => {
 
     hasLoopsOrIsDisconnected: function() {
       // TODO: performance: consider HashSet, or something that has a fast contains lookup
-      var visitedAtoms = [];
-      var dirtyAtoms = [];
+      const visitedAtoms = [];
+      const dirtyAtoms = [];
 
       // pull one atom out. doesn't matter which one
       dirtyAtoms.push( this.atoms[ 0 ] );
 
       while ( dirtyAtoms.length > 0 ) {
         // while atoms are dirty, pull one out
-        var atom = dirtyAtoms.pop();
+        const atom = dirtyAtoms.pop();
 
         // for each neighbor, make 'unvisited' atoms dirty and count 'visited' atoms
         var visitedCount = 0;
@@ -232,7 +232,7 @@ define( require => {
     },
 
     getDebuggingDump: function() {
-      var str = 'Molecule\n';
+      let str = 'Molecule\n';
       this.atoms.forEach( function( atom ) {
         // TODO: was using hashcode, may need to create IDs for Atom instances (not Atom2, those have IDs)
         str += 'atom: ' + atom.symbol + ' ' + atom.id + '\n';
@@ -249,7 +249,7 @@ define( require => {
 
     // between atoms a and b
     getBond: function( a, b ) {
-      var result = _.find( this.bonds, function( bond ) { return bond.contains( a ) && bond.contains( b ); } );
+      const result = _.find( this.bonds, function( bond ) { return bond.contains( a ) && bond.contains( b ); } );
       assert && assert( result, 'Could not find bond!' );
       return result;
     },
@@ -266,7 +266,7 @@ define( require => {
 
     // TODO: rename copy()
     getCopy: function() {
-      var result = new MoleculeStructure( this.atoms.length, this.bonds.length );
+      const result = new MoleculeStructure( this.atoms.length, this.bonds.length );
       this.atoms.forEach( result.addAtom.bind( result ) );
       this.bonds.forEach( result.addBond.bind( result ) );
       return result;
@@ -276,7 +276,7 @@ define( require => {
      * @returns {MoleculeStructure} Gives us a copy that is typed to just Atom, even though it uses the same atom instances (but different bond instances)
      */
     getAtomCopy: function() {
-      var result = new MoleculeStructure( this.atoms.length, this.bonds.length );
+      const result = new MoleculeStructure( this.atoms.length, this.bonds.length );
       this.atoms.forEach( result.addAtom.bind( result ) );
       this.bonds.forEach( function( bond ) {
         // new bonds. TODO: document why necessary if we find out
@@ -286,7 +286,7 @@ define( require => {
     },
 
     getCopyWithAtomRemoved: function( atomToRemove ) {
-      var result = new MoleculeStructure( this.atoms.length - 1, 12 ); // default to 12 bonds, probably more?
+      const result = new MoleculeStructure( this.atoms.length - 1, 12 ); // default to 12 bonds, probably more?
       this.atoms.forEach( function( atom ) {
         if ( atom !== atomToRemove ) {
           result.addAtom( atom );
@@ -323,12 +323,12 @@ define( require => {
       }
 
       // TODO: performance: sets instead of arrays here?
-      var myVisited = [];
-      var otherVisited = [];
-      var firstAtom = this.atoms[ 0 ]; // grab the 1st atom
-      var length = other.atoms.length;
-      for ( var i = 0; i < length; i++ ) {
-        var otherAtom = other.atoms[ i ];
+      const myVisited = [];
+      const otherVisited = [];
+      const firstAtom = this.atoms[ 0 ]; // grab the 1st atom
+      const length = other.atoms.length;
+      for ( let i = 0; i < length; i++ ) {
+        const otherAtom = other.atoms[ i ];
         if ( this.checkEquivalency( other, myVisited, otherVisited, firstAtom, otherAtom ) ) {
           // we found an isomorphism with firstAtom => otherAtom
           return true;
@@ -371,8 +371,8 @@ define( require => {
         // if the atoms are of different types, bail. subtrees can't possibly be equivalent
         return false;
       }
-      var myUnvisitedNeighbors = this.getNeighborsNotInSet( myAtom, myVisited );
-      var otherUnvisitedNeighbors = other.getNeighborsNotInSet( otherAtom, otherVisited );
+      const myUnvisitedNeighbors = this.getNeighborsNotInSet( myAtom, myVisited );
+      const otherUnvisitedNeighbors = other.getNeighborsNotInSet( otherAtom, otherVisited );
       if ( myUnvisitedNeighbors.length !== otherUnvisitedNeighbors.length ) {
         return false;
       }
@@ -380,7 +380,7 @@ define( require => {
         // no more unmatched atoms
         return true;
       }
-      var size = myUnvisitedNeighbors.length;
+      const size = myUnvisitedNeighbors.length;
 
       // for now, add visiting atoms to the visited set. we NEED to revert this before returning!
       myVisited.push( myAtom );
@@ -390,15 +390,15 @@ define( require => {
        equivalency matrix. each entry is basically whether the subtree in the direction of the 'my' atom is
        equivalent to the subtree in the direction of the 'other' atom, for all possible my and other atoms
        */
-      var equivalences = new Array( size * size ); // booleans
+      const equivalences = new Array( size * size ); // booleans
 
       // keep track of available indices for the following matrix equivalency check
-      var availableIndices = [];
+      const availableIndices = [];
 
       // for the love of god, this matrix is NOT symmetric. It computes whether each tree branch for A is equivalent to each tree branch for B
-      for ( var myIndex = 0; myIndex < size; myIndex++ ) {
+      for ( let myIndex = 0; myIndex < size; myIndex++ ) {
         availableIndices.push( myIndex );
-        for ( var otherIndex = 0; otherIndex < size; otherIndex++ ) {
+        for ( let otherIndex = 0; otherIndex < size; otherIndex++ ) {
           equivalences[ myIndex * size + otherIndex ] = this.checkEquivalency( other, myVisited, otherVisited, myUnvisitedNeighbors[ myIndex ], otherUnvisitedNeighbors[ otherIndex ] );
         }
       }
@@ -428,15 +428,15 @@ define( require => {
      *         for each bond, two zero-indexed indices of atoms above
      */
     toSerial: function() {
-      var self = this;
+      const self = this;
 
-      var ret = this.atoms.length + '|' + this.bonds.length;
+      let ret = this.atoms.length + '|' + this.bonds.length;
       this.atoms.forEach( function( atom ) {
         ret += '|' + atom.symbol;
       } );
       this.bonds.forEach( function( bond ) {
-        var a = self.atoms.indexOf( bond.a );
-        var b = self.atoms.indexOf( bond.b );
+        const a = self.atoms.indexOf( bond.a );
+        const b = self.atoms.indexOf( bond.b );
         ret += '|' + a + '|' + b;
       } );
 
@@ -454,8 +454,8 @@ define( require => {
      * @return
      */
     toSerial2: function() {
-      var self = this;
-      var result = '';
+      const self = this;
+      let result = '';
 
       // serializing and the following builder appends are not a performance bottleneck. they are left in a more readable form
 
@@ -466,8 +466,8 @@ define( require => {
         result += '|' + atom.toString();
         this.bonds.forEach( function( bond ) {
           if ( bond.contains( atom ) ) {
-            var otherAtom = bond.getOtherAtom( atom );
-            var index = self.atoms.indexOf( otherAtom );
+            const otherAtom = bond.getOtherAtom( atom );
+            const index = self.atoms.indexOf( otherAtom );
             if ( index < i ) {
               result += ',' + bond.toSerial2( index );
             }
@@ -481,11 +481,11 @@ define( require => {
      * @returns A new equivalent structure using simple atoms and bonds
      */
     toSimple: function() {
-      var result = new MoleculeStructure( this.atoms.length, this.bonds.length );
+      const result = new MoleculeStructure( this.atoms.length, this.bonds.length );
 
-      var newMap = {}; // old atom ID => new atom
+      const newMap = {}; // old atom ID => new atom
       this.atoms.forEach( function( atom ) {
-        var newAtom = new Atom( atom.element );
+        const newAtom = new Atom( atom.element );
         result.addAtom( newAtom );
         newMap[ atom.id ] = newAtom;
       } );
@@ -518,7 +518,7 @@ define( require => {
   };
 
   MoleculeStructure.alphabeticSortValue = function( element ) {
-    var value = 1000 * element.symbol.charCodeAt( 0 );
+    let value = 1000 * element.symbol.charCodeAt( 0 );
     if ( element.symbol.length > 1 ) {
       value += element.symbol.charCodeAt( 1 );
     }
@@ -561,12 +561,12 @@ define( require => {
      *----------------------------------------------------------------------------*/
 
     // TODO: performance: use sets for fast insertion, removal, and querying, wherever necessary in this function
-    var atomsInA = [ bond.a ];
+    const atomsInA = [ bond.a ];
 
     // atoms left after removing atoms
-    var remainingAtoms = structure.atoms.slice( 0 );
+    const remainingAtoms = structure.atoms.slice( 0 );
     remainingAtoms.splice( remainingAtoms.indexOf( bond.a ), 1 ); // TODO: replace with remove()
-    var dirtyAtoms = [ bond.a ];
+    const dirtyAtoms = [ bond.a ];
     while ( dirtyAtoms.length > 0 ) {
       var atom = dirtyAtoms.pop();
       // dirtyAtoms.splice( dirtyAtoms.indexOf( atom ), 1 ); // TODO: replace with remove()
@@ -574,7 +574,7 @@ define( require => {
       // for all neighbors that don't use our 'bond'
       structure.bonds.forEach( function( otherBond ) {
         if ( otherBond !== bond && otherBond.contains( atom ) ) {
-          var neighbor = otherBond.getOtherAtom( atom );
+          const neighbor = otherBond.getOtherAtom( atom );
 
           // pick out our neighbor, mark it as in 'A', and mark it as dirty so we can process its neighbors
           if ( _.includes( remainingAtoms, neighbor ) ) {
@@ -636,16 +636,16 @@ define( require => {
     // TODO: performance: this should leak memory in un-fun ways, and performance complexity should be sped up
 
     // should be inefficient, but not too bad (computational complexity is not optimal)
-    var arr = otherRemainingIndices.slice( 0 );
-    var len = arr.length;
-    for ( var i = 0; i < len; i++ ) { // loop over all remaining others
-      var otherIndex = arr[ i ];
+    const arr = otherRemainingIndices.slice( 0 );
+    const len = arr.length;
+    for ( let i = 0; i < len; i++ ) { // loop over all remaining others
+      const otherIndex = arr[ i ];
       if ( equivalences[ myIndex * size + otherIndex ] ) { // only follow path if it is true (equivalent)
 
         // remove the index from consideration for checking the following submatrix
         otherRemainingIndices.splice( otherRemainingIndices.indexOf( otherIndex ), 1 ); // TODO: replace with remove()
 
-        var success = ( myIndex === size - 1 ) || // there are no more permutations to check
+        const success = ( myIndex === size - 1 ) || // there are no more permutations to check
                       MoleculeStructure.checkEquivalencyMatrix( equivalences, myIndex + 1, otherRemainingIndices, size ); // or we can find a good combination of the remaining indices
 
         // add it back in so the calling function's contract for otherRemainingIndices is satisfied
@@ -666,12 +666,12 @@ define( require => {
    * @returns {Molecule} structure
    */
   MoleculeStructure.fromSerial = function( str ) {
-    var tokens = str.split( '|' );
-    var idx = 0;
-    var atomCount = parseInt( tokens[ idx++ ], 10 );
-    var bondCount = parseInt( tokens[ idx++ ], 10 );
-    var structure = new MoleculeStructure( atomCount, bondCount );
-    var atoms = new Array( atomCount );
+    const tokens = str.split( '|' );
+    let idx = 0;
+    const atomCount = parseInt( tokens[ idx++ ], 10 );
+    const bondCount = parseInt( tokens[ idx++ ], 10 );
+    const structure = new MoleculeStructure( atomCount, bondCount );
+    const atoms = new Array( atomCount );
 
     for ( var i = 0; i < atomCount; i++ ) {
       atoms[ i ] = Atom.createAtomFromSymbol( tokens[ idx++ ] );
@@ -693,19 +693,19 @@ define( require => {
    * @returns {MoleculeStructure} A constructed molecule
    */
   MoleculeStructure.fromSerial2 = function( line, moleculeGenerator, atomParser, bondParser ) {
-    var tokens = line.split( '|' );
-    var idx = 0;
-    var atomCount = parseInt( tokens[ idx++ ], 10 );
-    var bondCount = parseInt( tokens[ idx++ ], 10 );
-    var molecule = moleculeGenerator( atomCount, bondCount );
-    for ( var i = 0; i < atomCount; i++ ) {
-      var atomBondString = tokens[ idx++ ];
-      var subIdx = 0;
-      var subTokens = atomBondString.split( ',' );
-      var atom = atomParser( subTokens[ subIdx++ ] );
+    const tokens = line.split( '|' );
+    let idx = 0;
+    const atomCount = parseInt( tokens[ idx++ ], 10 );
+    const bondCount = parseInt( tokens[ idx++ ], 10 );
+    const molecule = moleculeGenerator( atomCount, bondCount );
+    for ( let i = 0; i < atomCount; i++ ) {
+      const atomBondString = tokens[ idx++ ];
+      let subIdx = 0;
+      const subTokens = atomBondString.split( ',' );
+      const atom = atomParser( subTokens[ subIdx++ ] );
       molecule.addAtom( atom );
       while ( subIdx < subTokens.length ) {
-        var bond = bondParser( subTokens[ subIdx++ ], atom, molecule );
+        const bond = bondParser( subTokens[ subIdx++ ], atom, molecule );
         molecule.addBond( bond );
       }
     }

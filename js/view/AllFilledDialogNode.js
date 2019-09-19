@@ -33,15 +33,15 @@ define( require => {
    * @constructor
    */
   function AllFilledDialogNode( regenerateCallback ) {
-    var contentVBox = new VBox( { spacing: 5, align: 'center' } );
-    var self = this;
+    const contentVBox = new VBox( { spacing: 5, align: 'center' } );
+    const self = this;
 
     // Add smiley face
-    var smiley = new FaceNode( 120 ).smile();
+    const smiley = new FaceNode( 120 ).smile();
     contentVBox.addChild( smiley );
 
     // Add text
-    var text = new Text( youCompletedYourCollectionString, {
+    const text = new Text( youCompletedYourCollectionString, {
       font: new PhetFont( {
         size: 20,
         weight: 'bold'
@@ -50,7 +50,7 @@ define( require => {
     contentVBox.addChild( text );
 
     // Add button
-    var button = new TextPushButton( nextCollectionString, {
+    const button = new TextPushButton( nextCollectionString, {
       listener: function() {
         regenerateCallback();
         self.visible = false;

@@ -30,7 +30,7 @@ define( require => {
    */
   function MakeMoleculeScreen() {
 
-    var options = {
+    const options = {
       name: titleSingleString,
       homeScreenIcon: new Rectangle( 0, 0, 548, 373, { fill: 'red' } )
     };
@@ -40,7 +40,7 @@ define( require => {
 
       // createInitialKitCollection
       function( bounds, stepEmitter ) {
-        var kitCollection = new KitCollection();
+        const kitCollection = new KitCollection();
         kitCollection.addKit( new Kit( bounds, [
           new Bucket( new Dimension2( 400, 200 ), stepEmitter, Element.H, 2 ),
           new Bucket( new Dimension2( 350, 200 ), stepEmitter, Element.O, 1 )

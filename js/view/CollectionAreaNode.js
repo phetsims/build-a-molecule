@@ -32,24 +32,24 @@ define( require => {
    */
   function CollectionAreaNode( collection, isSingleCollectionMode, toModelBounds ) {
     Node.call( this, {} );
-    var self = this;
+    const self = this;
 
     // Array for the black box for its text
     this.collectionBoxNodes = [];
 
     // Container for collection boxes and reset collection button.
-    var allCollectionItemsVBox = new VBox( { spacing: 10 } );
+    const allCollectionItemsVBox = new VBox( { spacing: 10 } );
     this.addChild( allCollectionItemsVBox );
 
     // Create and add all collection box nodes.
     collection.collectionBoxes.forEach( function( collectionBox ) {
-      var collectionBoxNode = isSingleCollectionMode ? new SingleCollectionBoxNode( collectionBox, toModelBounds ) : new MultipleCollectionBoxNode( collectionBox, toModelBounds );
+      const collectionBoxNode = isSingleCollectionMode ? new SingleCollectionBoxNode( collectionBox, toModelBounds ) : new MultipleCollectionBoxNode( collectionBox, toModelBounds );
       self.collectionBoxNodes.push( collectionBoxNode );
       allCollectionItemsVBox.addChild( collectionBoxNode );
     } );
 
     // Reset Collection Button
-    var resetCollectionButton = new TextPushButton( resetCollectionString, {
+    const resetCollectionButton = new TextPushButton( resetCollectionString, {
       listener: function() {
         // when clicked, empty collection boxes
         collection.collectionBoxes.forEach( function( box ) {
@@ -71,7 +71,7 @@ define( require => {
      * @private
      */
     function updateEnabled() {
-      var enabled = false;
+      let enabled = false;
       collection.collectionBoxes.forEach( function( box ) {
         if ( box.quantityProperty.value > 0 ) {
           enabled = true;

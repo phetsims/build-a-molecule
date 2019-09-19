@@ -40,23 +40,23 @@ define( require => {
     constructor: MoleculeList,
 
     loadInitialData: function() {
-      var startTime = Date.now();
-      var mainMolecules = MoleculeList.readCompleteMoleculesFromData( collectionMoleculesData );
+      const startTime = Date.now();
+      const mainMolecules = MoleculeList.readCompleteMoleculesFromData( collectionMoleculesData );
       mainMolecules.forEach( this.addCompleteMolecule.bind( this ) );
       console.log( 'loaded initial data in ' + ( Date.now() - startTime ) + 'ms' );
     },
 
     loadMasterData: function() {
-      var startTime = Date.now();
-      var self = this;
+      const startTime = Date.now();
+      const self = this;
       // load in our collection molecules first
       initialList.getAllCompleteMolecules().forEach( this.addCompleteMolecule.bind( this ) );
 
       // then load other molecules
-      var mainMolecules = MoleculeList.readCompleteMoleculesFromData( otherMoleculesData );
+      const mainMolecules = MoleculeList.readCompleteMoleculesFromData( otherMoleculesData );
       mainMolecules.forEach( function( molecule ) {
         // if our molecule was included in the initial lookup, use that initial version instead so we can have instance equality preserved
-        var initialListLookup = initialList.moleculeNameMap[ molecule.filterCommonName( molecule.commonNameProperty.value ) ];
+        const initialListLookup = initialList.moleculeNameMap[ molecule.filterCommonName( molecule.commonNameProperty.value ) ];
         if ( initialListLookup && molecule.isEquivalent( initialListLookup ) ) {
           molecule = initialListLookup;
         }
@@ -65,7 +65,7 @@ define( require => {
       } );
 
       // then load structures
-      var mainStructures = MoleculeList.readMoleculeStructuresFromData( structuresData );
+      const mainStructures = MoleculeList.readMoleculeStructuresFromData( structuresData );
       mainStructures.forEach( this.addAllowedStructure.bind( this ) );
       console.log( 'loaded master data in ' + ( Date.now() - startTime ) + 'ms' );
     },
@@ -78,8 +78,8 @@ define( require => {
      * @returns {boolean} True if it is allowed
      */
     isAllowedStructure: function( moleculeStructure ) {
-      var strippedMolecule = new StrippedMolecule( moleculeStructure );
-      var hashString = strippedMolecule.stripped.getHistogram().getHashString();
+      const strippedMolecule = new StrippedMolecule( moleculeStructure );
+      const hashString = strippedMolecule.stripped.getHistogram().getHashString();
 
       // if the molecule contained only 1 or 2 hydrogen, it is ok
       if ( strippedMolecule.stripped.atoms.length === 0 && moleculeStructure.atoms.length <= 2 ) {
@@ -94,11 +94,11 @@ define( require => {
       // use the allowed structure map as an acceleration feature
       // TODO: performance: only do the lookup once
       if ( this.allowedStructureFormulaMap[ hashString ] ) {
-        var moleculeStructures = this.allowedStructureFormulaMap[ hashString ];
+        const moleculeStructures = this.allowedStructureFormulaMap[ hashString ];
         if ( moleculeStructures ) {
-          var length = moleculeStructures.length;
-          for ( var i = 0; i < length; i++ ) {
-            var structure = moleculeStructures[ i ];
+          const length = moleculeStructures.length;
+          for ( let i = 0; i < length; i++ ) {
+            const structure = moleculeStructures[ i ];
             if ( structure.isHydrogenSubmolecule( strippedMolecule ) ) {
               return true;
             }
@@ -135,10 +135,10 @@ define( require => {
     },
 
     addAllowedStructure: function( structure ) {
-      var strippedMolecule = new StrippedMolecule( structure );
-      var hashString = strippedMolecule.stripped.getHistogram().getHashString();
+      const strippedMolecule = new StrippedMolecule( structure );
+      const hashString = strippedMolecule.stripped.getHistogram().getHashString();
 
-      var spot = this.allowedStructureFormulaMap[ hashString ];
+      const spot = this.allowedStructureFormulaMap[ hashString ];
       if ( spot ) {
         spot.push( strippedMolecule );
       }
@@ -148,8 +148,8 @@ define( require => {
     }
   };
 
-  var masterInstance = null;
-  var initialized = false;
+  let masterInstance = null;
+  let initialized = false;
   var initialList = new MoleculeList();
 
   MoleculeList.startInitialization = function() {
@@ -170,7 +170,7 @@ define( require => {
   };
 
   MoleculeList.getMoleculeByName = function( name ) {
-    var result = initialList.moleculeNameMap[ name ];
+    let result = initialList.moleculeNameMap[ name ];
 
     if ( !result ) {
       // TODO: logger here needed as a warning for master lookup?
@@ -189,7 +189,7 @@ define( require => {
    */
   MoleculeList.readCompleteMoleculesFromData = function( strings ) {
     return _.map( strings, function( string ) {
-      var molecule = CompleteMolecule.fromSerial2( string );
+      const molecule = CompleteMolecule.fromSerial2( string );
 
       // sanity checks
       assert && assert( !molecule.hasLoopsOrIsDisconnected(),
@@ -205,11 +205,11 @@ define( require => {
    * @returns A list of molecule structures
    */
   MoleculeList.readMoleculeStructuresFromData = function( strings ) {
-    var len = strings.length;
-    var arr = new Array( len );
-    for ( var i = 0; i < len; i++ ) {
-      var string = strings[ i ];
-      var structure = MoleculeStructure.fromSerial2Basic( string );
+    const len = strings.length;
+    const arr = new Array( len );
+    for ( let i = 0; i < len; i++ ) {
+      const string = strings[ i ];
+      const structure = MoleculeStructure.fromSerial2Basic( string );
 
       // sanity checks
       assert && assert( !structure.hasWeirdHydrogenProperties(), 'Weird hydrogen pattern in structure: ' + string );

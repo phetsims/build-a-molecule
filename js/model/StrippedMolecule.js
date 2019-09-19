@@ -25,26 +25,26 @@ define( require => {
    * @constructor
    */
   function StrippedMolecule( original ) {
-    var self = this;
+    const self = this;
 
     // var atomsToAdd = [];
-    var bondsToAdd = [];
+    const bondsToAdd = [];
 
     // copy non-hydrogens
-    var atomsToAdd = _.filter( original.atoms, function( atom ) { return !atom.isHydrogen(); } );
+    const atomsToAdd = _.filter( original.atoms, function( atom ) { return !atom.isHydrogen(); } );
 
     /**
      * Array indexed the same way as stripped.atoms for efficiency. It's essentially immutable, so this works
      */
     this.hydrogenCount = new Array( atomsToAdd.length );
-    for ( var i = 0; i < this.hydrogenCount.length; i++ ) {
+    for ( let i = 0; i < this.hydrogenCount.length; i++ ) {
       this.hydrogenCount[ i ] = 0;
     }
 
     // copy non-hydrogen honds, and mark hydrogen bonds
     original.bonds.forEach( function( bond ) {
-      var aIsHydrogen = bond.a.isHydrogen();
-      var bIsHydrogen = bond.b.isHydrogen();
+      const aIsHydrogen = bond.a.isHydrogen();
+      const bIsHydrogen = bond.b.isHydrogen();
 
       // only do something if both aren't hydrogen
       if ( !aIsHydrogen || !bIsHydrogen ) {
@@ -73,12 +73,12 @@ define( require => {
      * @returns {MoleculeStructure} where the hydrogen atoms are not the original hydrogen atoms
      */
     toMoleculeStructure: function() {
-      var self = this;
-      var result = this.stripped.getAtomCopy();
+      const self = this;
+      const result = this.stripped.getAtomCopy();
       this.stripped.atoms.forEach( function( atom ) {
-        var count = self.getHydrogenCount( atom );
-        for ( var i = 0; i < count; i++ ) {
-          var hydrogenAtom = new Atom( Element.H );
+        const count = self.getHydrogenCount( atom );
+        for ( let i = 0; i < count; i++ ) {
+          const hydrogenAtom = new Atom( Element.H );
           result.addAtom( hydrogenAtom );
           result.addBond( new Bond( atom, hydrogenAtom ) );
         }
@@ -87,7 +87,7 @@ define( require => {
     },
 
     getIndex: function( atom ) {
-      var index = this.stripped.atoms.indexOf( atom );
+      const index = this.stripped.atoms.indexOf( atom );
       assert && assert( index !== -1 );
       return index;
     },
@@ -98,7 +98,7 @@ define( require => {
 
     // @param {StrippedMolecule} other
     isEquivalent: function( other ) { // I know this isn't used, but it might be useful in the future (comment from before the port, still kept for that reason)
-      var self = this;
+      const self = this;
       if ( this === other ) {
         // same instance
         return true;
@@ -109,12 +109,12 @@ define( require => {
       }
 
       // TODO: performance: use something more like HashSet here
-      var myVisited = [];
-      var otherVisited = [];
-      var firstAtom = this.stripped.atoms[ 0 ]; // grab the 1st atom
-      var length = other.stripped.atoms.length;
-      for ( var i = 0; i < length; i++ ) {
-        var otherAtom = other.stripped.atoms[ i ];
+      const myVisited = [];
+      const otherVisited = [];
+      const firstAtom = this.stripped.atoms[ 0 ]; // grab the 1st atom
+      const length = other.stripped.atoms.length;
+      for ( let i = 0; i < length; i++ ) {
+        const otherAtom = other.stripped.atoms[ i ];
         if ( self.checkEquivalency( other, myVisited, otherVisited, firstAtom, otherAtom, false ) ) {
           // we found an isomorphism with firstAtom => otherAtom
           return true;
@@ -135,7 +135,7 @@ define( require => {
      * @returns {boolean} Whether "other" is a hydrogen submolecule of this instance
      */
     isHydrogenSubmolecule: function( other ) {
-      var self = this;
+      const self = this;
       if ( this === other ) {
         // same instance
         return true;
@@ -145,12 +145,12 @@ define( require => {
         // if we have no heavy atoms
         return other.stripped.atoms.length === 0;
       }
-      var myVisited = [];
-      var otherVisited = [];
-      var firstAtom = this.stripped.atoms[ 0 ]; // grab the 1st atom
-      var length = other.stripped.atoms.length;
-      for ( var i = 0; i < length; i++ ) {
-        var otherAtom = other.stripped.atoms[ i ];
+      const myVisited = [];
+      const otherVisited = [];
+      const firstAtom = this.stripped.atoms[ 0 ]; // grab the 1st atom
+      const length = other.stripped.atoms.length;
+      for ( let i = 0; i < length; i++ ) {
+        const otherAtom = other.stripped.atoms[ i ];
         if ( self.checkEquivalency( other, myVisited, otherVisited, firstAtom, otherAtom, true ) ) {
           // we found an isomorphism with firstAtom => otherAtom
           return true;
@@ -193,8 +193,8 @@ define( require => {
           return false;
         }
       }
-      var myUnvisitedNeighbors = this.stripped.getNeighborsNotInSet( myAtom, myVisited );
-      var otherUnvisitedNeighbors = other.stripped.getNeighborsNotInSet( otherAtom, otherVisited );
+      const myUnvisitedNeighbors = this.stripped.getNeighborsNotInSet( myAtom, myVisited );
+      const otherUnvisitedNeighbors = other.stripped.getNeighborsNotInSet( otherAtom, otherVisited );
       if ( myUnvisitedNeighbors.length !== otherUnvisitedNeighbors.length ) {
         return false;
       }
@@ -202,7 +202,7 @@ define( require => {
         // no more unmatched atoms
         return true;
       }
-      var size = myUnvisitedNeighbors.length;
+      const size = myUnvisitedNeighbors.length;
 
       // for now, add visiting atoms to the visited set. we NEED to revert this before returning!
       myVisited.push( myAtom );
@@ -212,15 +212,15 @@ define( require => {
        equivalency matrix. each entry is basically whether the subtree in the direction of the "my" atom is
        equivalent to the subtree in the direction of the "other" atom, for all possible my and other atoms
        */
-      var equivalences = new Array( size * size ); // booleans
+      const equivalences = new Array( size * size ); // booleans
 
       // keep track of available indices for the following matrix equivalency check
-      var availableIndices = [];
+      const availableIndices = [];
 
       // for the love of god, this matrix is NOT symmetric. It computes whether each tree branch for A is equivalent to each tree branch for B
-      for ( var myIndex = 0; myIndex < size; myIndex++ ) {
+      for ( let myIndex = 0; myIndex < size; myIndex++ ) {
         availableIndices.push( myIndex );
-        for ( var otherIndex = 0; otherIndex < size; otherIndex++ ) {
+        for ( let otherIndex = 0; otherIndex < size; otherIndex++ ) {
           equivalences[ myIndex * size + otherIndex ] = this.checkEquivalency( other, myVisited, otherVisited, myUnvisitedNeighbors[ myIndex ], otherUnvisitedNeighbors[ otherIndex ], subCheck );
         }
       }
@@ -234,8 +234,8 @@ define( require => {
     },
 
     getCopyWithAtomRemoved: function( atom ) {
-      var self = this;
-      var result = new StrippedMolecule( this.stripped.getCopyWithAtomRemoved( atom ) );
+      const self = this;
+      const result = new StrippedMolecule( this.stripped.getCopyWithAtomRemoved( atom ) );
       result.stripped.atoms.forEach( function( resultAtom ) {
         result.hydrogenCount[ result.getIndex( resultAtom ) ] = self.getHydrogenCount( resultAtom );
       } );

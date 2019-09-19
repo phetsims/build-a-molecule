@@ -121,7 +121,7 @@ define( require => {
       // this.addChild( sliceNode );
       const atomNode = this.addAtomNodeToPlayAreaNode( atom );
       let lastPosition;
-      var atomListener = new DragListener( {
+      const atomListener = new DragListener( {
         transform: BAMConstants.MODEL_VIEW_TRANSFORM,
         targetNode: atomNode,
         locationProperty: atom.positionProperty,
@@ -159,7 +159,7 @@ define( require => {
           const currentKit = kitCollection.currentKitProperty.value;
 
           // responsible for bonding atoms into molecules in play area
-          var droppedInKitArea = mappedAtomNode && mappedAtomNode.bounds.intersectsBounds( mappedKitCollectionBounds );
+          const droppedInKitArea = mappedAtomNode && mappedAtomNode.bounds.intersectsBounds( mappedKitCollectionBounds );
           currentKit.atomDropped( atom, droppedInKitArea );
         }
       } );

@@ -25,7 +25,7 @@ define( require => {
   const threeDString = require( 'string!BUILD_A_MOLECULE/threeD' ); // eslint-disable-line string-require-statement-match
 
   function ShowMolecule3DButtonNode( completeMolecule, options ) {
-    var self = this;
+    const self = this;
     RectangularPushButton.call( this, _.extend( {
       content: new Text( threeDString, {
         font: new PhetFont( {
@@ -42,14 +42,14 @@ define( require => {
 
     this.addInputListener( new ButtonListener( {
       fire: function() {
-        var trail = self.getUniqueTrail();
+        const trail = self.getUniqueTrail();
         //REVIEW: (JO) See if we can just check for a ScreenView, so that we don't use this special check.
-        var view = _.find( trail.nodes, function( node ) {
+        const view = _.find( trail.nodes, function( node ) {
           if ( node instanceof ScreenView ) {
             return node;
           }
         } );
-        var dialog = new Molecule3DDialog( completeMolecule, view );
+        const dialog = new Molecule3DDialog( completeMolecule, view );
 
         dialog.show();
       }

@@ -36,7 +36,7 @@ define( require => {
    * @constructor
    */
   function CollectionPanel( kitCollectionList, isSingleCollectionMode, collectionAttachmentCallbacks, toModelBounds, options ) {
-    var self = this;
+    const self = this;
 
     this.layoutNode = new VBox( { spacing: 10 } );
     this.collectionAreaHolder = new Node();
@@ -44,7 +44,7 @@ define( require => {
     this.collectionAttachmentCallbacks = collectionAttachmentCallbacks;
 
     // Header text for panel
-    var moleculeCollectionText = new Text( yourMoleculesString, {
+    const moleculeCollectionText = new Text( yourMoleculesString, {
       font: new PhetFont( {
         size: 22
       } ),
@@ -53,7 +53,7 @@ define( require => {
     this.layoutNode.addChild( moleculeCollectionText );
 
     // "Collection X" with arrows
-    var currentCollectionText = new Text( '', {
+    const currentCollectionText = new Text( '', {
       font: new PhetFont( {
         size: 16,
         weight: 'bold'
@@ -65,7 +65,7 @@ define( require => {
     } );
 
     // Used to cycle through collections when a collection has bee completed.
-    var collectionSwitcher = new NextPreviousNavigationNode( currentCollectionText, {
+    const collectionSwitcher = new NextPreviousNavigationNode( currentCollectionText, {
       arrowColor: BAMConstants.KIT_ARROW_BACKGROUND_ENABLED,
       arrowStrokeColor: BAMConstants.KIT_ARROW_BORDER_ENABLED,
       arrowWidth: 14,
@@ -136,7 +136,7 @@ define( require => {
 
       // swap out the inner collection area
       this.collectionAreaHolder.removeAllChildren();
-      var collectionAreaNode = this.collectionAreaMap[ collection.id ];
+      const collectionAreaNode = this.collectionAreaMap[ collection.id ];
       this.collectionAreaHolder.addChild( collectionAreaNode );
 
       // if we are hooked up, update the box locations. otherwise, listen to the canvas for when it is
@@ -157,7 +157,7 @@ define( require => {
      * @returns {boolean} If an ancestor is a BuildAMoleculeCanvas
      */
     hasCanvasAsParent: function() {
-      var node = this; // eslint-disable-line consistent-this
+      let node = this; // eslint-disable-line consistent-this
       while ( node.getParent() !== null ) {
         node = node.getParent();
         if ( node instanceof ScreenView ) {

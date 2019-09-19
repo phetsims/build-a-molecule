@@ -93,14 +93,14 @@ define( require => {
       if ( this.positionProperty.value.distance( this.destinationProperty.value ) !== 0 ) {
 
         // Move towards the current destination
-        var distanceToTravel = MOTION_VELOCITY * dt;
-        var distanceToTarget = this.positionProperty.value.distance( this.destinationProperty.value );
+        let distanceToTravel = MOTION_VELOCITY * dt;
+        const distanceToTarget = this.positionProperty.value.distance( this.destinationProperty.value );
 
-        var farDistanceMultiple = 10; // if we are this many times away, we speed up
+        const farDistanceMultiple = 10; // if we are this many times away, we speed up
 
         // if we are far from the target, let's speed up the velocity
         if ( distanceToTarget > distanceToTravel * farDistanceMultiple ) {
-          var extraDistance = distanceToTarget - distanceToTravel * farDistanceMultiple;
+          const extraDistance = distanceToTarget - distanceToTravel * farDistanceMultiple;
           distanceToTravel *= 1 + extraDistance / 300;
         }
 
@@ -112,7 +112,7 @@ define( require => {
         else {
 
           // Move towards the destination.
-          var angle = Math.atan2( this.destinationProperty.value.y - this.positionProperty.value.y,
+          const angle = Math.atan2( this.destinationProperty.value.y - this.positionProperty.value.y,
             this.destinationProperty.value.x - this.positionProperty.value.x );
           this.translate( distanceToTravel * Math.cos( angle ), distanceToTravel * Math.sin( angle ) );
         }
