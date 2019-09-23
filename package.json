@@ -12,9 +12,13 @@
   "phet": {
     "requirejsNamespace": "BUILD_A_MOLECULE",
     "phetLibs": [
+      "mobius",
       "nitroglycerin",
       "vegas",
       "twixt"
+    ],
+    "preload": [
+      "../sherpa/lib/three-r104.js"
     ],
     "runnable": true,
     "supportedBrands": [

@@ -32,6 +32,7 @@ require.config( {
     DOT: '../../dot/js',
     JOIST: '../../joist/js',
     KITE: '../../kite/js',
+    MOBIUS: '../../mobius/js',
     NITROGLYCERIN: '../../nitroglycerin/js',
     PHETCOMMON: '../../phetcommon/js',
     PHET_CORE: '../../phet-core/js',
