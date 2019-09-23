@@ -15,11 +15,13 @@ define( require => {
   const DragListener = require( 'SCENERY/listeners/DragListener' );
   const KitCollectionNode = require( 'BUILD_A_MOLECULE/view/KitCollectionNode' );
   const KitPlayAreaNode = require( 'BUILD_A_MOLECULE/view/KitPlayAreaNode' );
+  const MobiusSceneNode = require( 'MOBIUS/MobiusSceneNode' );
   // const Node = require( 'SCENERY/nodes/Node' );
   // const Rectangle = require( 'SCENERY/nodes/Rectangle' );
   const ScreenView = require( 'JOIST/ScreenView' );
   // const Shape = require( 'KITE/Shape' );
   // const SliceNode = require( 'BUILD_A_MOLECULE/view/SliceNode' );
+  const Vector3 = require( 'DOT/Vector3' );
 
   class BAMView extends ScreenView {
     /**
@@ -84,6 +86,37 @@ define( require => {
       //
       //   }
       // } );
+
+
+      // @private {MobiusSceneNode} Taken from DensityBuoyancyScreenView.js
+      this.sceneNode = new MobiusSceneNode( this.layoutBounds, {
+        cameraPosition: new Vector3( 0, 0.4, 2 )
+      } );
+      this.addChild( this.sceneNode );
+
+      // Temp object for MobiusSceneNode
+      this.sphereMesh = new THREE.Mesh( new THREE.SphereGeometry( 2, 40, 40 ), new THREE.MeshLambertMaterial() );
+      this.sceneNode.threeScene.add( this.sphereMesh );
+
+      // Adding lights
+      const ambientLight = new THREE.AmbientLight( 0x555555 );
+      this.sceneNode.threeScene.add( ambientLight );
+
+      const sunLight = new THREE.DirectionalLight( 0xffffff, 1 );
+      sunLight.position.set( -1, 1.5, 0.8 );
+      this.sceneNode.threeScene.add( sunLight );
+    }
+
+    /**
+     * @public
+     *
+     * @override
+     */
+    step( dt ) {
+
+      // Updates the sceneNode
+      this.sceneNode.render( undefined );
+
     }
 
     addCollection( collection ) {
