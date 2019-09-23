@@ -90,21 +90,25 @@ define( require => {
 
       // @private {MobiusSceneNode} Taken from DensityBuoyancyScreenView.js
       this.sceneNode = new MobiusSceneNode( this.layoutBounds, {
-        cameraPosition: new Vector3( 0, 0.4, 2 )
+        cameraPosition: new Vector3( 0, 0, 2 )
       } );
       this.addChild( this.sceneNode );
 
       // Temp object for MobiusSceneNode
-      this.sphereMesh = new THREE.Mesh( new THREE.SphereGeometry( 2, 40, 40 ), new THREE.MeshLambertMaterial() );
+      this.sphereMesh = new THREE.Mesh( new THREE.SphereGeometry( 0.5, 40, 40 ), new THREE.MeshLambertMaterial() );
       this.sceneNode.threeScene.add( this.sphereMesh );
 
       // Adding lights
-      const ambientLight = new THREE.AmbientLight( 0x555555 );
+      const ambientLight = new THREE.AmbientLight( 0x191919 ); // closest to 0.1 like the original shader
       this.sceneNode.threeScene.add( ambientLight );
 
-      const sunLight = new THREE.DirectionalLight( 0xffffff, 1 );
-      sunLight.position.set( -1, 1.5, 0.8 );
+      const sunLight = new THREE.DirectionalLight( 0xffffff, 0.8 * 0.9 );
+      sunLight.position.set( -1.0, 0.5, 2.0 );
       this.sceneNode.threeScene.add( sunLight );
+
+      const moonLight = new THREE.DirectionalLight( 0xffffff, 0.6 * 0.9 );
+      moonLight.position.set( 2.0, -1.0, 1.0 );
+      this.sceneNode.threeScene.add( moonLight );
     }
 
     /**
@@ -117,6 +121,16 @@ define( require => {
       // Updates the sceneNode
       this.sceneNode.render( undefined );
 
+    }
+
+    /**
+     * @override
+     * @param {number} width
+     * @param {number} height
+     */
+    layout( width, height ) {
+      super.layout( width, height );
+      this.sceneNode.layout( width, height );
     }
 
     addCollection( collection ) {
