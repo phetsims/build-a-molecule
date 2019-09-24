@@ -44,6 +44,7 @@ define( require => {
     this.atomsInPlayArea.addItemRemovedListener( atom => {
       console.log( 'kit.atomsInPlayArea.removed = ', this.atomsInPlayArea._array );
     } );
+
     // @public {Property.<boolean>}
     this.activeProperty = new BooleanProperty( false );
     this.visibleProperty = new BooleanProperty( false );

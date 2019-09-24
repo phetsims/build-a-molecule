@@ -16,6 +16,7 @@ define( require => {
   const KitCollectionNode = require( 'BUILD_A_MOLECULE/view/KitCollectionNode' );
   const KitPlayAreaNode = require( 'BUILD_A_MOLECULE/view/KitPlayAreaNode' );
   // const Node = require( 'SCENERY/nodes/Node' );
+  const MoleculeControlsHBox = require( 'BUILD_A_MOLECULE/view/MoleculeControlsHBox' );
   // const Rectangle = require( 'SCENERY/nodes/Rectangle' );
   const ScreenView = require( 'JOIST/ScreenView' );
   // const Shape = require( 'KITE/Shape' );
@@ -30,6 +31,8 @@ define( require => {
       super();
       this.atomNodeMap = {};
       this.kitCollectionMap = {}; // maps KitCollection ID => KitCollectionNode
+      this.metadataMap = {}; // moleculeId => MoleculeControlsHBox
+      this.bondMap = {}; // moleculeId => MoleculeBondContainerNode
 
       // @public {KitCollectionList}
       this.kitCollectionList = kitCollectionList;
@@ -69,21 +72,34 @@ define( require => {
       this.kitPlayAreaNode = new KitPlayAreaNode( kits );
       this.addChild( this.kitPlayAreaNode );
 
-      // When the kit changes reconstruct the kitPlayAreaNode
-      // this.kitCollectionList.currentCollectionProperty.value.currentKitProperty.link( kit => {
-      //   if ( kit ) {
-      //     if (this.kitPlayAreaNode) {
-      //       this.kitPlayAreaNode.dispose();
-      //     }
-      //     this.kitPlayAreaNode = new KitPlayAreaNode( this.kitCollectionList.currentCollectionProperty.value.currentKitProperty.value );
-      //     kit.atomsInPlayArea.getArray().forEach( atom => {
-      //       this.addAtomNodeToPlayAreaNode( atom );
-      //     } );
-      //     // this.kitPlayerAreaNode.dispose();
-      //     this.addChild( this.kitPlayAreaNode );
-      //
-      //   }
-      // } );
+      // Kit listeners added to manage molecule metadata.
+      this.kitCollectionList.collections.forEach( collection => {
+        collection.kits.forEach( kit => {
+
+          // handle molecule creation and destruction
+          kit.addedMoleculeEmitter.addListener( molecule => {
+            var moleculeControlsHBox = new MoleculeControlsHBox( kit, molecule );
+            this.kitPlayAreaNode.metadataLayer.addChild( moleculeControlsHBox );
+            this.kitPlayAreaNode.metadataMap[ molecule.moleculeId ] = moleculeControlsHBox;
+
+            if ( BAMConstants.ALLOW_BOND_BREAKING ) {
+              this.kitPlayAreaNode.addMoleculeBondNodes( molecule );
+            }
+          } );
+          kit.removedMoleculeEmitter.addListener( molecule => {
+            var moleculeControlsHBox = this.kitPlayAreaNode.metadataMap[ molecule.moleculeId ];
+            if ( moleculeControlsHBox ) {
+              this.kitPlayAreaNode.metadataLayer.removeChild( moleculeControlsHBox );
+              moleculeControlsHBox.dispose();
+              delete this.kitPlayAreaNode.metadataMap[ molecule.moleculeId ];
+
+              if ( BAMConstants.ALLOW_BOND_BREAKING ) {
+                this.kitPlayAreaNode.removeMoleculeBondNodes( molecule );
+              }
+            }
+          } );
+        } );
+      } );
     }
 
     addCollection( collection ) {
@@ -130,6 +146,9 @@ define( require => {
           // Get atom position before drag
           lastPosition = atom.positionProperty.value;
           atom.userControlledProperty.value = true;
+
+          // Update the current kit in the play area node.
+          this.kitPlayAreaNode.currentKit = this.kitCollectionList.currentCollectionProperty.value.currentKitProperty.value;
         },
         drag: event => {
 

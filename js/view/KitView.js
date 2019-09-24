@@ -39,12 +39,12 @@ define( require => {
 
     this.kit = kit;
 
-    this.metadataMap = {}; // moleculeId => MoleculeControlsHBox
-    this.bondMap = {}; // moleculeId => MoleculeBondContainerNode
+    // Maps for KitView elements.
     this.atomNodeMap = {}; // atom.id => AtomNode
+    this.metadataMap = {}; // moleculeId => MoleculeControlsHBox
 
+    // Layers
     const topLayer = this.topLayer = new Node();
-    // var metadataLayer = this.metadataLayer = new Node();
     const atomLayer = new Node();
     this.atomLayer = atomLayer;
     const bottomLayer = this.bottomLayer = new Node();
@@ -57,7 +57,6 @@ define( require => {
     // this.addChild( swipeCatch );
     this.addChild( bottomLayer );
     this.addChild( atomLayer );
-    // this.addChild( metadataLayer );
     this.addChild( topLayer );
     // this.addChild( sliceNode );
 
@@ -203,27 +202,6 @@ define( require => {
       bucket.particleList.addItemAddedListener( particleAddedListener );
       bucket.particleList.addItemRemovedListener( particleRemovedListener );
     } );
-
-    // handle molecule creation and destruction
-    kit.addedMoleculeEmitter.addListener( function( molecule ) {
-      // var moleculeControlsHBox = new MoleculeControlsHBox( kit, molecule );
-      // metadataLayer.addChild( moleculeControlsHBox );
-      // self.metadataMap[ molecule.moleculeId ] = moleculeControlsHBox;
-
-      if ( BAMConstants.ALLOW_BOND_BREAKING ) {
-        self.addMoleculeBondNodes( molecule );
-      }
-    } );
-    kit.removedMoleculeEmitter.addListener( function( molecule ) {
-      // var moleculeControlsHBox = self.metadataMap[ molecule.moleculeId ];
-      // moleculeControlsHBox.dispose();
-      delete self.metadataMap[ molecule.moleculeId ];
-
-      if ( BAMConstants.ALLOW_BOND_BREAKING ) {
-        self.removeMoleculeBondNodes( molecule );
-      }
-    } );
-
     assert && assert( kit.molecules.length === 0 );
   }
 
