@@ -116,6 +116,9 @@ define( require => {
         bucket.getParticleList().forEach( function( atom ) {
           self.lewisDotModel.addAtom( atom );
         } );
+
+        // Save the state of a filled bucket.
+        bucket.setToFullState();
       } );
     },
 

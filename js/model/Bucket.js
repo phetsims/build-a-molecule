@@ -14,7 +14,6 @@ define( require => {
   const buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   const Color = require( 'SCENERY/util/Color' );
   const Dimension2 = require( 'DOT/Dimension2' );
-  // const Property = require( 'AXON/Property' );
   const Vector2Property = require( 'DOT/Vector2Property' );
   const ObservableArray = require( 'AXON/ObservableArray' );
   const SphereBucket = require( 'PHETCOMMON/model/SphereBucket' );
@@ -48,6 +47,10 @@ define( require => {
       // @public {ObservableArray}
       this.particleList = new ObservableArray();
 
+      // @public {Array.<Atoms2>} Contains atoms for a bucket that is full.
+      // Set after buckets are initially filled at sim start up.
+      this.fullState = [];
+
       // REVIEW: Used for debugging.
       this.particleList.addItemAddedListener( () => {
         console.log( 'particleList.added = ', this.particleList._array );
@@ -72,6 +75,20 @@ define( require => {
         this.removeParticle( atom, true );
       }
       this.addParticleFirstOpen( atom, false );
+    }
+
+    /**
+     * Fill the bucket with its initial set of atoms.
+     *
+     * @public
+     */
+    setToFullState() {
+      this.fullState.forEach( atom => {
+        if ( !this.particleList.contains( atom ) ) {
+          this.placeAtom( atom );
+          this.particleList.push( atom );
+        }
+      } );
     }
 
     /**
