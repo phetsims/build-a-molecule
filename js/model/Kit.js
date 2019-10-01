@@ -238,6 +238,9 @@ define( require => {
         self.atoms.splice( self.atoms.indexOf( atom ), 1 );
         self.atomsInCollectionBox.push( atom );
         atom.visibleProperty.value = false;
+
+        // Atoms in the CollectionBox shouldn't be in the play area.
+        self.atomsInPlayArea.remove( atom );
       } );
       box.addMolecule( molecule );
       this.removedMolecules[ molecule.moleculeId ] = box;
