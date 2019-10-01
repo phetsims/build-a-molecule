@@ -117,8 +117,8 @@ define( require => {
           self.lewisDotModel.addAtom( atom );
         } );
 
-        // Save the state of a filled bucket.
-        bucket.setToFullState();
+        // Set the bucket to its filled state and its the atoms.
+        bucket.setToFullState( true );
       } );
     },
 
@@ -334,7 +334,6 @@ define( require => {
 
     removeMolecule: function( molecule ) {
       arrayRemove( this.molecules, molecule );
-
       this.removedMoleculeEmitter.emit( molecule );
     },
 
