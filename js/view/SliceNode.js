@@ -164,10 +164,6 @@ define( require => {
         }, 0 );
       }
     }
-
-    updateCSSTransform( transform, element ) {
-      // prevent CSS transforms, we work in the global space
-    }
   }
 
   return buildAMolecule.register( 'SliceNode', SliceNode );

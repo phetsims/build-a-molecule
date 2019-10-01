@@ -95,7 +95,6 @@ define( require => {
      * 3D view
      *----------------------------------------------------------------------------*/
     const moleculeNode = new Molecule3DNode( completeMolecule, view.layoutBounds, true );
-    // moleculeNode.updateCSSTransform = function( transform, element ) {}; // don't CSS transform it
     // moleculeNode.touchArea = moleculeNode.mouseArea = Shape.bounds( this.getLocalCanvasBounds() );
     moleculeNode.initializeDrag( this );
     // contentNode.addChild( moleculeNode );
