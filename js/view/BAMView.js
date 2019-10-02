@@ -62,7 +62,7 @@ define( require => {
         if ( oldCollection ) {
 
           //Check if a KitCollectionNode exists and remove it.
-          this.children.forEach( ( child ) => {
+          this.children.forEach( child => {
             if ( child instanceof KitCollectionNode ) {
               this.removeChild( child );
             }

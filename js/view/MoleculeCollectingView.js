@@ -67,7 +67,7 @@ define( require => {
       let hasShownOnce = false;
 
       // show dialog the 1st time all collection boxes are filled
-      collection.allCollectionBoxesFilledProperty.link( ( filled ) => {
+      collection.allCollectionBoxesFilledProperty.link( filled => {
         if ( filled ) {
           if ( !hasShownOnce ) {
             this.allFilledDialogNode.show();
