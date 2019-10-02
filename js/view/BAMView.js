@@ -89,9 +89,9 @@ define( require => {
 
       // Create a play area to house the molecules.
       this.kitPlayAreaNode = new KitPlayAreaNode( kits );
+      this.addChild( swipeCatch );
       this.addChild( this.kitPlayAreaNode );
       this.addChild( sliceNode );
-      this.addChild( swipeCatch );
 
       // Kit listeners added to manage molecule metadata.
       this.kitCollectionList.collections.forEach( collection => {
