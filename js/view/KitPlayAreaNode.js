@@ -24,14 +24,12 @@ define( require => {
       // @public {Kit|null} Current kit set when atomNode is dragged
       this.currentKit = null;
 
-      // Mapped atomNodes to kit play area.
-      this.atomNodeMap = {}; // atom.id => AtomNode
-
       // Layers
       this.metadataLayer = new Node();
       this.atomLayer = new Node();
 
       // Maps for kit area elements
+      this.atomNodeMap = {}; // atom.id => AtomNode
       this.bondMap = {}; // moleculeId => MoleculeBondContainerNode
       this.metadataMap = {}; // moleculeId => MoleculeControlsHBox
 

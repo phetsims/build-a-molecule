@@ -29,16 +29,17 @@ define( require => {
    * @constructor
    */
   constructor( kit, viewSwipeBounds, view ) {
-    super();
+
+    // Create a dom element to house the slice node
+    const canvas = document.createElement( 'canvas' );
+    const context = canvas.getContext( '2d' );
+    super( canvas, {
+      preventTransform: true
+    } );
+
     this.kit = kit;
     this.bondData = [];
     this.traveledDistance = 0;
-
-    const canvas = document.createElement( 'canvas' );
-    const context = canvas.getContext( '2d' );
-    DOM.call( this, canvas, {
-      preventTransform: true
-    } );
 
     let globalBounds;
     let toModelTransform;

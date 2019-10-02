@@ -22,13 +22,11 @@ define( require => {
   const VBox = require( 'SCENERY/nodes/VBox' );
   const Vector2 = require( 'DOT/Vector2' );
 
-
   // strings
   const youCompletedYourCollectionString = require( 'string!BUILD_A_MOLECULE/youCompletedYourCollection' );
   const nextCollectionString = require( 'string!BUILD_A_MOLECULE/nextCollection' );
 
   /**
-   * @param {Bounds2} availablePlayAreaBounds
    * @param {Function} regenerateCallback
    * @constructor
    */

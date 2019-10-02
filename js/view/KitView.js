@@ -49,16 +49,9 @@ define( require => {
     this.atomLayer = atomLayer;
     const bottomLayer = this.bottomLayer = new Node();
 
-    // var viewSwipeBounds = BAMConstants.MODEL_VIEW_TRANSFORM.modelToViewBounds( kit.collectionLayout.availablePlayAreaBounds );
-    // var sliceNode = this.sliceNode = new SliceNode( kit, viewSwipeBounds, moleculeCollectingView );
-
-    // swipeCatch.addInputListener( sliceNode.sliceInputListener );
-
-    // this.addChild( swipeCatch );
     this.addChild( bottomLayer );
     this.addChild( atomLayer );
     this.addChild( topLayer );
-    // this.addChild( sliceNode );
 
     // override its hit testing
     // // TODO: REALLY don't do this. Super easy to break

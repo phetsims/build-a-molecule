@@ -17,10 +17,10 @@ define( require => {
   const KitPlayAreaNode = require( 'BUILD_A_MOLECULE/view/KitPlayAreaNode' );
   // const Node = require( 'SCENERY/nodes/Node' );
   const MoleculeControlsHBox = require( 'BUILD_A_MOLECULE/view/MoleculeControlsHBox' );
-  // const Rectangle = require( 'SCENERY/nodes/Rectangle' );
+  const Rectangle = require( 'SCENERY/nodes/Rectangle' );
   const ScreenView = require( 'JOIST/ScreenView' );
   // const Shape = require( 'KITE/Shape' );
-  // const SliceNode = require( 'BUILD_A_MOLECULE/view/SliceNode' );
+  const SliceNode = require( 'BUILD_A_MOLECULE/view/SliceNode' );
 
   class BAMView extends ScreenView {
     /**
@@ -36,8 +36,19 @@ define( require => {
 
       // @public {KitCollectionList}
       this.kitCollectionList = kitCollectionList;
-
       this.addCollection( kitCollectionList.currentCollectionProperty.value );
+
+      // Components relevant to swipe node used to manually break bonded molecules.
+      const viewSwipeBounds = BAMConstants.MODEL_VIEW_TRANSFORM.modelToViewBounds(
+        kitCollectionList.currentCollectionProperty.value.currentKitProperty.value.collectionLayout.availablePlayAreaBounds
+      );
+      const sliceNode = new SliceNode(
+        kitCollectionList.currentCollectionProperty.value.currentKitProperty.value,
+        viewSwipeBounds,
+        this
+      );
+      const swipeCatch = Rectangle.bounds( viewSwipeBounds.eroded( BAMConstants.VIEW_PADDING ) );
+      swipeCatch.addInputListener( sliceNode.sliceInputListener );
 
       // KitPlayAreaNode for the main BAMView listens to the kitPlayArea of each kit in the model to fill or remove
       // its content.
@@ -76,9 +87,11 @@ define( require => {
       } );
       kitCollectionList.addedCollectionEmitter.addListener( this.addCollection.bind( this ) );
 
-      // Create a play area to house the atomNodes.
+      // Create a play area to house the molecules.
       this.kitPlayAreaNode = new KitPlayAreaNode( kits );
       this.addChild( this.kitPlayAreaNode );
+      this.addChild( sliceNode );
+      this.addChild( swipeCatch );
 
       // Kit listeners added to manage molecule metadata.
       this.kitCollectionList.collections.forEach( collection => {
@@ -136,9 +149,6 @@ define( require => {
       // const viewSwipeBounds = BAMConstants.MODEL_VIEW_TRANSFORM.modelToViewBounds( kitCollection.collectionLayout.availablePlayAreaBounds );
       // const sliceNode = new SliceNode( kitCollection, viewSwipeBounds, view );
 
-
-      // const swipeCatch = Rectangle.bounds( viewSwipeBounds.eroded( BAMConstants.VIEW_PADDING ) );
-      // swipeCatch.addInputListener( sliceNode.sliceInputListener );
 
       //REVIEW: Can we use the newer drag listeners?
       // this.addChild( swipeCatch );
