@@ -145,14 +145,7 @@ define( require => {
       return atomNode;
     }
 
-    addAtomNodeToPlayArea( atom, kitCollection, view ) {
-      // const viewSwipeBounds = BAMConstants.MODEL_VIEW_TRANSFORM.modelToViewBounds( kitCollection.collectionLayout.availablePlayAreaBounds );
-      // const sliceNode = new SliceNode( kitCollection, viewSwipeBounds, view );
-
-
-      //REVIEW: Can we use the newer drag listeners?
-      // this.addChild( swipeCatch );
-      // this.addChild( sliceNode );
+    addAtomNodeToPlayArea( atom, kitCollection ) {
       const atomNode = this.addAtomNodeToPlayAreaNode( atom );
       let lastPosition;
       const atomListener = new DragListener( {

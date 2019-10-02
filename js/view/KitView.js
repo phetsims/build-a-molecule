@@ -183,7 +183,11 @@ define( require => {
 
             // Get reference to atomNode and call the dragListener
             const atomNode = moleculeCollectingView.kitPlayAreaNode.atomNodeMap[ atom.id ];
-            atomNode.dragListener.press( event, atomNode );
+
+            // REVIEW: KitPlayAreaNode is missing elements its atomNodeMap after completed collection.
+            if ( atomNode ) {
+              atomNode.dragListener.press( event, atomNode );
+            }
           }
         } ) );
       };

@@ -67,6 +67,7 @@ define( require => {
 
     // Add a molecule to the kit whenever we add an atom to the play area.
     this.atomsInPlayArea.addItemAddedListener( atom => {
+
       // Add a molecule to the kit with our newly added atom
       const molecule = new Molecule();
       molecule.addAtom( atom );
@@ -331,7 +332,6 @@ define( require => {
 
     addMolecule: function( molecule ) {
       this.molecules.push( molecule );
-
       this.addedMoleculeEmitter.emit( molecule );
     },
 
@@ -347,6 +347,7 @@ define( require => {
      * @param {Atom2} atom An atom to add into play
      */
     addAtomToPlay: function( atom ) {
+
       // add the atoms to our models
       const molecule = new Molecule();
       molecule.addAtom( atom );
