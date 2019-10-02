@@ -61,7 +61,7 @@ define( require => {
 
     // use the lewis dot model to get our bond direction
     const bondDirection = kit.getBondDirection( this.a, this.b );
-    const isHorizontal = bondDirection.id === 'west' || bondDirection.id === 'east';
+    const isHorizontal = bondDirection.id.name === 'WEST' || bondDirection.id.name === 'EAST';
 
     let openFile = 'scissors';
     let closedFile = 'scissors-closed';
