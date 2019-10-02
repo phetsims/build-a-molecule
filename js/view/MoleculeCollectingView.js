@@ -9,7 +9,7 @@
 define( require => {
   'use strict';
 
-  // const AllFilledDialogNode = require( 'BUILD_A_MOLECULE/view/AllFilledDialogNode' );
+  const AllFilledDialogNode = require( 'BUILD_A_MOLECULE/view/AllFilledDialogNode' );
   const BAMView = require( 'BUILD_A_MOLECULE/view/BAMView' );
   const buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   const CollectionPanel = require( 'BUILD_A_MOLECULE/view/CollectionPanel' );
@@ -29,9 +29,7 @@ define( require => {
       const collectionAttachmentCallbacks = [];
 
       // @private
-      // this.allFilledDialogNode = new AllFilledDialogNode(regenerateCallback);
-      // this.allFilledDialogNode.show();
-
+      this.allFilledDialogNode = new AllFilledDialogNode( regenerateCallback );
 
       const collectionPanel = new CollectionPanel(
         kitCollectionList,
@@ -66,18 +64,17 @@ define( require => {
     addCollection( collection ) {
       const kitCollectionNode = BAMView.prototype.addCollection.call( this, collection );
 
-      // let hasShownOnce = false;
-      //
-      // // show dialog the 1st time all collection boxes are filled
-      // collection.allCollectionBoxesFilledProperty.link( ( filled ) => {
-      //   if ( !filled ) {
-      //     // if ( !hasShownOnce ) {
-      //       // REVIEW: "this" reference is referencing the constructor, allFilledDialogNode is undefined.
-      //       this.allFilledDialogNode.show();
-      //       hasShownOnce = true;
-      //     // }
-      //   }
-      // } );
+      let hasShownOnce = false;
+
+      // show dialog the 1st time all collection boxes are filled
+      collection.allCollectionBoxesFilledProperty.link( ( filled ) => {
+        if ( filled ) {
+          if ( !hasShownOnce ) {
+            this.allFilledDialogNode.show();
+            hasShownOnce = true;
+          }
+        }
+      } );
 
       return kitCollectionNode;
     }

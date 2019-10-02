@@ -60,8 +60,16 @@ define( require => {
 
       kitCollectionList.currentCollectionProperty.link( ( newCollection, oldCollection ) => {
         if ( oldCollection ) {
-          this.removeChild( this.kitCollectionMap[ oldCollection.id ] );
+
+          //Check if a KitCollectionNode exists and remove it.
+          this.children.forEach( ( child ) => {
+            if ( child instanceof KitCollectionNode ) {
+              this.removeChild( child );
+            }
+          } );
         }
+
+        // Add a new collection
         if ( newCollection ) {
           this.addChild( this.kitCollectionMap[ newCollection.id ] );
         }
