@@ -53,7 +53,7 @@ define( require => {
     const button = new TextPushButton( nextCollectionString, {
       listener: function() {
         regenerateCallback();
-        self.visible = false;
+        self.hide();
       },
       font: new PhetFont( {
         size: 18,
