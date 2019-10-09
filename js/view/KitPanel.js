@@ -41,8 +41,7 @@ define( require => {
         fill: BAMConstants.KIT_BACKGROUND,
         stroke: BAMConstants.KIT_BORDER,
         margin: 10,
-        itemsPerPage: 1,
-        animationEnabled: false
+        itemsPerPage: 1
       } );
 
       this.kitCarousel.pageNumberProperty.link( page => {
