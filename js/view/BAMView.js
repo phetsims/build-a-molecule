@@ -155,11 +155,8 @@ define( require => {
       const atomListener = new DragListener( {
         transform: BAMConstants.MODEL_VIEW_TRANSFORM,
         targetNode: atomNode,
-
-        // TODO: We want to animate within these bounds on end callback.
-        // dragBoundsProperty: new Property( this.playAreaDragBounds ),
         locationProperty: atom.positionProperty,
-        start: event => {
+        start: () => {
           // Get atom position before drag
           lastPosition = atom.positionProperty.value;
           atom.userControlledProperty.value = true;
@@ -167,7 +164,7 @@ define( require => {
           // Update the current kit in the play area node.
           this.kitPlayAreaNode.currentKit = this.kitCollectionList.currentCollectionProperty.value.currentKitProperty.value;
         },
-        drag: event => {
+        drag: () => {
 
           // Get delta from start of drag
           const delta = atom.positionProperty.value.minus( lastPosition );
@@ -189,20 +186,37 @@ define( require => {
           }
         },
         end: () => {
+          // Consider an atom released and mark its position
           atom.userControlledProperty.value = false;
+          const startingPos = atom.positionProperty.value;
+
+          // Keep track of view elements used later in the callback
           const mappedAtomNode = this.kitPlayAreaNode.atomNodeMap[ atom.id ];
           const mappedKitCollectionBounds = this.kitCollectionMap[ this.kitCollectionList.currentCollectionProperty.value.id ].bounds;
           const currentKit = kitCollection.currentKitProperty.value;
+          const molecule = kitCollection.currentKitProperty.value.getMolecule( atom );
 
-          // responsible for bonding atoms into molecules in play area
+          // Responsible for dropping molecules in play area or kit area
           const droppedInKitArea = mappedAtomNode && mappedAtomNode.bounds.intersectsBounds( mappedKitCollectionBounds );
+
+          // Responsible bonding molecules in play area or breaking molecule bonds and returned to kit.
           currentKit.atomDropped( atom, droppedInKitArea );
 
           // Set the atom position to the closest position within the play area bounds, unless it's dropped in kit area.
-          // TODO: We want this to be done for every atom in the molecule.
-          // TODO: Animate this process? Maybe twixt?
+          // TODO: Animate this process?
           if ( !this.playAreaDragBounds.containsPoint( atom.positionProperty.value ) && !droppedInKitArea ) {
             atom.positionProperty.set( this.playAreaDragBounds.closestPointTo( atom.positionProperty.value ) );
+
+            // Track changed position of atom after returning to constrained bounds.
+            const endingPos = atom.positionProperty.value;
+            const delta = endingPos.minus( startingPos );
+
+            // Every other atom in the molecule should update its position with the same delta.
+            molecule.atoms.forEach( moleculeAtom => {
+              if ( moleculeAtom !== atom ) {
+                moleculeAtom.positionProperty.value = moleculeAtom.positionProperty.value.plus( delta );
+              }
+            } );
           }
         }
       } );
