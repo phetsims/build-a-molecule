@@ -11,6 +11,7 @@ define( require => {
 
   const AtomNode = require( 'BUILD_A_MOLECULE/view/AtomNode' );
   const BAMConstants = require( 'BUILD_A_MOLECULE/BAMConstants' );
+  const Bounds2 = require( 'DOT/Bounds2' );
   const buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   const DragListener = require( 'SCENERY/listeners/DragListener' );
   const KitCollectionNode = require( 'BUILD_A_MOLECULE/view/KitCollectionNode' );
@@ -18,6 +19,7 @@ define( require => {
   // const Node = require( 'SCENERY/nodes/Node' );
   const MoleculeControlsHBox = require( 'BUILD_A_MOLECULE/view/MoleculeControlsHBox' );
   const Rectangle = require( 'SCENERY/nodes/Rectangle' );
+  const Property = require( 'AXON/Property' );
   const ScreenView = require( 'JOIST/ScreenView' );
   // const Shape = require( 'KITE/Shape' );
   const SliceNode = require( 'BUILD_A_MOLECULE/view/SliceNode' );
@@ -33,6 +35,9 @@ define( require => {
       this.kitCollectionMap = {}; // maps KitCollection ID => KitCollectionNode
       this.metadataMap = {}; // moleculeId => MoleculeControlsHBox
       this.bondMap = {}; // moleculeId => MoleculeBondContainerNode
+
+      // @public {Bounds2} Bounds used to limit where molecules can reside in the play area.
+      this.playAreaDragBounds = new Bounds2( -1500, -250, 1450, 800 );
 
       // @public {KitCollectionList}
       this.kitCollectionList = kitCollectionList;
@@ -151,9 +156,11 @@ define( require => {
       const atomListener = new DragListener( {
         transform: BAMConstants.MODEL_VIEW_TRANSFORM,
         targetNode: atomNode,
+
+        // TODO: We want to animate within these bounds on end callback.
+        dragBoundsProperty: new Property( this.playAreaDragBounds ),
         locationProperty: atom.positionProperty,
         start: event => {
-
           // Get atom position before drag
           lastPosition = atom.positionProperty.value;
           atom.userControlledProperty.value = true;
@@ -191,11 +198,8 @@ define( require => {
           // responsible for bonding atoms into molecules in play area
           const droppedInKitArea = mappedAtomNode && mappedAtomNode.bounds.intersectsBounds( mappedKitCollectionBounds );
           currentKit.atomDropped( atom, droppedInKitArea );
+
         }
-      } );
-      // TODO: Check for memory leak. Unlink?
-      this.visibleBoundsProperty.link( visibleBounds => {
-        atomListener.setDragBounds( BAMConstants.MODEL_VIEW_TRANSFORM.viewToModelBounds( visibleBounds ) );
       } );
       atomNode.dragListener = atomListener;
       atomNode.addInputListener( atomListener );

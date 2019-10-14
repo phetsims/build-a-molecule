@@ -23,7 +23,6 @@ define( require => {
      */
     constructor( collection, view ) {
       super( {} );
-
       const kitPanel = new KitPanel( collection, BAMConstants.KIT_VIEW_HEIGHT, view );
       kitPanel.bottom = BAMConstants.STAGE_SIZE.bottom - BAMConstants.VIEW_PADDING;
       kitPanel.left = BAMConstants.STAGE_SIZE.left + BAMConstants.VIEW_PADDING;

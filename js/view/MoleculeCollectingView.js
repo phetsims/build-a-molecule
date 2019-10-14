@@ -23,9 +23,10 @@ define( require => {
      * @constructor
      */
     constructor( kitCollectionList, isSingleCollectionMode, regenerateCallback ) {
-
       super( kitCollectionList );
 
+      // Erode play area to compensate for CollectionPanel
+      this.playAreaDragBounds.setMaxX( 650 );
       const collectionAttachmentCallbacks = [];
 
       // @private
@@ -63,7 +64,6 @@ define( require => {
      */
     addCollection( collection ) {
       const kitCollectionNode = BAMView.prototype.addCollection.call( this, collection );
-
       let hasShownOnce = false;
 
       // show dialog the 1st time all collection boxes are filled
