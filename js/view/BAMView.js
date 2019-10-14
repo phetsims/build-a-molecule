@@ -203,10 +203,7 @@ define( require => {
 
           // Set the atom position to the closest position within the play area bounds, unless it's dropped in kit area.
           if ( !this.playAreaDragBounds.containsPoint( atom.positionProperty.value ) && !droppedInKitArea ) {
-            // atom.positionProperty.set( this.playAreaDragBounds.closestPointTo( atom.positionProperty.value ) );
-            atom.animationStartPosition = atom.positionProperty.value;
-            atom.animationEndPosition = this.playAreaDragBounds.closestPointTo( atom.positionProperty.value );
-            atom.isAnimatingProperty.set( true );
+            this.setAnimationParameters( atom, this.playAreaDragBounds.closestPointTo( atom.positionProperty.value ) );
 
             // Track changed position of atom after returning to constrained bounds.
             // All atoms bonded to the dragged atom need to be offset by this delta.
@@ -215,9 +212,7 @@ define( require => {
             // Every other atom in the molecule should update its position with the same delta.
             molecule.atoms.forEach( moleculeAtom => {
               if ( moleculeAtom !== atom ) {
-                moleculeAtom.animationStartPosition = moleculeAtom.positionProperty.value;
-                moleculeAtom.animationEndPosition = moleculeAtom.positionProperty.value.plus( delta );
-                moleculeAtom.isAnimatingProperty.set( true );
+                this.setAnimationParameters( moleculeAtom, moleculeAtom.positionProperty.value.plus( delta ) );
               }
             } );
           }
@@ -225,6 +220,19 @@ define( require => {
       } );
       atomNode.dragListener = atomListener;
       atomNode.addInputListener( atomListener );
+    }
+
+    /**
+     * Removes atom elements from view.
+     *
+     * @param atom {Atom2}
+     * @param animationEndPosition {Vector2}
+     * @private
+     */
+    setAnimationParameters( atom, animationEndPosition ) {
+      atom.animationStartPosition = atom.positionProperty.value;
+      atom.animationEndPosition = animationEndPosition;
+      atom.isAnimatingProperty.set( true );
     }
 
     /**
