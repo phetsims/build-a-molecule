@@ -198,9 +198,6 @@ define( require => {
           // Responsible for dropping molecules in play area or kit area
           const droppedInKitArea = mappedAtomNode && mappedAtomNode.bounds.intersectsBounds( mappedKitCollectionBounds );
 
-          // Responsible bonding molecules in play area or breaking molecule bonds and returned to kit.
-          currentKit.atomDropped( atom, droppedInKitArea );
-
           // Set the atom position to the closest position within the play area bounds, unless it's dropped in kit area.
           if ( !this.playAreaDragBounds.containsPoint( atom.positionProperty.value ) && !droppedInKitArea ) {
             this.setAnimationParameters( atom, this.playAreaDragBounds.closestPointTo( atom.positionProperty.value ) );
@@ -217,6 +214,12 @@ define( require => {
                 }
               } );
             }
+          }
+
+          // Responsible bonding molecules in play area or breaking molecule bonds and returned to kit.
+          // We don't want to do this while the molecule is animating.
+          if ( !atom.isAnimatingProperty.value ) {
+            currentKit.atomDropped( atom, droppedInKitArea );
           }
         }
       } );
