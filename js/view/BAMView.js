@@ -19,7 +19,6 @@ define( require => {
   // const Node = require( 'SCENERY/nodes/Node' );
   const MoleculeControlsHBox = require( 'BUILD_A_MOLECULE/view/MoleculeControlsHBox' );
   const Rectangle = require( 'SCENERY/nodes/Rectangle' );
-  const Property = require( 'AXON/Property' );
   const ScreenView = require( 'JOIST/ScreenView' );
   // const Shape = require( 'KITE/Shape' );
   const SliceNode = require( 'BUILD_A_MOLECULE/view/SliceNode' );
@@ -158,7 +157,7 @@ define( require => {
         targetNode: atomNode,
 
         // TODO: We want to animate within these bounds on end callback.
-        dragBoundsProperty: new Property( this.playAreaDragBounds ),
+        // dragBoundsProperty: new Property( this.playAreaDragBounds ),
         locationProperty: atom.positionProperty,
         start: event => {
           // Get atom position before drag
@@ -199,6 +198,12 @@ define( require => {
           const droppedInKitArea = mappedAtomNode && mappedAtomNode.bounds.intersectsBounds( mappedKitCollectionBounds );
           currentKit.atomDropped( atom, droppedInKitArea );
 
+          // Set the atom position to the closest position within the play area bounds, unless it's dropped in kit area.
+          // TODO: We want this to be done for every atom in the molecule.
+          // TODO: Animate this process? Maybe twixt?
+          if ( !this.playAreaDragBounds.containsPoint( atom.positionProperty.value ) && !droppedInKitArea ) {
+            atom.positionProperty.set( this.playAreaDragBounds.closestPointTo( atom.positionProperty.value ) );
+          }
         }
       } );
       atomNode.dragListener = atomListener;
