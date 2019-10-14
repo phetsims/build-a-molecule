@@ -78,6 +78,10 @@ define( require => {
       this.userControlledProperty.lazyLink( controlled => {
         if ( controlled ) {
           this.grabbedByUserEmitter.emit( this );
+
+          // Interrupt animation process
+          this.isAnimatingProperty.set( !controlled );
+          this.animationProgress = 0;
         }
         else {
           this.droppedByUserEmitter.emit( this );
