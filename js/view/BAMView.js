@@ -210,11 +210,13 @@ define( require => {
             const delta = atom.animationEndPosition.minus( atom.animationStartPosition );
 
             // Every other atom in the molecule should update its position with the same delta.
-            molecule.atoms.forEach( moleculeAtom => {
-              if ( moleculeAtom !== atom ) {
-                this.setAnimationParameters( moleculeAtom, moleculeAtom.positionProperty.value.plus( delta ) );
-              }
-            } );
+            if ( molecule ) {
+              molecule.atoms.forEach( moleculeAtom => {
+                if ( moleculeAtom !== atom ) {
+                  this.setAnimationParameters( moleculeAtom, moleculeAtom.positionProperty.value.plus( delta ) );
+                }
+              } );
+            }
           }
         }
       } );
