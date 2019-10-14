@@ -188,7 +188,6 @@ define( require => {
         end: () => {
           // Consider an atom released and mark its position
           atom.userControlledProperty.value = false;
-          const startingPos = atom.positionProperty.value;
 
           // Keep track of view elements used later in the callback
           const mappedAtomNode = this.kitPlayAreaNode.atomNodeMap[ atom.id ];
@@ -203,18 +202,22 @@ define( require => {
           currentKit.atomDropped( atom, droppedInKitArea );
 
           // Set the atom position to the closest position within the play area bounds, unless it's dropped in kit area.
-          // TODO: Animate this process?
           if ( !this.playAreaDragBounds.containsPoint( atom.positionProperty.value ) && !droppedInKitArea ) {
-            atom.positionProperty.set( this.playAreaDragBounds.closestPointTo( atom.positionProperty.value ) );
+            // atom.positionProperty.set( this.playAreaDragBounds.closestPointTo( atom.positionProperty.value ) );
+            atom.animationStartPosition = atom.positionProperty.value;
+            atom.animationEndPosition = this.playAreaDragBounds.closestPointTo( atom.positionProperty.value );
+            atom.isAnimatingProperty.set( true );
 
             // Track changed position of atom after returning to constrained bounds.
-            const endingPos = atom.positionProperty.value;
-            const delta = endingPos.minus( startingPos );
+            // All atoms bonded to the dragged atom need to be offset by this delta.
+            const delta = atom.animationEndPosition.minus( atom.animationStartPosition );
 
             // Every other atom in the molecule should update its position with the same delta.
             molecule.atoms.forEach( moleculeAtom => {
               if ( moleculeAtom !== atom ) {
-                moleculeAtom.positionProperty.value = moleculeAtom.positionProperty.value.plus( delta );
+                moleculeAtom.animationStartPosition = moleculeAtom.positionProperty.value;
+                moleculeAtom.animationEndPosition = moleculeAtom.positionProperty.value.plus( delta );
+                moleculeAtom.isAnimatingProperty.set( true );
               }
             } );
           }

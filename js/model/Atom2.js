@@ -13,6 +13,7 @@ define( require => {
   const Atom = require( 'NITROGLYCERIN/Atom' );
   const BooleanProperty = require( 'AXON/BooleanProperty' );
   const buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
+  const Easing = require( 'TWIXT/Easing' );
   const Emitter = require( 'AXON/Emitter' );
   const Rectangle = require( 'DOT/Rectangle' );
   const Strings = require( 'BUILD_A_MOLECULE/Strings' );
@@ -41,6 +42,14 @@ define( require => {
       this.userControlledProperty = new BooleanProperty( false );
       this.visibleProperty = new BooleanProperty( true );
       this.addedToModelProperty = new BooleanProperty( true );
+      this.isAnimatingProperty = new BooleanProperty( false );
+
+      // @private {Vector2|null} Used for animating the molecules to a position constrained in play area bounds
+      this.animationStartPosition = null;
+      this.animationEndPosition = null;
+
+      // @private {number} Valid values 0 <= x <= 1. Used to adjust rate of animation completion.
+      this.animationProgress = 0;
 
       // @public {Emitter} - Called with one parameter: particle
       this.grabbedByUserEmitter = new Emitter( { parameters: [ { valueType: Atom2 } ] } );
@@ -85,7 +94,7 @@ define( require => {
     }
 
     /**
-     * @param dt {number}: time elapsed in seconds
+     * @param dt {number} time elapsed in seconds
      *
      * @public
      */
@@ -116,6 +125,39 @@ define( require => {
             this.destinationProperty.value.x - this.positionProperty.value.x );
           this.translate( distanceToTravel * Math.cos( angle ), distanceToTravel * Math.sin( angle ) );
         }
+      }
+
+      // Handle animation process
+      if ( this.isAnimatingProperty.value ) {
+        this.animate( dt );
+      }
+    }
+
+    /**
+     * Handle animating returning atoms to a position constrained within play area.
+     *
+     * @param {number} dt
+     * @private
+     */
+    animate( dt ) {
+      const distance = this.animationStartPosition.distance( this.animationEndPosition );
+      if ( distance > 0 ) {
+
+        // Responsible for the tempo of the animation.
+        this.animationProgress = Math.min( 1, this.animationProgress + dt );
+        const ratio = Easing.LINEAR.value( this.animationProgress );
+
+        // Update the position of the atom
+        this.positionProperty.set( this.animationStartPosition.blend( this.animationEndPosition, ratio ) );
+      }
+
+      // At this point the animation has completed
+      else {
+        this.animationProgress = 1;
+      }
+      if ( this.animationProgress === 1 ) {
+        this.isAnimatingProperty.set( false );
+        this.animationProgress = 0;
       }
     }
 
