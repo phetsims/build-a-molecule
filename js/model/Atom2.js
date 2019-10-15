@@ -198,8 +198,10 @@ define( require => {
       this.userControlledProperty.reset();
       this.visibleProperty.reset();
       this.addedToModelProperty.reset();
-
       this.destinationProperty.value = this.positionProperty.value;
+
+      // Treat animation interruption as if it is userControlled.
+      this.interruptAnimation( true );
     }
   }
 
