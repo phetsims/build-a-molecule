@@ -76,16 +76,13 @@ define( require => {
       delete this.bondMap[ molecule.moleculeId ];
     }
 
-    clearPlayArea() {
+    /**
+     * Resets the kit of play area.
+     *
+     * @public
+     */
+    resetPlayAreaKit() {
       this.currentKit.reset();
-      // this.currentKit.molecules =[];
-      // this.atomLayer.removeAllChildren();
-      // this.metadataLayer.removeAllChildren();
-      //
-      // this.atomNodeMap = {}; // atom.id => AtomNode
-      // this.bondMap = {}; // moleculeId => MoleculeBondContainerNode
-      // this.metadataMap = {};
-
     }
   }
 

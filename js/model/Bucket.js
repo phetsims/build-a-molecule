@@ -92,15 +92,16 @@ define( require => {
       } );
     }
 
+    /**
+     * Checks if the bucket is filled.
+     *
+     * @returns {boolean}
+     */
     isFull() {
-      let full;
+      let full = this.fullState.length === this.particleList.getArray().length;
       this.fullState.forEach( particle => {
         full = this.particleList.getArray().includes( particle );
       } );
-      full = this.fullState.length == this.particleList.getArray().length
-
-      console.log( 'full = ' + full );
-
       return full;
     }
 

@@ -17,7 +17,6 @@ define( require => {
   const DragListener = require( 'SCENERY/listeners/DragListener' );
   const KitCollectionNode = require( 'BUILD_A_MOLECULE/view/KitCollectionNode' );
   const KitPlayAreaNode = require( 'BUILD_A_MOLECULE/view/KitPlayAreaNode' );
-  // const Node = require( 'SCENERY/nodes/Node' );
   const MoleculeControlsHBox = require( 'BUILD_A_MOLECULE/view/MoleculeControlsHBox' );
   const PhetFont = require( 'SCENERY_PHET/PhetFont' );
   const Rectangle = require( 'SCENERY/nodes/Rectangle' );
@@ -79,7 +78,7 @@ define( require => {
       kitCollectionList.currentCollectionProperty.link( ( newCollection, oldCollection ) => {
         if ( oldCollection ) {
 
-          //Check if a KitCollectionNode exists and remove it.
+          // Check if a KitCollectionNode exists and remove it.
           this.children.forEach( child => {
             if ( child instanceof KitCollectionNode ) {
               this.removeChild( child );
@@ -104,21 +103,20 @@ define( require => {
       // var kitViewBounds = BAMConstants.modelViewTransform.modelToViewBounds( kitCollectionList.availableKitBounds() );
       const refillButton = new TextPushButton( 'Refill', {
         listener: () => {
-          this.kitPlayAreaNode.clearPlayArea();
+          this.kitPlayAreaNode.resetPlayAreaKit();
           this.kitPlayAreaNode.currentKit.buckets.forEach( bucket => {
-            bucket.setToFullState( true )
+            bucket.setToFullState( true );
           } );
-
           console.log( 'hello world' );
         },
         baseColor: Color.ORANGE,
-        font: new PhetFont( { size: 12, weight: 'bold' } ),
+        font: new PhetFont( { size: 12, weight: 'bold' } )
       } );
       refillButton.touchArea = Shape.bounds( refillButton.selfBounds.union( refillButton.childBounds ).dilated( 10 ) );
 
       // @private {function} Refill button is enabled if atoms exists outside of the bucket.
       this.updateRefillButton = () => {
-        refillButton.enabled = !kitCollectionList.currentCollectionProperty.value.currentKitProperty.value.filledBuckets();
+        refillButton.enabled = !kitCollectionList.currentCollectionProperty.value.currentKitProperty.value.allBucketsFilled();
       };
 
       // Update the refill button when the kit is switched

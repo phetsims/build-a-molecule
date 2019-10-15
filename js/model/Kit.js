@@ -326,13 +326,19 @@ define( require => {
       return !!( this.molecules.length || this.hasMoleculesInBoxesProperty.value );
     },
 
-    filledBuckets: function() {
-      let filled;
+    /**
+     * Checks if all of the buckets in the kit are filled. Buckets should match initial state.
+     *
+     * @returns {boolean}
+     */
+    allBucketsFilled: function() {
+      let allBucketsFilled = true;
       this.buckets.forEach( function( bucket ) {
-        filled = bucket.isFull();
+        if ( !bucket.isFull() ) {
+          allBucketsFilled = false;
+        }
       } );
-      console.log( 'filled = ' + filled );
-      return filled
+      return allBucketsFilled;
 
     },
 
