@@ -13,15 +13,18 @@ define( require => {
   const BAMConstants = require( 'BUILD_A_MOLECULE/BAMConstants' );
   const Bounds2 = require( 'DOT/Bounds2' );
   const buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
+  const Color = require( 'SCENERY/util/Color' );
   const DragListener = require( 'SCENERY/listeners/DragListener' );
   const KitCollectionNode = require( 'BUILD_A_MOLECULE/view/KitCollectionNode' );
   const KitPlayAreaNode = require( 'BUILD_A_MOLECULE/view/KitPlayAreaNode' );
   // const Node = require( 'SCENERY/nodes/Node' );
   const MoleculeControlsHBox = require( 'BUILD_A_MOLECULE/view/MoleculeControlsHBox' );
+  const PhetFont = require( 'SCENERY_PHET/PhetFont' );
   const Rectangle = require( 'SCENERY/nodes/Rectangle' );
   const ScreenView = require( 'JOIST/ScreenView' );
-  // const Shape = require( 'KITE/Shape' );
+  const Shape = require( 'KITE/Shape' );
   const SliceNode = require( 'BUILD_A_MOLECULE/view/SliceNode' );
+  const TextPushButton = require( 'SUN/buttons/TextPushButton' );
 
   class BAMView extends ScreenView {
     /**
@@ -96,6 +99,27 @@ define( require => {
       this.addChild( swipeCatch );
       this.addChild( this.kitPlayAreaNode );
       this.addChild( sliceNode );
+
+      // Create a button to refill the kit
+      // var kitViewBounds = BAMConstants.modelViewTransform.modelToViewBounds( kitCollectionList.availableKitBounds() );
+      const refillButton = new TextPushButton( 'Refill', {
+        listener: () => {
+          // TODO: Used for debugging
+          console.log( 'hello world' );
+        },
+        baseColor: Color.ORANGE,
+        font: new PhetFont( { size: 12, weight: 'bold' } ),
+      } );
+      refillButton.touchArea = Shape.bounds( refillButton.selfBounds.union( refillButton.childBounds ).dilated( 10 ) )
+
+      // @private {function} Refill button is enabled if atoms exists outside of the bucket.
+      this.updateRefillButton = () => {
+        refillButton.enabled = kitCollectionList.currentCollectionProperty.value.currentKitProperty.value.hasAtomsOutsideOfBuckets();
+      };
+
+      // Update the refill button when the kit is switched
+      kitCollectionList.currentCollectionProperty.value.currentKitProperty.link( this.updateRefillButton );
+      this.addChild( refillButton );
 
       // Kit listeners added to manage molecule metadata.
       this.kitCollectionList.collections.forEach( collection => {
@@ -231,6 +255,9 @@ define( require => {
           if ( !atom.isAnimatingProperty.value ) {
             currentKit.atomDropped( atom, droppedInKitArea );
           }
+
+          // Make sure to update the update button after moving atoms
+          this.updateRefillButton();
         }
       } );
       atomNode.dragListener = atomListener;
