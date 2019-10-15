@@ -75,6 +75,19 @@ define( require => {
       moleculeBondContainerNode.dispose();
       delete this.bondMap[ molecule.moleculeId ];
     }
+
+    clearPlayArea() {
+      this.currentKit.reset();
+      // this.currentKit.molecules =[];
+      // this.atomLayer.removeAllChildren();
+      // this.metadataLayer.removeAllChildren();
+      //
+      // this.atomNodeMap = {}; // atom.id => AtomNode
+      // this.bondMap = {}; // moleculeId => MoleculeBondContainerNode
+      // this.metadataMap = {};
+
+    }
   }
+
   return buildAMolecule.register( 'KitPlayAreaNode', KitPlayAreaNode );
 } );

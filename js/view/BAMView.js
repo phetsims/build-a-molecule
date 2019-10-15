@@ -104,17 +104,21 @@ define( require => {
       // var kitViewBounds = BAMConstants.modelViewTransform.modelToViewBounds( kitCollectionList.availableKitBounds() );
       const refillButton = new TextPushButton( 'Refill', {
         listener: () => {
-          // TODO: Used for debugging
+          this.kitPlayAreaNode.clearPlayArea();
+          this.kitPlayAreaNode.currentKit.buckets.forEach( bucket => {
+            bucket.setToFullState( true )
+          } );
+
           console.log( 'hello world' );
         },
         baseColor: Color.ORANGE,
         font: new PhetFont( { size: 12, weight: 'bold' } ),
       } );
-      refillButton.touchArea = Shape.bounds( refillButton.selfBounds.union( refillButton.childBounds ).dilated( 10 ) )
+      refillButton.touchArea = Shape.bounds( refillButton.selfBounds.union( refillButton.childBounds ).dilated( 10 ) );
 
       // @private {function} Refill button is enabled if atoms exists outside of the bucket.
       this.updateRefillButton = () => {
-        refillButton.enabled = kitCollectionList.currentCollectionProperty.value.currentKitProperty.value.hasAtomsOutsideOfBuckets();
+        refillButton.enabled = !kitCollectionList.currentCollectionProperty.value.currentKitProperty.value.filledBuckets();
       };
 
       // Update the refill button when the kit is switched

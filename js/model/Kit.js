@@ -118,7 +118,7 @@ define( require => {
           self.lewisDotModel.addAtom( atom );
         } );
 
-        // Set the bucket to its filled state and its the atoms.
+        // Set the bucket to its filled state.
         bucket.setToFullState( true );
       } );
     },
@@ -325,6 +325,17 @@ define( require => {
     hasAtomsOutsideOfBuckets: function() {
       return !!( this.molecules.length || this.hasMoleculesInBoxesProperty.value );
     },
+
+    filledBuckets: function() {
+      let filled;
+      this.buckets.forEach( function( bucket ) {
+        filled = bucket.isFull();
+      } );
+      console.log( 'filled = ' + filled );
+      return filled
+
+    },
+
 
     /*---------------------------------------------------------------------------*
      * model implementation

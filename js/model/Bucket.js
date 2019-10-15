@@ -78,7 +78,7 @@ define( require => {
     }
 
     /**
-     * Used to assign atoms to bucket's intial state.
+     * Used to assign atoms to bucket's initial state.
      * @param {boolean} addAtoms - flag to determine if atoms should be added to bucket
      *
      * @public
@@ -87,11 +87,21 @@ define( require => {
       this.fullState.forEach( atom => {
         if ( !this.particleList.contains( atom ) ) {
           this.particleList.push( atom );
-        }
-        if ( addAtoms ) {
           this.placeAtom( atom );
         }
       } );
+    }
+
+    isFull() {
+      let full;
+      this.fullState.forEach( particle => {
+        full = this.particleList.getArray().includes( particle );
+      } );
+      full = this.fullState.length == this.particleList.getArray().length
+
+      console.log( 'full = ' + full );
+
+      return full;
     }
 
     /**
