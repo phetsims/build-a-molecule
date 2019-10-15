@@ -159,14 +159,14 @@ define( require => {
         start: () => {
           // Get atom position before drag
           lastPosition = atom.positionProperty.value;
+
+          // If a molecule is animating interrupt the animation process.
           atom.userControlledProperty.value = true;
           const molecule = kitCollection.currentKitProperty.value.getMolecule( atom );
           if ( molecule ) {
             molecule.atoms.forEach( moleculeAtom => {
               if ( moleculeAtom ) {
-                moleculeAtom.isAnimatingProperty.value = !atom.userControlledProperty.value;
-                moleculeAtom.animationProgress = 0;
-
+                moleculeAtom.interruptAnimation( atom.userControlledProperty.value );
               }
             } );
           }

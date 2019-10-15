@@ -80,8 +80,7 @@ define( require => {
           this.grabbedByUserEmitter.emit( this );
 
           // Interrupt animation process
-          this.isAnimatingProperty.set( !controlled );
-          this.animationProgress = 0;
+          this.interruptAnimation( controlled );
         }
         else {
           this.droppedByUserEmitter.emit( this );
@@ -163,6 +162,16 @@ define( require => {
         this.isAnimatingProperty.set( false );
         this.animationProgress = 0;
       }
+    }
+
+    /**
+     * Interrupt and reset the animation progress if a user controls an atom.
+     *
+     * @param {boolean} userControlled - User is controlling the atom
+     */
+    interruptAnimation( userControlled ) {
+      this.isAnimatingProperty.set( !userControlled );
+      this.animationProgress = 0;
     }
 
     setPosition( x, y ) {
