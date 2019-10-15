@@ -160,6 +160,16 @@ define( require => {
           // Get atom position before drag
           lastPosition = atom.positionProperty.value;
           atom.userControlledProperty.value = true;
+          const molecule = kitCollection.currentKitProperty.value.getMolecule( atom );
+          if ( molecule ) {
+            molecule.atoms.forEach( moleculeAtom => {
+              if ( moleculeAtom ) {
+                moleculeAtom.isAnimatingProperty.value = !atom.userControlledProperty.value;
+                moleculeAtom.animationProgress = 0;
+
+              }
+            } );
+          }
 
           // Update the current kit in the play area node.
           this.kitPlayAreaNode.currentKit = this.kitCollectionList.currentCollectionProperty.value.currentKitProperty.value;
