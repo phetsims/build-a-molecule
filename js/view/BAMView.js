@@ -127,10 +127,10 @@ define( require => {
         listener: () => {
 
           // When clicked, empty collection boxes
-          kitCollectionList.currentCollectionProperty.value.collectionBoxes.forEach( function( box ) {
+          kitCollectionList.currentCollectionProperty.value.collectionBoxes.forEach( box => {
             box.reset();
           } );
-          kitCollectionList.currentCollectionProperty.value.kits.forEach( function( kit ) {
+          kitCollectionList.currentCollectionProperty.value.kits.forEach( kit => {
             kit.reset();
           } );
           kitCollectionList.reset();
