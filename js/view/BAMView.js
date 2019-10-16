@@ -101,6 +101,7 @@ define( require => {
 
       // Create a button to refill the kit
       // var kitViewBounds = BAMConstants.modelViewTransform.modelToViewBounds( kitCollectionList.availableKitBounds() );
+      const kitPanel = this.kitCollectionMap[ 0 ].kitPanel;
       const refillButton = new TextPushButton( 'Refill', {
         listener: () => {
           this.kitPlayAreaNode.resetPlayAreaKit();
@@ -110,7 +111,9 @@ define( require => {
           console.log( 'hello world' );
         },
         baseColor: Color.ORANGE,
-        font: new PhetFont( { size: 12, weight: 'bold' } )
+        font: new PhetFont( { size: 12, weight: 'bold' } ),
+        x: kitPanel.left,
+        bottom: kitPanel.top - 7
       } );
       refillButton.touchArea = Shape.bounds( refillButton.selfBounds.union( refillButton.childBounds ).dilated( 10 ) );
 

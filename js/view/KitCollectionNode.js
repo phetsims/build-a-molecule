@@ -22,12 +22,12 @@ define( require => {
      * @constructor
      */
     constructor( collection, view ) {
-      super( {} );
-      const kitPanel = new KitPanel( collection, BAMConstants.KIT_VIEW_HEIGHT, view );
-      kitPanel.bottom = BAMConstants.STAGE_SIZE.bottom - BAMConstants.VIEW_PADDING;
-      kitPanel.left = BAMConstants.STAGE_SIZE.left + BAMConstants.VIEW_PADDING;
+      super();
+      this.kitPanel = new KitPanel( collection, BAMConstants.KIT_VIEW_HEIGHT, view );
+      this.kitPanel.bottom = BAMConstants.STAGE_SIZE.bottom - BAMConstants.VIEW_PADDING;
+      this.kitPanel.left = BAMConstants.STAGE_SIZE.left + BAMConstants.VIEW_PADDING;
 
-      this.addChild( kitPanel );
+      this.addChild( this.kitPanel );
 
       const kitMap = []; // maps kit ID => KitView
       collection.kits.forEach( kit => {
