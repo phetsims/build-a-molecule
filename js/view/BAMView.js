@@ -105,7 +105,7 @@ define( require => {
         listener: () => {
           this.kitPlayAreaNode.resetPlayAreaKit();
           this.kitPlayAreaNode.currentKit.buckets.forEach( bucket => {
-            bucket.setToFullState( true );
+            bucket.setToFullState();
           } );
           console.log( 'hello world' );
         },

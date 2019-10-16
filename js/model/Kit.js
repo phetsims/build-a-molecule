@@ -119,7 +119,7 @@ define( require => {
         } );
 
         // Set the bucket to its filled state.
-        bucket.setToFullState( true );
+        bucket.setToFullState();
       } );
     },
 

@@ -195,7 +195,7 @@ define( require => {
       // Initial filling of the buckets and setting the bucket's filled state.
       bucket.getParticleList().forEach( particleAddedListener );
       bucket.fullState = bucket.getParticleList();
-      bucket.setToFullState( true );
+      bucket.setToFullState();
 
       // Add listeners to bucket particles observable array
       bucket.particleList.addItemAddedListener( particleAddedListener );
