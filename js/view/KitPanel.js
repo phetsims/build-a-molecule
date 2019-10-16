@@ -11,9 +11,11 @@ define( require => {
 
   const buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   const Carousel = require( 'SUN/Carousel' );
+  const Color = require( 'SCENERY/util/Color' );
   const BAMConstants = require( 'BUILD_A_MOLECULE/BAMConstants' );
   const KitView = require( 'BUILD_A_MOLECULE/view/KitView' );
   const Node = require( 'SCENERY/nodes/Node' );
+  const PageControl = require( 'SUN/PageControl' );
 
   class KitPanel extends Node {
     /**
@@ -37,6 +39,7 @@ define( require => {
         kitViews.push( kitView );
       } );
 
+      // @public {Carousel} Treats each kit as an item.
       this.kitCarousel = new Carousel( kitViews, {
         fill: BAMConstants.KIT_BACKGROUND,
         stroke: BAMConstants.KIT_BORDER,
@@ -49,6 +52,18 @@ define( require => {
         this.kitCollection.currentKitProperty.value = this.kitCollection.kits[ page ];
       } );
       this.addChild( this.kitCarousel );
+
+      // Page control for input carousel
+      const inputPageControl = new PageControl( this.kitCarousel.numberOfPages, this.kitCarousel.pageNumberProperty, {
+        top: this.kitCarousel.bottom + BAMConstants.VIEW_PADDING / 2,
+        centerX: this.kitCarousel.centerX,
+        pageFill: Color.WHITE,
+        pageStroke: Color.BLACK,
+        interactive: true,
+        dotTouchAreaDilation: 4,
+        dotMouseAreaDilation: 4
+      } );
+      this.addChild( inputPageControl );
     }
 
     /**
