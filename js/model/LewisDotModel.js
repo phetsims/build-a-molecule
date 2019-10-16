@@ -30,7 +30,7 @@ define( require => {
 
       // disconnect all of its bonds
       Direction.values.forEach( direction => {
-        if ( dotAtom.hasConnection( direction ) ) {
+        if ( dotAtom && dotAtom.hasConnection( direction ) ) {
           const otherDotAtom = dotAtom.getLewisDotAtom( direction );
           this.breakBond( dotAtom.atom, otherDotAtom.atom );
         }
@@ -73,7 +73,7 @@ define( require => {
       const result = [];
       const dotAtom = this.getLewisDotAtom( atom );
       Direction.values.forEach( direction => {
-        if ( !dotAtom.hasConnection( direction ) ) {
+        if ( dotAtom && !dotAtom.hasConnection( direction ) ) {
           result.push( direction );
         }
       } );
@@ -89,7 +89,7 @@ define( require => {
       const dotA = this.getLewisDotAtom( a );
       for ( let i = 0; i < 4; i++ ) {
         const direction = Direction.values[ i ];
-        if ( dotA.hasConnection( direction ) && dotA.getLewisDotAtom( direction ).atom === b ) {
+        if ( dotA && dotA.hasConnection( direction ) && dotA.getLewisDotAtom( direction ).atom === b ) {
           return direction;
         }
       }
@@ -166,7 +166,7 @@ define( require => {
       // check all directions so we can explore all other atoms that need to be mapped
       for ( let i = 0; i < 4; i++ ) {
         const direction = Direction.values[ i ];
-        if ( dotAtom.hasConnection( direction ) ) {
+        if ( dotAtom && dotAtom.hasConnection( direction ) ) {
           const otherDot = dotAtom.getLewisDotAtom( direction );
 
           // if this atom isn't excluded
