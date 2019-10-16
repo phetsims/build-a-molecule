@@ -145,8 +145,11 @@ define( require => {
       this.addChild( this.resetAllButton );
       this.resetAllButton.moveToBack();
 
-      // Update the refill button when the kit is switched
-      kitCollectionList.currentCollectionProperty.value.currentKitProperty.link( this.updateRefillButton );
+      // Update the refill button when the kit is switched. Also update the kit of the sliceNode
+      kitCollectionList.currentCollectionProperty.value.currentKitProperty.link( kit => {
+        sliceNode.swapKit( kit );
+        this.updateRefillButton();
+      } );
       this.addChild( refillButton );
 
       // Kit listeners added to manage molecule metadata.
