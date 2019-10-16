@@ -122,15 +122,20 @@ define( require => {
         refillButton.enabled = !kitCollectionList.currentCollectionProperty.value.currentKitProperty.value.allBucketsFilled();
       };
 
+      // Create a reset all button. Position altered on "Larger" Screen.
       this.resetAllButton = new ResetAllButton( {
         listener: () => {
-          // when clicked, empty collection boxes
+
+          // When clicked, empty collection boxes
           kitCollectionList.currentCollectionProperty.value.collectionBoxes.forEach( function( box ) {
             box.reset();
           } );
           kitCollectionList.currentCollectionProperty.value.kits.forEach( function( kit ) {
             kit.reset();
           } );
+          kitCollectionList.reset();
+          kitPanel.reset();
+          this.updateRefillButton();
         },
         radius: BAMConstants.RESET_BUTTON_RADIUS,
         right: kitPanel.right,

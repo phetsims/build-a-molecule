@@ -49,6 +49,13 @@ define( require => {
       } );
       this.addChild( this.kitCarousel );
     }
+
+    /**
+     * @public
+     */
+    reset() {
+      this.kitCarousel.reset();
+    }
   }
 
   return buildAMolecule.register( 'KitPanel', KitPanel );
