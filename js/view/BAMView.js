@@ -20,6 +20,7 @@ define( require => {
   const MoleculeControlsHBox = require( 'BUILD_A_MOLECULE/view/MoleculeControlsHBox' );
   const PhetFont = require( 'SCENERY_PHET/PhetFont' );
   const Rectangle = require( 'SCENERY/nodes/Rectangle' );
+  const ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
   const ScreenView = require( 'JOIST/ScreenView' );
   const Shape = require( 'KITE/Shape' );
   const SliceNode = require( 'BUILD_A_MOLECULE/view/SliceNode' );
@@ -100,7 +101,6 @@ define( require => {
       this.addChild( sliceNode );
 
       // Create a button to refill the kit
-      // var kitViewBounds = BAMConstants.modelViewTransform.modelToViewBounds( kitCollectionList.availableKitBounds() );
       const kitPanel = this.kitCollectionMap[ 0 ].kitPanel;
       const refillButton = new TextPushButton( 'Refill', {
         listener: () => {
@@ -112,7 +112,7 @@ define( require => {
         },
         baseColor: Color.ORANGE,
         font: new PhetFont( { size: 12, weight: 'bold' } ),
-        x: kitPanel.left,
+        left: kitPanel.left,
         bottom: kitPanel.top - 7
       } );
       refillButton.touchArea = Shape.bounds( refillButton.selfBounds.union( refillButton.childBounds ).dilated( 10 ) );
@@ -121,6 +121,24 @@ define( require => {
       this.updateRefillButton = () => {
         refillButton.enabled = !kitCollectionList.currentCollectionProperty.value.currentKitProperty.value.allBucketsFilled();
       };
+
+      this.resetAllButton = new ResetAllButton( {
+        listener: () => {
+          // when clicked, empty collection boxes
+          kitCollectionList.currentCollectionProperty.value.collectionBoxes.forEach( function( box ) {
+            box.reset();
+          } );
+          kitCollectionList.currentCollectionProperty.value.kits.forEach( function( kit ) {
+            kit.reset();
+          } );
+        },
+        radius: BAMConstants.RESET_BUTTON_RADIUS,
+        right: kitPanel.right,
+        bottom: refillButton.bottom
+      } );
+      this.resetAllButton.touchArea = Shape.bounds( this.resetAllButton.bounds.dilated( 7 ) );
+      this.addChild( this.resetAllButton );
+      this.resetAllButton.moveToBack();
 
       // Update the refill button when the kit is switched
       kitCollectionList.currentCollectionProperty.value.currentKitProperty.link( this.updateRefillButton );

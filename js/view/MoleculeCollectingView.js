@@ -14,6 +14,7 @@ define( require => {
   const buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   const CollectionPanel = require( 'BUILD_A_MOLECULE/view/CollectionPanel' );
   const BAMConstants = require( 'BUILD_A_MOLECULE/BAMConstants' );
+  const Vector2 = require( 'DOT/Vector2' );
 
   class MoleculeCollectingView extends BAMView {
     /**
@@ -47,8 +48,15 @@ define( require => {
           minWidth: 250,
           align: 'center'
         } );
-      collectionPanel.right = BAMConstants.STAGE_SIZE.width - BAMConstants.VIEW_PADDING / 2;
-      collectionPanel.bottom = BAMConstants.STAGE_SIZE.bottom - BAMConstants.VIEW_PADDING;
+
+      collectionPanel.setRightTop( new Vector2(
+        BAMConstants.STAGE_SIZE.width - BAMConstants.VIEW_PADDING / 2,
+        BAMConstants.STAGE_SIZE.top + BAMConstants.VIEW_PADDING / 2,
+      ) );
+      this.resetAllButton.setCenter( new Vector2(
+        collectionPanel.centerX,
+        collectionPanel.bottom + BAMConstants.RESET_BUTTON_RADIUS + BAMConstants.VIEW_PADDING / 2,
+      ) );
       this.addChild( collectionPanel );
       collectionPanel.moveToBack();
 

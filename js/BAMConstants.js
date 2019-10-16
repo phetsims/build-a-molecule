@@ -47,6 +47,7 @@ define( require => {
     MODEL_PADDING: MODEL_PADDING,
     TEXT_MAX_WIDTH: 200,
     BUTTON_PADDING: 5, // vertical space between molecule and name/buttons
+    RESET_BUTTON_RADIUS: 27,
     KIT_VIEW_HEIGHT: 148, // empirically determined as the height of the tallest bucket of atoms
 
     /*---------------------------------------------------------------------------*
