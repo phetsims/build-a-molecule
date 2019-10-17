@@ -1,5 +1,5 @@
 {
-  "comment": "# build-a-molecule 0.0.0-dev.19 Tue Oct 15 2019 10:31:05 GMT-0400 (EDT)",
+  "comment": "# build-a-molecule 0.0.0-dev.20 Thu Oct 17 2019 11:29:22 GMT-0400 (EDT)",
   "assert": {
     "sha": "bd6e3ed0a8b6fea73a4a176d5364809666833e58",
     "branch": "master"
@@ -13,7 +13,7 @@
     "branch": "master"
   },
   "build-a-molecule": {
-    "sha": "bfd422b6b09cdae7c5cc2428881fefec6977dc34",
+    "sha": "aa9f802835cc9fcc6ed183460de5785e993ade0b",
     "branch": "master"
   },
   "chipper": {
@@ -41,7 +41,7 @@
     "branch": "master"
   },
   "phet-core": {
-    "sha": "abfe2607f09a608418c9db138a6a19a28892fd2d",
+    "sha": "a2be5d3dadde2ca34028cdd378d5197b95d817c3",
     "branch": "master"
   },
   "phet-io": {
@@ -81,11 +81,11 @@
     "branch": "master"
   },
   "tambo": {
-    "sha": "c7151db2d0865e358412d3d03fb0135ccad1814b",
+    "sha": "44e878a8cfd7c750e1761e94e5e657e1d4fbecdf",
     "branch": "master"
   },
   "tandem": {
-    "sha": "051b9d389b6771ee03093fb8910bd2068eb846a5",
+    "sha": "a6d8e915af255b0721eaf6f47510dd973209176a",
     "branch": "master"
   },
   "twixt": {
