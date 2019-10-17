@@ -13,6 +13,7 @@ define( require => {
   const ButtonListener = require( 'SCENERY/input/ButtonListener' );
   const Color = require( 'SCENERY/util/Color' );
   const inherit = require( 'PHET_CORE/inherit' );
+  const merge = require( 'PHET_CORE/merge' );
   const Molecule3DDialog = require( 'BUILD_A_MOLECULE/view/view3d/Molecule3DDialog' );
   const Node = require( 'SCENERY/nodes/Node' );
   const PhetFont = require( 'SCENERY_PHET/PhetFont' );
@@ -26,7 +27,7 @@ define( require => {
 
   function ShowMolecule3DButtonNode( completeMolecule, options ) {
     const self = this;
-    RectangularPushButton.call( this, _.extend( {
+    RectangularPushButton.call( this, merge( {
       content: new Text( threeDString, {
         font: new PhetFont( {
           size: 12,

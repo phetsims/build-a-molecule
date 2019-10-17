@@ -13,6 +13,7 @@ define( require => {
   const buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   const CollectionAreaNode = require( 'BUILD_A_MOLECULE/view/CollectionAreaNode' );
   const inherit = require( 'PHET_CORE/inherit' );
+  const merge = require( 'PHET_CORE/merge' );
   const NextPreviousNavigationNode = require( 'SCENERY_PHET/NextPreviousNavigationNode' );
   const Node = require( 'SCENERY/nodes/Node' );
   const Panel = require( 'SUN/Panel' );
@@ -95,7 +96,7 @@ define( require => {
     // all of the collection boxes themselves
     this.layoutNode.addChild( this.collectionAreaHolder );
 
-    options = _.extend( {
+    options = merge( {
       cornerRadius: 0
     }, options );
 

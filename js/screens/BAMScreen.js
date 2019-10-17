@@ -8,17 +8,18 @@
 define( require => {
   'use strict';
 
+  const BAMConstants = require( 'BUILD_A_MOLECULE/BAMConstants' );
   const Bucket = require( 'BUILD_A_MOLECULE/model/Bucket' );
   const buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   const CollectionBox = require( 'BUILD_A_MOLECULE/model/CollectionBox' );
-  const KitCollectionList = require( 'BUILD_A_MOLECULE/model/KitCollectionList' );
-  const BAMConstants = require( 'BUILD_A_MOLECULE/BAMConstants' );
   const Dimension2 = require( 'DOT/Dimension2' );
   const Element = require( 'NITROGLYCERIN/Element' );
   const Emitter = require( 'AXON/Emitter' );
   const inherit = require( 'PHET_CORE/inherit' );
   const Kit = require( 'BUILD_A_MOLECULE/model/Kit' );
   const KitCollection = require( 'BUILD_A_MOLECULE/model/KitCollection' );
+  const KitCollectionList = require( 'BUILD_A_MOLECULE/model/KitCollectionList' );
+  const merge = require( 'PHET_CORE/merge' );
   const MoleculeList = require( 'BUILD_A_MOLECULE/model/MoleculeList' );
   const Property = require( 'AXON/Property' );
   const Screen = require( 'JOIST/Screen' );
@@ -32,7 +33,7 @@ define( require => {
    * @constructor
    */
   function BAMScreen( createInitialKitCollection, collectionLayout, createKitCollection, createView, options ) {
-    options = _.extend( {
+    options = merge( {
       backgroundColorProperty: new Property( BAMConstants.CANVAS_BACKGROUND_COLOR )
     }, options );
     const stepEmitter = new Emitter( { parameters: [ { valueType: 'number' } ] } ); // emits 1 parameter, timeElapsed

@@ -14,9 +14,10 @@ define( require => {
   'use strict';
 
   // modules
+  const BAMConstants = require( 'BUILD_A_MOLECULE/BAMConstants' );
   const buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   const Color = require( 'SCENERY/util/Color' );
-  const BAMConstants = require( 'BUILD_A_MOLECULE/BAMConstants' );
+  const merge = require( 'PHET_CORE/merge' );
   const Node = require( 'SCENERY/nodes/Node' );
   const PhetFont = require( 'SCENERY_PHET/PhetFont' );
   const ShadedSphereNode = require( 'SCENERY_PHET/ShadedSphereNode' );
@@ -33,7 +34,7 @@ define( require => {
      * @param {Object} options
      */
     constructor( atom, options ) {
-      super( _.extend( {
+      super( merge( {
         cursor: 'pointer'
       }, options ) );
 
