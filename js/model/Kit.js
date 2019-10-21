@@ -202,29 +202,6 @@ define( require => {
     },
 
     /**
-     * Called when an atom is dragged, with the corresponding delta
-     *
-     * @param atom  Atom that was dragged
-     * @param {Vector2} delta How far it was dragged (the delta)
-     */
-    atomDragged: function( atom, delta ) {
-      // move our atom
-      atom.translatePositionAndDestination( delta );
-
-      // move all other atoms in the molecule
-      if ( this.isAtomInPlay( atom ) ) {
-        const atoms = this.getMolecule( atom ).atoms;
-        for ( let i = 0; i < atoms.length; i++ ) {
-          const atomInMolecule = atoms[ i ];
-          if ( atom === atomInMolecule ) {
-            continue;
-          }
-          atomInMolecule.translatePositionAndDestination( delta );
-        }
-      }
-    },
-
-    /**
      * Called when a molecule is dragged (successfully) into a collection box
      *
      * @param {Molecule} molecule
