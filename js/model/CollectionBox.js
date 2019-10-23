@@ -12,7 +12,7 @@ define( require => {
   const Bounds2 = require( 'DOT/Bounds2' );
   const buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   const Emitter = require( 'AXON/Emitter' );
-  const Globals = require( 'BUILD_A_MOLECULE/Globals' );
+  const GameAudioPlayer = require( 'VEGAS/GameAudioPlayer' );
   const inherit = require( 'PHET_CORE/inherit' );
   const Molecule = require( 'BUILD_A_MOLECULE/model/Molecule' );
   const NumberProperty = require( 'AXON/NumberProperty' );
@@ -39,12 +39,15 @@ define( require => {
     // @public {number}
     this.capacity = capacity;
 
+    // Audio player for correct sound.
+    const gameAudioPlayer = new GameAudioPlayer();
+
     // @private
     this.molecules = [];
     this.dropBoundsProperty = new Property( Bounds2.NOTHING );
     this.addedMoleculeEmitter.addListener( function() {
       if ( self.quantityProperty.value === capacity ) {
-        Globals.gameAudioPlayer.correctAnswer();
+        gameAudioPlayer.correctAnswer();
       }
     } );
   }
