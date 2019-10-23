@@ -69,9 +69,11 @@ define( require => {
           // Each kit gets listeners for managing its play area.
           kit.atomsInPlayArea.addItemAddedListener( atom => {
             this.addAtomNodeToPlayArea( atom, kitCollectionList.currentCollectionProperty.value );
+            this.updateRefillButton();
           } );
           kit.atomsInPlayArea.addItemRemovedListener( atom => {
             this.onAtomRemovedFromPlayArea( atom );
+            this.updateRefillButton();
           } );
         } );
       } );
@@ -108,7 +110,7 @@ define( require => {
           this.kitPlayAreaNode.currentKit.buckets.forEach( bucket => {
             bucket.setToFullState();
           } );
-          console.log( 'hello world' );
+          this.updateRefillButton();
         },
         baseColor: Color.ORANGE,
         font: new PhetFont( { size: 12, weight: 'bold' } ),
