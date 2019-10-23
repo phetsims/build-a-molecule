@@ -43,6 +43,7 @@ define( require => {
       this.visibleProperty = new BooleanProperty( true );
       this.addedToModelProperty = new BooleanProperty( true );
       this.isAnimatingProperty = new BooleanProperty( false );
+      this.isSeparatingProperty = new BooleanProperty( false );
 
       // @private {Vector2|null} Used for animating the molecules to a position constrained in play area bounds
       this.animationStartPosition = null;
@@ -102,32 +103,8 @@ define( require => {
      * @public
      */
     step( dt ) {
-      if ( this.positionProperty.value.distance( this.destinationProperty.value ) !== 0 ) {
-
-        // Move towards the current destination
-        let distanceToTravel = MOTION_VELOCITY * dt;
-        const distanceToTarget = this.positionProperty.value.distance( this.destinationProperty.value );
-
-        const farDistanceMultiple = 10; // if we are this many times away, we speed up
-
-        // if we are far from the target, let's speed up the velocity
-        if ( distanceToTarget > distanceToTravel * farDistanceMultiple ) {
-          const extraDistance = distanceToTarget - distanceToTravel * farDistanceMultiple;
-          distanceToTravel *= 1 + extraDistance / 300;
-        }
-
-        if ( distanceToTravel >= distanceToTarget ) {
-
-          // Closer than one step, so just go there.
-          // this.positionProperty.value = this.destinationProperty.value;
-        }
-        else {
-
-          // Move towards the destination.
-          const angle = Math.atan2( this.destinationProperty.value.y - this.positionProperty.value.y,
-            this.destinationProperty.value.x - this.positionProperty.value.x );
-          this.translate( distanceToTravel * Math.cos( angle ), distanceToTravel * Math.sin( angle ) );
-        }
+      if ( this.isSeparatingProperty.value ) {
+        this.separateFromNearestAtom( dt );
       }
 
       // Handle animation process
@@ -161,6 +138,42 @@ define( require => {
       if ( this.animationProgress === 1 ) {
         this.isAnimatingProperty.set( false );
         this.animationProgress = 0;
+      }
+    }
+
+    /**
+     * Responsible for distancing an atom from other atoms, while staying within the play area bounds.
+     *
+     * @param dt
+     * @private
+     */
+    separateFromNearestAtom( dt ) {
+      if ( this.isSeparatingProperty.value && !this.userControlledProperty.value && this.positionProperty.value.distance( this.destinationProperty.value ) !== 0 ) {
+        console.log( 'separating' );
+
+        // Move towards the current destination
+        let distanceToTravel = MOTION_VELOCITY * dt;
+        const distanceToTarget = this.positionProperty.value.distance( this.destinationProperty.value );
+
+        const farDistanceMultiple = 10; // if we are this many times away, we speed up
+
+        // if we are far from the target, let's speed up the velocity
+        if ( distanceToTarget > distanceToTravel * farDistanceMultiple ) {
+          const extraDistance = distanceToTarget - distanceToTravel * farDistanceMultiple;
+          distanceToTravel *= 1 + extraDistance / 300;
+        }
+        if ( distanceToTravel >= distanceToTarget ) {
+
+          // Closer than one step, so just go there.
+          this.positionProperty.value = this.destinationProperty.value;
+        }
+        else {
+
+          // Move towards the destination.
+          const angle = Math.atan2( this.destinationProperty.value.y - this.positionProperty.value.y,
+            this.destinationProperty.value.x - this.positionProperty.value.x );
+          this.translate( distanceToTravel * Math.cos( angle ), distanceToTravel * Math.sin( angle ) );
+        }
       }
     }
 
