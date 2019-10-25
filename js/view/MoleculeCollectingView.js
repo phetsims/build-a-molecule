@@ -42,7 +42,8 @@ define( require => {
           // returns model bounds from a node, given local coordinates on a node
           const viewBounds = node.getParent().getUniqueTrail().getTransformTo( this.getUniqueTrail() ).transformBounds2( node.bounds );
           return BAMConstants.MODEL_VIEW_TRANSFORM.viewToModelBounds( viewBounds );
-        }, {
+        },
+        this.showDialogCallback, {
           xMargin: 10,
           yMargin: 7,
           minWidth: 250,

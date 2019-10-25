@@ -31,10 +31,11 @@ define( require => {
 
   /**
    * @param {CollectionBox} box
-   * @param {Function} toModelBounds
+   * @param {function} toModelBounds
+   * @param {function} showDialogCallback
    * @constructor
    */
-  function CollectionBoxNode( box, toModelBounds ) {
+  function CollectionBoxNode( box, toModelBounds, showDialogCallback ) {
     VBox.call( this );
     const self = this;
 
@@ -53,7 +54,7 @@ define( require => {
     };
 
     if ( BAMConstants.HAS_3D ) {
-      const show3dButton = new ShowMolecule3DButtonNode( box.moleculeType );
+      const show3dButton = new ShowMolecule3DButtonNode( box.moleculeType, showDialogCallback );
       show3dButton.touchArea = Shape.bounds( show3dButton.bounds.dilated( 10 ) );
       show3dButton.right = this.blackBox.right - BLACK_BOX_PADDING;
       show3dButton.centerY = this.blackBox.centerY;

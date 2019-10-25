@@ -18,6 +18,7 @@ define( require => {
   const KitCollectionNode = require( 'BUILD_A_MOLECULE/view/KitCollectionNode' );
   const KitPlayAreaNode = require( 'BUILD_A_MOLECULE/view/KitPlayAreaNode' );
   const MoleculeControlsHBox = require( 'BUILD_A_MOLECULE/view/MoleculeControlsHBox' );
+  const Molecule3DDialog = require( 'BUILD_A_MOLECULE/view/view3d/Molecule3DDialog' );
   const PhetFont = require( 'SCENERY_PHET/PhetFont' );
   const Rectangle = require( 'SCENERY/nodes/Rectangle' );
   const ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
@@ -44,6 +45,9 @@ define( require => {
       // @public {KitCollectionList}
       this.kitCollectionList = kitCollectionList;
       this.addCollection( kitCollectionList.currentCollectionProperty.value );
+
+      // @public {fucntion} Reference to callback that displays dialog for 3d node representation
+      this.showDialogCallback = this.showDialog.bind( this );
 
       // Components relevant to swipe node used to manually break bonded molecules.
       const viewSwipeBounds = BAMConstants.MODEL_VIEW_TRANSFORM.modelToViewBounds(
@@ -160,7 +164,7 @@ define( require => {
 
           // handle molecule creation and destruction
           kit.addedMoleculeEmitter.addListener( molecule => {
-            var moleculeControlsHBox = new MoleculeControlsHBox( kit, molecule );
+            var moleculeControlsHBox = new MoleculeControlsHBox( kit, molecule, this.showDialogCallback );
             this.kitPlayAreaNode.metadataLayer.addChild( moleculeControlsHBox );
             this.kitPlayAreaNode.metadataMap[ molecule.moleculeId ] = moleculeControlsHBox;
 
@@ -182,6 +186,27 @@ define( require => {
           } );
         } );
       } );
+    }
+
+    /**
+     * @private
+     */
+    step() {
+      if ( this.dialog ) {
+        this.dialog.render( undefined );
+      }
+    }
+
+    /**
+     * Responsible for showing 3d representation of molecule.
+     *
+     * @param completeMolecule
+     * @private
+     */
+    showDialog( completeMolecule ) {
+      this.dialog = new Molecule3DDialog( completeMolecule );
+      this.dialog.show();
+
     }
 
     addCollection( collection ) {

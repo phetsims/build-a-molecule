@@ -28,11 +28,12 @@ define( require => {
 
   /**
    * @param {CollectionBox} box
-   * @param {Function} toModelBounds
+   * @param {function} toModelBounds
+   * @param {function} showDialogCallback
    * @constructor
    */
-  function MultipleCollectionBoxNode( box, toModelBounds ) {
-    CollectionBoxNode.call( this, box, toModelBounds );
+  function MultipleCollectionBoxNode( box, toModelBounds, showDialogCallback ) {
+    CollectionBoxNode.call( this, box, toModelBounds, showDialogCallback );
 
     this.addChild( new RichText( StringUtils.fillIn( collectionMultipleGoalPatternString, {
       number: box.capacity,
@@ -78,9 +79,9 @@ define( require => {
 
   MoleculeList.collectionBoxMolecules.forEach( function( molecule ) {
     // fake boxes
-    const boxBounds = new MultipleCollectionBoxNode( new CollectionBox( molecule, 1 ), function( node ) {
+    const boxBounds = new MultipleCollectionBoxNode( new CollectionBox( molecule, 1, () => {} ), function( node ) {
       return node.bounds;
-    } ).bounds;
+    }, () => {} ).bounds;
 
     maxBounds = maxBounds.union( boxBounds );
   } );

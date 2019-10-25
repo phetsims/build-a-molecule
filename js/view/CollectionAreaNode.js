@@ -19,10 +19,11 @@ define( require => {
   /**
    * @param {KitCollection} collection
    * @param {boolean} isSingleCollectionMode
-   * @param {Function} toModelBounds
+   * @param {function} toModelBounds
+   * @param {function} showDialogCallback
    * @constructor
    */
-  function CollectionAreaNode( collection, isSingleCollectionMode, toModelBounds ) {
+  function CollectionAreaNode( collection, isSingleCollectionMode, toModelBounds, showDialogCallback ) {
     Node.call( this, {} );
     const self = this;
 
@@ -35,7 +36,8 @@ define( require => {
 
     // Create and add all collection box nodes.
     collection.collectionBoxes.forEach( function( collectionBox ) {
-      const collectionBoxNode = isSingleCollectionMode ? new SingleCollectionBoxNode( collectionBox, toModelBounds ) : new MultipleCollectionBoxNode( collectionBox, toModelBounds );
+      const collectionBoxNode = isSingleCollectionMode ? new SingleCollectionBoxNode( collectionBox, toModelBounds, showDialogCallback ) :
+                                new MultipleCollectionBoxNode( collectionBox, toModelBounds, showDialogCallback );
       self.collectionBoxNodes.push( collectionBoxNode );
       allCollectionItemsVBox.addChild( collectionBoxNode );
     } );

@@ -25,14 +25,13 @@ define( require => {
 
   /**
    * @param {CollectionBox} box
-   * @param {Function} toModelBounds
+   * @param {function} toModelBounds
+   * @param {function} showDialogCallback
    * @constructor
    */
-  function SingleCollectionBoxNode( box, toModelBounds ) {
-    CollectionBoxNode.call( this, box, toModelBounds );
-
+  function SingleCollectionBoxNode( box, toModelBounds, showDialogCallback ) {
+    CollectionBoxNode.call( this, box, toModelBounds, showDialogCallback );
     assert && assert( box.capacity === 1 );
-
     this.addChild( new RichText( StringUtils.fillIn( collectionSinglePatternString,
       {
         general: box.moleculeType.getGeneralFormulaFragment(),
@@ -59,9 +58,9 @@ define( require => {
 
   MoleculeList.collectionBoxMolecules.forEach( function( molecule ) {
     // fake boxes
-    const boxBounds = new SingleCollectionBoxNode( new CollectionBox( molecule, 1 ), function( node ) {
+    const boxBounds = new SingleCollectionBoxNode( new CollectionBox( molecule, 1, () => {} ), function( node ) {
       return node.bounds;
-    } ).bounds;
+    }, () => {} ).bounds;
 
     maxBounds = maxBounds.union( boxBounds );
   } );

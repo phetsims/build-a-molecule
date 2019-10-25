@@ -18,12 +18,12 @@ define( require => {
   const Enumeration = require( 'PHET_CORE/Enumeration' );
   const EnumerationProperty = require( 'AXON/EnumerationProperty' );
   const inherit = require( 'PHET_CORE/inherit' );
-  const Molecule3DNode = require( 'BUILD_A_MOLECULE/view/view3d/Molecule3DNode' );
-  const Node = require( 'SCENERY/nodes/Node' );
   const PhetFont = require( 'SCENERY_PHET/PhetFont' );
   const RichText = require( 'SCENERY/nodes/RichText' );
+  const ThreeNode = require( 'MOBIUS/ThreeNode' );
   const Text = require( 'SCENERY/nodes/Text' );
   const HBox = require( 'SCENERY/nodes/HBox' );
+  const VBox = require( 'SCENERY/nodes/VBox' );
 
   // strings
   const ballAndStickString = require( 'string!BUILD_A_MOLECULE/ballAndStick' ); // eslint-disable-line string-require-statement-match
@@ -32,13 +32,12 @@ define( require => {
   const size = 200;
   const optionsHorizontalPadding = 40;
 
-  //REVIEW: Note that this may change significantly if we go with a three.js/webgl solution
-  function Molecule3DDialog( completeMolecule, view ) {
+  function Molecule3DDialog( completeMolecule ) {
 
     // Holds all of the content within the dialog
-    const contentNode = new Node();
+    const contentVBox = new VBox( { spacing: 12 } );
 
-    Dialog.call( this, contentNode, {
+    Dialog.call( this, contentVBox, {
       modal: true,
       fill: 'black',
       xAlign: 'center',
@@ -55,12 +54,8 @@ define( require => {
     // Chemical formula label
     const formulaText = new RichText( completeMolecule.getGeneralFormulaFragment(), {
       font: new PhetFont( 20 ),
-      fill: '#bbb',
-      centerX: this.center.x,
-      top: this.top + 10
-
+      fill: '#bbb'
     } );
-    contentNode.addChild( formulaText );
 
     // Space fill / Ball and stick radio buttons
     const buttonTextOptions = {
@@ -83,66 +78,32 @@ define( require => {
 
     const buttonHolder = new HBox( {
       children: [ spaceFillButton, ballAndStickButton ],
-      centerX: this.centerX,
-      top: this.bottom,
       spacing: optionsHorizontalPadding
     } );
 
-    contentNode.addChild( buttonHolder );
+    // @private 3D view of moleculeNode using mobuis supported elements
+    this.moleculeNode = new ThreeNode( 70, 70 );
+    const moleculeScene = this.moleculeNode.stage.threeScene;
 
-    // REVIEW: Ask for JO input on scaling molecule to fit within dialog. This may change if we use three.js
-    /*---------------------------------------------------------------------------*
-     * 3D view
-     *----------------------------------------------------------------------------*/
-    const moleculeNode = new Molecule3DNode( completeMolecule, view.layoutBounds, true );
-    // moleculeNode.touchArea = moleculeNode.mouseArea = Shape.bounds( this.getLocalCanvasBounds() );
-    moleculeNode.initializeDrag( this );
-    // contentNode.addChild( moleculeNode );
+    moleculeScene.add( new THREE.Mesh(
+      new THREE.SphereGeometry( 4, 30, 24 ), new THREE.MeshLambertMaterial( {
+        color: 0xffaa44
+      } ) ) );
 
-    // var transformMatrix = Molecule3DNode.initialTransforms[ completeMolecule.getGeneralFormula() ];
-    // if ( transformMatrix ) {
-    //   moleculeNode.transformMolecule( transformMatrix );
-    // }
+    // Lights taken from MoleculeShapesScreenView.js
+    const ambientLight = new THREE.AmbientLight( 0x191919 ); // closest to 0.1 like the original shader
+    moleculeScene.add( ambientLight );
 
-    // function updateLayout() {
-    //   var sceneWidth = window.innerWidth;
-    //   var sceneHeight = window.innerHeight;
-    //   var newMatrix = view.getMatrix();
-    //   if ( sceneWidth === width && sceneHeight === height && matrix.equals( newMatrix ) ) {
-    //     return;
-    //   }
-    //   width = sceneWidth;
-    //   height = sceneHeight;
-    //   matrix = newMatrix.copy();
-    //
-    //   var screenBounds = view.globalToLocalBounds( new Bounds2( 0, 0, width, height ) );
-    //   outsideNode.setRectBounds( screenBounds.roundedOut() );
-    //   var windowBounds = BAMConstants.STAGE_SIZE.toBounds().eroded( stageWindowPadding );
-    //   background.setRectBounds( windowBounds );
-    //
-    //
-    //   moleculeNode.setMoleculeBounds( self.getGlobalCanvasBounds( view ) );
-    // }
+    const sunLight = new THREE.DirectionalLight( 0xffffff, 0.8 * 0.9 );
+    sunLight.position.set( -1.0, 0.5, 2.0 );
+    moleculeScene.add( sunLight );
 
-    // updateLayout();
-    // view.on( 'bounds', updateLayout );
+    const moonLight = new THREE.DirectionalLight( 0xffffff, 0.6 * 0.9 );
+    moonLight.position.set( 2.0, -1.0, 1.0 );
+    moleculeScene.add( moonLight );
 
-    // moleculeNode.draggingProperty.link( function( dragging ) {
-    //   var cursor = dragging ? 'scenery-grabbing-pointer' : 'scenery-grab-pointer';
-    //   background.cursor = cursor;
-    //   moleculeNode.cursor = cursor;
-    // } );
-
-    const tick = moleculeNode.tick.bind( moleculeNode );
-    const stepEmitter = view.kitCollectionList.stepEmitter;
-    stepEmitter.addListener( tick );
-    //
-    // this.disposeMolecule3DDialog = function() {
-    //   view.off( 'bounds', updateLayout );
-    //   view.removeChild( self );
-    //   stepEmitter.removeListener( tick );
-    // };
-
+    // Set the order of children for the Vbox
+    contentVBox.children = [ formulaText, this.moleculeNode, buttonHolder ];
   }
 
   buildAMolecule.register( 'Molecule3DDialog', Molecule3DDialog );
@@ -156,6 +117,16 @@ define( require => {
 
     getGlobalCanvasBounds: function( view ) {
       return view.localToGlobalBounds( this.getLocalCanvasBounds() ).roundedOut();
+    },
+
+    /**
+     * Render the molecule node scene
+     *
+     * @public
+     */
+    render: function() {
+      this.moleculeNode.layout();
+      this.moleculeNode.render( undefined );
     }
   } );
 } );

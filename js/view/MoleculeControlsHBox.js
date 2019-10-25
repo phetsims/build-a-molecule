@@ -31,10 +31,11 @@ define( require => {
   /**
    * @param {Kit} kit
    * @param {Molecule} molecule
+   * @param {function} showDialogCallback
    * @constructor
    */
   class MoleculeControlsHBox extends HBox {
-    constructor( kit, molecule ) {
+    constructor( kit, molecule, showDialogCallback ) {
       super( { spacing: 9 } );
 
       const self = this;
@@ -60,7 +61,9 @@ define( require => {
 
         // 3D button
         if ( BAMConstants.HAS_3D ) {
-          const button3d = new ShowMolecule3DButtonNode( completeMolecule, {
+
+          // @private Button that shows 3d representation of molecule
+          const button3d = new ShowMolecule3DButtonNode( completeMolecule, showDialogCallback, {
             scale: SCALE
           } );
           button3d.touchArea = Shape.bounds( button3d.childBounds.dilated( DILATION_FACTOR ) );
