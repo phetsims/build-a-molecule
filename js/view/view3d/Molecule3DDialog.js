@@ -113,15 +113,15 @@ define( require => {
           this.moleculeContainer.add( atomMesh );
           atomMesh.position.set( atom.x3d, atom.y3d, atom.z3d );
         } );
-        completeMolecule.bonds.forEach( ( bond ) => {
+        completeMolecule.bonds.forEach( bond => {
           const bondMesh = new THREE.Mesh( new THREE.CylinderGeometry( .75, .75, 0.25, 32, false ), new THREE.MeshLambertMaterial( {
             color: Color.gray
           } ) );
 
           // Vector3
           const cylinderDefaultOrientation = Vector3.X_UNIT;
-          let bondAPosition = new Vector3( bond.a.x3d, bond.a.y3d, bond.a.z3d );
-          let bondBPosition = new Vector3( bond.b.x3d, bond.b.y3d, bond.b.z3d );
+          const bondAPosition = new Vector3( bond.a.x3d, bond.a.y3d, bond.a.z3d );
+          const bondBPosition = new Vector3( bond.b.x3d, bond.b.y3d, bond.b.z3d );
           const neededOrientation = bondAPosition.minus( bondBPosition ).normalized();
 
           // Matrix3
