@@ -82,6 +82,9 @@ define( require => {
         } );
       } );
 
+      // Create a play area to house the molecules.
+      this.kitPlayAreaNode = new KitPlayAreaNode( kits );
+
       kitCollectionList.currentCollectionProperty.link( ( newCollection, oldCollection ) => {
         if ( oldCollection ) {
 
@@ -97,11 +100,12 @@ define( require => {
         if ( newCollection ) {
           this.addChild( this.kitCollectionMap[ newCollection.id ] );
         }
+
+        // Set the current kit of the KitPlayAreaNode
+        this.kitPlayAreaNode.currentKit = newCollection.currentKitProperty.value;
       } );
       kitCollectionList.addedCollectionEmitter.addListener( this.addCollection.bind( this ) );
 
-      // Create a play area to house the molecules.
-      this.kitPlayAreaNode = new KitPlayAreaNode( kits );
       this.addChild( swipeCatch );
       this.addChild( this.kitPlayAreaNode );
       this.addChild( sliceNode );
@@ -127,6 +131,10 @@ define( require => {
       this.updateRefillButton = () => {
         refillButton.enabled = !kitCollectionList.currentCollectionProperty.value.currentKitProperty.value.allBucketsFilled();
       };
+
+      kitCollectionList.currentCollectionProperty.value.currentKitProperty.link( kit => {
+        this.kitPlayAreaNode.currentKit = kit;
+      } );
 
       // Create a reset all button. Position altered on "Larger" Screen.
       this.resetAllButton = new ResetAllButton( {
