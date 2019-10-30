@@ -97,11 +97,8 @@ define( require => {
      * @returns {boolean}
      */
     isFull() {
-      let full = this.fullState.length === this.particleList.getArray().length;
-      this.fullState.forEach( particle => {
-        full = this.particleList.getArray().includes( particle );
-      } );
-      return full;
+      return this.fullState.length === this.particleList.getArray().length;
+      ;
     }
 
     /**

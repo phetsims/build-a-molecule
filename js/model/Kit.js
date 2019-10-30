@@ -316,7 +316,6 @@ define( require => {
         }
       } );
       return allBucketsFilled;
-
     },
 
 
