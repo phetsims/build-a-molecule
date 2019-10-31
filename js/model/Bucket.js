@@ -98,7 +98,6 @@ define( require => {
      */
     isFull() {
       return this.fullState.length === this.particleList.getArray().length;
-      ;
     }
 
     /**
