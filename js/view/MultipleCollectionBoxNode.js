@@ -30,6 +30,7 @@ define( require => {
    * @param {CollectionBox} box
    * @param {function} toModelBounds
    * @param {function} showDialogCallback
+   *
    * @constructor
    */
   function MultipleCollectionBoxNode( box, toModelBounds, showDialogCallback ) {
@@ -79,9 +80,12 @@ define( require => {
 
   MoleculeList.collectionBoxMolecules.forEach( function( molecule ) {
     // fake boxes
-    const boxBounds = new MultipleCollectionBoxNode( new CollectionBox( molecule, 1, () => {} ), function( node ) {
-      return node.bounds;
-    }, () => {} ).bounds;
+    const boxBounds = new MultipleCollectionBoxNode(
+      new CollectionBox( molecule, 1, { initializeAudio: false } ),
+      function( node ) {
+        return node.bounds;
+      },
+      () => {} ).bounds;
 
     maxBounds = maxBounds.union( boxBounds );
   } );

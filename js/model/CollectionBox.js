@@ -14,6 +14,7 @@ define( require => {
   const Emitter = require( 'AXON/Emitter' );
   const GameAudioPlayer = require( 'VEGAS/GameAudioPlayer' );
   const inherit = require( 'PHET_CORE/inherit' );
+  const merge = require( 'PHET_CORE/merge' );
   const Molecule = require( 'BUILD_A_MOLECULE/model/Molecule' );
   const NumberProperty = require( 'AXON/NumberProperty' );
   const Property = require( 'AXON/Property' );
@@ -21,8 +22,13 @@ define( require => {
   /**
    * @param {CompleteMolecule} moleculeType
    * @param {number} capacity
+   * @param {object} options
    */
-  function CollectionBox( moleculeType, capacity ) {
+  function CollectionBox( moleculeType, capacity, options ) {
+    options = merge( {
+      initializeAudio: true
+    }, options );
+
     const self = this;
 
     // @public {Property.<number>}
@@ -39,14 +45,14 @@ define( require => {
     // @public {number}
     this.capacity = capacity;
 
-    // Audio player for correct sound.
-    const gameAudioPlayer = new GameAudioPlayer();
-
     // @private
     this.molecules = [];
     this.dropBoundsProperty = new Property( Bounds2.NOTHING );
     this.addedMoleculeEmitter.addListener( function() {
-      if ( self.quantityProperty.value === capacity ) {
+      if ( self.quantityProperty.value === capacity && options.initializeAudio ) {
+
+        // Audio player for correct sound
+        const gameAudioPlayer = new GameAudioPlayer();
         gameAudioPlayer.correctAnswer();
       }
     } );
