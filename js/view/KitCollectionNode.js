@@ -19,11 +19,12 @@ define( require => {
     /**
      * @param {KitCollection} collection
      * @param {MoleculeCollectingView} view
+     * @param {boolean} isCollectingView
      * @constructor
      */
-    constructor( collection, view ) {
+    constructor( collection, view, isCollectingView ) {
       super();
-      this.kitPanel = new KitPanel( collection, BAMConstants.KIT_VIEW_HEIGHT, view );
+      this.kitPanel = new KitPanel( collection, BAMConstants.KIT_VIEW_WIDTH, BAMConstants.KIT_VIEW_HEIGHT, view, isCollectingView );
       this.kitPanel.bottom = BAMConstants.STAGE_SIZE.bottom - BAMConstants.VIEW_PADDING;
       this.kitPanel.left = BAMConstants.STAGE_SIZE.left + BAMConstants.VIEW_PADDING;
 

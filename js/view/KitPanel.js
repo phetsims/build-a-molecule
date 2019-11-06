@@ -20,11 +20,13 @@ define( require => {
   class KitPanel extends Node {
     /**
      * @param {KitCollection} kitCollection
+     * @param {number} kitViewWidth
      * @param {number} kitViewHeight
-     * @param {MoleculeCollectingView} view
+     * @param {MoleculeCollectingView|BAMView} view
+     * @param {boolean} isCollectingView
      * @constructor
      */
-    constructor( kitCollection, kitViewHeight, view ) {
+    constructor( kitCollection, kitViewWidth, kitViewHeight, view, isCollectingView ) {
       super();
 
       // @private
@@ -36,6 +38,11 @@ define( require => {
         const kitView = new KitView( kit, view );
         const kitViewBounds = kitView.getLocalBounds();
         kitView.setLocalBounds( kitViewBounds.dilatedY( ( kitViewHeight - kitViewBounds.getHeight() ) / 2 ) );
+
+        // We only want to adjust width of kit panel on collection views.
+        if ( isCollectingView ) {
+          kitView.setLocalBounds( kitViewBounds.dilatedX( ( kitViewWidth - kitViewBounds.getWidth() ) / 2 ) );
+        }
         kitViews.push( kitView );
       } );
 

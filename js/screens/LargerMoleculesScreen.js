@@ -110,6 +110,7 @@ define( require => {
       },
 
       function( model ) {
+
         // create the view
         return new BAMView( model );
       },

@@ -72,7 +72,7 @@ define( require => {
         // create the view
         return new MoleculeCollectingView( model, true, function() {
           // next collection callback
-          model.addCollection( BAMScreen.generateKitCollection( false, 5, model.stepEmitter, model.collectionLayout ) );
+          model.addCollection( BAMScreen.generateKitCollection( false, 5, model.stepEmitter, model.collectionLayout ), true );
         } );
       },
 

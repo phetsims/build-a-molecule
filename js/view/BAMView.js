@@ -44,7 +44,7 @@ define( require => {
 
       // @public {KitCollectionList}
       this.kitCollectionList = kitCollectionList;
-      this.addCollection( kitCollectionList.currentCollectionProperty.value );
+      this.addCollection( kitCollectionList.currentCollectionProperty.value, false );
 
       // @public {fucntion} Reference to callback that displays dialog for 3d node representation
       this.showDialogCallback = this.showDialog.bind( this );
@@ -217,8 +217,14 @@ define( require => {
 
     }
 
-    addCollection( collection ) {
-      const kitCollectionNode = new KitCollectionNode( collection, this );
+    /**
+     *
+     * @param {KitCollection} collection
+     * @param {boolean} isCollectingView
+     * @returns {*}
+     */
+    addCollection( collection, isCollectingView ) {
+      const kitCollectionNode = new KitCollectionNode( collection, this, isCollectingView );
       this.kitCollectionMap[ collection.id ] = kitCollectionNode;
 
       // supposedly: return this so we can manipulate it in an override....?
