@@ -44,10 +44,12 @@ define( require => {
     this.metadataMap = {}; // moleculeId => MoleculeControlsHBox
 
     // Layers
-    const topLayer = this.topLayer = new Node();
+    const topLayer = new Node();
+    this.topLayer = topLayer;
     const atomLayer = new Node();
     this.atomLayer = atomLayer;
-    const bottomLayer = this.bottomLayer = new Node();
+    const bottomLayer = new Node();
+    this.bottomLayer = bottomLayer;
 
     this.addChild( bottomLayer );
     this.addChild( atomLayer );
