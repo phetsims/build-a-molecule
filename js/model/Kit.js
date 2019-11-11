@@ -607,7 +607,7 @@ define( require => {
   } );
 
   // A bond option from A to B. B would be moved to the location near A to bond.
-  var BondingOption = Kit.BondingOption = function BondingOption( a, direction, b ) {
+  var BondingOption = function BondingOption( a, direction, b ) {
     this.a = a;
     this.direction = direction;
     this.b = b;
@@ -615,6 +615,7 @@ define( require => {
     // The location the atom should be placed
     this.idealLocation = a.positionProperty.value.plus( direction.vector.times( a.covalentRadius + b.covalentRadius ) );
   };
+  Kit.BondingOption = BondingOption;
 
   Kit.bondDistanceThreshold = 200;
   Kit.bucketPadding = 50;
