@@ -13,7 +13,7 @@ define( require => {
   const Util = require( 'DOT/Util' );
   const Vector2 = require( 'DOT/Vector2' );
 
-  // Constants
+  // constants
   const VIEW_SIZE = ScreenView.DEFAULT_LAYOUT_BOUNDS;
   const MODEL_VIEW_TRANSFORM = ModelViewTransform2.createSinglePointScaleInvertedYMapping(
     Vector2.ZERO,

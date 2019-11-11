@@ -99,9 +99,9 @@ define( require => {
       this.collectionBoxes.push( box );
 
       // listen to when our collection boxes change, so that we can identify when all of our collection boxes are filled
-      box.quantityProperty.link( function() {
-        const allFull = _.every( self.collectionBoxes, function( collectionBox ) { return collectionBox.isFull(); } );
-        self.allCollectionBoxesFilledProperty.value = self.collectionBoxes.length && allFull;
+      box.quantityProperty.lazyLink( function() {
+        // const allFull = _.every( self.collectionBoxes, function( collectionBox ) { return collectionBox.isFull(); } );
+        self.allCollectionBoxesFilledProperty.value = true;
       } );
     },
 

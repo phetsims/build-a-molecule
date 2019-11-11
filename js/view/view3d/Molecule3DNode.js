@@ -13,6 +13,7 @@
 define( require => {
   'use strict';
 
+  // modules
   const Arc = require( 'KITE/segments/Arc' );
   const Bounds3 = require( 'DOT/Bounds3' );
   const buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
@@ -27,7 +28,8 @@ define( require => {
   const Vector2 = require( 'DOT/Vector2' );
   const Vector3 = require( 'DOT/Vector3' );
 
-  const grabInitialTransforms = false; // debug flag, specifies whether master transforms are tracked and printed to determine "pretty" setup transformations
+  // constants
+  const GRAB_INITIAL_TRANSFORMS = false; // debug flag, specifies whether master transforms are tracked and printed to determine "pretty" setup transformations
 
   function to3d( atom ) {
     const v = new Vector3( atom.x3d, atom.y3d, atom.z3d ).times( 75 ); // similar to picometers from angstroms? hopefully?
@@ -148,7 +150,7 @@ define( require => {
     this.lastPosition = Vector2.ZERO;
     this.currentPosition = Vector2.ZERO;
 
-    if ( grabInitialTransforms ) {
+    if ( GRAB_INITIAL_TRANSFORMS ) {
       this.masterMatrix = Matrix3.identity();
     }
   }
@@ -198,7 +200,7 @@ define( require => {
           event.pointer.removeInputListener( dragListener );
           event.handle();
           self.draggingProperty.set( false );
-          if ( grabInitialTransforms ) {
+          if ( GRAB_INITIAL_TRANSFORMS ) {
             console.log( self.masterMatrix.toString() );
           }
         },
@@ -348,7 +350,7 @@ define( require => {
       this.currentAtoms.forEach( function( atom ) {
         matrix.multiplyVector3( atom );
       } );
-      if ( grabInitialTransforms ) {
+      if ( GRAB_INITIAL_TRANSFORMS ) {
         this.masterMatrix = matrix.timesMatrix( this.masterMatrix );
       }
     },

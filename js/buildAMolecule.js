@@ -8,6 +8,7 @@
 define( require => {
   'use strict';
 
+  // modules
   const Namespace = require( 'PHET_CORE/Namespace' );
 
   return new Namespace( 'buildAMolecule' );

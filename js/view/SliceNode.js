@@ -10,6 +10,7 @@
 define( require => {
   'use strict';
 
+  // modules
   const buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   const BAMConstants = require( 'BUILD_A_MOLECULE/BAMConstants' );
   const DOM = require( 'SCENERY/nodes/DOM' );

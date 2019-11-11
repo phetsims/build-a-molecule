@@ -20,7 +20,6 @@ define( require => {
   const siliconString = require( 'string!BUILD_A_MOLECULE/silicon' );
   const sulphurString = require( 'string!BUILD_A_MOLECULE/sulphur' );
 
-
   const elementMap = {
     'H': hydrogenString,
     'O': oxygenString,

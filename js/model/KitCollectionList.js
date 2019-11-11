@@ -9,6 +9,7 @@
 define( require => {
   'use strict';
 
+  // modules
   const buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   const Emitter = require( 'AXON/Emitter' );
   const KitCollection = require( 'BUILD_A_MOLECULE/model/KitCollection' );

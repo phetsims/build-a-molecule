@@ -8,6 +8,7 @@
 define( require => {
   'use strict';
 
+  // modules
   const BAMConstants = require( 'BUILD_A_MOLECULE/BAMConstants' );
   const Bucket = require( 'BUILD_A_MOLECULE/model/Bucket' );
   const buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );

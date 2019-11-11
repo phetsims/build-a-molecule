@@ -9,6 +9,7 @@
 define( require => {
   'use strict';
 
+  // modules
   const AllFilledDialogNode = require( 'BUILD_A_MOLECULE/view/AllFilledDialogNode' );
   const BAMView = require( 'BUILD_A_MOLECULE/view/BAMView' );
   const buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );

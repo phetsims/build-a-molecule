@@ -9,6 +9,7 @@
 define( require => {
   'use strict';
 
+  // modules
   const AtomNode = require( 'BUILD_A_MOLECULE/view/AtomNode' );
   const BAMConstants = require( 'BUILD_A_MOLECULE/BAMConstants' );
   const Bounds2 = require( 'DOT/Bounds2' );

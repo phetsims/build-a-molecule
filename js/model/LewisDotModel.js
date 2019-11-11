@@ -10,6 +10,7 @@
 define( require => {
   'use strict';
 
+  // modules
   const buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   const Direction = require( 'BUILD_A_MOLECULE/model/Direction' );
   const Util = require( 'DOT/Util' );

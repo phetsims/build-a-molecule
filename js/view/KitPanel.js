@@ -9,6 +9,7 @@
 define( require => {
   'use strict';
 
+  // modules
   const buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   const Carousel = require( 'SUN/Carousel' );
   const Color = require( 'SCENERY/util/Color' );

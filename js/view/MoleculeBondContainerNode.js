@@ -9,6 +9,7 @@
 define( require => {
   'use strict';
 
+  // modules
   const buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   const MoleculeBondNode = require( 'BUILD_A_MOLECULE/view/MoleculeBondNode' );
   const Node = require( 'SCENERY/nodes/Node' );

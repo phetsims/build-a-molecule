@@ -9,6 +9,7 @@
 define( require => {
   'use strict';
 
+  // modules
   const Bounds2 = require( 'DOT/Bounds2' );
   const buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   const Emitter = require( 'AXON/Emitter' );

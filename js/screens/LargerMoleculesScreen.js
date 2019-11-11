@@ -8,6 +8,7 @@
 define( require => {
   'use strict';
 
+  // modules
   const BAMScreen = require( 'BUILD_A_MOLECULE/screens/BAMScreen' );
   const BAMView = require( 'BUILD_A_MOLECULE/view/BAMView' );
   const Bucket = require( 'BUILD_A_MOLECULE/model/Bucket' );

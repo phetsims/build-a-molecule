@@ -12,6 +12,7 @@
 define( require => {
   'use strict';
 
+  // modules
   const Atom = require( 'NITROGLYCERIN/Atom' );
   const Bond = require( 'BUILD_A_MOLECULE/model/Bond' );
   const buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
@@ -26,8 +27,6 @@ define( require => {
    */
   function StrippedMolecule( original ) {
     const self = this;
-
-    // var atomsToAdd = [];
     const bondsToAdd = [];
 
     // copy non-hydrogens

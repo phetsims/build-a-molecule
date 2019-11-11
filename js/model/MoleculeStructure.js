@@ -14,14 +14,13 @@
 define( require => {
   'use strict';
 
+  // modules
   const Atom = require( 'NITROGLYCERIN/Atom' );
   const Bond = require( 'BUILD_A_MOLECULE/model/Bond' );
   const buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   const ChemUtils = require( 'NITROGLYCERIN/ChemUtils' );
   const Element = require( 'NITROGLYCERIN/Element' );
   const ElementHistogram = require( 'BUILD_A_MOLECULE/model/ElementHistogram' );
-
-  let nextMoleculeId = 0;
 
   //REVIEW comments below indicate that ordering is important. Describe why ordering is significant.
   // NOTE from porting: StrippedMolecule relies on the ordering of atoms, and possibly bonds
@@ -36,6 +35,7 @@ define( require => {
   function MoleculeStructure( numAtoms, numBonds ) {
     assert && assert( numAtoms !== undefined && numBonds !== undefined, 'numAtoms and numBonds required' );
 
+    let nextMoleculeId = 0;
     this.moleculeId = nextMoleculeId++; // used for molecule identification and ordering for optimization
 
     //REVIEW: Figure out types, and whether it's polymorphic

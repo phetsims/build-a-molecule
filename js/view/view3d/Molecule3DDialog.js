@@ -11,6 +11,7 @@
 define( require => {
   'use strict';
 
+  // modules
   const AquaRadioButton = require( 'SUN/AquaRadioButton' );
   const Bounds2 = require( 'DOT/Bounds2' );
   const buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
@@ -32,8 +33,8 @@ define( require => {
   const ballAndStickString = require( 'string!BUILD_A_MOLECULE/ballAndStick' ); // eslint-disable-line string-require-statement-match
   const spaceFillString = require( 'string!BUILD_A_MOLECULE/spaceFilling' ); // eslint-disable-line string-require-statement-match
 
-  const size = 200;
-  const optionsHorizontalPadding = 40;
+  // constants
+  const SIZE = 200;
 
   function Molecule3DDialog( completeMolecule ) {
 
@@ -80,7 +81,7 @@ define( require => {
     const ballAndStickButton = new AquaRadioButton( viewStyleProperty, ViewStyle.BALL_AND_STICK, ballAndStickText, radioButtonOptions );
     const buttonHolder = new HBox( {
       children: [ spaceFillButton, ballAndStickButton ],
-      spacing: optionsHorizontalPadding
+      spacing: 40
     } );
 
     // @private 3D view of moleculeNode using mobuis supported elements
@@ -165,7 +166,7 @@ define( require => {
     getLocalCanvasBounds: function() {
       const centerX = this.center;
       const centerY = this.center;
-      return new Bounds2( centerX - size, centerY - size, centerX + size, centerY + size );
+      return new Bounds2( centerX - SIZE, centerY - SIZE, centerX + SIZE, centerY + SIZE );
     },
 
     getGlobalCanvasBounds: function( view ) {

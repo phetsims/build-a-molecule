@@ -11,6 +11,7 @@
 define( require => {
   'use strict';
 
+  // modules
   const AtomNode = require( 'BUILD_A_MOLECULE/view/AtomNode' );
   const BucketFront = require( 'SCENERY_PHET/bucket/BucketFront' );
   const BucketHole = require( 'SCENERY_PHET/bucket/BucketHole' );

@@ -10,7 +10,7 @@
 define( require => {
   'use strict';
 
-  // constants
+  // modules
   const Bounds2 = require( 'DOT/Bounds2' );
   const buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   const BAMConstants = require( 'BUILD_A_MOLECULE/BAMConstants' );
@@ -27,7 +27,6 @@ define( require => {
   // constants
   const MOLECULE_PADDING = 5;
   const BLACK_BOX_PADDING = BAMConstants.HAS_3D ? 10 : 0;
-
 
   /**
    * @param {CollectionBox} box

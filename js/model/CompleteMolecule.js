@@ -12,7 +12,7 @@
 define( require => {
   'use strict';
 
-  // Modules
+  // modules
   const Atom = require( 'NITROGLYCERIN/Atom' );
   const AtomNode = require( 'NITROGLYCERIN/nodes/AtomNode' );
   const Bond = require( 'BUILD_A_MOLECULE/model/Bond' );
@@ -24,7 +24,7 @@ define( require => {
   const Strings = require( 'BUILD_A_MOLECULE/Strings' );
   const StringProperty = require( 'AXON/StringProperty' );
 
-  // Node type modules
+  // node type modules
   const Cl2Node = require( 'NITROGLYCERIN/nodes/Cl2Node' );
   const CO2Node = require( 'NITROGLYCERIN/nodes/CO2Node' );
   const CS2Node = require( 'NITROGLYCERIN/nodes/CS2Node' );

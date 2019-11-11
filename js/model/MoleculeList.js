@@ -16,6 +16,7 @@ define( require => {
 
   //REVIEW use logging instead of System.out throughout, since this happens at startup in production product.
 
+  // modules
   const buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   const collectionMoleculesData = require( 'BUILD_A_MOLECULE/model/data/collectionMoleculesData' );
   const CompleteMolecule = require( 'BUILD_A_MOLECULE/model/CompleteMolecule' );

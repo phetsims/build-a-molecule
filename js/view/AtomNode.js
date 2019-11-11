@@ -24,8 +24,9 @@ define( require => {
   const Text = require( 'SCENERY/nodes/Text' );
   const Vector2 = require( 'DOT/Vector2' );
 
+  // constants
   // map from element symbol => graphical node for the atom, so that we can use the DAG to save overhead and costs
-  const elementMap = {};
+  const ELEMENT_MAP = {};
 
   class AtomNode extends Node {
 
@@ -57,7 +58,7 @@ define( require => {
      * @private
      */
     static createIcon( element ) {
-      let node = elementMap[ element.symbol ];
+      let node = ELEMENT_MAP[ element.symbol ];
 
       if ( !node ) {
         const color = new Color( element.color );
@@ -79,7 +80,7 @@ define( require => {
         text.center = Vector2.ZERO;
         node.addChild( text );
 
-        elementMap[ element.symbol ] = node;
+        ELEMENT_MAP[ element.symbol ] = node;
       }
 
       return node;
