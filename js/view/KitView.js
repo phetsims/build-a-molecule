@@ -46,23 +46,21 @@ define( require => {
 
     // Layers
     const topLayer = new Node();
-    this.topLayer = topLayer;
-    const atomLayer = new Node();
-    this.atomLayer = atomLayer;
+    this.atomLayer = new Node();
     const bottomLayer = new Node();
     this.bottomLayer = bottomLayer;
 
     this.addChild( bottomLayer );
-    this.addChild( atomLayer );
+    this.addChild( this.atomLayer );
     this.addChild( topLayer );
 
     // override its hit testing
     // // TODO: REALLY don't do this. Super easy to break
     // // REVIEW: Definitely replace with a better way
-    // atomLayer.hitTest = function( point, isMouse, isTouch ) {
+    // this.atomLayer.hitTest = function( point, isMouse, isTouch ) {
     //   // return accurate hits for the mouse
     //   if ( isMouse ) {
-    //     return Node.prototype.hitTest.call( atomLayer, point, isMouse, isTouch );
+    //     return Node.prototype.hitTest.call( this.atomLayer, point, isMouse, isTouch );
     //   }
     //
     //   // probably a touch or something we will target
@@ -70,14 +68,14 @@ define( require => {
     //   var atom = self.closestAtom( modelPoint, 100 );
     //   if ( atom ) {
     //     // TODO: this is somewhat hackish. better way of doing this?
-    //     return new Trail( [ atomLayer, self.atomNodeMap[ atom.id ] ] );
+    //     return new Trail( [ this.atomLayer, self.atomNodeMap[ atom.id ] ] );
     //   }
     //   else {
     //     return null;
     //   }
     // };
     // ensure that touches don't get pruned before this point
-    // atomLayer.touchArea = Shape.bounds( BAMConstants.STAGE_SIZE );
+    // this.atomLayer.touchArea = Shape.bounds( BAMConstants.STAGE_SIZE );
 
     kit.buckets.forEach( function( bucket ) {
       const bucketFront = new BucketFront( bucket, BAMConstants.MODEL_VIEW_TRANSFORM, {
@@ -141,7 +139,7 @@ define( require => {
 
         // Remove atom view elements from bucket node and delete the reference from atom node map
         if ( self.atomNodeMap[ atom.id ] ) {
-          atomLayer.removeChild( self.atomNodeMap[ atom.id ] );
+          self.atomLayer.removeChild( self.atomNodeMap[ atom.id ] );
           delete self.atomNodeMap[ atom.id ];
         }
 
@@ -162,7 +160,7 @@ define( require => {
         self.atomNodeMap[ atom.id ] = atomNode;
 
         // Add the particle to the bucket atom layer and the bucket's particles.
-        atomLayer.addChild( atomNode );
+        self.atomLayer.addChild( atomNode );
         bucket.placeAtom( atom );
 
         // Add a drag listener that will move the model element when the user
