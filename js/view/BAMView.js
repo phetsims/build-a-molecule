@@ -156,7 +156,7 @@ define( require => {
       this.addChild( refillButton );
 
       // Kit listeners added to manage molecule metadata.
-      this.kitCollectionList.collections.forEach( collection => {
+      this.kitCollectionList.currentCollectionProperty.link( collection => {
         collection.kits.forEach( kit => {
 
           // handle molecule creation and destruction
@@ -188,6 +188,11 @@ define( require => {
       kitCollectionList.currentCollectionProperty.link( collection => {
         collection.kits.forEach( kit => {
 
+          // Reset our kitPlayAreaNode for the new collection
+          this.kitPlayAreaNode.resetPlayAreaKit();
+          this.kitPlayAreaNode.currentKit = collection.currentKitProperty.value;
+          this.kitPlayAreaNode.moveToFront();
+
           // Used for tracking kits in KitPlayAreaNode
           kits.push( kit );
 
@@ -202,7 +207,7 @@ define( require => {
           } );
           this.updateRefillButton();
         } );
-      } )
+      } );
     }
 
     /**
