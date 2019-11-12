@@ -25,13 +25,14 @@ define( require => {
   const Rectangle = require( 'DOT/Rectangle' );
   const Vector2 = require( 'DOT/Vector2' );
 
+  let kitIdCounter = 0;
+
   /**
    * @param {CollectionLayout} collectionLayout
    * @param {Array.<Buckets>} buckets
    * @constructor
    */
   function Kit( collectionLayout, buckets ) {
-    let kitIdCounter = 0;
 
     //@public {number}
     this.id = kitIdCounter++;
