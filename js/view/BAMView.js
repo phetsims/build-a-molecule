@@ -65,23 +65,7 @@ define( require => {
       // KitPlayAreaNode for the main BAMView listens to the kitPlayArea of each kit in the model to fill or remove
       // its content.
       const kits = [];
-      this.kitCollectionList.collections.forEach( collection => {
-        collection.kits.forEach( kit => {
 
-          // Used for tracking kits in KitPlayAreaNode
-          kits.push( kit );
-
-          // Each kit gets listeners for managing its play area.
-          kit.atomsInPlayArea.addItemAddedListener( atom => {
-            this.addAtomNodeToPlayArea( atom, kitCollectionList.currentCollectionProperty.value );
-            this.updateRefillButton();
-          } );
-          kit.atomsInPlayArea.addItemRemovedListener( atom => {
-            this.onAtomRemovedFromPlayArea( atom );
-            this.updateRefillButton();
-          } );
-        } );
-      } );
 
       // Create a play area to house the molecules.
       this.kitPlayAreaNode = new KitPlayAreaNode( kits );
@@ -136,6 +120,10 @@ define( require => {
       kitCollectionList.currentCollectionProperty.value.currentKitProperty.link( kit => {
         this.kitPlayAreaNode.currentKit = kit;
       } );
+      // kitCollectionList.currentCollectionProperty.link( kitCollection => {
+      //   this.kitPlayAreaNode.currentKit = kitCollection.currentKitProperty.value;
+      //   this.kitPlayAreaNode.moveToFront();
+      // } );
 
       // Create a reset all button. Position altered on "Larger" Screen.
       this.resetAllButton = new ResetAllButton( {
@@ -195,6 +183,26 @@ define( require => {
           } );
         } );
       } );
+
+      // When a collection is changed, update the listeners to the kits.
+      kitCollectionList.currentCollectionProperty.link( collection => {
+        collection.kits.forEach( kit => {
+
+          // Used for tracking kits in KitPlayAreaNode
+          kits.push( kit );
+
+          // Each kit gets listeners for managing its play area.
+          kit.atomsInPlayArea.addItemAddedListener( atom => {
+            this.addAtomNodeToPlayArea( atom, collection );
+            this.updateRefillButton();
+          } );
+          kit.atomsInPlayArea.addItemRemovedListener( atom => {
+            this.onAtomRemovedFromPlayArea( atom );
+            this.updateRefillButton();
+          } );
+          this.updateRefillButton();
+        } );
+      } )
     }
 
     /**
