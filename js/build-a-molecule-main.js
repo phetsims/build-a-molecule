@@ -19,8 +19,7 @@ define( require => {
     credits: {
       //TODO (without scrolling credits, the BAM team refuses to take credit!)'
       //REVIEW: Take a first pass at credits
-    },
-    supportsSound: true
+    }
   };
 
   // if the flag is set on window, don't launch the sim
