@@ -66,7 +66,6 @@ define( require => {
       // its content.
       const kits = [];
 
-
       // Create a play area to house the molecules.
       this.kitPlayAreaNode = new KitPlayAreaNode( kits );
 
@@ -117,14 +116,6 @@ define( require => {
         refillButton.enabled = !kitCollectionList.currentCollectionProperty.value.currentKitProperty.value.allBucketsFilled();
       };
 
-      kitCollectionList.currentCollectionProperty.value.currentKitProperty.link( kit => {
-        this.kitPlayAreaNode.currentKit = kit;
-      } );
-      // kitCollectionList.currentCollectionProperty.link( kitCollection => {
-      //   this.kitPlayAreaNode.currentKit = kitCollection.currentKitProperty.value;
-      //   this.kitPlayAreaNode.moveToFront();
-      // } );
-
       // Create a reset all button. Position altered on "Larger" Screen.
       this.resetAllButton = new ResetAllButton( {
         listener: () => {
@@ -149,10 +140,11 @@ define( require => {
       this.resetAllButton.moveToBack();
 
       // Update the refill button when the kit is switched. Also update the kit of the sliceNode
-      kitCollectionList.currentCollectionProperty.value.currentKitProperty.link( kit => {
-        sliceNode.swapKit( kit );
-        this.updateRefillButton();
-      } );
+      // kitCollectionList.currentCollectionProperty.value.currentKitProperty.link( kit => {
+      //   this.kitPlayAreaNode.currentKit = kit;
+      //   sliceNode.swapKit( kit );
+      //   this.updateRefillButton();
+      // } );
       this.addChild( refillButton );
 
       // Kit listeners added to manage molecule metadata.
@@ -184,8 +176,11 @@ define( require => {
         } );
       } );
 
-      // When a collection is changed, update the listeners to the kits.
+      // When a collection is changed, update the listeners to the kits, KitPlayAreaNode and sliceNode.
       kitCollectionList.currentCollectionProperty.link( collection => {
+
+        // KitPlayAreaNode kits should be updated to the kits in the new collection.
+        this.kitPlayAreaNode.kitsProperty.value = collection.kits;
         collection.kits.forEach( kit => {
 
           // Reset our kitPlayAreaNode for the new collection
@@ -203,6 +198,13 @@ define( require => {
           } );
           kit.atomsInPlayArea.addItemRemovedListener( atom => {
             this.onAtomRemovedFromPlayArea( atom );
+            this.updateRefillButton();
+          } );
+
+          // KitPlayAreaNode and sliceNode should update their kits
+          collection.currentKitProperty.link( kit => {
+            this.kitPlayAreaNode.currentKit = kit;
+            sliceNode.swapKit( kit );
             this.updateRefillButton();
           } );
           this.updateRefillButton();

@@ -13,6 +13,7 @@ define( require => {
   const buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   const Node = require( 'SCENERY/nodes/Node' );
   const MoleculeBondContainerNode = require( 'BUILD_A_MOLECULE/view/MoleculeBondContainerNode' );
+  const Property = require( 'AXON/Property' );
 
   class KitPlayAreaNode extends Node {
     /**
@@ -21,6 +22,9 @@ define( require => {
      */
     constructor( kits ) {
       super();
+
+      // @public {Property.<Array[Kit]>} Kits included in this play area
+      this.kitsProperty = new Property( kits );
 
       // @public {Kit|null} Current kit set when atomNode is dragged
       this.currentKit = null;
@@ -36,20 +40,23 @@ define( require => {
 
       // Every kit maps the visibility of its atoms in the play area to its active property. Active kits
       // have visible atoms.
-      kits.forEach( kit => {
-        kit.activeProperty.link( active => {
-          this.atomLayer.children.forEach( atomNode => {
+      this.kitsProperty.link( kits => {
+        kits.forEach( kit => {
+          kit.activeProperty.link( active => {
+            this.atomLayer.children.forEach( atomNode => {
 
-            // Check if the atom is in the kit's play area and toggle its visiblity.
-            atomNode.visible = kit.atomsInPlayArea.contains( atomNode.atom ) && active;
-          } );
-          this.metadataLayer.children.forEach( metadataNode => {
+              // Check if the atom is in the kit's play area and toggle its visiblity.
+              atomNode.visible = kit.atomsInPlayArea.contains( atomNode.atom ) && active;
+            } );
+            this.metadataLayer.children.forEach( metadataNode => {
 
-            // Check if the metadata molecule is a part of the active kit molecules  and toggle its visiblity.
-            metadataNode.visible = kit.molecules.includes( metadataNode.molecule ) && active;
+              // Check if the metadata molecule is a part of the active kit molecules  and toggle its visiblity.
+              metadataNode.visible = kit.molecules.includes( metadataNode.molecule ) && active;
+            } );
           } );
         } );
       } );
+
       this.addChild( this.atomLayer );
       this.addChild( this.metadataLayer );
     }
