@@ -17,6 +17,7 @@ define( require => {
   const KitView = require( 'BUILD_A_MOLECULE/view/KitView' );
   const Node = require( 'SCENERY/nodes/Node' );
   const PageControl = require( 'SUN/PageControl' );
+  const Property = require( 'AXON/Property' );
 
   class KitPanel extends Node {
     /**
@@ -30,21 +31,23 @@ define( require => {
     constructor( kitCollection, kitViewWidth, kitViewHeight, view, isCollectingView ) {
       super();
 
-      // @private
-      this.kitCollection = kitCollection;
+      // Keep track of the KitCollection
+      const kitCollectionProperty = new Property( kitCollection );
 
       // create kitViews and unify their heights
       const kitViews = [];
-      kitCollection.kits.forEach( kit => {
-        const kitView = new KitView( kit, view );
-        const kitViewBounds = kitView.getLocalBounds();
-        kitView.setLocalBounds( kitViewBounds.dilatedY( ( kitViewHeight - kitViewBounds.getHeight() ) / 2 ) );
+      kitCollectionProperty.link( kitCollection => {
+        kitCollection.kits.forEach( kit => {
+          const kitView = new KitView( kit, view );
+          const kitViewBounds = kitView.getLocalBounds();
+          kitView.setLocalBounds( kitViewBounds.dilatedY( ( kitViewHeight - kitViewBounds.getHeight() ) / 2 ) );
 
-        // We only want to adjust width of kit panel on collection views.
-        if ( isCollectingView ) {
-          kitView.setLocalBounds( kitViewBounds.dilatedX( ( kitViewWidth - kitViewBounds.getWidth() ) / 2 ) );
-        }
-        kitViews.push( kitView );
+          // We only want to adjust width of kit panel on collection views.
+          if ( isCollectingView ) {
+            kitView.setLocalBounds( kitViewBounds.dilatedX( ( kitViewWidth - kitViewBounds.getWidth() ) / 2 ) );
+          }
+          kitViews.push( kitView );
+        } )
       } );
 
       // @public {Carousel} Treats each kit as an item.
@@ -57,7 +60,7 @@ define( require => {
       } );
 
       this.kitCarousel.pageNumberProperty.link( page => {
-        this.kitCollection.currentKitProperty.value = this.kitCollection.kits[ page ];
+        kitCollectionProperty.value.currentKitProperty.value = kitCollectionProperty.value.kits[ page ];
       } );
       this.addChild( this.kitCarousel );
 
