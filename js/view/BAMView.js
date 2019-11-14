@@ -138,20 +138,16 @@ define( require => {
       this.resetAllButton.touchArea = Shape.bounds( this.resetAllButton.bounds.dilated( 7 ) );
       this.addChild( this.resetAllButton );
       this.resetAllButton.moveToBack();
-
-      // Update the refill button when the kit is switched. Also update the kit of the sliceNode
-      // kitCollectionList.currentCollectionProperty.value.currentKitProperty.link( kit => {
-      //   this.kitPlayAreaNode.currentKit = kit;
-      //   sliceNode.swapKit( kit );
-      //   this.updateRefillButton();
-      // } );
       this.addChild( refillButton );
 
-      // Kit listeners added to manage molecule metadata.
-      this.kitCollectionList.currentCollectionProperty.link( collection => {
+      // When a collection is changed, update the listeners to the kits, KitPlayAreaNode and sliceNode.
+      kitCollectionList.currentCollectionProperty.link( collection => {
+
+        // KitPlayAreaNode kits should be updated to the kits in the new collection.
+        this.kitPlayAreaNode.kitsProperty.value = collection.kits;
         collection.kits.forEach( kit => {
 
-          // handle molecule creation and destruction
+          // Handle metadataLayer creation and destruction
           kit.addedMoleculeEmitter.addListener( molecule => {
             var moleculeControlsHBox = new MoleculeControlsHBox( kit, molecule, this.showDialogCallback );
             this.kitPlayAreaNode.metadataLayer.addChild( moleculeControlsHBox );
@@ -173,15 +169,6 @@ define( require => {
               }
             }
           } );
-        } );
-      } );
-
-      // When a collection is changed, update the listeners to the kits, KitPlayAreaNode and sliceNode.
-      kitCollectionList.currentCollectionProperty.link( collection => {
-
-        // KitPlayAreaNode kits should be updated to the kits in the new collection.
-        this.kitPlayAreaNode.kitsProperty.value = collection.kits;
-        collection.kits.forEach( kit => {
 
           // Reset our kitPlayAreaNode for the new collection
           this.kitPlayAreaNode.resetPlayAreaKit();
