@@ -47,7 +47,7 @@ define( require => {
             kitView.setLocalBounds( kitViewBounds.dilatedX( ( kitViewWidth - kitViewBounds.getWidth() ) / 2 ) );
           }
           kitViews.push( kitView );
-        } )
+        } );
       } );
 
       // @public {Carousel} Treats each kit as an item.
