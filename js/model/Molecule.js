@@ -51,6 +51,7 @@ define( require => {
     shiftDestination: function( delta ) {
       this.atoms.forEach( function( atom ) {
         // TODO: memory: consider alternate mutable form atom.destination.add( delta )
+        atom.isSeparatingProperty.value = true;
         atom.destinationProperty.value = atom.destinationProperty.value.plus( delta );
       } );
     }

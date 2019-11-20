@@ -50,7 +50,7 @@ define( require => {
       this.kitCollectionList = kitCollectionList;
       this.addCollection( kitCollectionList.currentCollectionProperty.value, false );
 
-      // @public {fucntion} Reference to callback that displays dialog for 3d node representation
+      // @public {function} Reference to callback that displays dialog for 3d node representation
       this.showDialogCallback = this.showDialog.bind( this );
 
       // Components relevant to swipe node used to manually break bonded molecules.
@@ -259,6 +259,8 @@ define( require => {
         targetNode: atomNode,
         locationProperty: atom.positionProperty,
         start: () => {
+          atom.destinationProperty.value = atom.positionProperty.value;
+
           // Get atom position before drag
           lastPosition = atom.positionProperty.value;
 
@@ -269,6 +271,7 @@ define( require => {
             molecule.atoms.forEach( moleculeAtom => {
               if ( moleculeAtom ) {
                 moleculeAtom.interruptAnimation( atom.userControlledProperty.value );
+                moleculeAtom.destinationProperty.value = moleculeAtom.positionProperty.value;
               }
             } );
           }
@@ -280,6 +283,7 @@ define( require => {
 
           // Get delta from start of drag
           const delta = atom.positionProperty.value.minus( lastPosition );
+          atom.destinationProperty.value = atom.positionProperty.value;
 
           // Set the last position to the newly dragged position.
           lastPosition = atom.positionProperty.value;
@@ -289,7 +293,9 @@ define( require => {
           if ( molecule ) {
             molecule.atoms.forEach( moleculeAtom => {
               if ( moleculeAtom !== atom ) {
-                moleculeAtom.positionProperty.value = moleculeAtom.positionProperty.value.plus( delta );
+                moleculeAtom.isSeparatingProperty.value = true;
+                moleculeAtom.translatePositionAndDestination( delta );
+                moleculeAtom.isSeparatingProperty.value = false;
               }
             } );
           }
@@ -299,6 +305,7 @@ define( require => {
         },
         end: () => {
           // Consider an atom released and mark its position
+          atom.isSeparatingProperty.value = false;
           atom.userControlledProperty.value = false;
 
           // Keep track of view elements used later in the callback

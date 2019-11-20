@@ -36,6 +36,9 @@ define( require => {
       // @public {Vector2Property}
       this.positionProperty = new Vector2Property( Vector2.ZERO );
       this.destinationProperty = new Vector2Property( Vector2.ZERO );
+      // this.destinationProperty.lazyLink( (value, oldValue) => {
+      //   console.log( 'Element:', element.symbol, 'new value:', value, 'oldvalue:', oldValue, 'distance:', value.distance(oldValue) );
+      // } );
 
       // @public {BooleanProperty} All atoms start off in the bucket and a link is used to trigger removal.
       this.inBucketProperty = new BooleanProperty( true );
@@ -43,7 +46,7 @@ define( require => {
       this.visibleProperty = new BooleanProperty( true );
       this.addedToModelProperty = new BooleanProperty( true );
       this.isAnimatingProperty = new BooleanProperty( false );
-      this.isSeparatingProperty = new BooleanProperty( false );
+      this.isSeparatingProperty = new BooleanProperty( true );
 
       // @private {Vector2|null} Used for animating the molecules to a position constrained in play area bounds
       this.animationStartPosition = null;
@@ -104,7 +107,7 @@ define( require => {
      */
     step( dt ) {
       if ( this.isSeparatingProperty.value ) {
-        this.separateFromNearestAtom( dt );
+        this.stepAtomTowardsDestination( dt );
       }
 
       // Handle animation process
@@ -134,6 +137,7 @@ define( require => {
       // At this point the animation has completed
       else {
         this.animationProgress = 1;
+        this.destinationProperty.value = this.positionProperty.value;
       }
       if ( this.animationProgress === 1 ) {
         this.isAnimatingProperty.set( false );
@@ -142,14 +146,13 @@ define( require => {
     }
 
     /**
-     * Responsible for distancing an atom from other atoms, while staying within the play area bounds.
+     * Responsible stepping an atom towards its destination. Velocity of step is modified based on distance to destination.
      *
      * @param dt
      * @private
      */
-    separateFromNearestAtom( dt ) {
-      if ( this.isSeparatingProperty.value && !this.userControlledProperty.value && this.positionProperty.value.distance( this.destinationProperty.value ) !== 0 ) {
-        console.log( 'separating' );
+    stepAtomTowardsDestination( dt ) {
+      if ( !this.userControlledProperty.value && this.positionProperty.value.distance( this.destinationProperty.value ) !== 0 ) {
 
         // Move towards the current destination
         let distanceToTravel = MOTION_VELOCITY * dt;
@@ -202,7 +205,7 @@ define( require => {
     }
 
     translate( x, y ) {
-      // this.positionProperty.value = new Vector2( this.positionProperty.value.x + x, this.positionProperty.value.y + y );
+      this.positionProperty.value = new Vector2( this.positionProperty.value.x + x, this.positionProperty.value.y + y );
     }
 
     reset() {

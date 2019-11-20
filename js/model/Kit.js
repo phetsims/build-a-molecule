@@ -39,12 +39,12 @@ define( require => {
     this.atomsInPlayArea = new ObservableArray();
 
     // REVIEW: Used for debugging.
-    this.atomsInPlayArea.addItemAddedListener( atom => {
-      console.log( 'kit.atomsInPlayArea.added = ', this.atomsInPlayArea._array );
-    } );
-    this.atomsInPlayArea.addItemRemovedListener( atom => {
-      console.log( 'kit.atomsInPlayArea.removed = ', this.atomsInPlayArea._array );
-    } );
+    // this.atomsInPlayArea.addItemAddedListener( atom => {
+    //   console.log( 'kit.atomsInPlayArea.added = ', this.atomsInPlayArea._array );
+    // } );
+    // this.atomsInPlayArea.addItemRemovedListener( atom => {
+    //   console.log( 'kit.atomsInPlayArea.removed = ', this.atomsInPlayArea._array );
+    // } );
 
     // @public {Property.<boolean>}
     this.activeProperty = new BooleanProperty( false );
