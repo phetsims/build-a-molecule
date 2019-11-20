@@ -28,6 +28,9 @@ define( require => {
   const SliceNode = require( 'BUILD_A_MOLECULE/view/SliceNode' );
   const TextPushButton = require( 'SUN/buttons/TextPushButton' );
 
+  // strings
+  const refillString = require( 'string!BUILD_A_MOLECULE/refill' );
+
   class BAMView extends ScreenView {
     /**
      * @param {KitCollectionList} kitCollectionList
@@ -96,7 +99,7 @@ define( require => {
 
       // Create a button to refill the kit
       const kitPanel = this.kitCollectionMap[ 0 ].kitPanel;
-      const refillButton = new TextPushButton( 'Refill', {
+      const refillButton = new TextPushButton( refillString, {
         listener: () => {
           this.kitPlayAreaNode.resetPlayAreaKit();
           this.kitPlayAreaNode.currentKit.buckets.forEach( bucket => {

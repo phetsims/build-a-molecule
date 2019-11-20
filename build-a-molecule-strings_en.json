@@ -149,6 +149,9 @@
   "nitricOxide": {
     "value": "Nitric Oxide"
   },
+  "refill": {
+    "value": "Refill"
+  },
   "carbon": {
     "value": "Carbon"
   }
