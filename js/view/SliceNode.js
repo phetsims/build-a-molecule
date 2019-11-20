@@ -78,6 +78,7 @@ define( require => {
         },
         drag: ( event, trail ) => {
           context.beginPath();
+          context.lineWidth = 1.5;
           const isStep = !!lastPoint;
           if ( lastPoint ) {
             context.moveTo( lastPoint.x, lastPoint.y );
