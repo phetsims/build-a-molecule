@@ -46,7 +46,7 @@ define( require => {
       this.visibleProperty = new BooleanProperty( true );
       this.addedToModelProperty = new BooleanProperty( true );
       this.isAnimatingProperty = new BooleanProperty( false );
-      this.isSeparatingProperty = new BooleanProperty( true );
+      this.isSeparatingProperty = new BooleanProperty( false );
 
       // @private {Vector2|null} Used for animating the molecules to a position constrained in play area bounds
       this.animationStartPosition = null;
