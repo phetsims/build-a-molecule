@@ -251,6 +251,14 @@ define( require => {
       return atomNode;
     }
 
+    /**
+     * Add an atom to the play area in the model. Handled via a drag listener.
+     * @param {Atom2} atom
+     * @param {KitCollection} kitCollection
+     *
+     * @private
+     * @returns {AtomNode}
+     */
     addAtomNodeToPlayArea( atom, kitCollection ) {
       const atomNode = this.addAtomNodeToPlayAreaNode( atom );
       let lastPosition;
