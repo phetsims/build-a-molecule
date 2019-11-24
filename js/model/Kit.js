@@ -11,6 +11,7 @@ define( require => {
 
   // modules
   const arrayRemove = require( 'PHET_CORE/arrayRemove' );
+  const BAMConstants = require( 'BUILD_A_MOLECULE/BAMConstants' );
   const BooleanProperty = require( 'AXON/BooleanProperty' );
   const Bounds2 = require( 'DOT/Bounds2' );
   const buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
@@ -393,8 +394,7 @@ define( require => {
       // TODO: performance: general optimization
       let maxIterations = 500;
       const pushAmount = 10; // how much to push two molecules away
-
-      const availablePlayAreaBounds = this.availablePlayAreaBounds;
+      const availablePlayAreaBounds = BAMConstants.MODEL_SIZE;
 
       let foundOverlap = true;
       while ( foundOverlap && maxIterations-- >= 0 ) {
