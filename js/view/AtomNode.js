@@ -21,12 +21,14 @@ define( require => {
   const Node = require( 'SCENERY/nodes/Node' );
   const PhetFont = require( 'SCENERY_PHET/PhetFont' );
   const ShadedSphereNode = require( 'SCENERY_PHET/ShadedSphereNode' );
+  const Shape = require( 'KITE/Shape' );
   const Text = require( 'SCENERY/nodes/Text' );
   const Vector2 = require( 'DOT/Vector2' );
 
   // constants
   // map from element symbol => graphical node for the atom, so that we can use the DAG to save overhead and costs
   const ELEMENT_MAP = {};
+  const GRABBABLE_OFFSET = 35;
 
   class AtomNode extends Node {
 
@@ -35,8 +37,11 @@ define( require => {
      * @param {Object} options
      */
     constructor( atom, options ) {
+      const grabbableArea = Shape.circle( 0, 0, atom.covalentRadius * 0.65 > GRABBABLE_OFFSET ? GRABBABLE_OFFSET : atom.covalentRadius * 0.65 );
       super( merge( {
-        cursor: 'pointer'
+        cursor: 'pointer',
+        mouseArea: grabbableArea,
+        touchArea: grabbableArea
       }, options ) );
 
       // @public

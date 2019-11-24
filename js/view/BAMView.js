@@ -267,6 +267,7 @@ define( require => {
         targetNode: atomNode,
         locationProperty: atom.positionProperty,
         start: () => {
+          console.log( 'atom.covalentBond = ' + atom.covalentRadius );
           atom.destinationProperty.value = atom.positionProperty.value;
 
           // Get atom position before drag
