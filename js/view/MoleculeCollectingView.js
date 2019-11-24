@@ -57,7 +57,7 @@ define( require => {
       ) );
       this.resetAllButton.setCenter( new Vector2(
         collectionPanel.centerX,
-        collectionPanel.bottom + BAMConstants.RESET_BUTTON_RADIUS + BAMConstants.VIEW_PADDING / 2,
+        collectionPanel.bottom + BAMConstants.RESET_BUTTON_RADIUS + BAMConstants.VIEW_PADDING,
       ) );
       this.addChild( collectionPanel );
       collectionPanel.moveToBack();
