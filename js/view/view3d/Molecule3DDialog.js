@@ -42,7 +42,6 @@ define( require => {
     const contentVBox = new VBox( { spacing: 12 } );
 
     Dialog.call( this, contentVBox, {
-      modal: true,
       fill: 'black',
       xAlign: 'center',
       title: new Text( completeMolecule.getDisplayName(), {

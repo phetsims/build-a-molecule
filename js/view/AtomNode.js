@@ -40,7 +40,6 @@ define( require => {
       const grabbableArea = Shape.circle( 0, 0, atom.covalentRadius * 0.65 > GRABBABLE_OFFSET ? GRABBABLE_OFFSET : atom.covalentRadius * 0.65 );
       super( merge( {
         cursor: 'pointer',
-        mouseArea: grabbableArea,
         touchArea: grabbableArea
       }, options ) );
 
