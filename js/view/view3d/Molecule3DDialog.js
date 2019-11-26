@@ -41,15 +41,6 @@ define( require => {
     // Holds all of the content within the dialog
     const contentVBox = new VBox( { spacing: 12 } );
 
-    Dialog.call( this, contentVBox, {
-      fill: 'black',
-      xAlign: 'center',
-      title: new Text( completeMolecule.getDisplayName(), {
-        font: new PhetFont( 30 ),
-        fill: 'white'
-      } )
-    } );
-
     // Used for radio buttons
     const ViewStyle = new Enumeration( [ 'SPACE_FILL', 'BALL_AND_STICK' ] );
     const viewStyleProperty = new EnumerationProperty( ViewStyle, ViewStyle.SPACE_FILL );
@@ -83,17 +74,17 @@ define( require => {
       spacing: 40
     } );
 
-    // @private 3D view of moleculeNode using mobuis supported elements
-    this.moleculeNode = new ThreeNode( 400, 300, {
+    // 3D view of moleculeNode using mobius supported elements
+    const moleculeNode = new ThreeNode( 400, 300, {
       cameraPosition: new Vector3( 0, 0, 10 )
     } );
-    this.moleculeContainer = new THREE.Object3D();
-    const moleculeScene = this.moleculeNode.stage.threeScene;
-    moleculeScene.add( this.moleculeContainer );
+    const moleculeContainer = new THREE.Object3D();
+    const moleculeScene = moleculeNode.stage.threeScene;
+    moleculeScene.add( moleculeContainer );
 
     viewStyleProperty.link( viewStyle => {
-      while ( this.moleculeContainer.children.length > 0 ) {
-        this.moleculeContainer.remove( this.moleculeContainer.children[ 0 ] );
+      while ( moleculeContainer.children.length > 0 ) {
+        moleculeContainer.remove( moleculeContainer.children[ 0 ] );
       }
       if ( viewStyle === ViewStyle.SPACE_FILL ) {
         completeMolecule.atoms.forEach( atom => {
@@ -110,7 +101,7 @@ define( require => {
           const atomMesh = new THREE.Mesh( new THREE.SphereGeometry( atom.covalentRadius / 100, 30, 24 ), new THREE.MeshLambertMaterial( {
             color: Color.toColor( atom.element.color ).toNumber()
           } ) );
-          this.moleculeContainer.add( atomMesh );
+          moleculeContainer.add( atomMesh );
           atomMesh.position.set( atom.x3d, atom.y3d, atom.z3d );
         } );
         completeMolecule.bonds.forEach( bond => {
@@ -129,7 +120,7 @@ define( require => {
 
           // Vector3
           const midpointBetweenAtoms = bondAPosition.average( bondBPosition );
-          this.moleculeContainer.add( bondMesh );
+          moleculeContainer.add( bondMesh );
 
           bondMesh.matrix.set(
             matrix.m00(), matrix.m01(), matrix.m02(), midpointBetweenAtoms.x,
@@ -141,7 +132,6 @@ define( require => {
         } );
       }
     } );
-
 
     // Lights taken from MoleculeShapesScreenView.js
     const ambientLight = new THREE.AmbientLight( 0x191919 ); // closest to 0.1 like the original shader
@@ -155,8 +145,19 @@ define( require => {
     moonLight.position.set( 2.0, -1.0, 1.0 );
     moleculeScene.add( moonLight );
 
-    // Set the order of children for the Vbox
-    contentVBox.children = [ formulaText, this.moleculeNode, buttonHolder ];
+    // Set the order of children for the VBox
+    contentVBox.children = [ formulaText, moleculeNode, buttonHolder ];
+    Dialog.call( this, contentVBox, {
+      fill: 'black',
+      xAlign: 'center',
+      title: new Text( completeMolecule.getDisplayName(), {
+        font: new PhetFont( 30 ),
+        fill: 'white'
+      } )
+    } );
+
+    // @private
+    this.moleculeNode = moleculeNode;
   }
 
   buildAMolecule.register( 'Molecule3DDialog', Molecule3DDialog );
