@@ -19,7 +19,6 @@ define( require => {
   const BAMConstants = require( 'BUILD_A_MOLECULE/BAMConstants' );
   const DragListener = require( 'SCENERY/listeners/DragListener' );
   const inherit = require( 'PHET_CORE/inherit' );
-  const MoleculeBondContainerNode = require( 'BUILD_A_MOLECULE/view/MoleculeBondContainerNode' );
   // const MoleculeControlsHBox = require( 'BUILD_A_MOLECULE/view/MoleculeControlsHBox' );
   const Node = require( 'SCENERY/nodes/Node' );
   const PhetFont = require( 'SCENERY_PHET/PhetFont' );
@@ -244,13 +243,6 @@ define( require => {
 
       return best;
     },
-
-    addMoleculeBondNodes: function( molecule ) {
-      const moleculeBondContainerNode = new MoleculeBondContainerNode( this.kit, molecule );
-      // this.metadataLayer.addChild( moleculeBondContainerNode );
-      this.bondMap[ molecule.moleculeId ] = moleculeBondContainerNode;
-    },
-
     removeMoleculeBondNodes: function( molecule ) {
       const moleculeBondContainerNode = this.bondMap[ molecule.moleculeId ];
       moleculeBondContainerNode.dispose();
