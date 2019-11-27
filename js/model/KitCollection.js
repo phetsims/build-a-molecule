@@ -13,6 +13,7 @@ define( require => {
   const BooleanProperty = require( 'AXON/BooleanProperty' );
   const buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   const inherit = require( 'PHET_CORE/inherit' );
+  const BuildAMoleculeQueryParameters = require( 'BUILD_A_MOLECULE/common/BuildAMoleculeQueryParameters' );
   const Property = require( 'AXON/Property' );
 
   /**
@@ -97,18 +98,18 @@ define( require => {
     addCollectionBox: function( box ) {
       const self = this;
       this.collectionBoxes.push( box );
-      //
-      // // listen to when our collection boxes change, so that we can identify when all of our collection boxes are filled
-      // box.quantityProperty.lazyLink( function() {
-      //   // const allFull = _.every( self.collectionBoxes, function( collectionBox ) { return collectionBox.isFull(); } );
-      //   self.allCollectionBoxesFilledProperty.value = true;
-      // } );
-
 
       // listen to when our collection boxes change, so that we can identify when all of our collection boxes are filled
-      box.quantityProperty.link( function() {
+      box.quantityProperty.lazyLink( () => {
         const allFull = _.every( self.collectionBoxes, function( collectionBox ) { return collectionBox.isFull(); } );
-        self.allCollectionBoxesFilledProperty.value = self.collectionBoxes.length && allFull;
+
+        // REVIEW: Used for debugging.
+        if ( BuildAMoleculeQueryParameters.easyMode ) {
+          self.allCollectionBoxesFilledProperty.value = true;
+        }
+        else {
+          self.allCollectionBoxesFilledProperty.value = self.collectionBoxes.length && allFull;
+        }
       } );
     },
 
