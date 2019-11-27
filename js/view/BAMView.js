@@ -134,9 +134,8 @@ define( require => {
           kitPanel.reset();
           this.updateRefillButton();
         },
-        radius: BAMConstants.RESET_BUTTON_RADIUS,
-        right: kitPanel.right,
-        bottom: refillButton.bottom
+        right: this.layoutBounds.right - BAMConstants.VIEW_PADDING * 1.3,
+        bottom: this.layoutBounds.bottom - BAMConstants.VIEW_PADDING * 1.5
       } );
       this.resetAllButton.touchArea = Shape.bounds( this.resetAllButton.bounds.dilated( 7 ) );
       this.addChild( this.resetAllButton );

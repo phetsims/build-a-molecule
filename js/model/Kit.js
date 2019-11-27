@@ -30,7 +30,7 @@ define( require => {
 
   /**
    * @param {CollectionLayout} collectionLayout
-   * @param {Array.<Buckets>} buckets
+   * @param {Array.<Bucket>} buckets
    * @constructor
    */
   function Kit( collectionLayout, buckets ) {

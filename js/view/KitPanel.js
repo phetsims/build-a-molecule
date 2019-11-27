@@ -46,6 +46,7 @@ define( require => {
           if ( isCollectingView ) {
             kitView.setLocalBounds( kitViewBounds.dilatedX( ( kitViewWidth - kitViewBounds.getWidth() ) / 2 ) );
           }
+          kitView.setLocalBounds( kitViewBounds.dilatedX( ( kitViewWidth - kitViewBounds.getWidth() ) * 0.1 ) );
           kitViews.push( kitView );
         } );
       } );

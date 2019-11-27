@@ -55,10 +55,6 @@ define( require => {
         BAMConstants.STAGE_SIZE.width - BAMConstants.VIEW_PADDING / 2,
         BAMConstants.STAGE_SIZE.top + BAMConstants.VIEW_PADDING / 2,
       ) );
-      this.resetAllButton.setCenter( new Vector2(
-        collectionPanel.centerX,
-        collectionPanel.bottom + BAMConstants.RESET_BUTTON_RADIUS + BAMConstants.VIEW_PADDING,
-      ) );
       this.addChild( collectionPanel );
       collectionPanel.moveToBack();
 
