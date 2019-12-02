@@ -110,7 +110,9 @@ define( require => {
         baseColor: Color.ORANGE,
         font: new PhetFont( { size: 12, weight: 'bold' } ),
         left: kitPanel.left,
-        bottom: kitPanel.top - 7
+        bottom: kitPanel.top - 7,
+        maxWidth: BAMConstants.TEXT_MAX_WIDTH
+
       } );
       refillButton.touchArea = Shape.bounds( refillButton.selfBounds.union( refillButton.childBounds ).dilated( 10 ) );
 

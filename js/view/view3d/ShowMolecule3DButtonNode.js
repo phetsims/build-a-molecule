@@ -10,6 +10,7 @@ define( require => {
   'use strict';
 
   // modules
+  const BAMConstants = require( 'BUILD_A_MOLECULE/BAMConstants' );
   const buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   const ButtonListener = require( 'SCENERY/input/ButtonListener' );
   const Color = require( 'SCENERY/util/Color' );
@@ -43,7 +44,8 @@ define( require => {
       baseColor: new Color( 112, 177, 84 ),
       xMargin: 3,  //
       yMargin: 3,  //
-      cursor: 'pointer'
+      cursor: 'pointer',
+      maxWidth: BAMConstants.TEXT_MAX_WIDTH / 4
     }, options ) );
 
     this.addInputListener( new ButtonListener( {

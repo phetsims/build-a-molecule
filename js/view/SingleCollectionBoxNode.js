@@ -44,9 +44,8 @@ define( require => {
           weight: 'bold'
         } ),
         maxWidth: BAMConstants.TEXT_MAX_WIDTH
-
       }
-    ) ) );
+    ), { maxWidth: BAMConstants.TEXT_MAX_WIDTH } ) );
   }
 
   buildAMolecule.register( 'SingleCollectionBoxNode', SingleCollectionBoxNode );

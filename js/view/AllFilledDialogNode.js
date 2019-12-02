@@ -43,7 +43,8 @@ define( require => {
     const text = new Text( youCompletedYourCollectionString, {
       font: new PhetFont( {
         size: 20,
-        weight: 'bold'
+        weight: 'bold',
+        maxWidth: BAMConstants.TEXT_MAX_WIDTH
       } )
     } );
     contentVBox.addChild( text );
@@ -56,7 +57,8 @@ define( require => {
       },
       font: new PhetFont( {
         size: 18,
-        weight: 'bold'
+        weight: 'bold',
+        maxWidth: BAMConstants.TEXT_MAX_WIDTH
       } ),
       baseColor: Color.ORANGE
     } );

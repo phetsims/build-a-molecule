@@ -13,6 +13,7 @@ define( require => {
 
   // modules
   const AquaRadioButton = require( 'SUN/AquaRadioButton' );
+  const BAMConstants = require( 'BUILD_A_MOLECULE/BAMConstants' );
   const Bounds2 = require( 'DOT/Bounds2' );
   const buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   const Color = require( 'SCENERY/util/Color' );
@@ -54,7 +55,8 @@ define( require => {
     // Space fill / Ball and stick radio buttons
     const buttonTextOptions = {
       font: new PhetFont( 20 ),
-      fill: 'white'
+      fill: 'white',
+      maxWidth: BAMConstants.TEXT_MAX_WIDTH
     };
     const spaceFillText = new Text( spaceFillString, buttonTextOptions );
     const ballAndStickText = new Text( ballAndStickString, buttonTextOptions );
