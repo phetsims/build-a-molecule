@@ -13,15 +13,14 @@ define( require => {
   const buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   const Color = require( 'SCENERY/util/Color' );
   const BAMConstants = require( 'BUILD_A_MOLECULE/BAMConstants' );
-  const Dialog = require( 'SUN/Dialog' );
   const FaceNode = require( 'SCENERY_PHET/FaceNode' );
   const inherit = require( 'PHET_CORE/inherit' );
+  const Panel = require( 'SUN/Panel' );
   const PhetFont = require( 'SCENERY_PHET/PhetFont' );
   const Shape = require( 'KITE/Shape' );
   const Text = require( 'SCENERY/nodes/Text' );
   const TextPushButton = require( 'SUN/buttons/TextPushButton' );
   const VBox = require( 'SCENERY/nodes/VBox' );
-  const Vector2 = require( 'DOT/Vector2' );
 
   // strings
   const youCompletedYourCollectionString = require( 'string!BUILD_A_MOLECULE/youCompletedYourCollection' );
@@ -31,7 +30,7 @@ define( require => {
    * @param {Function} regenerateCallback
    * @constructor
    */
-  function AllFilledDialogNode( regenerateCallback ) {
+  function AllFilledNode( regenerateCallback ) {
     const contentVBox = new VBox( { spacing: 5, align: 'center' } );
     const self = this;
 
@@ -53,7 +52,7 @@ define( require => {
     const button = new TextPushButton( nextCollectionString, {
       listener: function() {
         regenerateCallback();
-        self.hide();
+        self.dispose();
       },
       font: new PhetFont( {
         size: 18,
@@ -65,14 +64,14 @@ define( require => {
     button.touchArea = Shape.bounds( button.localBounds.dilated( 20 ) );
     contentVBox.addChild( button );
 
-    Dialog.call( this, contentVBox, {
+    Panel.call( this, contentVBox, {
       stroke: 'black',
       fill: BAMConstants.COMPLETE_BACKGROUND_COLOR,
-      center: new Vector2( 0, 0 )
+      center: BAMConstants.STAGE_SIZE.center
     } );
   }
 
-  buildAMolecule.register( 'AllFilledDialogNode', AllFilledDialogNode );
+  buildAMolecule.register( 'AllFilledNode', AllFilledNode );
 
-  return inherit( Dialog, AllFilledDialogNode );
+  return inherit( Panel, AllFilledNode );
 } );

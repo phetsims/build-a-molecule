@@ -10,7 +10,7 @@ define( require => {
   'use strict';
 
   // modules
-  const AllFilledDialogNode = require( 'BUILD_A_MOLECULE/view/AllFilledDialogNode' );
+  const AllFilledNode = require( 'BUILD_A_MOLECULE/view/AllFilledNode' );
   const BAMView = require( 'BUILD_A_MOLECULE/view/BAMView' );
   const buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   const CollectionPanel = require( 'BUILD_A_MOLECULE/view/CollectionPanel' );
@@ -27,13 +27,12 @@ define( require => {
     constructor( kitCollectionList, isSingleCollectionMode, regenerateCallback ) {
       super( kitCollectionList );
 
+      // @private
+      this.regenerateCallback = regenerateCallback;
+
       // Erode play area to compensate for CollectionPanel
       this.playAreaDragBounds.setMaxX( BAMConstants.KIT_VIEW_WIDTH );
       const collectionAttachmentCallbacks = [];
-
-      // @private
-      this.allFilledDialogNode = new AllFilledDialogNode( regenerateCallback );
-
       const collectionPanel = new CollectionPanel(
         kitCollectionList,
         isSingleCollectionMode,
@@ -76,7 +75,9 @@ define( require => {
       collection.allCollectionBoxesFilledProperty.link( filled => {
         if ( filled ) {
           if ( !hasShownOnce ) {
-            this.allFilledDialogNode.show();
+            // @private
+            this.AllFilledNode = new AllFilledNode( this.regenerateCallback );
+            this.addChild( this.allFilledNode );
             hasShownOnce = true;
           }
         }
