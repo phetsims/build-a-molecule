@@ -76,12 +76,12 @@ define( require => {
         if ( filled ) {
           if ( !hasShownOnce ) {
 
-            // Create the allFilledNode with a next collection button.
-            const allFilledNode = new AllFilledNode( this.regenerateCallback, {
+            // @public Create the allFilledNode with a next collection button.
+            this.allFilledNode = new AllFilledNode( this.regenerateCallback, {
               center: new Vector2( this.layoutBounds.centerX - 100, this.layoutBounds.centerY - 90 )
             } );
 
-            this.addChild( allFilledNode );
+            this.addChild( this.allFilledNode );
             hasShownOnce = true;
           }
         }

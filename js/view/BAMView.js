@@ -135,6 +135,11 @@ define( require => {
           kitCollectionList.reset();
           kitPanel.reset();
           this.updateRefillButton();
+
+          // If the allFilledNode is present on screen dispose it.
+          if ( this.allFilledNode ) {
+            this.allFilledNode.dispose();
+          }
         },
         right: this.layoutBounds.right - BAMConstants.VIEW_PADDING * 1.3,
         bottom: this.layoutBounds.bottom - BAMConstants.VIEW_PADDING * 1.5
