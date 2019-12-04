@@ -1,5 +1,5 @@
 {
-  "comment": "# build-a-molecule 0.0.0-dev.24 Wed Nov 27 2019 11:28:47 GMT-0500 (Eastern Standard Time)",
+  "comment": "# build-a-molecule 0.0.0-dev.25 Wed Dec 04 2019 09:00:02 GMT-0500 (Eastern Standard Time)",
   "assert": {
     "sha": "a99a9ce9ee0774bf3ef509bf3e31ca7383f67478",
     "branch": "master"
@@ -13,19 +13,19 @@
     "branch": "master"
   },
   "build-a-molecule": {
-    "sha": "9a0127b7d0928041b3cbd66d556284b8a216e892",
+    "sha": "78dbe29b30431c3aadc587fa15782a23f54aceb5",
     "branch": "master"
   },
   "chipper": {
-    "sha": "c65c44917493e0c71865559024797fc3b8966ec0",
+    "sha": "851016dd1f14d1ac0654cc7b3891f11845e28610",
     "branch": "master"
   },
   "dot": {
-    "sha": "4679e19e7049f39b8b0a4d008533285d8f58108b",
+    "sha": "4628f63f904b5a88b0c970d7b9d3233be917d004",
     "branch": "master"
   },
   "joist": {
-    "sha": "3091c8ee445d1ffd3180c7f8e86ca169b104da7a",
+    "sha": "06f02ceff90c1d6c46d14e781995371e48fd0e8a",
     "branch": "master"
   },
   "kite": {
@@ -53,7 +53,7 @@
     "branch": "master"
   },
   "phetcommon": {
-    "sha": "c45e395d010c620e2f635c2cf463e0e073195312",
+    "sha": "cedfad00cd7862e15d7324e35c96172395540ff0",
     "branch": "master"
   },
   "phetmarks": {
@@ -65,19 +65,19 @@
     "branch": "master"
   },
   "scenery": {
-    "sha": "693e3016c9eb03965cea3262523b927b10d68776",
+    "sha": "953480086d9da021efe9075b46646c9a3fc4ef54",
     "branch": "master"
   },
   "scenery-phet": {
-    "sha": "4769515eb77cda1b30fd951c179020e9341ac119",
+    "sha": "1ba2d577e334b3d690ced059d6d9a2c4aca6d05c",
     "branch": "master"
   },
   "sherpa": {
-    "sha": "61d6ed8e091cb65cb5ab6aaf7f7c1bf90c08e32d",
+    "sha": "af6eeb0c19e5f75b55165c6f7e89259e3931578c",
     "branch": "master"
   },
   "sun": {
-    "sha": "f4fffb9c6a72ca6863fc45f3ff43f6b10a0e8ef6",
+    "sha": "54257da05fb332b8ee55ca9a74c4816ce854079a",
     "branch": "master"
   },
   "tambo": {
@@ -85,7 +85,7 @@
     "branch": "master"
   },
   "tandem": {
-    "sha": "473cfb3d997923c6481f7627b7fc52747fddd61b",
+    "sha": "7ef9ccfdbbc69a4a7b71823b19b410050c969a28",
     "branch": "master"
   },
   "twixt": {
