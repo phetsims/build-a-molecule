@@ -11,10 +11,10 @@ define( require => {
 
   // modules
   const AllFilledNode = require( 'BUILD_A_MOLECULE/view/AllFilledNode' );
+  const BAMConstants = require( 'BUILD_A_MOLECULE/BAMConstants' );
   const BAMView = require( 'BUILD_A_MOLECULE/view/BAMView' );
   const buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   const CollectionPanel = require( 'BUILD_A_MOLECULE/view/CollectionPanel' );
-  const BAMConstants = require( 'BUILD_A_MOLECULE/BAMConstants' );
   const Vector2 = require( 'DOT/Vector2' );
 
   class MoleculeCollectingView extends BAMView {
@@ -75,9 +75,13 @@ define( require => {
       collection.allCollectionBoxesFilledProperty.link( filled => {
         if ( filled ) {
           if ( !hasShownOnce ) {
-            // @private
-            this.AllFilledNode = new AllFilledNode( this.regenerateCallback );
-            this.addChild( this.allFilledNode );
+
+            // Create the allFilledNode with a next collection button.
+            const allFilledNode = new AllFilledNode( this.regenerateCallback, {
+              center: new Vector2( this.layoutBounds.centerX - 100, this.layoutBounds.centerY - 90 )
+            } );
+
+            this.addChild( allFilledNode );
             hasShownOnce = true;
           }
         }

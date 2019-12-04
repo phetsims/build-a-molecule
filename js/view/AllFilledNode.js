@@ -1,7 +1,8 @@
 // Copyright 2013-2019, University of Colorado Boulder
 
 /**
- * Displays a dialog that tells the user that all collection boxes are full.
+ * Displays a node that tells the user that all collection boxes are full. Allows the user
+ * to create a new collection.
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
@@ -15,6 +16,7 @@ define( require => {
   const BAMConstants = require( 'BUILD_A_MOLECULE/BAMConstants' );
   const FaceNode = require( 'SCENERY_PHET/FaceNode' );
   const inherit = require( 'PHET_CORE/inherit' );
+  const merge = require( 'PHET_CORE/merge' );
   const Panel = require( 'SUN/Panel' );
   const PhetFont = require( 'SCENERY_PHET/PhetFont' );
   const Shape = require( 'KITE/Shape' );
@@ -30,7 +32,15 @@ define( require => {
    * @param {Function} regenerateCallback
    * @constructor
    */
-  function AllFilledNode( regenerateCallback ) {
+  function AllFilledNode( regenerateCallback, options ) {
+    options = merge( {
+      stroke: 'black',
+      fill: BAMConstants.COMPLETE_BACKGROUND_COLOR,
+      center: BAMConstants.STAGE_SIZE.center,
+      cornerRadius: 0,
+      xMargin: 15,
+      yMargin: 10
+    }, options );
     const contentVBox = new VBox( { spacing: 5, align: 'center' } );
     const self = this;
 
@@ -64,11 +74,7 @@ define( require => {
     button.touchArea = Shape.bounds( button.localBounds.dilated( 20 ) );
     contentVBox.addChild( button );
 
-    Panel.call( this, contentVBox, {
-      stroke: 'black',
-      fill: BAMConstants.COMPLETE_BACKGROUND_COLOR,
-      center: BAMConstants.STAGE_SIZE.center
-    } );
+    Panel.call( this, contentVBox, options );
   }
 
   buildAMolecule.register( 'AllFilledNode', AllFilledNode );
