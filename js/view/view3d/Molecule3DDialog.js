@@ -91,7 +91,7 @@ define( require => {
         selectedColor: 'rgba(255,255,255,0.4)',
         deselectedColor: 'black',
         centerColor: 'white',
-        radius: 16,
+        radius: 12,
         xSpacing: 8,
         stroke: 'white'
       };
