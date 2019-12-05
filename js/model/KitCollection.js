@@ -27,6 +27,7 @@ define( require => {
 
     this.kits = [];
     this.collectionBoxes = [];
+    this.hasBlinkedOnce = false; // Only show a blinking highlight once
 
     // @public {Property.<Kit|null>}
     this.currentKitProperty = new Property( null );
@@ -87,8 +88,9 @@ define( require => {
 
       kit.addedMoleculeEmitter.addListener( function( molecule ) {
         self.collectionBoxes.forEach( function( box ) {
-          if ( box.willAllowMoleculeDrop( molecule ) ) {
+          if ( box.willAllowMoleculeDrop( molecule ) && !self.hasBlinkedOnce ) {
             box.acceptedMoleculeCreationEmitter.emit( molecule );
+            self.hasBlinkedOnce = true;
           }
         } );
       } );
@@ -116,6 +118,7 @@ define( require => {
     resetAll: function() {
       this.collectionBoxes.forEach( function( box ) { box.reset(); } );
       this.kits.forEach( function( kit ) { kit.reset(); } );
+      this.hasBlinkedOnce = false;
     }
   } );
 
