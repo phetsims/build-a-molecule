@@ -36,9 +36,6 @@ define( require => {
       // @public {Vector2Property}
       this.positionProperty = new Vector2Property( Vector2.ZERO );
       this.destinationProperty = new Vector2Property( Vector2.ZERO );
-      // this.destinationProperty.lazyLink( (value, oldValue) => {
-      //   console.log( 'Element:', element.symbol, 'new value:', value, 'oldvalue:', oldValue, 'distance:', value.distance(oldValue) );
-      // } );
 
       // @public {BooleanProperty} All atoms start off in the bucket and a link is used to trigger removal.
       this.inBucketProperty = new BooleanProperty( true );
@@ -47,6 +44,7 @@ define( require => {
       this.addedToModelProperty = new BooleanProperty( true );
       this.isAnimatingProperty = new BooleanProperty( false );
       this.isSeparatingProperty = new BooleanProperty( false );
+      this.isClickedProperty = new BooleanProperty( false );
 
       // @private {Vector2|null} Used for animating the molecules to a position constrained in play area bounds
       this.animationStartPosition = null;

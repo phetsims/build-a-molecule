@@ -277,6 +277,7 @@ define( require => {
         locationProperty: atom.positionProperty,
         start: () => {
           atom.destinationProperty.value = atom.positionProperty.value;
+          atom.isClickedProperty.value = true;
 
           // Get atom position before drag
           lastPosition = atom.positionProperty.value;

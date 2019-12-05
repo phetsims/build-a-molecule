@@ -18,6 +18,7 @@ define( require => {
   const inherit = require( 'PHET_CORE/inherit' );
   const Node = require( 'SCENERY/nodes/Node' );
   const platform = require( 'PHET_CORE/platform' );
+  const Property = require( 'AXON/Property' );
   const Shape = require( 'KITE/Shape' );
 
   /* Notes on .cur file generation, all from the images directory, with "sudo apt-get install icoutils" for icotool:
@@ -116,12 +117,51 @@ define( require => {
     this.addChild( target );
 
     // Used for debugging
-    if ( BuildAMoleculeQueryParameters.easyMode ) {
+    if ( BuildAMoleculeQueryParameters.showCutTargets ) {
+
+      // See ComboxBox.js
+      let enableClickToDismissListener = true;
+
+      // listener for 'click outside to dismiss'
+      this.clickToDismissListener = {
+        down: () => {
+          if ( enableClickToDismissListener ) {
+            if ( _.indexOf( phet.joist.display.getInputListeners(), this.clickToDismissListener ) !== -1 ) {
+              phet.joist.display.removeInputListener( this.clickToDismissListener );
+            }
+            this.detach();
+          }
+          else {
+            enableClickToDismissListener = true;
+          }
+        }
+      };
+      phet.joist.display.addInputListener( this.clickToDismissListener );
+
+      // Cut here icon is subject to change. See https://github.com/phetsims/build-a-molecule/issues/113
       const cutterNode = new Circle( bondRadius, {
         fill: 'red',
-        stroke: 'red'
+        stroke: 'red',
+        cursor: openCursor,
+        visible: false
       } );
+      cutterNode.addInputListener( new ButtonListener( {
+        fire: function() {
+        },
+        up: function() {
+          cutterNode.cursor = openCursor;
+        },
+        down: function() {
+          cutterNode.cursor = closedCursor;
+          enableClickToDismissListener = false;
+          kit.breakBond( self.a, self.b );
+        }
+      } ) );
       this.addChild( cutterNode );
+
+      Property.multilink( [ self.a.isClickedProperty, self.b.isClickedProperty ], ( isAtomAClicked, isAtomBClicked ) => {
+        cutterNode.visible = enableClickToDismissListener;
+      } );
     }
 
     // listener that will update the position of our hit target
