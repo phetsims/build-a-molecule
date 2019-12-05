@@ -13,6 +13,7 @@ define( require => {
   const buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   const MoleculeBondNode = require( 'BUILD_A_MOLECULE/view/MoleculeBondNode' );
   const Node = require( 'SCENERY/nodes/Node' );
+  const Text = require( 'SCENERY/nodes/Text' );
 
   class MoleculeBondContainerNode extends Node {
     /**

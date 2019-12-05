@@ -14,7 +14,10 @@ define( require => {
   const BuildAMoleculeQueryParameters = QueryStringMachine.getAll( {
 
     // Triggers a successfully completed collection. The user just needs to fill a single box to go to next collection.
-    easyMode: { type: 'flag' }
+    easyMode: { type: 'flag' },
+
+    // Triggers visual to show where each bond can be cut.
+    showCutTargets: { type: 'flag' }
   } );
 
   buildAMolecule.register( 'BuildAMoleculeQueryParameters', BuildAMoleculeQueryParameters );

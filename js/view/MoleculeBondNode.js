@@ -14,6 +14,7 @@ define( require => {
   const ButtonListener = require( 'SCENERY/input/ButtonListener' );
   const Circle = require( 'SCENERY/nodes/Circle' );
   const BAMConstants = require( 'BUILD_A_MOLECULE/BAMConstants' );
+  const BuildAMoleculeQueryParameters = require( 'BUILD_A_MOLECULE/common/BuildAMoleculeQueryParameters' );
   const inherit = require( 'PHET_CORE/inherit' );
   const Node = require( 'SCENERY/nodes/Node' );
   const platform = require( 'PHET_CORE/platform' );
@@ -114,6 +115,15 @@ define( require => {
     } ) );
     this.addChild( target );
 
+    // Used for debugging
+    if ( BuildAMoleculeQueryParameters.easyMode ) {
+      const cutterNode = new Circle( bondRadius, {
+        fill: 'red',
+        stroke: 'red'
+      } );
+      this.addChild( cutterNode );
+    }
+
     // listener that will update the position of our hit target
     this.positionListener = function() {
       const orientation = self.b.positionProperty.value.minus( self.a.positionProperty.value );
@@ -126,6 +136,7 @@ define( require => {
     this.a.positionProperty.link( this.positionListener );
     this.b.positionProperty.link( this.positionListener );
   }
+
   buildAMolecule.register( 'MoleculeBondNode', MoleculeBondNode );
 
   inherit( Node, MoleculeBondNode, {
