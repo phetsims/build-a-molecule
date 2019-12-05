@@ -21,6 +21,7 @@ define( require => {
   const MoleculeControlsHBox = require( 'BUILD_A_MOLECULE/view/MoleculeControlsHBox' );
   const Molecule3DDialog = require( 'BUILD_A_MOLECULE/view/view3d/Molecule3DDialog' );
   const PhetFont = require( 'SCENERY_PHET/PhetFont' );
+  const Property = require( 'AXON/Property' );
   const Rectangle = require( 'SCENERY/nodes/Rectangle' );
   const ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
   const ScreenView = require( 'JOIST/ScreenView' );
@@ -49,6 +50,9 @@ define( require => {
       // @public {KitCollectionList}
       this.kitCollectionList = kitCollectionList;
       this.addCollection( kitCollectionList.currentCollectionProperty.value, false );
+
+      // @public Dialog used for representing 3D molecules.
+      this.dialog = new Molecule3DDialog( new Property( null ) );
 
       // @public {function} Reference to callback that displays dialog for 3d node representation
       this.showDialogCallback = this.showDialog.bind( this );
@@ -220,13 +224,12 @@ define( require => {
     /**
      * Responsible for showing 3d representation of molecule.
      *
-     * @param completeMolecule
+     * @param {CompleteMolecule} completeMolecule
      * @private
      */
     showDialog( completeMolecule ) {
-      this.dialog = new Molecule3DDialog( completeMolecule );
+      this.dialog.completeMoleculeProperty.value = completeMolecule;
       this.dialog.show();
-
     }
 
     /**
