@@ -18,6 +18,7 @@ define( require => {
   const merge = require( 'PHET_CORE/merge' );
   const Node = require( 'SCENERY/nodes/Node' );
   const PhetFont = require( 'SCENERY_PHET/PhetFont' );
+  const Playable = require( 'TAMBO/Playable' );
   const RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
   const Text = require( 'SCENERY/nodes/Text' );
 
@@ -45,7 +46,8 @@ define( require => {
       xMargin: 3,  //
       yMargin: 3,  //
       cursor: 'pointer',
-      maxWidth: BAMConstants.TEXT_MAX_WIDTH / 4
+      maxWidth: BAMConstants.TEXT_MAX_WIDTH / 4,
+      soundPlayer: Playable.NO_SOUND
     }, options ) );
 
     this.addInputListener( new ButtonListener( {

@@ -23,6 +23,7 @@ define( require => {
     const inherit = require( 'PHET_CORE/inherit' );
     const Matrix3 = require( 'DOT/Matrix3' );
     const PhetFont = require( 'SCENERY_PHET/PhetFont' );
+  const Playable = require( 'TAMBO/Playable' );
     const Property = require( 'AXON/Property' );
     const Rectangle = require( 'SCENERY/nodes/Rectangle' );
     const RichText = require( 'SCENERY/nodes/RichText' );
@@ -93,7 +94,8 @@ define( require => {
         centerColor: 'white',
         radius: 12,
         xSpacing: 8,
-        stroke: 'white'
+        stroke: 'white',
+        soundPlayer: Playable.NO_SOUND
       };
       const spaceFillButton = new AquaRadioButton( viewStyleProperty, ViewStyle.SPACE_FILL, spaceFillText, radioButtonOptions );
       const ballAndStickButton = new AquaRadioButton( viewStyleProperty, ViewStyle.BALL_AND_STICK, ballAndStickText, radioButtonOptions );

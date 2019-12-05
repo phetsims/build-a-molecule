@@ -15,6 +15,7 @@ define( require => {
   const inherit = require( 'PHET_CORE/inherit' );
   const MultipleCollectionBoxNode = require( 'BUILD_A_MOLECULE/view/MultipleCollectionBoxNode' );
   const Node = require( 'SCENERY/nodes/Node' );
+  const Playable = require( 'TAMBO/Playable' );
   const RefreshButton = require( 'SCENERY_PHET/buttons/RefreshButton' );
   const Shape = require( 'KITE/Shape' );
   const SingleCollectionBoxNode = require( 'BUILD_A_MOLECULE/view/SingleCollectionBoxNode' );
@@ -62,7 +63,8 @@ define( require => {
       iconScale: 0.5,
       xMargin: 15,
       yMargin: 5,
-      baseColor: Color.ORANGE
+      baseColor: Color.ORANGE,
+      soundPlayer: Playable.NO_SOUND
     } );
     resetCollectionButton.touchArea = Shape.bounds( resetCollectionButton.bounds.dilated( 7 ) );
 

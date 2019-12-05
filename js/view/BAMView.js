@@ -21,6 +21,7 @@ define( require => {
   const MoleculeControlsHBox = require( 'BUILD_A_MOLECULE/view/MoleculeControlsHBox' );
   const Molecule3DDialog = require( 'BUILD_A_MOLECULE/view/view3d/Molecule3DDialog' );
   const PhetFont = require( 'SCENERY_PHET/PhetFont' );
+  const Playable = require( 'TAMBO/Playable' );
   const Property = require( 'AXON/Property' );
   const Rectangle = require( 'SCENERY/nodes/Rectangle' );
   const ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
@@ -112,6 +113,7 @@ define( require => {
           this.updateRefillButton();
         },
         baseColor: Color.ORANGE,
+        soundPlayer: Playable.NO_SOUND,
         font: new PhetFont( { size: 12, weight: 'bold' } ),
         left: kitPanel.left,
         bottom: kitPanel.top - 7,

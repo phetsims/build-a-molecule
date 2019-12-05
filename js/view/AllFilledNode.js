@@ -19,6 +19,7 @@ define( require => {
   const merge = require( 'PHET_CORE/merge' );
   const Panel = require( 'SUN/Panel' );
   const PhetFont = require( 'SCENERY_PHET/PhetFont' );
+  const Playable = require( 'TAMBO/Playable' );
   const Shape = require( 'KITE/Shape' );
   const Text = require( 'SCENERY/nodes/Text' );
   const TextPushButton = require( 'SUN/buttons/TextPushButton' );
@@ -69,7 +70,8 @@ define( require => {
         weight: 'bold',
         maxWidth: BAMConstants.TEXT_MAX_WIDTH
       } ),
-      baseColor: Color.ORANGE
+      baseColor: Color.ORANGE,
+      soundPlayer: Playable.NO_SOUND
     } );
     button.touchArea = Shape.bounds( button.localBounds.dilated( 20 ) );
     contentVBox.addChild( button );

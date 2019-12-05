@@ -17,6 +17,7 @@ define( require => {
   const KitView = require( 'BUILD_A_MOLECULE/view/KitView' );
   const Node = require( 'SCENERY/nodes/Node' );
   const PageControl = require( 'SUN/PageControl' );
+  const Playable = require( 'TAMBO/Playable' );
   const Property = require( 'AXON/Property' );
 
   class KitPanel extends Node {
@@ -57,7 +58,8 @@ define( require => {
         stroke: BAMConstants.KIT_BORDER,
         margin: 10,
         itemsPerPage: 1,
-        animationEnabled: false
+        animationEnabled: false,
+        soundPlayer: Playable.NO_SOUND
       } );
 
       this.kitCarousel.pageNumberProperty.link( page => {

@@ -17,6 +17,7 @@ define( require => {
   const Image = require( 'SCENERY/nodes/Image' );
   const MoleculeList = require( 'BUILD_A_MOLECULE/model/MoleculeList' );
   const PhetFont = require( 'SCENERY_PHET/PhetFont' );
+  const Playable = require( 'TAMBO/Playable' );
   const RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
   const Shape = require( 'KITE/Shape' );
   const ShowMolecule3DButtonNode = require( 'BUILD_A_MOLECULE/view/view3d/ShowMolecule3DButtonNode' );
@@ -78,7 +79,8 @@ define( require => {
         scale: SCALE,
         cursor: 'pointer',
         xMargin: 0, // Setting margins to zero so the 'X' image takes up the whole button view
-        yMargin: 0
+        yMargin: 0,
+        soundPlayer: Playable.NO_SOUND
       } );
       buttonBreak.touchArea = Shape.bounds( buttonBreak.childBounds.dilated( DILATION_FACTOR ) );
       buttonBreak.addInputListener( new ButtonListener( {
