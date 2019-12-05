@@ -43,12 +43,15 @@ define( require => {
           const viewBounds = node.getParent().getUniqueTrail().getTransformTo( this.getUniqueTrail() ).transformBounds2( node.bounds );
           return BAMConstants.MODEL_VIEW_TRANSFORM.viewToModelBounds( viewBounds );
         },
-        this.showDialogCallback, {
+        this.showDialogCallback,
+        this.updateRefillButton,
+        {
           xMargin: 10,
           yMargin: 7,
           minWidth: 250,
           align: 'center'
-        } );
+        },
+      );
 
       collectionPanel.setRightTop( new Vector2(
         BAMConstants.STAGE_SIZE.width - BAMConstants.VIEW_PADDING / 2,

@@ -35,11 +35,12 @@ define( require => {
    * @param {Array.<function>} collectionAttachmentCallbacks
    * @param {function} toModelBounds
    * @param {function} showDialogCallback
+   * @param {function} updateRefillButton
    * @param {Object} options
    * @constructor
    */
   function CollectionPanel( kitCollectionList, isSingleCollectionMode, collectionAttachmentCallbacks, toModelBounds,
-                            showDialogCallback, options ) {
+                            showDialogCallback, updateRefillButton, options ) {
     const self = this;
 
     this.layoutNode = new VBox( { spacing: 10 } );
@@ -107,7 +108,9 @@ define( require => {
 
     // anonymous function here, so we don't create a bunch of fields
     function createCollectionNode( collection ) {
-      self.collectionAreaMap[ collection.id ] = new CollectionAreaNode( collection, isSingleCollectionMode, toModelBounds, showDialogCallback );
+      self.collectionAreaMap[ collection.id ] = new CollectionAreaNode(
+        collection, isSingleCollectionMode, toModelBounds, showDialogCallback, updateRefillButton
+      );
     }
 
     // create nodes for all current collections
