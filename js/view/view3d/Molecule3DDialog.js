@@ -76,7 +76,7 @@ define( require => {
       } );
 
       // Used for radio buttons
-      const ViewStyle = new Enumeration( [ 'SPACE_FILL', 'BALL_AND_STICK' ] );
+      const ViewStyle = Enumeration.byKeys( [ 'SPACE_FILL', 'BALL_AND_STICK' ] );
       const viewStyleProperty = new EnumerationProperty( ViewStyle, ViewStyle.SPACE_FILL );
 
       // Space fill / Ball and stick radio buttons

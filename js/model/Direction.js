@@ -15,7 +15,7 @@ define( require => {
   const Vector2 = require( 'DOT/Vector2' );
 
   // constants
-  const DIRECTION = new Enumeration( [ 'NORTH', 'EAST', 'SOUTH', 'WEST' ] );
+  const DIRECTION = Enumeration.byKeys( [ 'NORTH', 'EAST', 'SOUTH', 'WEST' ] );
 
   class Direction {
     /**
