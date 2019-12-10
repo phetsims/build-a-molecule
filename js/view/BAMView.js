@@ -29,6 +29,7 @@ define( require => {
   const Shape = require( 'KITE/Shape' );
   const SliceNode = require( 'BUILD_A_MOLECULE/view/SliceNode' );
   const TextPushButton = require( 'SUN/buttons/TextPushButton' );
+  const ThreeUtil = require( 'MOBIUS/ThreeUtil' );
 
   // strings
   const refillString = require( 'string!BUILD_A_MOLECULE/refill' );
@@ -53,7 +54,10 @@ define( require => {
       this.addCollection( kitCollectionList.currentCollectionProperty.value, false );
 
       // @public Dialog used for representing 3D molecules.
-      this.dialog = new Molecule3DDialog( new Property( null ) );
+      // Only create a dialog if webgl is enabled. See https://github.com/phetsims/build-a-molecule/issues/105
+      if ( ThreeUtil.isWebGLEnabled() ) {
+        this.dialog = new Molecule3DDialog( new Property( null ) );
+      }
 
       // @public {function} Reference to callback that displays dialog for 3d node representation
       this.showDialogCallback = this.showDialog.bind( this );
@@ -230,8 +234,11 @@ define( require => {
      * @private
      */
     showDialog( completeMolecule ) {
-      this.dialog.completeMoleculeProperty.value = completeMolecule;
-      this.dialog.show();
+      // Bail if we don't have a dialog, due to a lack of webgl support. See https://github.com/phetsims/build-a-molecule/issues/105
+      if ( this.dialog ) {
+        this.dialog.completeMoleculeProperty.value = completeMolecule;
+        this.dialog.show();
+      }
     }
 
     /**
