@@ -15,6 +15,7 @@ define( require => {
     const AquaRadioButton = require( 'SUN/AquaRadioButton' );
     const BAMConstants = require( 'BUILD_A_MOLECULE/BAMConstants' );
     const Bounds2 = require( 'DOT/Bounds2' );
+  const BooleanProperty = require( 'AXON/BooleanProperty' );
     const buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
     const Color = require( 'SCENERY/util/Color' );
     const Dialog = require( 'SUN/Dialog' );
@@ -24,6 +25,7 @@ define( require => {
     const Matrix3 = require( 'DOT/Matrix3' );
     const PhetFont = require( 'SCENERY_PHET/PhetFont' );
   const Playable = require( 'TAMBO/Playable' );
+  const PlayPauseButton = require( 'SCENERY_PHET/buttons/PlayPauseButton' );
     const Property = require( 'AXON/Property' );
     const Rectangle = require( 'SCENERY/nodes/Rectangle' );
     const RichText = require( 'SCENERY/nodes/RichText' );
@@ -46,7 +48,13 @@ define( require => {
      * @constructor
      */
     function Molecule3DDialog( completeMoleculeProperty ) {
-      //@public
+
+      // @public {BooleanProperty} Property used for playing/pausing a rotating molecule
+      // TODO: Change visuals of this button
+      this.isPlayingProperty = new BooleanProperty( true );
+      const playPauseButton = new PlayPauseButton( this.isPlayingProperty );
+
+      // @public {Property.<CompletMoleculeProperty>}
       this.completeMoleculeProperty = completeMoleculeProperty;
       const formulaText = new RichText( '', {
         font: new PhetFont( 18 ),
@@ -185,7 +193,7 @@ define( require => {
 
           // TODO: ThreeNode needs to be reset/childrenRemoved?
           contentVBox.removeAllChildren();
-          contentVBox.children = [ formulaText, moleculeNode, buttonHolder ];
+          contentVBox.children = [ formulaText, moleculeNode, playPauseButton, buttonHolder ];
         }
         else {
           contentVBox.removeAllChildren();
@@ -225,15 +233,17 @@ define( require => {
        * @public
        */
       step: function( dt ) {
+        if ( this.isPlayingProperty.value ) {
 
-        // Define a quaternion that is offset by a rotation determined by theta.
-        // Multiply the rotated quaternion by the previous quaternion of the THREE object and render it with its new
-        // quaternion
-        const theta = Math.PI / 4 * dt;
-        const newQuaternion = new THREE.Quaternion();
-        newQuaternion.setFromAxisAngle( new THREE.Vector3( 0, 1, 0 ), theta );
-        newQuaternion.multiply( this.quaternionProperty.value );
-        this.quaternionProperty.value = newQuaternion;
+          // Define a quaternion that is offset by a rotation determined by theta.
+          // Multiply the rotated quaternion by the previous quaternion of the THREE object and render it with its new
+          // quaternion
+          const theta = Math.PI / 4 * dt;
+          const newQuaternion = new THREE.Quaternion();
+          newQuaternion.setFromAxisAngle( new THREE.Vector3( 0, 1, 0 ), theta );
+          newQuaternion.multiply( this.quaternionProperty.value );
+          this.quaternionProperty.value = newQuaternion;
+        }
         this.render();
       },
 
