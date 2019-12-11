@@ -49,11 +49,11 @@ define( require => {
       //@public
       this.completeMoleculeProperty = completeMoleculeProperty;
       const formulaText = new RichText( '', {
-        font: new PhetFont( 20 ),
+        font: new PhetFont( 18 ),
         fill: '#bbb'
       } );
       const title = new Text( '', {
-        font: new PhetFont( 30 ),
+        font: new PhetFont( 28 ),
         fill: 'white'
       } );
       completeMoleculeProperty.link( completeMolecule => {
@@ -65,7 +65,7 @@ define( require => {
 
       // Holds all of the content within the dialog. Dialog needs to be sized to content before content is added.
       // TODO: Find largest size for dialog and fill content with that size bounds
-      const contentWrapper = new Rectangle( 0, 0, 350, 300, { background: 'white' } );
+      const contentWrapper = new Rectangle( 0, 0, 300, 275, { background: 'white' } );
       const contentVBox = new VBox( { children: [ contentWrapper ], spacing: 12 } );
 
       Dialog.call( this, contentVBox, {
@@ -81,7 +81,7 @@ define( require => {
 
       // Space fill / Ball and stick radio buttons
       const buttonTextOptions = {
-        font: new PhetFont( 20 ),
+        font: new PhetFont( 18 ),
         fill: 'white',
         maxWidth: BAMConstants.TEXT_MAX_WIDTH
       };
@@ -92,7 +92,7 @@ define( require => {
         selectedColor: 'rgba(255,255,255,0.4)',
         deselectedColor: 'black',
         centerColor: 'white',
-        radius: 12,
+        radius: 8,
         xSpacing: 8,
         stroke: 'white',
         soundPlayer: Playable.NO_SOUND
