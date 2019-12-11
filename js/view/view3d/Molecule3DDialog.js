@@ -64,7 +64,6 @@ define( require => {
       } );
 
       // Holds all of the content within the dialog. Dialog needs to be sized to content before content is added.
-      // TODO: Find largest size for dialog and fill content with that size bounds
       const contentWrapper = new Rectangle( 0, 0, 300, 275, { background: 'white' } );
       const contentVBox = new VBox( { children: [ contentWrapper ], spacing: 12 } );
 
