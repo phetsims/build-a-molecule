@@ -26,6 +26,7 @@ define( require => {
     const PhetFont = require( 'SCENERY_PHET/PhetFont' );
   const Playable = require( 'TAMBO/Playable' );
   const PlayPauseButton = require( 'SCENERY_PHET/buttons/PlayPauseButton' );
+  const PressListener = require( 'SCENERY/listeners/PressListener' );
     const Property = require( 'AXON/Property' );
     const Rectangle = require( 'SCENERY/nodes/Rectangle' );
     const RichText = require( 'SCENERY/nodes/RichText' );
@@ -200,9 +201,6 @@ define( require => {
         }
       } );
 
-      // @private
-      this.moleculeNode = moleculeNode;
-
       // @private {Property.<THREE.Quaternion>}
       this.quaternionProperty = new Property( new THREE.Quaternion() );
       this.quaternionProperty.link( quaternion => {
@@ -212,6 +210,30 @@ define( require => {
         moleculeContainer.updateMatrix();
         moleculeContainer.updateMatrixWorld();
       } );
+
+      // @private
+      this.moleculeNode = moleculeNode;
+      let lastGlobalPoint = null;
+
+      // Listener that handles user input to rotate molecule
+      const pressListener = new PressListener( {
+        press: event => {
+          this.isPlayingProperty.value = false;
+          lastGlobalPoint = event.pointer.point.copy();
+        },
+        drag: event => {
+          const delta = event.pointer.point.minus( lastGlobalPoint );
+          lastGlobalPoint = event.pointer.point.copy();
+          // TODO: Add scale?
+          const newQuaternion = new THREE.Quaternion().setFromEuler( new THREE.Euler( delta.y, delta.x, 0 ) );
+          newQuaternion.multiply( this.quaternionProperty.value );
+          this.quaternionProperty.value = newQuaternion;
+        },
+        release: () => {
+          this.isPlayingProperty.value = true;
+        }
+      } );
+      moleculeNode.addInputListener( pressListener );
     }
 
     buildAMolecule.register( 'Molecule3DDialog', Molecule3DDialog );
