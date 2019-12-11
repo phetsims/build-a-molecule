@@ -222,9 +222,9 @@ define( require => {
     /**
      * @private
      */
-    step() {
+    step( dt ) {
       if ( this.dialog ) {
-        this.dialog.render( undefined );
+        this.dialog.step( dt );
       }
     }
 

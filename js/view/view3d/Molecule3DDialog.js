@@ -194,6 +194,16 @@ define( require => {
 
       // @private
       this.moleculeNode = moleculeNode;
+
+      // @private {Property.<THREE.Quaternion>}
+      this.quaternionProperty = new Property( new THREE.Quaternion() );
+      this.quaternionProperty.link( quaternion => {
+
+        // Copy the new value into the Three object's quaternion and update the matricies.
+        moleculeContainer.quaternion.copy( quaternion );
+        moleculeContainer.updateMatrix();
+        moleculeContainer.updateMatrixWorld();
+      } );
     }
 
     buildAMolecule.register( 'Molecule3DDialog', Molecule3DDialog );
@@ -207,6 +217,24 @@ define( require => {
 
       getGlobalCanvasBounds: function( view ) {
         return view.localToGlobalBounds( this.getLocalCanvasBounds() ).roundedOut();
+      },
+
+      /**
+       *
+       * @param dt
+       * @public
+       */
+      step: function( dt ) {
+
+        // Define a quaternion that is offset by a rotation determined by theta.
+        // Multiply the rotated quaternion by the previous quaternion of the THREE object and render it with its new
+        // quaternion
+        const theta = Math.PI / 4 * dt;
+        const newQuaternion = new THREE.Quaternion();
+        newQuaternion.setFromAxisAngle( new THREE.Vector3( 0, 1, 0 ), theta );
+        newQuaternion.multiply( this.quaternionProperty.value );
+        this.quaternionProperty.value = newQuaternion;
+        this.render();
       },
 
       /**
