@@ -46,12 +46,13 @@ define( require => {
       this.metadataMap = {}; // moleculeId => MoleculeControlsHBox
       this.bondMap = {}; // moleculeId => MoleculeBondContainerNode
 
-      // @public {Bounds2} Bounds used to limit where molecules can reside in the play area.
-      this.playAreaDragBounds = new Bounds2( -1500, -250, 1450, 800 );
-
       // @public {KitCollectionList}
       this.kitCollectionList = kitCollectionList;
       this.addCollection( kitCollectionList.currentCollectionProperty.value, false );
+
+      // @public {Bounds2} Bounds used to limit where molecules can reside in the play area.
+      this.playAreaDragBounds = new Bounds2( -1500, -250, 1450, 800 );
+      this.atomDragBounds = new Bounds2( -1575, -850, 1575, 950 );
 
       // @public Dialog used for representing 3D molecules.
       // Only create a dialog if webgl is enabled. See https://github.com/phetsims/build-a-molecule/issues/105
@@ -283,6 +284,7 @@ define( require => {
       const atomListener = new DragListener( {
         transform: BAMConstants.MODEL_VIEW_TRANSFORM,
         targetNode: atomNode,
+        dragBoundsProperty: new Property( this.atomDragBounds ),
         locationProperty: atom.positionProperty,
         start: () => {
           atom.destinationProperty.value = atom.positionProperty.value;
@@ -337,7 +339,7 @@ define( require => {
 
           // Keep track of view elements used later in the callback
           const mappedAtomNode = this.kitPlayAreaNode.atomNodeMap[ atom.id ];
-          const mappedKitCollectionBounds = this.kitCollectionMap[ this.kitCollectionList.currentCollectionProperty.value.id ].bounds;
+          const mappedKitCollectionBounds = this.kitCollectionMap[ this.kitCollectionList.currentCollectionProperty.value.id ].bounds.dilatedX( 15 );
           const currentKit = kitCollection.currentKitProperty.value;
           const molecule = kitCollection.currentKitProperty.value.getMolecule( atom );
 
