@@ -224,8 +224,10 @@ define( require => {
         drag: event => {
           const delta = event.pointer.point.minus( lastGlobalPoint );
           lastGlobalPoint = event.pointer.point.copy();
-          // TODO: Add scale?
-          const newQuaternion = new THREE.Quaternion().setFromEuler( new THREE.Euler( delta.y, delta.x, 0 ) );
+
+          // Compensate for the size of the sim screen by scaling the amount we rotate in THREE.Euler
+          const scale = 1 / (100 * window.phet.joist.sim.scaleProperty.value);
+          const newQuaternion = new THREE.Quaternion().setFromEuler( new THREE.Euler( delta.y * scale, delta.x * scale, 0 ) );
           newQuaternion.multiply( this.quaternionProperty.value );
           this.quaternionProperty.value = newQuaternion;
         },
