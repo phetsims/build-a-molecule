@@ -10,7 +10,7 @@ define( require => {
   // modules
   const buildAMoleculeTitleString = require( 'string!BUILD_A_MOLECULE/build-a-molecule.title' );
   const CollectMultipleScreen = require( 'BUILD_A_MOLECULE/screens/CollectMultipleScreen' );
-  const LargerMoleculesScreen = require( 'BUILD_A_MOLECULE/screens/LargerMoleculesScreen' );
+  const PlaygroundScreen = require( 'BUILD_A_MOLECULE/screens/PlaygroundScreen' );
   const MakeMoleculeScreen = require( 'BUILD_A_MOLECULE/screens/MakeMoleculeScreen' );
   const Sim = require( 'JOIST/Sim' );
   const SimLauncher = require( 'JOIST/SimLauncher' );
@@ -29,7 +29,7 @@ define( require => {
       new Sim( buildAMoleculeTitleString, [
         new MakeMoleculeScreen(),
         new CollectMultipleScreen(),
-        new LargerMoleculesScreen()
+        new PlaygroundScreen()
       ], simOptions ).start();
     } );
 } );

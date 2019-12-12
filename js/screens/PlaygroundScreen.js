@@ -22,7 +22,7 @@ define( require => {
   const Rectangle = require( 'SCENERY/nodes/Rectangle' );
 
   // strings
-  const titleLargerString = require( 'string!BUILD_A_MOLECULE/title.larger' );
+  const titlePlaygroundString = require( 'string!BUILD_A_MOLECULE/title.playground' );
 
   // constants
   const BUCKET_DIMENSIONS = new Dimension2( 670, 200 );
@@ -30,9 +30,9 @@ define( require => {
   /**
    * @constructor
    */
-  function LargerMoleculesScreen() {
+  function PlaygroundScreen() {
     const options = {
-      name: titleLargerString,
+      name: titlePlaygroundString,
       homeScreenIcon: new Rectangle( 0, 0, 548, 373, { fill: 'blue' } )
     };
 
@@ -119,9 +119,9 @@ define( require => {
       options );
   }
 
-  buildAMolecule.register( 'LargerMoleculesScreen', LargerMoleculesScreen );
+  buildAMolecule.register( 'PlaygroundScreen', PlaygroundScreen );
 
-  inherit( BAMScreen, LargerMoleculesScreen );
+  inherit( BAMScreen, PlaygroundScreen );
 
-  return LargerMoleculesScreen;
+  return PlaygroundScreen;
 } );
