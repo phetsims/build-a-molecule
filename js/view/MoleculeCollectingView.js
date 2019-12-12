@@ -30,8 +30,9 @@ define( require => {
       // @private
       this.regenerateCallback = regenerateCallback;
 
-      // Erode play area to compensate for CollectionPanel
+      // Adjust play area and carousel bounds to compensate for CollectionPanel
       this.playAreaDragBounds.setMaxX( BAMConstants.KIT_VIEW_WIDTH );
+      this.mappedKitCollectionBounds = this.kitCollectionMap[ this.kitCollectionList.currentCollectionProperty.value.id ].bounds.dilatedX( 15 );
       const collectionAttachmentCallbacks = [];
       const collectionPanel = new CollectionPanel(
         kitCollectionList,

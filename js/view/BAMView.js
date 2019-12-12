@@ -53,6 +53,8 @@ define( require => {
       // @public {Bounds2} Bounds used to limit where molecules can reside in the play area.
       this.playAreaDragBounds = new Bounds2( -1500, -250, 1450, 800 );
       this.atomDragBounds = new Bounds2( -1575, -850, 1575, 950 );
+      this.mappedKitCollectionBounds = this.kitCollectionMap[ this.kitCollectionList.currentCollectionProperty.value.id ].bounds.dilatedX( 60 );
+
 
       // @public Dialog used for representing 3D molecules.
       // Only create a dialog if webgl is enabled. See https://github.com/phetsims/build-a-molecule/issues/105
@@ -339,12 +341,11 @@ define( require => {
 
           // Keep track of view elements used later in the callback
           const mappedAtomNode = this.kitPlayAreaNode.atomNodeMap[ atom.id ];
-          const mappedKitCollectionBounds = this.kitCollectionMap[ this.kitCollectionList.currentCollectionProperty.value.id ].bounds.dilatedX( 15 );
           const currentKit = kitCollection.currentKitProperty.value;
           const molecule = kitCollection.currentKitProperty.value.getMolecule( atom );
 
           // Responsible for dropping molecules in play area or kit area
-          const droppedInKitArea = mappedAtomNode && mappedAtomNode.bounds.intersectsBounds( mappedKitCollectionBounds );
+          const droppedInKitArea = mappedAtomNode && mappedAtomNode.bounds.intersectsBounds( this.mappedKitCollectionBounds );
 
           // Set the atom position to the closest position within the play area bounds, unless it's dropped in kit area.
           if ( !this.playAreaDragBounds.containsPoint( atom.positionProperty.value ) && !droppedInKitArea ) {
