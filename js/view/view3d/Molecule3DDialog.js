@@ -51,8 +51,8 @@ define( require => {
     function Molecule3DDialog( completeMoleculeProperty ) {
 
       // @public {BooleanProperty} Property used for playing/pausing a rotating molecule
-      // TODO: Change visuals of this button
       this.isPlayingProperty = new BooleanProperty( true );
+      this.userControlledProperty = new BooleanProperty( false );
       const playPauseButton = new PlayPauseButton( this.isPlayingProperty, {
         radius: 15,
         valueOffSoundPlayer: Playable.NO_SOUND,
@@ -223,7 +223,7 @@ define( require => {
       // Listener that handles user input to rotate molecule
       const pressListener = new PressListener( {
         press: event => {
-          this.isPlayingProperty.value = false;
+          this.userControlledProperty.value = true;
           lastGlobalPoint = event.pointer.point.copy();
         },
         drag: event => {
@@ -237,7 +237,7 @@ define( require => {
           this.quaternionProperty.value = newQuaternion;
         },
         release: () => {
-          this.isPlayingProperty.value = true;
+          this.userControlledProperty.value = false;
         }
       } );
       moleculeNode.addInputListener( pressListener );
@@ -262,7 +262,7 @@ define( require => {
        * @public
        */
       step: function( dt ) {
-        if ( this.isPlayingProperty.value ) {
+        if ( this.isPlayingProperty.value && !this.userControlledProperty.value ) {
 
           // Define a quaternion that is offset by a rotation determined by theta.
           // Multiply the rotated quaternion by the previous quaternion of the THREE object and render it with its new
