@@ -126,7 +126,7 @@ define( require => {
 
         // Responsible for the tempo of the animation.
         this.animationProgress = Math.min( 1, this.animationProgress + dt );
-        const ratio = Easing.LINEAR.value( this.animationProgress );
+        const ratio = Easing.CUBIC_IN_OUT.value( this.animationProgress );
 
         // Update the position of the atom
         this.positionProperty.set( this.animationStartPosition.blend( this.animationEndPosition, ratio ) );
