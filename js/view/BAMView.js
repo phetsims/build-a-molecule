@@ -365,7 +365,7 @@ define( require => {
             }
           }
 
-          // Responsible bonding molecules in play area or breaking molecule bonds and returned to kit.
+          // Responsible for bonding molecules in play area or breaking molecule bonds and returning to kit.
           // We don't want to do this while the molecule is animating.
           if ( !atom.isAnimatingProperty.value ) {
             currentKit.atomDropped( atom, droppedInKitArea );
@@ -380,7 +380,7 @@ define( require => {
     }
 
     /**
-     * Removes atom elements from view.
+     * Sets animation end and start positions.
      *
      * @param atom {Atom2}
      * @param animationEndPosition {Vector2}
