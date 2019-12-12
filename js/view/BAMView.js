@@ -110,7 +110,7 @@ define( require => {
       this.addChild( sliceNode );
 
       // Create a button to refill the kit
-      const kitPanel = this.kitCollectionMap[ 0 ].kitPanel;
+      const kitPanel = this.kitCollectionMap[ kitCollectionList.currentCollectionProperty.value.id ].kitPanel;
       const refillButton = new TextPushButton( refillString, {
         listener: () => {
           this.kitPlayAreaNode.resetPlayAreaKit();
@@ -150,8 +150,8 @@ define( require => {
           this.updateRefillButton();
 
           // If the allFilledNode is present on screen dispose it.
-          if ( this.allFilledNode ) {
-            this.allFilledNode.dispose();
+          if ( this.children.includes( this.allFilledNode ) ) {
+            this.removeChild( this.allFilledNode );
           }
         },
         right: this.layoutBounds.right - BAMConstants.VIEW_PADDING * 1.3,
@@ -162,6 +162,42 @@ define( require => {
       this.resetAllButton.moveToBack();
       this.addChild( refillButton );
 
+      /**
+       * Handles adding molecules and molecule metadata to kit play area.
+       *
+       * @param {Molecule} molecule
+       * @param {Kit} kit
+       * @private
+       */
+      const addedMoleculeCallback = ( molecule, kit ) => {
+        const moleculeControlsHBox = new MoleculeControlsHBox( kit, molecule, this.showDialogCallback );
+        this.kitPlayAreaNode.metadataLayer.addChild( moleculeControlsHBox );
+        this.kitPlayAreaNode.metadataMap[ molecule.moleculeId ] = moleculeControlsHBox;
+        if ( BAMConstants.ALLOW_BOND_BREAKING ) {
+          this.kitPlayAreaNode.addMoleculeBondNodes( molecule );
+        }
+      };
+
+      /**
+       * Handles removing molecules and molecule metadata to kit play area.
+       *
+       * @param {Molecule} molecule
+       * @param {Kit} kit
+       * @private
+       */
+      const removedMoleculeCallback = ( molecule, kit ) => {
+        const moleculeControlsHBox = this.kitPlayAreaNode.metadataMap[ molecule.moleculeId ];
+        if ( moleculeControlsHBox ) {
+          this.kitPlayAreaNode.metadataLayer.removeChild( moleculeControlsHBox );
+          moleculeControlsHBox.dispose();
+          delete this.kitPlayAreaNode.metadataMap[ molecule.moleculeId ];
+
+          if ( BAMConstants.ALLOW_BOND_BREAKING ) {
+            this.kitPlayAreaNode.removeMoleculeBondNodes( molecule );
+          }
+        }
+      };
+
       // When a collection is changed, update the listeners to the kits, KitPlayAreaNode and sliceNode.
       kitCollectionList.currentCollectionProperty.link( collection => {
 
@@ -170,27 +206,16 @@ define( require => {
         collection.kits.forEach( kit => {
 
           // Handle metadataLayer creation and destruction
-          kit.addedMoleculeEmitter.addListener( molecule => {
-            var moleculeControlsHBox = new MoleculeControlsHBox( kit, molecule, this.showDialogCallback );
-            this.kitPlayAreaNode.metadataLayer.addChild( moleculeControlsHBox );
-            this.kitPlayAreaNode.metadataMap[ molecule.moleculeId ] = moleculeControlsHBox;
-
-            if ( BAMConstants.ALLOW_BOND_BREAKING ) {
-              this.kitPlayAreaNode.addMoleculeBondNodes( molecule );
-            }
-          } );
-          kit.removedMoleculeEmitter.addListener( molecule => {
-            var moleculeControlsHBox = this.kitPlayAreaNode.metadataMap[ molecule.moleculeId ];
-            if ( moleculeControlsHBox ) {
-              this.kitPlayAreaNode.metadataLayer.removeChild( moleculeControlsHBox );
-              moleculeControlsHBox.dispose();
-              delete this.kitPlayAreaNode.metadataMap[ molecule.moleculeId ];
-
-              if ( BAMConstants.ALLOW_BOND_BREAKING ) {
-                this.kitPlayAreaNode.removeMoleculeBondNodes( molecule );
-              }
-            }
-          } );
+          // We only need to add listeners once
+          if ( !kit.emitterAdded ) {
+            kit.addedMoleculeEmitter.addListener( molecule => {
+              addedMoleculeCallback( molecule, kit );
+            } );
+            kit.removedMoleculeEmitter.addListener( molecule => {
+              removedMoleculeCallback( molecule, kit )
+            } );
+            kit.emitterAdded = true;
+          }
 
           // Reset our kitPlayAreaNode for the new collection
           this.kitPlayAreaNode.resetPlayAreaKit();
@@ -200,15 +225,19 @@ define( require => {
           // Used for tracking kits in KitPlayAreaNode
           kits.push( kit );
 
-          // Each kit gets listeners for managing its play area.
-          kit.atomsInPlayArea.addItemAddedListener( atom => {
-            this.addAtomNodeToPlayArea( atom, collection );
-            this.updateRefillButton();
-          } );
-          kit.atomsInPlayArea.addItemRemovedListener( atom => {
-            this.onAtomRemovedFromPlayArea( atom );
-            this.updateRefillButton();
-          } );
+          // We only need to add listeners once
+          if ( !kit.listenerAdded ) {
+            // Each kit gets listeners for managing its play area.
+            kit.atomsInPlayArea.addItemAddedListener( atom => {
+              this.addAtomNodeToPlayArea( atom, collection );
+              this.updateRefillButton();
+            } );
+            kit.atomsInPlayArea.addItemRemovedListener( atom => {
+              this.onAtomRemovedFromPlayArea( atom );
+              this.updateRefillButton();
+            } );
+            kit.listenerAdded = true;
+          }
 
           // KitPlayAreaNode and sliceNode should update their kits
           collection.currentKitProperty.link( kit => {

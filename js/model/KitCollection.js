@@ -16,11 +16,12 @@ define( require => {
   const BuildAMoleculeQueryParameters = require( 'BUILD_A_MOLECULE/common/BuildAMoleculeQueryParameters' );
   const Property = require( 'AXON/Property' );
 
+  let currentId = 0;
+
   /**
    * @constructor
    */
   function KitCollection() {
-    let currentId = 0;
 
     // @public {number}
     this.id = currentId++;

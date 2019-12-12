@@ -38,8 +38,10 @@ define( require => {
     //@public {number}
     this.id = kitIdCounter++;
     this.atomsInPlayArea = new ObservableArray();
+    this.listenerAdded = false;
+    this.emitterAdded = false;
 
-    // REVIEW: Used for debugging.
+    // // REVIEW: Used for debugging.
     // this.atomsInPlayArea.addItemAddedListener( atom => {
     //   console.log( 'kit.atomsInPlayArea.added = ', this.atomsInPlayArea._array );
     // } );
