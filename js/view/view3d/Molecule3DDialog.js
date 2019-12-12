@@ -53,7 +53,12 @@ define( require => {
       // @public {BooleanProperty} Property used for playing/pausing a rotating molecule
       // TODO: Change visuals of this button
       this.isPlayingProperty = new BooleanProperty( true );
-      const playPauseButton = new PlayPauseButton( this.isPlayingProperty );
+      const playPauseButton = new PlayPauseButton( this.isPlayingProperty, {
+        radius: 15,
+        valueOffSoundPlayer: Playable.NO_SOUND,
+        valueOnSoundPlayer: Playable.NO_SOUND,
+        baseColor: Color.ORANGE
+      } );
 
       // @public {Property.<CompletMoleculeProperty>}
       this.completeMoleculeProperty = completeMoleculeProperty;
@@ -73,7 +78,7 @@ define( require => {
       } );
 
       // Holds all of the content within the dialog. Dialog needs to be sized to content before content is added.
-      const contentWrapper = new Rectangle( 0, 0, 300, 275, { background: 'white' } );
+      const contentWrapper = new Rectangle( 0, 0, 350, 275, { background: 'white' } );
       const contentVBox = new VBox( { children: [ contentWrapper ], spacing: 12 } );
 
       Dialog.call( this, contentVBox, {
@@ -108,8 +113,8 @@ define( require => {
       const spaceFillButton = new AquaRadioButton( viewStyleProperty, ViewStyle.SPACE_FILL, spaceFillText, radioButtonOptions );
       const ballAndStickButton = new AquaRadioButton( viewStyleProperty, ViewStyle.BALL_AND_STICK, ballAndStickText, radioButtonOptions );
       const buttonHolder = new HBox( {
-        children: [ spaceFillButton, ballAndStickButton ],
-        spacing: 40
+        children: [ spaceFillButton, playPauseButton, ballAndStickButton ],
+        spacing: 30
       } );
 
       // 3D view of moleculeNode using mobius supported elements
@@ -194,7 +199,7 @@ define( require => {
 
           // TODO: ThreeNode needs to be reset/childrenRemoved?
           contentVBox.removeAllChildren();
-          contentVBox.children = [ formulaText, moleculeNode, playPauseButton, buttonHolder ];
+          contentVBox.children = [ formulaText, moleculeNode, buttonHolder ];
         }
         else {
           contentVBox.removeAllChildren();
