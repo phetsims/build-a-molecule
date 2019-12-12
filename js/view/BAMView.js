@@ -212,7 +212,7 @@ define( require => {
               addedMoleculeCallback( molecule, kit );
             } );
             kit.removedMoleculeEmitter.addListener( molecule => {
-              removedMoleculeCallback( molecule, kit )
+              removedMoleculeCallback( molecule, kit );
             } );
             kit.emitterAdded = true;
           }
