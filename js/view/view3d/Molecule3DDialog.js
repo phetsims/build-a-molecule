@@ -267,7 +267,7 @@ define( require => {
           // Define a quaternion that is offset by a rotation determined by theta.
           // Multiply the rotated quaternion by the previous quaternion of the THREE object and render it with its new
           // quaternion
-          const theta = Math.PI / 4 * dt;
+          const theta = Math.PI / 6 * dt;
           const newQuaternion = new THREE.Quaternion();
           newQuaternion.setFromAxisAngle( new THREE.Vector3( 0, 1, 0 ), theta );
           newQuaternion.multiply( this.quaternionProperty.value );
