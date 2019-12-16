@@ -125,7 +125,7 @@ define( require => {
       if ( distance > 0 ) {
 
         // Responsible for the tempo of the animation.
-        this.animationProgress = Math.min( 1, this.animationProgress + dt );
+        this.animationProgress = Math.min( 1, this.animationProgress + dt * 2 );
         const ratio = Easing.CUBIC_IN_OUT.value( this.animationProgress );
 
         // Update the position of the atom
