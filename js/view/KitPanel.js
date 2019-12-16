@@ -59,7 +59,7 @@ define( require => {
         margin: 10,
         itemsPerPage: 1,
         animationEnabled: false,
-        soundPlayer: Playable.NO_SOUND
+        buttonSoundPlayer: Playable.NO_SOUND
       } );
 
       this.kitCarousel.pageNumberProperty.link( page => {
