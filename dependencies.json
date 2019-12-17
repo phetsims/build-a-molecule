@@ -1,5 +1,5 @@
 {
-  "comment": "# build-a-molecule 0.0.0-dev.33 Mon Dec 16 2019 11:05:06 GMT-0500 (Eastern Standard Time)",
+  "comment": "# build-a-molecule 0.0.0-dev.34 Tue Dec 17 2019 12:31:56 GMT-0500 (Eastern Standard Time)",
   "assert": {
     "sha": "a99a9ce9ee0774bf3ef509bf3e31ca7383f67478",
     "branch": "master"
@@ -13,7 +13,7 @@
     "branch": "master"
   },
   "build-a-molecule": {
-    "sha": "b113480d992684df6bd93753dfc28c4c0cb179c7",
+    "sha": "8bdec0885a076fadd684e212006602ada18f2b55",
     "branch": "master"
   },
   "chipper": {
@@ -77,7 +77,7 @@
     "branch": "master"
   },
   "sun": {
-    "sha": "ee8a044b123b46bcb8f5c25e2859d6c9fe478d96",
+    "sha": "b5ed007b0091af629418e779750388145bcf54e6",
     "branch": "master"
   },
   "tambo": {
