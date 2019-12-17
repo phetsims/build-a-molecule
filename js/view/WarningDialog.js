@@ -12,9 +12,9 @@ define( require => {
   const buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   const Dialog = require( 'SUN/Dialog' );
   const FontAwesomeNode = require( 'SUN/FontAwesomeNode' );
+  const MultiLineText = require( 'SCENERY_PHET/MultiLineText' );
   const openPopup = require( 'PHET_CORE/openPopup' );
   const PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  const Text = require( 'SCENERY/nodes/Text' );
   const HBox = require( 'SCENERY/nodes/HBox' );
 
   // strings
@@ -34,14 +34,16 @@ define( require => {
             fill: '#E87600', // "safety orange", according to Wikipedia
             scale: 0.8
           } ),
-          new Text( warningString, {
+          new MultiLineText( warningString, {
             font: new PhetFont( 16 ),
             fill: '#000',
+            align: 'left',
             maxWidth: 600
           } )
         ],
-        spacing: 12,
+        spacing: 15,
         align: 'center',
+        xMargin: 15,
         cursor: 'pointer'
       } );
       warningNode.mouseArea = warningNode.touchArea = warningNode.localBounds;
