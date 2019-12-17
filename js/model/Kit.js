@@ -38,8 +38,6 @@ define( require => {
     //@public {number}
     this.id = kitIdCounter++;
     this.atomsInPlayArea = new ObservableArray();
-    this.listenerAdded = false;
-    this.emitterAdded = false;
 
     // // REVIEW: Used for debugging.
     // this.atomsInPlayArea.addItemAddedListener( atom => {
@@ -125,6 +123,7 @@ define( require => {
         // Set the bucket to its filled state.
         bucket.setToFullState();
       } );
+
     },
 
     layoutBuckets: function( buckets ) {
