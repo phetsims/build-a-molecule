@@ -152,6 +152,9 @@
   "refill": {
     "value": "Refill"
   },
+  "warning": {
+    "value": "3D rendering of the molecule requires WebGL. WebGL is not enabled or not available. Click to learn more."
+  },
   "carbon": {
     "value": "Carbon"
   }

@@ -18,7 +18,7 @@ define( require => {
   const HBox = require( 'SCENERY/nodes/HBox' );
 
   // strings
-  const webglWarningBodyString = require( 'string!SCENERY_PHET/webglWarning.body' );
+  const warningString = require( 'string!BUILD_A_MOLECULE/warning' );
 
   class WarningDialog extends Dialog {
     /**
@@ -34,7 +34,7 @@ define( require => {
             fill: '#E87600', // "safety orange", according to Wikipedia
             scale: 0.8
           } ),
-          new Text( webglWarningBodyString, {
+          new Text( warningString, {
             font: new PhetFont( 16 ),
             fill: '#000',
             maxWidth: 600
