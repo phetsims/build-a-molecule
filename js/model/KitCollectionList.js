@@ -40,6 +40,7 @@ define( require => {
       this.stepEmitter = stepEmitter;
       this.collections = [];
       this.currentIndex = 0;
+      this.firstCollection = firstCollection;
       this.addCollection( firstCollection );
     }
 
@@ -70,7 +71,6 @@ define( require => {
     removeCollection( collection ) {
       assert && assert( this.currentCollectionProperty.value !== collection );
       this.collections.shift();
-
       this.removedCollectionEmitter.emit( collection );
     }
 
@@ -88,6 +88,7 @@ define( require => {
           this.removeCollection( collection );
         }
       } );
+      this.collections = [ this.firstCollection ];
     }
 
     availableKitBounds() {
