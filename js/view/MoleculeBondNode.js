@@ -10,15 +10,14 @@ define( require => {
   'use strict';
 
   // modules
+  const BAMConstants = require( 'BUILD_A_MOLECULE/BAMConstants' );
   const buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   const ButtonListener = require( 'SCENERY/input/ButtonListener' );
   const Circle = require( 'SCENERY/nodes/Circle' );
-  const BAMConstants = require( 'BUILD_A_MOLECULE/BAMConstants' );
-  const BuildAMoleculeQueryParameters = require( 'BUILD_A_MOLECULE/common/BuildAMoleculeQueryParameters' );
+  const Color = require( 'SCENERY/util/Color' );
   const inherit = require( 'PHET_CORE/inherit' );
   const Node = require( 'SCENERY/nodes/Node' );
   const platform = require( 'PHET_CORE/platform' );
-  const Shape = require( 'KITE/Shape' );
 
   /* Notes on .cur file generation, all from the images directory, with "sudo apt-get install icoutils" for icotool:
    icotool -c -o scissors.ico scissors.png
@@ -97,53 +96,31 @@ define( require => {
       closedCursor = 'url(' + scissorsClosed.src + ') ' + ( isHorizontal ? '7 13' : '13 7' ) + ', ' + backup;
     }
 
-    // hit target
-    const target = new Circle( bondRadius, {
-      // no fill or stroke
+    // Cut here icon is subject to change. See https://github.com/phetsims/build-a-molecule/issues/113
+    const cutTargetNode = new Node();
+    cutTargetNode.addChild( new Circle( bondRadius, {
+      fill: new Color( 'rgb(253,225,49)' ),
+      stroke: new Color( 'rgb(253,225,49)' ),
       cursor: openCursor,
-      touchArea: new Shape() // these areas don't respond to touch events
-    } );
-    target.addInputListener( new ButtonListener( {
+      visible: true
+    } ) );
+    cutTargetNode.addInputListener( new ButtonListener( {
       fire: function() {
-        kit.breakBond( self.a, self.b );
       },
       up: function() {
-        target.cursor = openCursor;
+        cutTargetNode.cursor = openCursor;
       },
       down: function() {
-        target.cursor = closedCursor;
+        cutTargetNode.cursor = closedCursor;
+        kit.breakBond( self.a, self.b );
       }
     } ) );
-    this.addChild( target );
+    this.addChild( cutTargetNode );
 
-    // Used for debugging
-    if ( BuildAMoleculeQueryParameters.showCutTargets ) {
-
-      // Cut here icon is subject to change. See https://github.com/phetsims/build-a-molecule/issues/113
-      const cutterNode = new Circle( bondRadius, {
-        fill: 'red',
-        stroke: 'red',
-        cursor: openCursor,
-        visible: true
-      } );
-      cutterNode.addInputListener( new ButtonListener( {
-        fire: function() {
-        },
-        up: function() {
-          cutterNode.cursor = openCursor;
-        },
-        down: function() {
-          cutterNode.cursor = closedCursor;
-          kit.breakBond( self.a, self.b );
-        }
-      } ) );
-      this.addChild( cutterNode );
-
-      // Show the cut targets for the selected atom's bonds
-      kit.selectedAtomProperty.link( selectedAtom => {
-        cutterNode.visible = selectedAtom === self.a || selectedAtom === self.b;
-      } );
-    }
+    // Show the cut targets for the selected atom's bonds
+    kit.selectedAtomProperty.link( selectedAtom => {
+      cutTargetNode.visible = selectedAtom === self.a || selectedAtom === self.b;
+    } );
 
     // listener that will update the position of our hit target
     this.positionListener = function() {
