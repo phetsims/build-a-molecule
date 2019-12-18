@@ -275,6 +275,14 @@ define( require => {
           this.updateRefillButton();
         } );
       } );
+
+      // listener for 'click outside to dismiss'
+      this.clickToDismissListener = {
+        down: () => {
+          kitCollectionList.currentCollectionProperty.value.currentKitProperty.value.selectedAtomProperty.value = null;
+        }
+      };
+      phet.joist.display.addInputListener( this.clickToDismissListener );
     }
 
     /**
@@ -343,12 +351,16 @@ define( require => {
       const currentKit = this.kitCollectionList.currentCollectionProperty.value.currentKitProperty.value;
       const atomNode = this.addAtomNodeToPlayAreaNode( atom );
       let lastPosition;
+
+      // Track the length of a drag in model units
+      let dragLength = 0;
       const atomListener = new DragListener( {
         transform: BAMConstants.MODEL_VIEW_TRANSFORM,
         targetNode: atomNode,
         dragBoundsProperty: new Property( this.atomDragBounds ),
         locationProperty: atom.positionProperty,
         start: () => {
+          dragLength = 0;
           atom.destinationProperty.value = atom.positionProperty.value;
           atom.isClickedProperty.value = true;
 
@@ -370,7 +382,8 @@ define( require => {
           // Update the current kit in the play area node.
           this.kitPlayAreaNode.currentKit = currentKit;
         },
-        drag: () => {
+        drag: ( event, listener ) => {
+          dragLength += listener.modelDelta.getMagnitude();
 
           // Get delta from start of drag
           const delta = atom.positionProperty.value.minus( lastPosition );
@@ -395,6 +408,12 @@ define( require => {
           }
         },
         end: () => {
+
+          // Threshold for how much we can drag before considering an atom selected
+          if ( dragLength < BAMConstants.DRAG_LENGTH_THRESHOLD ) {
+            currentKit.selectedAtomProperty.value = atom;
+          }
+
           // Consider an atom released and mark its position
           atom.isSeparatingProperty.value = false;
           atom.userControlledProperty.value = false;

@@ -72,6 +72,7 @@ define( require => {
      * Misc
      *----------------------------------------------------------------------------*/
 
+    DRAG_LENGTH_THRESHOLD: 8000,
     ALLOW_BOND_BREAKING: true,
     SUPPORTED_ELEMENTS: [
       Element.B, Element.Br, Element.C, Element.Cl, Element.F, Element.H, Element.I, Element.N, Element.O, Element.P, Element.S, Element.Si

@@ -23,6 +23,7 @@ define( require => {
   const MoleculeList = require( 'BUILD_A_MOLECULE/model/MoleculeList' );
   const MoleculeStructure = require( 'BUILD_A_MOLECULE/model/MoleculeStructure' );
   const ObservableArray = require( 'AXON/ObservableArray' );
+  const Property = require( 'AXON/Property' );
   const Rectangle = require( 'DOT/Rectangle' );
   const Vector2 = require( 'DOT/Vector2' );
 
@@ -35,9 +36,12 @@ define( require => {
    */
   function Kit( collectionLayout, buckets ) {
 
-    //@public {number}
+    // @public {number}
     this.id = kitIdCounter++;
     this.atomsInPlayArea = new ObservableArray();
+
+    // @public {Property.<Atom|null>}
+    this.selectedAtomProperty = new Property( null );
 
     // // REVIEW: Used for debugging.
     // this.atomsInPlayArea.addItemAddedListener( atom => {
