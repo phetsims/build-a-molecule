@@ -91,6 +91,7 @@ define( require => {
         self.collectionBoxes.forEach( function( box ) {
           if ( box.willAllowMoleculeDrop( molecule ) && !self.hasBlinkedOnce ) {
             box.acceptedMoleculeCreationEmitter.emit( molecule );
+            box.cueVisibilityProperty.value = true;
             self.hasBlinkedOnce = true;
           }
         } );

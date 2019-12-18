@@ -11,6 +11,7 @@ define( require => {
   'use strict';
 
   // modules
+  const ArrowNode = require( 'SCENERY_PHET/ArrowNode' );
   const Bounds2 = require( 'DOT/Bounds2' );
   const buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   const BAMConstants = require( 'BUILD_A_MOLECULE/BAMConstants' );
@@ -69,13 +70,34 @@ define( require => {
     else {
       this.button3dWidth = 0;
     }
-
     this.boxNode.addChild( this.blackBox );
+
+    // Cue that tells the user where to drop the molecule.
+    this.cueNode = new ArrowNode( 10, 0, 34, 0, {
+      fill: 'blue',
+      stroke: 'black',
+      right: this.blackBox.left - 5,
+      centerY: this.blackBox.centerY,
+      tailWidth: 8,
+      headWidth: 14,
+      pickable: false,
+      visible: box.cueVisibilityProperty.value
+    } );
+    box.cueVisibilityProperty.link( visible => {
+      this.cueNode.visible = visible;
+    } );
+
+    // Bounds are expanded to compensate for layout including a cueNode.
+    this.blackBox.localBounds = this.blackBox.localBounds.withMaxX(
+      this.blackBox.localBounds.right + this.blackBox.left - this.cueNode.left
+    );
+    this.boxNode.addChild( this.cueNode );
 
     this.moleculeLayer = new Node();
     this.boxNode.addChild( this.moleculeLayer );
 
     this.updateBoxGraphics();
+
 
     box.addedMoleculeEmitter.addListener( this.addMolecule.bind( this ) );
     box.removedMoleculeEmitter.addListener( this.removeMolecule.bind( this ) );
@@ -155,6 +177,7 @@ define( require => {
     removeMolecule: function( molecule ) {
       this.cancelBlinksInProgress();
       this.updateBoxGraphics();
+      this.box.cueVisibilityProperty.value = false;
 
       const lastMoleculeNode = this.moleculeNodeMap[ molecule.moleculeId ];
       this.moleculeLayer.removeChild( lastMoleculeNode );
@@ -215,6 +238,7 @@ define( require => {
       this.blackBox.lineWidth = 4;
       if ( this.box.isFull() ) {
         this.blackBox.stroke = BAMConstants.MOLECULE_COLLECTION_BOX_HIGHLIGHT;
+        this.box.cueVisibilityProperty.value = false;
       }
       else {
         this.blackBox.stroke = BAMConstants.MOLECULE_COLLECTION_BACKGROUND;

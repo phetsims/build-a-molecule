@@ -10,6 +10,7 @@ define( require => {
   'use strict';
 
   // modules
+  const BooleanProperty = require( 'AXON/BooleanProperty' );
   const Bounds2 = require( 'DOT/Bounds2' );
   const buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   const Emitter = require( 'AXON/Emitter' );
@@ -32,8 +33,9 @@ define( require => {
 
     const self = this;
 
-    // @public {Property.<number>}
+    // @public
     this.quantityProperty = new NumberProperty( 0 );
+    this.cueVisibilityProperty = new BooleanProperty( false );
 
     // @public {Emitter} - Called with a single molecule parameter
     this.addedMoleculeEmitter = new Emitter( { parameters: [ { valueType: Molecule } ] } );
@@ -97,6 +99,7 @@ define( require => {
      */
     reset: function() {
       this.molecules.slice( 0 ).forEach( this.removeMolecule.bind( this ) );
+      this.cueVisibilityProperty.reset();
     }
   } );
 
