@@ -30,7 +30,6 @@ define( require => {
      * @param {Emitter} stepEmitter
      */
     constructor( element, stepEmitter ) {
-
       super( element );
 
       // @public {Vector2Property}
@@ -44,7 +43,6 @@ define( require => {
       this.addedToModelProperty = new BooleanProperty( true );
       this.isAnimatingProperty = new BooleanProperty( false );
       this.isSeparatingProperty = new BooleanProperty( false );
-      this.isClickedProperty = new BooleanProperty( false );
 
       // @private {Vector2|null} Used for animating the molecules to a position constrained in play area bounds
       this.animationStartPosition = null;
