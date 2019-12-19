@@ -59,7 +59,7 @@ define( require => {
     // @private
     this.a = bond.a;
     this.b = bond.b;
-    this.selectedAtom = kit.selectedAtomProperty.value;
+    this.selectedAtom = null;
 
     // use the lewis dot model to get our bond direction
     const bondDirection = kit.getBondDirection( this.a, this.b );

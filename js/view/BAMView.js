@@ -409,7 +409,7 @@ define( require => {
         end: () => {
 
           // Threshold for how much we can drag before considering an atom selected
-          if ( dragLength < BAMConstants.DRAG_LENGTH_THRESHOLD ) {
+          if ( dragLength < BAMConstants.DRAG_LENGTH_THRESHOLD && (currentKit.getMolecule( atom ).bonds.length !== 0) ) {
             currentKit.selectedAtomProperty.value = atom;
           }
 
