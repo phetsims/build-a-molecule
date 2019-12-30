@@ -10,14 +10,14 @@ define( require => {
   const Element = require( 'NITROGLYCERIN/Element' );
   const ModelViewTransform2 = require( 'PHETCOMMON/view/ModelViewTransform2' );
   const ScreenView = require( 'JOIST/ScreenView' );
-  const Util = require( 'DOT/Util' );
+  const Utils = require( 'DOT/Utils' );
   const Vector2 = require( 'DOT/Vector2' );
 
   // constants
   const VIEW_SIZE = ScreenView.DEFAULT_LAYOUT_BOUNDS;
   const MODEL_VIEW_TRANSFORM = ModelViewTransform2.createSinglePointScaleInvertedYMapping(
     Vector2.ZERO,
-    new Vector2( Util.roundSymmetric( VIEW_SIZE.width * 0.5 ), Util.roundSymmetric( VIEW_SIZE.height * 0.5 ) ),
+    new Vector2( Utils.roundSymmetric( VIEW_SIZE.width * 0.5 ), Utils.roundSymmetric( VIEW_SIZE.height * 0.5 ) ),
     0.27 * 1.2 // "Zoom factor" - smaller zooms out, larger zooms in
   );
   const MODEL_SIZE = new Dimension2(

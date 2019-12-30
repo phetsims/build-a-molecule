@@ -13,7 +13,7 @@ define( require => {
   // modules
   const buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   const Direction = require( 'BUILD_A_MOLECULE/model/Direction' );
-  const Util = require( 'DOT/Util' );
+  const Utils = require( 'DOT/Utils' );
   const Vector2 = require( 'DOT/Vector2' );
 
   class LewisDotModel {
@@ -146,7 +146,7 @@ define( require => {
       const dotAtom = this.getLewisDotAtom( atom );
 
       // for sanity and equality (negative zero equals zero, so don't worry about that)
-      const point = new Vector2( Util.roundSymmetric( coordinates.x ), Util.roundSymmetric( coordinates.y ) );
+      const point = new Vector2( Utils.roundSymmetric( coordinates.x ), Utils.roundSymmetric( coordinates.y ) );
 
       const idx = point.x + ',' + point.y;
 

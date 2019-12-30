@@ -24,7 +24,7 @@ define( require => {
   const Matrix3 = require( 'DOT/Matrix3' );
   const Property = require( 'AXON/Property' );
   const Quaternion = require( 'DOT/Quaternion' );
-  const Util = require( 'SCENERY/util/Util' );
+  const Utils = require( 'SCENERY/util/Utils' );
   const Vector2 = require( 'DOT/Vector2' );
   const Vector3 = require( 'DOT/Vector3' );
 
@@ -101,7 +101,7 @@ define( require => {
     // prepare the canvas
     this.canvas = document.createElement( 'canvas' );
     this.context = this.canvas.getContext( '2d' );
-    this.backingScale = useHighRes ? Util.backingScale( this.context ) : 1;
+    this.backingScale = useHighRes ? Utils.backingScale( this.context ) : 1;
     this.canvas.className = 'canvas-3d';
     this.canvas.style.position = 'absolute';
     this.canvas.style.left = '0';
