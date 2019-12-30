@@ -29,7 +29,7 @@ define( require => {
   const Shape = require( 'KITE/Shape' );
   const SliceNode = require( 'BUILD_A_MOLECULE/view/SliceNode' );
   const TextPushButton = require( 'SUN/buttons/TextPushButton' );
-  const ThreeUtil = require( 'MOBIUS/ThreeUtil' );
+  const ThreeUtils = require( 'MOBIUS/ThreeUtils' );
   const WarningDialog = require( 'BUILD_A_MOLECULE/view/WarningDialog' );
 
   // strings
@@ -61,7 +61,7 @@ define( require => {
 
       // @public Dialog used for representing 3D molecules.
       // Only create a dialog if webgl is enabled. See https://github.com/phetsims/build-a-molecule/issues/105
-      this.dialog = ThreeUtil.isWebGLEnabled() ? new Molecule3DDialog( new Property( null ) ) : new WarningDialog();
+      this.dialog = ThreeUtils.isWebGLEnabled() ? new Molecule3DDialog( new Property( null ) ) : new WarningDialog();
 
       // @public {function} Reference to callback that displays dialog for 3d node representation
       this.showDialogCallback = this.showDialog.bind( this );
@@ -289,7 +289,7 @@ define( require => {
      * @private
      */
     step( dt ) {
-      if ( this.dialog && ThreeUtil.isWebGLEnabled() ) {
+      if ( this.dialog && ThreeUtils.isWebGLEnabled() ) {
         this.dialog.step( dt );
       }
     }
@@ -303,7 +303,7 @@ define( require => {
     showDialog( completeMolecule ) {
       // Bail if we don't have a dialog, due to a lack of webgl support. See https://github.com/phetsims/build-a-molecule/issues/105
       if ( this.dialog ) {
-        if ( ThreeUtil.isWebGLEnabled() ) {
+        if ( ThreeUtils.isWebGLEnabled() ) {
           this.dialog.completeMoleculeProperty.value = completeMolecule;
         }
         this.dialog.show();
