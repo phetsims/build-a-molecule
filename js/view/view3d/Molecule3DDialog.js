@@ -43,6 +43,9 @@ define( require => {
     // constants
     const SIZE = 200;
 
+    // Used for radio buttons
+    const ViewStyle = Enumeration.byKeys( [ 'SPACE_FILL', 'BALL_AND_STICK' ] );
+
     /**
      *
      * @param {Property.<CompleteMolecule|null>} completeMoleculeProperty
@@ -88,8 +91,6 @@ define( require => {
         resize: false
       } );
 
-      // Used for radio buttons
-      const ViewStyle = Enumeration.byKeys( [ 'SPACE_FILL', 'BALL_AND_STICK' ] );
       const viewStyleProperty = new EnumerationProperty( ViewStyle, ViewStyle.SPACE_FILL );
 
       // Space fill / Ball and stick radio buttons
