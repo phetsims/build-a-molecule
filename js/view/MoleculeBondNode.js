@@ -32,16 +32,24 @@ define( require => {
    */
   //REVIEW: It would be good to look at the current custom cursor support for supported platforms. Can we get rid of
   //REVIEW: the duplication here?
+  const scissorsImage = require( 'image!BUILD_A_MOLECULE/scissors.png' );
+  const closedImage = require( 'image!BUILD_A_MOLECULE/scissors-closed.png' );
+  const upImage = require( 'image!BUILD_A_MOLECULE/scissors-up.png' );
+  const closedUpImage = require( 'image!BUILD_A_MOLECULE/scissors-closed-up.png' );
+  const cursorImage = require( 'image!BUILD_A_MOLECULE/scissors.cur' );
+  const closedCursorImage = require( 'image!BUILD_A_MOLECULE/scissors-closed.cur' );
+  const upCursorImage = require( 'image!BUILD_A_MOLECULE/scissors-up.cur' );
+  const closedUpCursorImage = require( 'image!BUILD_A_MOLECULE/scissors-closed-up.cur' );
 
   const images = {
-    'scissors.png': require( 'image!BUILD_A_MOLECULE/scissors.png' ),
-    'scissors-closed.png': require( 'image!BUILD_A_MOLECULE/scissors-closed.png' ),
-    'scissors-up.png': require( 'image!BUILD_A_MOLECULE/scissors-up.png' ),
-    'scissors-closed-up.png': require( 'image!BUILD_A_MOLECULE/scissors-closed-up.png' ),
-    'scissors.cur': require( 'image!BUILD_A_MOLECULE/scissors.cur' ),
-    'scissors-closed.cur': require( 'image!BUILD_A_MOLECULE/scissors-closed.cur' ),
-    'scissors-up.cur': require( 'image!BUILD_A_MOLECULE/scissors-up.cur' ),
-    'scissors-closed-up.cur': require( 'image!BUILD_A_MOLECULE/scissors-closed-up.cur' )
+    'scissors.png': scissorsImage,
+    'scissors-closed.png': closedImage,
+    'scissors-up.png': upImage,
+    'scissors-closed-up.png': closedUpImage,
+    'scissors.cur': cursorImage,
+    'scissors-closed.cur': closedCursorImage,
+    'scissors-up.cur': upCursorImage,
+    'scissors-closed-up.cur': closedUpCursorImage
   };
 
   const bondRadius = 5; // "Radius" of the bond target that will break the bond
