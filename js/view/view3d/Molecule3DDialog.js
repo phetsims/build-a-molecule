@@ -15,7 +15,7 @@ define( require => {
     const AquaRadioButton = require( 'SUN/AquaRadioButton' );
     const BAMConstants = require( 'BUILD_A_MOLECULE/BAMConstants' );
     const Bounds2 = require( 'DOT/Bounds2' );
-  const BooleanProperty = require( 'AXON/BooleanProperty' );
+    const BooleanProperty = require( 'AXON/BooleanProperty' );
     const buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
     const Color = require( 'SCENERY/util/Color' );
     const Dialog = require( 'SUN/Dialog' );
@@ -24,9 +24,9 @@ define( require => {
     const inherit = require( 'PHET_CORE/inherit' );
     const Matrix3 = require( 'DOT/Matrix3' );
     const PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  const Playable = require( 'TAMBO/Playable' );
-  const PlayPauseButton = require( 'SCENERY_PHET/buttons/PlayPauseButton' );
-  const PressListener = require( 'SCENERY/listeners/PressListener' );
+    const Playable = require( 'TAMBO/Playable' );
+    const PlayPauseButton = require( 'SCENERY_PHET/buttons/PlayPauseButton' );
+    const PressListener = require( 'SCENERY/listeners/PressListener' );
     const Property = require( 'AXON/Property' );
     const Rectangle = require( 'SCENERY/nodes/Rectangle' );
     const RichText = require( 'SCENERY/nodes/RichText' );
@@ -231,7 +231,7 @@ define( require => {
           lastGlobalPoint = event.pointer.point.copy();
 
           // Compensate for the size of the sim screen by scaling the amount we rotate in THREE.Euler
-          const scale = 1 / (100 * window.phet.joist.sim.scaleProperty.value);
+          const scale = 1 / ( 100 * window.phet.joist.sim.scaleProperty.value );
           const newQuaternion = new THREE.Quaternion().setFromEuler( new THREE.Euler( delta.y * scale, delta.x * scale, 0 ) );
           newQuaternion.multiply( this.quaternionProperty.value );
           this.quaternionProperty.value = newQuaternion;
