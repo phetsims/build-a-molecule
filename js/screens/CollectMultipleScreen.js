@@ -10,17 +10,17 @@ define( require => {
 
   // modules
   const BAMScreen = require( 'BUILD_A_MOLECULE/screens/BAMScreen' );
-  const Bucket = require( 'BUILD_A_MOLECULE/model/Bucket' );
+  const Bucket = require( 'BUILD_A_MOLECULE/common/model/Bucket' );
   const buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
-  const CollectionBox = require( 'BUILD_A_MOLECULE/model/CollectionBox' );
+  const CollectionBox = require( 'BUILD_A_MOLECULE/common/model/CollectionBox' );
   const Dimension2 = require( 'DOT/Dimension2' );
   const Element = require( 'NITROGLYCERIN/Element' );
   const inherit = require( 'PHET_CORE/inherit' );
-  const Kit = require( 'BUILD_A_MOLECULE/model/Kit' );
-  const KitCollection = require( 'BUILD_A_MOLECULE/model/KitCollection' );
-  const CollectionLayout = require( 'BUILD_A_MOLECULE/model/CollectionLayout' );
-  const MoleculeCollectingView = require( 'BUILD_A_MOLECULE/view/MoleculeCollectingView' );
-  const MoleculeList = require( 'BUILD_A_MOLECULE/model/MoleculeList' );
+  const Kit = require( 'BUILD_A_MOLECULE/common/model/Kit' );
+  const KitCollection = require( 'BUILD_A_MOLECULE/common/model/KitCollection' );
+  const CollectionLayout = require( 'BUILD_A_MOLECULE/common/model/CollectionLayout' );
+  const MoleculeCollectingView = require( 'BUILD_A_MOLECULE/common/view/MoleculeCollectingView' );
+  const MoleculeList = require( 'BUILD_A_MOLECULE/common/model/MoleculeList' );
   const Rectangle = require( 'SCENERY/nodes/Rectangle' );
 
   // strings

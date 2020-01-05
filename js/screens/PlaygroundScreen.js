@@ -10,15 +10,15 @@ define( require => {
 
   // modules
   const BAMScreen = require( 'BUILD_A_MOLECULE/screens/BAMScreen' );
-  const BAMView = require( 'BUILD_A_MOLECULE/view/BAMView' );
-  const Bucket = require( 'BUILD_A_MOLECULE/model/Bucket' );
+  const BAMView = require( 'BUILD_A_MOLECULE/common/view/BAMView' );
+  const Bucket = require( 'BUILD_A_MOLECULE/common/model/Bucket' );
   const buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   const Dimension2 = require( 'DOT/Dimension2' );
   const Element = require( 'NITROGLYCERIN/Element' );
   const inherit = require( 'PHET_CORE/inherit' );
-  const Kit = require( 'BUILD_A_MOLECULE/model/Kit' );
-  const KitCollection = require( 'BUILD_A_MOLECULE/model/KitCollection' );
-  const CollectionLayout = require( 'BUILD_A_MOLECULE/model/CollectionLayout' );
+  const Kit = require( 'BUILD_A_MOLECULE/common/model/Kit' );
+  const KitCollection = require( 'BUILD_A_MOLECULE/common/model/KitCollection' );
+  const CollectionLayout = require( 'BUILD_A_MOLECULE/common/model/CollectionLayout' );
   const Rectangle = require( 'SCENERY/nodes/Rectangle' );
 
   // strings
