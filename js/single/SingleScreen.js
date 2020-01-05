@@ -1,7 +1,7 @@
 // Copyright 2013-2019, University of Colorado Boulder
 
 /*
- * Screen for 2nd tab. Collection boxes take multiple molecules of the same type, and start off with a different kit collection each time
+ * 1st screen: collection boxes only take 1 molecule, and our 1st kit collection is always the same
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
@@ -24,17 +24,19 @@ define( require => {
   const Rectangle = require( 'SCENERY/nodes/Rectangle' );
 
   // strings
-  const titleMultipleString = require( 'string!BUILD_A_MOLECULE/title.multiple' );
+  const titleSingleString = require( 'string!BUILD_A_MOLECULE/title.single' );
 
   /**
    * @constructor
    */
-  function CollectMultipleScreen() {
+  function SingleScreen() {
+
     const options = {
-      name: titleMultipleString,
-      homeScreenIcon: new Rectangle( 0, 0, 548, 373, { fill: 'green' } )
+      name: titleSingleString,
+      homeScreenIcon: new Rectangle( 0, 0, 548, 373, { fill: 'red' } )
     };
 
+    //REVIEW: Formatting could use some changes here
     BAMScreen.call( this,
 
       // createInitialKitCollection
@@ -42,46 +44,45 @@ define( require => {
         const kitCollection = new KitCollection();
         kitCollection.addKit( new Kit( bounds, [
           new Bucket( new Dimension2( 400, 200 ), stepEmitter, Element.H, 2 ),
+          new Bucket( new Dimension2( 350, 200 ), stepEmitter, Element.O, 1 )
+        ] ) );
+        kitCollection.addKit( new Kit( bounds, [
+          new Bucket( new Dimension2( 400, 200 ), stepEmitter, Element.H, 2 ),
           new Bucket( new Dimension2( 450, 200 ), stepEmitter, Element.O, 2 )
         ] ) );
-
         kitCollection.addKit( new Kit( bounds, [
-          new Bucket( new Dimension2( 500, 200 ), stepEmitter, Element.C, 2 ),
-          new Bucket( new Dimension2( 600, 200 ), stepEmitter, Element.O, 4 ),
+          new Bucket( new Dimension2( 350, 200 ), stepEmitter, Element.C, 1 ),
+          new Bucket( new Dimension2( 450, 200 ), stepEmitter, Element.O, 2 ),
           new Bucket( new Dimension2( 500, 200 ), stepEmitter, Element.N, 2 )
         ] ) );
-        kitCollection.addKit( new Kit( bounds, [
-          new Bucket( new Dimension2( 600, 200 ), stepEmitter, Element.H, 12 ),
-          new Bucket( new Dimension2( 600, 200 ), stepEmitter, Element.O, 4 ),
-          new Bucket( new Dimension2( 500, 200 ), stepEmitter, Element.N, 2 )
-        ] ) );
-        kitCollection.addCollectionBox( new CollectionBox( MoleculeList.CO2, 2 ) );
-        kitCollection.addCollectionBox( new CollectionBox( MoleculeList.O2, 2 ) );
-        kitCollection.addCollectionBox( new CollectionBox( MoleculeList.H2, 4 ) );
-        kitCollection.addCollectionBox( new CollectionBox( MoleculeList.NH3, 2 ) );
+        kitCollection.addCollectionBox( new CollectionBox( MoleculeList.H2O, 1 ) );
+        kitCollection.addCollectionBox( new CollectionBox( MoleculeList.O2, 1 ) );
+        kitCollection.addCollectionBox( new CollectionBox( MoleculeList.H2, 1 ) );
+        kitCollection.addCollectionBox( new CollectionBox( MoleculeList.CO2, 1 ) );
+        kitCollection.addCollectionBox( new CollectionBox( MoleculeList.N2, 1 ) );
         return kitCollection;
       },
 
       // CollectionLayout
       new CollectionLayout(), function( bounds, stepEmitter ) {
-        return BAMScreen.generateKitCollection( true, 4, stepEmitter, bounds );
+        return BAMScreen.generateKitCollection( false, 5, stepEmitter, bounds );
       },
 
       // createKitCollection
       function( model ) {
         // create the view
-        return new MoleculeCollectingView( model, false, function() {
+        return new MoleculeCollectingView( model, true, function() {
           // next collection callback
-          model.addCollection( BAMScreen.generateKitCollection( true, 4, model.stepEmitter, model.collectionLayout ), true );
+          model.addCollection( BAMScreen.generateKitCollection( false, 5, model.stepEmitter, model.collectionLayout ), true );
         } );
       },
 
       options );
   }
 
-  buildAMolecule.register( 'CollectMultipleScreen', CollectMultipleScreen );
+  buildAMolecule.register( 'SingleScreen', SingleScreen );
 
-  inherit( BAMScreen, CollectMultipleScreen );
+  inherit( BAMScreen, SingleScreen );
 
-  return CollectMultipleScreen;
+  return SingleScreen;
 } );
