@@ -16,11 +16,11 @@ define( require => {
 
   // modules
   const Atom = require( 'NITROGLYCERIN/Atom' );
-  const Bond = require( 'BUILD_A_MOLECULE/model/Bond' );
+  const Bond = require( 'BUILD_A_MOLECULE/common/model/Bond' );
   const buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   const ChemUtils = require( 'NITROGLYCERIN/ChemUtils' );
   const Element = require( 'NITROGLYCERIN/Element' );
-  const ElementHistogram = require( 'BUILD_A_MOLECULE/model/ElementHistogram' );
+  const ElementHistogram = require( 'BUILD_A_MOLECULE/common/model/ElementHistogram' );
 
   let nextMoleculeId = 0;
 

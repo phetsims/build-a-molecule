@@ -17,7 +17,7 @@ define( require => {
   const GameAudioPlayer = require( 'VEGAS/GameAudioPlayer' );
   const inherit = require( 'PHET_CORE/inherit' );
   const merge = require( 'PHET_CORE/merge' );
-  const Molecule = require( 'BUILD_A_MOLECULE/model/Molecule' );
+  const Molecule = require( 'BUILD_A_MOLECULE/common/model/Molecule' );
   const NumberProperty = require( 'AXON/NumberProperty' );
   const Property = require( 'AXON/Property' );
 

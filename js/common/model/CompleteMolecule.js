@@ -15,11 +15,11 @@ define( require => {
   // modules
   const Atom = require( 'NITROGLYCERIN/Atom' );
   const AtomNode = require( 'NITROGLYCERIN/nodes/AtomNode' );
-  const Bond = require( 'BUILD_A_MOLECULE/model/Bond' );
+  const Bond = require( 'BUILD_A_MOLECULE/common/model/Bond' );
   const buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   const Element = require( 'NITROGLYCERIN/Element' );
   const inherit = require( 'PHET_CORE/inherit' );
-  const MoleculeStructure = require( 'BUILD_A_MOLECULE/model/MoleculeStructure' );
+  const MoleculeStructure = require( 'BUILD_A_MOLECULE/common/model/MoleculeStructure' );
   const Node = require( 'SCENERY/nodes/Node' );
   const Strings = require( 'BUILD_A_MOLECULE/Strings' );
   const StringProperty = require( 'AXON/StringProperty' );

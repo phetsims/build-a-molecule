@@ -12,7 +12,7 @@ define( require => {
   // modules
   const buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   const Emitter = require( 'AXON/Emitter' );
-  const KitCollection = require( 'BUILD_A_MOLECULE/model/KitCollection' );
+  const KitCollection = require( 'BUILD_A_MOLECULE/common/model/KitCollection' );
   const ObservableArray = require( 'AXON/ObservableArray' );
   const Property = require( 'AXON/Property' );
 

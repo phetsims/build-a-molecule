@@ -18,12 +18,12 @@ define( require => {
 
   // modules
   const buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
-  const collectionMoleculesData = require( 'BUILD_A_MOLECULE/model/data/collectionMoleculesData' );
-  const CompleteMolecule = require( 'BUILD_A_MOLECULE/model/CompleteMolecule' );
-  const MoleculeStructure = require( 'BUILD_A_MOLECULE/model/MoleculeStructure' );
-  const otherMoleculesData = require( 'BUILD_A_MOLECULE/model/data/otherMoleculesData' );
-  const StrippedMolecule = require( 'BUILD_A_MOLECULE/model/StrippedMolecule' );
-  const structuresData = require( 'BUILD_A_MOLECULE/model/data/structuresData' );
+  const collectionMoleculesData = require( 'BUILD_A_MOLECULE/common/model/data/collectionMoleculesData' );
+  const CompleteMolecule = require( 'BUILD_A_MOLECULE/common/model/CompleteMolecule' );
+  const MoleculeStructure = require( 'BUILD_A_MOLECULE/common/model/MoleculeStructure' );
+  const otherMoleculesData = require( 'BUILD_A_MOLECULE/common/model/data/otherMoleculesData' );
+  const StrippedMolecule = require( 'BUILD_A_MOLECULE/common/model/StrippedMolecule' );
+  const structuresData = require( 'BUILD_A_MOLECULE/common/model/data/structuresData' );
 
   /**
    * @constructor

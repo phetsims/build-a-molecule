@@ -13,7 +13,7 @@ define( require => {
   const Bounds2 = require( 'DOT/Bounds2' );
   const buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   const inherit = require( 'PHET_CORE/inherit' );
-  const MoleculeStructure = require( 'BUILD_A_MOLECULE/model/MoleculeStructure' );
+  const MoleculeStructure = require( 'BUILD_A_MOLECULE/common/model/MoleculeStructure' );
 
   //REVIEW: Do we really want default parameters here?
   /**

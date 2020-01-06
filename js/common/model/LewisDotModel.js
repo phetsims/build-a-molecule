@@ -12,7 +12,7 @@ define( require => {
 
   // modules
   const buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
-  const Direction = require( 'BUILD_A_MOLECULE/model/Direction' );
+  const Direction = require( 'BUILD_A_MOLECULE/common/model/Direction' );
   const Utils = require( 'DOT/Utils' );
   const Vector2 = require( 'DOT/Vector2' );
 
