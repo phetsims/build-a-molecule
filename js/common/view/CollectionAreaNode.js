@@ -13,12 +13,12 @@ define( require => {
   const buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   const Color = require( 'SCENERY/util/Color' );
   const inherit = require( 'PHET_CORE/inherit' );
-  const MultipleCollectionBoxNode = require( 'BUILD_A_MOLECULE/view/MultipleCollectionBoxNode' );
+  const MultipleCollectionBoxNode = require( 'BUILD_A_MOLECULE/common/view/MultipleCollectionBoxNode' );
   const Node = require( 'SCENERY/nodes/Node' );
   const Playable = require( 'TAMBO/Playable' );
   const RefreshButton = require( 'SCENERY_PHET/buttons/RefreshButton' );
   const Shape = require( 'KITE/Shape' );
-  const SingleCollectionBoxNode = require( 'BUILD_A_MOLECULE/view/SingleCollectionBoxNode' );
+  const SingleCollectionBoxNode = require( 'BUILD_A_MOLECULE/common/view/SingleCollectionBoxNode' );
   const VBox = require( 'SCENERY/nodes/VBox' );
 
   /**

@@ -10,11 +10,11 @@ define( require => {
   'use strict';
 
   // modules
-  const AllFilledNode = require( 'BUILD_A_MOLECULE/view/AllFilledNode' );
+  const AllFilledNode = require( 'BUILD_A_MOLECULE/common/view/AllFilledNode' );
   const BAMConstants = require( 'BUILD_A_MOLECULE/common/BAMConstants' );
-  const BAMView = require( 'BUILD_A_MOLECULE/view/BAMView' );
+  const BAMView = require( 'BUILD_A_MOLECULE/common/view/BAMView' );
   const buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
-  const CollectionPanel = require( 'BUILD_A_MOLECULE/view/CollectionPanel' );
+  const CollectionPanel = require( 'BUILD_A_MOLECULE/common/view/CollectionPanel' );
   const Vector2 = require( 'DOT/Vector2' );
 
   class MoleculeCollectingView extends BAMView {

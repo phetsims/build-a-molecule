@@ -19,7 +19,7 @@ define( require => {
   const Kit = require( 'BUILD_A_MOLECULE/common/model/Kit' );
   const KitCollection = require( 'BUILD_A_MOLECULE/common/model/KitCollection' );
   const CollectionLayout = require( 'BUILD_A_MOLECULE/common/model/CollectionLayout' );
-  const MoleculeCollectingView = require( 'BUILD_A_MOLECULE/view/MoleculeCollectingView' );
+  const MoleculeCollectingView = require( 'BUILD_A_MOLECULE/common/view/MoleculeCollectingView' );
   const MoleculeList = require( 'BUILD_A_MOLECULE/common/model/MoleculeList' );
   const Rectangle = require( 'SCENERY/nodes/Rectangle' );
 

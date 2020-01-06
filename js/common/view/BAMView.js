@@ -10,16 +10,16 @@ define( require => {
   'use strict';
 
   // modules
-  const AtomNode = require( 'BUILD_A_MOLECULE/view/AtomNode' );
+  const AtomNode = require( 'BUILD_A_MOLECULE/common/view/AtomNode' );
   const BAMConstants = require( 'BUILD_A_MOLECULE/common/BAMConstants' );
   const Bounds2 = require( 'DOT/Bounds2' );
   const buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   const Color = require( 'SCENERY/util/Color' );
   const DragListener = require( 'SCENERY/listeners/DragListener' );
-  const KitCollectionNode = require( 'BUILD_A_MOLECULE/view/KitCollectionNode' );
-  const KitPlayAreaNode = require( 'BUILD_A_MOLECULE/view/KitPlayAreaNode' );
-  const MoleculeControlsHBox = require( 'BUILD_A_MOLECULE/view/MoleculeControlsHBox' );
-  const Molecule3DDialog = require( 'BUILD_A_MOLECULE/view/view3d/Molecule3DDialog' );
+  const KitCollectionNode = require( 'BUILD_A_MOLECULE/common/view/KitCollectionNode' );
+  const KitPlayAreaNode = require( 'BUILD_A_MOLECULE/common/view/KitPlayAreaNode' );
+  const MoleculeControlsHBox = require( 'BUILD_A_MOLECULE/common/view/MoleculeControlsHBox' );
+  const Molecule3DDialog = require( 'BUILD_A_MOLECULE/common/view/view3d/Molecule3DDialog' );
   const PhetFont = require( 'SCENERY_PHET/PhetFont' );
   const Playable = require( 'TAMBO/Playable' );
   const Property = require( 'AXON/Property' );
@@ -27,10 +27,10 @@ define( require => {
   const ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
   const ScreenView = require( 'JOIST/ScreenView' );
   const Shape = require( 'KITE/Shape' );
-  const SliceNode = require( 'BUILD_A_MOLECULE/view/SliceNode' );
+  const SliceNode = require( 'BUILD_A_MOLECULE/common/view/SliceNode' );
   const TextPushButton = require( 'SUN/buttons/TextPushButton' );
   const ThreeUtils = require( 'MOBIUS/ThreeUtils' );
-  const WarningDialog = require( 'BUILD_A_MOLECULE/view/WarningDialog' );
+  const WarningDialog = require( 'BUILD_A_MOLECULE/common/view/WarningDialog' );
 
   // strings
   const refillString = require( 'string!BUILD_A_MOLECULE/refill' );

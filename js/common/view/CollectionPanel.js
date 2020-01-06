@@ -12,7 +12,7 @@ define( require => {
   // modules
   const BAMConstants = require( 'BUILD_A_MOLECULE/common/BAMConstants' );
   const buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
-  const CollectionAreaNode = require( 'BUILD_A_MOLECULE/view/CollectionAreaNode' );
+  const CollectionAreaNode = require( 'BUILD_A_MOLECULE/common/view/CollectionAreaNode' );
   const inherit = require( 'PHET_CORE/inherit' );
   const merge = require( 'PHET_CORE/merge' );
   const NextPreviousNavigationNode = require( 'SCENERY_PHET/NextPreviousNavigationNode' );

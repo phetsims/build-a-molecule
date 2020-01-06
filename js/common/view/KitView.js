@@ -12,20 +12,20 @@ define( require => {
   'use strict';
 
   // modules
-  const AtomNode = require( 'BUILD_A_MOLECULE/view/AtomNode' );
+  const AtomNode = require( 'BUILD_A_MOLECULE/common/view/AtomNode' );
   const BucketFront = require( 'SCENERY_PHET/bucket/BucketFront' );
   const BucketHole = require( 'SCENERY_PHET/bucket/BucketHole' );
   const buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   const BAMConstants = require( 'BUILD_A_MOLECULE/common/BAMConstants' );
   const DragListener = require( 'SCENERY/listeners/DragListener' );
   const inherit = require( 'PHET_CORE/inherit' );
-  // const MoleculeControlsHBox = require( 'BUILD_A_MOLECULE/view/MoleculeControlsHBox' );
+  // const MoleculeControlsHBox = require( 'BUILD_A_MOLECULE/common/view/MoleculeControlsHBox' );
   const Node = require( 'SCENERY/nodes/Node' );
   const PhetFont = require( 'SCENERY_PHET/PhetFont' );
   // const Rectangle = require( 'SCENERY/nodes/Rectangle' );
   const Shape = require( 'KITE/Shape' );
   // const SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' ); // TODO: DragListener
-  // const SliceNode = require( 'BUILD_A_MOLECULE/view/SliceNode' );
+  // const SliceNode = require( 'BUILD_A_MOLECULE/common/view/SliceNode' );
   // const Trail = require( 'SCENERY/util/Trail' );
 
   /**

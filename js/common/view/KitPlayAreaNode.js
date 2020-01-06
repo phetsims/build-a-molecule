@@ -12,7 +12,7 @@ define( require => {
   // modules
   const buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   const Node = require( 'SCENERY/nodes/Node' );
-  const MoleculeBondContainerNode = require( 'BUILD_A_MOLECULE/view/MoleculeBondContainerNode' );
+  const MoleculeBondContainerNode = require( 'BUILD_A_MOLECULE/common/view/MoleculeBondContainerNode' );
   const Property = require( 'AXON/Property' );
 
   class KitPlayAreaNode extends Node {

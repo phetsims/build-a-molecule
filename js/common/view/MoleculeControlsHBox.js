@@ -20,7 +20,7 @@ define( require => {
   const Playable = require( 'TAMBO/Playable' );
   const RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
   const Shape = require( 'KITE/Shape' );
-  const ShowMolecule3DButtonNode = require( 'BUILD_A_MOLECULE/view/view3d/ShowMolecule3DButtonNode' );
+  const ShowMolecule3DButtonNode = require( 'BUILD_A_MOLECULE/common/view/view3d/ShowMolecule3DButtonNode' );
   const Text = require( 'SCENERY/nodes/Text' );
 
   // images

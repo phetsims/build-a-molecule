@@ -11,7 +11,7 @@ define( require => {
 
   // modules
   const Atom2 = require( 'BUILD_A_MOLECULE/common/model/Atom2' );
-  const AtomNode = require( 'BUILD_A_MOLECULE/view/AtomNode' );
+  const AtomNode = require( 'BUILD_A_MOLECULE/common/view/AtomNode' );
   const buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   const Color = require( 'SCENERY/util/Color' );
   const Dimension2 = require( 'DOT/Dimension2' );

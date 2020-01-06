@@ -10,7 +10,7 @@ define( require => {
 
   // modules
   const BAMScreen = require( 'BUILD_A_MOLECULE/screens/BAMScreen' );
-  const BAMView = require( 'BUILD_A_MOLECULE/view/BAMView' );
+  const BAMView = require( 'BUILD_A_MOLECULE/common/view/BAMView' );
   const Bucket = require( 'BUILD_A_MOLECULE/common/model/Bucket' );
   const buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   const Dimension2 = require( 'DOT/Dimension2' );

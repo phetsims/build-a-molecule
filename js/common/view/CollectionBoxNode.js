@@ -17,12 +17,12 @@ define( require => {
   const BAMConstants = require( 'BUILD_A_MOLECULE/common/BAMConstants' );
   const Image = require( 'SCENERY/nodes/Image' );
   const inherit = require( 'PHET_CORE/inherit' );
-  const Molecule3DNode = require( 'BUILD_A_MOLECULE/view/view3d/Molecule3DNode' );
+  const Molecule3DNode = require( 'BUILD_A_MOLECULE/common/view/view3d/Molecule3DNode' );
   const MoleculeList = require( 'BUILD_A_MOLECULE/common/model/MoleculeList' );
   const Node = require( 'SCENERY/nodes/Node' );
   const Rectangle = require( 'SCENERY/nodes/Rectangle' );
   const Shape = require( 'KITE/Shape' );
-  const ShowMolecule3DButtonNode = require( 'BUILD_A_MOLECULE/view/view3d/ShowMolecule3DButtonNode' );
+  const ShowMolecule3DButtonNode = require( 'BUILD_A_MOLECULE/common/view/view3d/ShowMolecule3DButtonNode' );
   const VBox = require( 'SCENERY/nodes/VBox' );
 
   // constants
