@@ -17,7 +17,6 @@ define( require => {
   const buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   const cleanArray = require( 'PHET_CORE/cleanArray' );
   const Emitter = require( 'AXON/Emitter' );
-  const inherit = require( 'PHET_CORE/inherit' );
   const LewisDotModel = require( 'BUILD_A_MOLECULE/common/model/LewisDotModel' );
   const Molecule = require( 'BUILD_A_MOLECULE/common/model/Molecule' );
   const MoleculeList = require( 'BUILD_A_MOLECULE/common/model/MoleculeList' );
@@ -29,67 +28,68 @@ define( require => {
 
   let kitIdCounter = 0;
 
-  /**
-   * @param {CollectionLayout} collectionLayout
-   * @param {Array.<Bucket>} buckets
-   * @constructor
-   */
-  function Kit( collectionLayout, buckets ) {
+  class Kit {
+    /**
+     * @param {CollectionLayout} collectionLayout
+     * @param {Array.<Bucket>} buckets
+     * @constructor
+     */
+    constructor( collectionLayout, buckets ) {
 
-    // @public {number}
-    this.id = kitIdCounter++;
-    this.atomsInPlayArea = new ObservableArray();
+      // @public {number}
+      this.id = kitIdCounter++;
+      this.atomsInPlayArea = new ObservableArray();
 
-    // @public {Property.<Atom|null>}
-    this.selectedAtomProperty = new Property( null );
+      // @public {Property.<Atom|null>}
+      this.selectedAtomProperty = new Property( null );
 
-    // // REVIEW: Used for debugging.
-    // this.atomsInPlayArea.addItemAddedListener( atom => {
-    //   console.log( 'kit.atomsInPlayArea.added = ', this.atomsInPlayArea._array );
-    // } );
-    // this.atomsInPlayArea.addItemRemovedListener( atom => {
-    //   console.log( 'kit.atomsInPlayArea.removed = ', this.atomsInPlayArea._array );
-    // } );
+      // // REVIEW: Used for debugging.
+      // this.atomsInPlayArea.addItemAddedListener( atom => {
+      //   console.log( 'kit.atomsInPlayArea.added = ', this.atomsInPlayArea._array );
+      // } );
+      // this.atomsInPlayArea.addItemRemovedListener( atom => {
+      //   console.log( 'kit.atomsInPlayArea.removed = ', this.atomsInPlayArea._array );
+      // } );
 
-    // @public {Property.<boolean>}
-    this.activeProperty = new BooleanProperty( false );
-    this.visibleProperty = new BooleanProperty( false );
-    this.hasMoleculesInBoxesProperty = new BooleanProperty( false ); // we record this so we know when the "reset kit" should be shown
+      // @public {Property.<boolean>}
+      this.activeProperty = new BooleanProperty( false );
+      this.visibleProperty = new BooleanProperty( false );
+      this.hasMoleculesInBoxesProperty = new BooleanProperty( false ); // we record this so we know when the "reset kit" should be shown
 
-    // @public {Emitter} - Called with a single parameter molecule
-    this.addedMoleculeEmitter = new Emitter( { parameters: [ { valueType: Molecule } ] } );
-    this.removedMoleculeEmitter = new Emitter( { parameters: [ { valueType: Molecule } ] } );
+      // @public {Emitter} - Called with a single parameter molecule
+      this.addedMoleculeEmitter = new Emitter( { parameters: [ { valueType: Molecule } ] } );
+      this.removedMoleculeEmitter = new Emitter( { parameters: [ { valueType: Molecule } ] } );
 
-    this.buckets = buckets;
-    this.collectionLayout = collectionLayout;
+      // @public {Array.<Bucket>}
+      this.buckets = buckets;
 
-    this.atoms = []; // our master list of atoms (in and out of buckets), but not ones in collection boxes
-    this.atomsInCollectionBox = []; // atoms in the collection box
-    this.lewisDotModel = null; // created later, lewis-dot connections between atoms on the play area
-    this.molecules = []; // molecule structures in the play area
-    this.removedMolecules = {}; // moleculeId => CollectionBox, molecule structures that were put into the collection box. kept for now, since modifying the reset behavior will be much easier if we retain this
-    this.reset();
-    this.layoutBuckets( buckets );
+      // @public {CollectionLayout}
+      this.collectionLayout = collectionLayout;
 
-    // Add a molecule to the kit whenever we add an atom to the play area.
-    this.atomsInPlayArea.addItemAddedListener( atom => {
+      this.atoms = []; // our master list of atoms (in and out of buckets), but not ones in collection boxes
+      this.atomsInCollectionBox = []; // atoms in the collection box
+      this.molecules = []; // molecule structures in the play area
+      this.removedMolecules = {}; // moleculeId => CollectionBox, molecule structures that were put into the collection box. kept for now, since modifying the reset behavior will be much easier if we retain this
+      this.lewisDotModel = null; // created later, lewis-dot connections between atoms on the play area
 
-      // Add a molecule to the kit with our newly added atom
-      const molecule = new Molecule();
-      molecule.addAtom( atom );
-      this.addMolecule( molecule );
-    } );
-  }
+      // Rest the kit and adjust the bucket layout
+      this.reset();
+      this.layoutBuckets( buckets );
 
-  buildAMolecule.register( 'Kit', Kit );
+      // Add a molecule to the kit whenever we add an atom to the play area.
+      this.atomsInPlayArea.addItemAddedListener( atom => {
 
-  inherit( Object, Kit, {
+        // Add a molecule to the kit with our newly added atom
+        const molecule = new Molecule();
+        molecule.addAtom( atom );
+        this.addMolecule( molecule );
+      } );
+    }
+
     /**
      * @public
      */
-    reset: function() {
-      const self = this;
-
+    reset() {
       // not resetting visible, since that is not handled by us
       this.hasMoleculesInBoxesProperty.reset();
 
@@ -97,12 +97,12 @@ define( require => {
       this.molecules.slice( 0 ).forEach( this.removeMolecule.bind( this ) );
 
       // put everything back in buckets
-      this.atoms.concat( this.atomsInCollectionBox ).forEach( function( atom ) {
+      this.atoms.concat( this.atomsInCollectionBox ).forEach( atom => {
         // reset the actual atom
         atom.reset();
 
         // THEN place it so we overwrite its "bad" position and destination info
-        self.getBucketForElement( atom.element ).placeAtom( atom );
+        this.getBucketForElement( atom.element ).placeAtom( atom );
       } );
 
       // if reset kit ignores collection boxes, add in other atoms that are equivalent to how the bucket started
@@ -117,20 +117,25 @@ define( require => {
       this.removedMolecules = {};
 
       // keep track of all atoms in our kit
-      this.buckets.forEach( function( bucket ) {
-        self.atoms = self.atoms.concat( bucket.getParticleList() );
+      this.buckets.forEach( bucket => {
+        this.atoms = this.atoms.concat( bucket.getParticleList() );
 
-        bucket.getParticleList().forEach( function( atom ) {
-          self.lewisDotModel.addAtom( atom );
+        bucket.getParticleList().forEach( atom => {
+          this.lewisDotModel.addAtom( atom );
         } );
 
         // Set the bucket to its filled state.
         bucket.setToFullState();
       } );
+    }
 
-    },
-
-    layoutBuckets: function( buckets ) {
+    /**
+     * Adjust the layout of the buckets along with moving their atoms to the correct positions
+     *
+     * @param {Array.<Bucket>} buckets
+     * @public
+     */
+    layoutBuckets( buckets ) {
       let usedWidth = 0;
       const bucketBounds = Bounds2.NOTHING.copy(); // considered mutable, used to calculate the center bounds of a bucket AND its atoms
 
@@ -143,7 +148,7 @@ define( require => {
 
         // include both the bucket's shape and its atoms in our bounds, so we can properly center the group
         bucketBounds.includeBounds( bucket.containerShape.bounds );
-        bucket.getParticleList().forEach( function( atom ) {
+        bucket.getParticleList().forEach( atom => {
           const atomPosition = atom.positionProperty.value;
           bucketBounds.includeBounds( new Bounds2( atomPosition.x - atom.covalentRadius, atomPosition.y - atom.covalentRadius,
             atomPosition.x + atom.covalentRadius, atomPosition.y + atom.covalentRadius ) );
@@ -153,46 +158,55 @@ define( require => {
       }
 
       // centers the buckets horizontally within the kit
-      buckets.forEach( function( bucket ) {
+      buckets.forEach( bucket => {
         // also note: this moves the atoms also!
         bucket.position = new Vector2( bucket.position.x - usedWidth / 2 + bucket.width / 2, bucketBounds.centerY );
 
         // since changing the bucket's position doesn't change contained atoms!
         // TODO: have the bucket position change do this?
-        bucket.getParticleList().forEach( function( atom ) {
+        bucket.getParticleList().forEach( atom => {
           atom.translatePositionAndDestination( bucket.position );
         } );
       } );
-    },
+    }
 
-    isContainedInBucket: function( atom ) {
-      return _.some( this.buckets, function( bucket ) {
-        return bucket.containsParticle( atom );
-      } );
-    },
-
-    getBucketForElement: function( element ) {
-      return _.find( this.buckets, function( bucket ) {
+    /**
+     * @param {Element} element
+     *
+     * @returns {Bucket}
+     */
+    getBucketForElement( element ) {
+      //TODO: Add assert for failed _find()
+      return _.find( this.buckets, bucket => {
         return bucket.element.isSameElement( element );
       } );
-    },
+    }
 
+    /**
+     * @public
+     *
+     * @returns {Rectangle}
+     */
     get availableKitBounds() {
       return this.collectionLayout.availableKitBounds;
-    },
+    }
 
+    /**
+     * @returns {Rectangle}
+     */
     get availablePlayAreaBounds() {
       return this.collectionLayout.availablePlayAreaBounds;
-    },
+    }
 
     /**
      * Called when an atom is dropped within either the play area OR the kit area. This will NOT be called for molecules
      * dropped into the collection area successfully
      *
      * @param {Atom2} atom - The dropped atom.
-     * @param {Boolean} droppedInKitArea - The dropped atom.
+     * @param {boolean} droppedInKitArea - The dropped atom.
+     * @public
      */
-    atomDropped: function( atom, droppedInKitArea ) {
+    atomDropped( atom, droppedInKitArea ) {
 
       // dropped on kit, put it in a bucket
       if ( droppedInKitArea ) {
@@ -206,40 +220,48 @@ define( require => {
           this.separateMoleculeDestinations();
         }
       }
-    },
+    }
 
     /**
      * Called when a molecule is dragged (successfully) into a collection box
      *
      * @param {Molecule} molecule
      * @param {CollectionBox} box
+     * @public
      */
-    moleculePutInCollectionBox: function( molecule, box ) {
-      const self = this;
+    moleculePutInCollectionBox( molecule, box ) {
       window.console && console.log && console.log( 'You have collected: ' + box.moleculeType.commonNameProperty.value );
       this.hasMoleculesInBoxesProperty.value = true;
       this.removeMolecule( molecule );
-      molecule.atoms.forEach( function( atom ) {
-        self.atoms.splice( self.atoms.indexOf( atom ), 1 );
-        self.atomsInCollectionBox.push( atom );
+      molecule.atoms.forEach( atom => {
+        this.atoms.splice( this.atoms.indexOf( atom ), 1 );
+        this.atomsInCollectionBox.push( atom );
         atom.visibleProperty.value = false;
 
         // Atoms in the CollectionBox shouldn't be in the play area.
-        self.atomsInPlayArea.remove( atom );
+        this.atomsInPlayArea.remove( atom );
       } );
       box.addMolecule( molecule );
       this.removedMolecules[ molecule.moleculeId ] = box;
-    },
+    }
 
     /**
-     * @param atom An atom
+     * @param {Atom2} atom
+     * @public
+     *
      * @returns {boolean} Is this atom registered in our molecule structures?
      */
-    isAtomInPlay: function( atom ) {
+    isAtomInPlay( atom ) {
       return this.getMolecule( atom ) !== null;
-    },
+    }
 
-    getMolecule: function( atom ) {
+    /**
+     * @param {Atom2} atom
+     * @public
+     *
+     * @returns {Molecule|null}
+     */
+    getMolecule( atom ) {
       // TODO: performance: seems like this could be a bottleneck? faster ways?
       const numMolecules = this.molecules.length;
       for ( let i = 0; i < numMolecules; i++ ) {
@@ -254,37 +276,41 @@ define( require => {
         }
       }
       return null;
-    },
+    }
 
     /**
      * Breaks apart a molecule into separate atoms that remain in the play area
      *
-     * @param molecule The molecule to break
+     * @param {Molecule} molecule - the molecule to break
+     * @public
      */
-    breakMolecule: function( molecule ) {
-      const self = this;
+    breakMolecule( molecule ) {
       const createdMolecules = [];
-
       this.removeMolecule( molecule );
-      molecule.atoms.forEach( function( atom ) {
-        self.lewisDotModel.breakBondsOfAtom( atom );
+      molecule.atoms.forEach( atom => {
 
+        // Break the current molecule and create a new molecule for each atom
+        this.lewisDotModel.breakBondsOfAtom( atom );
         const newMolecule = new Molecule();
         newMolecule.addAtom( atom );
-
-        self.addMolecule( newMolecule );
+        this.addMolecule( newMolecule );
         createdMolecules.push( molecule );
       } );
+
+      // Separate all the molecules, including the newly created molecules.
       this.separateMoleculeDestinations();
-    },
+    }
 
     /**
      * Breaks a bond between two atoms in a molecule.
      *
      * @param {Atom2} a - Atom A
      * @param {Atom2} b - Atom B
+     * @param {boolean} skipSeparation
+     * @public
      */
-    breakBond: function( a, b, skipSeparation ) {
+    breakBond( a, b, skipSeparation ) {
+
       // get our old and new molecule structures
       const oldMolecule = this.getMolecule( a );
       const newMolecules = MoleculeStructure.getMoleculesFromBrokenBond( oldMolecule, oldMolecule.getBond( a, b ), new Molecule(), new Molecule() );
@@ -300,45 +326,58 @@ define( require => {
       if ( !skipSeparation ) {
         this.separateMoleculeDestinations();
       }
-    },
-
-    getBondDirection: function( a, b ) {
-      return this.lewisDotModel.getBondDirection( a, b );
-    },
-
-    hasAtomsOutsideOfBuckets: function() {
-      return !!( this.molecules.length || this.hasMoleculesInBoxesProperty.value );
-    },
+    }
 
     /**
-     * Checks if all of the buckets in the kit are filled. Buckets should match initial state.
+     *
+     * @param {Atom2} a - An atom A
+     * @param {Atom2} b - An atom B
+     * @returns {Direction}
+     */
+    getBondDirection( a, b ) {
+      return this.lewisDotModel.getBondDirection( a, b );
+    }
+
+    /**
+     * @returns {boolean}
+     */
+    hasAtomsOutsideOfBuckets() {
+      return !!( this.molecules.length || this.hasMoleculesInBoxesProperty.value );
+    }
+
+    /**
+     * Checks if all of the buckets in the kit are filled.
+     * @public
      *
      * @returns {boolean}
      */
-    allBucketsFilled: function() {
+    allBucketsFilled() {
       let allBucketsFilled = true;
-      this.buckets.forEach( function( bucket ) {
+      this.buckets.forEach( bucket => {
         if ( !bucket.isFull() ) {
           allBucketsFilled = false;
         }
       } );
       return allBucketsFilled;
-    },
+    }
 
-
-    /*---------------------------------------------------------------------------*
-     * model implementation
-     *----------------------------------------------------------------------------*/
-
-    addMolecule: function( molecule ) {
+    /**
+     * @param {Molecule} molecule
+     * @public
+     */
+    addMolecule( molecule ) {
       this.molecules.push( molecule );
       this.addedMoleculeEmitter.emit( molecule );
-    },
+    }
 
-    removeMolecule: function( molecule ) {
+    /**
+     * @param {Molecule} molecule
+     * @public
+     */
+    removeMolecule( molecule ) {
       arrayRemove( this.molecules, molecule );
       this.removedMoleculeEmitter.emit( molecule );
-    },
+    }
 
     /**
      * Takes an atom that was in a bucket and hooks it up within our structural model. It allocates a molecule for the
@@ -346,7 +385,7 @@ define( require => {
      *
      * @param {Atom2} atom An atom to add into play
      */
-    addAtomToPlay: function( atom ) {
+    addAtomToPlay( atom ) {
 
       // add the atoms to our models
       const molecule = new Molecule();
@@ -356,15 +395,28 @@ define( require => {
 
       // attempt to bond
       this.attemptToBondMolecule( molecule );
-    },
+    }
+
+    /**
+     * @param {Atom2} atom
+     * @private
+     *
+     * @returns {boolean}
+     */
+    isContainedInBucket( atom ) {
+      return _.some( this.buckets, bucket => {
+        return bucket.containsParticle( atom );
+      } );
+    }
 
     /**
      * Takes an atom, invalidates the structural bonds it may have, and puts it in the correct bucket
      *
-     * @param {Atom2} atom    The atom to recycle
+     * @param {Atom2} atom - the atom to recycle
      * @param {boolean} animate Whether we should display animation
+     * @private
      */
-    recycleAtomIntoBuckets: function( atom, animate ) {
+    recycleAtomIntoBuckets( atom, animate ) {
       this.lewisDotModel.breakBondsOfAtom( atom );
       this.atomsInPlayArea.remove( atom );
       const bucket = this.getBucketForElement( atom.element );
@@ -372,30 +424,37 @@ define( require => {
       if ( !bucket.particleList.contains( atom ) ) {
         bucket.particleList.push( atom );
       }
-    },
+    }
 
     /**
      * Recycles an entire molecule by invalidating its bonds and putting its atoms into their respective buckets
      *
-     * @param molecule The molecule to recycle
+     * @param {Molecule} molecule - the molecule to recycle
+     * @private
      */
-    recycleMoleculeIntoBuckets: function( molecule ) {
-      const self = this;
-      molecule.atoms.forEach( function( atom ) {
-        self.recycleAtomIntoBuckets( atom, true );
+    recycleMoleculeIntoBuckets( molecule ) {
+      molecule.atoms.forEach( atom => {
+        this.recycleAtomIntoBuckets( atom, true );
       } );
       this.removeMolecule( molecule );
-    },
+    }
 
-    padMoleculeBounds: function( bounds ) {
+    /**
+     * @param {Bounds2} bounds
+     * @private
+     *
+     * @returns {Rectangle}
+     */
+    padMoleculeBounds( bounds ) {
       const halfPadding = Kit.interMoleculePadding / 2;
       return new Rectangle( bounds.x - halfPadding, bounds.y - halfPadding, bounds.width + Kit.interMoleculePadding, bounds.height + Kit.interMoleculePadding );
-    },
+    }
 
     /**
      * Update atom destinations so that separate molecules will be separated visually
+     * @private
      */
-    separateMoleculeDestinations: function() {
+    separateMoleculeDestinations() {
       // TODO: performance: general optimization
       let maxIterations = 500;
       const pushAmount = 10; // how much to push two molecules away
@@ -463,7 +522,7 @@ define( require => {
           }
         }
       }
-    },
+    }
 
     /**
      * Bonds one atom to another, and handles the corresponding structural changes between molecules.
@@ -471,8 +530,9 @@ define( require => {
      * @param {Atom2} a - An atom A
      * @param {Direction} dirAtoB - The direction from A that the bond will go in (for lewis-dot structure)
      * @param {Atom2} b - An atom B
+     * @private
      */
-    bond: function( a, dirAtoB, b ) {
+    bond( a, dirAtoB, b ) {
       this.lewisDotModel.bond( a, dirAtoB, b );
       const molA = this.getMolecule( a );
       const molB = this.getMolecule( b );
@@ -512,7 +572,7 @@ define( require => {
       window.console && console.log && console.log( 'created structure: ' + serializedForm );
       const structure = this.getMolecule( a );
       if ( structure.atoms.length > 2 ) {
-        structure.bonds.forEach( function( bond ) {
+        structure.bonds.forEach( bond => {
           if ( bond.a.hasSameElement( bond.b ) && bond.a.symbol === 'H' ) {
             window.console && console.log && console.log( 'WARNING: Hydrogen bonded to another hydrogen in a molecule which is not diatomic hydrogen' );
           }
@@ -520,53 +580,60 @@ define( require => {
       }
       // REVIEW: Why do we want this check?
       // assert && assert( this.getMolecule( a ) === this.getMolecule( b ) );
-    },
+    }
 
-    // {Atom2}
-    getPossibleMoleculeStructureFromBond: function( a, b ) {
+    /**
+     * @param {Atom2} a - An atom A
+     * @param {Atom2} b - An atom B
+     * @private
+     *
+     * @returns {MoleculeStructure}
+     */
+    getPossibleMoleculeStructureFromBond( a, b ) {
       const molA = this.getMolecule( a );
       const molB = this.getMolecule( b );
       assert && assert( molA !== molB );
 
       return MoleculeStructure.getCombinedMoleculeFromBond( molA, molB, a, b, new Molecule() );
-    },
+    }
 
     /**
-     * @param molecule A molecule that should attempt to bind to other atoms / molecules
-     * @returns {boolean} Success
+     * @param {Molecule} molecule - A molecule that should attempt to bind to other atoms / molecules
+     * @private
+     *
+     * @returns {boolean}
      */
-    attemptToBondMolecule: function( molecule ) {
-      const self = this;
-      let bestLocation = null; // {BondingOption}
+    attemptToBondMolecule( molecule ) {
+      let bestLocation = null; // {BondingOption|null}
       let bestDistanceFromIdealLocation = Number.POSITIVE_INFINITY;
 
       // for each atom in our molecule, we try to see if it can bond to other atoms
-      molecule.atoms.forEach( function( ourAtom ) {
+      molecule.atoms.forEach( ourAtom => {
 
         // all other atoms
-        self.atoms.forEach( function( otherAtom ) {
+        this.atoms.forEach( otherAtom => {
           // disallow loops in an already-connected molecule
-          if ( self.getMolecule( otherAtom ) === molecule ) {
+          if ( this.getMolecule( otherAtom ) === molecule ) {
             return; // continue, in the inner loop
           }
 
           // don't bond to something in a bucket!
-          if ( !self.isContainedInBucket( otherAtom ) ) {
+          if ( !this.isContainedInBucket( otherAtom ) ) {
 
             // sanity check, and run it through our molecule structure model to see if it would be allowable
-            if ( otherAtom === ourAtom || !self.canBond( ourAtom, otherAtom ) ) {
+            if ( otherAtom === ourAtom || !this.canBond( ourAtom, otherAtom ) ) {
               return; // continue, in the inner loop
             }
 
-            self.lewisDotModel.getOpenDirections( otherAtom ).forEach( function( otherDirection ) {
+            this.lewisDotModel.getOpenDirections( otherAtom ).forEach( otherDirection => {
               const direction = otherDirection.opposite;
-              if ( !_.includes( self.lewisDotModel.getOpenDirections( ourAtom ), direction ) ) {
+              if ( !_.includes( this.lewisDotModel.getOpenDirections( ourAtom ), direction ) ) {
                 // the spot on otherAtom was open, but the corresponding spot on our main atom was not
                 return; // continue, in the inner loop
               }
 
               // check the lewis dot model to make sure we wouldn't have two "overlapping" atoms that aren't both hydrogen
-              if ( !self.lewisDotModel.willAllowBond( ourAtom, direction, otherAtom ) ) {
+              if ( !this.lewisDotModel.willAllowBond( ourAtom, direction, otherAtom ) ) {
                 return; // continue, in the inner loop
               }
 
@@ -592,40 +659,59 @@ define( require => {
 
       // cause all atoms in the molecule to move to that location
       const delta = bestLocation.idealLocation.minus( bestLocation.b.positionProperty.value );
-      this.getMolecule( bestLocation.b ).atoms.forEach( function( atomInMolecule ) {
+      this.getMolecule( bestLocation.b ).atoms.forEach( atomInMolecule => {
         atomInMolecule.setPositionAndDestination( atomInMolecule.positionProperty.value.plus( delta ) );
       } );
 
       // we now will bond the atom
       this.bond( bestLocation.a, bestLocation.direction, bestLocation.b ); // model bonding
       return true;
-    },
+    }
 
-    // {Atom2}s
-    canBond: function( a, b ) {
+    /**
+     * @param {Atom2} a - An atom A
+     * @param {Atom2} b - An atom B
+     * @private
+     *
+     * @returns {boolean}
+     */
+    canBond( a, b ) {
       return this.getMolecule( a ) !== this.getMolecule( b ) && this.isAllowedStructure( this.getPossibleMoleculeStructureFromBond( a, b ) );
-    },
+    }
 
-    isAllowedStructure: function( moleculeStructure ) {
+    /**
+     * @param {MoleculeStructure} moleculeStructure
+     * @private
+     *
+     * @returns {boolean}
+     */
+    isAllowedStructure( moleculeStructure ) {
       return moleculeStructure.atoms.length < 2 ||
              MoleculeList.getMasterInstance().isAllowedStructure( moleculeStructure );
     }
-  } );
+  }
 
   // A bond option from A to B. B would be moved to the location near A to bond.
-  var BondingOption = function BondingOption( a, direction, b ) {
-    this.a = a;
-    this.direction = direction;
-    this.b = b;
+  class BondingOption {
+    /**
+     * @param {Atom2} a - An atom A
+     * @param direction
+     * @param {Atom2} b - An atom b
+     */
+    constructor( a, direction, b ) {
+      this.a = a;
+      this.direction = direction;
+      this.b = b;
 
-    // The location the atom should be placed
-    this.idealLocation = a.positionProperty.value.plus( direction.vector.times( a.covalentRadius + b.covalentRadius ) );
-  };
+      // The location the atom should be placed
+      this.idealLocation = a.positionProperty.value.plus( direction.vector.times( a.covalentRadius + b.covalentRadius ) );
+    }
+  }
+
   Kit.BondingOption = BondingOption;
-
   Kit.bondDistanceThreshold = 200;
   Kit.bucketPadding = 50;
   Kit.interMoleculePadding = 150;
 
-  return Kit;
+  return buildAMolecule.register( 'Kit', Kit );
 } );
