@@ -29,7 +29,7 @@ define( require => {
   /**
    * @constructor
    */
-  function CollectMultipleScreen() {
+  function MultipleScreen() {
     const options = {
       name: titleMultipleString,
       homeScreenIcon: new Rectangle( 0, 0, 548, 373, { fill: 'green' } )
@@ -75,13 +75,12 @@ define( require => {
           model.addCollection( BAMScreen.generateKitCollection( true, 4, model.stepEmitter, model.collectionLayout ), true );
         } );
       },
-
       options );
   }
 
-  buildAMolecule.register( 'CollectMultipleScreen', CollectMultipleScreen );
+  buildAMolecule.register( 'MultipleScreen', MultipleScreen );
 
-  inherit( BAMScreen, CollectMultipleScreen );
+  inherit( BAMScreen, MultipleScreen );
 
-  return CollectMultipleScreen;
+  return MultipleScreen;
 } );
