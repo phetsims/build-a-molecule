@@ -10,7 +10,7 @@ define( require => {
   // modules
   const buildAMoleculeTitleString = require( 'string!BUILD_A_MOLECULE/build-a-molecule.title' );
   const MultipleScreen = require( 'BUILD_A_MOLECULE/multiple/MultipleScreen' );
-  const PlaygroundScreen = require( 'BUILD_A_MOLECULE/screens/PlaygroundScreen' );
+  const PlaygroundScreen = require( 'BUILD_A_MOLECULE/playground/PlaygroundScreen' );
   const SingleScreen = require( 'BUILD_A_MOLECULE/single/SingleScreen' );
   const Sim = require( 'JOIST/Sim' );
   const SimLauncher = require( 'JOIST/SimLauncher' );
