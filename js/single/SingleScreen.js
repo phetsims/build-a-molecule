@@ -29,7 +29,7 @@ define( require => {
   /**
    * @constructor
    */
-  function MakeMoleculeScreen() {
+  function SingleScreen() {
 
     const options = {
       name: titleSingleString,
@@ -80,9 +80,9 @@ define( require => {
       options );
   }
 
-  buildAMolecule.register( 'MakeMoleculeScreen', MakeMoleculeScreen );
+  buildAMolecule.register( 'SingleScreen', SingleScreen );
 
-  inherit( BAMScreen, MakeMoleculeScreen );
+  inherit( BAMScreen, SingleScreen );
 
-  return MakeMoleculeScreen;
+  return SingleScreen;
 } );
