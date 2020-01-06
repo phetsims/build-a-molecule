@@ -13,7 +13,7 @@ define( require => {
 
     // modules
     const AquaRadioButton = require( 'SUN/AquaRadioButton' );
-    const BAMConstants = require( 'BUILD_A_MOLECULE/BAMConstants' );
+  const BAMConstants = require( 'BUILD_A_MOLECULE/common/BAMConstants' );
     const Bounds2 = require( 'DOT/Bounds2' );
     const BooleanProperty = require( 'AXON/BooleanProperty' );
     const buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );

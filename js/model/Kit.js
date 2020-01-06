@@ -11,7 +11,7 @@ define( require => {
 
   // modules
   const arrayRemove = require( 'PHET_CORE/arrayRemove' );
-  const BAMConstants = require( 'BUILD_A_MOLECULE/BAMConstants' );
+  const BAMConstants = require( 'BUILD_A_MOLECULE/common/BAMConstants' );
   const BooleanProperty = require( 'AXON/BooleanProperty' );
   const Bounds2 = require( 'DOT/Bounds2' );
   const buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );

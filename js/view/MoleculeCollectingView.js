@@ -11,7 +11,7 @@ define( require => {
 
   // modules
   const AllFilledNode = require( 'BUILD_A_MOLECULE/view/AllFilledNode' );
-  const BAMConstants = require( 'BUILD_A_MOLECULE/BAMConstants' );
+  const BAMConstants = require( 'BUILD_A_MOLECULE/common/BAMConstants' );
   const BAMView = require( 'BUILD_A_MOLECULE/view/BAMView' );
   const buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   const CollectionPanel = require( 'BUILD_A_MOLECULE/view/CollectionPanel' );

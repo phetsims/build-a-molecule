@@ -12,7 +12,7 @@ define( require => {
 
   // modules
   const buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
-  const BAMConstants = require( 'BUILD_A_MOLECULE/BAMConstants' );
+  const BAMConstants = require( 'BUILD_A_MOLECULE/common/BAMConstants' );
   const DOM = require( 'SCENERY/nodes/DOM' );
   const SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' ); // TODO: DragListener
   const timer = require( 'AXON/timer' );

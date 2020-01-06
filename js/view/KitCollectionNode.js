@@ -10,7 +10,7 @@ define( require => {
   'use strict';
 
   // modules
-  const BAMConstants = require( 'BUILD_A_MOLECULE/BAMConstants' );
+  const BAMConstants = require( 'BUILD_A_MOLECULE/common/BAMConstants' );
   const buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   const KitPanel = require( 'BUILD_A_MOLECULE/view/KitPanel' );
   const KitView = require( 'BUILD_A_MOLECULE/view/KitView' );

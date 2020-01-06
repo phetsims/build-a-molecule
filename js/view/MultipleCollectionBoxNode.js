@@ -11,7 +11,7 @@ define( require => {
   'use strict';
 
   // modules
-  const BAMConstants = require( 'BUILD_A_MOLECULE/BAMConstants' );
+  const BAMConstants = require( 'BUILD_A_MOLECULE/common/BAMConstants' );
   const Bounds2 = require( 'DOT/Bounds2' );
   const buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   const CollectionBox = require( 'BUILD_A_MOLECULE/model/CollectionBox' );

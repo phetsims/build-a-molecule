@@ -12,7 +12,7 @@ define( require => {
   // modules
   const buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   const ButtonListener = require( 'SCENERY/input/ButtonListener' );
-  const BAMConstants = require( 'BUILD_A_MOLECULE/BAMConstants' );
+  const BAMConstants = require( 'BUILD_A_MOLECULE/common/BAMConstants' );
   const HBox = require( 'SCENERY/nodes/HBox' );
   const Image = require( 'SCENERY/nodes/Image' );
   const MoleculeList = require( 'BUILD_A_MOLECULE/model/MoleculeList' );
