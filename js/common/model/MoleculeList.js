@@ -25,29 +25,27 @@ define( require => {
   const StrippedMolecule = require( 'BUILD_A_MOLECULE/common/model/StrippedMolecule' );
   const structuresData = require( 'BUILD_A_MOLECULE/common/model/data/structuresData' );
 
-  /**
-   * @constructor
-   */
-  function MoleculeList() {
-    this.completeMolecules = []; // all complete molecules
-    this.moleculeNameMap = {}; // unique name => complete molecule
+  class MoleculeList {
+    constructor() {
+      this.completeMolecules = []; // all complete molecules
+      this.moleculeNameMap = {}; // unique name => complete molecule
+      this.allowedStructureFormulaMap = {}; // formula => allowed stripped molecules (array)
+    }
 
-    this.allowedStructureFormulaMap = {}; // formula => allowed stripped molecules (array)
-  }
-
-  buildAMolecule.register( 'MoleculeList', MoleculeList );
-
-  MoleculeList.prototype = {
-    constructor: MoleculeList,
-
-    loadInitialData: function() {
+    /**
+     * @private
+     */
+    loadInitialData() {
       const startTime = Date.now();
       const mainMolecules = MoleculeList.readCompleteMoleculesFromData( collectionMoleculesData );
       mainMolecules.forEach( this.addCompleteMolecule.bind( this ) );
       console.log( 'loaded initial data in ' + ( Date.now() - startTime ) + 'ms' );
-    },
+    }
 
-    loadMasterData: function() {
+    /**
+     * @private
+     */
+    loadMasterData() {
       const startTime = Date.now();
       const self = this;
       // load in our collection molecules first
@@ -69,16 +67,18 @@ define( require => {
       const mainStructures = MoleculeList.readMoleculeStructuresFromData( structuresData );
       mainStructures.forEach( this.addAllowedStructure.bind( this ) );
       console.log( 'loaded master data in ' + ( Date.now() - startTime ) + 'ms' );
-    },
+    }
 
     /**
      * Check whether this structure is allowed. Currently this means it is a "sub-molecule" of one of our complete
      * molecules
      *
      * @param moleculeStructure Molecule to check
+     * @public
+     *
      * @returns {boolean} True if it is allowed
      */
-    isAllowedStructure: function( moleculeStructure ) {
+    isAllowedStructure( moleculeStructure ) {
       const strippedMolecule = new StrippedMolecule( moleculeStructure );
       const hashString = strippedMolecule.stripped.getHistogram().getHashString();
 
@@ -107,35 +107,49 @@ define( require => {
         }
       }
       return false;
-    },
+    }
 
     /**
      * Find a complete molecule with an equivalent structure to the passed in molecule
      *
      * @param moleculeStructure Molecule structure to match
+     * @public
+     *
      * @returns {CompleteMolecule|null} Either a matching CompleteMolecule, or null if none is found
      */
-    findMatchingCompleteMolecule: function( moleculeStructure ) {
-      return _.find( this.completeMolecules, function( completeMolecule ) {
+    findMatchingCompleteMolecule( moleculeStructure ) {
+      return _.find( this.completeMolecules, completeMolecule => {
         return moleculeStructure.isEquivalent( completeMolecule ) ? completeMolecule : null;
       } );
-    },
+    }
 
-    getAllCompleteMolecules: function() {
+    /**
+     * @private
+     * @returns {Array.<Molecules>}
+     */
+    getAllCompleteMolecules() {
       // TODO: performance: do we need a full copy here?
       return this.completeMolecules.slice( 0 );
-    },
+    }
 
     /*---------------------------------------------------------------------------*
      * computation of allowed molecule structures
      *----------------------------------------------------------------------------*/
 
-    addCompleteMolecule: function( completeMolecule ) {
+    /**
+     * @param {CompleteMolecule} completeMolecule
+     * @private
+     */
+    addCompleteMolecule( completeMolecule ) {
       this.completeMolecules.push( completeMolecule );
       this.moleculeNameMap[ completeMolecule.filterCommonName( completeMolecule.commonNameProperty.value ) ] = completeMolecule;
-    },
+    }
 
-    addAllowedStructure: function( structure ) {
+    /**
+     * @param {MoleculeStructure} structure
+     * @private
+     */
+    addAllowedStructure( structure ) {
       const strippedMolecule = new StrippedMolecule( structure );
       const hashString = strippedMolecule.stripped.getHistogram().getHashString();
 
@@ -147,13 +161,13 @@ define( require => {
         this.allowedStructureFormulaMap[ hashString ] = [ strippedMolecule ];
       }
     }
-  };
+  }
 
   let masterInstance = null;
   let initialized = false;
-  var initialList = new MoleculeList();
+  const initialList = new MoleculeList();
 
-  MoleculeList.startInitialization = function() {
+  MoleculeList.startInitialization = () => {
     // TODO: performance: use web worker or chop it up into bits of work
     masterInstance = new MoleculeList();
     masterInstance.loadMasterData();
@@ -161,7 +175,7 @@ define( require => {
     // TODO: log completion?
   };
 
-  MoleculeList.getMasterInstance = function() {
+  MoleculeList.getMasterInstance = () => {
     if ( !initialized ) {
       // TODO: performance: threading-like replacement goes here
       MoleculeList.startInitialization();
@@ -170,7 +184,7 @@ define( require => {
     return masterInstance;
   };
 
-  MoleculeList.getMoleculeByName = function( name ) {
+  MoleculeList.getMoleculeByName = name => {
     let result = initialList.moleculeNameMap[ name ];
 
     if ( !result ) {
@@ -186,10 +200,11 @@ define( require => {
    *----------------------------------------------------------------------------*/
 
   /**
+   * {string} strings - File name relative to the sim's data directory
    * @returns A list of complete molecules
    */
-  MoleculeList.readCompleteMoleculesFromData = function( strings ) {
-    return _.map( strings, function( string ) {
+  MoleculeList.readCompleteMoleculesFromData = strings => {
+    return _.map( strings, string => {
       const molecule = CompleteMolecule.fromSerial2( string );
 
       // sanity checks
@@ -202,10 +217,10 @@ define( require => {
   };
 
   /**
-   * @param filename File name relative to the sim's data directory
+   * @param {string} strings - File name relative to the sim's data directory
    * @returns A list of molecule structures
    */
-  MoleculeList.readMoleculeStructuresFromData = function( strings ) {
+  MoleculeList.readMoleculeStructuresFromData = strings => {
     const len = strings.length;
     const arr = new Array( len );
     for ( let i = 0; i < len; i++ ) {
@@ -267,12 +282,12 @@ define( require => {
     MoleculeList.getMoleculeByName( 'Sulfur Dioxide' )
   ];
 
-  MoleculeList.collectionBoxMolecules.forEach( function( molecule ) {
+  MoleculeList.collectionBoxMolecules.forEach( molecule => {
     assert && assert( !!molecule );
   } );
 
   // TODO: performance: postpone all of the loading?
   MoleculeList.getMasterInstance();
 
-  return MoleculeList;
+  return buildAMolecule.register( 'MoleculeList', MoleculeList );
 } );
