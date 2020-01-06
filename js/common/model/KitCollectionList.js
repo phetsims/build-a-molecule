@@ -44,19 +44,27 @@ define( require => {
       this.addCollection( firstCollection );
     }
 
+    /**
+     *
+     * @param {number} timeElapsed
+     * @public
+     */
     step( timeElapsed ) {
       this.stepEmitter.emit( timeElapsed );
     }
 
+    /**
+     * @public
+     * @returns {function}
+     */
     generateKitCollection() {
       return this.createKitCollection( this.collectionLayout, this.stepEmitter );
     }
 
-    switchTo( collection ) {
-      this.currentIndex = this.collections.indexOf( collection );
-      this.currentCollectionProperty.value = collection;
-    }
-
+    /**
+     *
+     * @param {KitCollection} collection
+     */
     addCollection( collection ) {
       this.collections.push( collection );
 
@@ -68,12 +76,9 @@ define( require => {
       this.currentCollectionProperty.value = collection;
     }
 
-    removeCollection( collection ) {
-      assert && assert( this.currentCollectionProperty.value !== collection );
-      this.collections.shift();
-      this.removedCollectionEmitter.emit( collection );
-    }
-
+    /**
+     * @public
+     */
     reset() {
 
       // switch to the first collection
@@ -91,28 +96,67 @@ define( require => {
       this.collections = [ this.firstCollection ];
     }
 
+    /**
+     * @returns {Rectangle}
+     */
     availableKitBounds() {
       return this.collectionLayout.availableKitBounds;
     }
 
+    /**
+     * @returns {Rectangle}
+     */
     availablePlayAreaBounds() {
       return this.collectionLayout.availablePlayAreaBounds;
     }
 
+    /**
+     * @public
+     * @return {boolean}
+     */
     hasPreviousCollection() {
       return this.currentIndex > 0;
     }
 
+    /**
+     * @public
+     * @return {boolean}
+     */
     hasNextCollection() {
       return this.currentIndex < this.collections.length - 1;
     }
 
+    /**
+     * @public
+     */
     switchToPreviousCollection() {
       this.switchTo( this.collections[ this.currentIndex - 1 ] );
     }
 
+    /**
+     * @public
+     */
     switchToNextCollection() {
       this.switchTo( this.collections[ this.currentIndex + 1 ] );
+    }
+
+    /**
+     * @param {KitCollection} collection
+     * @private
+     */
+    switchTo( collection ) {
+      this.currentIndex = this.collections.indexOf( collection );
+      this.currentCollectionProperty.value = collection;
+    }
+
+    /**
+     * @param {KitCollection} collection
+     * @private
+     */
+    removeCollection( collection ) {
+      assert && assert( this.currentCollectionProperty.value !== collection );
+      this.collections.shift();
+      this.removedCollectionEmitter.emit( collection );
     }
   }
 
