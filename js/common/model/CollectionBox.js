@@ -21,52 +21,50 @@ define( require => {
   const NumberProperty = require( 'AXON/NumberProperty' );
   const Property = require( 'AXON/Property' );
 
-  /**
-   * @param {CompleteMolecule} moleculeType
-   * @param {number} capacity
-   * @param {object} options
-   */
-  function CollectionBox( moleculeType, capacity, options ) {
-    options = merge( {
-      initializeAudio: true
-    }, options );
+  class CollectionBox {
+    /**
+     * @param {CompleteMolecule} moleculeType
+     * @param {number} capacity
+     * @param {object} options
+     */
+    constructor( moleculeType, capacity, options ) {
+      options = merge( {
+        initializeAudio: true
+      }, options );
 
-    const self = this;
+      const self = this;
 
-    // @public
-    this.quantityProperty = new NumberProperty( 0 );
-    this.cueVisibilityProperty = new BooleanProperty( false );
+      // @public
+      this.quantityProperty = new NumberProperty( 0 );
+      this.cueVisibilityProperty = new BooleanProperty( false );
 
-    // @public {Emitter} - Called with a single molecule parameter
-    this.addedMoleculeEmitter = new Emitter( { parameters: [ { valueType: Molecule } ] } );
-    this.removedMoleculeEmitter = new Emitter( { parameters: [ { valueType: Molecule } ] } );
-    this.acceptedMoleculeCreationEmitter = new Emitter( { parameters: [ { valueType: Molecule } ] } ); // triggered from KitCollection
+      // @public {Emitter} - Called with a single molecule parameter
+      this.addedMoleculeEmitter = new Emitter( { parameters: [ { valueType: Molecule } ] } );
+      this.removedMoleculeEmitter = new Emitter( { parameters: [ { valueType: Molecule } ] } );
+      this.acceptedMoleculeCreationEmitter = new Emitter( { parameters: [ { valueType: Molecule } ] } ); // triggered from KitCollection
 
-    // @public {CompleteMolecule}
-    this.moleculeType = moleculeType;
+      // @public {CompleteMolecule}
+      this.moleculeType = moleculeType;
 
-    // @public {number}
-    this.capacity = capacity;
+      // @public {number}
+      this.capacity = capacity;
 
-    // @private
-    this.molecules = [];
-    this.dropBoundsProperty = new Property( Bounds2.NOTHING );
-    this.addedMoleculeEmitter.addListener( function() {
-      if ( self.quantityProperty.value === capacity && options.initializeAudio ) {
+      // @private
+      this.molecules = [];
+      this.dropBoundsProperty = new Property( Bounds2.NOTHING );
+      this.addedMoleculeEmitter.addListener( () => {
+        if ( self.quantityProperty.value === capacity && options.initializeAudio ) {
 
-        // Audio player for correct sound
-        const gameAudioPlayer = new GameAudioPlayer();
-        gameAudioPlayer.correctAnswer();
-      }
-    } );
-  }
+          // Audio player for correct sound
+          const gameAudioPlayer = new GameAudioPlayer();
+          gameAudioPlayer.correctAnswer();
+        }
+      } );
+    }
 
-  buildAMolecule.register( 'CollectionBox', CollectionBox );
-
-  inherit( Object, CollectionBox, {
-    isFull: function() {
+    isFull() {
       return this.capacity === this.quantityProperty.value;
-    },
+    }
 
     /**
      * Whether this molecule can be dropped into this collection box (at this point in time)
@@ -74,34 +72,34 @@ define( require => {
      * @param moleculeStructure The molecule's structure
      * @returns {boolean} Whether it can be dropped in
      */
-    willAllowMoleculeDrop: function( moleculeStructure ) {
+    willAllowMoleculeDrop( moleculeStructure ) {
       const equivalent = this.moleculeType.isEquivalent( moleculeStructure );
 
       // whether the structure is acceptable
       return equivalent && this.quantityProperty.value < this.capacity;
-    },
+    }
 
-    addMolecule: function( molecule ) {
+    addMolecule( molecule ) {
       this.quantityProperty.value++;
       this.molecules.push( molecule );
 
       this.addedMoleculeEmitter.emit( molecule );
-    },
+    }
 
-    removeMolecule: function( molecule ) {
+    removeMolecule( molecule ) {
       this.quantityProperty.value--;
       this.molecules.shift();
       this.removedMoleculeEmitter.emit( molecule );
-    },
+    }
 
     /**
      * @public
      */
-    reset: function() {
+    reset() {
       this.molecules.slice( 0 ).forEach( this.removeMolecule.bind( this ) );
       this.cueVisibilityProperty.reset();
     }
-  } );
+  }
 
-  return CollectionBox;
+  return buildAMolecule.register( 'CollectionBox', CollectionBox );
 } );
