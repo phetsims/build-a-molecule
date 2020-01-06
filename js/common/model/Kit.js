@@ -38,6 +38,8 @@ define( require => {
 
       // @public {number}
       this.id = kitIdCounter++;
+
+      // @public {ObservableArray}
       this.atomsInPlayArea = new ObservableArray();
 
       // @public {Property.<Atom|null>}
