@@ -64,54 +64,52 @@ define( require => {
     P4Node, PCl3Node, PCl5Node, PF3Node, PH3Node, SO2Node, SO3Node
   ];
 
-  /**
-   * @param {string} commonName
-   * @param {string} molecularFormula
-   * @param {number} atomCount
-   * @param {number} bondCount
-   * @param {boolean} has2d
-   * @param {boolean} has3d
-   */
-  function CompleteMolecule( commonName, molecularFormula, atomCount, bondCount, has2d, has3d ) {
-    MoleculeStructure.call( this, atomCount, bondCount );
+  class CompleteMolecule extends MoleculeStructure {
+    /**
+     * @param {string} commonName
+     * @param {string} molecularFormula
+     * @param {number} atomCount
+     * @param {number} bondCount
+     * @param {boolean} has2d
+     * @param {boolean} has3d
+     */
+    constructor( commonName, molecularFormula, atomCount, bondCount, has2d, has3d ) {
+      super( atomCount, bondCount );
 
-    // @public {Property.<string>}
-    this.commonNameProperty = new StringProperty( commonName ); // as said by pubchem (or overridden)
+      // @public {Property.<string>}
+      this.commonNameProperty = new StringProperty( commonName ); // as said by pubchem (or overridden)
 
-    this.molecularFormula = molecularFormula; // as said by pubchem
-    this.has2d = has2d;
-    this.has3d = has3d;
-  }
+      this.molecularFormula = molecularFormula; // as said by pubchem
+      this.has2d = has2d;
+      this.has3d = has3d;
+    }
 
-  buildAMolecule.register( 'CompleteMolecule', CompleteMolecule );
-
-  inherit( MoleculeStructure, CompleteMolecule, {
 
     /**
      * Strip out the 'molecular ' part of the string and process the result.
      *
      * @public
      */
-    filterCommonName: function() {
+    filterCommonName() {
       let result = this.commonNameProperty.value;
       if ( result.indexOf( 'molecular ' ) === 0 ) {
         result = result.slice( 'molecular '.length );
       }
       return CompleteMolecule.capitalize( result );
-    },
+    }
 
     /**
      * @returns {string} The translation string key that should be used to look up a translated value
      */
     get stringKey() {
       return 'molecule.' + this.commonNameProperty.value.replace( ' ', '_' );
-    },
+    }
 
     /**
      * @returns A translated display name if possible. This does a weird lookup so that we can only list some of the names in the translation, but can
      *         accept an even larger number of translated names in a translation file
      */
-    getDisplayName: function() {
+    getDisplayName() {
       // first check if we have it translated. do NOT warn on missing
       const lookupKey = this.stringKey;
       const stringLookup = Strings[ lookupKey ]; // NOTE: do NOT warn or error on missing strings, this is generally expected
@@ -124,10 +122,10 @@ define( require => {
         // if we didn't find it, pull it from our English data
         return this.commonNameProperty.value;
       }
-    },
+    }
 
     // @returns {Node} A node that represents a 2d but quasi-3D version
-    createPseudo3DNode: function() {
+    createPseudo3DNode() {
       const molecularFormula = this.molecularFormula;
       const molecularFormulaType = molecularFormula + 'Node';
 
@@ -142,27 +140,28 @@ define( require => {
 
       // otherwise, use our 2d positions to construct a version. we get the correct back-to-front rendering
       const node = new Node();
-      const wrappers = _.sortBy( this.atoms, function( atom ) {
+      const wrappers = _.sortBy( this.atoms, atom => {
         return atom.z3d;
       } );
-      wrappers.forEach( function( atomWrapper ) {
+      wrappers.forEach( atomWrapper => {
         node.addChild( new AtomNode( atomWrapper.element, {
+
           // custom scale for now
           x: atomWrapper.x2d * 15,
           y: atomWrapper.y2d * 15
         } ) );
       } );
       return node;
-    },
+    }
 
-    toSerial2: function() {
+    toSerial2() {
       // add in a header
       const format = ( this.has3d ? ( this.has2d ? 'full' : '3d' ) : '2d' );
       return this.commonNameProperty.value + '|' + this.molecularFormula + '|' + this.cid + '|' + format + '|' + MoleculeStructure.prototype.toSerial2.call( this );
     }
-  } );
+  }
 
-  CompleteMolecule.capitalize = function( str ) {
+  CompleteMolecule.capitalize = str => {
     const characters = str.split( '' );
     let lastWasSpace = true;
     for ( let i = 0; i < characters.length; i++ ) {
@@ -194,7 +193,7 @@ define( require => {
    * @param {string} line A string that is essentially a serialized molecule
    * @returns {CompleteMolecule} that is properly constructed
    */
-  CompleteMolecule.fromString = function( line ) {
+  CompleteMolecule.fromString = line => {
     let i;
     const tokens = line.split( '|' );
     let idx = 0;
@@ -231,7 +230,7 @@ define( require => {
     return completeMolecule;
   };
 
-  CompleteMolecule.fromSerial2 = function( line ) {
+  CompleteMolecule.fromSerial2 = line => {
     /*---------------------------------------------------------------------------*
      * extract header
      *----------------------------------------------------------------------------*/
@@ -251,7 +250,7 @@ define( require => {
     // select the atom parser depending on the format
     const atomParser = has3d ? ( has2dAnd3d ? PubChemAtomFull.parser : PubChemAtom3.parser ) : PubChemAtom2.parser;
 
-    return MoleculeStructure.fromSerial2( line.slice( burnedLength ), function( atomCount, bondCount ) {
+    return MoleculeStructure.fromSerial2( line.slice( burnedLength ), ( atomCount, bondCount ) => {
       const molecule = new CompleteMolecule( commonName, molecularFormula, atomCount, bondCount, has2d, has3d );
       molecule.cid = cid;
       return molecule;
@@ -457,6 +456,5 @@ define( require => {
 
   CompleteMolecule.PubChemBond = PubChemBond;
 
-
-  return CompleteMolecule;
+  return buildAMolecule.register( 'CompleteMolecule', CompleteMolecule );
 } );
