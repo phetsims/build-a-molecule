@@ -1,4 +1,4 @@
-// Copyright 2013-2020, University of Colorado Boulder
+// Copyright 2013-2019, University of Colorado Boulder
 
 /*
  * Supertype for modules in Build a Molecule. Handles code required for all modules (bounds, canvas handling, and the ability to switch models)
@@ -9,19 +9,19 @@ define( require => {
   'use strict';
 
   // modules
-  const BAMConstants = require( 'BUILD_A_MOLECULE/common/BAMConstants' );
-  const Bucket = require( 'BUILD_A_MOLECULE/common/model/Bucket' );
+  const BAMConstants = require( 'BUILD_A_MOLECULE/BAMConstants' );
+  const Bucket = require( 'BUILD_A_MOLECULE/model/Bucket' );
   const buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
-  const CollectionBox = require( 'BUILD_A_MOLECULE/common/model/CollectionBox' );
+  const CollectionBox = require( 'BUILD_A_MOLECULE/model/CollectionBox' );
   const Dimension2 = require( 'DOT/Dimension2' );
   const Element = require( 'NITROGLYCERIN/Element' );
   const Emitter = require( 'AXON/Emitter' );
   const inherit = require( 'PHET_CORE/inherit' );
-  const Kit = require( 'BUILD_A_MOLECULE/common/model/Kit' );
-  const KitCollection = require( 'BUILD_A_MOLECULE/common/model/KitCollection' );
-  const KitCollectionList = require( 'BUILD_A_MOLECULE/common/model/KitCollectionList' );
+  const Kit = require( 'BUILD_A_MOLECULE/model/Kit' );
+  const KitCollection = require( 'BUILD_A_MOLECULE/model/KitCollection' );
+  const KitCollectionList = require( 'BUILD_A_MOLECULE/model/KitCollectionList' );
   const merge = require( 'PHET_CORE/merge' );
-  const MoleculeList = require( 'BUILD_A_MOLECULE/common/model/MoleculeList' );
+  const MoleculeList = require( 'BUILD_A_MOLECULE/model/MoleculeList' );
   const Property = require( 'AXON/Property' );
   const Screen = require( 'JOIST/Screen' );
 

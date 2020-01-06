@@ -1,0 +1,244 @@
+// Copyright 2013-2019, University of Colorado Boulder
+
+/**
+ * Molecule structure with the hydrogens stripped out (but with the hydrogen count of an atom saved)
+ * <p/>
+ * This class was motivated by a need for efficient molecule comparison. It brought down the cost
+ * of filtering molecules from months to minutes, along with significant reductions in the structures' file size.
+ *
+ * @author Jonathan Olson <jonathan.olson@colorado.edu>
+ */
+
+define( require => {
+  'use strict';
+
+  // modules
+  const Atom = require( 'NITROGLYCERIN/Atom' );
+  const Bond = require( 'BUILD_A_MOLECULE/model/Bond' );
+  const buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
+  const Element = require( 'NITROGLYCERIN/Element' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const MoleculeStructure = require( 'BUILD_A_MOLECULE/model/MoleculeStructure' );
+  const PhetioObject = require( 'TANDEM/PhetioObject' );
+
+  /**
+   * @param {MoleculeStructure} original
+   * @constructor
+   */
+  function StrippedMolecule( original ) {
+    const self = this;
+    const bondsToAdd = [];
+
+    // copy non-hydrogens
+    const atomsToAdd = _.filter( original.atoms, function( atom ) { return !atom.isHydrogen(); } );
+
+    /**
+     * Array indexed the same way as stripped.atoms for efficiency. It's essentially immutable, so this works
+     */
+    this.hydrogenCount = new Array( atomsToAdd.length );
+    for ( let i = 0; i < this.hydrogenCount.length; i++ ) {
+      this.hydrogenCount[ i ] = 0;
+    }
+
+    // copy non-hydrogen honds, and mark hydrogen bonds
+    original.bonds.forEach( function( bond ) {
+      const aIsHydrogen = bond.a.isHydrogen();
+      const bIsHydrogen = bond.b.isHydrogen();
+
+      // only do something if both aren't hydrogen
+      if ( !aIsHydrogen || !bIsHydrogen ) {
+
+        if ( aIsHydrogen || bIsHydrogen ) {
+          // increment hydrogen count of either A or B, if the bond contains hydrogen
+          self.hydrogenCount[ atomsToAdd.indexOf( aIsHydrogen ? bond.b : bond.a ) ]++;
+        }
+        else {
+          // bond doesn't involve hydrogen, so we add it to our stripped version
+          bondsToAdd.push( bond );
+        }
+      }
+    } );
+
+    // construct the stripped structure
+    this.stripped = new MoleculeStructure( atomsToAdd.length, bondsToAdd.length );
+    atomsToAdd.forEach( this.stripped.addAtom.bind( this.stripped ) );
+    bondsToAdd.forEach( this.stripped.addBond.bind( this.stripped ) );
+  }
+  buildAMolecule.register( 'StrippedMolecule', StrippedMolecule );
+
+  return inherit( PhetioObject, StrippedMolecule, {
+
+    /**
+     * @returns {MoleculeStructure} where the hydrogen atoms are not the original hydrogen atoms
+     */
+    toMoleculeStructure: function() {
+      const self = this;
+      const result = this.stripped.getAtomCopy();
+      this.stripped.atoms.forEach( function( atom ) {
+        const count = self.getHydrogenCount( atom );
+        for ( let i = 0; i < count; i++ ) {
+          const hydrogenAtom = new Atom( Element.H );
+          result.addAtom( hydrogenAtom );
+          result.addBond( new Bond( atom, hydrogenAtom ) );
+        }
+      } );
+      return result;
+    },
+
+    getIndex: function( atom ) {
+      const index = this.stripped.atoms.indexOf( atom );
+      assert && assert( index !== -1 );
+      return index;
+    },
+
+    getHydrogenCount: function( atom ) {
+      return this.hydrogenCount[ this.getIndex( atom ) ];
+    },
+
+    // @param {StrippedMolecule} other
+    isEquivalent: function( other ) { // I know this isn't used, but it might be useful in the future (comment from before the port, still kept for that reason)
+      const self = this;
+      if ( this === other ) {
+        // same instance
+        return true;
+      }
+
+      if ( this.stripped.atoms.length === 0 && other.stripped.atoms.length === 0 ) {
+        return true;
+      }
+
+      // TODO: performance: use something more like HashSet here
+      const myVisited = [];
+      const otherVisited = [];
+      const firstAtom = this.stripped.atoms[ 0 ]; // grab the 1st atom
+      const length = other.stripped.atoms.length;
+      for ( let i = 0; i < length; i++ ) {
+        const otherAtom = other.stripped.atoms[ i ];
+        if ( self.checkEquivalency( other, myVisited, otherVisited, firstAtom, otherAtom, false ) ) {
+          // we found an isomorphism with firstAtom => otherAtom
+          return true;
+        }
+      }
+      return false;
+    },
+
+    /**
+     * This checks to see whether the "other" molecule (with 0 or more added hydrogens) would be
+     * equivalent to this stripped molecule.
+     * <p/>
+     * This is useful for checking whether "other" is a valid structure by checking it against
+     * stripped structures efficiently.
+     *
+     * @param {StrippedMolecule} other   Other (potential) submolecule
+     * @param <AtomU> Other atom type.
+     * @returns {boolean} Whether "other" is a hydrogen submolecule of this instance
+     */
+    isHydrogenSubmolecule: function( other ) {
+      const self = this;
+      if ( this === other ) {
+        // same instance
+        return true;
+      }
+
+      if ( this.stripped.atoms.length === 0 ) {
+        // if we have no heavy atoms
+        return other.stripped.atoms.length === 0;
+      }
+      const myVisited = [];
+      const otherVisited = [];
+      const firstAtom = this.stripped.atoms[ 0 ]; // grab the 1st atom
+      const length = other.stripped.atoms.length;
+      for ( let i = 0; i < length; i++ ) {
+        const otherAtom = other.stripped.atoms[ i ];
+        if ( self.checkEquivalency( other, myVisited, otherVisited, firstAtom, otherAtom, true ) ) {
+          // we found an isomorphism with firstAtom => otherAtom
+          return true;
+        }
+      }
+      return false;
+    },
+
+    /*
+     * @param {StrippedMolecule} other
+     * @param {Array[Atom]}      myVisited
+     * @param {Array[Atom]}      otherVisited
+     * @param {Atom}             myAtom
+     * @param {Atom}             otherAtom
+     * @param {boolean}          subCheck
+     */
+    checkEquivalency: function( other, myVisited, otherVisited, myAtom, otherAtom, subCheck ) {
+      // basically this checks whether two different sub-trees of two different molecules are "equivalent"
+
+      /*
+       * NOTE: this shares much overall structure (and some code) from MoleculeStructure's version, however
+       * extracting out the common parts would be more effort (and lines of code) than it would be worth
+       *
+       * ------- If you change this, also consider the similar code in MoleculeStructure
+       */
+
+      if ( !myAtom.hasSameElement( otherAtom ) ) {
+        // if the atoms are of different types, bail. subtrees can't possibly be equivalent
+        return false;
+      }
+      if ( !subCheck ) {
+        // if the atoms have different numbers of hydrogen containing them, bail
+        if ( this.getHydrogenCount( myAtom ) !== other.getHydrogenCount( otherAtom ) ) {
+          return false;
+        }
+      }
+      else {
+        // if the other atom has more hydrogens, bail
+        if ( this.getHydrogenCount( myAtom ) < other.getHydrogenCount( otherAtom ) ) {
+          return false;
+        }
+      }
+      const myUnvisitedNeighbors = this.stripped.getNeighborsNotInSet( myAtom, myVisited );
+      const otherUnvisitedNeighbors = other.stripped.getNeighborsNotInSet( otherAtom, otherVisited );
+      if ( myUnvisitedNeighbors.length !== otherUnvisitedNeighbors.length ) {
+        return false;
+      }
+      if ( myUnvisitedNeighbors.length === 0 ) {
+        // no more unmatched atoms
+        return true;
+      }
+      const size = myUnvisitedNeighbors.length;
+
+      // for now, add visiting atoms to the visited set. we NEED to revert this before returning!
+      myVisited.push( myAtom );
+      otherVisited.push( otherAtom );
+
+      /*
+       equivalency matrix. each entry is basically whether the subtree in the direction of the "my" atom is
+       equivalent to the subtree in the direction of the "other" atom, for all possible my and other atoms
+       */
+      const equivalences = new Array( size * size ); // booleans
+
+      // keep track of available indices for the following matrix equivalency check
+      const availableIndices = [];
+
+      // for the love of god, this matrix is NOT symmetric. It computes whether each tree branch for A is equivalent to each tree branch for B
+      for ( let myIndex = 0; myIndex < size; myIndex++ ) {
+        availableIndices.push( myIndex );
+        for ( let otherIndex = 0; otherIndex < size; otherIndex++ ) {
+          equivalences[ myIndex * size + otherIndex ] = this.checkEquivalency( other, myVisited, otherVisited, myUnvisitedNeighbors[ myIndex ], otherUnvisitedNeighbors[ otherIndex ], subCheck );
+        }
+      }
+
+      // remove the atoms from the visited sets, to hold our contract
+      myVisited.splice();
+      otherVisited.shift();
+
+      // return whether we can find a successful permutation matching from our equivalency matrix
+      return MoleculeStructure.checkEquivalencyMatrix( equivalences, 0, availableIndices, size );
+    },
+
+    getCopyWithAtomRemoved: function( atom ) {
+      const self = this;
+      const result = new StrippedMolecule( this.stripped.getCopyWithAtomRemoved( atom ) );
+      result.stripped.atoms.forEach( function( resultAtom ) {
+        result.hydrogenCount[ result.getIndex( resultAtom ) ] = self.getHydrogenCount( resultAtom );
+      } );
+      return result;
+    }
+  } );
+} );

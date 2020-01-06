@@ -1,4 +1,4 @@
-// Copyright 2013-2020, University of Colorado Boulder
+// Copyright 2013-2019, University of Colorado Boulder
 
 /*
  * Screen for 2nd tab. Collection boxes take multiple molecules of the same type, and start off with a different kit collection each time
@@ -9,18 +9,18 @@ define( require => {
   'use strict';
 
   // modules
-  const BAMScreen = require( 'BUILD_A_MOLECULE/common/BAMScreen' );
-  const Bucket = require( 'BUILD_A_MOLECULE/common/model/Bucket' );
+  const BAMScreen = require( 'BUILD_A_MOLECULE/screens/BAMScreen' );
+  const Bucket = require( 'BUILD_A_MOLECULE/model/Bucket' );
   const buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
-  const CollectionBox = require( 'BUILD_A_MOLECULE/common/model/CollectionBox' );
+  const CollectionBox = require( 'BUILD_A_MOLECULE/model/CollectionBox' );
   const Dimension2 = require( 'DOT/Dimension2' );
   const Element = require( 'NITROGLYCERIN/Element' );
   const inherit = require( 'PHET_CORE/inherit' );
-  const Kit = require( 'BUILD_A_MOLECULE/common/model/Kit' );
-  const KitCollection = require( 'BUILD_A_MOLECULE/common/model/KitCollection' );
-  const CollectionLayout = require( 'BUILD_A_MOLECULE/common/model/CollectionLayout' );
-  const MoleculeCollectingView = require( 'BUILD_A_MOLECULE/common/view/MoleculeCollectingView' );
-  const MoleculeList = require( 'BUILD_A_MOLECULE/common/model/MoleculeList' );
+  const Kit = require( 'BUILD_A_MOLECULE/model/Kit' );
+  const KitCollection = require( 'BUILD_A_MOLECULE/model/KitCollection' );
+  const CollectionLayout = require( 'BUILD_A_MOLECULE/model/CollectionLayout' );
+  const MoleculeCollectingView = require( 'BUILD_A_MOLECULE/view/MoleculeCollectingView' );
+  const MoleculeList = require( 'BUILD_A_MOLECULE/model/MoleculeList' );
   const Rectangle = require( 'SCENERY/nodes/Rectangle' );
 
   // strings
@@ -29,7 +29,7 @@ define( require => {
   /**
    * @constructor
    */
-  function MultipleScreen() {
+  function CollectMultipleScreen() {
     const options = {
       name: titleMultipleString,
       homeScreenIcon: new Rectangle( 0, 0, 548, 373, { fill: 'green' } )
@@ -79,9 +79,9 @@ define( require => {
       options );
   }
 
-  buildAMolecule.register( 'MultipleScreen', MultipleScreen );
+  buildAMolecule.register( 'CollectMultipleScreen', CollectMultipleScreen );
 
-  inherit( BAMScreen, MultipleScreen );
+  inherit( BAMScreen, CollectMultipleScreen );
 
-  return MultipleScreen;
+  return CollectMultipleScreen;
 } );

@@ -1,4 +1,4 @@
-// Copyright 2013-2020, University of Colorado Boulder
+// Copyright 2013-2019, University of Colorado Boulder
 /**
  * Main entry point for the sim.
  *
@@ -9,9 +9,9 @@ define( require => {
 
   // modules
   const buildAMoleculeTitleString = require( 'string!BUILD_A_MOLECULE/build-a-molecule.title' );
-  const MultipleScreen = require( 'BUILD_A_MOLECULE/multiple/MultipleScreen' );
-  const PlaygroundScreen = require( 'BUILD_A_MOLECULE/playground/PlaygroundScreen' );
-  const SingleScreen = require( 'BUILD_A_MOLECULE/single/SingleScreen' );
+  const CollectMultipleScreen = require( 'BUILD_A_MOLECULE/screens/CollectMultipleScreen' );
+  const PlaygroundScreen = require( 'BUILD_A_MOLECULE/screens/PlaygroundScreen' );
+  const MakeMoleculeScreen = require( 'BUILD_A_MOLECULE/screens/MakeMoleculeScreen' );
   const Sim = require( 'JOIST/Sim' );
   const SimLauncher = require( 'JOIST/SimLauncher' );
 
@@ -27,8 +27,8 @@ define( require => {
   SimLauncher.launch( () => {
       //Create and start the sim
       new Sim( buildAMoleculeTitleString, [
-        new SingleScreen(),
-        new MultipleScreen(),
+        new MakeMoleculeScreen(),
+        new CollectMultipleScreen(),
         new PlaygroundScreen()
       ], simOptions ).start();
     } );

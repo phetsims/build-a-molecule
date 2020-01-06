@@ -1,4 +1,4 @@
-// Copyright 2013-2020, University of Colorado Boulder
+// Copyright 2013-2019, University of Colorado Boulder
 
 /*
  * Module for the 3rd tab. Shows kits below as normal, but without collection boxes. Instead, the user is presented with an option of a "3d" view
@@ -9,16 +9,16 @@ define( require => {
   'use strict';
 
   // modules
-  const BAMScreen = require( 'BUILD_A_MOLECULE/common/BAMScreen' );
-  const BAMView = require( 'BUILD_A_MOLECULE/common/view/BAMView' );
-  const Bucket = require( 'BUILD_A_MOLECULE/common/model/Bucket' );
+  const BAMScreen = require( 'BUILD_A_MOLECULE/screens/BAMScreen' );
+  const BAMView = require( 'BUILD_A_MOLECULE/view/BAMView' );
+  const Bucket = require( 'BUILD_A_MOLECULE/model/Bucket' );
   const buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   const Dimension2 = require( 'DOT/Dimension2' );
   const Element = require( 'NITROGLYCERIN/Element' );
   const inherit = require( 'PHET_CORE/inherit' );
-  const Kit = require( 'BUILD_A_MOLECULE/common/model/Kit' );
-  const KitCollection = require( 'BUILD_A_MOLECULE/common/model/KitCollection' );
-  const CollectionLayout = require( 'BUILD_A_MOLECULE/common/model/CollectionLayout' );
+  const Kit = require( 'BUILD_A_MOLECULE/model/Kit' );
+  const KitCollection = require( 'BUILD_A_MOLECULE/model/KitCollection' );
+  const CollectionLayout = require( 'BUILD_A_MOLECULE/model/CollectionLayout' );
   const Rectangle = require( 'SCENERY/nodes/Rectangle' );
 
   // strings
