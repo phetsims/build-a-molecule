@@ -112,7 +112,7 @@ define( require => {
 
     /**
      * @public
-     * @return {boolean}
+     * @returns {boolean}
      */
     hasPreviousCollection() {
       return this.currentIndex > 0;
@@ -120,7 +120,7 @@ define( require => {
 
     /**
      * @public
-     * @return {boolean}
+     * @returns {boolean}
      */
     hasNextCollection() {
       return this.currentIndex < this.collections.length - 1;

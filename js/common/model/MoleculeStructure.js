@@ -91,7 +91,9 @@ define( require => {
      */
     getBondsInvolving( atom ) {
       // TODO: performance: optimize out function allocation here?
-      return _.filter( this.bonds, bond => { return bond.contains( atom ); } );
+      return _.filter( this.bonds, bond => {
+        return bond.contains( atom );
+      } );
     }
 
     /**
@@ -194,7 +196,9 @@ define( require => {
      * @returns All neighboring atoms that are connected by bonds to the passed in atom
      */
     getNeighbors( atom ) {
-      return _.map( this.getBondsInvolving( atom ), bond => { return bond.getOtherAtom( atom ); } );
+      return _.map( this.getBondsInvolving( atom ), bond => {
+        return bond.getOtherAtom( atom );
+      } );
     }
 
     /**
@@ -204,7 +208,9 @@ define( require => {
      */
     getApproximateMolecularWeight() {
       // sum the atomic weights
-      return _.reduce( this.atoms, ( memo, atom ) => { return memo + atom.atomicWeight; }, 0 );
+      return _.reduce( this.atoms, ( memo, atom ) => {
+        return memo + atom.atomicWeight;
+      }, 0 );
     }
 
     /**
@@ -298,7 +304,9 @@ define( require => {
      * @returns {boolean}
      */
     containsElement( element ) {
-      return _.some( this.atoms, atom => { return atom.element === element; } );
+      return _.some( this.atoms, atom => {
+        return atom.element === element;
+      } );
     }
 
     /**
@@ -310,7 +318,9 @@ define( require => {
      * @returns {Bond}
      */
     getBond( a, b ) {
-      const result = _.find( this.bonds, bond => { return bond.contains( a ) && bond.contains( b ); } );
+      const result = _.find( this.bonds, bond => {
+        return bond.contains( a ) && bond.contains( b );
+      } );
       assert && assert( result, 'Could not find bond!' );
       return result;
     }
@@ -421,7 +431,9 @@ define( require => {
      */
     getNeighborsNotInSet( atom, exclusionSet ) {
       // TODO: performance: hashset with fast lookup?
-      return _.filter( this.getNeighbors( atom ), otherAtom => { return !_.includes( exclusionSet, otherAtom ); } );
+      return _.filter( this.getNeighbors( atom ), otherAtom => {
+        return !_.includes( exclusionSet, otherAtom );
+      } );
     }
 
     /**
@@ -432,7 +444,7 @@ define( require => {
      * @param {Atom2}              otherAtom
      * @public
      *
-     * @return {boolean}
+     * @returns {boolean}
      */
     checkEquivalency( other, myVisited, otherVisited, myAtom, otherAtom ) {
       // basically this checks whether two different sub-trees of two different molecules are 'equivalent'
@@ -490,7 +502,9 @@ define( require => {
      */
     getElementList() {
       // return defensive copy. if that is changed, examine all usages
-      return _.map( this.atoms, atom => { return atom.element; } );
+      return _.map( this.atoms, atom => {
+        return atom.element;
+      } );
     }
 
     /*---------------------------------------------------------------------------*
@@ -530,7 +544,7 @@ define( require => {
      * bondSpec --- determined by implementation of bond. does not contain '|' or ','
      * @public
      *
-     * @return
+     * @returns
      */
     toSerial2() {
       let result = '';
@@ -539,7 +553,7 @@ define( require => {
       // write header: # of atoms
       result += this.atoms.length + '|' + this.bonds.length;
       for ( let i = 0; i < this.atoms.length; i++ ) {
-        let atom = this.atoms[ i ];
+        const atom = this.atoms[ i ];
         result += '|' + atom.toString();
         this.bonds.forEach( bond => {
           if ( bond.contains( atom ) ) {
@@ -608,10 +622,18 @@ define( require => {
    * @returns {MoleculeStructure} A completely new molecule with all atoms in A and B, where atom A is joined to atom B
    */
   MoleculeStructure.getCombinedMoleculeFromBond = ( molA, molB, a, b, result ) => {
-    molA.atoms.forEach( atom => { result.addAtom( atom ); } );
-    molB.atoms.forEach( atom => { result.addAtom( atom ); } );
-    molA.bonds.forEach( bond => { result.addBond( bond ); } );
-    molB.bonds.forEach( bond => { result.addBond( bond ); } );
+    molA.atoms.forEach( atom => {
+      result.addAtom( atom );
+    } );
+    molB.atoms.forEach( atom => {
+      result.addAtom( atom );
+    } );
+    molA.bonds.forEach( bond => {
+      result.addBond( bond );
+    } );
+    molB.bonds.forEach( bond => {
+      result.addBond( bond );
+    } );
     result.addBond( new Bond( a, b ) );
     return result;
   };
@@ -749,7 +771,7 @@ define( require => {
       atoms[ i ] = Atom.createAtomFromSymbol( tokens[ idx++ ] );
       structure.addAtom( atoms[ i ] );
     }
-    for ( i = 0; i < bondCount; i++ ) {
+    for ( let i = 0; i < bondCount; i++ ) {
       structure.addBond( atoms[ parseInt( tokens[ idx++ ], 10 ) ], atoms[ parseInt( tokens[ idx++ ], 10 ) ] );
     }
     return structure;

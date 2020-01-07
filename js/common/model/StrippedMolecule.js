@@ -27,7 +27,9 @@ define( require => {
       const bondsToAdd = [];
 
       // copy non-hydrogens
-      const atomsToAdd = _.filter( original.atoms, atom => { return !atom.isHydrogen(); } );
+      const atomsToAdd = _.filter( original.atoms, atom => {
+        return !atom.isHydrogen();
+      } );
 
       /**
        * Array indexed the same way as stripped.atoms for efficiency. It's essentially immutable, so this works
@@ -65,7 +67,7 @@ define( require => {
     /**
      * @private
      *
-     * @return {number}
+     * @returns {number}
      */
     getIndex( atom ) {
       const index = this.stripped.atoms.indexOf( atom );
