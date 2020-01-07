@@ -15,7 +15,6 @@ define( require => {
   const Color = require( 'SCENERY/util/Color' );
   const BAMConstants = require( 'BUILD_A_MOLECULE/common/BAMConstants' );
   const FaceNode = require( 'SCENERY_PHET/FaceNode' );
-  const inherit = require( 'PHET_CORE/inherit' );
   const merge = require( 'PHET_CORE/merge' );
   const Panel = require( 'SUN/Panel' );
   const PhetFont = require( 'SCENERY_PHET/PhetFont' );
@@ -29,57 +28,57 @@ define( require => {
   const youCompletedYourCollectionString = require( 'string!BUILD_A_MOLECULE/youCompletedYourCollection' );
   const nextCollectionString = require( 'string!BUILD_A_MOLECULE/nextCollection' );
 
-  /**
-   * @param {Function} regenerateCallback
-   * @constructor
-   */
-  function AllFilledNode( regenerateCallback, options ) {
-    options = merge( {
-      stroke: 'black',
-      fill: BAMConstants.COMPLETE_BACKGROUND_COLOR,
-      center: BAMConstants.STAGE_SIZE.center,
-      cornerRadius: 0,
-      xMargin: 15,
-      yMargin: 10
-    }, options );
-    const contentVBox = new VBox( { spacing: 5, align: 'center' } );
-    const self = this;
+  class AllFilledNode extends Panel {
+    /**
+     * @param {Function} regenerateCallback
+     * @param {object} options
+     * @constructor
+     */
+    constructor( regenerateCallback, options ) {
+      options = merge( {
+        stroke: 'black',
+        fill: BAMConstants.COMPLETE_BACKGROUND_COLOR,
+        center: BAMConstants.STAGE_SIZE.center,
+        cornerRadius: 0,
+        xMargin: 15,
+        yMargin: 10
+      }, options );
+      const contentVBox = new VBox( { spacing: 5, align: 'center' } );
 
-    // Add smiley face
-    const smiley = new FaceNode( 120 ).smile();
-    contentVBox.addChild( smiley );
+      // Add smiley face
+      const smiley = new FaceNode( 120 ).smile();
+      contentVBox.addChild( smiley );
 
-    // Add text
-    const text = new Text( youCompletedYourCollectionString, {
-      font: new PhetFont( {
-        size: 20,
-        weight: 'bold',
-        maxWidth: BAMConstants.TEXT_MAX_WIDTH
-      } )
-    } );
-    contentVBox.addChild( text );
+      // Add text
+      const text = new Text( youCompletedYourCollectionString, {
+        font: new PhetFont( {
+          size: 20,
+          weight: 'bold',
+          maxWidth: BAMConstants.TEXT_MAX_WIDTH
+        } )
+      } );
+      contentVBox.addChild( text );
 
-    // Add button
-    const button = new TextPushButton( nextCollectionString, {
-      listener: function() {
-        regenerateCallback();
-        self.dispose();
-      },
-      font: new PhetFont( {
-        size: 18,
-        weight: 'bold',
-        maxWidth: BAMConstants.TEXT_MAX_WIDTH
-      } ),
-      baseColor: Color.ORANGE,
-      soundPlayer: Playable.NO_SOUND
-    } );
-    button.touchArea = Shape.bounds( button.localBounds.dilated( 20 ) );
-    contentVBox.addChild( button );
+      // Add button
+      const button = new TextPushButton( nextCollectionString, {
+        listener() {
+          regenerateCallback();
+          self.dispose();
+        },
+        font: new PhetFont( {
+          size: 18,
+          weight: 'bold',
+          maxWidth: BAMConstants.TEXT_MAX_WIDTH
+        } ),
+        baseColor: Color.ORANGE,
+        soundPlayer: Playable.NO_SOUND
+      } );
+      button.touchArea = Shape.bounds( button.localBounds.dilated( 20 ) );
+      contentVBox.addChild( button );
 
-    Panel.call( this, contentVBox, options );
+      super( contentVBox, options );
+    }
   }
 
-  buildAMolecule.register( 'AllFilledNode', AllFilledNode );
-
-  return inherit( Panel, AllFilledNode );
+  return buildAMolecule.register( 'AllFilledNode', AllFilledNode );
 } );
