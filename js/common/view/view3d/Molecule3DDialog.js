@@ -9,49 +9,59 @@
  */
 
 define( require => {
-    'use strict';
+  'use strict';
 
-    // modules
-    const AquaRadioButton = require( 'SUN/AquaRadioButton' );
+  // modules
+  const AquaRadioButton = require( 'SUN/AquaRadioButton' );
   const BAMConstants = require( 'BUILD_A_MOLECULE/common/BAMConstants' );
-    const Bounds2 = require( 'DOT/Bounds2' );
-    const BooleanProperty = require( 'AXON/BooleanProperty' );
-    const buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
-    const Color = require( 'SCENERY/util/Color' );
-    const Dialog = require( 'SUN/Dialog' );
-    const Enumeration = require( 'PHET_CORE/Enumeration' );
-    const EnumerationProperty = require( 'AXON/EnumerationProperty' );
-    const inherit = require( 'PHET_CORE/inherit' );
-    const Matrix3 = require( 'DOT/Matrix3' );
-    const PhetFont = require( 'SCENERY_PHET/PhetFont' );
-    const Playable = require( 'TAMBO/Playable' );
-    const PlayPauseButton = require( 'SCENERY_PHET/buttons/PlayPauseButton' );
-    const PressListener = require( 'SCENERY/listeners/PressListener' );
-    const Property = require( 'AXON/Property' );
-    const Rectangle = require( 'SCENERY/nodes/Rectangle' );
-    const RichText = require( 'SCENERY/nodes/RichText' );
-    const ThreeNode = require( 'MOBIUS/ThreeNode' );
-    const Text = require( 'SCENERY/nodes/Text' );
-    const HBox = require( 'SCENERY/nodes/HBox' );
-    const VBox = require( 'SCENERY/nodes/VBox' );
-    const Vector3 = require( 'DOT/Vector3' );
+  const BooleanProperty = require( 'AXON/BooleanProperty' );
+  const buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
+  const Color = require( 'SCENERY/util/Color' );
+  const Dialog = require( 'SUN/Dialog' );
+  const Enumeration = require( 'PHET_CORE/Enumeration' );
+  const EnumerationProperty = require( 'AXON/EnumerationProperty' );
+  const Matrix3 = require( 'DOT/Matrix3' );
+  const PhetFont = require( 'SCENERY_PHET/PhetFont' );
+  const Playable = require( 'TAMBO/Playable' );
+  const PlayPauseButton = require( 'SCENERY_PHET/buttons/PlayPauseButton' );
+  const PressListener = require( 'SCENERY/listeners/PressListener' );
+  const Property = require( 'AXON/Property' );
+  const Rectangle = require( 'SCENERY/nodes/Rectangle' );
+  const RichText = require( 'SCENERY/nodes/RichText' );
+  const ThreeNode = require( 'MOBIUS/ThreeNode' );
+  const Text = require( 'SCENERY/nodes/Text' );
+  const HBox = require( 'SCENERY/nodes/HBox' );
+  const VBox = require( 'SCENERY/nodes/VBox' );
+  const Vector3 = require( 'DOT/Vector3' );
 
-    // strings
-    const ballAndStickString = require( 'string!BUILD_A_MOLECULE/ballAndStick' ); // eslint-disable-line string-require-statement-match
-    const spaceFillString = require( 'string!BUILD_A_MOLECULE/spaceFilling' ); // eslint-disable-line string-require-statement-match
+  // strings
+  const ballAndStickString = require( 'string!BUILD_A_MOLECULE/ballAndStick' ); // eslint-disable-line string-require-statement-match
+  const spaceFillString = require( 'string!BUILD_A_MOLECULE/spaceFilling' ); // eslint-disable-line string-require-statement-match
 
-    // constants
-    const SIZE = 200;
+  // Used for radio buttons
+  const ViewStyle = Enumeration.byKeys( [ 'SPACE_FILL', 'BALL_AND_STICK' ] );
 
-    // Used for radio buttons
-    const ViewStyle = Enumeration.byKeys( [ 'SPACE_FILL', 'BALL_AND_STICK' ] );
-
+  class Molecule3DDialog extends Dialog {
     /**
      *
      * @param {Property.<CompleteMolecule|null>} completeMoleculeProperty
      * @constructor
      */
-    function Molecule3DDialog( completeMoleculeProperty ) {
+    constructor( completeMoleculeProperty ) {
+      const title = new Text( '', {
+        font: new PhetFont( 28 ),
+        fill: 'white'
+      } );
+      // Holds all of the content within the dialog. Dialog needs to be sized to content before content is added.
+      const contentWrapper = new Rectangle( 0, 0, 350, 275, { background: 'white' } );
+      const contentVBox = new VBox( { children: [ contentWrapper ], spacing: 12 } );
+
+      super( contentVBox, {
+        fill: 'black',
+        xAlign: 'center',
+        title: title,
+        resize: false
+      } );
 
       // @public {BooleanProperty} Property used for playing/pausing a rotating molecule
       this.isPlayingProperty = new BooleanProperty( true );
@@ -69,26 +79,12 @@ define( require => {
         font: new PhetFont( 18 ),
         fill: '#bbb'
       } );
-      const title = new Text( '', {
-        font: new PhetFont( 28 ),
-        fill: 'white'
-      } );
+
       completeMoleculeProperty.link( completeMolecule => {
         if ( completeMolecule ) {
           title.setText( completeMolecule.getDisplayName() );
           formulaText.setText( completeMolecule.getGeneralFormulaFragment() );
         }
-      } );
-
-      // Holds all of the content within the dialog. Dialog needs to be sized to content before content is added.
-      const contentWrapper = new Rectangle( 0, 0, 350, 275, { background: 'white' } );
-      const contentVBox = new VBox( { children: [ contentWrapper ], spacing: 12 } );
-
-      Dialog.call( this, contentVBox, {
-        fill: 'black',
-        xAlign: 'center',
-        title: title,
-        resize: false
       } );
 
       const viewStyleProperty = new EnumerationProperty( ViewStyle, ViewStyle.SPACE_FILL );
@@ -244,48 +240,37 @@ define( require => {
       moleculeNode.addInputListener( pressListener );
     }
 
-    buildAMolecule.register( 'Molecule3DDialog', Molecule3DDialog );
 
-    return inherit( Dialog, Molecule3DDialog, {
-      getLocalCanvasBounds: function() {
-        const centerX = this.center;
-        const centerY = this.center;
-        return new Bounds2( centerX - SIZE, centerY - SIZE, centerX + SIZE, centerY + SIZE );
-      },
+    /**
+     * @param dt
+     * @public
+     */
+    step( dt ) {
+      if ( this.isPlayingProperty.value && !this.userControlledProperty.value ) {
 
-      getGlobalCanvasBounds: function( view ) {
-        return view.localToGlobalBounds( this.getLocalCanvasBounds() ).roundedOut();
-      },
-
-      /**
-       *
-       * @param dt
-       * @public
-       */
-      step: function( dt ) {
-        if ( this.isPlayingProperty.value && !this.userControlledProperty.value ) {
-
-          // Define a quaternion that is offset by a rotation determined by theta.
-          // Multiply the rotated quaternion by the previous quaternion of the THREE object and render it with its new
-          // quaternion
-          const theta = Math.PI / 6 * dt;
-          const newQuaternion = new THREE.Quaternion();
-          newQuaternion.setFromAxisAngle( new THREE.Vector3( 0, 1, 0 ), theta );
-          newQuaternion.multiply( this.quaternionProperty.value );
-          this.quaternionProperty.value = newQuaternion;
-        }
-        this.render();
-      },
-
-      /**
-       * Render the molecule node scene
-       *
-       * @public
-       */
-      render: function() {
-        this.moleculeNode.layout();
-        this.moleculeNode.render( undefined );
+        // Define a quaternion that is offset by a rotation determined by theta.
+        // Multiply the rotated quaternion by the previous quaternion of the THREE object and render it with its new
+        // quaternion
+        const theta = Math.PI / 6 * dt;
+        const newQuaternion = new THREE.Quaternion();
+        newQuaternion.setFromAxisAngle( new THREE.Vector3( 0, 1, 0 ), theta );
+        newQuaternion.multiply( this.quaternionProperty.value );
+        this.quaternionProperty.value = newQuaternion;
       }
-    } );
+      this.render();
+    }
+
+    /**
+     * Render the molecule node scene
+     *
+     * @private
+     */
+    render() {
+      this.moleculeNode.layout();
+      this.moleculeNode.render( undefined );
+    }
   }
-);
+
+  return buildAMolecule.register( 'Molecule3DDialog', Molecule3DDialog );
+
+} );
