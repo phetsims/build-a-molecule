@@ -15,7 +15,6 @@ define( require => {
   const buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   const CollectionBox = require( 'BUILD_A_MOLECULE/common/model/CollectionBox' );
   const CollectionBoxNode = require( 'BUILD_A_MOLECULE/common/view/CollectionBoxNode' );
-  const inherit = require( 'PHET_CORE/inherit' );
   const MoleculeList = require( 'BUILD_A_MOLECULE/common/model/MoleculeList' );
   const PhetFont = require( 'SCENERY_PHET/PhetFont' );
   const RichText = require( 'SCENERY/nodes/RichText' );
@@ -24,44 +23,42 @@ define( require => {
   // strings
   const collectionSinglePatternString = require( 'string!BUILD_A_MOLECULE/collectionSinglePattern' );
 
-  /**
-   * @param {CollectionBox} box
-   * @param {function} toModelBounds
-   * @param {function} showDialogCallback
-   *
-   * @constructor
-   */
-  function SingleCollectionBoxNode( box, toModelBounds, showDialogCallback ) {
-    CollectionBoxNode.call( this, box, toModelBounds, showDialogCallback );
-    assert && assert( box.capacity === 1 );
-    this.addChild( new RichText( StringUtils.fillIn( collectionSinglePatternString,
-      {
-        general: box.moleculeType.getGeneralFormulaFragment(),
-        display: box.moleculeType.getDisplayName()
-      }, {
-        font: new PhetFont( {
-          size: 15,
-          weight: 'bold'
-        } ),
-        maxWidth: BAMConstants.TEXT_MAX_WIDTH
-      }
-    ), { maxWidth: BAMConstants.TEXT_MAX_WIDTH } ) );
+  class SingleCollectionBoxNode extends CollectionBoxNode {
+
+    /**
+     * @param {CollectionBox} box
+     * @param {function} toModelBounds
+     * @param {function} showDialogCallback
+     *
+     */
+    constructor( box, toModelBounds, showDialogCallback ) {
+      super( box, toModelBounds, showDialogCallback );
+      assert && assert( box.capacity === 1 );
+      this.addChild( new RichText( StringUtils.fillIn( collectionSinglePatternString,
+        {
+          general: box.moleculeType.getGeneralFormulaFragment(),
+          display: box.moleculeType.getDisplayName()
+        }, {
+          font: new PhetFont( {
+            size: 15,
+            weight: 'bold'
+          } ),
+          maxWidth: BAMConstants.TEXT_MAX_WIDTH
+        }
+      ), { maxWidth: BAMConstants.TEXT_MAX_WIDTH } ) );
+    }
   }
-
-  buildAMolecule.register( 'SingleCollectionBoxNode', SingleCollectionBoxNode );
-
-  inherit( CollectionBoxNode, SingleCollectionBoxNode );
 
   /*---------------------------------------------------------------------------*
    * precomputation of largest single collection box size
    *----------------------------------------------------------------------------*/
   let maxBounds = Bounds2.NOTHING;
 
-  MoleculeList.collectionBoxMolecules.forEach( function( molecule ) {
+  MoleculeList.collectionBoxMolecules.forEach( molecule => {
     // fake boxes
     const boxBounds = new SingleCollectionBoxNode(
       new CollectionBox( molecule, 1, { initializeAudio: false } ),
-      function( node ) {
+      node => {
         return node.bounds;
       },
       () => {} ).bounds;
@@ -72,5 +69,5 @@ define( require => {
   SingleCollectionBoxNode.maxWidth = maxBounds.width;
   SingleCollectionBoxNode.maxHeight = maxBounds.height;
 
-  return SingleCollectionBoxNode;
+  return buildAMolecule.register( 'SingleCollectionBoxNode', SingleCollectionBoxNode );
 } );

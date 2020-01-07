@@ -16,7 +16,6 @@ define( require => {
   const buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   const CollectionBox = require( 'BUILD_A_MOLECULE/common/model/CollectionBox' );
   const CollectionBoxNode = require( 'BUILD_A_MOLECULE/common/view/CollectionBoxNode' );
-  const inherit = require( 'PHET_CORE/inherit' );
   const MoleculeList = require( 'BUILD_A_MOLECULE/common/model/MoleculeList' );
   const PhetFont = require( 'SCENERY_PHET/PhetFont' );
   const RichText = require( 'SCENERY/nodes/RichText' );
@@ -27,51 +26,49 @@ define( require => {
   const collectionMultipleQuantityEmptyString = require( 'string!BUILD_A_MOLECULE/collectionMultipleQuantityEmpty' );
   const collectionMultipleQuantityPatternString = require( 'string!BUILD_A_MOLECULE/collectionMultipleQuantityPattern' );
 
-  /**
-   * @param {CollectionBox} box
-   * @param {function} toModelBounds
-   * @param {function} showDialogCallback
-   *
-   * @constructor
-   */
-  function MultipleCollectionBoxNode( box, toModelBounds, showDialogCallback ) {
-    CollectionBoxNode.call( this, box, toModelBounds, showDialogCallback );
+  class MultipleCollectionBoxNode extends CollectionBoxNode {
+    /**
+     * @param {CollectionBox} box
+     * @param {function} toModelBounds
+     * @param {function} showDialogCallback
+     *
+     */
+    constructor( box, toModelBounds, showDialogCallback ) {
+      super( box, toModelBounds, showDialogCallback );
 
-    this.addChild( new RichText( StringUtils.fillIn( collectionMultipleGoalPatternString, {
-      number: box.capacity,
-      formula: box.moleculeType.getGeneralFormulaFragment()
-    } ), {
-      font: new PhetFont( {
-        size: 15,
-        weight: 'bold'
-      } ),
-      maxWidth: BAMConstants.TEXT_MAX_WIDTH
-    } ) );
+      this.addChild( new RichText( StringUtils.fillIn( collectionMultipleGoalPatternString, {
+        number: box.capacity,
+        formula: box.moleculeType.getGeneralFormulaFragment()
+      } ), {
+        font: new PhetFont( {
+          size: 15,
+          weight: 'bold'
+        } ),
+        maxWidth: BAMConstants.TEXT_MAX_WIDTH
+      } ) );
 
-    const quantityNode = new RichText( '', {
-      font: new PhetFont( {
-        size: 14
-      } ),
-      maxWidth: BAMConstants.TEXT_MAX_WIDTH
-    } );
+      const quantityNode = new RichText( '', {
+        font: new PhetFont( {
+          size: 14
+        } ),
+        maxWidth: BAMConstants.TEXT_MAX_WIDTH
+      } );
 
-    box.quantityProperty.link( function( quantity ) {
-      if ( quantity === 0 ) {
-        quantityNode.text = collectionMultipleQuantityEmptyString;
-      }
-      else {
-        quantityNode.text = StringUtils.fillIn( collectionMultipleQuantityPatternString, {
-          number: quantity,
-          formula: box.moleculeType.getGeneralFormulaFragment()
-        } );
-      }
-    } );
+      box.quantityProperty.link( quantity => {
+        if ( quantity === 0 ) {
+          quantityNode.text = collectionMultipleQuantityEmptyString;
+        }
+        else {
+          quantityNode.text = StringUtils.fillIn( collectionMultipleQuantityPatternString, {
+            number: quantity,
+            formula: box.moleculeType.getGeneralFormulaFragment()
+          } );
+        }
+      } );
 
-    this.addChild( quantityNode );
+      this.addChild( quantityNode );
+    }
   }
-  buildAMolecule.register( 'MultipleCollectionBoxNode', MultipleCollectionBoxNode );
-
-  inherit( CollectionBoxNode, MultipleCollectionBoxNode );
 
   /*---------------------------------------------------------------------------*
    * precomputation of largest single collection box size
@@ -79,11 +76,11 @@ define( require => {
   // TODO: simplify this code from single/multiple into one
   let maxBounds = Bounds2.NOTHING;
 
-  MoleculeList.collectionBoxMolecules.forEach( function( molecule ) {
+  MoleculeList.collectionBoxMolecules.forEach( molecule => {
     // fake boxes
     const boxBounds = new MultipleCollectionBoxNode(
       new CollectionBox( molecule, 1, { initializeAudio: false } ),
-      function( node ) {
+      node => {
         return node.bounds;
       },
       () => {} ).bounds;
@@ -94,5 +91,5 @@ define( require => {
   MultipleCollectionBoxNode.maxWidth = maxBounds.width;
   MultipleCollectionBoxNode.maxHeight = maxBounds.height;
 
-  return MultipleCollectionBoxNode;
+  return buildAMolecule.register( 'MultipleCollectionBoxNode', MultipleCollectionBoxNode );
 } );
