@@ -26,7 +26,7 @@ define( require => {
     /**
      * @param {Kit} kit
      * @param {Bounds2} viewSwipeBounds
-     * @param {MoleculeCollectingView} view
+     * @param {MoleculeCollectingScreenView} view
      * @constructor
      */
     constructor( kit, viewSwipeBounds, view ) {

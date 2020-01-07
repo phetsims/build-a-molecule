@@ -19,7 +19,7 @@ define( require => {
   class KitCollectionNode extends Node {
     /**
      * @param {KitCollection} collection
-     * @param {MoleculeCollectingView} view
+     * @param {MoleculeCollectingScreenView} view
      * @param {boolean} isCollectingView
      * @constructor
      */

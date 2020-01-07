@@ -30,9 +30,9 @@ define( require => {
   class KitView extends Node {
     /**
      * @param {Kit} kit
-     * @param {MoleculeCollectingView} moleculeCollectingView
+     * @param {MoleculeCollectingScreenView} moleculeCollectingScreenView
      */
-    constructor( kit, moleculeCollectingView ) {
+    constructor( kit, moleculeCollectingScreenView ) {
       super();
 
       this.kit = kit;
@@ -108,7 +108,7 @@ define( require => {
         // bucketHole.addInputListener( {
         //   down: function( event ) {
         //     // coordinate transforms to get our atom
-        //     var viewPoint = moleculeCollectingView.globalToLocalPoint( event.pointer.point );
+        //     var viewPoint = moleculeCollectingScreenView.globalToLocalPoint( event.pointer.point );
         //     var modelPoint = BAMConstants.MODEL_VIEW_TRANSFORM.viewToModelPosition( viewPoint );
         //     var atom = this.closestAtom( modelPoint, Number.POSITIVE_INFINITY, bucket.element ); // filter by the element
         //
@@ -165,11 +165,11 @@ define( require => {
           atomNode.addInputListener( DragListener.createForwardingListener( event => {
 
             // Adjust position of atom
-            const viewPoint = moleculeCollectingView.globalToLocalPoint( event.pointer.point );
+            const viewPoint = moleculeCollectingScreenView.globalToLocalPoint( event.pointer.point );
             atom.positionProperty.value = BAMConstants.MODEL_VIEW_TRANSFORM.viewToModelPosition( viewPoint );
 
             // Add new atom to the play area.
-            const currentKit = moleculeCollectingView.kitCollectionList.currentCollectionProperty.value.currentKitProperty.value;
+            const currentKit = moleculeCollectingScreenView.kitCollectionList.currentCollectionProperty.value.currentKitProperty.value;
             currentKit.atomsInPlayArea.push( atom );
 
             // Handle removing particles from bucket
@@ -180,7 +180,7 @@ define( require => {
               atom.inBucketProperty.value = false;
 
               // Get reference to atomNode and call the dragListener
-              const atomNode = moleculeCollectingView.kitPlayAreaNode.atomNodeMap[ atom.id ];
+              const atomNode = moleculeCollectingScreenView.kitPlayAreaNode.atomNodeMap[ atom.id ];
 
               // REVIEW: KitPlayAreaNode is missing elements its atomNodeMap after completed collection.
               if ( atomNode ) {

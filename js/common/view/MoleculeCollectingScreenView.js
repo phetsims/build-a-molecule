@@ -17,7 +17,7 @@ define( require => {
   const CollectionPanel = require( 'BUILD_A_MOLECULE/common/view/CollectionPanel' );
   const Vector2 = require( 'DOT/Vector2' );
 
-  class MoleculeCollectingView extends BAMScreenView {
+  class MoleculeCollectingScreenView extends BAMScreenView {
     /**
      * @param {KitCollectionList} kitCollectionList
      * @param {boolean} isSingleCollectionMode
@@ -95,6 +95,6 @@ define( require => {
     }
   }
 
-  return buildAMolecule.register( 'MoleculeCollectingView', MoleculeCollectingView );
+  return buildAMolecule.register( 'MoleculeCollectingScreenView', MoleculeCollectingScreenView );
 
 } );

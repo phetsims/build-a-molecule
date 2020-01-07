@@ -18,7 +18,7 @@ define( require => {
   const Kit = require( 'BUILD_A_MOLECULE/common/model/Kit' );
   const KitCollection = require( 'BUILD_A_MOLECULE/common/model/KitCollection' );
   const CollectionLayout = require( 'BUILD_A_MOLECULE/common/model/CollectionLayout' );
-  const MoleculeCollectingView = require( 'BUILD_A_MOLECULE/common/view/MoleculeCollectingView' );
+  const MoleculeCollectingScreenView = require( 'BUILD_A_MOLECULE/common/view/MoleculeCollectingScreenView' );
   const MoleculeList = require( 'BUILD_A_MOLECULE/common/model/MoleculeList' );
   const Rectangle = require( 'SCENERY/nodes/Rectangle' );
 
@@ -66,7 +66,7 @@ define( require => {
         // createKitCollection
         model => {
           // create the view
-          return new MoleculeCollectingView( model, false, () => {
+          return new MoleculeCollectingScreenView( model, false, () => {
             // next collection callback
             model.addCollection( BAMScreen.generateKitCollection( true, 4, model.stepEmitter, model.collectionLayout ), true );
           } );
