@@ -1,4 +1,4 @@
-// Copyright 2013-2019, University of Colorado Boulder
+// Copyright 2020, University of Colorado Boulder
 
 /**
  * Stores multiple instances of a single type of molecule. Keeps track of quantity, and has a desired capacity.

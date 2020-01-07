@@ -1,4 +1,4 @@
-// Copyright 2019, University of Colorado Boulder
+// Copyright 2020, University of Colorado Boulder
 
 /**
  * Node canvas for Build a Molecule. It features kits shown at the bottom. Can be extended to add other parts
