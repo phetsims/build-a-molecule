@@ -15,14 +15,13 @@ define( require => {
 
   // modules
   const Arc = require( 'KITE/segments/Arc' );
+  const BooleanProperty = require( 'AXON/BooleanProperty' );
   const Bounds3 = require( 'DOT/Bounds3' );
   const buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   const Color = require( 'SCENERY/util/Color' );
   const DOM = require( 'SCENERY/nodes/DOM' );
   const EllipticalArc = require( 'KITE/segments/EllipticalArc' );
-  const inherit = require( 'PHET_CORE/inherit' );
   const Matrix3 = require( 'DOT/Matrix3' );
-  const Property = require( 'AXON/Property' );
   const Quaternion = require( 'DOT/Quaternion' );
   const Utils = require( 'SCENERY/util/Utils' );
   const Vector2 = require( 'DOT/Vector2' );
@@ -31,132 +30,299 @@ define( require => {
   // constants
   const GRAB_INITIAL_TRANSFORMS = false; // debug flag, specifies whether master transforms are tracked and printed to determine "pretty" setup transformations
 
-  function to3d( atom ) {
-    const v = new Vector3( atom.x3d, atom.y3d, atom.z3d ).times( 75 ); // similar to picometers from angstroms? hopefully?
-    v.element = atom.element;
-    v.covalentRadius = atom.element.covalentRadius;
-    v.color = atom.element.color;
-    return v;
-  }
-
-  function ellipticalArcCut( ra, rb, d, theta ) {
-    if ( theta > Math.PI / 2 ) {
-      // other one is in front, bail!
-    }
-
-    // 2d circle-circle intersection point (ix,iy)
-    const ix = ( d * d + ra * ra - rb * rb ) / ( 2 * d );
-    const ixnorm = ix * ix / ( ra * ra );
-    if ( ixnorm > 1 ) {
-      // one contains the other
-      return null;
-    }
-    const iy = ra * Math.sqrt( 1 - ixnorm );
-
-    // elliptical arc center
-    const cx = ix * Math.sin( theta );
-    const cy = 0;
-
-    // elliptical semi-minor/major axes
-    const rx = iy * Math.cos( theta );
-    const ry = iy;
-
-    const cutoffTheta = Math.atan2( ix, iy ); // yes, tan( ix/iy ) converts to this, don't let your instincts tell you otherwise
-
-    if ( theta < cutoffTheta - 1e-7 ) {
-      // no arc needed
-      return null;
-    }
-
-    const nx = ix / ( ra * Math.sin( theta ) );
-
-    // start angle for our elliptical arc (from our ra circle's parametric frame)
-    const psi = Math.acos( nx );
-
-    // start angle for our elliptical arc (from the elliptical arc's parametric frame)
-    const alpha = Math.atan2( ra * Math.sqrt( 1 - nx * nx ) / ry, ( ra * nx - cx ) / rx );
-
-    assert && assert( isFinite( rx ) );
-
-    //REVIEW: Maybe work this out with JO (Not the best example of documentation)
-    return {
-      ix: ix,
-      iy: iy,
-      cx: cx,
-      cy: cy,
-      rx: rx,
-      ry: ry,
-      nx: nx,
-      psi: psi,
-      alpha: alpha
-    };
-  }
-
-  //REVIEW: Note that this may change significantly if we go with a three.js/webgl solution
-  function Molecule3DNode( completeMolecule, initialBounds, useHighRes ) {
-    const self = this;
-
-    this.draggingProperty = new Property( false );
-
-    // prepare the canvas
-    this.canvas = document.createElement( 'canvas' );
-    this.context = this.canvas.getContext( '2d' );
-    this.backingScale = useHighRes ? Utils.backingScale( this.context ) : 1;
-    this.canvas.className = 'canvas-3d';
-    this.canvas.style.position = 'absolute';
-    this.canvas.style.left = '0';
-    this.canvas.style.top = '0';
-    this.setMoleculeCanvasBounds( initialBounds );
-
-    // construct ourself with the canvas (now properly initially sized)
-    DOM.call( this, this.canvas, {
-      preventTransform: true
-    } );
-
-    // map the atoms into our enhanced format
-    this.currentAtoms = completeMolecule.atoms.map( to3d );
-
-    // center the bounds of the atoms
-    const bounds3 = Bounds3.NOTHING.copy();
-    this.currentAtoms.forEach( function( atom ) {
-      bounds3.includeBounds( new Bounds3( atom.x - atom.covalentRadius, atom.y - atom.covalentRadius,
-        atom.z - atom.covalentRadius, atom.x + atom.covalentRadius, atom.y + atom.covalentRadius,
-        atom.z + atom.covalentRadius ) );
-    } );
-    const center3 = bounds3.center;
-    if ( center3.magnitude ) {
-      this.currentAtoms.forEach( function( atom ) {
-        atom.subtract( center3 );
+  class Molecule3DNode extends DOM {
+    //REVIEW: Note that this may change significantly if we go with a three.js/webgl solution
+    /**
+     * @param {CompleteMolecule} completeMolecule
+     * @param {Bounds2} initialBounds
+     * @param {boolean} useHighRes
+     */
+    constructor( completeMolecule, initialBounds, useHighRes ) {
+      // construct ourself with the canvas (now properly initially sized)
+      const canvas = document.createElement( 'canvas' );
+      super( canvas, {
+        preventTransform: true
       } );
+
+      // @private {BooleanProperty}
+      this.draggingProperty = new BooleanProperty( false );
+
+      // prepare the canvas
+      this.canvas = canvas;
+      this.context = this.canvas.getContext( '2d' );
+      this.backingScale = useHighRes ? Utils.backingScale( this.context ) : 1;
+      this.canvas.className = 'canvas-3d';
+      this.canvas.style.position = 'absolute';
+      this.canvas.style.left = '0';
+      this.canvas.style.top = '0';
+      this.setMoleculeCanvasBounds( initialBounds );
+
+      // map the atoms into our enhanced format
+      this.currentAtoms = completeMolecule.atoms.map( atom => {
+        const v = new Vector3( atom.x3d, atom.y3d, atom.z3d ).times( 75 ); // similar to picometers from angstroms? hopefully?
+        v.element = atom.element;
+        v.covalentRadius = atom.element.covalentRadius;
+        v.color = atom.element.color;
+        return v;
+      } );
+
+      // center the bounds of the atoms
+      const bounds3 = Bounds3.NOTHING.copy();
+      this.currentAtoms.forEach( atom => {
+        bounds3.includeBounds( new Bounds3( atom.x - atom.covalentRadius, atom.y - atom.covalentRadius,
+          atom.z - atom.covalentRadius, atom.x + atom.covalentRadius, atom.y + atom.covalentRadius,
+          atom.z + atom.covalentRadius ) );
+      } );
+      const center3 = bounds3.center;
+      if ( center3.magnitude ) {
+        this.currentAtoms.forEach( atom => {
+          atom.subtract( center3 );
+        } );
+      }
+
+      // compute our outer bounds so we can properly scale our transform to fit
+      let maxTotalRadius = 0;
+      this.currentAtoms.forEach( atom => {
+        maxTotalRadius = Math.max( maxTotalRadius, atom.magnitude + atom.covalentRadius );
+      } );
+      this.maxTotalRadius = maxTotalRadius;
+
+      const gradientMap = {}; // element symbol => gradient
+      this.currentAtoms.forEach( atom => {
+        if ( !gradientMap[ atom.element.symbol ] ) {
+          gradientMap[ atom.element.symbol ] = this.createGradient( atom.element );
+        }
+      } );
+      this.gradientMap = gradientMap;
+      this.dragging = false;
+      this.lastPosition = Vector2.ZERO;
+      this.currentPosition = Vector2.ZERO;
+
+      if ( GRAB_INITIAL_TRANSFORMS ) {
+        this.masterMatrix = Matrix3.identity();
+      }
     }
 
-    // compute our outer bounds so we can properly scale our transform to fit
-    let maxTotalRadius = 0;
-    this.currentAtoms.forEach( function( atom ) {
-      maxTotalRadius = Math.max( maxTotalRadius, atom.magnitude + atom.covalentRadius );
-    } );
-    this.maxTotalRadius = maxTotalRadius;
+    /**
+     * @param {Element} element
+     * @private
+     *
+     * @returns {*}
+     */
+    createGradient( element ) {
+      const gCenter = new Vector2( -element.covalentRadius / 5, -element.covalentRadius / 5 );
+      const fullRadius = gCenter.minus( new Vector2( 1, 1 ).normalized().times( element.covalentRadius ) ).magnitude;
+      const gradientFill = this.context.createRadialGradient( gCenter.x, gCenter.y, 0, gCenter.x, gCenter.y, fullRadius );
 
-    const gradientMap = {}; // element symbol => gradient
-    this.currentAtoms.forEach( function( atom ) {
-      if ( !gradientMap[ atom.element.symbol ] ) {
-        gradientMap[ atom.element.symbol ] = self.createGradient( atom.element );
+      const baseColor = new Color( element.color );
+      gradientFill.addColorStop( 0, baseColor.colorUtilsBrighter( 0.5 ).toCSS() );
+      gradientFill.addColorStop( 0.08, baseColor.colorUtilsBrighter( 0.2 ).toCSS() );
+      gradientFill.addColorStop( 0.4, baseColor.colorUtilsDarker( 0.1 ).toCSS() );
+      gradientFill.addColorStop( 0.8, baseColor.colorUtilsDarker( 0.4 ).toCSS() );
+      gradientFill.addColorStop( 0.95, baseColor.colorUtilsDarker( 0.6 ).toCSS() );
+      gradientFill.addColorStop( 1, baseColor.colorUtilsDarker( 0.4 ).toCSS() );
+      return gradientFill;
+    }
+
+    /**
+     * @param {number} ra
+     * @param {number} rb
+     * @param {number} d
+     * @param {number} theta
+     * @returns {*}
+     */
+    ellipticalArcCut( ra, rb, d, theta ) {
+      if ( theta > Math.PI / 2 ) {
+        // other one is in front, bail!
       }
-    } );
-    this.gradientMap = gradientMap;
 
-    this.dragging = false;
+      // 2d circle-circle intersection point (ix,iy)
+      const ix = ( d * d + ra * ra - rb * rb ) / ( 2 * d );
+      const ixnorm = ix * ix / ( ra * ra );
+      if ( ixnorm > 1 ) {
+        // one contains the other
+        return null;
+      }
+      const iy = ra * Math.sqrt( 1 - ixnorm );
 
-    this.lastPosition = Vector2.ZERO;
-    this.currentPosition = Vector2.ZERO;
+      // elliptical arc center
+      const cx = ix * Math.sin( theta );
+      const cy = 0;
 
-    if ( GRAB_INITIAL_TRANSFORMS ) {
-      this.masterMatrix = Matrix3.identity();
+      // elliptical semi-minor/major axes
+      const rx = iy * Math.cos( theta );
+      const ry = iy;
+
+      const cutoffTheta = Math.atan2( ix, iy ); // yes, tan( ix/iy ) converts to this, don't let your instincts tell you otherwise
+
+      if ( theta < cutoffTheta - 1e-7 ) {
+        // no arc needed
+        return null;
+      }
+
+      const nx = ix / ( ra * Math.sin( theta ) );
+
+      // start angle for our elliptical arc (from our ra circle's parametric frame)
+      const psi = Math.acos( nx );
+
+      // start angle for our elliptical arc (from the elliptical arc's parametric frame)
+      const alpha = Math.atan2( ra * Math.sqrt( 1 - nx * nx ) / ry, ( ra * nx - cx ) / rx );
+
+      assert && assert( isFinite( rx ) );
+
+      //REVIEW: Maybe work this out with JO (Not the best example of documentation)
+      return {
+        ix: ix,
+        iy: iy,
+        cx: cx,
+        cy: cy,
+        rx: rx,
+        ry: ry,
+        nx: nx,
+        psi: psi,
+        alpha: alpha
+      };
+    }
+
+    /**
+     * @public
+     *
+     * @return
+     */
+    draw() {
+      const canvas = this.canvas;
+      const context = this.context;
+
+      const width = canvas.width;
+      const height = canvas.height;
+      const midX = width / 2;
+      const midY = height / 2;
+      context.setTransform( 1, 0, 0, 1, 0, 0 );
+      context.clearRect( 0, 0, width, height );
+      const bigScale = width / this.maxTotalRadius / 2.5;
+      context.setTransform( bigScale, 0, 0, bigScale, midX - bigScale * midX, midY - bigScale * midY );
+
+      const atoms = _.sortBy( this.currentAtoms, v => {
+        return v.z;
+      } );
+
+      for ( let i = 0; i < atoms.length; i++ ) {
+        const atom = atoms[ i ];
+
+        let arcs = [];
+
+        // check each atom behind this one for occlusion
+        for ( let k = 0; k < i; k++ ) {
+          const otherAtom = atoms[ k ];
+
+          const delta = otherAtom.minus( atom );
+          const d = delta.magnitude;
+          if ( d < atom.covalentRadius + otherAtom.covalentRadius - 1e-7 ) {
+            const theta = delta.angleBetween( new Vector3( 0, 0, -1 ) );
+            const arcData = this.ellipticalArcCut( atom.covalentRadius, otherAtom.covalentRadius, d, theta );
+            if ( arcData ) {
+
+              // angle to center of ellipse
+              const phi = Math.atan2( delta.y, delta.x );
+              const center = new Vector2( arcData.cx, arcData.cy ).rotated( phi );
+              arcs.push( {
+                center: center,
+                rx: arcData.rx,
+                ry: arcData.ry,
+                rotation: phi,
+                circleStart: phi - arcData.psi,
+                circleEnd: phi + arcData.psi,
+                ellipseStart: -arcData.alpha,
+                ellipseEnd: arcData.alpha
+              } );
+            }
+          }
+        }
+        arcs = _.sortBy( arcs, arc => {
+          return arc.circleStart;
+        } );
+
+        context.save();
+        context.translate( midX + atom.x, midY + atom.y );
+        context.beginPath();
+        var arc;
+        var ellipticalArc;
+        if ( arcs.length ) {
+          for ( let j = 0; j < arcs.length; j++ ) {
+            ellipticalArc = new EllipticalArc( arcs[ j ].center,
+              arcs[ j ].rx, arcs[ j ].ry,
+              arcs[ j ].rotation,
+              arcs[ j ].ellipseStart, arcs[ j ].ellipseEnd, false );
+            const atEnd = j + 1 === arcs.length;
+            arc = new Arc( Vector2.ZERO, atom.covalentRadius, arcs[ j ].circleEnd, atEnd ? ( arcs[ 0 ].circleStart + Math.PI * 2 ) : arcs[ j + 1 ].circleStart, false );
+            ellipticalArc.writeToContext( context );
+            arc.writeToContext( context );
+          }
+        }
+        else {
+          arc = new Arc( Vector2.ZERO, atom.covalentRadius, 0, Math.PI * 2, false );
+          arc.writeToContext( context );
+        }
+
+        context.fillStyle = this.gradientMap[ atom.element.symbol ];
+        context.fill();
+        context.restore();
+      }
+    }
+
+    /**
+     * @param timeElapsed
+     * @public
+     */
+    tick( timeElapsed ) {
+      let matrix;
+      if ( !this.dragging && this.currentPosition.equals( this.lastPosition ) ) {
+        matrix = Matrix3.rotationY( timeElapsed );
+      }
+      else {
+        // TODO: WARNING: test high-res on iPad, this may be a bug here (includes scaled-up version!)
+        const correctScale = 4 / this.canvas.width;
+        const delta = this.currentPosition.minus( this.lastPosition );
+        const quat = Quaternion.fromEulerAngles(
+          -delta.y * correctScale, // yaw
+          delta.x * correctScale,  // roll
+          0                        // pitch
+        );
+        matrix = quat.toRotationMatrix();
+        this.lastPosition = this.currentPosition;
+      }
+      this.transformMolecule( matrix );
+      this.draw();
+    }
+
+    /**
+     *
+     * @param {Matrix3} matrix
+     * @public
+     */
+    transformMolecule( matrix ) {
+      this.currentAtoms.forEach( atom => {
+        matrix.multiplyVector3( atom );
+      } );
+      if ( GRAB_INITIAL_TRANSFORMS ) {
+        this.masterMatrix = matrix.timesMatrix( this.masterMatrix );
+      }
+    }
+
+    /**
+     * @param {Bounds2} globalBounds
+     * @private
+     */
+    setMoleculeCanvasBounds( globalBounds ) {
+      this.canvas.width = globalBounds.width * this.backingScale;
+      this.canvas.height = globalBounds.height * this.backingScale;
+      this.canvas.style.width = globalBounds.width + 'px';
+      this.canvas.style.height = globalBounds.height + 'px';
+      this.canvas.style.left = globalBounds.x + 'px';
+      this.canvas.style.top = globalBounds.y + 'px';
     }
   }
-  buildAMolecule.register( 'Molecule3DNode', Molecule3DNode );
 
-  // TODO: CH3Cl, CH3F, CH2O, H2O2, CH4, SiH4?, PH3?, BH3!!!
   Molecule3DNode.initialTransforms = {
     'H2O': Matrix3.createFromPool( 0.181499678570479, -0.7277838769374022, -0.6613535326501101,
       0.7878142178395282, 0.5101170681131106, -0.34515117700738,
@@ -190,184 +356,7 @@ define( require => {
       -0.6262443240885491, 0.43887124237095504, 0.6443679687621515 )
   };
 
-  return inherit( DOM, Molecule3DNode, {
-    initializeDrag: function( target ) {
-      const self = this;
 
-      var dragListener = {
-        up: function( event ) {
-          self.dragging = false;
-          event.pointer.removeInputListener( dragListener );
-          event.handle();
-          self.draggingProperty.set( false );
-          if ( GRAB_INITIAL_TRANSFORMS ) {
-            console.log( self.masterMatrix.toString() );
-          }
-        },
+  return buildAMolecule.register( 'Molecule3DNode', Molecule3DNode );
 
-        cancel: function( event ) {
-          self.dragging = false;
-          event.pointer.removeInputListener( dragListener );
-          self.draggingProperty.set( false );
-        },
-
-        move: function( event ) {
-          self.currentPosition = event.pointer.point.copy();
-        }
-      };
-      target.addInputListener( {
-        up: function( event ) {
-          event.handle();
-        },
-
-        down: function( event ) {
-          if ( !self.dragging ) {
-            self.dragging = true;
-            self.lastPosition = self.currentPosition = event.pointer.point.copy();
-            event.pointer.addInputListener( dragListener );
-            self.draggingProperty.set( true );
-          }
-        }
-      } );
-    },
-
-    createGradient: function( element ) {
-      // var covalentDiameter = element.covalentRadius * 2;
-      const gCenter = new Vector2( -element.covalentRadius / 5, -element.covalentRadius / 5 );
-      const fullRadius = gCenter.minus( new Vector2( 1, 1 ).normalized().times( element.covalentRadius ) ).magnitude;
-      const gradientFill = this.context.createRadialGradient( gCenter.x, gCenter.y, 0, gCenter.x, gCenter.y, fullRadius );
-
-      const baseColor = new Color( element.color );
-      gradientFill.addColorStop( 0, baseColor.colorUtilsBrighter( 0.5 ).toCSS() );
-      gradientFill.addColorStop( 0.08, baseColor.colorUtilsBrighter( 0.2 ).toCSS() );
-      gradientFill.addColorStop( 0.4, baseColor.colorUtilsDarker( 0.1 ).toCSS() );
-      gradientFill.addColorStop( 0.8, baseColor.colorUtilsDarker( 0.4 ).toCSS() );
-      gradientFill.addColorStop( 0.95, baseColor.colorUtilsDarker( 0.6 ).toCSS() );
-      gradientFill.addColorStop( 1, baseColor.colorUtilsDarker( 0.4 ).toCSS() );
-      return gradientFill;
-    },
-
-    draw: function() {
-      const canvas = this.canvas;
-      const context = this.context;
-
-      const width = canvas.width;
-      const height = canvas.height;
-      const midX = width / 2;
-      const midY = height / 2;
-      context.setTransform( 1, 0, 0, 1, 0, 0 );
-      context.clearRect( 0, 0, width, height );
-      const bigScale = width / this.maxTotalRadius / 2.5;
-      context.setTransform( bigScale, 0, 0, bigScale, midX - bigScale * midX, midY - bigScale * midY );
-
-      const atoms = _.sortBy( this.currentAtoms, function( v ) { return v.z; } );
-
-      for ( let i = 0; i < atoms.length; i++ ) {
-        const atom = atoms[ i ];
-
-        let arcs = [];
-
-        // check each atom behind this one for occlusion
-        for ( let k = 0; k < i; k++ ) {
-          const otherAtom = atoms[ k ];
-
-          const delta = otherAtom.minus( atom );
-          const d = delta.magnitude;
-          if ( d < atom.covalentRadius + otherAtom.covalentRadius - 1e-7 ) {
-            const theta = delta.angleBetween( new Vector3( 0, 0, -1 ) );
-            const arcData = ellipticalArcCut( atom.covalentRadius, otherAtom.covalentRadius, d, theta );
-            if ( arcData ) {
-              // angle to center of ellipse
-              const phi = Math.atan2( delta.y, delta.x );
-              const center = new Vector2( arcData.cx, arcData.cy ).rotated( phi );
-              arcs.push( {
-                center: center,
-                rx: arcData.rx,
-                ry: arcData.ry,
-                rotation: phi,
-                circleStart: phi - arcData.psi,
-                circleEnd:   phi + arcData.psi,
-                ellipseStart: -arcData.alpha,
-                ellipseEnd: arcData.alpha
-              } );
-            }
-          }
-        }
-
-        arcs = _.sortBy( arcs, function( arc ) { return arc.circleStart; } );
-
-        context.save();
-        context.translate( midX + atom.x, midY + atom.y );
-        context.beginPath();
-        var arc;
-        var ellipticalArc;
-        if ( arcs.length ) {
-          for ( let j = 0; j < arcs.length; j++ ) {
-            ellipticalArc = new EllipticalArc( arcs[ j ].center,
-              arcs[ j ].rx, arcs[ j ].ry,
-              arcs[ j ].rotation,
-              arcs[ j ].ellipseStart, arcs[ j ].ellipseEnd, false );
-            const atEnd = j + 1 === arcs.length;
-            arc = new Arc( Vector2.ZERO, atom.covalentRadius, arcs[ j ].circleEnd, atEnd ? ( arcs[ 0 ].circleStart + Math.PI * 2 ) : arcs[ j + 1 ].circleStart, false );
-            ellipticalArc.writeToContext( context );
-            arc.writeToContext( context );
-          }
-        }
-        else {
-          arc = new Arc( Vector2.ZERO, atom.covalentRadius, 0, Math.PI * 2, false );
-          arc.writeToContext( context );
-        }
-
-        context.fillStyle = this.gradientMap[ atom.element.symbol ];
-
-        context.fill();
-        context.restore();
-      }
-    },
-
-    tick: function( timeElapsed ) {
-      let matrix;
-      if ( !this.dragging && this.currentPosition.equals( this.lastPosition ) ) {
-        matrix = Matrix3.rotationY( timeElapsed );
-      }
-      else {
-        // TODO: WARNING: test high-res on iPad, this may be a bug here (includes scaled-up version!)
-        const correctScale = 4 / this.canvas.width;
-        const delta = this.currentPosition.minus( this.lastPosition );
-        const quat = Quaternion.fromEulerAngles(
-          -delta.y * correctScale, // yaw
-          delta.x * correctScale,  // roll
-          0                        // pitch
-        );
-        matrix = quat.toRotationMatrix();
-        this.lastPosition = this.currentPosition;
-      }
-      this.transformMolecule( matrix );
-      this.draw();
-    },
-
-    transformMolecule: function( matrix ) {
-      this.currentAtoms.forEach( function( atom ) {
-        matrix.multiplyVector3( atom );
-      } );
-      if ( GRAB_INITIAL_TRANSFORMS ) {
-        this.masterMatrix = matrix.timesMatrix( this.masterMatrix );
-      }
-    },
-
-    setMoleculeCanvasBounds: function( globalBounds ) {
-      this.canvas.width = globalBounds.width * this.backingScale;
-      this.canvas.height = globalBounds.height * this.backingScale;
-      this.canvas.style.width = globalBounds.width + 'px';
-      this.canvas.style.height = globalBounds.height + 'px';
-      this.canvas.style.left = globalBounds.x + 'px';
-      this.canvas.style.top = globalBounds.y + 'px';
-      // this.canvas.style.backgroundColor = '#000';
-    },
-
-    setMoleculeBounds: function( globalBounds ) {
-      this.setMoleculeCanvasBounds( globalBounds );
-      this.invalidateSelf( globalBounds );
-    }
-  } );
 } );
