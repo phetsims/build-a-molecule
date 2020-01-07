@@ -35,7 +35,7 @@ define( require => {
   // strings
   const refillString = require( 'string!BUILD_A_MOLECULE/refill' );
 
-  class BAMView extends ScreenView {
+  class BAMScreenView extends ScreenView {
     /**
      * @param {KitCollectionList} kitCollectionList
      * @constructor
@@ -78,7 +78,7 @@ define( require => {
       const swipeCatch = Rectangle.bounds( viewSwipeBounds.eroded( BAMConstants.VIEW_PADDING ) );
       swipeCatch.addInputListener( sliceNode.sliceInputListener );
 
-      // KitPlayAreaNode for the main BAMView listens to the kitPlayArea of each kit in the model to fill or remove
+      // KitPlayAreaNode for the main BAMScreenView listens to the kitPlayArea of each kit in the model to fill or remove
       // its content.
       const kits = [];
 
@@ -483,5 +483,5 @@ define( require => {
     }
   }
 
-  return buildAMolecule.register( 'BAMView', BAMView );
+  return buildAMolecule.register( 'BAMScreenView', BAMScreenView );
 } );

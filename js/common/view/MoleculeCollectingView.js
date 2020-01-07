@@ -1,7 +1,7 @@
 // Copyright 2020, University of Colorado Boulder
 
 /**
- * Subtype of BAMView that shows kits, but also has a collection area to the right-hand side
+ * Subtype of BAMScreenView that shows kits, but also has a collection area to the right-hand side
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
@@ -12,12 +12,12 @@ define( require => {
   // modules
   const AllFilledNode = require( 'BUILD_A_MOLECULE/common/view/AllFilledNode' );
   const BAMConstants = require( 'BUILD_A_MOLECULE/common/BAMConstants' );
-  const BAMView = require( 'BUILD_A_MOLECULE/common/view/BAMView' );
+  const BAMScreenView = require( 'BUILD_A_MOLECULE/common/view/BAMScreenView' );
   const buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   const CollectionPanel = require( 'BUILD_A_MOLECULE/common/view/CollectionPanel' );
   const Vector2 = require( 'DOT/Vector2' );
 
-  class MoleculeCollectingView extends BAMView {
+  class MoleculeCollectingView extends BAMScreenView {
     /**
      * @param {KitCollectionList} kitCollectionList
      * @param {boolean} isSingleCollectionMode
@@ -72,7 +72,7 @@ define( require => {
      * @returns {Node}
      */
     addCollection( collection ) {
-      const kitCollectionNode = BAMView.prototype.addCollection.call( this, collection, true );
+      const kitCollectionNode = BAMScreenView.prototype.addCollection.call( this, collection, true );
       let hasShownOnce = false;
 
       // show dialog the 1st time all collection boxes are filled

@@ -25,7 +25,7 @@ define( require => {
      * @param {KitCollection} kitCollection
      * @param {number} kitViewWidth
      * @param {number} kitViewHeight
-     * @param {MoleculeCollectingView|BAMView} view
+     * @param {MoleculeCollectingView|BAMScreenView} view
      * @param {boolean} isCollectingView
      * @constructor
      */
