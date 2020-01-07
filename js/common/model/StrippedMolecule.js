@@ -13,91 +13,83 @@ define( require => {
   'use strict';
 
   // modules
-  const Atom = require( 'NITROGLYCERIN/Atom' );
-  const Bond = require( 'BUILD_A_MOLECULE/common/model/Bond' );
   const buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
-  const Element = require( 'NITROGLYCERIN/Element' );
-  const inherit = require( 'PHET_CORE/inherit' );
   const MoleculeStructure = require( 'BUILD_A_MOLECULE/common/model/MoleculeStructure' );
   const PhetioObject = require( 'TANDEM/PhetioObject' );
 
-  /**
-   * @param {MoleculeStructure} original
-   * @constructor
-   */
-  function StrippedMolecule( original ) {
-    const self = this;
-    const bondsToAdd = [];
-
-    // copy non-hydrogens
-    const atomsToAdd = _.filter( original.atoms, function( atom ) { return !atom.isHydrogen(); } );
-
+  class StrippedMolecule extends PhetioObject {
     /**
-     * Array indexed the same way as stripped.atoms for efficiency. It's essentially immutable, so this works
+     * @param {MoleculeStructure} original
+     * @constructor
      */
-    this.hydrogenCount = new Array( atomsToAdd.length );
-    for ( let i = 0; i < this.hydrogenCount.length; i++ ) {
-      this.hydrogenCount[ i ] = 0;
-    }
+    constructor( original ) {
+      super();
+      const bondsToAdd = [];
 
-    // copy non-hydrogen honds, and mark hydrogen bonds
-    original.bonds.forEach( function( bond ) {
-      const aIsHydrogen = bond.a.isHydrogen();
-      const bIsHydrogen = bond.b.isHydrogen();
+      // copy non-hydrogens
+      const atomsToAdd = _.filter( original.atoms, atom => { return !atom.isHydrogen(); } );
 
-      // only do something if both aren't hydrogen
-      if ( !aIsHydrogen || !bIsHydrogen ) {
-
-        if ( aIsHydrogen || bIsHydrogen ) {
-          // increment hydrogen count of either A or B, if the bond contains hydrogen
-          self.hydrogenCount[ atomsToAdd.indexOf( aIsHydrogen ? bond.b : bond.a ) ]++;
-        }
-        else {
-          // bond doesn't involve hydrogen, so we add it to our stripped version
-          bondsToAdd.push( bond );
-        }
+      /**
+       * Array indexed the same way as stripped.atoms for efficiency. It's essentially immutable, so this works
+       */
+      this.hydrogenCount = new Array( atomsToAdd.length );
+      for ( let i = 0; i < this.hydrogenCount.length; i++ ) {
+        this.hydrogenCount[ i ] = 0;
       }
-    } );
 
-    // construct the stripped structure
-    this.stripped = new MoleculeStructure( atomsToAdd.length, bondsToAdd.length );
-    atomsToAdd.forEach( this.stripped.addAtom.bind( this.stripped ) );
-    bondsToAdd.forEach( this.stripped.addBond.bind( this.stripped ) );
-  }
-  buildAMolecule.register( 'StrippedMolecule', StrippedMolecule );
+      // copy non-hydrogen honds, and mark hydrogen bonds
+      original.bonds.forEach( bond => {
+        const aIsHydrogen = bond.a.isHydrogen();
+        const bIsHydrogen = bond.b.isHydrogen();
 
-  return inherit( PhetioObject, StrippedMolecule, {
+        // only do something if both aren't hydrogen
+        if ( !aIsHydrogen || !bIsHydrogen ) {
 
-    /**
-     * @returns {MoleculeStructure} where the hydrogen atoms are not the original hydrogen atoms
-     */
-    toMoleculeStructure: function() {
-      const self = this;
-      const result = this.stripped.getAtomCopy();
-      this.stripped.atoms.forEach( function( atom ) {
-        const count = self.getHydrogenCount( atom );
-        for ( let i = 0; i < count; i++ ) {
-          const hydrogenAtom = new Atom( Element.H );
-          result.addAtom( hydrogenAtom );
-          result.addBond( new Bond( atom, hydrogenAtom ) );
+          if ( aIsHydrogen || bIsHydrogen ) {
+            // increment hydrogen count of either A or B, if the bond contains hydrogen
+            this.hydrogenCount[ atomsToAdd.indexOf( aIsHydrogen ? bond.b : bond.a ) ]++;
+          }
+          else {
+            // bond doesn't involve hydrogen, so we add it to our stripped version
+            bondsToAdd.push( bond );
+          }
         }
       } );
-      return result;
-    },
 
-    getIndex: function( atom ) {
+      // construct the stripped structure
+      this.stripped = new MoleculeStructure( atomsToAdd.length, bondsToAdd.length );
+      atomsToAdd.forEach( this.stripped.addAtom.bind( this.stripped ) );
+      bondsToAdd.forEach( this.stripped.addBond.bind( this.stripped ) );
+    }
+
+    /**
+     * @private
+     *
+     * @return {number}
+     */
+    getIndex( atom ) {
       const index = this.stripped.atoms.indexOf( atom );
       assert && assert( index !== -1 );
       return index;
-    },
+    }
 
-    getHydrogenCount: function( atom ) {
+    /**
+     * @param {Atom2} atom
+     * @private
+     *
+     * @returns {number}
+     */
+    getHydrogenCount( atom ) {
       return this.hydrogenCount[ this.getIndex( atom ) ];
-    },
+    }
 
-    // @param {StrippedMolecule} other
-    isEquivalent: function( other ) { // I know this isn't used, but it might be useful in the future (comment from before the port, still kept for that reason)
-      const self = this;
+    /**
+     * @param {StrippedMolecule} other
+     * @public
+     *
+     * @returns {boolean}
+     */
+    isEquivalent( other ) { // I know this isn't used, but it might be useful in the future (comment from before the port, still kept for that reason)
       if ( this === other ) {
         // same instance
         return true;
@@ -114,13 +106,13 @@ define( require => {
       const length = other.stripped.atoms.length;
       for ( let i = 0; i < length; i++ ) {
         const otherAtom = other.stripped.atoms[ i ];
-        if ( self.checkEquivalency( other, myVisited, otherVisited, firstAtom, otherAtom, false ) ) {
+        if ( this.checkEquivalency( other, myVisited, otherVisited, firstAtom, otherAtom, false ) ) {
           // we found an isomorphism with firstAtom => otherAtom
           return true;
         }
       }
       return false;
-    },
+    }
 
     /**
      * This checks to see whether the "other" molecule (with 0 or more added hydrogens) would be
@@ -130,11 +122,11 @@ define( require => {
      * stripped structures efficiently.
      *
      * @param {StrippedMolecule} other   Other (potential) submolecule
-     * @param <AtomU> Other atom type.
+     * @public
+     *
      * @returns {boolean} Whether "other" is a hydrogen submolecule of this instance
      */
-    isHydrogenSubmolecule: function( other ) {
-      const self = this;
+    isHydrogenSubmolecule( other ) {
       if ( this === other ) {
         // same instance
         return true;
@@ -150,23 +142,26 @@ define( require => {
       const length = other.stripped.atoms.length;
       for ( let i = 0; i < length; i++ ) {
         const otherAtom = other.stripped.atoms[ i ];
-        if ( self.checkEquivalency( other, myVisited, otherVisited, firstAtom, otherAtom, true ) ) {
+        if ( this.checkEquivalency( other, myVisited, otherVisited, firstAtom, otherAtom, true ) ) {
           // we found an isomorphism with firstAtom => otherAtom
           return true;
         }
       }
       return false;
-    },
+    }
 
-    /*
+    /**
      * @param {StrippedMolecule} other
-     * @param {Array[Atom]}      myVisited
-     * @param {Array[Atom]}      otherVisited
-     * @param {Atom}             myAtom
-     * @param {Atom}             otherAtom
-     * @param {boolean}          subCheck
+     * @param {Array.<Atom2>} myVisited
+     * @param {Array.<Atom2>} otherVisited
+     * @param {Atom2} myAtom
+     * @param {Atom2} otherAtom
+     * @param {boolean} subCheck
+     * @public
+     *
+     * @returns {boolean}
      */
-    checkEquivalency: function( other, myVisited, otherVisited, myAtom, otherAtom, subCheck ) {
+    checkEquivalency( other, myVisited, otherVisited, myAtom, otherAtom, subCheck ) {
       // basically this checks whether two different sub-trees of two different molecules are "equivalent"
 
       /*
@@ -230,15 +225,21 @@ define( require => {
 
       // return whether we can find a successful permutation matching from our equivalency matrix
       return MoleculeStructure.checkEquivalencyMatrix( equivalences, 0, availableIndices, size );
-    },
+    }
 
-    getCopyWithAtomRemoved: function( atom ) {
-      const self = this;
+    /**
+     * @public
+     * @returns {atom}
+     */
+    getCopyWithAtomRemoved( atom ) {
       const result = new StrippedMolecule( this.stripped.getCopyWithAtomRemoved( atom ) );
-      result.stripped.atoms.forEach( function( resultAtom ) {
-        result.hydrogenCount[ result.getIndex( resultAtom ) ] = self.getHydrogenCount( resultAtom );
+      result.stripped.atoms.forEach( resultAtom => {
+        result.hydrogenCount[ result.getIndex( resultAtom ) ] = this.getHydrogenCount( resultAtom );
       } );
       return result;
     }
-  } );
+  }
+
+  return buildAMolecule.register( 'StrippedMolecule', StrippedMolecule );
+
 } );
