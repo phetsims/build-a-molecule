@@ -1,4 +1,4 @@
-// Copyright 2013-2019, University of Colorado Boulder
+// Copyright 2020, University of Colorado Boulder
 
 /**
  * Represents a general molecular structure (without position or instance information).

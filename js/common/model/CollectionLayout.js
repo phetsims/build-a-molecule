@@ -1,4 +1,4 @@
-// Copyright 2013-2019, University of Colorado Boulder
+// Copyright 2020, University of Colorado Boulder
 
 /**
  * Contains layout information relevant to where the kits are placed, where molecules can exist in the play area, etc.

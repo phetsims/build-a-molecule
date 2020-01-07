@@ -1,4 +1,4 @@
-// Copyright 2013-2019, University of Colorado Boulder
+// Copyright 2020, University of Colorado Boulder
 
 /**
  * Collection molecules that need to be loaded for the 1st tab to work

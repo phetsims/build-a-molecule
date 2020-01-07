@@ -1,4 +1,4 @@
-// Copyright 2013-2019, University of Colorado Boulder
+// Copyright 2020, University of Colorado Boulder
 
 /**
  * 3D Molecule display that takes up the entire screen

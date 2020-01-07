@@ -1,4 +1,4 @@
-// Copyright 2013-2019, University of Colorado Boulder
+// Copyright 2020, University of Colorado Boulder
 
 /**
  * Represents a cardinal direction for use in our model. Also includes unit vector version
