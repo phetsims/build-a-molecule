@@ -13,7 +13,6 @@ define( require => {
   const BAMConstants = require( 'BUILD_A_MOLECULE/common/BAMConstants' );
   const buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   const CollectionAreaNode = require( 'BUILD_A_MOLECULE/common/view/CollectionAreaNode' );
-  const inherit = require( 'PHET_CORE/inherit' );
   const merge = require( 'PHET_CORE/merge' );
   const NextPreviousNavigationNode = require( 'SCENERY_PHET/NextPreviousNavigationNode' );
   const Node = require( 'SCENERY/nodes/Node' );
@@ -29,117 +28,113 @@ define( require => {
   const collectionPatternString = require( 'string!BUILD_A_MOLECULE/collectionPattern' );
   const yourMoleculesString = require( 'string!BUILD_A_MOLECULE/yourMolecules' );
 
-  /**
-   * @param {KitCollectionList} kitCollectionList
-   * @param {boolean} isSingleCollectionMode
-   * @param {Array.<function>} collectionAttachmentCallbacks
-   * @param {function} toModelBounds
-   * @param {function} showDialogCallback
-   * @param {function} updateRefillButton
-   * @param {Object} options
-   * @constructor
-   */
-  function CollectionPanel( kitCollectionList, isSingleCollectionMode, collectionAttachmentCallbacks, toModelBounds,
-                            showDialogCallback, updateRefillButton, options ) {
-    const self = this;
+  class CollectionPanel extends Panel {
+    /**
+     * @param {KitCollectionList} kitCollectionList
+     * @param {boolean} isSingleCollectionMode
+     * @param {Array.<function>} collectionAttachmentCallbacks
+     * @param {function} toModelBounds
+     * @param {function} showDialogCallback
+     * @param {function} updateRefillButton
+     * @param {Object} options
+     */
+    constructor( kitCollectionList, isSingleCollectionMode, collectionAttachmentCallbacks, toModelBounds,
+                 showDialogCallback, updateRefillButton, options ) {
+      options = merge( {
+        cornerRadius: 0
+      }, options );
+      const layoutNode = new VBox( { spacing: 10 } );
+      super( layoutNode, options );
 
-    this.layoutNode = new VBox( { spacing: 10 } );
-    this.collectionAreaHolder = new Node();
-    this.collectionAreaMap = {}; // kitCollection id => node
-    this.collectionAttachmentCallbacks = collectionAttachmentCallbacks;
+      this.layoutNode = layoutNode;
+      this.collectionAreaHolder = new Node();
+      this.collectionAreaMap = {}; // kitCollection id => node
+      this.collectionAttachmentCallbacks = collectionAttachmentCallbacks;
 
-    // Header text for panel
-    const moleculeCollectionText = new Text( yourMoleculesString, {
-      font: new PhetFont( {
-        size: 22
-      } ),
-      maxWidth: BAMConstants.TEXT_MAX_WIDTH
-    } );
-    this.layoutNode.addChild( moleculeCollectionText );
+      // Header text for panel
+      const moleculeCollectionText = new Text( yourMoleculesString, {
+        font: new PhetFont( {
+          size: 22
+        } ),
+        maxWidth: BAMConstants.TEXT_MAX_WIDTH
+      } );
+      this.layoutNode.addChild( moleculeCollectionText );
 
-    // "Collection X" with arrows
-    const currentCollectionText = new Text( '', {
-      font: new PhetFont( {
-        size: 16,
-        weight: 'bold'
-      } ),
-      maxWidth: BAMConstants.TEXT_MAX_WIDTH
-    } );
-    kitCollectionList.currentCollectionProperty.link( function() {
-      currentCollectionText.text = StringUtils.fillIn( collectionPatternString, { number: kitCollectionList.currentIndex + 1 } );
-    } );
+      // "Collection X" with arrows
+      const currentCollectionText = new Text( '', {
+        font: new PhetFont( {
+          size: 16,
+          weight: 'bold'
+        } ),
+        maxWidth: BAMConstants.TEXT_MAX_WIDTH
+      } );
+      kitCollectionList.currentCollectionProperty.link( () => {
+        currentCollectionText.text = StringUtils.fillIn( collectionPatternString, { number: kitCollectionList.currentIndex + 1 } );
+      } );
 
-    // Used to cycle through collections when a collection has bee completed.
-    const collectionSwitcher = new NextPreviousNavigationNode( currentCollectionText, {
-      arrowColor: BAMConstants.KIT_ARROW_BACKGROUND_ENABLED,
-      arrowStrokeColor: BAMConstants.KIT_ARROW_BORDER_ENABLED,
-      arrowWidth: 14,
-      arrowHeight: 18,
-      next: function() {
-        kitCollectionList.switchToNextCollection();
-      },
-      previous: function() {
-        kitCollectionList.switchToPreviousCollection();
-      },
-      createTouchAreaShape: function( shape ) {
-        // square touch area
-        return Shape.bounds( shape.bounds.dilated( 7 ) );
-      }
-    } );
+      // Used to cycle through collections when a collection has bee completed.
+      const collectionSwitcher = new NextPreviousNavigationNode( currentCollectionText, {
+        arrowColor: BAMConstants.KIT_ARROW_BACKGROUND_ENABLED,
+        arrowStrokeColor: BAMConstants.KIT_ARROW_BORDER_ENABLED,
+        arrowWidth: 14,
+        arrowHeight: 18,
+        next() {
+          kitCollectionList.switchToNextCollection();
+        },
+        previous() {
+          kitCollectionList.switchToPreviousCollection();
+        },
+        createTouchAreaShape( shape ) {
+          // square touch area
+          return Shape.bounds( shape.bounds.dilated( 7 ) );
+        }
+      } );
 
-    function updateSwitcher() {
-      collectionSwitcher.hasNextProperty.value = kitCollectionList.hasNextCollection();
-      collectionSwitcher.hasPreviousProperty.value = kitCollectionList.hasPreviousCollection();
+      const updateSwitcher = () => {
+        collectionSwitcher.hasNextProperty.value = kitCollectionList.hasNextCollection();
+        collectionSwitcher.hasPreviousProperty.value = kitCollectionList.hasPreviousCollection();
+      };
+
+      kitCollectionList.currentCollectionProperty.link( updateSwitcher );
+      kitCollectionList.addedCollectionEmitter.addListener( updateSwitcher );
+      kitCollectionList.removedCollectionEmitter.addListener( updateSwitcher );
+      this.layoutNode.addChild( collectionSwitcher );
+
+      // all of the collection boxes themselves
+      this.layoutNode.addChild( this.collectionAreaHolder );
+
+
+      // anonymous function here, so we don't create a bunch of fields
+      const createCollectionNode = collection => {
+        this.collectionAreaMap[ collection.id ] = new CollectionAreaNode(
+          collection, isSingleCollectionMode, toModelBounds, showDialogCallback, updateRefillButton
+        );
+      };
+
+      // create nodes for all current collections
+      kitCollectionList.collections.forEach( collection => {
+        createCollectionNode( collection );
+      } );
+
+      // if a new collection is added, create one for it
+      kitCollectionList.addedCollectionEmitter.addListener( collection => {
+        createCollectionNode( collection );
+      } );
+
+      // use the current collection
+      this.useCollection( kitCollectionList.currentCollectionProperty.value );
+
+      kitCollectionList.currentCollectionProperty.link( newCollection => {
+        this.useCollection( newCollection );
+      } );
     }
 
-    kitCollectionList.currentCollectionProperty.link( updateSwitcher );
-    kitCollectionList.addedCollectionEmitter.addListener( updateSwitcher );
-    kitCollectionList.removedCollectionEmitter.addListener( updateSwitcher );
-    this.layoutNode.addChild( collectionSwitcher );
-
-    // all of the collection boxes themselves
-    this.layoutNode.addChild( this.collectionAreaHolder );
-
-    options = merge( {
-      cornerRadius: 0
-    }, options );
-
-    Panel.call( this, this.layoutNode, options );
-
-    // anonymous function here, so we don't create a bunch of fields
-    function createCollectionNode( collection ) {
-      self.collectionAreaMap[ collection.id ] = new CollectionAreaNode(
-        collection, isSingleCollectionMode, toModelBounds, showDialogCallback, updateRefillButton
-      );
-    }
-
-    // create nodes for all current collections
-    kitCollectionList.collections.forEach( function( collection ) {
-      createCollectionNode( collection );
-    } );
-
-    // if a new collection is added, create one for it
-    kitCollectionList.addedCollectionEmitter.addListener( function( collection ) {
-      createCollectionNode( collection );
-    } );
-
-    // use the current collection
-    this.useCollection( kitCollectionList.currentCollectionProperty.value );
-
-    kitCollectionList.currentCollectionProperty.link( function( newCollection ) {
-      self.useCollection( newCollection );
-    } );
-  }
-
-  buildAMolecule.register( 'CollectionPanel', CollectionPanel );
-  return inherit( Panel, CollectionPanel, {
 
     /**
-     *
      * @param {KitCollection} collection
      * @private
      */
-    useCollection: function( collection ) {
+    useCollection( collection ) {
 
       // swap out the inner collection area
       this.collectionAreaHolder.removeAllChildren();
@@ -152,18 +147,19 @@ define( require => {
       }
       else {
         // we need to listen for this because the update needs to use canvas' global/local/view coordinate transformations
-        this.collectionAttachmentCallbacks.push( function() {
+        this.collectionAttachmentCallbacks.push( () => {
           collectionAreaNode.updateCollectionBoxLocations();
         } );
       }
-    },
+    }
 
     /**
      * Walk up the scene graph, looking to see if we are a (grand)child of a canvas
+     * @private
      *
      * @returns {boolean} If an ancestor is a BuildAMoleculeCanvas
      */
-    hasCanvasAsParent: function() {
+    hasCanvasAsParent() {
       let node = this; // eslint-disable-line consistent-this
       while ( node.getParent() !== null ) {
         node = node.getParent();
@@ -173,5 +169,8 @@ define( require => {
       }
       return false;
     }
-  } );
+  }
+
+  return buildAMolecule.register( 'CollectionPanel', CollectionPanel );
+
 } );

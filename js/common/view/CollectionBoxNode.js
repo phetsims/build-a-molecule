@@ -274,7 +274,7 @@ define( require => {
 
       this.cancelBlinksInProgress();
 
-      function tick() {
+      const tick = () => {
         // precautionarily set this to null so we never cancel a timeout that has occurred
         this.blinkTimeout = null;
 
@@ -305,7 +305,7 @@ define( require => {
           // set the blinkTimeout so it can be canceled
           this.blinkTimeout = window.setTimeout( tick, blinkDelayInMs );
         }
-      }
+      };
 
       //REVIEW: Use timer.setTimeout (or another thing that is hooked to the simulation step)
       this.blinkTimeout = window.setTimeout( tick, blinkDelayInMs );
