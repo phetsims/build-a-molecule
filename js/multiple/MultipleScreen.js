@@ -15,7 +15,6 @@ define( require => {
   const CollectionBox = require( 'BUILD_A_MOLECULE/common/model/CollectionBox' );
   const Dimension2 = require( 'DOT/Dimension2' );
   const Element = require( 'NITROGLYCERIN/Element' );
-  const inherit = require( 'PHET_CORE/inherit' );
   const Kit = require( 'BUILD_A_MOLECULE/common/model/Kit' );
   const KitCollection = require( 'BUILD_A_MOLECULE/common/model/KitCollection' );
   const CollectionLayout = require( 'BUILD_A_MOLECULE/common/model/CollectionLayout' );
@@ -26,61 +25,55 @@ define( require => {
   // strings
   const titleMultipleString = require( 'string!BUILD_A_MOLECULE/title.multiple' );
 
-  /**
-   * @constructor
-   */
-  function MultipleScreen() {
-    const options = {
-      name: titleMultipleString,
-      homeScreenIcon: new Rectangle( 0, 0, 548, 373, { fill: 'green' } )
-    };
+  class MultipleScreen extends BAMScreen {
+    constructor() {
+      const options = {
+        name: titleMultipleString,
+        homeScreenIcon: new Rectangle( 0, 0, 548, 373, { fill: 'green' } )
+      };
 
-    BAMScreen.call( this,
+      super(
+        // createInitialKitCollection
+        ( bounds, stepEmitter ) => {
+          const kitCollection = new KitCollection();
+          kitCollection.addKit( new Kit( bounds, [
+            new Bucket( new Dimension2( 400, 200 ), stepEmitter, Element.H, 2 ),
+            new Bucket( new Dimension2( 450, 200 ), stepEmitter, Element.O, 2 )
+          ] ) );
 
-      // createInitialKitCollection
-      function( bounds, stepEmitter ) {
-        const kitCollection = new KitCollection();
-        kitCollection.addKit( new Kit( bounds, [
-          new Bucket( new Dimension2( 400, 200 ), stepEmitter, Element.H, 2 ),
-          new Bucket( new Dimension2( 450, 200 ), stepEmitter, Element.O, 2 )
-        ] ) );
+          kitCollection.addKit( new Kit( bounds, [
+            new Bucket( new Dimension2( 500, 200 ), stepEmitter, Element.C, 2 ),
+            new Bucket( new Dimension2( 600, 200 ), stepEmitter, Element.O, 4 ),
+            new Bucket( new Dimension2( 500, 200 ), stepEmitter, Element.N, 2 )
+          ] ) );
+          kitCollection.addKit( new Kit( bounds, [
+            new Bucket( new Dimension2( 600, 200 ), stepEmitter, Element.H, 12 ),
+            new Bucket( new Dimension2( 600, 200 ), stepEmitter, Element.O, 4 ),
+            new Bucket( new Dimension2( 500, 200 ), stepEmitter, Element.N, 2 )
+          ] ) );
+          kitCollection.addCollectionBox( new CollectionBox( MoleculeList.CO2, 2 ) );
+          kitCollection.addCollectionBox( new CollectionBox( MoleculeList.O2, 2 ) );
+          kitCollection.addCollectionBox( new CollectionBox( MoleculeList.H2, 4 ) );
+          kitCollection.addCollectionBox( new CollectionBox( MoleculeList.NH3, 2 ) );
+          return kitCollection;
+        },
 
-        kitCollection.addKit( new Kit( bounds, [
-          new Bucket( new Dimension2( 500, 200 ), stepEmitter, Element.C, 2 ),
-          new Bucket( new Dimension2( 600, 200 ), stepEmitter, Element.O, 4 ),
-          new Bucket( new Dimension2( 500, 200 ), stepEmitter, Element.N, 2 )
-        ] ) );
-        kitCollection.addKit( new Kit( bounds, [
-          new Bucket( new Dimension2( 600, 200 ), stepEmitter, Element.H, 12 ),
-          new Bucket( new Dimension2( 600, 200 ), stepEmitter, Element.O, 4 ),
-          new Bucket( new Dimension2( 500, 200 ), stepEmitter, Element.N, 2 )
-        ] ) );
-        kitCollection.addCollectionBox( new CollectionBox( MoleculeList.CO2, 2 ) );
-        kitCollection.addCollectionBox( new CollectionBox( MoleculeList.O2, 2 ) );
-        kitCollection.addCollectionBox( new CollectionBox( MoleculeList.H2, 4 ) );
-        kitCollection.addCollectionBox( new CollectionBox( MoleculeList.NH3, 2 ) );
-        return kitCollection;
-      },
+        // CollectionLayout
+        new CollectionLayout(), ( bounds, stepEmitter ) => {
+          return BAMScreen.generateKitCollection( true, 4, stepEmitter, bounds );
+        },
 
-      // CollectionLayout
-      new CollectionLayout(), function( bounds, stepEmitter ) {
-        return BAMScreen.generateKitCollection( true, 4, stepEmitter, bounds );
-      },
-
-      // createKitCollection
-      function( model ) {
-        // create the view
-        return new MoleculeCollectingView( model, false, function() {
-          // next collection callback
-          model.addCollection( BAMScreen.generateKitCollection( true, 4, model.stepEmitter, model.collectionLayout ), true );
-        } );
-      },
-      options );
+        // createKitCollection
+        model => {
+          // create the view
+          return new MoleculeCollectingView( model, false, () => {
+            // next collection callback
+            model.addCollection( BAMScreen.generateKitCollection( true, 4, model.stepEmitter, model.collectionLayout ), true );
+          } );
+        },
+        options );
+    }
   }
 
-  buildAMolecule.register( 'MultipleScreen', MultipleScreen );
-
-  inherit( BAMScreen, MultipleScreen );
-
-  return MultipleScreen;
+  return buildAMolecule.register( 'MultipleScreen', MultipleScreen );
 } );
