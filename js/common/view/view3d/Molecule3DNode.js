@@ -245,8 +245,8 @@ define( require => {
         context.save();
         context.translate( midX + atom.x, midY + atom.y );
         context.beginPath();
-        var arc;
-        var ellipticalArc;
+        let arc;
+        let ellipticalArc;
         if ( arcs.length ) {
           for ( let j = 0; j < arcs.length; j++ ) {
             ellipticalArc = new EllipticalArc( arcs[ j ].center,
