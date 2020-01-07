@@ -16,7 +16,6 @@ define( require => {
   const Dimension2 = require( 'DOT/Dimension2' );
   const Element = require( 'NITROGLYCERIN/Element' );
   const Emitter = require( 'AXON/Emitter' );
-  const inherit = require( 'PHET_CORE/inherit' );
   const Kit = require( 'BUILD_A_MOLECULE/common/model/Kit' );
   const KitCollection = require( 'BUILD_A_MOLECULE/common/model/KitCollection' );
   const KitCollectionList = require( 'BUILD_A_MOLECULE/common/model/KitCollectionList' );
@@ -25,37 +24,38 @@ define( require => {
   const Property = require( 'AXON/Property' );
   const Screen = require( 'JOIST/Screen' );
 
-  /**
-   * @param {Function} createInitialKitCollection
-   * @param {CollectionLayout} collectionLayout
-   * @param {Function} createKitCollection
-   * @param {Function} createView
-   * @param {Object} options
-   * @constructor
-   */
-  function BAMScreen( createInitialKitCollection, collectionLayout, createKitCollection, createView, options ) {
-    options = merge( {
-      backgroundColorProperty: new Property( BAMConstants.CANVAS_BACKGROUND_COLOR )
-    }, options );
-    const stepEmitter = new Emitter( { parameters: [ { valueType: 'number' } ] } ); // emits 1 parameter, timeElapsed
+  class BAMScreen extends Screen {
+    /**
+     * @param {Function} createInitialKitCollection
+     * @param {CollectionLayout} collectionLayout
+     * @param {Function} createKitCollection
+     * @param {Function} createView
+     * @param {Object} options
+     */
+    constructor( createInitialKitCollection, collectionLayout, createKitCollection, createView, options ) {
+      options = merge( {
+        backgroundColorProperty: new Property( BAMConstants.CANVAS_BACKGROUND_COLOR )
+      }, options );
+      const stepEmitter = new Emitter( { parameters: [ { valueType: 'number' } ] } ); // emits 1 parameter, timeElapsed
 
-    Screen.call( this,
-      function() {
-        return new KitCollectionList( createInitialKitCollection( collectionLayout, stepEmitter ), collectionLayout, stepEmitter, createKitCollection );
-      },
-      createView, options );
+      super( () => {
+          return new KitCollectionList( createInitialKitCollection( collectionLayout, stepEmitter ), collectionLayout, stepEmitter, createKitCollection );
+        },
+        createView, options );
+    }
   }
-
-  buildAMolecule.register( 'BAMScreen', BAMScreen );
 
   /**
    * Generate a group of collection boxes and kits such that the boxes can be filled.
    *
-   * @param allowMultipleMolecules Whether collection boxes can have more than 1 molecule
-   * @param numBoxes               Number of collection boxes
+   * @param {boolean} allowMultipleMolecules Whether collection boxes can have more than 1 molecule
+   * @param {number} numBoxes               Number of collection boxes
+   * @param {Emitter} stepEmitter
+   * @param {CollectionLayout} collectionLayout
+   *
    * @returns {KitCollection} A consistent kitCollection
    */
-  BAMScreen.generateKitCollection = function( allowMultipleMolecules, numBoxes, stepEmitter, collectionLayout ) {
+  BAMScreen.generateKitCollection = ( allowMultipleMolecules, numBoxes, stepEmitter, collectionLayout ) => {
     const maxInBox = 3;
 
     const usedMolecules = []; // [CompleteMolecule]
@@ -100,7 +100,7 @@ define( require => {
 
       var equivalentMoleculesRemaining = 0;
       // TODO: we include the current molecule in this list, maybe that was unintended?
-      molecules.forEach( function( moleculeStructure ) {
+      molecules.forEach( moleculeStructure => {
         if ( moleculeStructure.getHillSystemFormulaFragment() === molecule.getHillSystemFormulaFragment() ) {
           equivalentMoleculesRemaining++;
         }
@@ -111,10 +111,10 @@ define( require => {
       var atomMultiple = 1 + ( ableToIncreaseMultiple ? equivalentMoleculesRemaining : 0 );
 
       // for each type of atom
-      _.uniq( molecule.getElementList() ).forEach( function( element ) {
+      _.uniq( molecule.getElementList() ).forEach( element => {
         // find out how many atoms of this type we need
         let requiredAtomCount = 0;
-        molecule.atoms.forEach( function( atom ) {
+        molecule.atoms.forEach( atom => {
           if ( atom.element.isSameElement( element ) ) {
             requiredAtomCount++;
           }
@@ -161,10 +161,9 @@ define( require => {
     return collection;
   };
 
-  inherit( Screen, BAMScreen, {} );
 
   // from array of CompleteMolecule, returns {CompleteMolecule}
-  BAMScreen.pickRandomMoleculeNotIn = function( molecules ) {
+  BAMScreen.pickRandomMoleculeNotIn = molecules => {
     // Infinite loop. We're living on the edge now, baby!
     while ( true ) { // eslint-disable-line no-constant-condition
       const molecule = MoleculeList.collectionBoxMolecules[ phet.joist.random.nextIntBetween( 0, MoleculeList.collectionBoxMolecules.length - 1 ) ];
@@ -174,5 +173,5 @@ define( require => {
     }
   };
 
-  return BAMScreen;
+  return buildAMolecule.register( 'BAMScreen', BAMScreen );
 } );
