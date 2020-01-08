@@ -38,8 +38,8 @@ define( require => {
   const ballAndStickString = require( 'string!BUILD_A_MOLECULE/ballAndStick' ); // eslint-disable-line string-require-statement-match
   const spaceFillString = require( 'string!BUILD_A_MOLECULE/spaceFilling' ); // eslint-disable-line string-require-statement-match
 
-  // Used for radio buttons
-  const ViewStyle = Enumeration.byKeys( [ 'SPACE_FILL', 'BALL_AND_STICK' ] );
+  // constants
+  const VIEW_STYLE = Enumeration.byKeys( [ 'SPACE_FILL', 'BALL_AND_STICK' ] );
 
   class Molecule3DDialog extends Dialog {
     /**
@@ -87,7 +87,7 @@ define( require => {
         }
       } );
 
-      const viewStyleProperty = new EnumerationProperty( ViewStyle, ViewStyle.SPACE_FILL );
+      const viewStyleProperty = new EnumerationProperty( VIEW_STYLE, VIEW_STYLE.SPACE_FILL );
 
       // Space fill / Ball and stick radio buttons
       const buttonTextOptions = {
@@ -107,8 +107,8 @@ define( require => {
         stroke: 'white',
         soundPlayer: Playable.NO_SOUND
       };
-      const spaceFillButton = new AquaRadioButton( viewStyleProperty, ViewStyle.SPACE_FILL, spaceFillText, radioButtonOptions );
-      const ballAndStickButton = new AquaRadioButton( viewStyleProperty, ViewStyle.BALL_AND_STICK, ballAndStickText, radioButtonOptions );
+      const spaceFillButton = new AquaRadioButton( viewStyleProperty, VIEW_STYLE.SPACE_FILL, spaceFillText, radioButtonOptions );
+      const ballAndStickButton = new AquaRadioButton( viewStyleProperty, VIEW_STYLE.BALL_AND_STICK, ballAndStickText, radioButtonOptions );
       const buttonHolder = new HBox( {
         children: [ spaceFillButton, playPauseButton, ballAndStickButton ],
         spacing: 30
@@ -127,7 +127,7 @@ define( require => {
           while ( moleculeContainer.children.length > 0 ) {
             moleculeContainer.remove( moleculeContainer.children[ 0 ] );
           }
-          if ( viewStyle === ViewStyle.SPACE_FILL && completeMolecule ) {
+          if ( VIEW_STYLE === VIEW_STYLE.SPACE_FILL && completeMolecule ) {
             completeMoleculeProperty.value.atoms.forEach( atom => {
               const atomMesh = new THREE.Mesh( new THREE.SphereGeometry( atom.covalentRadius / 80, 30, 24 ), new THREE.MeshLambertMaterial( {
                 color: Color.toColor( atom.element.color ).toNumber()
