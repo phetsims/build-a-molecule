@@ -342,7 +342,6 @@ define( require => {
     /**
      * Add an atom to the play area in the model. Handled via a drag listener.
      * @param {Atom2} atom
-     * @param {Kit} kit
      *
      * @private
      * @returns {AtomNode}
