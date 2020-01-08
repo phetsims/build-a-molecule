@@ -116,7 +116,7 @@ define( require => {
         },
         down() {
           cutTargetNode.cursor = closedCursor;
-          kit.breakBond( this.a, this.b );
+          kit.breakBond( bond.a, bond.b );
         }
       } ) );
       this.addChild( cutTargetNode );
@@ -149,7 +149,6 @@ define( require => {
       Node.prototype.dispose.call( this );
     }
   }
-
 
   return buildAMolecule.register( 'MoleculeBondNode', MoleculeBondNode );
 } );
