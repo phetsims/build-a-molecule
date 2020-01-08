@@ -15,7 +15,15 @@ define( require => {
   const BAMScreenView = require( 'BUILD_A_MOLECULE/common/view/BAMScreenView' );
   const buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   const CollectionPanel = require( 'BUILD_A_MOLECULE/common/view/CollectionPanel' );
+  const Color = require( 'SCENERY/util/Color' );
+  const PhetFont = require( 'SCENERY_PHET/PhetFont' );
+  const Playable = require( 'TAMBO/Playable' );
+  const TextPushButton = require( 'SUN/buttons/TextPushButton' );
+  const Shape = require( 'KITE/Shape' );
   const Vector2 = require( 'DOT/Vector2' );
+
+  // strings
+  const nextCollectionString = require( 'string!BUILD_A_MOLECULE/nextCollection' );
 
   class MoleculeCollectingScreenView extends BAMScreenView {
     /**
@@ -28,7 +36,9 @@ define( require => {
       super( kitCollectionList );
 
       // @private
+      this.allFilledNode = new AllFilledNode();
       this.regenerateCallback = regenerateCallback;
+
 
       // Adjust play area and carousel bounds to compensate for CollectionPanel
       this.playAreaDragBounds.setMaxX( BAMConstants.KIT_VIEW_WIDTH );
@@ -45,8 +55,7 @@ define( require => {
           return BAMConstants.MODEL_VIEW_TRANSFORM.viewToModelBounds( viewBounds );
         },
         this.showDialogCallback,
-        this.updateRefillButton,
-        {
+        this.updateRefillButton, {
           xMargin: 10,
           yMargin: 7,
           minWidth: 250,
@@ -79,13 +88,25 @@ define( require => {
       collection.allCollectionBoxesFilledProperty.link( filled => {
         if ( filled ) {
           if ( !hasShownOnce ) {
-
-            // @public Create the allFilledNode with a next collection button.
-            this.allFilledNode = new AllFilledNode( this.regenerateCallback, {
-              center: new Vector2( this.layoutBounds.centerX - 100, this.layoutBounds.centerY - 90 )
+            this.nextCollectionButton = new TextPushButton( nextCollectionString, {
+              centerX: this.layoutBounds.centerX - 100,
+              top: this.layoutBounds.top + BAMConstants.VIEW_PADDING,
+              font: new PhetFont( {
+                size: 18,
+                weight: 'bold',
+                maxWidth: BAMConstants.TEXT_MAX_WIDTH,
+                visible: false
+              } ),
+              baseColor: Color.ORANGE,
+              soundPlayer: Playable.NO_SOUND
             } );
-
-            this.addChild( this.allFilledNode );
+            this.nextCollectionButton.touchArea = Shape.bounds( this.nextCollectionButton.localBounds.dilated( 20 ) );
+            this.nextCollectionButton.addListener( () => {
+              this.regenerateCallback();
+              this.nextCollectionButton.dispose();
+            } );
+            this.addChild( this.nextCollectionButton );
+            this.allFilledNode.show();
             hasShownOnce = true;
           }
         }

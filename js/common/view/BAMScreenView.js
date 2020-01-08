@@ -150,9 +150,9 @@ define( require => {
           kitPanel.reset();
           this.updateRefillButton();
 
-          // If the allFilledNode is present on screen dispose it.
-          if ( this.children.includes( this.allFilledNode ) ) {
-            this.removeChild( this.allFilledNode );
+          // If the nextCollectionButton is present on screen dispose it.
+          if ( this.children.includes( this.nextCollectionButton ) ) {
+            this.removeChild( this.nextCollectionButton );
           }
         },
         right: this.layoutBounds.right - BAMConstants.VIEW_PADDING * 1.3,

@@ -12,36 +12,29 @@ define( require => {
 
   // modules
   const buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
-  const Color = require( 'SCENERY/util/Color' );
   const BAMConstants = require( 'BUILD_A_MOLECULE/common/BAMConstants' );
+  const Dialog = require( 'SUN/Dialog' );
   const FaceNode = require( 'SCENERY_PHET/FaceNode' );
   const merge = require( 'PHET_CORE/merge' );
-  const Panel = require( 'SUN/Panel' );
   const PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  const Playable = require( 'TAMBO/Playable' );
-  const Shape = require( 'KITE/Shape' );
   const Text = require( 'SCENERY/nodes/Text' );
-  const TextPushButton = require( 'SUN/buttons/TextPushButton' );
   const VBox = require( 'SCENERY/nodes/VBox' );
+  const Vector2 = require( 'DOT/Vector2' );
 
   // strings
   const youCompletedYourCollectionString = require( 'string!BUILD_A_MOLECULE/youCompletedYourCollection' );
-  const nextCollectionString = require( 'string!BUILD_A_MOLECULE/nextCollection' );
 
-  class AllFilledNode extends Panel {
+  class AllFilledNode extends Dialog {
     /**
-     * @param {Function} regenerateCallback
      * @param {object} options
      * @constructor
      */
-    constructor( regenerateCallback, options ) {
+    constructor( options ) {
       options = merge( {
         stroke: 'black',
         fill: BAMConstants.COMPLETE_BACKGROUND_COLOR,
-        center: BAMConstants.STAGE_SIZE.center,
-        cornerRadius: 0,
-        xMargin: 15,
-        yMargin: 10
+        center: new Vector2( 0, 0 ),
+        cornerRadius: 0
       }, options );
       const contentVBox = new VBox( { spacing: 5, align: 'center' } );
 
@@ -58,24 +51,6 @@ define( require => {
         } )
       } );
       contentVBox.addChild( text );
-
-      // Add button
-      const button = new TextPushButton( nextCollectionString, {
-        listener() {
-          regenerateCallback();
-          self.dispose();
-        },
-        font: new PhetFont( {
-          size: 18,
-          weight: 'bold',
-          maxWidth: BAMConstants.TEXT_MAX_WIDTH
-        } ),
-        baseColor: Color.ORANGE,
-        soundPlayer: Playable.NO_SOUND
-      } );
-      button.touchArea = Shape.bounds( button.localBounds.dilated( 20 ) );
-      contentVBox.addChild( button );
-
       super( contentVBox, options );
     }
   }
