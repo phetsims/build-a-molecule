@@ -62,7 +62,7 @@ define( require => {
 
       // @public
       this.element = element;
-      this.width = this.containerShape.bounds.width;
+      this.width = this.containerShape.bounds.width * 0.95;
 
       // Create the atoms for each element and add them to the bucket.
       for ( let i = 0; i < quantity; i++ ) {

@@ -308,7 +308,6 @@ define( require => {
         }
         this.dialog.show();
       }
-
     }
 
     /**

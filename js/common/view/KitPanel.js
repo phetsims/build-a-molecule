@@ -47,7 +47,9 @@ define( require => {
           if ( isCollectingView ) {
             kitView.setLocalBounds( kitViewBounds.dilatedX( ( kitViewWidth - kitViewBounds.getWidth() ) / 2 ) );
           }
-          kitView.setLocalBounds( kitViewBounds.dilatedX( ( kitViewWidth - kitViewBounds.getWidth() ) * 0.1 ) );
+          else {
+            kitView.setLocalBounds( kitViewBounds.dilatedX( ( kitViewWidth - kitViewBounds.getWidth() ) * 0.025 ) );
+          }
           kitViews.push( kitView );
         } );
       } );
@@ -56,7 +58,7 @@ define( require => {
       this.kitCarousel = new Carousel( kitViews, {
         fill: BAMConstants.KIT_BACKGROUND,
         stroke: BAMConstants.KIT_BORDER,
-        margin: 10,
+        xMargin: 10,
         itemsPerPage: 1,
         animationEnabled: false,
         buttonSoundPlayer: Playable.NO_SOUND
