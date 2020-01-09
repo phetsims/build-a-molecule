@@ -359,7 +359,7 @@ define( require => {
         transform: BAMConstants.MODEL_VIEW_TRANSFORM,
         targetNode: atomNode,
         dragBoundsProperty: new Property( this.atomDragBounds ),
-        locationProperty: atom.positionProperty,
+        positionProperty: atom.positionProperty,
         start: () => {
           dragLength = 0;
           atom.destinationProperty.value = atom.positionProperty.value;
