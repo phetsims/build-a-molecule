@@ -106,6 +106,11 @@ define( require => {
               this.nextCollectionButton.dispose();
             } );
             this.addChild( this.nextCollectionButton );
+
+            // Show the next collection button after the dialog has been disposed
+            this.allFilledNode.isShowingProperty.lazyLink( isShowing => {
+              this.nextCollectionButton.visible = !isShowing;
+            } );
             this.allFilledNode.show();
             hasShownOnce = true;
           }

@@ -247,7 +247,7 @@ define( require => {
           kit.addedMoleculeEmitter.addListener( addedEmitterListener );
           this.addedEmitterListeners[ kit.id ] = addedEmitterListener;
 
-          // Handle deleting metatdataLayer
+          // Handle deleting metadataLayer
           const removedEmitterListener = molecule => {
             removedMoleculeListener( molecule, kit );
           };
