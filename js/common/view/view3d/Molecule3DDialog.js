@@ -86,7 +86,6 @@ define( require => {
           formulaText.setText( completeMolecule.getGeneralFormulaFragment() );
         }
       } );
-
       const viewStyleProperty = new EnumerationProperty( VIEW_STYLE, VIEW_STYLE.SPACE_FILL );
 
       // Space fill / Ball and stick radio buttons
@@ -127,7 +126,7 @@ define( require => {
           while ( moleculeContainer.children.length > 0 ) {
             moleculeContainer.remove( moleculeContainer.children[ 0 ] );
           }
-          if ( VIEW_STYLE === VIEW_STYLE.SPACE_FILL && completeMolecule ) {
+          if ( viewStyle === VIEW_STYLE.SPACE_FILL && completeMolecule ) {
             completeMoleculeProperty.value.atoms.forEach( atom => {
               const atomMesh = new THREE.Mesh( new THREE.SphereGeometry( atom.covalentRadius / 80, 30, 24 ), new THREE.MeshLambertMaterial( {
                 color: Color.toColor( atom.element.color ).toNumber()
