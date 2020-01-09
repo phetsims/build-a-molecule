@@ -179,7 +179,6 @@ define( require => {
     removeMolecule( molecule ) {
       this.cancelBlinksInProgress();
       this.updateBoxGraphics();
-      this.box.cueVisibilityProperty.value = false;
 
       const lastMoleculeNode = this.moleculeNodeMap[ molecule.moleculeId ];
       this.moleculeLayer.removeChild( lastMoleculeNode );

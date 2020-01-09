@@ -118,6 +118,9 @@ define( require => {
           this.kitPlayAreaNode.currentKit.buckets.forEach( bucket => {
             bucket.setToFullState();
           } );
+          kitCollectionList.currentCollectionProperty.value.collectionBoxes.forEach( box => {
+            box.cueVisibilityProperty.value = false;
+          } );
           this.updateRefillButton();
         },
         baseColor: Color.ORANGE,
