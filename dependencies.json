@@ -1,5 +1,5 @@
 {
-  "comment": "# build-a-molecule 0.0.0-dev.36 Wed Jan 08 2020 19:58:43 GMT-0500 (Eastern Standard Time)",
+  "comment": "# build-a-molecule 0.0.0-dev.37 Thu Jan 09 2020 07:13:55 GMT-0500 (Eastern Standard Time)",
   "assert": {
     "sha": "a99a9ce9ee0774bf3ef509bf3e31ca7383f67478",
     "branch": "master"
@@ -13,7 +13,7 @@
     "branch": "master"
   },
   "build-a-molecule": {
-    "sha": "3fcff8e3bc1ba08d31a2e334f8c526c88acedeb9",
+    "sha": "9b05c84f0f7fc56296cae5417ade4827de73d633",
     "branch": "master"
   },
   "chipper": {
