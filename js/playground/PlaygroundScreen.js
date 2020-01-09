@@ -11,13 +11,17 @@ define( require => {
   // modules
   const BAMScreen = require( 'BUILD_A_MOLECULE/common/view/BAMScreen' );
   const BAMScreenView = require( 'BUILD_A_MOLECULE/common/view/BAMScreenView' );
+  const Bounds2 = require( 'DOT/Bounds2' );
   const Bucket = require( 'BUILD_A_MOLECULE/common/model/Bucket' );
   const buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
+  const CollectionLayout = require( 'BUILD_A_MOLECULE/common/model/CollectionLayout' );
   const Dimension2 = require( 'DOT/Dimension2' );
   const Element = require( 'NITROGLYCERIN/Element' );
+  const Image = require( 'SCENERY/nodes/Image' );
   const Kit = require( 'BUILD_A_MOLECULE/common/model/Kit' );
   const KitCollection = require( 'BUILD_A_MOLECULE/common/model/KitCollection' );
-  const CollectionLayout = require( 'BUILD_A_MOLECULE/common/model/CollectionLayout' );
+  const Molecule3DNode = require( 'BUILD_A_MOLECULE/common/view/view3d/Molecule3DNode' );
+  const MoleculeList = require( 'BUILD_A_MOLECULE/common/model/MoleculeList' );
   const Rectangle = require( 'SCENERY/nodes/Rectangle' );
 
   // strings
@@ -28,9 +32,22 @@ define( require => {
 
   class PlaygroundScreen extends BAMScreen {
     constructor() {
+
+      // Iconize Molecule for homescreen and nav-bar
+      const moleculeNode = new Molecule3DNode( MoleculeList.getMoleculeByName( 'Acetic Acid' ), new Bounds2( 0, 0, 548, 373 ), false );
+      const transformMatrix = Molecule3DNode.initialTransforms[ MoleculeList.getMoleculeByName( 'Acetic Acid' ).getGeneralFormula() ];
+
+      if ( transformMatrix ) {
+        moleculeNode.transformMolecule( transformMatrix );
+      }
+      moleculeNode.draw();
+      const node = new Image( moleculeNode.canvas.toDataURL() );
+      const wrapperNode = new Rectangle( 0, 0, 548, 373 );
+      wrapperNode.addChild( node );
+
       const options = {
         name: titlePlaygroundString,
-        homeScreenIcon: new Rectangle( 0, 0, 548, 373, { fill: 'blue' } )
+        homeScreenIcon: wrapperNode
       };
 
       super(
