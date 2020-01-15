@@ -249,6 +249,7 @@ define( require => {
   MoleculeList.H2 = MoleculeList.getMoleculeByName( 'Hydrogen' );
   MoleculeList.Cl2 = MoleculeList.getMoleculeByName( 'Chlorine' );
   MoleculeList.NH3 = MoleculeList.getMoleculeByName( 'Ammonia' );
+  MoleculeList.C2H4O2 = MoleculeList.getMoleculeByName( 'Acetic Acid' );
 
   /**
    * Molecules that can be used for collection boxes

@@ -34,9 +34,8 @@ define( require => {
     constructor() {
 
       // Iconize Molecule for homescreen and nav-bar
-      const moleculeNode = new Molecule3DNode( MoleculeList.getMoleculeByName( 'Acetic Acid' ), new Bounds2( 0, 0, 548, 373 ), false );
-      const transformMatrix = Molecule3DNode.initialTransforms[ MoleculeList.getMoleculeByName( 'Acetic Acid' ).getGeneralFormula() ];
-
+      const moleculeNode = new Molecule3DNode( MoleculeList.C2H4O2, new Bounds2( 0, 0, 548, 373 ), false );
+      const transformMatrix = Molecule3DNode.initialTransforms[ MoleculeList.C2H4O2.getGeneralFormula() ];
       if ( transformMatrix ) {
         moleculeNode.transformMolecule( transformMatrix );
       }
