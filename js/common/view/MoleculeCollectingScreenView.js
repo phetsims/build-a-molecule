@@ -62,6 +62,9 @@ define( require => {
       this.allFilledNode = new AllFilledNode(
         kitCollectionList.buttonClickedProperty,
         regenerateCallback, {
+          layoutStrategy: ( dialog, simBounds, screenBounds, scale ) => {
+            this.allFilledNode.center = screenBounds.center.times( 1.0 / scale ).minusXY( 75, 75 );
+          },
           showCallback: () => {
             this.kitCollectionList.buttonClickedProperty.value = false;
           },
@@ -109,6 +112,10 @@ define( require => {
 
       // notify attachment
       collectionAttachmentCallbacks.forEach( callback => { callback(); } );
+
+      this.visibleBoundsProperty.link( () => {
+        this.allFilledNode.center = BAMConstants.STAGE_SIZE.center;
+      } );
     }
 
     /**
