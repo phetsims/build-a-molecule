@@ -1,11 +1,11 @@
 {
-  "comment": "# build-a-molecule 0.0.0-dev.38 Thu Jan 09 2020 09:39:13 GMT-0500 (Eastern Standard Time)",
+  "comment": "# build-a-molecule 0.0.0-dev.39 Wed Jan 15 2020 15:31:34 GMT-0500 (Eastern Standard Time)",
   "assert": {
     "sha": "a99a9ce9ee0774bf3ef509bf3e31ca7383f67478",
     "branch": "master"
   },
   "axon": {
-    "sha": "96414114ff2051fbc1ba08cb6e8c9872e4d1bafe",
+    "sha": "88d12347d1b0137acc76c68559fc6f53757092b1",
     "branch": "master"
   },
   "brand": {
@@ -13,11 +13,11 @@
     "branch": "master"
   },
   "build-a-molecule": {
-    "sha": "ec442cdb03922713054227dbd23d13288e62dc5b",
+    "sha": "2a0001336d5f109abeb40b887cad229d9693d082",
     "branch": "master"
   },
   "chipper": {
-    "sha": "19697d1e24c5ac5b9027205c551b051b61bb4b58",
+    "sha": "9d6b7f73ae74b457e93e7bf32ecb3e1ef52ee1de",
     "branch": "master"
   },
   "dot": {
@@ -25,7 +25,7 @@
     "branch": "master"
   },
   "joist": {
-    "sha": "35bf62f6b28f5c1842b276b1f0db1ad4fe06f87a",
+    "sha": "f61e4e7e952ea0bbfde11a85a9a843752bb2d673",
     "branch": "master"
   },
   "kite": {
@@ -45,7 +45,7 @@
     "branch": "master"
   },
   "phet-io": {
-    "sha": "09ff0adb10ff7fe0b1d6a6ff2c629b99debd5fce",
+    "sha": "cbb0533412ec31a53c870676b829c3896b72cf37",
     "branch": "master"
   },
   "phet-io-wrappers": {
@@ -65,11 +65,11 @@
     "branch": "master"
   },
   "scenery": {
-    "sha": "5c36debac2382b1ca38ccb639617a32fdad61034",
+    "sha": "629eefb0c535f0a2524d32d0033ada4afce90be0",
     "branch": "master"
   },
   "scenery-phet": {
-    "sha": "6f5d20830e076f8bf7a036755a023de06b1a553f",
+    "sha": "c638434d558774dda09a8b2238835e95524465ab",
     "branch": "master"
   },
   "sherpa": {
@@ -85,15 +85,15 @@
     "branch": "master"
   },
   "tandem": {
-    "sha": "7755d259425d760b3b5d3e671b6b7e13b2e9b146",
+    "sha": "a936a25bdcb0450a546c32536b5310fdfc16b2f2",
     "branch": "master"
   },
   "twixt": {
-    "sha": "dc655adfa3252569d73ff22d81a56d06a8a7a96a",
+    "sha": "b6b758b7de1f2c8697e8bdbaa0c6f02734a84612",
     "branch": "master"
   },
   "utterance-queue": {
-    "sha": "3fd4e401b8d460f5d8a185a4caaea8650f35516d",
+    "sha": "f1900049196322ab46bef08fa94c97446f34d5dc",
     "branch": "master"
   },
   "vegas": {
