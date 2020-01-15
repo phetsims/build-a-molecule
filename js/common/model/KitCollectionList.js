@@ -10,6 +10,7 @@ define( require => {
   'use strict';
 
   // modules
+  const BooleanProperty = require( 'AXON/BooleanProperty' );
   const buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   const Emitter = require( 'AXON/Emitter' );
   const KitCollection = require( 'BUILD_A_MOLECULE/common/model/KitCollection' );
@@ -28,6 +29,9 @@ define( require => {
 
       // @public {Property.<KitCollection>}
       this.currentCollectionProperty = new Property( firstCollection );
+
+      // @public
+      this.buttonClickedProperty = new BooleanProperty( false );
 
       // @public {Emitter} - Fires single parameter of {KitCollection}
       this.addedCollectionEmitter = new Emitter( { parameters: [ { valueType: KitCollection } ] } );

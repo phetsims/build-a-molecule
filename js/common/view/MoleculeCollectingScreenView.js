@@ -18,6 +18,7 @@ define( require => {
   const Color = require( 'SCENERY/util/Color' );
   const PhetFont = require( 'SCENERY_PHET/PhetFont' );
   const Playable = require( 'TAMBO/Playable' );
+  const Property = require( 'AXON/Property' );
   const TextPushButton = require( 'SUN/buttons/TextPushButton' );
   const Shape = require( 'KITE/Shape' );
   const Vector2 = require( 'DOT/Vector2' );
@@ -34,18 +35,54 @@ define( require => {
      */
     constructor( kitCollectionList, isSingleCollectionMode, regenerateCallback ) {
       super( kitCollectionList );
+      this.kitCollectionList = kitCollectionList;
 
-      // @private
-      this.allFilledNode = new AllFilledNode();
+      // @private {TextPushButton} Create a next collection button
+      this.nextCollectionButton = new TextPushButton( nextCollectionString, {
+        centerX: this.layoutBounds.centerX - 100,
+        top: this.layoutBounds.top + BAMConstants.VIEW_PADDING,
+        font: new PhetFont( {
+          size: 18,
+          weight: 'bold',
+          maxWidth: BAMConstants.TEXT_MAX_WIDTH
+        } ),
+        baseColor: Color.ORANGE,
+        soundPlayer: Playable.NO_SOUND
+      } );
+      this.nextCollectionButton.touchArea = Shape.bounds( this.nextCollectionButton.localBounds.dilated( 20 ) );
+      this.nextCollectionButton.addListener( () => {
+        regenerateCallback();
+        kitCollectionList.buttonClickedProperty.value = false;
+        this.nextCollectionButton.visible = false;
+      } );
+      this.addChild( this.nextCollectionButton );
+      this.nextCollectionButton.visible = false;
+
+      // @private {Dialog} Dialog that shows when all the boxes are filled.
+      this.allFilledNode = new AllFilledNode(
+        kitCollectionList.buttonClickedProperty,
+        regenerateCallback, {
+          showCallback: () => {
+            this.kitCollectionList.buttonClickedProperty.value = false;
+          },
+          hideCallback: () => {
+            // this.nextCollectionButton.visible = !this.allFilledNode.isShowingProperty.value && !this.kitCollectionList.buttonClickedProperty.value;
+          }
+        }
+      );
+
+      Property.lazyMultilink( [ this.allFilledNode.isShowingProperty, this.kitCollectionList.buttonClickedProperty ],
+        ( isShowing, buttonClicked ) => {
+          this.nextCollectionButton.visible = !isShowing && !buttonClicked;
+        } );
       this.regenerateCallback = regenerateCallback;
-
 
       // Adjust play area and carousel bounds to compensate for CollectionPanel
       this.playAreaDragBounds.setMaxX( BAMConstants.KIT_VIEW_WIDTH );
       this.mappedKitCollectionBounds = this.kitCollectionMap[ this.kitCollectionList.currentCollectionProperty.value.id ].bounds.dilatedX( 15 );
       const collectionAttachmentCallbacks = [];
       const collectionPanel = new CollectionPanel(
-        kitCollectionList,
+        this.kitCollectionList,
         isSingleCollectionMode,
         collectionAttachmentCallbacks,
         node => {
@@ -88,29 +125,6 @@ define( require => {
       collection.allCollectionBoxesFilledProperty.link( filled => {
         if ( filled ) {
           if ( !hasShownOnce ) {
-            this.nextCollectionButton = new TextPushButton( nextCollectionString, {
-              centerX: this.layoutBounds.centerX - 100,
-              top: this.layoutBounds.top + BAMConstants.VIEW_PADDING,
-              font: new PhetFont( {
-                size: 18,
-                weight: 'bold',
-                maxWidth: BAMConstants.TEXT_MAX_WIDTH,
-                visible: false
-              } ),
-              baseColor: Color.ORANGE,
-              soundPlayer: Playable.NO_SOUND
-            } );
-            this.nextCollectionButton.touchArea = Shape.bounds( this.nextCollectionButton.localBounds.dilated( 20 ) );
-            this.nextCollectionButton.addListener( () => {
-              this.regenerateCallback();
-              this.nextCollectionButton.dispose();
-            } );
-            this.addChild( this.nextCollectionButton );
-
-            // Show the next collection button after the dialog has been disposed
-            this.allFilledNode.isShowingProperty.lazyLink( isShowing => {
-              this.nextCollectionButton.visible = !isShowing;
-            } );
             this.allFilledNode.show();
             hasShownOnce = true;
           }
