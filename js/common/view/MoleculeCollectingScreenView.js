@@ -67,9 +67,6 @@ define( require => {
           },
           showCallback: () => {
             this.kitCollectionList.buttonClickedProperty.value = false;
-          },
-          hideCallback: () => {
-            // this.nextCollectionButton.visible = !this.allFilledNode.isShowingProperty.value && !this.kitCollectionList.buttonClickedProperty.value;
           }
         }
       );
