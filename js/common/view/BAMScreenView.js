@@ -155,7 +155,7 @@ define( require => {
 
           // If the nextCollectionButton is present on screen hide it.
           if ( this.children.includes( this.nextCollectionButton ) ) {
-            this.nextCollectionButton.visible = false
+            this.nextCollectionButton.visible = false;
           }
         },
         right: this.layoutBounds.right - BAMConstants.VIEW_PADDING * 1.3,
