@@ -37,6 +37,9 @@ define( require => {
       super( kitCollectionList );
       this.kitCollectionList = kitCollectionList;
 
+      // @private
+      this.hasShownOnce = false;
+
       // @private {TextPushButton} Create a next collection button
       this.nextCollectionButton = new TextPushButton( nextCollectionString, {
         centerX: this.layoutBounds.centerX - 100,
@@ -110,6 +113,11 @@ define( require => {
       // notify attachment
       collectionAttachmentCallbacks.forEach( callback => { callback(); } );
 
+      // Affects whether the AllFilledNode will show after resetting.
+      this.resetAllButton.addListener( () => {
+        this.hasShownOnce = false;
+      } );
+
       // Adjust the center of the AllFilledNode
       this.visibleBoundsProperty.link( () => {
         this.allFilledNode.center = BAMConstants.STAGE_SIZE.center;
@@ -124,14 +132,14 @@ define( require => {
      */
     addCollection( collection ) {
       const kitCollectionNode = BAMScreenView.prototype.addCollection.call( this, collection, true );
-      let hasShownOnce = false;
+      this.hasShownOnce = false;
 
       // show dialog the 1st time all collection boxes are filled
       collection.allCollectionBoxesFilledProperty.link( filled => {
         if ( filled ) {
-          if ( !hasShownOnce ) {
+          if ( !this.hasShownOnce ) {
             this.allFilledNode.show();
-            hasShownOnce = true;
+            this.hasShownOnce = true;
           }
         }
       } );

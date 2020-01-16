@@ -153,9 +153,9 @@ define( require => {
           kitPanel.reset();
           this.updateRefillButton();
 
-          // If the nextCollectionButton is present on screen dispose it.
+          // If the nextCollectionButton is present on screen hide it.
           if ( this.children.includes( this.nextCollectionButton ) ) {
-            this.removeChild( this.nextCollectionButton );
+            this.nextCollectionButton.visible = false
           }
         },
         right: this.layoutBounds.right - BAMConstants.VIEW_PADDING * 1.3,

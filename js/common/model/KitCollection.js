@@ -139,6 +139,7 @@ define( require => {
       this.collectionBoxes.forEach( box => { box.reset(); } );
       this.kits.forEach( kit => { kit.reset(); } );
       this.hasBlinkedOnce = false;
+      this.allCollectionBoxesFilledProperty.reset();
     }
   }
 
