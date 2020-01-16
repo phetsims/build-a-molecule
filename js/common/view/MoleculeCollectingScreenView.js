@@ -110,6 +110,7 @@ define( require => {
       // notify attachment
       collectionAttachmentCallbacks.forEach( callback => { callback(); } );
 
+      // Adjust the center of the AllFilledNode
       this.visibleBoundsProperty.link( () => {
         this.allFilledNode.center = BAMConstants.STAGE_SIZE.center;
       } );
