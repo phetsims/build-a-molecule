@@ -25,8 +25,8 @@ define( require => {
   const VBox = require( 'SCENERY/nodes/VBox' );
 
   // constants
-  const MOLECULE_PADDING = 5;
-  const BLACK_BOX_PADDING = BAMConstants.HAS_3D ? 10 : 0;
+  const MOLECULE_PADDING = 0;
+  const BLACK_BOX_PADDING = BAMConstants.HAS_3D ? 7 : 0;
 
   class CollectionBoxNode extends VBox {
     /**
@@ -197,7 +197,9 @@ define( require => {
 
       // center in the black box
       if ( this.box.quantityProperty.value > 0 ) {
-        this.centerMoleculesInBlackBox();
+
+        // Molecule centering is adjusted for MultipleCollectionBoxNodes.
+        this.centerMoleculesInBlackBox( this.box.capacity > 1 );
       }
     }
 
@@ -229,18 +231,22 @@ define( require => {
     }
 
     /**
+     * Center the molecules, while considering if the black box can fit multiple molecules
+     * @param {Boolean} isMultipleCollectionBox
      * @private
      */
-    centerMoleculesInBlackBox() {
+    centerMoleculesInBlackBox( isMultipleCollectionBox ) {
       const moleculeArea = this.getMoleculeAreaInBlackBox();
 
       // for now, we scale the molecules up and down depending on their size
-      this.moleculeLayer.setScaleMagnitude( 1 );
+      isMultipleCollectionBox ? this.moleculeLayer.setScaleMagnitude( 1.23 ) : this.moleculeLayer.setScaleMagnitude( 1 );
       const xScale = ( moleculeArea.width - 5 ) / this.moleculeLayer.width;
       const yScale = ( moleculeArea.height - 5 ) / this.moleculeLayer.height;
       this.moleculeLayer.setScaleMagnitude( Math.min( xScale, yScale ) );
 
-      this.moleculeLayer.center = moleculeArea.center.minus( moleculeArea.leftTop );
+      // Shift the molecule center for MultipleCollectionBoxNodes
+      const shiftX = isMultipleCollectionBox ? 15 : 0;
+      this.moleculeLayer.center = moleculeArea.center.minus( moleculeArea.leftTop.plusXY( shiftX, 0 ) );
     }
 
     /**
