@@ -24,7 +24,6 @@ define( require => {
   const MoleculeCollectingScreenView = require( 'BUILD_A_MOLECULE/common/view/MoleculeCollectingScreenView' );
   const MoleculeList = require( 'BUILD_A_MOLECULE/common/model/MoleculeList' );
   const Rectangle = require( 'SCENERY/nodes/Rectangle' );
-  // const VBox = require( 'SCENERY/nodes/VBox' );
 
   // strings
   const titleMultipleString = require( 'string!BUILD_A_MOLECULE/title.multiple' );
@@ -39,8 +38,7 @@ define( require => {
         moleculeNodeOne.transformMolecule( transformMatrix );
       }
       moleculeNodeOne.draw();
-      // moleculeNodeOne.scale = 0.8;
-      const nodeOne = new Image( moleculeNodeOne.canvas.toDataURL() );
+      const moleculeIconOne = new Image( moleculeNodeOne.canvas.toDataURL(), { scale: .50 } );
 
       // Iconize second O2 molecule
       const moleculeNodeTwo = new Molecule3DNode( MoleculeList.O2, new Bounds2( 0, 0, 548, 373 ), false );
@@ -48,17 +46,16 @@ define( require => {
         moleculeNodeTwo.transformMolecule( transformMatrix );
       }
       moleculeNodeTwo.draw();
-      // moleculeNodeTwo.scale = 0.8;
-      const nodeTwo = new Image( moleculeNodeTwo.canvas.toDataURL() );
+      const moleculeIconTwo = new Image( moleculeNodeTwo.canvas.toDataURL(), { scale: .50 } );
 
       // Wrapper node to house molecule icons
       const wrapperNode = new Rectangle( 0, 0, 548, 373 );
-      // const contentVBox = new VBox( { align: 'center' } );
+      wrapperNode.addChild( moleculeIconOne );
+      wrapperNode.addChild( moleculeIconTwo );
 
-      wrapperNode.addChild( nodeOne );
-      wrapperNode.addChild( nodeTwo );
-      // wrapperNode.addChild( contentVBox );
-
+      // Adjust the position of the molecule icons.
+      moleculeIconOne.center = wrapperNode.center.minusXY( 250, 100 );
+      moleculeIconTwo.center = wrapperNode.center.minusXY( 0, 100 );
       const options = {
         name: titleMultipleString,
         homeScreenIcon: wrapperNode
