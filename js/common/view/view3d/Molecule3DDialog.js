@@ -60,7 +60,8 @@ define( require => {
         fill: 'black',
         xAlign: 'center',
         title: title,
-        resize: false
+        resize: false,
+        closeButtonColor: 'white'
       } );
 
       // @public {BooleanProperty} Property used for playing/pausing a rotating molecule
