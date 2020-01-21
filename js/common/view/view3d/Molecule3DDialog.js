@@ -92,7 +92,7 @@ define( require => {
       const buttonTextOptions = {
         font: new PhetFont( 18 ),
         fill: 'white',
-        maxWidth: BAMConstants.TEXT_MAX_WIDTH
+        maxWidth: BAMConstants.TEXT_MAX_WIDTH - 100
       };
       const spaceFillText = new Text( spaceFillString, buttonTextOptions );
       const ballAndStickText = new Text( ballAndStickString, buttonTextOptions );
