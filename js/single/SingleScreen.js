@@ -77,7 +77,7 @@ define( require => {
         },
 
         // CollectionLayout
-        new CollectionLayout(), ( bounds, stepEmitter ) => {
+        new CollectionLayout( true ), ( bounds, stepEmitter ) => {
           return BAMScreen.generateKitCollection( false, 5, stepEmitter, bounds );
         },
 

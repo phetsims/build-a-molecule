@@ -54,7 +54,7 @@ define( require => {
       this.addCollection( kitCollectionList.currentCollectionProperty.value, false );
 
       // @public {Bounds2} Bounds used to limit where molecules can reside in the play area.
-      this.playAreaDragBounds = new Bounds2( -1500, -250, 1450, 800 );
+      this.playAreaDragBounds = kitCollectionList.currentCollectionProperty.value.currentKitProperty.value.collectionLayout.availablePlayAreaBounds;
       this.atomDragBounds = new Bounds2( -1575, -850, 1575, 950 );
       this.mappedKitCollectionBounds = this.kitCollectionMap[ this.kitCollectionList.currentCollectionProperty.value.id ].bounds.dilatedX( 60 );
 
@@ -351,6 +351,7 @@ define( require => {
     addAtomNodeToPlayArea( atom ) {
       const currentKit = this.kitCollectionList.currentCollectionProperty.value.currentKitProperty.value;
       const atomNode = this.addAtomNodeToPlayAreaNode( atom );
+      atom.separateMoleculeEmitter.addListener( currentKit.separateMoleculeDestinations.bind( currentKit ) );
       let lastPosition;
 
       // Track the length of a drag in model units

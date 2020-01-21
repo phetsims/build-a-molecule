@@ -118,7 +118,7 @@ define( require => {
         },
 
         // CollectionLayout
-        new CollectionLayout(), () => {
+        new CollectionLayout( false ), () => {
           throw new Error( 'There are no more kit collections in the 3rd tab' );
         },
 

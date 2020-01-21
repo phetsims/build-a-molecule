@@ -51,9 +51,10 @@ define( require => {
       // @private {number} Valid values 0 <= x <= 1. Used to adjust rate of animation completion.
       this.animationProgress = 0;
 
-      // @public {Emitter} - Called with one parameter: particle
+      // @public {Emitter}
       this.grabbedByUserEmitter = new Emitter( { parameters: [ { valueType: Atom2 } ] } );
       this.droppedByUserEmitter = new Emitter( { parameters: [ { valueType: Atom2 } ] } );
+      this.separateMoleculeEmitter = new Emitter();
 
       // @public {Emitter}
       this.stepEmitter = stepEmitter;
@@ -138,6 +139,7 @@ define( require => {
       if ( this.animationProgress === 1 ) {
         this.isAnimatingProperty.set( false );
         this.animationProgress = 0;
+        this.separateMoleculeEmitter.emit();
       }
     }
 

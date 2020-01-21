@@ -18,9 +18,10 @@ define( require => {
     /**
      * Construct the necessary layout.
      *
+     * @param {Boolean} hasCollectionPanel - flag used to scale available bounds width to compensate for collection panel
      * @constructor
      */
-    constructor() {
+    constructor( hasCollectionPanel ) {
       const availableWidth = BAMConstants.MODEL_SIZE.width - 2 * BAMConstants.MODEL_PADDING; // minus padding
       const halfWidth = availableWidth / 2;
 
@@ -28,14 +29,16 @@ define( require => {
       const kitHeight = 550;
       const kitTop = kitBottom + kitHeight;
 
-      // leave room for collection area
-      this.availableKitBounds = new Rectangle( -halfWidth, kitBottom, availableWidth * .75, kitHeight );
+      // scale width to leave room for the collection panel
+      const kitAvailableWidth = hasCollectionPanel ? 0.75 : 1;
+      this.availableKitBounds = new Rectangle( -halfWidth, kitBottom, availableWidth * kitAvailableWidth, kitHeight );
 
       this.availablePlayAreaBounds = new Rectangle(
         -BAMConstants.MODEL_SIZE.width / 2, // far left part of model
         kitTop, // top of kit
         this.availableKitBounds.width + BAMConstants.MODEL_PADDING * 2, // add in padding, since there is padding in-between the kit and collection area
-        BAMConstants.MODEL_SIZE.height / 2 - kitTop );
+        BAMConstants.MODEL_SIZE.height / 2 - kitTop
+      );
     }
   }
 
