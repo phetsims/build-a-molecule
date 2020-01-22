@@ -13,7 +13,6 @@ define( require => {
   const Atom = require( 'NITROGLYCERIN/Atom' );
   const BooleanProperty = require( 'AXON/BooleanProperty' );
   const buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
-  const Easing = require( 'TWIXT/Easing' );
   const Emitter = require( 'AXON/Emitter' );
   const Rectangle = require( 'DOT/Rectangle' );
   const Strings = require( 'BUILD_A_MOLECULE/Strings' );
@@ -44,13 +43,6 @@ define( require => {
       this.isAnimatingProperty = new BooleanProperty( false );
       this.isSeparatingProperty = new BooleanProperty( false );
 
-      // @private {Vector2|null} Used for animating the molecules to a position constrained in play area bounds
-      this.animationStartPosition = null;
-      this.animationEndPosition = null;
-
-      // @private {number} Valid values 0 <= x <= 1. Used to adjust rate of animation completion.
-      this.animationProgress = 0;
-
       // @public {Emitter}
       this.grabbedByUserEmitter = new Emitter( { parameters: [ { valueType: Atom2 } ] } );
       this.droppedByUserEmitter = new Emitter( { parameters: [ { valueType: Atom2 } ] } );
@@ -79,9 +71,6 @@ define( require => {
       this.userControlledProperty.lazyLink( controlled => {
         if ( controlled ) {
           this.grabbedByUserEmitter.emit( this );
-
-          // Interrupt animation process
-          this.interruptAnimation( controlled );
         }
         else {
           this.droppedByUserEmitter.emit( this );
@@ -105,41 +94,6 @@ define( require => {
     step( dt ) {
       if ( this.isSeparatingProperty.value ) {
         this.stepAtomTowardsDestination( dt );
-      }
-
-      // Handle animation process
-      if ( this.isAnimatingProperty.value ) {
-        this.animate( dt );
-      }
-    }
-
-    /**
-     * Handle animating returning atoms to a position constrained within play area.
-     *
-     * @param {number} dt
-     * @private
-     */
-    animate( dt ) {
-      const distance = this.animationStartPosition.distance( this.animationEndPosition );
-      if ( distance > 0 ) {
-
-        // Responsible for the tempo of the animation.
-        this.animationProgress = Math.min( 1, this.animationProgress + dt * 2 );
-        const ratio = Easing.CUBIC_IN_OUT.value( this.animationProgress );
-
-        // Update the position of the atom
-        this.positionProperty.set( this.animationStartPosition.blend( this.animationEndPosition, ratio ) );
-      }
-
-      // At this point the animation has completed
-      else {
-        this.animationProgress = 1;
-        this.destinationProperty.value = this.positionProperty.value;
-      }
-      if ( this.animationProgress === 1 ) {
-        this.isAnimatingProperty.set( false );
-        this.animationProgress = 0;
-        this.separateMoleculeEmitter.emit();
       }
     }
 
@@ -178,16 +132,6 @@ define( require => {
       }
     }
 
-    /**
-     * Interrupt and reset the animation progress if a user controls an atom.
-     *
-     * @param {boolean} userControlled - User is controlling the atom
-     */
-    interruptAnimation( userControlled ) {
-      this.isAnimatingProperty.set( !userControlled );
-      this.animationProgress = 0;
-    }
-
     setPosition( x, y ) {
       this.positionProperty.value = new Vector2( x, y );
     }
@@ -213,9 +157,6 @@ define( require => {
       this.visibleProperty.reset();
       this.addedToModelProperty.reset();
       this.destinationProperty.value = this.positionProperty.value;
-
-      // Treat animation interruption as if it is userControlled.
-      this.interruptAnimation( true );
     }
   }
 

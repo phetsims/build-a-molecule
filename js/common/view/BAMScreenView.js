@@ -58,7 +58,6 @@ define( require => {
       this.atomDragBounds = new Bounds2( -1575, -850, 1575, 950 );
       this.mappedKitCollectionBounds = this.kitCollectionMap[ this.kitCollectionList.currentCollectionProperty.value.id ].bounds.dilatedX( 60 );
 
-
       // @public Dialog used for representing 3D molecules.
       // Only create a dialog if webgl is enabled. See https://github.com/phetsims/build-a-molecule/issues/105
       this.dialog = ThreeUtils.isWebGLEnabled() ? new Molecule3DDialog( new Property( null ) ) : new WarningDialog();
@@ -374,7 +373,6 @@ define( require => {
           if ( molecule ) {
             molecule.atoms.forEach( moleculeAtom => {
               if ( moleculeAtom ) {
-                moleculeAtom.interruptAnimation( atom.userControlledProperty.value );
                 moleculeAtom.destinationProperty.value = moleculeAtom.positionProperty.value;
               }
             } );
@@ -421,28 +419,9 @@ define( require => {
 
           // Keep track of view elements used later in the callback
           const mappedAtomNode = this.kitPlayAreaNode.atomNodeMap[ atom.id ];
-          const molecule = currentKit.getMolecule( atom );
 
           // Responsible for dropping molecules in play area or kit area
           const droppedInKitArea = mappedAtomNode && mappedAtomNode.bounds.intersectsBounds( this.mappedKitCollectionBounds );
-
-          // Set the atom position to the closest position within the play area bounds, unless it's dropped in kit area.
-          if ( !this.playAreaDragBounds.containsPoint( atom.positionProperty.value ) && !droppedInKitArea ) {
-            this.setAnimationParameters( atom, this.playAreaDragBounds.closestPointTo( atom.positionProperty.value ) );
-
-            // Track changed position of atom after returning to constrained bounds.
-            // All atoms bonded to the dragged atom need to be offset by this delta.
-            const delta = atom.animationEndPosition.minus( atom.animationStartPosition );
-
-            // Every other atom in the molecule should update its position with the same delta.
-            if ( molecule ) {
-              molecule.atoms.forEach( moleculeAtom => {
-                if ( moleculeAtom !== atom ) {
-                  this.setAnimationParameters( moleculeAtom, moleculeAtom.positionProperty.value.plus( delta ) );
-                }
-              } );
-            }
-          }
 
           // Responsible for bonding molecules in play area or breaking molecule bonds and returning to kit.
           // We don't want to do this while the molecule is animating.
@@ -456,19 +435,6 @@ define( require => {
       } );
       atomNode.dragListener = atomListener;
       atomNode.addInputListener( atomListener );
-    }
-
-    /**
-     * Sets animation end and start positions.
-     *
-     * @param atom {Atom2}
-     * @param animationEndPosition {Vector2}
-     * @private
-     */
-    setAnimationParameters( atom, animationEndPosition ) {
-      atom.animationStartPosition = atom.positionProperty.value;
-      atom.animationEndPosition = animationEndPosition;
-      atom.isAnimatingProperty.set( true );
     }
 
     /**

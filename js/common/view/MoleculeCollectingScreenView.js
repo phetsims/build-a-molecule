@@ -81,7 +81,8 @@ define( require => {
       this.regenerateCallback = regenerateCallback;
 
       // Adjust play area and carousel bounds to compensate for CollectionPanel
-      this.playAreaDragBounds = kitCollectionList.currentCollectionProperty.value.currentKitProperty.value.collectionLayout.availablePlayAreaBounds;
+      const collectionLayout = kitCollectionList.currentCollectionProperty.value.currentKitProperty.value.collectionLayout;
+      this.playAreaDragBounds = collectionLayout.availablePlayAreaBounds.withMaxX( collectionLayout.availableKitBounds.width );
       this.mappedKitCollectionBounds = this.kitCollectionMap[ this.kitCollectionList.currentCollectionProperty.value.id ].bounds.dilatedX( 15 );
       const collectionAttachmentCallbacks = [];
       const collectionPanel = new CollectionPanel(
