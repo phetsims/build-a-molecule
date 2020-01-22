@@ -56,6 +56,9 @@ define( require => {
   const SO2Node = require( 'NITROGLYCERIN/nodes/SO2Node' );
   const SO3Node = require( 'NITROGLYCERIN/nodes/SO3Node' );
 
+  // constants
+  const OFFSET = 2.5; // used to model our atoms with only 2d data into a 3d representation
+
   // Node types used for molecules
   const nodeTypes = [
     Cl2Node, CO2Node, CO2Node, CS2Node, F2Node, H2Node, N2Node, NONode, N2ONode, O2Node, C2H2Node, C2H4Node, C2H5ClNode,
@@ -296,8 +299,8 @@ define( require => {
       this.x2d = x2d;
       this.y2d = y2d;
 
-      // 3d representation uses only 2d data
-      this.x3d = x2d;
+      // 3d representation uses only 2d data but is adjusted by an offset
+      this.x3d = x2d - OFFSET;
       this.y3d = y2d;
       this.z3d = 0;
     }
