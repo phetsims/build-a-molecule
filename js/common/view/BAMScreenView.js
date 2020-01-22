@@ -396,9 +396,7 @@ define( require => {
           if ( molecule ) {
             molecule.atoms.forEach( moleculeAtom => {
               if ( moleculeAtom !== atom ) {
-                moleculeAtom.isSeparatingProperty.value = true;
                 moleculeAtom.translatePositionAndDestination( delta );
-                moleculeAtom.isSeparatingProperty.value = false;
               }
             } );
           }
@@ -425,9 +423,7 @@ define( require => {
 
           // Responsible for bonding molecules in play area or breaking molecule bonds and returning to kit.
           // We don't want to do this while the molecule is animating.
-          if ( !atom.isAnimatingProperty.value ) {
             currentKit.atomDropped( atom, droppedInKitArea );
-          }
 
           // Make sure to update the update button after moving atoms
           this.updateRefillButton();

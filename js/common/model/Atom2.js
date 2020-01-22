@@ -40,7 +40,6 @@ define( require => {
       this.userControlledProperty = new BooleanProperty( false );
       this.visibleProperty = new BooleanProperty( true );
       this.addedToModelProperty = new BooleanProperty( true );
-      this.isAnimatingProperty = new BooleanProperty( false );
       this.isSeparatingProperty = new BooleanProperty( false );
 
       // @public {Emitter}

@@ -613,6 +613,7 @@ define( require => {
 
         // all other atoms
         this.atoms.forEach( otherAtom => {
+
           // disallow loops in an already-connected molecule
           if ( this.getMolecule( otherAtom ) === molecule ) {
             return; // continue, in the inner loop
@@ -677,7 +678,10 @@ define( require => {
      * @returns {boolean}
      */
     canBond( a, b ) {
-      return this.getMolecule( a ) !== this.getMolecule( b ) && this.isAllowedStructure( this.getPossibleMoleculeStructureFromBond( a, b ) );
+      return this.getMolecule( a ) !== this.getMolecule( b ) &&
+             this.isAllowedStructure( this.getPossibleMoleculeStructureFromBond( a, b ) ) &&
+             !a.isSeparatingProperty.value &&
+             !b.isSeparatingProperty.value;
     }
 
     /**
