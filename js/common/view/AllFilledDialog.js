@@ -29,7 +29,7 @@ define( require => {
   const nextCollectionString = require( 'string!BUILD_A_MOLECULE/nextCollection' );
   const youCompletedYourCollectionString = require( 'string!BUILD_A_MOLECULE/youCompletedYourCollection' );
 
-  class AllFilledNode extends Dialog {
+  class AllFilledDialog extends Dialog {
     /**
      * @param {BooleanProperty} buttonClickedProperty
      * @param {Function} regenerateCallback
@@ -82,5 +82,5 @@ define( require => {
     }
   }
 
-  return buildAMolecule.register( 'AllFilledNode', AllFilledNode );
+  return buildAMolecule.register( 'AllFilledDialog', AllFilledDialog );
 } );

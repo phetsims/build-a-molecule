@@ -10,7 +10,7 @@ define( require => {
   'use strict';
 
   // modules
-  const AllFilledNode = require( 'BUILD_A_MOLECULE/common/view/AllFilledNode' );
+  const AllFilledDialog = require( 'BUILD_A_MOLECULE/common/view/AllFilledDialog' );
   const BAMConstants = require( 'BUILD_A_MOLECULE/common/BAMConstants' );
   const BAMScreenView = require( 'BUILD_A_MOLECULE/common/view/BAMScreenView' );
   const buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
@@ -62,11 +62,11 @@ define( require => {
       this.nextCollectionButton.visible = false;
 
       // @private {Dialog} Dialog that shows when all the boxes are filled.
-      this.allFilledNode = new AllFilledNode(
+      this.AllFilledDialog = new AllFilledDialog(
         kitCollectionList.buttonClickedProperty,
         regenerateCallback, {
           layoutStrategy: ( dialog, simBounds, screenBounds, scale ) => {
-            this.allFilledNode.center = screenBounds.center.times( 1.0 / scale ).minusXY( 75, 75 );
+            this.AllFilledDialog.center = screenBounds.center.times( 1.0 / scale ).minusXY( 75, 75 );
           },
           showCallback: () => {
             this.kitCollectionList.buttonClickedProperty.value = false;
@@ -74,7 +74,7 @@ define( require => {
         }
       );
 
-      Property.lazyMultilink( [ this.allFilledNode.isShowingProperty, this.kitCollectionList.buttonClickedProperty ],
+      Property.lazyMultilink( [ this.AllFilledDialog.isShowingProperty, this.kitCollectionList.buttonClickedProperty ],
         ( isShowing, buttonClicked ) => {
           this.nextCollectionButton.visible = !isShowing && !buttonClicked;
         } );
@@ -114,14 +114,14 @@ define( require => {
       // notify attachment
       collectionAttachmentCallbacks.forEach( callback => { callback(); } );
 
-      // Affects whether the AllFilledNode will show after resetting.
+      // Affects whether the AllFilledDialog will show after resetting.
       this.resetAllButton.addListener( () => {
         this.hasShownOnce = false;
       } );
 
-      // Adjust the center of the AllFilledNode
+      // Adjust the center of the AllFilledDialog
       this.visibleBoundsProperty.link( () => {
-        this.allFilledNode.center = BAMConstants.STAGE_SIZE.center;
+        this.AllFilledDialog.center = BAMConstants.STAGE_SIZE.center;
       } );
     }
 
@@ -139,7 +139,7 @@ define( require => {
       collection.allCollectionBoxesFilledProperty.link( filled => {
         if ( filled ) {
           if ( !this.hasShownOnce ) {
-            this.allFilledNode.show();
+            this.AllFilledDialog.show();
             this.hasShownOnce = true;
           }
         }
