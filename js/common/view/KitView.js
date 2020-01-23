@@ -177,7 +177,6 @@ define( require => {
 
               // Remove the atom from the bucket's model and trigger its removal from the atomLayer in the view.
               particleRemovedListener( atom );
-              atom.inBucketProperty.value = false;
 
               // Get reference to atomNode and call the dragListener
               const atomNode = moleculeCollectingScreenView.kitPlayAreaNode.atomNodeMap[ atom.id ];

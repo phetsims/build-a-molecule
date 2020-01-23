@@ -36,7 +36,6 @@ define( require => {
       this.destinationProperty = new Vector2Property( Vector2.ZERO );
 
       // @public {BooleanProperty} All atoms start off in the bucket and a link is used to trigger removal.
-      this.inBucketProperty = new BooleanProperty( true );
       this.userControlledProperty = new BooleanProperty( false );
       this.visibleProperty = new BooleanProperty( true );
       this.addedToModelProperty = new BooleanProperty( true );
