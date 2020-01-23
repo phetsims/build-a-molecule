@@ -680,8 +680,8 @@ define( require => {
     canBond( a, b ) {
       return this.getMolecule( a ) !== this.getMolecule( b ) &&
              this.isAllowedStructure( this.getPossibleMoleculeStructureFromBond( a, b ) ) &&
-             !a.isSeparatingProperty.value &&
-             !b.isSeparatingProperty.value;
+             this.collectionLayout.availablePlayAreaBounds.containsPoint( a.positionProperty.value ) &&
+             this.collectionLayout.availablePlayAreaBounds.containsPoint( b.positionProperty.value );
     }
 
     /**
