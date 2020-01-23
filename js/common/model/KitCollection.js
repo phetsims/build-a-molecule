@@ -91,15 +91,11 @@ define( require => {
           box.cueVisibilityProperty.value = box.willAllowMoleculeDrop( molecule );
           if ( box.willAllowMoleculeDrop( molecule ) && !this.hasBlinkedOnce ) {
             box.acceptedMoleculeCreationEmitter.emit( molecule );
+            box.cueVisibilityProperty.value = true;
             this.hasBlinkedOnce = true;
           }
         } );
 
-        // kit.atomsInPlayArea.addItemAddedListener( () => {
-        //   this.collectionBoxes.forEach( box => {
-        //     box.cueVisibilityProperty.value = box.willAllowMoleculeDrop( molecule );
-        //   } );
-        // } );
         kit.atomsInPlayArea.addItemRemovedListener( () => {
           this.collectionBoxes.forEach( box => {
             box.cueVisibilityProperty.value = box.willAllowMoleculeDrop( molecule );

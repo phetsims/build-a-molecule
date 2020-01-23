@@ -294,6 +294,15 @@ define( require => {
       if ( this.dialog && ThreeUtils.isWebGLEnabled() ) {
         this.dialog.step( dt );
       }
+
+      // Update the visibility of the cues in each collection box
+      let hasTargetMolecule = false;
+      this.kitCollectionList.currentCollectionProperty.value.collectionBoxes.forEach( box => {
+        this.kitPlayAreaNode.currentKit.molecules.forEach( molecule => {
+          hasTargetMolecule = molecule ? box.willAllowMoleculeDrop( molecule ) : hasTargetMolecule || false;
+        } );
+        box.cueVisibilityProperty.value = hasTargetMolecule;
+      } );
     }
 
     /**
