@@ -48,6 +48,7 @@ define( require => {
     TEXT_MAX_WIDTH: 200,
     BUTTON_PADDING: 5, // vertical space between molecule and name/buttons
     RESET_BUTTON_RADIUS: 27,
+    CORNER_RADIUS: 4,
     KIT_VIEW_HEIGHT: 148, // empirically determined as the height of the tallest bucket of atoms
     KIT_VIEW_WIDTH: 655, // empirically determined as the width of the kit panel,
 

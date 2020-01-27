@@ -42,7 +42,7 @@ define( require => {
     constructor( kitCollectionList, isSingleCollectionMode, collectionAttachmentCallbacks, toModelBounds,
                  showDialogCallback, updateRefillButton, options ) {
       options = merge( {
-        cornerRadius: 0
+        cornerRadius: BAMConstants.CORNER_RADIUS
       }, options );
       const layoutNode = new VBox( { spacing: 10 } );
       super( layoutNode, options );

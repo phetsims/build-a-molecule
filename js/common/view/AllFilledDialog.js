@@ -41,7 +41,7 @@ define( require => {
         stroke: 'black',
         fill: BAMConstants.COMPLETE_BACKGROUND_COLOR,
         center: new Vector2( 0, 0 ),
-        cornerRadius: 0
+        cornerRadius: BAMConstants.CORNER_RADIUS
       }, options );
       const contentVBox = new VBox( { spacing: 5, align: 'center' } );
 
