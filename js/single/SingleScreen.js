@@ -9,6 +9,7 @@ define( require => {
   'use strict';
 
   // modules
+  const BAMConstants = require( 'BUILD_A_MOLECULE/common/BAMConstants' );
   const BAMScreen = require( 'BUILD_A_MOLECULE/common/view/BAMScreen' );
   const Bounds2 = require( 'DOT/Bounds2' );
   const Bucket = require( 'BUILD_A_MOLECULE/common/model/Bucket' );
@@ -42,7 +43,9 @@ define( require => {
       }
       moleculeNode.draw();
       const node = new Image( moleculeNode.canvas.toDataURL() );
-      const wrapperNode = new Rectangle( 0, 0, 548, 373 );
+      const wrapperNode = new Rectangle( 0, 0, 548, 373, {
+        fill: BAMConstants.CANVAS_BACKGROUND_COLOR
+      } );
       wrapperNode.addChild( node );
 
       const options = {
