@@ -157,8 +157,8 @@ define( require => {
             this.nextCollectionButton.visible = false;
           }
         },
-        right: this.layoutBounds.right - BAMConstants.VIEW_PADDING * 1.3,
-        bottom: this.layoutBounds.bottom - BAMConstants.VIEW_PADDING * 0.5
+        right: this.layoutBounds.right,
+        bottom: kitPanel.bottom - BAMConstants.VIEW_PADDING / 2
       } );
       this.resetAllButton.touchArea = Shape.bounds( this.resetAllButton.bounds.dilated( 7 ) );
       this.addChild( this.resetAllButton );
@@ -432,7 +432,7 @@ define( require => {
 
           // Responsible for bonding molecules in play area or breaking molecule bonds and returning to kit.
           // We don't want to do this while the molecule is animating.
-            currentKit.atomDropped( atom, droppedInKitArea );
+          currentKit.atomDropped( atom, droppedInKitArea );
 
           // Make sure to update the update button after moving atoms
           this.updateRefillButton();
