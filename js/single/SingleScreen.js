@@ -42,11 +42,14 @@ define( require => {
         moleculeNode.transformMolecule( transformMatrix );
       }
       moleculeNode.draw();
-      const node = new Image( moleculeNode.canvas.toDataURL() );
+      const moleculeIcon = new Image( moleculeNode.canvas.toDataURL(), { scale: .85 } );
       const wrapperNode = new Rectangle( 0, 0, 548, 373, {
         fill: BAMConstants.CANVAS_BACKGROUND_COLOR
       } );
-      wrapperNode.addChild( node );
+      wrapperNode.addChild( moleculeIcon );
+
+      // Adjust the position of the molecule icons.
+      moleculeIcon.center = wrapperNode.center.minusXY( 240, 140 );
 
       const options = {
         name: titleSingleString,

@@ -57,8 +57,8 @@ define( require => {
       wrapperNode.addChild( moleculeIconTwo );
 
       // Adjust the position of the molecule icons.
-      moleculeIconOne.center = wrapperNode.center.minusXY( 250, 100 );
-      moleculeIconTwo.center = wrapperNode.center.minusXY( 0, 100 );
+      moleculeIconOne.center = wrapperNode.center.minusXY( 270, 85 );
+      moleculeIconTwo.center = wrapperNode.center.minusXY( 5, 85 );
       const options = {
         name: titleMultipleString,
         homeScreenIcon: wrapperNode

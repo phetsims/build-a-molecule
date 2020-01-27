@@ -41,11 +41,12 @@ define( require => {
         moleculeNode.transformMolecule( transformMatrix );
       }
       moleculeNode.draw();
-      const node = new Image( moleculeNode.canvas.toDataURL() );
+      const moleculeIcon = new Image( moleculeNode.canvas.toDataURL() );
       const wrapperNode = new Rectangle( 0, 0, 548, 373, {
         fill: BAMConstants.CANVAS_BACKGROUND_COLOR
       } );
-      wrapperNode.addChild( node );
+      wrapperNode.addChild( moleculeIcon );
+      moleculeIcon.center = wrapperNode.center.minusXY( 275, 185 );
 
       const options = {
         name: titlePlaygroundString,
