@@ -12,6 +12,7 @@ define( require => {
   // modules
   const BAMConstants = require( 'BUILD_A_MOLECULE/common/BAMConstants' );
   const buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
+  const BuildAMoleculeQueryParameters = require( 'BUILD_A_MOLECULE/common/BuildAMoleculeQueryParameters' );
   const CollectionAreaNode = require( 'BUILD_A_MOLECULE/common/view/CollectionAreaNode' );
   const merge = require( 'PHET_CORE/merge' );
   const NextPreviousNavigationNode = require( 'SCENERY_PHET/NextPreviousNavigationNode' );
@@ -69,7 +70,9 @@ define( require => {
         maxWidth: BAMConstants.TEXT_MAX_WIDTH
       } );
       kitCollectionList.currentCollectionProperty.link( () => {
-        currentCollectionText.text = StringUtils.fillIn( collectionPatternString, { number: kitCollectionList.currentIndex + 1 } );
+        currentCollectionText.text = StringUtils.fillIn( collectionPatternString, {
+          number: kitCollectionList.currentIndex + BuildAMoleculeQueryParameters.skipLevels
+        } );
       } );
 
       // Used to cycle through collections when a collection has bee completed.
