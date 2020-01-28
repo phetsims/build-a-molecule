@@ -41,9 +41,10 @@ define( require => {
         stroke: 'black',
         fill: BAMConstants.COMPLETE_BACKGROUND_COLOR,
         center: new Vector2( 0, 0 ),
+        bottomMargin: 10,
         cornerRadius: BAMConstants.CORNER_RADIUS
       }, options );
-      const contentVBox = new VBox( { spacing: 5, align: 'center' } );
+      const contentVBox = new VBox( { spacing: 7, align: 'center' } );
 
       // Add smiley face
       const smiley = new FaceNode( 120 ).smile();
