@@ -53,9 +53,8 @@ define( require => {
         fill: 'white'
       } );
       // Holds all of the content within the dialog. Dialog needs to be sized to content before content is added.
-      const contentWrapper = new Rectangle( 0, 0, 350, 275, { background: 'white' } );
+      const contentWrapper = new Rectangle( 0, 0, 300, 300, { background: 'white' } );
       const contentVBox = new VBox( { children: [ contentWrapper ], spacing: 12 } );
-
       super( contentVBox, {
         fill: 'black',
         xAlign: 'center',
@@ -74,13 +73,12 @@ define( require => {
         baseColor: Color.ORANGE
       } );
 
-      // @public {Property.<CompletMoleculeProperty>}
+      // @public {Property.<CompleteMoleculeProperty>}
       this.completeMoleculeProperty = completeMoleculeProperty;
       const formulaText = new RichText( '', {
         font: new PhetFont( 18 ),
         fill: '#bbb'
       } );
-
       completeMoleculeProperty.link( completeMolecule => {
         if ( completeMolecule ) {
           title.setText( completeMolecule.getDisplayName() );
@@ -110,7 +108,7 @@ define( require => {
       const spaceFillButton = new AquaRadioButton( viewStyleProperty, VIEW_STYLE.SPACE_FILL, spaceFillText, radioButtonOptions );
       const ballAndStickButton = new AquaRadioButton( viewStyleProperty, VIEW_STYLE.BALL_AND_STICK, ballAndStickText, radioButtonOptions );
       const buttonHolder = new HBox( {
-        children: [ spaceFillButton, playPauseButton, ballAndStickButton ],
+        children: [ spaceFillButton, ballAndStickButton ],
         spacing: 30
       } );
 
@@ -196,7 +194,7 @@ define( require => {
 
           // TODO: ThreeNode needs to be reset/childrenRemoved?
           contentVBox.removeAllChildren();
-          contentVBox.children = [ formulaText, moleculeNode, buttonHolder ];
+          contentVBox.children = [ formulaText, moleculeNode, buttonHolder, playPauseButton ];
         }
         else {
           contentVBox.removeAllChildren();
