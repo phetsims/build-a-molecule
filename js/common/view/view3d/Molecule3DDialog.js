@@ -125,7 +125,11 @@ define( require => {
           while ( moleculeContainer.children.length > 0 ) {
             moleculeContainer.remove( moleculeContainer.children[ 0 ] );
           }
+
+          // Handle building mesh for space fill representation
           if ( viewStyle === VIEW_STYLE.SPACE_FILL && completeMolecule ) {
+
+            // Build mesh for atoms
             completeMoleculeProperty.value.atoms.forEach( atom => {
               const atomMesh = new THREE.Mesh( new THREE.SphereGeometry( atom.covalentRadius / 80, 30, 24 ), new THREE.MeshLambertMaterial( {
                 color: Color.toColor( atom.element.color ).toNumber()
@@ -135,42 +139,70 @@ define( require => {
               mesh.position.set( atom.x3d, atom.y3d, atom.z3d );
             } );
           }
+
+          // Handle building mesh for ball and stick representation
           else {
             completeMolecule.atoms.forEach( atom => {
+
+              // Build mesh for atoms
               const atomMesh = new THREE.Mesh( new THREE.SphereGeometry( 0.35, 30, 24 ), new THREE.MeshLambertMaterial( {
                 color: Color.toColor( atom.element.color ).toNumber()
               } ) );
               moleculeContainer.add( atomMesh );
               atomMesh.position.set( atom.x3d, atom.y3d, atom.z3d );
             } );
+
+            // Build mesh for bonds
             completeMolecule.bonds.forEach( bond => {
-              const bondAPosition = new Vector3( bond.a.x3d, bond.a.y3d, bond.a.z3d );
-              const bondBPosition = new Vector3( bond.b.x3d, bond.b.y3d, bond.b.z3d );
-              const distance = bondAPosition.distance( bondBPosition );
-              const bondMesh = new THREE.Mesh( new THREE.CylinderGeometry( 0.1, 0.1, distance, 32, false ), new THREE.MeshLambertMaterial( {
-                color: Color.gray
-              } ) );
+              let originOffset = -0.25;
+              let displacement = 0;
 
-              // Vector3
-              const cylinderDefaultOrientation = Vector3.Y_UNIT;
+              // If a bond has a high order we need to adjust the bond mesh in the y-axis
+              for ( let i = 0; i < bond.order; i++ ) {
 
-              const neededOrientation = bondAPosition.minus( bondBPosition ).normalized();
+                // Offset for single bond
+                if ( bond.order === 1 ) {
+                  originOffset = 0;
+                  displacement = 0;
+                }
+                // Offset for double bond
+                else if ( bond.order === 2 ) {
+                  originOffset = -.25;
+                  displacement = .5;
+                }
+                // Offset for triple bond
+                else if ( bond.order === 3 ) {
+                  originOffset = -0.25;
+                  displacement = 0.25;
+                }
+                const bondAPosition = new Vector3( bond.a.x3d, bond.a.y3d, bond.a.z3d );
+                const bondBPosition = new Vector3( bond.b.x3d, bond.b.y3d, bond.b.z3d );
+                const distance = bondAPosition.distance( bondBPosition );
+                const bondMesh = new THREE.Mesh( new THREE.CylinderGeometry( 0.1, 0.1, distance, 32, false ), new THREE.MeshLambertMaterial( {
+                  color: Color.gray
+                } ) );
 
-              // Matrix3
-              const matrix = Matrix3.rotateAToB( cylinderDefaultOrientation, neededOrientation );
+                // Vector3
+                const cylinderDefaultOrientation = Vector3.Y_UNIT;
 
-              // Vector3
-              const midpointBetweenAtoms = bondAPosition.average( bondBPosition );
-              moleculeContainer.add( bondMesh );
+                const neededOrientation = bondAPosition.minus( bondBPosition ).normalized();
 
-              // Enforce a manual update to the bondMesh matrix.
-              bondMesh.matrixAutoUpdate = false;
-              bondMesh.matrix.set(
-                matrix.m00(), matrix.m01(), matrix.m02(), midpointBetweenAtoms.x,
-                matrix.m10(), matrix.m11(), matrix.m12(), midpointBetweenAtoms.y,
-                matrix.m20(), matrix.m21(), matrix.m22(), midpointBetweenAtoms.z,
-                0, 0, 0, 1
-              );
+                // Matrix3
+                const matrix = Matrix3.rotateAToB( cylinderDefaultOrientation, neededOrientation );
+
+                // Vector3
+                const midpointBetweenAtoms = bondAPosition.average( bondBPosition );
+                moleculeContainer.add( bondMesh );
+
+                // Enforce a manual update to the bondMesh matrix.
+                bondMesh.matrixAutoUpdate = false;
+                bondMesh.matrix.set(
+                  matrix.m00(), matrix.m01(), matrix.m02(), midpointBetweenAtoms.x,
+                  matrix.m10(), matrix.m11(), matrix.m12(), midpointBetweenAtoms.y + originOffset + (i) * displacement,
+                  matrix.m20(), matrix.m21(), matrix.m22(), midpointBetweenAtoms.z,
+                  0, 0, 0, 1
+                );
+              }
             } );
           }
         }
