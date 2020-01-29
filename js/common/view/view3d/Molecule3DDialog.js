@@ -114,6 +114,7 @@ define( require => {
 
       // 3D view of moleculeNode using mobius supported elements
       const moleculeNode = new ThreeNode( 300, 200, {
+        cursor: 'pointer',
         cameraPosition: new Vector3( 0, 0, 5 )
       } );
       const moleculeContainer = new THREE.Object3D();
