@@ -1,11 +1,11 @@
 {
-  "comment": "# build-a-molecule 0.0.0-dev.50 Wed Jan 29 2020 15:31:29 GMT-0500 (Eastern Standard Time)",
+  "comment": "# build-a-molecule 0.0.0-dev.51 Thu Jan 30 2020 11:42:06 GMT-0500 (Eastern Standard Time)",
   "assert": {
     "sha": "a99a9ce9ee0774bf3ef509bf3e31ca7383f67478",
     "branch": "master"
   },
   "axon": {
-    "sha": "be0e559d2bc1ad874de7d42ac801088a27d59e7a",
+    "sha": "80a355bc3945b13c390a52dbb48e09500954bb8d",
     "branch": "master"
   },
   "brand": {
@@ -13,7 +13,7 @@
     "branch": "master"
   },
   "build-a-molecule": {
-    "sha": "5cbf201dffbdc91cfda0b7f7ed39464611b1dee9",
+    "sha": "dc1b0707929f1f3605f699eb5cedff4e21ca15ff",
     "branch": "master"
   },
   "chipper": {
@@ -45,7 +45,7 @@
     "branch": "master"
   },
   "phet-io": {
-    "sha": "6e59cb777f33fe4b69961ee135992ed7dc789d4c",
+    "sha": "afa18dc81d5054235cafe4063b470fc38ac1be52",
     "branch": "master"
   },
   "phet-io-wrappers": {
