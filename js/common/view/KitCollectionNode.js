@@ -28,10 +28,10 @@ define( require => {
       this.kitPanel = new KitPanel( collection, BAMConstants.KIT_VIEW_WIDTH, BAMConstants.KIT_VIEW_HEIGHT, view, isCollectingView );
       this.kitPanel.bottom = BAMConstants.STAGE_SIZE.bottom - BAMConstants.VIEW_PADDING;
       this.kitPanel.left = BAMConstants.STAGE_SIZE.left + BAMConstants.VIEW_PADDING;
-
       this.addChild( this.kitPanel );
 
-      const kitMap = []; // maps kit ID => KitView
+      // Maps kit ID => KitView
+      const kitMap = [];
       collection.kits.forEach( kit => {
         kitMap[ kit.id ] = new KitView( kit, view );
       } );

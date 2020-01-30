@@ -29,9 +29,6 @@ define( require => {
   const ThreeUtils = require( 'MOBIUS/ThreeUtils' );
   const WarningDialog = require( 'BUILD_A_MOLECULE/common/view/WarningDialog' );
 
-  // strings
-  const refillString = require( 'string!BUILD_A_MOLECULE/refill' );
-
   class BAMScreenView extends ScreenView {
     /**
      * @param {KitCollectionList} kitCollectionList
@@ -119,10 +116,10 @@ define( require => {
       };
       const kitPanel = this.kitCollectionMap[ kitCollectionList.currentCollectionProperty.value.id ].kitPanel;
       const refillButton = new RefillButton(
-        refillString,
         refillListener, {
           left: kitPanel.left,
-          bottom: kitPanel.top - 7
+          bottom: kitPanel.top - 7,
+          scale: 0.75
         } );
       refillButton.touchArea = Shape.bounds( refillButton.selfBounds.union( refillButton.childBounds ).dilated( 10 ) );
 
