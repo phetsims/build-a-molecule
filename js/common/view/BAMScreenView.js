@@ -14,21 +14,18 @@ define( require => {
   const BAMConstants = require( 'BUILD_A_MOLECULE/common/BAMConstants' );
   const Bounds2 = require( 'DOT/Bounds2' );
   const buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
-  const Color = require( 'SCENERY/util/Color' );
   const DragListener = require( 'SCENERY/listeners/DragListener' );
   const KitCollectionNode = require( 'BUILD_A_MOLECULE/common/view/KitCollectionNode' );
   const KitPlayAreaNode = require( 'BUILD_A_MOLECULE/common/view/KitPlayAreaNode' );
   const MoleculeControlsHBox = require( 'BUILD_A_MOLECULE/common/view/MoleculeControlsHBox' );
   const Molecule3DDialog = require( 'BUILD_A_MOLECULE/common/view/view3d/Molecule3DDialog' );
-  const PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  const Playable = require( 'TAMBO/Playable' );
   const Property = require( 'AXON/Property' );
   const Rectangle = require( 'SCENERY/nodes/Rectangle' );
+  const RefillButton = require( 'BUILD_A_MOLECULE/common/view/RefillButton' );
   const ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
   const ScreenView = require( 'JOIST/ScreenView' );
   const Shape = require( 'KITE/Shape' );
   const SliceNode = require( 'BUILD_A_MOLECULE/common/view/SliceNode' );
-  const TextPushButton = require( 'SUN/buttons/TextPushButton' );
   const ThreeUtils = require( 'MOBIUS/ThreeUtils' );
   const WarningDialog = require( 'BUILD_A_MOLECULE/common/view/WarningDialog' );
 
@@ -110,26 +107,23 @@ define( require => {
       this.addChild( sliceNode );
 
       // Create a button to refill the kit
+      const refillListener = () => {
+        this.kitPlayAreaNode.resetPlayAreaKit();
+        this.kitPlayAreaNode.currentKit.buckets.forEach( bucket => {
+          bucket.setToFullState();
+        } );
+        kitCollectionList.currentCollectionProperty.value.collectionBoxes.forEach( box => {
+          box.cueVisibilityProperty.value = false;
+        } );
+        this.updateRefillButton();
+      };
       const kitPanel = this.kitCollectionMap[ kitCollectionList.currentCollectionProperty.value.id ].kitPanel;
-      const refillButton = new TextPushButton( refillString, {
-        listener: () => {
-          this.kitPlayAreaNode.resetPlayAreaKit();
-          this.kitPlayAreaNode.currentKit.buckets.forEach( bucket => {
-            bucket.setToFullState();
-          } );
-          kitCollectionList.currentCollectionProperty.value.collectionBoxes.forEach( box => {
-            box.cueVisibilityProperty.value = false;
-          } );
-          this.updateRefillButton();
-        },
-        baseColor: Color.ORANGE,
-        soundPlayer: Playable.NO_SOUND,
-        font: new PhetFont( { size: 12, weight: 'bold' } ),
-        left: kitPanel.left,
-        bottom: kitPanel.top - 7,
-        maxWidth: BAMConstants.TEXT_MAX_WIDTH
-
-      } );
+      const refillButton = new RefillButton(
+        refillString,
+        refillListener, {
+          left: kitPanel.left,
+          bottom: kitPanel.top - 7
+        } );
       refillButton.touchArea = Shape.bounds( refillButton.selfBounds.union( refillButton.childBounds ).dilated( 10 ) );
 
       // @private {function} Refill button is enabled if atoms exists outside of the bucket.
