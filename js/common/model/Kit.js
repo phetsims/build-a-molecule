@@ -714,9 +714,9 @@ define( require => {
   }
 
   Kit.BondingOption = BondingOption;
-  Kit.bondDistanceThreshold = 200;
+  Kit.bondDistanceThreshold = 40;
   Kit.bucketPadding = 50;
-  Kit.interMoleculePadding = 150;
+  Kit.interMoleculePadding = 100;
 
   return buildAMolecule.register( 'Kit', Kit );
 } );
