@@ -36,17 +36,7 @@ define( require => {
     constructor( box, toModelBounds, showDialogCallback ) {
       super( box, toModelBounds, showDialogCallback );
 
-      this.addChild( new RichText( StringUtils.fillIn( collectionMultipleGoalPatternString, {
-        number: box.capacity,
-        formula: box.moleculeType.getGeneralFormulaFragment()
-      } ), {
-        font: new PhetFont( {
-          size: 15,
-          weight: 'bold'
-        } ),
-        maxWidth: BAMConstants.TEXT_MAX_WIDTH
-      } ) );
-
+      // Number of molecules that can be collected
       const quantityNode = new RichText( '', {
         font: new PhetFont( {
           size: 14
@@ -65,8 +55,19 @@ define( require => {
           } );
         }
       } );
+      this.insertChild( 0, quantityNode );
 
-      this.addChild( quantityNode );
+      // General formula for the molecule goal
+      this.insertChild( 0, new RichText( StringUtils.fillIn( collectionMultipleGoalPatternString, {
+        number: box.capacity,
+        formula: box.moleculeType.getGeneralFormulaFragment()
+      } ), {
+        font: new PhetFont( {
+          size: 15,
+          weight: 'bold'
+        } ),
+        maxWidth: BAMConstants.TEXT_MAX_WIDTH
+      } ) );
     }
   }
 

@@ -34,7 +34,7 @@ define( require => {
     constructor( box, toModelBounds, showDialogCallback ) {
       super( box, toModelBounds, showDialogCallback );
       assert && assert( box.capacity === 1 );
-      this.addChild( new RichText( StringUtils.fillIn( collectionSinglePatternString,
+      this.insertChild( 0, new RichText( StringUtils.fillIn( collectionSinglePatternString,
         {
           general: box.moleculeType.getGeneralFormulaFragment(),
           display: box.moleculeType.getDisplayName()
