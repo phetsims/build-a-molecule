@@ -102,7 +102,7 @@ define( require => {
         refillListener, {
           left: kitPanel.left,
           bottom: kitPanel.top - 7,
-          scale: 0.75
+          scale: 0.85
         } );
       refillButton.touchArea = Shape.bounds( refillButton.selfBounds.union( refillButton.childBounds ).dilated( 10 ) );
 
