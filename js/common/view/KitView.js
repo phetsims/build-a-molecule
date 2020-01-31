@@ -24,7 +24,6 @@ define( require => {
   // const Rectangle = require( 'SCENERY/nodes/Rectangle' );
   const Shape = require( 'KITE/Shape' );
   // const SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' ); // TODO: DragListener
-  // const SliceNode = require( 'BUILD_A_MOLECULE/common/view/SliceNode' );
   // const Trail = require( 'SCENERY/util/Trail' );
 
   class KitView extends Node {

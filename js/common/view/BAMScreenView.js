@@ -20,12 +20,10 @@ define( require => {
   const MoleculeControlsHBox = require( 'BUILD_A_MOLECULE/common/view/MoleculeControlsHBox' );
   const Molecule3DDialog = require( 'BUILD_A_MOLECULE/common/view/view3d/Molecule3DDialog' );
   const Property = require( 'AXON/Property' );
-  const Rectangle = require( 'SCENERY/nodes/Rectangle' );
   const RefillButton = require( 'BUILD_A_MOLECULE/common/view/RefillButton' );
   const ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
   const ScreenView = require( 'JOIST/ScreenView' );
   const Shape = require( 'KITE/Shape' );
-  const SliceNode = require( 'BUILD_A_MOLECULE/common/view/SliceNode' );
   const ThreeUtils = require( 'MOBIUS/ThreeUtils' );
   const WarningDialog = require( 'BUILD_A_MOLECULE/common/view/WarningDialog' );
 
@@ -59,18 +57,6 @@ define( require => {
       // @public {function} Reference to callback that displays dialog for 3d node representation
       this.showDialogCallback = this.showDialog.bind( this );
 
-      // Components relevant to swipe node used to manually break bonded molecules.
-      const viewSwipeBounds = BAMConstants.MODEL_VIEW_TRANSFORM.modelToViewBounds(
-        kitCollectionList.currentCollectionProperty.value.currentKitProperty.value.collectionLayout.availablePlayAreaBounds
-      );
-      const sliceNode = new SliceNode(
-        kitCollectionList.currentCollectionProperty.value.currentKitProperty.value,
-        viewSwipeBounds,
-        this
-      );
-      const swipeCatch = Rectangle.bounds( viewSwipeBounds.eroded( BAMConstants.VIEW_PADDING ) );
-      swipeCatch.addInputListener( sliceNode.sliceInputListener );
-
       // KitPlayAreaNode for the main BAMScreenView listens to the kitPlayArea of each kit in the model to fill or remove
       // its content.
       const kits = [];
@@ -99,9 +85,7 @@ define( require => {
       } );
       kitCollectionList.addedCollectionEmitter.addListener( this.addCollection.bind( this ) );
 
-      this.addChild( swipeCatch );
       this.addChild( this.kitPlayAreaNode );
-      this.addChild( sliceNode );
 
       // Create a button to refill the kit
       const refillListener = () => {
@@ -212,7 +196,7 @@ define( require => {
         this.updateRefillButton();
       };
 
-      // When a collection is changed, update the listeners to the kits, KitPlayAreaNode and sliceNode.
+      // When a collection is changed, update the listeners to the kits and KitPlayAreaNode.
       kitCollectionList.currentCollectionProperty.link( ( collection, previousCollection ) => {
         if ( previousCollection ) {
           previousCollection.kits.forEach( kit => {
@@ -259,10 +243,9 @@ define( require => {
           kit.atomsInPlayArea.addItemAddedListener( addAtomNodeToPlayArea );
           kit.atomsInPlayArea.addItemRemovedListener( removeAtomNodeFromPlayArea );
 
-          // KitPlayAreaNode and sliceNode should update their kits
+          // KitPlayAreaNode should update their kits
           collection.currentKitProperty.link( kit => {
             this.kitPlayAreaNode.currentKit = kit;
-            sliceNode.swapKit( kit );
             this.updateRefillButton();
           } );
           this.updateRefillButton();
