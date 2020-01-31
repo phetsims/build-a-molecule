@@ -101,12 +101,12 @@ define( require => {
           yMargin: 7,
           minWidth: 250,
           align: 'center'
-        },
+        }
       );
 
       collectionPanel.setRightTop( new Vector2(
         BAMConstants.STAGE_SIZE.width - BAMConstants.VIEW_PADDING / 2,
-        BAMConstants.STAGE_SIZE.top + BAMConstants.VIEW_PADDING / 2,
+        BAMConstants.STAGE_SIZE.top + BAMConstants.VIEW_PADDING / 2
       ) );
       this.addChild( collectionPanel );
       collectionPanel.moveToBack();
