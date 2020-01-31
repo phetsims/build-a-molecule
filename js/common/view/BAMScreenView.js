@@ -46,7 +46,6 @@ define( require => {
       this.addCollection( kitCollectionList.currentCollectionProperty.value, false );
 
       // @public {Bounds2} Bounds used to limit where molecules can reside in the play area.
-      this.playAreaDragBounds = kitCollectionList.currentCollectionProperty.value.currentKitProperty.value.collectionLayout.availablePlayAreaBounds;
       this.atomDragBounds = new Bounds2( -1575, -850, 1575, 950 );
       this.mappedKitCollectionBounds = this.kitCollectionMap[ this.kitCollectionList.currentCollectionProperty.value.id ].bounds.dilatedX( 60 );
 
