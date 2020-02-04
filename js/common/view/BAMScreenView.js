@@ -131,7 +131,7 @@ define( require => {
             this.nextCollectionButton.visible = false;
           }
         },
-        right: this.layoutBounds.right,
+        right: this.layoutBounds.right - BAMConstants.VIEW_PADDING / 2,
         bottom: kitPanel.bottom - BAMConstants.VIEW_PADDING / 2
       } );
       this.resetAllButton.touchArea = Shape.bounds( this.resetAllButton.bounds.dilated( 7 ) );
