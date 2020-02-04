@@ -37,7 +37,7 @@ define( require => {
       this.collectionBoxNodes = [];
 
       // Container for collection boxes and reset collection button.
-      const allCollectionItemsVBox = new VBox( { spacing: 7 } );
+      const allCollectionItemsVBox = new VBox( { spacing: 15 } );
       this.addChild( allCollectionItemsVBox );
 
       // Create and add all collection box nodes.
