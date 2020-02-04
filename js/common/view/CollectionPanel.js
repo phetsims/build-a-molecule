@@ -53,13 +53,13 @@ define( require => {
       this.collectionAttachmentCallbacks = collectionAttachmentCallbacks;
 
       // Header text for panel
-      const moleculeCollectionText = new Text( yourMoleculesString, {
+      const yourMoleculesText = new Text( yourMoleculesString, {
         font: new PhetFont( {
           size: 22
         } ),
         maxWidth: BAMConstants.TEXT_MAX_WIDTH
       } );
-      this.layoutNode.addChild( moleculeCollectionText );
+      this.layoutNode.addChild( yourMoleculesText );
 
       // "Collection X" with arrows
       const currentCollectionText = new Text( '', {

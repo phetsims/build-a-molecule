@@ -34,18 +34,13 @@ define( require => {
     constructor( box, toModelBounds, showDialogCallback ) {
       super( box, toModelBounds, showDialogCallback );
       assert && assert( box.capacity === 1 );
-      this.insertChild( 0, new RichText( StringUtils.fillIn( collectionSinglePatternString,
-        {
-          general: box.moleculeType.getGeneralFormulaFragment(),
-          display: box.moleculeType.getDisplayName()
-        }, {
-          font: new PhetFont( {
-            size: 15,
-            weight: 'bold'
-          } ),
-          maxWidth: BAMConstants.TEXT_MAX_WIDTH
-        }
-      ), { maxWidth: BAMConstants.TEXT_MAX_WIDTH } ) );
+      this.insertChild( 0, new RichText( StringUtils.fillIn( collectionSinglePatternString, {
+        general: box.moleculeType.getGeneralFormulaFragment(),
+        display: box.moleculeType.getDisplayName()
+      } ), {
+        font: new PhetFont( { size: 16, weight: 'bold' } ),
+        maxWidth: BAMConstants.TEXT_MAX_WIDTH
+      } ) );
     }
   }
 
