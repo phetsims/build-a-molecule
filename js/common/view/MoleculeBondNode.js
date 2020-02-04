@@ -15,6 +15,7 @@ define( require => {
   const ButtonListener = require( 'SCENERY/input/ButtonListener' );
   const Circle = require( 'SCENERY/nodes/Circle' );
   const Color = require( 'SCENERY/util/Color' );
+  const Line = require( 'SCENERY/nodes/Line' );
   const Node = require( 'SCENERY/nodes/Node' );
   const platform = require( 'PHET_CORE/platform' );
 
@@ -50,7 +51,7 @@ define( require => {
     'scissors-up.cur': upCursorImage,
     'scissors-closed-up.cur': closedUpCursorImage
   };
-  const bondRadius = 5; // "Radius" of the bond target that will break the bond
+  const bondRadius = 6; // "Radius" of the bond target that will break the bond
 
   class MoleculeBondNode extends Node {
     /**
@@ -102,12 +103,33 @@ define( require => {
 
       // Cut here icon is subject to change. See https://github.com/phetsims/build-a-molecule/issues/113
       const cutTargetNode = new Node();
+
+      // Add dashed line
+      const dashedLine = new Line( -15, 0, 15, 0, {
+        stroke: 'black',
+        lineDash: [ 4, 2 ],
+        lineWidth: 1
+      } );
+      cutTargetNode.addChild( dashedLine );
+      if ( isHorizontal ) {
+        dashedLine.rotate( Math.PI / 2 );
+      }
+
+      // Add inner circle
       cutTargetNode.addChild( new Circle( bondRadius, {
         fill: new Color( 'rgb(253,225,49)' ),
         stroke: new Color( 'rgb(253,225,49)' ),
         cursor: openCursor,
         visible: true
       } ) );
+
+      // Add outer circle
+      cutTargetNode.addChild( new Circle( bondRadius * 1.5, {
+        fill: new Color( 'rgba(253,225,49,0.4)' ),
+        cursor: openCursor,
+        visible: true
+      } ) );
+
       cutTargetNode.addInputListener( new ButtonListener( {
         fire() {
         },
