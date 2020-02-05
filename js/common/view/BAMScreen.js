@@ -30,7 +30,7 @@ define( require => {
      * @param {CollectionLayout} collectionLayout
      * @param {Function} createKitCollection
      * @param {Function} createView
-     * @param {Object} options
+     * @param {Object} [options]
      */
     constructor( createInitialKitCollection, collectionLayout, createKitCollection, createView, options ) {
       options = merge( {

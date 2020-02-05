@@ -37,7 +37,7 @@ define( require => {
      * @param {function} toModelBounds
      * @param {function} showDialogCallback
      * @param {function} updateRefillButton
-     * @param {Object} options
+     * @param {Object} [options]
      */
     constructor( kitCollectionList, isSingleCollectionMode, collectionAttachmentCallbacks, toModelBounds,
                  showDialogCallback, updateRefillButton, options ) {

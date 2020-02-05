@@ -33,7 +33,7 @@ define( require => {
     /**
      * @param {BooleanProperty} buttonClickedProperty
      * @param {Function} regenerateCallback
-     * @param {object} options
+     * @param {Object} [options]
      * @constructor
      */
     constructor( buttonClickedProperty, regenerateCallback, options ) {

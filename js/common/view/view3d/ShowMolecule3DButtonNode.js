@@ -29,7 +29,7 @@ define( require => {
      *
      * @param {CompleteMolecule} completeMolecule
      * @param {function} showDialogCallback
-     * @param {Object} options
+     * @param {Object} [options]
      * @constructor
      */
     constructor( completeMolecule, showDialogCallback, options ) {

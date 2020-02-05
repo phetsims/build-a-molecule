@@ -28,7 +28,7 @@ define( require => {
   class RefillButton extends RectangularPushButton {
     /**
      * @param {Function} buttonListener
-     * @param {object} options
+     * @param {Object} [options]
      * @constructor
      */
     constructor( buttonListener, options ) {

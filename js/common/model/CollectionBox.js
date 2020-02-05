@@ -24,7 +24,7 @@ define( require => {
     /**
      * @param {CompleteMolecule} moleculeType
      * @param {number} capacity
-     * @param {object} options
+     * @param {Object} [options]
      */
     constructor( moleculeType, capacity, options ) {
       options = merge( {
