@@ -71,18 +71,18 @@ define( require => {
           kitCollection.addKit( new Kit( bounds, [
             new Bucket( new Dimension2( 400, 200 ), stepEmitter, Element.H, 2 ),
             new Bucket( new Dimension2( 450, 200 ), stepEmitter, Element.O, 2 )
-          ] ) );
+          ] ), { triggerCue: true } );
 
           kitCollection.addKit( new Kit( bounds, [
             new Bucket( new Dimension2( 500, 200 ), stepEmitter, Element.C, 2 ),
             new Bucket( new Dimension2( 600, 200 ), stepEmitter, Element.O, 4 ),
             new Bucket( new Dimension2( 500, 200 ), stepEmitter, Element.N, 2 )
-          ] ) );
+          ] ), { triggerCue: true } );
           kitCollection.addKit( new Kit( bounds, [
             new Bucket( new Dimension2( 600, 200 ), stepEmitter, Element.H, 12 ),
             new Bucket( new Dimension2( 600, 200 ), stepEmitter, Element.O, 4 ),
             new Bucket( new Dimension2( 500, 200 ), stepEmitter, Element.N, 2 )
-          ] ) );
+          ] ), { triggerCue: true } );
           kitCollection.addCollectionBox( new CollectionBox( MoleculeList.CO2, 2 ) );
           kitCollection.addCollectionBox( new CollectionBox( MoleculeList.O2, 2 ) );
           kitCollection.addCollectionBox( new CollectionBox( MoleculeList.H2, 4 ) );

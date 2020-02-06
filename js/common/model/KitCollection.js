@@ -53,10 +53,12 @@ define( require => {
     }
 
     /**
-     * @param kit
+     * @param {Kit} kit
+     * @param {Object} options
+     *
      * @public
      */
-    addKit( kit ) {
+    addKit( kit, options ) {
       this.kits.push( kit );
       const dropListener = atom => {
 
@@ -89,10 +91,14 @@ define( require => {
       kit.addedMoleculeEmitter.addListener( molecule => {
         this.collectionBoxes.forEach( box => {
           box.cueVisibilityProperty.value = box.willAllowMoleculeDrop( molecule );
-          if ( box.willAllowMoleculeDrop( molecule ) && !this.hasBlinkedOnce ) {
+          if ( box.willAllowMoleculeDrop( molecule ) && (options && options.triggerCue) ) {
             box.acceptedMoleculeCreationEmitter.emit( molecule );
             box.cueVisibilityProperty.value = true;
             this.hasBlinkedOnce = true;
+          }
+          else {
+            box.cueVisibilityProperty.value = false;
+            this.hasBlinkedOnce = false;
           }
         } );
 

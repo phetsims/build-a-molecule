@@ -274,7 +274,7 @@ define( require => {
         this.kitPlayAreaNode.currentKit.molecules.forEach( molecule => {
           hasTargetMolecule = molecule ? box.willAllowMoleculeDrop( molecule ) : hasTargetMolecule || false;
         } );
-        box.cueVisibilityProperty.value = hasTargetMolecule;
+        // box.cueVisibilityProperty.value = hasTargetMolecule;
       } );
     }
 
