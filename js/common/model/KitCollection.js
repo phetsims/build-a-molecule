@@ -54,7 +54,7 @@ define( require => {
 
     /**
      * @param {Kit} kit
-     * @param {Object} options
+     * @param {Object} [options]
      *
      * @public
      */
