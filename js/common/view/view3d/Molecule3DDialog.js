@@ -159,8 +159,8 @@ define( require => {
             }
             // Offset for double bond
             else if ( bond.order === 2 ) {
-              originOffset = -.25;
-              displacement = .5;
+              originOffset = -0.25;
+              displacement = 0.5;
             }
             // Offset for triple bond
             else if ( bond.order === 3 ) {
