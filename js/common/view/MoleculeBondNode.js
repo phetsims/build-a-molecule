@@ -107,7 +107,7 @@ define( require => {
       // Add dashed line
       const dashedLine = new Line( -15, 0, 15, 0, {
         stroke: 'black',
-        lineDash: [ 4, 2 ],
+        lineDash: [ 4.5, 2 ],
         lineWidth: 1
       } );
       cutTargetNode.addChild( dashedLine );
