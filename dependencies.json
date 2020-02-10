@@ -1,5 +1,5 @@
 {
-  "comment": "# build-a-molecule 0.0.0-dev.56 Thu Feb 06 2020 11:28:41 GMT-0500 (Eastern Standard Time)",
+  "comment": "# build-a-molecule 0.0.0-dev.57 Mon Feb 10 2020 10:41:11 GMT-0500 (Eastern Standard Time)",
   "assert": {
     "sha": "a99a9ce9ee0774bf3ef509bf3e31ca7383f67478",
     "branch": "master"
@@ -13,15 +13,15 @@
     "branch": "master"
   },
   "build-a-molecule": {
-    "sha": "4b7d61e42282408c37e936ac5d890f915f5d475f",
+    "sha": "79ed4c36bff4950e2182471d65b1e7fe4c7e8484",
     "branch": "master"
   },
   "chipper": {
-    "sha": "543b40a3e154424a485920763820f251faf94e5c",
+    "sha": "aa3a7696bd94a11f2e0a2f2714b35a4ffffd2162",
     "branch": "master"
   },
   "dot": {
-    "sha": "6ea768b6346a5b8fee24eacfd6cfeb75d7459dc0",
+    "sha": "98d15ec4ea5be402ed89d4d310e166f928688d62",
     "branch": "master"
   },
   "joist": {
@@ -29,11 +29,11 @@
     "branch": "master"
   },
   "kite": {
-    "sha": "7828088a1217144176c68bcccb201760ca33332f",
+    "sha": "e2d550155eb55f311b4583e13d94fdc8b0d7218c",
     "branch": "master"
   },
   "mobius": {
-    "sha": "4150eef23d4f8745c2158f598b72ea9920632189",
+    "sha": "2859a6e44ee629a7f4b2799a0db698a2ae7710c2",
     "branch": "master"
   },
   "nitroglycerin": {
@@ -45,11 +45,11 @@
     "branch": "master"
   },
   "phet-io": {
-    "sha": "98e6a2cf3d471bb4e77e449224534d44e9507fc9",
+    "sha": "f5f96b661bafd8139976fc8b8865fd0915740d6d",
     "branch": "master"
   },
   "phet-io-wrappers": {
-    "sha": "89db874709fc7c5b11797d4d74444c071ff772ee",
+    "sha": "07f7b8d4cca5e39f65fb21ed630bd31f864e473f",
     "branch": "master"
   },
   "phetcommon": {
@@ -65,15 +65,19 @@
     "branch": "master"
   },
   "scenery": {
-    "sha": "6f519e27a4bdbf388a8b2b751edecd92a5002abf",
+    "sha": "4ace157efd412f4f193fc86cd3503b2a5c71ac91",
     "branch": "master"
   },
   "scenery-phet": {
-    "sha": "ab679b9553bafa9fca2675c0a07edebca0dbd28d",
+    "sha": "5a7ae48875064e372f1107a4c27b75dadcefafa1",
     "branch": "master"
   },
   "sherpa": {
     "sha": "740730efa03f119e628881debc4a73c0e0341c3b",
+    "branch": "master"
+  },
+  "studio": {
+    "sha": "f11b5773fb462f1606e2b76e696c6c98a2ef7cad",
     "branch": "master"
   },
   "sun": {
@@ -85,7 +89,7 @@
     "branch": "master"
   },
   "tandem": {
-    "sha": "521257553047b0127f6e532d1c9b299a4c549131",
+    "sha": "38db65282383829af362c83ae5b14417ed83edf5",
     "branch": "master"
   },
   "twixt": {
