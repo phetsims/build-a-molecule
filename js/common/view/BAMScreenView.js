@@ -132,7 +132,7 @@ define( require => {
           }
         },
         right: this.layoutBounds.right - BAMConstants.VIEW_PADDING / 2,
-        bottom: kitPanel.bottom - BAMConstants.VIEW_PADDING / 2
+        bottom: kitPanel.bottom
       } );
       this.resetAllButton.touchArea = Shape.bounds( this.resetAllButton.bounds.dilated( 7 ) );
       this.addChild( this.resetAllButton );
