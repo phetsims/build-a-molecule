@@ -69,6 +69,8 @@ define( require => {
         } ),
         maxWidth: BAMConstants.TEXT_MAX_WIDTH
       } );
+
+      // Manages changing the label of the current collection
       kitCollectionList.currentCollectionProperty.link( () => {
         currentCollectionText.text = StringUtils.fillIn( collectionPatternString, {
           number: kitCollectionList.currentIndex + BuildAMoleculeQueryParameters.skipLevels
@@ -93,6 +95,7 @@ define( require => {
         }
       } );
 
+      // Update the arrows that indicate the next/previous collection
       const updateSwitcher = () => {
         collectionSwitcher.hasNextProperty.value = kitCollectionList.hasNextCollection();
         collectionSwitcher.hasPreviousProperty.value = kitCollectionList.hasPreviousCollection();
@@ -127,6 +130,7 @@ define( require => {
       // use the current collection
       this.useCollection( kitCollectionList.currentCollectionProperty.value );
 
+      // As the current collection changes, use that new collection
       kitCollectionList.currentCollectionProperty.link( newCollection => {
         this.useCollection( newCollection );
       } );
