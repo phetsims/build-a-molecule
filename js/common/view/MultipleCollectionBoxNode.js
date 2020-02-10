@@ -34,7 +34,7 @@ define( require => {
      *
      */
     constructor( box, toModelBounds, showDialogCallback ) {
-      super( box, toModelBounds, showDialogCallback );
+      super( box, toModelBounds, showDialogCallback, { spacing: 2 } );
 
       // Number of molecules that can be collected
       const quantityNode = new RichText( '', {

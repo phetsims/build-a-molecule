@@ -16,6 +16,7 @@ define( require => {
   const buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   const BAMConstants = require( 'BUILD_A_MOLECULE/common/BAMConstants' );
   const Image = require( 'SCENERY/nodes/Image' );
+  const merge = require( 'PHET_CORE/merge' );
   const Molecule3DNode = require( 'BUILD_A_MOLECULE/common/view/view3d/Molecule3DNode' );
   const MoleculeList = require( 'BUILD_A_MOLECULE/common/model/MoleculeList' );
   const Node = require( 'SCENERY/nodes/Node' );
@@ -34,9 +35,8 @@ define( require => {
      * @param {function} toModelBounds
      * @param {function} showDialogCallback
      */
-    constructor( box, toModelBounds, showDialogCallback ) {
-      super();
-
+    constructor( box, toModelBounds, showDialogCallback, options ) {
+      super( options );
       this.box = box;
       this.moleculeNodes = [];
       this.moleculeNodeMap = {}; // molecule ID => node, stores nodes for each moecule
