@@ -355,6 +355,7 @@ define( require => {
           if ( molecule ) {
             molecule.atoms.forEach( moleculeAtom => {
               if ( moleculeAtom ) {
+                this.kitPlayAreaNode.atomNodeMap[ moleculeAtom.id ].moveToFront();
                 moleculeAtom.destinationProperty.value = moleculeAtom.positionProperty.value;
               }
             } );
@@ -381,6 +382,7 @@ define( require => {
                 moleculeAtom.translatePositionAndDestination( delta );
               }
             } );
+            atomNode.moveToFront();
           }
           else {
             atomNode.moveToFront();
