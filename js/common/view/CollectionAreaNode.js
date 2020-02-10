@@ -51,12 +51,12 @@ define( require => {
       // Reset collection button
       const resetCollectionButton = new RefreshButton( {
         listener() {
-          // when clicked, empty collection boxes
-          collection.collectionBoxes.forEach( box => {
-            box.reset();
-          } );
+          // when clicked, reset the kits and empty collection boxes
           collection.kits.forEach( kit => {
             kit.reset();
+          } );
+          collection.collectionBoxes.forEach( box => {
+            box.reset();
           } );
           updateRefillButton();
         },
