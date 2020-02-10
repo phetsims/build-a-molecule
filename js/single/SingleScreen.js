@@ -42,7 +42,7 @@ define( require => {
         moleculeNode.transformMolecule( transformMatrix );
       }
       moleculeNode.draw();
-      const moleculeIcon = new Image( moleculeNode.canvas.toDataURL(), { scale: .85 } );
+      const moleculeIcon = new Image( moleculeNode.canvas.toDataURL(), { scale: 0.85 } );
       const wrapperNode = new Rectangle( 0, 0, 548, 373, {
         fill: BAMConstants.CANVAS_BACKGROUND_COLOR
       } );
