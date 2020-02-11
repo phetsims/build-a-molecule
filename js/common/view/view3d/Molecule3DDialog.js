@@ -126,7 +126,6 @@ define( require => {
           const radius = scaledRadius ? 0.35 : atom.covalentRadius / 80;
           const offset = requiresAtomOffset ? (-0.5) + (i) : 0;
           const color = colorSet ? Color.toColor( colorSet[ i ] ).toNumber() : Color.toColor( atom.element.color ).toNumber();
-          console.log( 'color = ' + color );
           const iconMesh = new THREE.Mesh( new THREE.SphereGeometry( radius, 30, 24 ), new THREE.MeshLambertMaterial( {
             color: color
           } ) );
