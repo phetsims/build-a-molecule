@@ -12,8 +12,6 @@ define( require => {
   'use strict';
 
   // modules
-  // const AquaRadioButton = require( 'SUN/AquaRadioButton' );
-  // const BAMConstants = require( 'BUILD_A_MOLECULE/common/BAMConstants' );
   const BooleanProperty = require( 'AXON/BooleanProperty' );
   const buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
   const Color = require( 'SCENERY/util/Color' );
@@ -22,30 +20,24 @@ define( require => {
   const EnumerationProperty = require( 'AXON/EnumerationProperty' );
   const Matrix3 = require( 'DOT/Matrix3' );
   const MoleculeList = require( 'BUILD_A_MOLECULE/common/model/MoleculeList' );
-  // const Node = require( 'SCENERY/nodes/Node' );
   const PhetFont = require( 'SCENERY_PHET/PhetFont' );
   const Playable = require( 'TAMBO/Playable' );
   const PlayPauseButton = require( 'SCENERY_PHET/buttons/PlayPauseButton' );
   const PressListener = require( 'SCENERY/listeners/PressListener' );
   const Property = require( 'AXON/Property' );
+  const RadioButtonGroup = require( 'SUN/buttons/RadioButtonGroup' );
   const Rectangle = require( 'SCENERY/nodes/Rectangle' );
   const RichText = require( 'SCENERY/nodes/RichText' );
   const ThreeNode = require( 'MOBIUS/ThreeNode' );
   const Text = require( 'SCENERY/nodes/Text' );
-  const HBox = require( 'SCENERY/nodes/HBox' );
   const VBox = require( 'SCENERY/nodes/VBox' );
   const Vector3 = require( 'DOT/Vector3' );
-
-  // strings
-  // const ballAndStickString = require( 'string!BUILD_A_MOLECULE/ballAndStick' ); // eslint-disable-line string-require-statement-match
-  // const spaceFillString = require( 'string!BUILD_A_MOLECULE/spaceFilling' ); // eslint-disable-line string-require-statement-match
 
   // constants
   const VIEW_STYLE = Enumeration.byKeys( [ 'SPACE_FILL', 'BALL_AND_STICK' ] );
 
   class Molecule3DDialog extends Dialog {
     /**
-     *
      * @param {Property.<CompleteMolecule|null>} completeMoleculeProperty
      * @constructor
      */
@@ -54,9 +46,10 @@ define( require => {
         font: new PhetFont( 28 ),
         fill: 'white'
       } );
+
       // Holds all of the content within the dialog. Dialog needs to be sized to content before content is added.
-      const contentWrapper = new Rectangle( 0, 0, 300, 325, { background: 'white' } );
-      const contentVBox = new VBox( { children: [ contentWrapper ], spacing: 10 } );
+      const contentWrapper = new Rectangle( 0, 0, 300, 340 );
+      const contentVBox = new VBox( { children: [ contentWrapper ], spacing: 13 } );
       super( contentVBox, {
         fill: 'black',
         xAlign: 'center',
@@ -88,25 +81,6 @@ define( require => {
         }
       } );
       const viewStyleProperty = new EnumerationProperty( VIEW_STYLE, VIEW_STYLE.SPACE_FILL );
-
-      // // Space fill / Ball and stick radio buttons
-      // const buttonTextOptions = {
-      //   font: new PhetFont( 18 ),
-      //   fill: 'white',
-      //   maxWidth: BAMConstants.TEXT_MAX_WIDTH - 100
-      // };
-      // const spaceFillText = new Text( spaceFillString, buttonTextOptions );
-      // const ballAndStickText = new Text( ballAndStickString, buttonTextOptions );
-      //
-      // const radioButtonOptions = {
-      //   selectedColor: 'rgba(255,255,255,0.4)',
-      //   deselectedColor: 'black',
-      //   centerColor: 'white',
-      //   radius: 8,
-      //   xSpacing: 8,
-      //   stroke: 'white',
-      //   soundPlayer: Playable.NO_SOUND
-      // };
 
       /**
        * Build and add atom mesh to container.
@@ -272,11 +246,29 @@ define( require => {
           }
         }
       } );
-      // const spaceFillButton = new AquaRadioButton( viewStyleProperty, VIEW_STYLE.SPACE_FILL, spaceFilledIcon, radioButtonOptions );
-      // const ballAndStickButton = new AquaRadioButton( viewStyleProperty, VIEW_STYLE.BALL_AND_STICK, ballAndStickText, radioButtonOptions );
-      const buttonHolder = new HBox( {
-        children: [ spaceFilledIcon, ballAndStickIcon ],
-        spacing: 40
+
+      //  Creation of toggled modes for scene selection
+      const toggleButtonsContent = [ {
+        value: VIEW_STYLE.SPACE_FILL,
+        node: spaceFilledIcon
+      }, {
+        value: VIEW_STYLE.BALL_AND_STICK,
+        node: ballAndStickIcon
+      } ];
+
+      // Creation of icons for scene selection
+      const sceneRadioButtonGroup = new RadioButtonGroup( viewStyleProperty, toggleButtonsContent, {
+        buttonContentXMargin: 5,
+        buttonContentYMargin: -8, // Trimming of part of the icon node is acceptable in this case.
+        baseColor: 'black',
+        selectedStroke: 'yellow',
+        deselectedStroke: new Color( 'white' ),
+        selectedLineWidth: 1,
+        deselectedLineWidth: .5,
+        deselectedButtonOpacity: 0.25,
+        cornerRadius: 7,
+        orientation: 'horizontal',
+        spacing: 30
       } );
 
       // Add lights to each scene for main molecule node and icons. Lights taken from MoleculeShapesScreenView.js
@@ -298,12 +290,13 @@ define( require => {
       ballAndStickScene.add( moonLight.clone() );
 
       this.isShowingProperty.link( isShowing => {
+
         // Set the order of children for the VBox
         if ( isShowing ) {
 
           // TODO: ThreeNode needs to be reset/childrenRemoved?
           contentVBox.removeAllChildren();
-          contentVBox.children = [ formulaText, moleculeNode, buttonHolder, playPauseButton ];
+          contentVBox.children = [ formulaText, moleculeNode, sceneRadioButtonGroup, playPauseButton ];
         }
         else {
           contentVBox.removeAllChildren();
