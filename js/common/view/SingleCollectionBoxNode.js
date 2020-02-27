@@ -6,63 +6,59 @@
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 
-define( require => {
-  'use strict';
+import Bounds2 from '../../../../dot/js/Bounds2.js';
+import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
+import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
+import RichText from '../../../../scenery/js/nodes/RichText.js';
+import buildAMoleculeStrings from '../../build-a-molecule-strings.js';
+import buildAMolecule from '../../buildAMolecule.js';
+import BAMConstants from '../BAMConstants.js';
+import CollectionBox from '../model/CollectionBox.js';
+import MoleculeList from '../model/MoleculeList.js';
+import CollectionBoxNode from './CollectionBoxNode.js';
 
-  // modules
-  const BAMConstants = require( 'BUILD_A_MOLECULE/common/BAMConstants' );
-  const Bounds2 = require( 'DOT/Bounds2' );
-  const buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
-  const CollectionBox = require( 'BUILD_A_MOLECULE/common/model/CollectionBox' );
-  const CollectionBoxNode = require( 'BUILD_A_MOLECULE/common/view/CollectionBoxNode' );
-  const MoleculeList = require( 'BUILD_A_MOLECULE/common/model/MoleculeList' );
-  const PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  const RichText = require( 'SCENERY/nodes/RichText' );
-  const StringUtils = require( 'PHETCOMMON/util/StringUtils' );
+const collectionSinglePatternString = buildAMoleculeStrings.collectionSinglePattern;
 
-  // strings
-  const collectionSinglePatternString = require( 'string!BUILD_A_MOLECULE/collectionSinglePattern' );
+class SingleCollectionBoxNode extends CollectionBoxNode {
 
-  class SingleCollectionBoxNode extends CollectionBoxNode {
-
-    /**
-     * @param {CollectionBox} box
-     * @param {function} toModelBounds
-     * @param {function} showDialogCallback
-     *
-     */
-    constructor( box, toModelBounds, showDialogCallback ) {
-      super( box, toModelBounds, showDialogCallback );
-      assert && assert( box.capacity === 1 );
-      this.insertChild( 0, new RichText( StringUtils.fillIn( collectionSinglePatternString, {
-        general: box.moleculeType.getGeneralFormulaFragment(),
-        display: box.moleculeType.getDisplayName()
-      } ), {
-        font: new PhetFont( { size: 16, weight: 'bold' } ),
-        maxWidth: BAMConstants.TEXT_MAX_WIDTH
-      } ) );
-    }
+  /**
+   * @param {CollectionBox} box
+   * @param {function} toModelBounds
+   * @param {function} showDialogCallback
+   *
+   */
+  constructor( box, toModelBounds, showDialogCallback ) {
+    super( box, toModelBounds, showDialogCallback );
+    assert && assert( box.capacity === 1 );
+    this.insertChild( 0, new RichText( StringUtils.fillIn( collectionSinglePatternString, {
+      general: box.moleculeType.getGeneralFormulaFragment(),
+      display: box.moleculeType.getDisplayName()
+    } ), {
+      font: new PhetFont( { size: 16, weight: 'bold' } ),
+      maxWidth: BAMConstants.TEXT_MAX_WIDTH
+    } ) );
   }
+}
 
-  /*---------------------------------------------------------------------------*
-   * precomputation of largest single collection box size
-   *----------------------------------------------------------------------------*/
-  let maxBounds = Bounds2.NOTHING;
+/*---------------------------------------------------------------------------*
+ * precomputation of largest single collection box size
+ *----------------------------------------------------------------------------*/
+let maxBounds = Bounds2.NOTHING;
 
-  MoleculeList.collectionBoxMolecules.forEach( molecule => {
-    // fake boxes
-    const boxBounds = new SingleCollectionBoxNode(
-      new CollectionBox( molecule, 1, { initializeAudio: false } ),
-      node => {
-        return node.bounds;
-      },
-      () => {} ).bounds;
+MoleculeList.collectionBoxMolecules.forEach( molecule => {
+  // fake boxes
+  const boxBounds = new SingleCollectionBoxNode(
+    new CollectionBox( molecule, 1, { initializeAudio: false } ),
+    node => {
+      return node.bounds;
+    },
+    () => {} ).bounds;
 
-    maxBounds = maxBounds.union( boxBounds );
-  } );
-
-  SingleCollectionBoxNode.maxWidth = maxBounds.width;
-  SingleCollectionBoxNode.maxHeight = maxBounds.height;
-
-  return buildAMolecule.register( 'SingleCollectionBoxNode', SingleCollectionBoxNode );
+  maxBounds = maxBounds.union( boxBounds );
 } );
+
+SingleCollectionBoxNode.maxWidth = maxBounds.width;
+SingleCollectionBoxNode.maxHeight = maxBounds.height;
+
+buildAMolecule.register( 'SingleCollectionBoxNode', SingleCollectionBoxNode );
+export default SingleCollectionBoxNode;

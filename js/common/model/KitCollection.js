@@ -7,143 +7,139 @@
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 
-define( require => {
-  'use strict';
+import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
+import Property from '../../../../axon/js/Property.js';
+import buildAMolecule from '../../buildAMolecule.js';
+import BuildAMoleculeQueryParameters from '../BuildAMoleculeQueryParameters.js';
 
-  // modules
-  const BooleanProperty = require( 'AXON/BooleanProperty' );
-  const buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
-  const BuildAMoleculeQueryParameters = require( 'BUILD_A_MOLECULE/common/BuildAMoleculeQueryParameters' );
-  const Property = require( 'AXON/Property' );
+let currentId = 0;
 
-  let currentId = 0;
+class KitCollection {
+  /**
+   * @constructor
+   */
+  constructor() {
 
-  class KitCollection {
-    /**
-     * @constructor
-     */
-    constructor() {
+    // @public {number}
+    this.id = currentId++;
 
-      // @public {number}
-      this.id = currentId++;
+    // @public {Array.<Kit>}
+    this.kits = [];
 
-      // @public {Array.<Kit>}
-      this.kits = [];
+    // @public {Array.<CollectionBox>}
+    this.collectionBoxes = [];
 
-      // @public {Array.<CollectionBox>}
-      this.collectionBoxes = [];
+    // @private {boolean} Only show a blinking highlight once
+    this.hasBlinkedOnce = false;
 
-      // @private {boolean} Only show a blinking highlight once
-      this.hasBlinkedOnce = false;
+    // @public {Property.<boolean>} - this will remain false if we have no collection boxes
+    this.allCollectionBoxesFilledProperty = new BooleanProperty( false );
 
-      // @public {Property.<boolean>} - this will remain false if we have no collection boxes
-      this.allCollectionBoxesFilledProperty = new BooleanProperty( false );
+    // @public {Property.<Kit|null>}
+    this.currentKitProperty = new Property( null );
+    this.currentKitProperty.lazyLink( ( newKit, oldKit ) => {
+      if ( oldKit ) {
+        oldKit.activeProperty.value = false;
+      }
+      if ( newKit ) {
+        newKit.activeProperty.value = true;
+      }
+    } );
 
-      // @public {Property.<Kit|null>}
-      this.currentKitProperty = new Property( null );
-      this.currentKitProperty.lazyLink( ( newKit, oldKit ) => {
-        if ( oldKit ) {
-          oldKit.activeProperty.value = false;
-        }
-        if ( newKit ) {
-          newKit.activeProperty.value = true;
-        }
-      } );
+  }
 
-    }
+  /**
+   * @param {Kit} kit
+   * @param {Object} [options]
+   *
+   * @public
+   */
+  addKit( kit, options ) {
+    this.kits.push( kit );
+    const dropListener = atom => {
 
-    /**
-     * @param {Kit} kit
-     * @param {Object} [options]
-     *
-     * @public
-     */
-    addKit( kit, options ) {
-      this.kits.push( kit );
-      const dropListener = atom => {
+      // don't drop an atom from the kit to the collection box directly
+      if ( kit.isAtomInPlay( atom ) ) {
+        const molecule = kit.getMolecule( atom );
 
-        // don't drop an atom from the kit to the collection box directly
-        if ( kit.isAtomInPlay( atom ) ) {
-          const molecule = kit.getMolecule( atom );
+        // check to see if we are trying to drop it in a collection box.
+        const numBoxes = this.collectionBoxes.length;
+        for ( let i = 0; i < numBoxes; i++ ) {
+          const box = this.collectionBoxes[ i ];
 
-          // check to see if we are trying to drop it in a collection box.
-          const numBoxes = this.collectionBoxes.length;
-          for ( let i = 0; i < numBoxes; i++ ) {
-            const box = this.collectionBoxes[ i ];
+          // permissive, so that if the box bounds and molecule bounds intersect, we call it a 'hit'
+          if ( box.dropBoundsProperty.value.intersectsBounds( molecule.positionBounds ) ) {
 
-            // permissive, so that if the box bounds and molecule bounds intersect, we call it a 'hit'
-            if ( box.dropBoundsProperty.value.intersectsBounds( molecule.positionBounds ) ) {
-
-              // if our box takes this type of molecule
-              if ( box.willAllowMoleculeDrop( molecule ) ) {
-                kit.moleculePutInCollectionBox( molecule, box );
-                break;
-              }
+            // if our box takes this type of molecule
+            if ( box.willAllowMoleculeDrop( molecule ) ) {
+              kit.moleculePutInCollectionBox( molecule, box );
+              break;
             }
           }
         }
-      };
+      }
+    };
 
-      kit.atoms.forEach( atom => {
-        atom.droppedByUserEmitter.addListener( dropListener );
-      } );
+    kit.atoms.forEach( atom => {
+      atom.droppedByUserEmitter.addListener( dropListener );
+    } );
 
-      kit.addedMoleculeEmitter.addListener( molecule => {
-        this.collectionBoxes.forEach( box => {
-          box.cueVisibilityProperty.value = box.willAllowMoleculeDrop( molecule );
-          if ( box.willAllowMoleculeDrop( molecule ) && (options && options.triggerCue) ) {
-            box.acceptedMoleculeCreationEmitter.emit( molecule );
-            box.cueVisibilityProperty.value = true;
-            this.hasBlinkedOnce = true;
-          }
-          else {
-            box.cueVisibilityProperty.value = false;
-            this.hasBlinkedOnce = false;
-          }
-        } );
-
-        kit.atomsInPlayArea.addItemRemovedListener( () => {
-          this.collectionBoxes.forEach( box => {
-            box.cueVisibilityProperty.value = box.willAllowMoleculeDrop( molecule );
-          } );
-        } );
-      } );
-    }
-
-    /**
-     *
-     * @param {CollectionBox} box
-     * @public
-     */
-    addCollectionBox( box ) {
-      this.collectionBoxes.push( box );
-
-      // listen to when our collection boxes change, so that we can identify when all of our collection boxes are filled
-      box.quantityProperty.lazyLink( () => {
-        const allFull = _.every( this.collectionBoxes, collectionBox => {
-          return collectionBox.isFull();
-        } );
-
-        // REVIEW: Used for debugging.
-        if ( BuildAMoleculeQueryParameters.easyMode ) {
-          this.allCollectionBoxesFilledProperty.value = true;
+    kit.addedMoleculeEmitter.addListener( molecule => {
+      this.collectionBoxes.forEach( box => {
+        box.cueVisibilityProperty.value = box.willAllowMoleculeDrop( molecule );
+        if ( box.willAllowMoleculeDrop( molecule ) && ( options && options.triggerCue ) ) {
+          box.acceptedMoleculeCreationEmitter.emit( molecule );
+          box.cueVisibilityProperty.value = true;
+          this.hasBlinkedOnce = true;
         }
         else {
-          this.allCollectionBoxesFilledProperty.value = this.collectionBoxes.length && allFull;
+          box.cueVisibilityProperty.value = false;
+          this.hasBlinkedOnce = false;
         }
       } );
-    }
 
-    /**
-     * @public
-     */
-    resetAll() {
-      this.collectionBoxes.forEach( box => { box.reset(); } );
-      this.kits.forEach( kit => { kit.reset(); } );
-      this.hasBlinkedOnce = false;
-      this.allCollectionBoxesFilledProperty.reset();
-    }
+      kit.atomsInPlayArea.addItemRemovedListener( () => {
+        this.collectionBoxes.forEach( box => {
+          box.cueVisibilityProperty.value = box.willAllowMoleculeDrop( molecule );
+        } );
+      } );
+    } );
   }
 
-  return buildAMolecule.register( 'KitCollection', KitCollection );
-} );
+  /**
+   *
+   * @param {CollectionBox} box
+   * @public
+   */
+  addCollectionBox( box ) {
+    this.collectionBoxes.push( box );
+
+    // listen to when our collection boxes change, so that we can identify when all of our collection boxes are filled
+    box.quantityProperty.lazyLink( () => {
+      const allFull = _.every( this.collectionBoxes, collectionBox => {
+        return collectionBox.isFull();
+      } );
+
+      // REVIEW: Used for debugging.
+      if ( BuildAMoleculeQueryParameters.easyMode ) {
+        this.allCollectionBoxesFilledProperty.value = true;
+      }
+      else {
+        this.allCollectionBoxesFilledProperty.value = this.collectionBoxes.length && allFull;
+      }
+    } );
+  }
+
+  /**
+   * @public
+   */
+  resetAll() {
+    this.collectionBoxes.forEach( box => { box.reset(); } );
+    this.kits.forEach( kit => { kit.reset(); } );
+    this.hasBlinkedOnce = false;
+    this.allCollectionBoxesFilledProperty.reset();
+  }
+}
+
+buildAMolecule.register( 'KitCollection', KitCollection );
+export default KitCollection;

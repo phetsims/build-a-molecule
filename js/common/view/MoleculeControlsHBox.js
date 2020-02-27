@@ -6,119 +6,113 @@
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 
-define( require => {
-  'use strict';
+import Shape from '../../../../kite/js/Shape.js';
+import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
+import ButtonListener from '../../../../scenery/js/input/ButtonListener.js';
+import HBox from '../../../../scenery/js/nodes/HBox.js';
+import Image from '../../../../scenery/js/nodes/Image.js';
+import Text from '../../../../scenery/js/nodes/Text.js';
+import RectangularPushButton from '../../../../sun/js/buttons/RectangularPushButton.js';
+import Playable from '../../../../tambo/js/Playable.js';
+import splitIconImage from '../../../images/split-blue_png.js';
+import buildAMolecule from '../../buildAMolecule.js';
+import BAMConstants from '../BAMConstants.js';
+import MoleculeList from '../model/MoleculeList.js';
+import ShowMolecule3DButtonNode from './view3d/ShowMolecule3DButtonNode.js';
 
-  // modules
-  const buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
-  const ButtonListener = require( 'SCENERY/input/ButtonListener' );
-  const BAMConstants = require( 'BUILD_A_MOLECULE/common/BAMConstants' );
-  const HBox = require( 'SCENERY/nodes/HBox' );
-  const Image = require( 'SCENERY/nodes/Image' );
-  const MoleculeList = require( 'BUILD_A_MOLECULE/common/model/MoleculeList' );
-  const PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  const Playable = require( 'TAMBO/Playable' );
-  const RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
-  const Shape = require( 'KITE/Shape' );
-  const ShowMolecule3DButtonNode = require( 'BUILD_A_MOLECULE/common/view/view3d/ShowMolecule3DButtonNode' );
-  const Text = require( 'SCENERY/nodes/Text' );
+// constants
+const DILATION_FACTOR = 4 / 1.2;
+const SCALE = 1.2;
 
-  // images
-  const splitIconImage = require( 'image!BUILD_A_MOLECULE/split-blue.png' );
+/**
+ * @param {Kit} kit
+ * @param {Molecule} molecule
+ * @param {function} showDialogCallback
+ * @constructor
+ */
+class MoleculeControlsHBox extends HBox {
+  constructor( kit, molecule, showDialogCallback ) {
+    super( { spacing: 9 } );
 
-  // constants
-  const DILATION_FACTOR = 4 / 1.2;
-  const SCALE = 1.2;
+    const self = this;
+    this.molecule = molecule;
 
-  /**
-   * @param {Kit} kit
-   * @param {Molecule} molecule
-   * @param {function} showDialogCallback
-   * @constructor
-   */
-  class MoleculeControlsHBox extends HBox {
-    constructor( kit, molecule, showDialogCallback ) {
-      super( { spacing: 9 } );
+    if ( molecule.atoms.length < 2 ) {
+      // we don't need anything at all if it is not a "molecule"
+      return;
+    }
 
-      const self = this;
-      this.molecule = molecule;
+    this.updatePositionListener = this.updatePosition.bind( this );
 
-      if ( molecule.atoms.length < 2 ) {
-        // we don't need anything at all if it is not a "molecule"
-        return;
-      }
+    // Check if molecule data exists
+    const completeMolecule = MoleculeList.getMasterInstance().findMatchingCompleteMolecule( molecule );
+    if ( completeMolecule ) {
 
-      this.updatePositionListener = this.updatePosition.bind( this );
-
-      // Check if molecule data exists
-      const completeMolecule = MoleculeList.getMasterInstance().findMatchingCompleteMolecule( molecule );
-      if ( completeMolecule ) {
-
-        // Label with chemical formula and common name
-        const label = new Text( completeMolecule.getDisplayName(), {
-          font: new PhetFont( { size: 17, weight: 'bold' } ),
-          maxWidth: BAMConstants.TEXT_MAX_WIDTH
-        } );
-        this.addChild( label );
-
-        // 3D button
-        if ( BAMConstants.HAS_3D ) {
-
-          // @private Button that shows 3d representation of molecule
-          const button3d = new ShowMolecule3DButtonNode( completeMolecule, showDialogCallback, {
-            scale: SCALE
-          } );
-          button3d.touchArea = Shape.bounds( button3d.childBounds.dilated( DILATION_FACTOR ) );
-          this.addChild( button3d );
-        }
-      }
-
-      // Break-up button 'X'
-      const buttonBreak = new RectangularPushButton( {
-        content: new Image( splitIconImage ),
-        scale: SCALE,
-        cursor: 'pointer',
-        xMargin: 0, // Setting margins to zero so the 'X' image takes up the whole button view
-        yMargin: 0,
-        soundPlayer: Playable.NO_SOUND
+      // Label with chemical formula and common name
+      const label = new Text( completeMolecule.getDisplayName(), {
+        font: new PhetFont( { size: 17, weight: 'bold' } ),
+        maxWidth: BAMConstants.TEXT_MAX_WIDTH
       } );
-      buttonBreak.touchArea = Shape.bounds( buttonBreak.childBounds.dilated( DILATION_FACTOR ) );
-      buttonBreak.addInputListener( new ButtonListener( {
-        fire: () => {
-          kit.breakMolecule( molecule );
-        }
-      } ) );
-      this.addChild( buttonBreak );
+      this.addChild( label );
 
-      molecule.atoms.forEach( atom => {
-        atom.positionProperty.link( self.updatePositionListener );
-      } );
+      // 3D button
+      if ( BAMConstants.HAS_3D ) {
 
-      // sanity check. should update (unfortunately) a number of times above
-      this.updatePosition();
-    }
-
-    /**
-     * @override
-     */
-    dispose() {
-      const listener = this.updatePositionListener;
-      if ( listener ) {
-        this.molecule.atoms.forEach( atom => {
-          atom.positionProperty.unlink( listener );
+        // @private Button that shows 3d representation of molecule
+        const button3d = new ShowMolecule3DButtonNode( completeMolecule, showDialogCallback, {
+          scale: SCALE
         } );
+        button3d.touchArea = Shape.bounds( button3d.childBounds.dilated( DILATION_FACTOR ) );
+        this.addChild( button3d );
       }
-      HBox.prototype.dispose.call( this );
     }
 
-    updatePosition() {
-      const modelPositionBounds = this.molecule.positionBounds;
-      const moleculeViewBounds = BAMConstants.MODEL_VIEW_TRANSFORM.modelToViewBounds( modelPositionBounds );
+    // Break-up button 'X'
+    const buttonBreak = new RectangularPushButton( {
+      content: new Image( splitIconImage ),
+      scale: SCALE,
+      cursor: 'pointer',
+      xMargin: 0, // Setting margins to zero so the 'X' image takes up the whole button view
+      yMargin: 0,
+      soundPlayer: Playable.NO_SOUND
+    } );
+    buttonBreak.touchArea = Shape.bounds( buttonBreak.childBounds.dilated( DILATION_FACTOR ) );
+    buttonBreak.addInputListener( new ButtonListener( {
+      fire: () => {
+        kit.breakMolecule( molecule );
+      }
+    } ) );
+    this.addChild( buttonBreak );
 
-      this.setTranslation( moleculeViewBounds.centerX - this.width / 2, // horizontally center
-        moleculeViewBounds.minY - this.height - BAMConstants.BUTTON_PADDING ); // offset from top of molecule
-    }
+    molecule.atoms.forEach( atom => {
+      atom.positionProperty.link( self.updatePositionListener );
+    } );
+
+    // sanity check. should update (unfortunately) a number of times above
+    this.updatePosition();
   }
 
-  return buildAMolecule.register( 'MoleculeControlsHBox', MoleculeControlsHBox );
-} );
+  /**
+   * @override
+   */
+  dispose() {
+    const listener = this.updatePositionListener;
+    if ( listener ) {
+      this.molecule.atoms.forEach( atom => {
+        atom.positionProperty.unlink( listener );
+      } );
+    }
+    HBox.prototype.dispose.call( this );
+  }
+
+  updatePosition() {
+    const modelPositionBounds = this.molecule.positionBounds;
+    const moleculeViewBounds = BAMConstants.MODEL_VIEW_TRANSFORM.modelToViewBounds( modelPositionBounds );
+
+    this.setTranslation( moleculeViewBounds.centerX - this.width / 2, // horizontally center
+      moleculeViewBounds.minY - this.height - BAMConstants.BUTTON_PADDING ); // offset from top of molecule
+  }
+}
+
+buildAMolecule.register( 'MoleculeControlsHBox', MoleculeControlsHBox );
+export default MoleculeControlsHBox;

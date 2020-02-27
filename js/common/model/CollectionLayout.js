@@ -6,42 +6,37 @@
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 
-define( require => {
-  'use strict';
+import Rectangle from '../../../../dot/js/Rectangle.js';
+import buildAMolecule from '../../buildAMolecule.js';
+import BAMConstants from '../BAMConstants.js';
 
-  // modules
-  const buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
-  const BAMConstants = require( 'BUILD_A_MOLECULE/common/BAMConstants' );
-  const Rectangle = require( 'DOT/Rectangle' );
+class CollectionLayout {
+  /**
+   * Construct the necessary layout.
+   *
+   * @param {Boolean} hasCollectionPanel - flag used to scale available bounds width to compensate for collection panel
+   * @constructor
+   */
+  constructor( hasCollectionPanel ) {
+    const availableWidth = BAMConstants.MODEL_SIZE.width - 2 * BAMConstants.MODEL_PADDING; // minus padding
+    const halfWidth = availableWidth / 2;
 
-  class CollectionLayout {
-    /**
-     * Construct the necessary layout.
-     *
-     * @param {Boolean} hasCollectionPanel - flag used to scale available bounds width to compensate for collection panel
-     * @constructor
-     */
-    constructor( hasCollectionPanel ) {
-      const availableWidth = BAMConstants.MODEL_SIZE.width - 2 * BAMConstants.MODEL_PADDING; // minus padding
-      const halfWidth = availableWidth / 2;
+    const kitBottom = -BAMConstants.MODEL_SIZE.height / 2 + BAMConstants.MODEL_PADDING; // Y is up, so this is the bottom (min y) value for the rectangle
+    const kitHeight = 550;
+    const kitTop = kitBottom + kitHeight;
 
-      const kitBottom = -BAMConstants.MODEL_SIZE.height / 2 + BAMConstants.MODEL_PADDING; // Y is up, so this is the bottom (min y) value for the rectangle
-      const kitHeight = 550;
-      const kitTop = kitBottom + kitHeight;
+    // scale width to leave room for the collection panel
+    const kitAvailableWidth = hasCollectionPanel ? 0.75 : 1;
+    this.availableKitBounds = new Rectangle( -halfWidth, kitBottom, availableWidth * kitAvailableWidth, kitHeight );
 
-      // scale width to leave room for the collection panel
-      const kitAvailableWidth = hasCollectionPanel ? 0.75 : 1;
-      this.availableKitBounds = new Rectangle( -halfWidth, kitBottom, availableWidth * kitAvailableWidth, kitHeight );
-
-      this.availablePlayAreaBounds = new Rectangle(
-        -BAMConstants.MODEL_SIZE.width / 2, // far left part of model
-        kitTop, // top of kit
-        this.availableKitBounds.width + BAMConstants.MODEL_PADDING * 2, // add in padding, since there is padding in-between the kit and collection area
-        BAMConstants.MODEL_SIZE.height / 2 - kitTop
-      );
-    }
+    this.availablePlayAreaBounds = new Rectangle(
+      -BAMConstants.MODEL_SIZE.width / 2, // far left part of model
+      kitTop, // top of kit
+      this.availableKitBounds.width + BAMConstants.MODEL_PADDING * 2, // add in padding, since there is padding in-between the kit and collection area
+      BAMConstants.MODEL_SIZE.height / 2 - kitTop
+    );
   }
+}
 
-  return buildAMolecule.register( 'CollectionLayout', CollectionLayout );
-
-} );
+buildAMolecule.register( 'CollectionLayout', CollectionLayout );
+export default CollectionLayout;

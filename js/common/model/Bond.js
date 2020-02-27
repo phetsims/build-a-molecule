@@ -6,37 +6,33 @@
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 
-define( require => {
-  'use strict';
+import buildAMolecule from '../../buildAMolecule.js';
 
-  // modules
-  const buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
-
-  class Bond {
-    /**
-     * @param {Atom} a
-     * @param {Atom} b
-     */
-    constructor( a, b ) {
-      assert && assert( a !== b, 'Bonds cannot connect an atom to itself' );
-      this.a = a;
-      this.b = b;
-    }
-
-    contains( atom ) {
-      return atom === this.a || atom === this.b;
-    }
-
-    getOtherAtom( atom ) {
-      assert && assert( this.contains( atom ) );
-
-      return ( this.a === atom ? this.b : this.a );
-    }
-
-    toSerial2( index ) {
-      return index + '';
-    }
+class Bond {
+  /**
+   * @param {Atom} a
+   * @param {Atom} b
+   */
+  constructor( a, b ) {
+    assert && assert( a !== b, 'Bonds cannot connect an atom to itself' );
+    this.a = a;
+    this.b = b;
   }
 
-  return buildAMolecule.register( 'Bond', Bond );
-} );
+  contains( atom ) {
+    return atom === this.a || atom === this.b;
+  }
+
+  getOtherAtom( atom ) {
+    assert && assert( this.contains( atom ) );
+
+    return ( this.a === atom ? this.b : this.a );
+  }
+
+  toSerial2( index ) {
+    return index + '';
+  }
+}
+
+buildAMolecule.register( 'Bond', Bond );
+export default Bond;

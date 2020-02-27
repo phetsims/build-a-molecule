@@ -6,42 +6,37 @@
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 
-define( require => {
-  'use strict';
+import Node from '../../../../scenery/js/nodes/Node.js';
+import buildAMolecule from '../../buildAMolecule.js';
+import MoleculeBondNode from './MoleculeBondNode.js';
 
-  // modules
-  const buildAMolecule = require( 'BUILD_A_MOLECULE/buildAMolecule' );
-  const MoleculeBondNode = require( 'BUILD_A_MOLECULE/common/view/MoleculeBondNode' );
-  const Node = require( 'SCENERY/nodes/Node' );
+class MoleculeBondContainerNode extends Node {
+  /**
+   * @param {Kit} kit
+   * @param {Molecule} molecule
+   * @constructor
+   */
+  constructor( kit, molecule ) {
+    super();
+    this.bondNodes = [];
 
-  class MoleculeBondContainerNode extends Node {
-    /**
-     * @param {Kit} kit
-     * @param {Molecule} molecule
-     * @constructor
-     */
-    constructor( kit, molecule ) {
-      super();
-      this.bondNodes = [];
-
-      this.bondNodes = molecule.bonds.map( bond => {
-        const node = new MoleculeBondNode( bond, kit );
-        this.addChild( node );
-        return node;
-      } );
-    }
-
-    /**
-     * @override
-     */
-    dispose() {
-      this.bondNodes.forEach( bondNode => {
-        bondNode.dispose();
-      } );
-      Node.prototype.dispose.call( this );
-    }
+    this.bondNodes = molecule.bonds.map( bond => {
+      const node = new MoleculeBondNode( bond, kit );
+      this.addChild( node );
+      return node;
+    } );
   }
 
-  return buildAMolecule.register( 'MoleculeBondContainerNode', MoleculeBondContainerNode );
+  /**
+   * @override
+   */
+  dispose() {
+    this.bondNodes.forEach( bondNode => {
+      bondNode.dispose();
+    } );
+    Node.prototype.dispose.call( this );
+  }
+}
 
-} );
+buildAMolecule.register( 'MoleculeBondContainerNode', MoleculeBondContainerNode );
+export default MoleculeBondContainerNode;
