@@ -6,11 +6,8 @@
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 
-import Bounds2 from '../../../dot/js/Bounds2.js';
 import Dimension2 from '../../../dot/js/Dimension2.js';
 import Element from '../../../nitroglycerin/js/Element.js';
-import Image from '../../../scenery/js/nodes/Image.js';
-import Rectangle from '../../../scenery/js/nodes/Rectangle.js';
 import buildAMoleculeStrings from '../build-a-molecule-strings.js';
 import buildAMolecule from '../buildAMolecule.js';
 import BAMConstants from '../common/BAMConstants.js';
@@ -20,9 +17,10 @@ import CollectionLayout from '../common/model/CollectionLayout.js';
 import Kit from '../common/model/Kit.js';
 import KitCollection from '../common/model/KitCollection.js';
 import MoleculeList from '../common/model/MoleculeList.js';
+import Property from '../../../axon/js/Property.js';
+import BAMIconFactory from '../common/view/BAMIconFactory.js';
 import BAMScreen from '../common/view/BAMScreen.js';
 import MoleculeCollectingScreenView from '../common/view/MoleculeCollectingScreenView.js';
-import Molecule3DNode from '../common/view/view3d/Molecule3DNode.js';
 
 const titleSingleString = buildAMoleculeStrings.title.single;
 
@@ -32,25 +30,10 @@ class SingleScreen extends BAMScreen {
    */
   constructor() {
 
-    // Iconize Molecule for homescreen and nav-bar
-    const moleculeNode = new Molecule3DNode( MoleculeList.H2O, new Bounds2( 0, 0, 548, 373 ), false );
-    const transformMatrix = Molecule3DNode.initialTransforms[ MoleculeList.H2O.getGeneralFormula() ];
-    if ( transformMatrix ) {
-      moleculeNode.transformMolecule( transformMatrix );
-    }
-    moleculeNode.draw();
-    const moleculeIcon = new Image( moleculeNode.canvas.toDataURL(), { scale: 0.85 } );
-    const wrapperNode = new Rectangle( 0, 0, 548, 373, {
-      fill: BAMConstants.CANVAS_BACKGROUND_COLOR
-    } );
-    wrapperNode.addChild( moleculeIcon );
-
-    // Adjust the position of the molecule icons.
-    moleculeIcon.center = wrapperNode.center.minusXY( 240, 140 );
-
     const options = {
       name: titleSingleString,
-      homeScreenIcon: wrapperNode
+      backgroundColorProperty: new Property( BAMConstants.CANVAS_BACKGROUND_COLOR ),
+      homeScreenIcon: BAMIconFactory.createSingleScreen()
     };
 
     //REVIEW: Formatting could use some changes here

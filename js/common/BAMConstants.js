@@ -8,6 +8,7 @@ import ScreenView from '../../../joist/js/ScreenView.js';
 import Element from '../../../nitroglycerin/js/Element.js';
 import ModelViewTransform2 from '../../../phetcommon/js/view/ModelViewTransform2.js';
 import Color from '../../../scenery/js/util/Color.js';
+import Property from '../../../axon/js/Property.js';
 import buildAMolecule from '../buildAMolecule.js';
 
 // constants
@@ -53,6 +54,7 @@ const BAMConstants = {
    * Colors
    *----------------------------------------------------------------------------*/
 
+  SCREEN_OPTIONS: { backgroundColorProperty: new Property( new Color( 198, 226, 246 ) ) },
   CANVAS_BACKGROUND_COLOR: new Color( 198, 226, 246 ),      // main play area background
   MOLECULE_COLLECTION_BACKGROUND: new Color( 238, 238, 238 ), // collection area background
   MOLECULE_COLLECTION_BORDER: Color.BLACK,                    // border around the collection area

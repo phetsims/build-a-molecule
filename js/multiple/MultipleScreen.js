@@ -6,11 +6,8 @@
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 
-import Bounds2 from '../../../dot/js/Bounds2.js';
 import Dimension2 from '../../../dot/js/Dimension2.js';
 import Element from '../../../nitroglycerin/js/Element.js';
-import Image from '../../../scenery/js/nodes/Image.js';
-import Rectangle from '../../../scenery/js/nodes/Rectangle.js';
 import buildAMoleculeStrings from '../build-a-molecule-strings.js';
 import buildAMolecule from '../buildAMolecule.js';
 import BAMConstants from '../common/BAMConstants.js';
@@ -21,44 +18,18 @@ import Kit from '../common/model/Kit.js';
 import KitCollection from '../common/model/KitCollection.js';
 import MoleculeList from '../common/model/MoleculeList.js';
 import BAMScreen from '../common/view/BAMScreen.js';
+import Property from '../../../axon/js/Property.js';
+import BAMIconFactory from '../common/view/BAMIconFactory.js';
 import MoleculeCollectingScreenView from '../common/view/MoleculeCollectingScreenView.js';
-import Molecule3DNode from '../common/view/view3d/Molecule3DNode.js';
 
 const titleMultipleString = buildAMoleculeStrings.title.multiple;
 
 class MultipleScreen extends BAMScreen {
   constructor() {
-
-    // Iconize first O2 Molecule
-    const moleculeNodeOne = new Molecule3DNode( MoleculeList.O2, new Bounds2( 0, 0, 548, 373 ), false );
-    const transformMatrix = Molecule3DNode.initialTransforms[ MoleculeList.O2.getGeneralFormula() ];
-    if ( transformMatrix ) {
-      moleculeNodeOne.transformMolecule( transformMatrix );
-    }
-    moleculeNodeOne.draw();
-    const moleculeIconOne = new Image( moleculeNodeOne.canvas.toDataURL(), { scale: .50 } );
-
-    // Iconize second O2 molecule
-    const moleculeNodeTwo = new Molecule3DNode( MoleculeList.O2, new Bounds2( 0, 0, 548, 373 ), false );
-    if ( transformMatrix ) {
-      moleculeNodeTwo.transformMolecule( transformMatrix );
-    }
-    moleculeNodeTwo.draw();
-    const moleculeIconTwo = new Image( moleculeNodeTwo.canvas.toDataURL(), { scale: .50 } );
-
-    // Wrapper node to house molecule icons
-    const wrapperNode = new Rectangle( 0, 0, 548, 373, {
-      fill: BAMConstants.CANVAS_BACKGROUND_COLOR
-    } );
-    wrapperNode.addChild( moleculeIconOne );
-    wrapperNode.addChild( moleculeIconTwo );
-
-    // Adjust the position of the molecule icons.
-    moleculeIconOne.center = wrapperNode.center.minusXY( 270, 85 );
-    moleculeIconTwo.center = wrapperNode.center.minusXY( 5, 85 );
     const options = {
       name: titleMultipleString,
-      homeScreenIcon: wrapperNode
+      backgroundColorProperty: new Property( BAMConstants.CANVAS_BACKGROUND_COLOR ),
+      homeScreenIcon: BAMIconFactory.createMultipleScreen()
     };
 
     super(

@@ -6,11 +6,8 @@
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 
-import Bounds2 from '../../../dot/js/Bounds2.js';
 import Dimension2 from '../../../dot/js/Dimension2.js';
 import Element from '../../../nitroglycerin/js/Element.js';
-import Image from '../../../scenery/js/nodes/Image.js';
-import Rectangle from '../../../scenery/js/nodes/Rectangle.js';
 import buildAMoleculeStrings from '../build-a-molecule-strings.js';
 import buildAMolecule from '../buildAMolecule.js';
 import BAMConstants from '../common/BAMConstants.js';
@@ -18,10 +15,10 @@ import Bucket from '../common/model/Bucket.js';
 import CollectionLayout from '../common/model/CollectionLayout.js';
 import Kit from '../common/model/Kit.js';
 import KitCollection from '../common/model/KitCollection.js';
-import MoleculeList from '../common/model/MoleculeList.js';
 import BAMScreen from '../common/view/BAMScreen.js';
 import BAMScreenView from '../common/view/BAMScreenView.js';
-import Molecule3DNode from '../common/view/view3d/Molecule3DNode.js';
+import Property from '../../../axon/js/Property.js';
+import BAMIconFactory from '../common/view/BAMIconFactory.js';
 
 const titlePlaygroundString = buildAMoleculeStrings.title.playground;
 
@@ -30,24 +27,10 @@ const BUCKET_DIMENSIONS = new Dimension2( 670, 200 );
 
 class PlaygroundScreen extends BAMScreen {
   constructor() {
-
-    // Iconize Molecule for homescreen and nav-bar
-    const moleculeNode = new Molecule3DNode( MoleculeList.C2H4O2, new Bounds2( 0, 0, 548, 373 ), false );
-    const transformMatrix = Molecule3DNode.initialTransforms[ MoleculeList.C2H4O2.getGeneralFormula() ];
-    if ( transformMatrix ) {
-      moleculeNode.transformMolecule( transformMatrix );
-    }
-    moleculeNode.draw();
-    const moleculeIcon = new Image( moleculeNode.canvas.toDataURL(), { scale: 0.95 } );
-    const wrapperNode = new Rectangle( 0, 0, 548, 373, {
-      fill: BAMConstants.CANVAS_BACKGROUND_COLOR
-    } );
-    wrapperNode.addChild( moleculeIcon );
-    moleculeIcon.center = wrapperNode.center.minusXY( 275, 185 );
-
     const options = {
       name: titlePlaygroundString,
-      homeScreenIcon: wrapperNode
+      backgroundColorProperty: new Property( BAMConstants.CANVAS_BACKGROUND_COLOR ),
+      homeScreenIcon: BAMIconFactory.createPlaygroundScreen()
     };
 
     super(
