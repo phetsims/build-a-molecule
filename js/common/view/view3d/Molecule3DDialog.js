@@ -38,14 +38,15 @@ class Molecule3DDialog extends Dialog {
    * @constructor
    */
   constructor( completeMoleculeProperty ) {
-    const title = new Text( '', {
-      font: new PhetFont( 28 ),
-      fill: 'white'
-    } );
 
     // Holds all of the content within the dialog. Dialog needs to be sized to content before content is added.
     const contentWrapper = new Rectangle( 0, 0, 300, 340 );
     const contentVBox = new VBox( { children: [ contentWrapper ], spacing: 13 } );
+    const title = new Text( '', {
+      font: new PhetFont( 28 ),
+      maxWidth: contentWrapper.width - 20,
+      fill: 'white'
+    } );
     super( contentVBox, {
       fill: 'black',
       xAlign: 'center',
