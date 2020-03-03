@@ -7,7 +7,7 @@
   <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1"/>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="phet-sim-level" content="development">
-  
+
   <title>build-a-molecule</title>
 </head>
 
@@ -19,33 +19,75 @@
 
   window.phet = window.phet || {};
   window.phet.chipper = window.phet.chipper || {};
-  window.phet.chipper.packageObject = {
-    "name": "build-a-molecule",
-    "version": "0.0.0-dev.58",
-    "license": "GPL-3.0",
-    "repository": { "type": "git", "url": "https://github.com/phetsims/build-a-molecule.git" },
-    "devDependencies": { "grunt": "~1.0.0" },
-    "phet": {
-      "requirejsNamespace": "BUILD_A_MOLECULE",
-      "phetLibs": [ "mobius", "nitroglycerin", "vegas", "twixt" ],
-      "preload": [ "../sherpa/lib/three-r104.js" ],
-      "runnable": true,
-      "supportedBrands": [ "phet", "adapted-from-phet" ],
-      "supportsSound": true,
-      "simulation": true
-    },
-    "eslintConfig": { "extends": "../chipper/eslint/sim_eslintrc.js", "globals": { "THREE": false } }
-  };
-  window.phet.chipper.stringRepos = [ {
-    "repo": "build-a-molecule",
-    "requirejsNamespace": "BUILD_A_MOLECULE"
-  }, { "repo": "joist", "requirejsNamespace": "JOIST" }, {
-    "repo": "scenery-phet",
-    "requirejsNamespace": "SCENERY_PHET"
-  }, { "repo": "sun", "requirejsNamespace": "SUN" }, {
-    "repo": "tambo",
-    "requirejsNamespace": "TAMBO"
-  }, { "repo": "twixt", "requirejsNamespace": "TWIXT" }, { "repo": "vegas", "requirejsNamespace": "VEGAS" } ];
+  window.phet.chipper.packageObject =
+    {
+      "name": "build-a-molecule",
+      "version": "0.0.0-dev.58",
+      "license": "GPL-3.0",
+      "repository": {
+        "type": "git",
+        "url": "https://github.com/phetsims/build-a-molecule.git"
+      },
+      "devDependencies": {
+        "grunt": "~1.0.0"
+      },
+      "phet": {
+        "requirejsNamespace": "BUILD_A_MOLECULE",
+        "phetLibs": [
+          "mobius",
+          "nitroglycerin",
+          "vegas",
+          "twixt"
+        ],
+        "preload": [
+          "../sherpa/lib/three-r104.js"
+        ],
+        "runnable": true,
+        "supportedBrands": [
+          "phet",
+          "adapted-from-phet"
+        ],
+        "supportsSound": true,
+        "simulation": true
+      },
+      "eslintConfig": {
+        "extends": "../chipper/eslint/sim_eslintrc.js",
+        "globals": {
+          "THREE": false
+        }
+      }
+    };
+  window.phet.chipper.stringRepos =
+    [
+      {
+        "repo": "build-a-molecule",
+        "requirejsNamespace": "BUILD_A_MOLECULE"
+      },
+      {
+        "repo": "joist",
+        "requirejsNamespace": "JOIST"
+      },
+      {
+        "repo": "scenery-phet",
+        "requirejsNamespace": "SCENERY_PHET"
+      },
+      {
+        "repo": "sun",
+        "requirejsNamespace": "SUN"
+      },
+      {
+        "repo": "tambo",
+        "requirejsNamespace": "TAMBO"
+      },
+      {
+        "repo": "twixt",
+        "requirejsNamespace": "TWIXT"
+      },
+      {
+        "repo": "vegas",
+        "requirejsNamespace": "VEGAS"
+      }
+    ];
 
   // Identify the brand (assume generated brand if not provided with query parameters)
   const brandMatch = location.search.match( /brand=([^&]+)/ );
