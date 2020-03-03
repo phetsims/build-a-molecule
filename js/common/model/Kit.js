@@ -712,7 +712,7 @@ class BondingOption {
 Kit.BondingOption = BondingOption;
 Kit.bondDistanceThreshold = 50;
 Kit.bucketPadding = 50;
-Kit.interMoleculePadding = 100;
+Kit.interMoleculePadding = 50;
 
 buildAMolecule.register( 'Kit', Kit );
 export default Kit;
