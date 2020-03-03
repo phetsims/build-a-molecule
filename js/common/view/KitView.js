@@ -147,7 +147,7 @@ class KitView extends Node {
       const particleAddedListener = atom => {
 
         // AtomNode created based on atoms in bucket
-        const atomNode = new AtomNode( atom, {} );
+        const atomNode = new AtomNode( atom );
 
         // Keep track of the atomNode by mapping to its atom's ID then add to atom layer
         this.atomNodeMap[ atom.id ] = atomNode;

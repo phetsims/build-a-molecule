@@ -84,6 +84,7 @@ class BAMScreenView extends ScreenView {
 
     // Create a button to refill the kit
     const refillListener = () => {
+      this.interruptSubtreeInput();
       this.kitPlayAreaNode.resetPlayAreaKit();
       this.kitPlayAreaNode.currentKit.buckets.forEach( bucket => {
         bucket.setToFullState();
@@ -110,6 +111,7 @@ class BAMScreenView extends ScreenView {
     // Create a reset all button. Position altered on "Larger" Screen.
     this.resetAllButton = new ResetAllButton( {
       listener: () => {
+        this.interruptSubtreeInput();
 
         // When clicked, empty collection boxes
         kitCollectionList.currentCollectionProperty.value.collectionBoxes.forEach( box => {
@@ -342,6 +344,14 @@ class BAMScreenView extends ScreenView {
       dragBoundsProperty: new Property( this.atomDragBounds ),
       positionProperty: atom.positionProperty,
       start: () => {
+
+        // Interrupt drag events on other atom nodes
+        this.kitPlayAreaNode.atomLayer.children.forEach( otherAtomNode => {
+          if ( otherAtomNode && atomNode !== otherAtomNode ) {
+            otherAtomNode.interruptSubtreeInput();
+            otherAtomNode.atom.userControlledProperty.reset();
+          }
+        } );
         dragLength = 0;
         atom.destinationProperty.value = atom.positionProperty.value;
 
@@ -373,7 +383,7 @@ class BAMScreenView extends ScreenView {
         // Set the last position to the newly dragged position.
         lastPosition = atom.positionProperty.value;
 
-        // Handles atoms with multiple molecules
+        // Handles molecules with multiple atoms
         const molecule = currentKit.getMolecule( atom );
         if ( molecule ) {
           molecule.atoms.forEach( moleculeAtom => {
@@ -407,6 +417,7 @@ class BAMScreenView extends ScreenView {
         // Responsible for bonding molecules in play area or breaking molecule bonds and returning to kit.
         // We don't want to do this while the molecule is animating.
         currentKit.atomDropped( atom, droppedInKitArea );
+
 
         // Make sure to update the update button after moving atoms
         this.updateRefillButton();
