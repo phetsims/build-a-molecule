@@ -195,7 +195,6 @@ class BAMScreenView extends ScreenView {
 
     // When a collection is changed, update the listeners to the kits and KitPlayAreaNode.
     kitCollectionList.currentCollectionProperty.link( ( collection, previousCollection ) => {
-      console.log( 'TEST' );
       this.kitPlayAreaNode.atomLayer.children.forEach( otherAtomNode => {
         if ( otherAtomNode ) {
           otherAtomNode.interruptSubtreeInput();
