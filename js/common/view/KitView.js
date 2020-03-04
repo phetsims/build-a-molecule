@@ -182,6 +182,8 @@ class KitView extends Node {
               atomNode.dragListener.press( event, atomNode );
             }
           }
+        }, {
+          allowTouchSnag: false
         } ) );
       };
 

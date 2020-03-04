@@ -341,6 +341,7 @@ class BAMScreenView extends ScreenView {
     const atomListener = new DragListener( {
       transform: BAMConstants.MODEL_VIEW_TRANSFORM,
       targetNode: atomNode,
+      allowTouchSnag: false,
       dragBoundsProperty: new Property( this.atomDragBounds ),
       positionProperty: atom.positionProperty,
       start: () => {
