@@ -46,9 +46,8 @@ class Molecule extends MoleculeStructure {
    */
   shiftDestination( delta ) {
     this.atoms.forEach( atom => {
-      // TODO: memory: consider alternate mutable form atom.destination.add( delta )
       atom.isSeparatingProperty.value = true;
-      atom.destinationProperty.value = atom.destinationProperty.value.plus( delta );
+      atom.destinationProperty.value.add( delta );
     } );
   }
 }

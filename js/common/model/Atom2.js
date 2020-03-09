@@ -133,8 +133,8 @@ class Atom2 extends Atom {
   }
 
   translatePositionAndDestination( delta ) {
-    this.positionProperty.value = this.positionProperty.value.plus( delta );
-    this.destinationProperty.value = this.destinationProperty.value.plus( delta );
+    this.positionProperty.value = this.positionProperty.value.add( delta );
+    this.destinationProperty.value.add( delta );
   }
 
   setPositionAndDestination( point ) {
