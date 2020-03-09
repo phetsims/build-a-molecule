@@ -150,7 +150,7 @@ class MoleculeBondNode extends Node {
       if ( orientation.magnitude > 0 ) {
         orientation.normalize();
       }
-      const location = orientation.times( this.a.covalentRadius ).add( this.a.positionProperty.value );
+      const location = orientation.times( this.a.covalentRadius ).plus( this.a.positionProperty.value );
       this.setTranslation( BAMConstants.MODEL_VIEW_TRANSFORM.modelToViewPosition( location ) );
     };
     this.a.positionProperty.link( this.positionListener );

@@ -488,8 +488,8 @@ class Kit {
             foundOverlap = true;
 
             // get perturbed centers. this is so that if two molecules have the exact same centers, we will push them away
-            const aCenter = aBounds.center.add( new Vector2( phet.joist.random.nextDouble() - 0.5, phet.joist.random.nextDouble() - 0.5 ) );
-            const bCenter = bBounds.center.add( new Vector2( phet.joist.random.nextDouble() - 0.5, phet.joist.random.nextDouble() - 0.5 ) );
+            const aCenter = aBounds.center.plus( new Vector2( phet.joist.random.nextDouble() - 0.5, phet.joist.random.nextDouble() - 0.5 ) );
+            const bCenter = bBounds.center.plus( new Vector2( phet.joist.random.nextDouble() - 0.5, phet.joist.random.nextDouble() - 0.5 ) );
 
             // delta from center of A to center of B, scaled to half of our push amount.
             const delta = bCenter.minus( aCenter ).normalized().times( pushAmount );
@@ -648,7 +648,7 @@ class Kit {
     // cause all atoms in the molecule to move to that location
     const delta = bestLocation.idealLocation.minus( bestLocation.b.positionProperty.value );
     this.getMolecule( bestLocation.b ).atoms.forEach( atomInMolecule => {
-      atomInMolecule.setPositionAndDestination( atomInMolecule.positionProperty.value.add( delta ) );
+      atomInMolecule.setPositionAndDestination( atomInMolecule.positionProperty.value.plus( delta ) );
     } );
 
     // we now will bond the atom
@@ -695,7 +695,7 @@ class BondingOption {
     this.b = b;
 
     // The location the atom should be placed
-    this.idealLocation = a.positionProperty.value.add( direction.vector.times( a.covalentRadius + b.covalentRadius ) );
+    this.idealLocation = a.positionProperty.value.plus( direction.vector.times( a.covalentRadius + b.covalentRadius ) );
   }
 }
 

@@ -168,7 +168,7 @@ class LewisDotModel {
 
         // if this atom isn't excluded
         if ( otherDot.atom !== excludedAtom ) {
-          success = this.mapMolecule( coordinates.add( direction.vector ), otherDot.atom, atom, coordinateMap );
+          success = this.mapMolecule( coordinates.plus( direction.vector ), otherDot.atom, atom, coordinateMap );
 
           // if we had a failure mapping that one, bail out
           if ( !success ) {
