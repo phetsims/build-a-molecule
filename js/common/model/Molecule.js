@@ -11,7 +11,6 @@ import buildAMolecule from '../../buildAMolecule.js';
 import MoleculeStructure from './MoleculeStructure.js';
 
 class Molecule extends MoleculeStructure {
-  //REVIEW: Do we really want default parameters here?
   /**
    * @param numAtoms
    * @param numBonds
