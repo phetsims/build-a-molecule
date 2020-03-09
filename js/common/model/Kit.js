@@ -165,10 +165,11 @@ class Kit {
    * @returns {Bucket}
    */
   getBucketForElement( element ) {
-    //TODO: Add assert for failed _find()
-    return _.find( this.buckets, bucket => {
+    const elementBucket = _.find( this.buckets, bucket => {
       return bucket.element.isSameElement( element );
     } );
+    assert && assert( elementBucket !== null, 'Element does not have an associated bucket.' );
+    return elementBucket
   }
 
   /**
