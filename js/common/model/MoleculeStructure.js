@@ -43,6 +43,7 @@ class MoleculeStructure {
     this.atoms = [];
     // this.bonds = new Array( numBonds );
     this.bonds = [];
+    // this.atomIndex = 0;
 
   }
 
@@ -54,6 +55,7 @@ class MoleculeStructure {
    */
   addAtom( atom ) {
     assert && assert( !_.includes( this.atoms, atom ), 'Cannot add an already existing atom' );
+    // this.atomIndex++;
     this.atoms.push( atom ); // NOTE: don't mess with the order
     return atom;
   }
