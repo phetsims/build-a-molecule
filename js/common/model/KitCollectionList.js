@@ -67,8 +67,6 @@ class KitCollectionList {
    */
   addCollection( collection ) {
     this.collections.push( collection );
-
-    // TODO: notifications before changing current collection - is this desired? may be
     this.addedCollectionEmitter.emit( collection );
 
     // switch to collection
