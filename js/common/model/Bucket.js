@@ -48,14 +48,6 @@ class Bucket extends SphereBucket {
     // Set after buckets are initially filled at sim start up.
     this.fullState = [];
 
-    // REVIEW: Used for debugging.
-    // this.particleList.addItemAddedListener( () => {
-    //   console.log( 'particleList.added = ', this.particleList._array );
-    // } );
-    // this.particleList.addItemRemovedListener( () => {
-    //   console.log( 'particleList.removed = ', this.particleList._array );
-    // } );
-
     // @public
     this.element = element;
     this.width = this.containerShape.bounds.width * 0.95;

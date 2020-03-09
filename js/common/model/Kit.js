@@ -40,14 +40,6 @@ class Kit {
     // @public {Property.<Atom|null>}
     this.selectedAtomProperty = new Property( null );
 
-    // // REVIEW: Used for debugging.
-    // this.atomsInPlayArea.addItemAddedListener( atom => {
-    //   console.log( 'kit.atomsInPlayArea.added = ', this.atomsInPlayArea._array );
-    // } );
-    // this.atomsInPlayArea.addItemRemovedListener( atom => {
-    //   console.log( 'kit.atomsInPlayArea.removed = ', this.atomsInPlayArea._array );
-    // } );
-
     // @public {Property.<boolean>}
     this.activeProperty = new BooleanProperty( false );
     this.visibleProperty = new BooleanProperty( false );
@@ -575,8 +567,6 @@ class Kit {
         }
       } );
     }
-    // REVIEW: Why do we want this check?
-    // assert && assert( this.getMolecule( a ) === this.getMolecule( b ) );
   }
 
   /**
