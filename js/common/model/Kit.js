@@ -197,16 +197,17 @@ class Kit {
    * @public
    */
   atomDropped( atom, droppedInKitArea ) {
+    const molecule = this.getMolecule( atom );
 
     // dropped on kit, put it in a bucket
     if ( droppedInKitArea ) {
-      this.recycleMoleculeIntoBuckets( this.getMolecule( atom ) );
+      this.recycleMoleculeIntoBuckets( molecule );
     }
     else {
 
       // dropped in play area
-      if ( this.getMolecule( atom ) ) {
-        this.attemptToBondMolecule( this.getMolecule( atom ) );
+      if ( molecule ) {
+        this.attemptToBondMolecule( molecule );
         this.separateMoleculeDestinations();
       }
     }
