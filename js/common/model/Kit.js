@@ -657,7 +657,7 @@ class Kit {
    */
   isAllowedStructure( moleculeStructure ) {
     return moleculeStructure.atoms.length < 2 ||
-           MoleculeList.getMasterInstance().isAllowedStructure( moleculeStructure );
+           MoleculeList.getMasterInstance().isAllowedStructureInList( moleculeStructure );
   }
 }
 

@@ -5,14 +5,8 @@
  * of molecules from collection-molecules.txt, and then in a separate thread loads the rest of the molecules + the allowed structures. The 1st
  * call that requires the full molecule list or allowed structures will block until it is all read in or computed
  *
- * REVIEW: This comment below is ominous!
- * TODO: stub: this is just a stub, fill out with actual behavior
- *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
-
-
-//REVIEW use logging instead of System.out throughout, since this happens at startup in production product.
 
 import buildAMolecule from '../../buildAMolecule.js';
 import CompleteMolecule from './CompleteMolecule.js';
@@ -185,7 +179,7 @@ MoleculeList.getMoleculeByName = name => {
   let result = initialList.moleculeNameMap[ name ];
 
   if ( !result ) {
-    // TODO: logger here needed as a warning for master lookup?
+    console.log( 'Searching', name, 'in master instance' );
     result = MoleculeList.getMasterInstance().moleculeNameMap[ name ];
   }
 
