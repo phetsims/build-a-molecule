@@ -528,24 +528,6 @@ class Kit {
 
     const newMolecule = MoleculeStructure.getCombinedMoleculeFromBond( molA, molB, a, b, new Molecule() );
 
-    // sanity check and debugging information
-    if ( !newMolecule.isValid() ) {
-      // TODO: performance: strip this out for the runtime?
-      window.console && console.log && console.log( 'invalid molecule!' );
-      window.console && console.log && console.log( 'bonding: ' + a.symbol + '(' + a.reference + '), ' + dirAtoB + ' ' + b.symbol + ' (' + b.reference + ')' );
-      window.console && console.log && console.log( 'A' );
-      window.console && console.log && console.log( molA.getDebuggingDump() );
-      window.console && console.log && console.log( 'B' );
-      window.console && console.log && console.log( molB.getDebuggingDump() );
-      window.console && console.log && console.log( 'combined' );
-      window.console && console.log && console.log( newMolecule.getDebuggingDump() );
-
-      window.console && console.log && console.log( 'found: ' + this.isAllowedStructure( newMolecule ) );
-
-      // just exit out for now
-      return;
-    }
-
     this.removeMolecule( molA );
     this.removeMolecule( molB );
     this.addMolecule( newMolecule );
