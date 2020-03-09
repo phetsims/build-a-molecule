@@ -163,7 +163,7 @@ MoleculeList.startInitialization = () => {
   masterInstance = new MoleculeList();
   masterInstance.loadMasterData();
   initialized = true;
-  console.log( 'Master list loaded.' )
+  console.log( 'Master list loaded.' );
 };
 
 MoleculeList.getMasterInstance = () => {

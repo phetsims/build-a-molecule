@@ -139,7 +139,7 @@ class MoleculeStructure {
     let alcoholCount = 0;
 
     // we pull of the alcohols so we can get that molecular formula (and we append the alcohols afterwards)
-    let structureWithoutAlcohols = this.getCopy();
+    let structureWithoutAlcohols = this.copy();
     this.atoms.forEach( oxygenAtom => {
       // only process if it is an oxygen atom
       if ( oxygenAtom.isOxygen() ) {
@@ -333,33 +333,18 @@ class MoleculeStructure {
     return new ElementHistogram( this );
   }
 
-  // TODO: rename copy()
   /**
    * @private
    *
    * @returns {MoleculeStructure}
    */
-  getCopy() {
+  copy() {
     const result = new MoleculeStructure( this.atoms.length, this.bonds.length );
     this.atoms.forEach( result.addAtom.bind( result ) );
     this.bonds.forEach( result.addBond.bind( result ) );
     return result;
   }
 
-  /**
-   * @public
-   *
-   * @returns {MoleculeStructure} Gives us a copy that is typed to just Atom, even though it uses the same atom instances (but different bond instances)
-   */
-  getAtomCopy() {
-    const result = new MoleculeStructure( this.atoms.length, this.bonds.length );
-    this.atoms.forEach( result.addAtom.bind( result ) );
-    this.bonds.forEach( bond => {
-      // new bonds. TODO: document why necessary if we find out
-      result.addBond( new Bond( bond.a, bond.b ) );
-    } );
-    return result;
-  }
 
   /**
    *

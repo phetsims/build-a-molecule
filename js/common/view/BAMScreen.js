@@ -79,7 +79,7 @@ BAMScreen.generateKitCollection = ( allowMultipleMolecules, numBoxes, stepEmitte
 
     // add in that many molecules
     for ( let j = 0; j < box.capacity; j++ ) {
-      molecules.push( molecule.getAtomCopy() );
+      molecules.push( molecule.copy() );
     }
   }
 
