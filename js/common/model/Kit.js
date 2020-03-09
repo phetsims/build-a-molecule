@@ -169,7 +169,7 @@ class Kit {
       return bucket.element.isSameElement( element );
     } );
     assert && assert( elementBucket !== null, 'Element does not have an associated bucket.' );
-    return elementBucket
+    return elementBucket;
   }
 
   /**
@@ -296,10 +296,9 @@ class Kit {
    *
    * @param {Atom2} a - Atom A
    * @param {Atom2} b - Atom B
-   * @param {boolean} skipSeparation
    * @public
    */
-  breakBond( a, b, skipSeparation ) {
+  breakBond( a, b ) {
 
     // get our old and new molecule structures
     const oldMolecule = this.getMolecule( a );
@@ -313,9 +312,7 @@ class Kit {
     newMolecules.forEach( this.addMolecule.bind( this ) );
 
     // push the new separate molecules away
-    if ( !skipSeparation ) {
-      this.separateMoleculeDestinations();
-    }
+    this.separateMoleculeDestinations();
   }
 
   /**
@@ -445,15 +442,14 @@ class Kit {
    * @private
    */
   separateMoleculeDestinations() {
-    // TODO: performance: general optimization
-    let maxIterations = 500;
+    let maxIterations = 200;
     const pushAmount = 10; // how much to push two molecules away
     const availablePlayAreaBounds = this.collectionLayout.availablePlayAreaBounds;
+    const numMolecules = this.molecules.length;
 
     let foundOverlap = true;
     while ( foundOverlap && maxIterations-- >= 0 ) {
       foundOverlap = false;
-      const numMolecules = this.molecules.length;
       for ( let i = 0; i < numMolecules; i++ ) {
         const a = this.molecules[ i ];
 
@@ -489,8 +485,8 @@ class Kit {
             foundOverlap = true;
 
             // get perturbed centers. this is so that if two molecules have the exact same centers, we will push them away
-            const aCenter = aBounds.center.plus( new Vector2( phet.joist.random.nextDouble() - 0.5, phet.joist.random.nextDouble() - 0.5 ) );
-            const bCenter = bBounds.center.plus( new Vector2( phet.joist.random.nextDouble() - 0.5, phet.joist.random.nextDouble() - 0.5 ) );
+            const aCenter = aBounds.center.add( new Vector2( phet.joist.random.nextDouble() - 0.5, phet.joist.random.nextDouble() - 0.5 ) );
+            const bCenter = bBounds.center.add( new Vector2( phet.joist.random.nextDouble() - 0.5, phet.joist.random.nextDouble() - 0.5 ) );
 
             // delta from center of A to center of B, scaled to half of our push amount.
             const delta = bCenter.minus( aCenter ).normalized().times( pushAmount );
