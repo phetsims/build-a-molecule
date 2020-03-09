@@ -163,7 +163,7 @@ MoleculeList.startInitialization = () => {
   masterInstance = new MoleculeList();
   masterInstance.loadMasterData();
   initialized = true;
-  // TODO: log completion?
+  console.log( 'Master list loaded.' )
 };
 
 MoleculeList.getMasterInstance = () => {
@@ -179,7 +179,7 @@ MoleculeList.getMoleculeByName = name => {
   let result = initialList.moleculeNameMap[ name ];
 
   if ( !result ) {
-    console.log( 'Searching', name, 'in master instance' );
+    console.log( 'Searching', name, 'in master instance.' );
     result = MoleculeList.getMasterInstance().moleculeNameMap[ name ];
   }
 
