@@ -53,7 +53,7 @@ class CollectionPanel extends Panel {
       font: new PhetFont( {
         size: 22
       } ),
-      maxWidth: BAMConstants.TEXT_MAX_WIDTH
+      maxWidth: BAMConstants.TEXT_MAX_WIDTH - 10
     } );
     this.layoutNode.addChild( yourMoleculesText );
 
@@ -63,7 +63,7 @@ class CollectionPanel extends Panel {
         size: 16,
         weight: 'bold'
       } ),
-      maxWidth: BAMConstants.TEXT_MAX_WIDTH
+      maxWidth: BAMConstants.TEXT_MAX_WIDTH - 10
     } );
 
     // Manages changing the label of the current collection

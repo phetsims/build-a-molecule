@@ -21,7 +21,6 @@ import Molecule3DNode from './view3d/Molecule3DNode.js';
 import ShowMolecule3DButtonNode from './view3d/ShowMolecule3DButtonNode.js';
 
 // constants
-const MOLECULE_PADDING = 0;
 const BLACK_BOX_PADDING = BAMConstants.HAS_3D ? 7 : 0;
 
 class CollectionBoxNode extends VBox {
@@ -35,7 +34,7 @@ class CollectionBoxNode extends VBox {
     super( options );
     this.box = box;
     this.moleculeNodes = [];
-    this.moleculeNodeMap = {}; // molecule ID => node, stores nodes for each moecule
+    this.moleculeNodeMap = {}; // molecule ID => node, stores nodes for each molecule
     this.blinkTimeout = null; // NOT zero, since that could be a valid timeout ID for window.setTimeout!
     this.boxNode = new Node();
     this.moleculeIdThumbnailMap = {}; // maps moleculeId => Node (thumbnail view for the molecule)
@@ -213,7 +212,7 @@ class CollectionBoxNode extends VBox {
     let x = 0;
     moleculeNodes.forEach( moleculeNode => {
       moleculeNode.setTranslation( x, ( maxHeight - moleculeNode.height ) / 2 );
-      x += moleculeNode.width + MOLECULE_PADDING;
+      x += moleculeNode.width;
     } );
   }
 
