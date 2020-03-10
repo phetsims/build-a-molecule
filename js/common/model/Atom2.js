@@ -128,10 +128,6 @@ class Atom2 extends Atom {
     }
   }
 
-  setPosition( x, y ) {
-    this.positionProperty.value = new Vector2( x, y );
-  }
-
   translatePositionAndDestination( delta ) {
     this.positionProperty.value = this.positionProperty.value.plus( delta );
     this.destinationProperty.value = this.destinationProperty.value.plus( delta );
