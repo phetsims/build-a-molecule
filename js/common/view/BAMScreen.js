@@ -1,8 +1,9 @@
 // Copyright 2013-2020, University of Colorado Boulder
 
-/*
+/**
  * Supertype for modules in Build a Molecule. Handles code required for all modules (bounds, canvas handling, and the ability to switch models)
  *
+ * @author Denzell Barnett (PhET Interactive Simulations)
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 
@@ -96,7 +97,6 @@ BAMScreen.generateKitCollection = ( allowMultipleMolecules, numBoxes, stepEmitte
     // NOTE: for the future, we could potentially add another type of atom?
 
     var equivalentMoleculesRemaining = 0;
-    // TODO: we include the current molecule in this list, maybe that was unintended?
     molecules.forEach( moleculeStructure => {
       if ( moleculeStructure.getHillSystemFormulaFragment() === molecule.getHillSystemFormulaFragment() ) {
         equivalentMoleculesRemaining++;

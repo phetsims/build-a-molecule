@@ -1,6 +1,7 @@
 // Copyright 2020, University of Colorado Boulder
 
 /**
+ * Factory to create icons for home screens and the nav-bar.
  *
  * @author Denzell Barnett (PhET Interactive Simulations)
  */
@@ -119,5 +120,4 @@ const BAMIconFactory = {
 };
 
 buildAMolecule.register( 'BAMIconFactory', BAMIconFactory );
-
 export default BAMIconFactory;

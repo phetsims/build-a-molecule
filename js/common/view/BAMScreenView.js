@@ -3,6 +3,7 @@
 /**
  * Node canvas for Build a Molecule. It features kits shown at the bottom. Can be extended to add other parts
  *
+ * @author Denzell Barnett (PhET Interactive Simulations)
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 
@@ -37,13 +38,15 @@ class BAMScreenView extends ScreenView {
     this.addedEmitterListeners = {}; // kit ID => addedMoleculeListener
     this.removedEmitterListeners = {}; // kit ID => removedMoleculeListener
 
-    // @public {KitCollectionList}
+    // @public
     this.kitCollectionList = kitCollectionList;
-    this.addCollection( kitCollectionList.currentCollectionProperty.value, false );
+    this.currentCollection = kitCollectionList.currentCollectionProperty.value;
+    this.currentKit = this.currentCollection.currentKitProperty.value;
+    this.addCollection( this.currentCollection, false );
 
     // @public {Bounds2} Bounds used to limit where molecules can reside in the play area.
     this.atomDragBounds = new Bounds2( -1575, -850, 1575, 950 );
-    this.mappedKitCollectionBounds = this.kitCollectionMap[ this.kitCollectionList.currentCollectionProperty.value.id ].bounds.dilatedX( 60 );
+    this.mappedKitCollectionBounds = this.kitCollectionMap[ this.currentCollection.id ].bounds.dilatedX( 60 );
 
     // @public Dialog used for representing 3D molecules.
     // Only create a dialog if webgl is enabled. See https://github.com/phetsims/build-a-molecule/issues/105
@@ -59,7 +62,8 @@ class BAMScreenView extends ScreenView {
     // Create a play area to house the molecules.
     this.kitPlayAreaNode = new KitPlayAreaNode( kits );
 
-    kitCollectionList.currentCollectionProperty.link( ( newCollection, oldCollection ) => {
+    // Update the collection
+    this.currentCollection.link( ( newCollection, oldCollection ) => {
       if ( oldCollection ) {
 
         // Check if a KitCollectionNode exists and remove it.
@@ -78,9 +82,13 @@ class BAMScreenView extends ScreenView {
       // Set the current kit of the KitPlayAreaNode
       this.kitPlayAreaNode.currentKit = newCollection.currentKitProperty.value;
     } );
-    kitCollectionList.addedCollectionEmitter.addListener( this.addCollection.bind( this ) );
 
+    // Add the a new collection if needed
+    kitCollectionList.addedCollectionEmitter.addListener( this.addCollection.bind( this ) );
     this.addChild( this.kitPlayAreaNode );
+
+    // Track the KitPanel
+    const kitPanel = this.kitCollectionMap[ this.currentCollection.id ].kitPanel;
 
     // Create a button to refill the kit
     const refillListener = () => {
@@ -89,12 +97,12 @@ class BAMScreenView extends ScreenView {
       this.kitPlayAreaNode.currentKit.buckets.forEach( bucket => {
         bucket.setToFullState();
       } );
-      kitCollectionList.currentCollectionProperty.value.collectionBoxes.forEach( box => {
+      this.currentCollection.value.collectionBoxes.forEach( box => {
         box.cueVisibilityProperty.value = false;
       } );
       this.updateRefillButton();
     };
-    const kitPanel = this.kitCollectionMap[ kitCollectionList.currentCollectionProperty.value.id ].kitPanel;
+
     const refillButton = new RefillButton(
       refillListener, {
         left: kitPanel.left,
@@ -105,7 +113,7 @@ class BAMScreenView extends ScreenView {
 
     // @private {function} Refill button is enabled if atoms exists outside of the bucket.
     this.updateRefillButton = () => {
-      refillButton.enabled = !kitCollectionList.currentCollectionProperty.value.currentKitProperty.value.allBucketsFilled();
+      refillButton.enabled = !this.currentKit.allBucketsFilled();
     };
 
     // Create a reset all button. Position altered on "Larger" Screen.
@@ -114,10 +122,10 @@ class BAMScreenView extends ScreenView {
         this.interruptSubtreeInput();
 
         // When clicked, empty collection boxes
-        kitCollectionList.currentCollectionProperty.value.collectionBoxes.forEach( box => {
+        this.currentCollection.value.collectionBoxes.forEach( box => {
           box.reset();
         } );
-        kitCollectionList.currentCollectionProperty.value.kits.forEach( kit => {
+        this.currentCollection.value.kits.forEach( kit => {
           kit.reset();
         } );
         kitCollectionList.reset();
@@ -194,7 +202,7 @@ class BAMScreenView extends ScreenView {
     };
 
     // When a collection is changed, update the listeners to the kits and KitPlayAreaNode.
-    kitCollectionList.currentCollectionProperty.link( ( collection, previousCollection ) => {
+    this.currentCollection.link( ( collection, previousCollection ) => {
       this.kitPlayAreaNode.atomLayer.children.forEach( otherAtomNode => {
         if ( otherAtomNode ) {
           otherAtomNode.interruptSubtreeInput();
@@ -261,7 +269,7 @@ class BAMScreenView extends ScreenView {
     // listener for 'click outside to dismiss'
     this.clickToDismissListener = {
       down: () => {
-        kitCollectionList.currentCollectionProperty.value.currentKitProperty.value.selectedAtomProperty.value = null;
+        this.currentKit.selectedAtomProperty.value = null;
       }
     };
     phet.joist.display.addInputListener( this.clickToDismissListener );
@@ -277,7 +285,7 @@ class BAMScreenView extends ScreenView {
 
     // Update the visibility of the cues in each collection box
     let hasTargetMolecule = false;
-    this.kitCollectionList.currentCollectionProperty.value.collectionBoxes.forEach( box => {
+    this.currentCollection.collectionBoxes.forEach( box => {
       this.kitPlayAreaNode.currentKit.molecules.forEach( molecule => {
         hasTargetMolecule = molecule ? box.willAllowMoleculeDrop( molecule ) : hasTargetMolecule || false;
       } );
@@ -337,7 +345,7 @@ class BAMScreenView extends ScreenView {
    * @returns {AtomNode}
    */
   addAtomNodeToPlayArea( atom ) {
-    const currentKit = this.kitCollectionList.currentCollectionProperty.value.currentKitProperty.value;
+    const currentKit = this.currentKit;
     const atomNode = this.addAtomNodeToPlayAreaNode( atom );
     atom.separateMoleculeEmitter.addListener( currentKit.separateMoleculeDestinations.bind( currentKit ) );
     let lastPosition;
