@@ -55,9 +55,15 @@ class Molecule3DDialog extends Dialog {
       closeButtonColor: 'white'
     } );
 
+    // @public {Property.<CompleteMoleculeProperty>}
+    this.completeMoleculeProperty = completeMoleculeProperty;
+
     // @public {BooleanProperty} Property used for playing/pausing a rotating molecule
     this.isPlayingProperty = new BooleanProperty( true );
     this.userControlledProperty = new BooleanProperty( false );
+
+    // View styles for space filled and ball and stick views.\
+    const viewStyleProperty = new EnumerationProperty( VIEW_STYLE, VIEW_STYLE.SPACE_FILL );
     const playPauseButton = new PlayPauseButton( this.isPlayingProperty, {
       radius: 15,
       valueOffSoundPlayer: Playable.NO_SOUND,
@@ -65,19 +71,19 @@ class Molecule3DDialog extends Dialog {
       baseColor: Color.ORANGE
     } );
 
-    // @public {Property.<CompleteMoleculeProperty>}
-    this.completeMoleculeProperty = completeMoleculeProperty;
+    // Reads out general formula for displayed molecule.
     const formulaText = new RichText( '', {
       font: new PhetFont( 18 ),
-      fill: '#bbb'
+      fill: new Color( '187,187,187' )
     } );
+
+    // Update formula text for displayed molecule.
     completeMoleculeProperty.link( completeMolecule => {
       if ( completeMolecule ) {
         title.setText( completeMolecule.getDisplayName() );
         formulaText.setText( completeMolecule.getGeneralFormulaFragment() );
       }
     } );
-    const viewStyleProperty = new EnumerationProperty( VIEW_STYLE, VIEW_STYLE.SPACE_FILL );
 
     /**
      * Build and add atom mesh to container.
@@ -154,7 +160,6 @@ class Molecule3DDialog extends Dialog {
 
           // Vector3
           const cylinderDefaultOrientation = Vector3.Y_UNIT;
-
           const neededOrientation = bondAPosition.minus( bondBPosition ).normalized();
 
           // Matrix3
@@ -183,6 +188,7 @@ class Molecule3DDialog extends Dialog {
       cameraPosition: new Vector3( 0, 0, 5 )
     };
     const colorSet = [ new Color( 159, 102, 218 ), new Color( 255, 255, 255 ) ];
+
     // Build the icon the space filled representation
     const spaceFilledIcon = new ThreeNode( 50, 50, iconOptions );
     const spaceFilledScene = spaceFilledIcon.stage.threeScene;
@@ -292,7 +298,7 @@ class Molecule3DDialog extends Dialog {
       if ( isShowing ) {
 
         // TODO: ThreeNode needs to be reset/childrenRemoved?
-        contentVBox.removeAllChildren();
+        contentVBox.removeAllChildren()
         contentVBox.children = [ formulaText, moleculeNode, sceneRadioButtonGroup, playPauseButton ];
       }
       else {
@@ -338,7 +344,6 @@ class Molecule3DDialog extends Dialog {
     } );
     moleculeNode.addInputListener( pressListener );
   }
-
 
   /**
    * @param dt
