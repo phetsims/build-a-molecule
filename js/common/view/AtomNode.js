@@ -43,13 +43,23 @@ class AtomNode extends Node {
     this.atom = atom;
     this.addChild( AtomNode.createIcon( atom.element ) );
 
-    //REVIEW: This looks like it may leak memory. Worth checking into
-    atom.positionProperty.link( modelPosition => {
+    // @private {Function}
+    this.translationListener = modelPosition => {
       this.setTranslation( BAMConstants.MODEL_VIEW_TRANSFORM.modelToViewPosition( modelPosition ) );
-    } );
-    atom.visibleProperty.link( visible => {
+    };
+
+    // @private {Function}
+    this.updateVisibilityListener = visible => {
       this.visible = visible;
-    } );
+    };
+    atom.positionProperty.link( this.translationListener );
+    atom.visibleProperty.link( this.updateVisibilityListener );
+  }
+
+  dispose() {
+    this.atom.positionProperty.unlink( this.translationListener );
+    this.atom.visibleProperty.unlink( this.updateVisibilityListener );
+    Node.prototype.dispose.call( this );
   }
 
   /**
