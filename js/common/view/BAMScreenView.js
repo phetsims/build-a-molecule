@@ -158,10 +158,9 @@ class BAMScreenView extends ScreenView {
      * Handles removing molecules and molecule metadata to kit play area.
      *
      * @param {Molecule} molecule
-     * @param {Kit} kit
      * @private
      */
-    const removedMoleculeListener = ( molecule, kit ) => {
+    const removedMoleculeListener = ( molecule ) => {
       const moleculeControlsHBox = this.kitPlayAreaNode.metadataMap[ molecule.moleculeId ];
       if ( moleculeControlsHBox ) {
         this.kitPlayAreaNode.metadataLayer.removeChild( moleculeControlsHBox );
