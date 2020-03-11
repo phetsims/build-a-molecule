@@ -21,7 +21,8 @@ import Utils from '../../../../../scenery/js/util/Utils.js';
 import buildAMolecule from '../../../buildAMolecule.js';
 
 // constants
-const GRAB_INITIAL_TRANSFORMS = false; // debug flag, specifies whether master transforms are tracked and printed to determine "pretty" setup transformations
+// debug flag, specifies whether master transforms are tracked and printed to determine "pretty" setup transformations
+const GRAB_INITIAL_TRANSFORMS = false;
 
 class Molecule3DNode extends DOM {
   /**
@@ -51,7 +52,9 @@ class Molecule3DNode extends DOM {
 
     // map the atoms into our enhanced format
     this.currentAtoms = completeMolecule.atoms.map( atom => {
-      const v = new Vector3( atom.x3d, atom.y3d, atom.z3d ).times( 75 ); // similar to picometers from angstroms? hopefully?
+
+      // similar to picometers from angstroms? hopefully?
+      const v = new Vector3( atom.x3d, atom.y3d, atom.z3d ).times( 75 );
       v.element = atom.element;
       v.covalentRadius = atom.element.covalentRadius;
       v.color = atom.element.color;
@@ -145,7 +148,8 @@ class Molecule3DNode extends DOM {
     const rx = iy * Math.cos( theta );
     const ry = iy;
 
-    const cutoffTheta = Math.atan2( ix, iy ); // yes, tan( ix/iy ) converts to this, don't let your instincts tell you otherwise
+    // yes, tan( ix/iy ) converts to this, don't let your instincts tell you otherwise
+    const cutoffTheta = Math.atan2( ix, iy );
 
     if ( theta < cutoffTheta - 1e-7 ) {
       // no arc needed

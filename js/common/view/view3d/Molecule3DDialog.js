@@ -73,7 +73,7 @@ class Molecule3DDialog extends Dialog {
     // Reads out general formula for displayed molecule.
     const formulaText = new RichText( '', {
       font: new PhetFont( 18 ),
-      fill: new Color( '187,187,187' )
+      fill: new Color( 187, 187, 187 )
     } );
 
     // Update formula text for displayed molecule.

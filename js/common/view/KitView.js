@@ -249,8 +249,7 @@ class KitView extends Node {
    * @public
    */
   removeMoleculeBondNodes( molecule ) {
-    const moleculeBondContainerNode = this.bondMap[ molecule.moleculeId ];
-    moleculeBondContainerNode.dispose();
+    this.bondMap[ molecule.moleculeId ].dispose();
     delete this.bondMap[ molecule.moleculeId ];
   }
 }

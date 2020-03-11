@@ -4,6 +4,7 @@
  * Displays a node that tells the user that all collection boxes are full. Allows the user
  * to create a new collection.
  *
+ * @author Denzell Barnett (PhET Interactive Simulations)
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 
@@ -34,7 +35,7 @@ class AllFilledDialog extends Dialog {
    */
   constructor( buttonClickedProperty, regenerateCallback, options ) {
     options = merge( {
-      stroke: 'black',
+      stroke: new Color( 0, 0, 0 ),
       fill: BAMConstants.COMPLETE_BACKGROUND_COLOR,
       center: new Vector2( 0, 0 ),
       bottomMargin: 10,

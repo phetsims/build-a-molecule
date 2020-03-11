@@ -41,7 +41,6 @@ class MoleculeControlsHBox extends HBox {
       // we don't need anything at all if it is not a "molecule"
       return;
     }
-
     this.updatePositionListener = this.updatePosition.bind( this );
 
     // Check if molecule data exists

@@ -3,8 +3,6 @@
 /**
  * Displays an atom and labels it with the chemical symbol
  *
- * REVIEW: Iodine is unusable as its label is too large (very thin I). If needed, rework the scaling
- *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  * @author Denzell Barnett (PhET Interactive Simulations)
  * @author Chris Klusendorf (PhET Interactive Simulations)
@@ -33,7 +31,9 @@ class AtomNode extends Node {
    * @param {Object} [options]
    */
   constructor( atom, options ) {
-    const grabbableArea = Shape.circle( 0, 0, atom.covalentRadius * 0.65 > GRABBABLE_OFFSET ? GRABBABLE_OFFSET : atom.covalentRadius * 0.65 );
+    const grabbableArea = Shape.circle( 0, 0,
+      atom.covalentRadius * 0.65 > GRABBABLE_OFFSET ? GRABBABLE_OFFSET : atom.covalentRadius * 0.65
+    );
     super( merge( {
       cursor: 'pointer',
       touchArea: grabbableArea
@@ -82,7 +82,6 @@ class AtomNode extends Node {
 
       ELEMENT_MAP[ element.symbol ] = node;
     }
-
     return node;
   }
 
@@ -94,7 +93,7 @@ class AtomNode extends Node {
    * @public
    */
   static getTextColor( color ) {
-    return 0.30 * color.r + 0.59 * color.g + 0.11 * color.b < 125 ? 'white' : 'black';
+    return 0.30 * color.r + 0.59 * color.g + 0.11 * color.b < 125 ? new Color( 225, 225, 255 ) : new Color( 0, 0, 0 );
   }
 }
 
