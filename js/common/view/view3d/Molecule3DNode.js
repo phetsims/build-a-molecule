@@ -3,10 +3,7 @@
 /**
  * 3D Molecule display that takes up the entire screen
  *
- * TODO: custom rotation, ball and stick view, perspective, optimization
- * REVIEW: Probably ignore perspective. Work with JO to use three.js for this, and potentially keeping in the
- * REVIEW: Canvas-only view (adding ball-and-stick mode to it)
- *
+ * @author Denzell Barnett (PhET Interactive Simulations)
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 
@@ -27,14 +24,13 @@ import buildAMolecule from '../../../buildAMolecule.js';
 const GRAB_INITIAL_TRANSFORMS = false; // debug flag, specifies whether master transforms are tracked and printed to determine "pretty" setup transformations
 
 class Molecule3DNode extends DOM {
-  //REVIEW: Note that this may change significantly if we go with a three.js/webgl solution
   /**
    * @param {CompleteMolecule} completeMolecule
    * @param {Bounds2} initialBounds
    * @param {boolean} useHighRes
    */
   constructor( completeMolecule, initialBounds, useHighRes ) {
-    // construct ourself with the canvas (now properly initially sized)
+    // construct with the canvas (now properly initially sized)
     const canvas = document.createElement( 'canvas' );
     super( canvas, {
       preventTransform: true

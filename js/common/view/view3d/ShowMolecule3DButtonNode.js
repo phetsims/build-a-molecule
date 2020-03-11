@@ -1,8 +1,9 @@
 // Copyright 2020, University of Colorado Boulder
 
 /**
- * STUB CLASS TODO
+ * Button responsible for showing a 3D representation of the molecule.
  *
+ * @author Denzell Barnett (PhET Interactive Simulations)
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 
@@ -17,8 +18,6 @@ import buildAMoleculeStrings from '../../../build-a-molecule-strings.js';
 import buildAMolecule from '../../../buildAMolecule.js';
 import BAMConstants from '../../BAMConstants.js';
 
-// strings
-//REVIEW: Could rename the string key so we don't have to disable the lint rule here?
 const threeDString = buildAMoleculeStrings.threeD;
 
 class ShowMolecule3DButtonNode extends RectangularPushButton {

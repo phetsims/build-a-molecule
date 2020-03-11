@@ -3,9 +3,8 @@
 /**
  * 3D Molecule display that takes up the entire screen
  *
- * TODO: custom rotation, ball and stick view, perspective, optimization
- *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
+ * @author Denzell Barnett (PhET Interactive Simulations)
  */
 
 import BooleanProperty from '../../../../../axon/js/BooleanProperty.js';
