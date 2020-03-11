@@ -243,15 +243,6 @@ class KitView extends Node {
 
     return best;
   }
-
-  /**
-   * @param {Molecule} molecule
-   * @public
-   */
-  removeMoleculeBondNodes( molecule ) {
-    this.bondMap[ molecule.moleculeId ].dispose();
-    delete this.bondMap[ molecule.moleculeId ];
-  }
 }
 
 buildAMolecule.register( 'KitView', KitView );
