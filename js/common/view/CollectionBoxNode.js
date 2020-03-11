@@ -321,6 +321,33 @@ class CollectionBoxNode extends VBox {
       this.blinkTimeout = null;
     }
   }
+
+  /**
+   * Precomputation of largest collection box size
+   *
+   * @param {SingleCollectionBoxNode|MultipleCollectionBoxNode} boxNode
+   * @param {CollectionBox} box
+   * @static
+   */
+  static getPsuedoBoxBounds( boxNode, box ) {
+    let maxBounds = Bounds2.NOTHING;
+
+    MoleculeList.collectionBoxMolecules.forEach( molecule => {
+
+      // fake boxes
+      const boxBounds = new boxNode(
+        new box( molecule, 1, { initializeAudio: false } ),
+        node => {
+          return node.bounds;
+        },
+        () => {} ).bounds;
+
+      maxBounds = maxBounds.union( boxBounds );
+    } );
+
+    boxNode.maxWidth = maxBounds.width;
+    boxNode.maxHeight = maxBounds.height;
+  }
 }
 
 buildAMolecule.register( 'CollectionBoxNode', CollectionBoxNode );

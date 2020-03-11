@@ -7,7 +7,6 @@
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 
-import Bounds2 from '../../../../dot/js/Bounds2.js';
 import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import RichText from '../../../../scenery/js/nodes/RichText.js';
@@ -15,7 +14,6 @@ import buildAMoleculeStrings from '../../build-a-molecule-strings.js';
 import buildAMolecule from '../../buildAMolecule.js';
 import BAMConstants from '../BAMConstants.js';
 import CollectionBox from '../model/CollectionBox.js';
-import MoleculeList from '../model/MoleculeList.js';
 import CollectionBoxNode from './CollectionBoxNode.js';
 
 const collectionMultipleGoalPatternString = buildAMoleculeStrings.collectionMultipleGoalPattern;
@@ -67,26 +65,8 @@ class MultipleCollectionBoxNode extends CollectionBoxNode {
   }
 }
 
-/*---------------------------------------------------------------------------*
- * precomputation of largest single collection box size
- *----------------------------------------------------------------------------*/
-// TODO: simplify this code from single/multiple into one
-let maxBounds = Bounds2.NOTHING;
-
-MoleculeList.collectionBoxMolecules.forEach( molecule => {
-  // fake boxes
-  const boxBounds = new MultipleCollectionBoxNode(
-    new CollectionBox( molecule, 1, { initializeAudio: false } ),
-    node => {
-      return node.bounds;
-    },
-    () => {} ).bounds;
-
-  maxBounds = maxBounds.union( boxBounds );
-} );
-
-MultipleCollectionBoxNode.maxWidth = maxBounds.width;
-MultipleCollectionBoxNode.maxHeight = maxBounds.height;
+// Precomputation of largest multiple collection box size
+CollectionBoxNode.getPsuedoBoxBounds( MultipleCollectionBoxNode, CollectionBox );
 
 buildAMolecule.register( 'MultipleCollectionBoxNode', MultipleCollectionBoxNode );
 export default MultipleCollectionBoxNode;
