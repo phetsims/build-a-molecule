@@ -295,9 +295,7 @@ class Molecule3DDialog extends Dialog {
 
       // Set the order of children for the VBox
       if ( isShowing ) {
-
-        // TODO: ThreeNode needs to be reset/childrenRemoved?
-        contentVBox.removeAllChildren()
+        contentVBox.removeAllChildren();
         contentVBox.children = [ formulaText, moleculeNode, sceneRadioButtonGroup, playPauseButton ];
       }
       else {
