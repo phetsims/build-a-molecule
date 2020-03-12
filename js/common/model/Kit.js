@@ -19,6 +19,7 @@ import buildAMolecule from '../../buildAMolecule.js';
 import LewisDotModel from './LewisDotModel.js';
 import Molecule from './Molecule.js';
 import MoleculeList from './MoleculeList.js';
+import BuildAMoleculeQueryParameters from '../BuildAMoleculeQueryParameters.js';
 import MoleculeStructure from './MoleculeStructure.js';
 
 let kitIdCounter = 0;
@@ -221,7 +222,9 @@ class Kit {
    * @public
    */
   moleculePutInCollectionBox( molecule, box ) {
-    window.console && console.log && console.log( 'You have collected: ' + box.moleculeType.commonNameProperty.value );
+    if ( BuildAMoleculeQueryParameters.logData ) {
+      window.console && console.log && console.log( 'You have collected: ' + box.moleculeType.commonNameProperty.value );
+    }
     this.hasMoleculesInBoxesProperty.value = true;
     this.removeMolecule( molecule );
     molecule.atoms.forEach( atom => {
@@ -537,8 +540,10 @@ class Kit {
      * bonding diagnostics and sanity checks
      *----------------------------------------------------------------------------*/
 
-    const serializedForm = this.getMolecule( a ).toSerial2();
-    window.console && console.log && console.log( 'created structure: ' + serializedForm );
+    if ( BuildAMoleculeQueryParameters.logData ) {
+      const serializedForm = this.getMolecule( a ).toSerial2();
+      window.console && console.log && console.log( 'created structure: ' + serializedForm );
+    }
     const structure = this.getMolecule( a );
     if ( structure.atoms.length > 2 ) {
       structure.bonds.forEach( bond => {

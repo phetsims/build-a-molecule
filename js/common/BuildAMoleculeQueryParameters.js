@@ -13,6 +13,9 @@ const BuildAMoleculeQueryParameters = QueryStringMachine.getAll( {
   // Triggers a successfully completed collection. The user just needs to fill a single box to go to next collection.
   easyMode: { type: 'flag' },
 
+  // Triggers console logs for information related to created molecules, collected molecules, and split molecules
+  logData: { type: 'flag' },
+
   // Increments collections by a defined amount. This only changes the naming convention for the collections.
   // It doesn't create additional collections. Used for testing.
   skipLevels: {
