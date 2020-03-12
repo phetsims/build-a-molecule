@@ -8,6 +8,7 @@
  */
 
 import Bounds2 from '../../../../dot/js/Bounds2.js';
+import timer from '../../../../axon/js/timer.js';
 import Shape from '../../../../kite/js/Shape.js';
 import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
 import Image from '../../../../scenery/js/nodes/Image.js';
@@ -303,12 +304,10 @@ class CollectionBoxNode extends VBox {
         }
 
         // set the blinkTimeout so it can be canceled
-        this.blinkTimeout = window.setTimeout( tick, blinkDelayInMs );
+        this.blinkTimeout = timer.setTimeout( tick, blinkDelayInMs );
       }
     };
-
-    //REVIEW: Use timer.setTimeout (or another thing that is hooked to the simulation step)
-    this.blinkTimeout = window.setTimeout( tick, blinkDelayInMs );
+    this.blinkTimeout = timer.setTimeout( tick, blinkDelayInMs );
   }
 
   /**

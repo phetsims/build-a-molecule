@@ -3,6 +3,7 @@
 /*
  * 1st screen: collection boxes only take 1 molecule, and our 1st kit collection is always the same
  *
+ * @author Denzell Barnett (PhET Interactive Simulations)
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 
@@ -29,14 +30,12 @@ class SingleScreen extends BAMScreen {
    * @constructor
    */
   constructor() {
-
     const options = {
       name: titleSingleString,
       backgroundColorProperty: new Property( BAMConstants.CANVAS_BACKGROUND_COLOR ),
       homeScreenIcon: BAMIconFactory.createSingleScreen()
     };
 
-    //REVIEW: Formatting could use some changes here
     super(
       // createInitialKitCollection
       ( bounds, stepEmitter ) => {
@@ -54,6 +53,8 @@ class SingleScreen extends BAMScreen {
           new Bucket( new Dimension2( 450, 200 ), stepEmitter, Element.O, 2 ),
           new Bucket( new Dimension2( 500, 200 ), stepEmitter, Element.N, 2 )
         ] ), { triggerCue: true } );
+
+        // Add the collection boxes.
         kitCollection.addCollectionBox( new CollectionBox( MoleculeList.H2O, 1 ) );
         kitCollection.addCollectionBox( new CollectionBox( MoleculeList.O2, 1 ) );
         kitCollection.addCollectionBox( new CollectionBox( MoleculeList.H2, 1 ) );
