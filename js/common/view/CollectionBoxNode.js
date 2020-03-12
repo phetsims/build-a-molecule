@@ -102,7 +102,7 @@ class CollectionBoxNode extends VBox {
     // add invisible molecules to the molecule layer so that its size won't change later (fixes molecule positions)
     const nodes = [];
     for ( let i = 0; i < box.capacity; i++ ) {
-      const node = this.lookupThumbnail( box.moleculeType );
+      const node = CollectionBoxNode.lookupThumbnail( box.moleculeType, this.moleculeNodeMap );
       node.visible = false;
       nodes.push( node );
       this.moleculeLayer.addChild( node );
@@ -127,31 +127,6 @@ class CollectionBoxNode extends VBox {
   }
 
   /**
-   * @param {CompleteMolecule} completeMolecule
-   * @private
-   *
-   * @returns {Node}
-   */
-  lookupThumbnail( completeMolecule ) {
-    if ( !this.moleculeIdThumbnailMap[ completeMolecule.moleculeId ] ) {
-      const moleculeNode = new Molecule3DNode( completeMolecule, new Bounds2( 0, 0, 50, 50 ), false );
-      const transformMatrix = Molecule3DNode.initialTransforms[ completeMolecule.getGeneralFormula() ];
-      if ( transformMatrix ) {
-        moleculeNode.transformMolecule( transformMatrix );
-      }
-      moleculeNode.draw();
-      //REVIEW: Can we factor all of this out to a static call on Molecule3DNode?
-      this.moleculeIdThumbnailMap[ completeMolecule.moleculeId ] = new Image( moleculeNode.canvas.toDataURL() );
-    }
-
-    // wrap the returned image in an extra node so we can transform them independently, and that takes up the proper amount of space
-    const node = this.moleculeIdThumbnailMap[ completeMolecule.moleculeId ];
-    const wrapperNode = new Rectangle( 0, 0, 50, 50 );
-    wrapperNode.addChild( node );
-    return wrapperNode;
-  }
-
-  /**
    * @param {Molecule} molecule
    * @public
    */
@@ -160,7 +135,7 @@ class CollectionBoxNode extends VBox {
     this.updateBoxGraphics();
 
     const completeMolecule = MoleculeList.getMasterInstance().findMatchingCompleteMolecule( molecule );
-    const pseudo3DNode = this.lookupThumbnail( completeMolecule );
+    const pseudo3DNode = CollectionBoxNode.lookupThumbnail( completeMolecule, this.moleculeNodeMap );
     this.moleculeLayer.addChild( pseudo3DNode );
     this.moleculeNodes.push( pseudo3DNode );
     this.moleculeNodeMap[ molecule.moleculeId ] = pseudo3DNode;
@@ -319,6 +294,31 @@ class CollectionBoxNode extends VBox {
       window.clearTimeout( this.blinkTimeout );
       this.blinkTimeout = null;
     }
+  }
+
+  /**
+   * @param {CompleteMolecule} completeMolecule
+   * @param {object} moleculeIdThumbnailMap
+   * @static
+   *
+   * @returns {Node}
+   */
+  static lookupThumbnail( completeMolecule, moleculeIdThumbnailMap ) {
+    if ( !moleculeIdThumbnailMap[ completeMolecule.moleculeId ] ) {
+      const moleculeNode = new Molecule3DNode( completeMolecule, new Bounds2( 0, 0, 50, 50 ), false );
+      const transformMatrix = Molecule3DNode.initialTransforms[ completeMolecule.getGeneralFormula() ];
+      if ( transformMatrix ) {
+        moleculeNode.transformMolecule( transformMatrix );
+      }
+      moleculeNode.draw();
+      moleculeIdThumbnailMap[ completeMolecule.moleculeId ] = new Image( moleculeNode.canvas.toDataURL() );
+    }
+
+    // wrap the returned image in an extra node so we can transform them independently, and that takes up the proper amount of space
+    const node = moleculeIdThumbnailMap[ completeMolecule.moleculeId ];
+    const wrapperNode = new Rectangle( 0, 0, 50, 50 );
+    wrapperNode.addChild( node );
+    return wrapperNode;
   }
 
   /**
