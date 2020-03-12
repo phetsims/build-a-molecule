@@ -60,22 +60,11 @@ class MoleculeStructure {
     return atom;
   }
 
-  //REVIEW: Don't have this be polymorphic (looks like we can either add a bond or a pair of atoms)
   /**
-   * @param {Atom2} a
-   * @param {Atom2} b
+   * @param {Bond} bond
    * @public
    */
-  addBond( a, b ) {
-    let bond;
-
-    // TODO: optimize call-sites of this to just use one way (almost assuredly creating the bond first)
-    if ( a instanceof Bond ) {
-      bond = a;
-    }
-    else {
-      bond = new Bond( a, b );
-    }
+  addBond( bond ) {
     assert && assert( _.includes( this.atoms, bond.a ) );
     assert && assert( _.includes( this.atoms, bond.b ) );
     this.bonds.push( bond );
@@ -703,9 +692,9 @@ MoleculeStructure.getMoleculesFromBrokenBond = ( structure, bond, molA, molB ) =
  * NOTE: equivalency matrices are stored in row-major format (compared to the Java version)
  *
  * @param {Array.<boolean>} equivalences          Equivalence Matrix, square!, row-major (stored as one boolean array)
- * @param {Int}            myIndex               Index for the row (index into our atoms). calls with myIndex + 1 to children TODO: should this be number?
- * @param {Array.<number>}     otherRemainingIndices Remaining available 'other' indices
- * @param {Int}            size                  This square matrix is size x size in dimensions
+ * @param {number}          myIndex               Index for the row (index into our atoms). calls with myIndex + 1 to children
+ * @param {Array.<number>}  otherRemainingIndices Remaining available 'other' indices
+ * @param {number}          size                  This square matrix is size x size in dimensions
  * @returns {boolean} Whether a successful matching permutation was found
  */
 MoleculeStructure.checkEquivalencyMatrix = ( equivalences, myIndex, otherRemainingIndices, size ) => {
@@ -734,30 +723,6 @@ MoleculeStructure.checkEquivalencyMatrix = ( equivalences, myIndex, otherRemaini
     }
   }
   return false;
-};
-
-/**
- * Reads in the serialized form produced above
- *
- * @param {string} str Serialized form of a structure
- * @returns {Molecule} structure
- */
-MoleculeStructure.fromSerial = str => {
-  const tokens = str.split( '|' );
-  let idx = 0;
-  const atomCount = parseInt( tokens[ idx++ ], 10 );
-  const bondCount = parseInt( tokens[ idx++ ], 10 );
-  const structure = new MoleculeStructure( atomCount, bondCount );
-  const atoms = new Array( atomCount );
-
-  for ( let i = 0; i < atomCount; i++ ) {
-    atoms[ i ] = Atom.createAtomFromSymbol( tokens[ idx++ ] );
-    structure.addAtom( atoms[ i ] );
-  }
-  for ( let i = 0; i < bondCount; i++ ) {
-    structure.addBond( atoms[ parseInt( tokens[ idx++ ], 10 ) ], atoms[ parseInt( tokens[ idx++ ], 10 ) ] );
-  }
-  return structure;
 };
 
 /**
