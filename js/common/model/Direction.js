@@ -11,7 +11,7 @@ import Enumeration from '../../../../phet-core/js/Enumeration.js';
 import buildAMolecule from '../../buildAMolecule.js';
 
 // constants
-const DIRECTION = Enumeration.byKeys( [ 'NORTH', 'EAST', 'SOUTH', 'WEST' ] );
+const DirectionOrientation = Enumeration.byKeys( [ 'NORTH', 'EAST', 'SOUTH', 'WEST' ] );
 
 class Direction {
   /**
@@ -26,10 +26,10 @@ class Direction {
 }
 
 // Declare directions
-Direction.North = new Direction( new Vector2( 0, 1 ), DIRECTION.NORTH );
-Direction.East = new Direction( new Vector2( 1, 0 ), DIRECTION.EAST );
-Direction.South = new Direction( new Vector2( 0, -1 ), DIRECTION.SOUTH );
-Direction.West = new Direction( new Vector2( -1, 0 ), DIRECTION.WEST );
+Direction.North = new Direction( new Vector2( 0, 1 ), DirectionOrientation.NORTH );
+Direction.East = new Direction( new Vector2( 1, 0 ), DirectionOrientation.EAST );
+Direction.South = new Direction( new Vector2( 0, -1 ), DirectionOrientation.SOUTH );
+Direction.West = new Direction( new Vector2( -1, 0 ), DirectionOrientation.WEST );
 
 // Declare direction opposites
 Direction.North.opposite = Direction.South;

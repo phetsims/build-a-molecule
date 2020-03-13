@@ -29,7 +29,7 @@ import buildAMolecule from '../../../buildAMolecule.js';
 import MoleculeList from '../../model/MoleculeList.js';
 
 // constants
-const VIEW_STYLE = Enumeration.byKeys( [ 'SPACE_FILL', 'BALL_AND_STICK' ] );
+const ViewStyle = Enumeration.byKeys( [ 'SPACE_FILL', 'BALL_AND_STICK' ] );
 
 class Molecule3DDialog extends Dialog {
   /**
@@ -62,7 +62,7 @@ class Molecule3DDialog extends Dialog {
     this.userControlledProperty = new BooleanProperty( false );
 
     // View styles for space filled and ball and stick views.\
-    const viewStyleProperty = new EnumerationProperty( VIEW_STYLE, VIEW_STYLE.SPACE_FILL );
+    const viewStyleProperty = new EnumerationProperty( ViewStyle, ViewStyle.SPACE_FILL );
     const playPauseButton = new PlayPauseButton( this.isPlayingProperty, {
       radius: 15,
       valueOffSoundPlayer: Playable.NO_SOUND,
@@ -198,7 +198,7 @@ class Molecule3DDialog extends Dialog {
     // Listener to change the view style to the space filled representation
     spaceFilledIcon.addInputListener( new PressListener( {
       press: () => {
-        viewStyleProperty.value = VIEW_STYLE.SPACE_FILL;
+        viewStyleProperty.value = ViewStyle.SPACE_FILL;
       }
     } ) );
 
@@ -216,7 +216,7 @@ class Molecule3DDialog extends Dialog {
     // Listener to change the view style to the ball and stick representation
     ballAndStickIcon.addInputListener( new PressListener( {
       press: () => {
-        viewStyleProperty.value = VIEW_STYLE.BALL_AND_STICK;
+        viewStyleProperty.value = ViewStyle.BALL_AND_STICK;
       }
     } ) );
 
@@ -237,7 +237,7 @@ class Molecule3DDialog extends Dialog {
         }
 
         // Handle building mesh for space fill representation
-        if ( viewStyle === VIEW_STYLE.SPACE_FILL && completeMolecule ) {
+        if ( viewStyle === ViewStyle.SPACE_FILL && completeMolecule ) {
           buildAtomMesh( completeMolecule, moleculeContainer, false, false );
         }
 
@@ -251,10 +251,10 @@ class Molecule3DDialog extends Dialog {
 
     //  Creation of toggled modes for scene selection
     const toggleButtonsContent = [ {
-      value: VIEW_STYLE.SPACE_FILL,
+      value: ViewStyle.SPACE_FILL,
       node: spaceFilledIcon
     }, {
-      value: VIEW_STYLE.BALL_AND_STICK,
+      value: ViewStyle.BALL_AND_STICK,
       node: ballAndStickIcon
     } ];
 
