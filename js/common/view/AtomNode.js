@@ -52,8 +52,8 @@ class AtomNode extends Node {
     this.updateVisibilityListener = visible => {
       this.visible = visible;
     };
-    atom.positionProperty.link( this.translationListener );
-    atom.visibleProperty.link( this.updateVisibilityListener );
+    this.atom.positionProperty.link( this.translationListener );
+    this.atom.visibleProperty.link( this.updateVisibilityListener );
   }
 
   /**

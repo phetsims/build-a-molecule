@@ -133,6 +133,7 @@ class KitView extends Node {
         // Remove atom view elements from bucket node and delete the reference from atom node map
         if ( this.atomNodeMap[ atom.id ] ) {
           this.atomLayer.removeChild( this.atomNodeMap[ atom.id ] );
+          this.atomNodeMap[ atom.id ].dispose();
           delete this.atomNodeMap[ atom.id ];
         }
 
