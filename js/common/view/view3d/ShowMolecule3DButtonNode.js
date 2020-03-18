@@ -36,7 +36,7 @@ class ShowMolecule3DButtonNode extends RectangularPushButton {
         } ),
         fill: 'white'
       } ),
-      baseColor: `rgb( 112, 177, 84 )`,
+      baseColor: 'rgb( 112, 177, 84 )',
       xMargin: 3,
       yMargin: 3,
       cursor: 'pointer',
