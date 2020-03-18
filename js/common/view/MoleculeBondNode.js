@@ -61,6 +61,7 @@ class MoleculeBondNode extends Node {
     // @private
     this.a = bond.a;
     this.b = bond.b;
+    this.kit = kit;
 
     // use the lewis dot model to get our bond direction
     const bondDirection = kit.getBondDirection( this.a, this.b );
@@ -139,12 +140,7 @@ class MoleculeBondNode extends Node {
     } ) );
     this.addChild( cutTargetNode );
 
-    // Show the cut targets for the selected atom's bonds
-    kit.selectedAtomProperty.link( selectedAtom => {
-      cutTargetNode.visible = selectedAtom === this.a || selectedAtom === this.b;
-    } );
-
-    // listener that will update the position of our hit target
+    // @private listener that will update the position of our hit target
     this.positionListener = () => {
       const orientation = this.b.positionProperty.value.minus( this.a.positionProperty.value );
       if ( orientation.magnitude > 0 ) {
@@ -153,6 +149,14 @@ class MoleculeBondNode extends Node {
       const location = orientation.times( this.a.covalentRadius ).plus( this.a.positionProperty.value );
       this.setTranslation( BAMConstants.MODEL_VIEW_TRANSFORM.modelToViewPosition( location ) );
     };
+
+    // @private Show the cut targets for the selected atom's bonds
+    this.toggleTargetVisibility = selectedAtom => {
+      cutTargetNode.visible = selectedAtom === this.a || selectedAtom === this.b;
+    };
+
+    // Link relevant elements
+    this.kit.selectedAtomProperty.link( this.toggleTargetVisibility );
     this.a.positionProperty.link( this.positionListener );
     this.b.positionProperty.link( this.positionListener );
   }
@@ -162,6 +166,7 @@ class MoleculeBondNode extends Node {
    * @public
    */
   dispose() {
+    this.kit.selectedAtomProperty.unlink( this.toggleTargetVisibility );
     this.a.positionProperty.unlink( this.positionListener );
     this.b.positionProperty.unlink( this.positionListener );
     Node.prototype.dispose.call( this );
