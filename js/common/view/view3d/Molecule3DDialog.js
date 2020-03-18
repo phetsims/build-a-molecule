@@ -61,7 +61,7 @@ class Molecule3DDialog extends Dialog {
     this.isPlayingProperty = new BooleanProperty( true );
     this.userControlledProperty = new BooleanProperty( false );
 
-    // View styles for space filled and ball and stick views.\
+    // View styles for space filled and ball and stick views.
     const viewStyleProperty = new EnumerationProperty( ViewStyle, ViewStyle.SPACE_FILL );
     const playPauseButton = new PlayPauseButton( this.isPlayingProperty, {
       radius: 15,
@@ -73,7 +73,7 @@ class Molecule3DDialog extends Dialog {
     // Reads out general formula for displayed molecule.
     const formulaText = new RichText( '', {
       font: new PhetFont( 18 ),
-      fill: new Color( 187, 187, 187 )
+      fill: 'rgb(187, 187, 187)'
     } );
 
     // Update formula text for displayed molecule.
@@ -264,7 +264,7 @@ class Molecule3DDialog extends Dialog {
       buttonContentYMargin: -8, // Trimming of part of the icon node is acceptable in this case.
       baseColor: 'black',
       selectedStroke: 'yellow',
-      deselectedStroke: new Color( 'white' ),
+      deselectedStroke: 'white',
       selectedLineWidth: 1,
       deselectedLineWidth: .5,
       deselectedButtonOpacity: 0.25,

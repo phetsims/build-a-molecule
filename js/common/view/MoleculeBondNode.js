@@ -11,7 +11,6 @@ import ButtonListener from '../../../../scenery/js/input/ButtonListener.js';
 import Circle from '../../../../scenery/js/nodes/Circle.js';
 import Line from '../../../../scenery/js/nodes/Line.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
-import Color from '../../../../scenery/js/util/Color.js';
 import closedUpCursorImage from '../../../images/scissors-closed-up_cur.js';
 import closedUpImage from '../../../images/scissors-closed-up_png.js';
 import closedCursorImage from '../../../images/scissors-closed_cur.js';
@@ -114,15 +113,15 @@ class MoleculeBondNode extends Node {
 
     // Add inner circle
     cutTargetNode.addChild( new Circle( bondRadius, {
-      fill: new Color( 'rgb(253,225,49)' ),
-      stroke: new Color( 'rgb(253,225,49)' ),
+      fill: 'rgb(253,225,49)',
+      stroke: 'rgb(253,225,49)',
       cursor: openCursor,
       visible: true
     } ) );
 
     // Add outer circle
     cutTargetNode.addChild( new Circle( bondRadius * 1.5, {
-      fill: new Color( 'rgba(253,225,49,0.4)' ),
+      fill: 'rgba(253,225,49,0.4)',
       cursor: openCursor,
       visible: true
     } ) );

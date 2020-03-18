@@ -11,7 +11,6 @@ import merge from '../../../../../phet-core/js/merge.js';
 import PhetFont from '../../../../../scenery-phet/js/PhetFont.js';
 import ButtonListener from '../../../../../scenery/js/input/ButtonListener.js';
 import Text from '../../../../../scenery/js/nodes/Text.js';
-import Color from '../../../../../scenery/js/util/Color.js';
 import RectangularPushButton from '../../../../../sun/js/buttons/RectangularPushButton.js';
 import Playable from '../../../../../tambo/js/Playable.js';
 import buildAMoleculeStrings from '../../../build-a-molecule-strings.js';
@@ -37,7 +36,7 @@ class ShowMolecule3DButtonNode extends RectangularPushButton {
         } ),
         fill: 'white'
       } ),
-      baseColor: new Color( 112, 177, 84 ),
+      baseColor: `rgb( 112, 177, 84 )`,
       xMargin: 3,
       yMargin: 3,
       cursor: 'pointer',
