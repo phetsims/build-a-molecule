@@ -42,11 +42,15 @@ const BAMIconFactory = {
     moleculeNode.draw();
 
     // Create icon from
-    const moleculeIcon = new Image( moleculeNode.canvas.toDataURL(), { scale: 0.85 } );
+    const moleculeIcon = new Image( moleculeNode.canvas.toDataURL(), {
+      initialWidth: moleculeNode.canvas.width,
+      initialHeight: moleculeNode.canvas.height,
+      scale: 0.85
+    } );
     wrapperNode.addChild( moleculeIcon );
 
     // Adjust the position of the molecule icon.
-    moleculeIcon.center = wrapperNode.center.minusXY( 240, 140 );
+    moleculeIcon.center = wrapperNode.center.plusXY( 0, 20 );
 
     // Return the icon in its wrapper
     return new ScreenIcon( new Node( {
@@ -67,7 +71,11 @@ const BAMIconFactory = {
       moleculeNodeOne.transformMolecule( transformMatrix );
     }
     moleculeNodeOne.draw();
-    const moleculeIconOne = new Image( moleculeNodeOne.canvas.toDataURL(), { scale: .50 } );
+    const moleculeIconOne = new Image( moleculeNodeOne.canvas.toDataURL(), {
+      initialWidth: moleculeNodeOne.canvas.width,
+      initialHeight: moleculeNodeOne.canvas.height,
+      scale: .50
+    } );
 
     // Iconize second O2 molecule
     const moleculeNodeTwo = new Molecule3DNode( MoleculeList.O2, new Bounds2( 0, 0, 548, 373 ), false );
@@ -85,8 +93,8 @@ const BAMIconFactory = {
     wrapperNode.addChild( moleculeIconTwo );
 
     // Adjust the position of the molecule icons.
-    moleculeIconOne.center = wrapperNode.center.minusXY( 270, 85 );
-    moleculeIconTwo.center = wrapperNode.center.minusXY( 5, 85 );
+    moleculeIconOne.center = wrapperNode.center.minusXY( 120, 0 );
+    moleculeIconTwo.center = wrapperNode.center.plusXY( 0, -93 );
 
     return new ScreenIcon( new Node( {
       children: [ wrapperNode ]
@@ -106,17 +114,20 @@ const BAMIconFactory = {
       moleculeNode.transformMolecule( transformMatrix );
     }
     moleculeNode.draw();
-    const moleculeIcon = new Image( moleculeNode.canvas.toDataURL(), { scale: 0.95 } );
+    const moleculeIcon = new Image( moleculeNode.canvas.toDataURL(), {
+      initialWidth: moleculeNode.canvas.width,
+      initialHeight: moleculeNode.canvas.height,
+      scale: 0.95
+    } );
     const wrapperNode = new Rectangle( 0, 0, 548, 373, 0, 0, {
       fill: BAMConstants.CANVAS_BACKGROUND_COLOR
     } );
     wrapperNode.addChild( moleculeIcon );
-    moleculeIcon.center = wrapperNode.center.minusXY( 275, 185 );
+    moleculeIcon.center = wrapperNode.center.minusXY( 0, 10 );
     return new ScreenIcon( new Node( {
       children: [ wrapperNode ]
     } ), SCREEN_ICON_OPTIONS );
   }
-
 };
 
 buildAMolecule.register( 'BAMIconFactory', BAMIconFactory );
