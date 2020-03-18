@@ -441,10 +441,11 @@ class BAMScreenView extends ScreenView {
    * @private
    */
   onAtomRemovedFromPlayArea( atom ) {
-
     // Remove mapped atom node from the view and dispose it.
-    this.kitPlayAreaNode.atomLayer.removeChild( this.kitPlayAreaNode.atomNodeMap[ atom.id ] );
-    this.kitPlayAreaNode.atomNodeMap[ atom.id ].dispose();
+    const atomNode = this.kitPlayAreaNode.atomNodeMap[ atom.id ];
+    atomNode.dragListener.dispose();
+    atomNode.dispose();
+
     delete this.kitPlayAreaNode.atomNodeMap[ atom.id ];
   }
 }
