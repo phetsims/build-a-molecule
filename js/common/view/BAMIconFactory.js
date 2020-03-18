@@ -83,7 +83,11 @@ const BAMIconFactory = {
       moleculeNodeTwo.transformMolecule( transformMatrix );
     }
     moleculeNodeTwo.draw();
-    const moleculeIconTwo = new Image( moleculeNodeTwo.canvas.toDataURL(), { scale: .50 } );
+    const moleculeIconTwo = new Image( moleculeNodeTwo.canvas.toDataURL(), {
+      initialWidth: moleculeNodeOne.canvas.width,
+      initialHeight: moleculeNodeOne.canvas.height,
+      scale: .50
+    } );
 
     // Wrapper node to house molecule icons
     const wrapperNode = new Rectangle( 0, 0, 548, 373, 0, 0, {
@@ -93,8 +97,8 @@ const BAMIconFactory = {
     wrapperNode.addChild( moleculeIconTwo );
 
     // Adjust the position of the molecule icons.
-    moleculeIconOne.center = wrapperNode.center.minusXY( 120, 0 );
-    moleculeIconTwo.center = wrapperNode.center.plusXY( 0, -93 );
+    moleculeIconOne.center = wrapperNode.center.minusXY( 125, 0 );
+    moleculeIconTwo.center = wrapperNode.center.plusXY( 115, 0 );
 
     return new ScreenIcon( new Node( {
       children: [ wrapperNode ]
