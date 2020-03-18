@@ -34,8 +34,7 @@ class KitView extends Node {
     this.kit = kit;
 
     // Maps for KitView elements.
-    this.atomNodeMap = {}; // atom.id => AtomNode
-    this.metadataMap = {}; // moleculeId => MoleculeControlsHBox
+    const atomNodeMap = {}; // atom.id => AtomNode
 
     // Layers
     const topLayer = new Node();
@@ -131,10 +130,10 @@ class KitView extends Node {
       const particleRemovedListener = atom => {
 
         // Remove atom view elements from bucket node and delete the reference from atom node map
-        if ( this.atomNodeMap[ atom.id ] ) {
-          this.atomLayer.removeChild( this.atomNodeMap[ atom.id ] );
-          this.atomNodeMap[ atom.id ].dispose();
-          delete this.atomNodeMap[ atom.id ];
+        if ( atomNodeMap[ atom.id ] ) {
+          this.atomLayer.removeChild( atomNodeMap[ atom.id ] );
+          atomNodeMap[ atom.id ].dispose();
+          delete atomNodeMap[ atom.id ];
         }
 
         // Remove the atom from the bucket particles
@@ -151,7 +150,7 @@ class KitView extends Node {
         const atomNode = new AtomNode( atom );
 
         // Keep track of the atomNode by mapping to its atom's ID then add to atom layer
-        this.atomNodeMap[ atom.id ] = atomNode;
+        atomNodeMap[ atom.id ] = atomNode;
 
         // Add the particle to the bucket atom layer and the bucket's particles.
         this.atomLayer.addChild( atomNode );
@@ -178,7 +177,6 @@ class KitView extends Node {
             // Get reference to atomNode and call the dragListener
             const atomNode = moleculeCollectingScreenView.kitPlayAreaNode.atomNodeMap[ atom.id ];
 
-            // REVIEW: KitPlayAreaNode is missing elements its atomNodeMap after completed collection.
             if ( atomNode ) {
               atomNode.dragListener.press( event, atomNode );
             }
