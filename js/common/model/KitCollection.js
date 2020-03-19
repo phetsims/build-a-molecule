@@ -120,7 +120,7 @@ class KitCollection {
         return collectionBox.isFull();
       } );
 
-      // REVIEW: Used for debugging.
+      // Used for debugging.
       if ( BuildAMoleculeQueryParameters.easyMode ) {
         this.allCollectionBoxesFilledProperty.value = true;
       }

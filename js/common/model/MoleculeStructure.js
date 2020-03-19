@@ -25,7 +25,6 @@ class MoleculeStructure {
   //REVIEW comments below indicate that ordering is important. Describe why ordering is significant.
   // NOTE from porting: StrippedMolecule relies on the ordering of atoms, and possibly bonds
 
-  // TODO: Molecule calls with (12,12)
   /**
    *
    * @param {number} numAtoms
@@ -38,14 +37,11 @@ class MoleculeStructure {
     // @public {number}
     this.moleculeId = nextMoleculeId++; // used for molecule identification and ordering for optimization
 
-    //REVIEW: Figure out types, and whether it's polymorphic
-    // TODO: performance: figure out a way of preallocating the arrays, and instead of pushing, just set the proper index (higher performance)
-    // this.atoms = new Array( numAtoms );
+    // @public {Array.<Atom2>}
     this.atoms = [];
-    // this.bonds = new Array( numBonds );
-    this.bonds = [];
-    // this.atomIndex = 0;
 
+    // @public {Array.<Bond>}
+    this.bonds = [];
   }
 
   /**
@@ -56,7 +52,6 @@ class MoleculeStructure {
    */
   addAtom( atom ) {
     assert && assert( !_.includes( this.atoms, atom ), 'Cannot add an already existing atom' );
-    // this.atomIndex++;
     this.atoms.push( atom ); // NOTE: don't mess with the order
     return atom;
   }
@@ -636,7 +631,7 @@ MoleculeStructure.getMoleculesFromBrokenBond = ( structure, bond, molA, molB ) =
   const dirtyAtoms = [ bond.a ];
   while ( dirtyAtoms.length > 0 ) {
     const atom = dirtyAtoms.pop();
-    // dirtyAtoms.splice( dirtyAtoms.indexOf( atom ), 1 ); // TODO: replace with remove()
+    dirtyAtoms.splice( dirtyAtoms.indexOf( atom ), 1 ); // TODO: replace with remove()
 
     // for all neighbors that don't use our 'bond'
     structure.bonds.forEach( otherBond => {

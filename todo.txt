@@ -2,36 +2,43 @@
 Build a Molecule TODO
 ====================
 
-Logging    (strippable)
-Assertions (strippable)
+✓ Indicates completed - Explanation presented as - { EXPLANATION } if needed
 
-Fix BucketFront colors - seems to be hue shifting
-CollectionList/KitCollection - consider extending ObservableArray instead?
+✓Logging    (strippable)
+✓Assertions (strippable)
 
-Check usages of getFirstTargetBox for handling undefined instead of null as a negative result
+✓Fix BucketFront colors - seems to be hue shifting
+✓CollectionList/KitCollection - consider extending ObservableArray instead?
+    - { Modules are responsible for more than Observable Array can handle }
 
-Memory:
-  Atoms are storing too much info in their instances from their Element. It's convenient, but probably killing us.
+✓Check usages of getFirstTargetBox for handling undefined instead of null as a negative result
+    - { No more usages }
+✓Memory:
+  ✓Atoms are storing too much info in their instances from their Element. It's convenient, but probably killing us.
+        - { Memory usage is tracked in issues BAM#38 and BAM#115 }
+✓Performance:
+  ✓ES5 getter/setter removal from inner-loop code
+    - { ES6 conversion BAM#92 }
 
-Performance:
-  ES5 getter/setter removal from inner-loop code
+✓Specify sim title string for Sim
 
-Specify sim title string for Sim
-
-Common code for:
+✓Common code for:
   HashMap
   Set
+  - { Not required for publication }
 
-Preloader
-Support portrait and landscape?
-Full serialization?
-Zoom/pan handler prototype
-Recycling bin for molecules/atoms?
-Handling hard-to-touch things:
-  Scissors? - single-finger would interact with panning if zoomed in, might be acceptable
-  3D button / break apart button - not sure
+✓Preloader
+✓Support portrait and landscape?
+    - { No issue reported by QA }
+✓Full serialization?
+✓Zoom/pan handler prototype
+  - { Not required for publication }
+✓Recycling bin for molecules/atoms?
+✓Handling hard-to-touch things:
+  ✓Scissors? - single-finger would interact with panning if zoomed in, might be acceptable
+  ✓3D button / break apart button - not sure
 
-"Model":
+✓"Model":
   Tabs:
     Play area bounds
     Kit area bounds
