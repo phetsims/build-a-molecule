@@ -1,5 +1,5 @@
 
-Build a Molecule TODO
+Build a Molecule
 ====================
 
 ✓ Indicates completed - Explanation presented as - { EXPLANATION } if needed

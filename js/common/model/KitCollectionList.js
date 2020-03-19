@@ -155,6 +155,13 @@ class KitCollectionList {
     assert && assert( this.currentCollectionProperty.value !== collection );
     this.collections.shift();
     this.removedCollectionEmitter.emit( collection );
+
+    // Remove listeners for collection boxes.
+    collection.collectionBoxes.forEach( collectionBox => {
+      collectionBox.addedMoleculeEmitter.removeAllListeners();
+      collectionBox.removedMoleculeEmitter.removeAllListeners();
+      collectionBox.acceptedMoleculeCreationEmitter.removeAllListeners();
+    } );
   }
 }
 
