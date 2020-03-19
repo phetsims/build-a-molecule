@@ -2,6 +2,7 @@
 /**
  * Main entry point for the sim.
  *
+ * @author Denzell Barnett (PhET Interactive Simulations)
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 
@@ -16,8 +17,10 @@ const buildAMoleculeTitleString = buildAMoleculeStrings[ 'build-a-molecule' ].ti
 
 const simOptions = {
   credits: {
-    //TODO (without scrolling credits, the BAM team refuses to take credit!)'
-    //REVIEW: Take a first pass at credits
+    leadDesign: 'Amy Rouinfar',
+    softwareDevelopment: 'Denzell Barnett, Johnathan Olson',
+    team: 'Ariel Paul, Kathy Perkins',
+    qualityAssurance: 'Ethan Johnson, Liam Mulhall, Benjamin Roberts, Jacob Romero,Kathryn Woessner'
   },
   webgl: true
 };
