@@ -33,8 +33,6 @@ import BAMConstants from '../BAMConstants.js';
  ./ico2cur.py scissors-up.ico -x 10 -y 11
  ./ico2cur.py scissors-closed-up.ico -x 7 -y 13
  */
-//REVIEW: It would be good to look at the current custom cursor support for supported platforms. Can we get rid of
-//REVIEW: the duplication here?
 
 const images = {
   'scissors.png': scissorsImage,
