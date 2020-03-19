@@ -14,44 +14,44 @@ import PageControl from '../../../../sun/js/PageControl.js';
 import Playable from '../../../../tambo/js/Playable.js';
 import buildAMolecule from '../../buildAMolecule.js';
 import BAMConstants from '../BAMConstants.js';
-import KitView from './KitView.js';
+import KitNode from './KitNode.js';
 
 class KitPanel extends Node {
   /**
    * @param {KitCollection} kitCollection
-   * @param {number} kitViewWidth
-   * @param {number} kitViewHeight
+   * @param {number} kitNodeWidth
+   * @param {number} kitNodeHeight
    * @param {MoleculeCollectingScreenView|BAMScreenView} view
    * @param {boolean} isCollectingView
    * @constructor
    */
-  constructor( kitCollection, kitViewWidth, kitViewHeight, view, isCollectingView ) {
+  constructor( kitCollection, kitNodeWidth, kitNodeHeight, view, isCollectingView ) {
     super();
 
     // Keep track of the KitCollection
     const kitCollectionProperty = new Property( kitCollection );
 
-    // create kitViews and unify their heights
-    const kitViews = [];
+    // create kitNodes and unify their heights
+    const kitNodes = [];
     kitCollectionProperty.link( kitCollection => {
       kitCollection.kits.forEach( kit => {
-        const kitView = new KitView( kit, view );
-        const kitViewBounds = kitView.getLocalBounds();
-        kitView.setLocalBounds( kitViewBounds.dilatedY( ( kitViewHeight - kitViewBounds.getHeight() ) / 2 ) );
+        const kitNode = new KitNode( kit, view );
+        const kitNodeBounds = kitNode.getLocalBounds();
+        kitNode.setLocalBounds( kitNodeBounds.dilatedY( ( kitNodeHeight - kitNodeBounds.getHeight() ) / 2 ) );
 
         // We only want to adjust width of kit panel on collection views.
         if ( isCollectingView ) {
-          kitView.setLocalBounds( kitViewBounds.dilatedX( ( kitViewWidth - kitViewBounds.getWidth() ) / 2 ) );
+          kitNode.setLocalBounds( kitNodeBounds.dilatedX( ( kitNodeWidth - kitNodeBounds.getWidth() ) / 2 ) );
         }
         else {
-          kitView.setLocalBounds( kitViewBounds.dilatedX( ( kitViewWidth - kitViewBounds.getWidth() ) * 0.02 ) );
+          kitNode.setLocalBounds( kitNodeBounds.dilatedX( ( kitNodeWidth - kitNodeBounds.getWidth() ) * 0.02 ) );
         }
-        kitViews.push( kitView );
+        kitNodes.push( kitNode );
       } );
     } );
 
     // @public {Carousel} Treats each kit as an item.
-    this.kitCarousel = new Carousel( kitViews, {
+    this.kitCarousel = new Carousel( kitNodes, {
       fill: BAMConstants.KIT_BACKGROUND,
       stroke: BAMConstants.KIT_BORDER,
       xMargin: 10,

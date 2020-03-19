@@ -10,7 +10,7 @@ import Node from '../../../../scenery/js/nodes/Node.js';
 import buildAMolecule from '../../buildAMolecule.js';
 import BAMConstants from '../BAMConstants.js';
 import KitPanel from './KitPanel.js';
-import KitView from './KitView.js';
+import KitNode from './KitNode.js';
 
 class KitCollectionNode extends Node {
   /**
@@ -26,10 +26,10 @@ class KitCollectionNode extends Node {
     this.kitPanel.left = BAMConstants.STAGE_SIZE.left + BAMConstants.VIEW_PADDING;
     this.addChild( this.kitPanel );
 
-    // Maps kit ID => KitView
+    // Maps kit ID => KitNode
     const kitMap = [];
     collection.kits.forEach( kit => {
-      kitMap[ kit.id ] = new KitView( kit, view );
+      kitMap[ kit.id ] = new KitNode( kit, view );
     } );
   }
 }

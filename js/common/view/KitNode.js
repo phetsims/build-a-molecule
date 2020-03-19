@@ -3,8 +3,7 @@
 /**
  * Shows a kit (series of buckets full of different types of atoms)
  *
- * TODO: consider 'KitNode' as a name?
- *
+ * @author Denzell Barnett (PhET Interactive Simulations)
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 
@@ -20,10 +19,9 @@ import AtomNode from './AtomNode.js';
 
 // const MoleculeControlsHBox = require( '/build-a-molecule/js/common/view/MoleculeControlsHBox' );
 // const Rectangle = require( '/scenery/js/nodes/Rectangle' );
-// const SimpleDragHandler = require( '/scenery/js/input/SimpleDragHandler' ); // TODO: DragListener
 // const Trail = require( '/scenery/js/util/Trail' );
 
-class KitView extends Node {
+class KitNode extends Node {
   /**
    * @param {Kit} kit
    * @param {MoleculeCollectingScreenView} moleculeCollectingScreenView
@@ -33,7 +31,7 @@ class KitView extends Node {
 
     this.kit = kit;
 
-    // Maps for KitView elements.
+    // Maps for KitNode elements.
     const atomNodeMap = {}; // atom.id => AtomNode
 
     // Layers
@@ -45,29 +43,6 @@ class KitView extends Node {
     this.addChild( bottomLayer );
     this.addChild( this.atomLayer );
     this.addChild( topLayer );
-
-    // override its hit testing
-    // // TODO: REALLY don't do this. Super easy to break
-    // // REVIEW: Definitely replace with a better way
-    // this.atomLayer.hitTest = function( point, isMouse, isTouch ) {
-    //   // return accurate hits for the mouse
-    //   if ( isMouse ) {
-    //     return Node.prototype.hitTest.call( this.atomLayer, point, isMouse, isTouch );
-    //   }
-    //
-    //   // probably a touch or something we will target
-    //   var modelPoint = BAMConstants.MODEL_VIEW_TRANSFORM.viewToModelPosition( point );
-    //   var atom = this.closestAtom( modelPoint, 100 );
-    //   if ( atom ) {
-    //     // TODO: this is somewhat hackish. better way of doing this?
-    //     return new Trail( [ this.atomLayer, this.atomNodeMap[ atom.id ] ] );
-    //   }
-    //   else {
-    //     return null;
-    //   }
-    // };
-    // ensure that touches don't get pruned before this point
-    // this.atomLayer.touchArea = Shape.bounds( BAMConstants.STAGE_SIZE );
 
     kit.buckets.forEach( bucket => {
       const bucketFront = new BucketFront( bucket, BAMConstants.MODEL_VIEW_TRANSFORM, {
@@ -116,7 +91,6 @@ class KitView extends Node {
       //     atom.positionProperty.value = atom.destinationProperty.value = modelPoint;
       //
       //     var atomNode = this.atomNodeMap[ atom.id ];
-      //     // TODO: use a new DragListener
       //     event.target = event.currentTarget = atomNode; // for now, modify the event directly so we can "point" it towards the atom node instead
       //
       //     // trigger the drag start
@@ -244,5 +218,5 @@ class KitView extends Node {
   }
 }
 
-buildAMolecule.register( 'KitView', KitView );
-export default KitView;
+buildAMolecule.register( 'KitNode', KitNode );
+export default KitNode;
