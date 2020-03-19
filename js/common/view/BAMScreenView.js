@@ -445,8 +445,8 @@ class BAMScreenView extends ScreenView {
     const atomNode = this.kitPlayAreaNode.atomNodeMap[ atom.id ];
     atomNode.dragListener.dispose();
     atomNode.dispose();
-
     delete this.kitPlayAreaNode.atomNodeMap[ atom.id ];
+    atom.separateMoleculeEmitter.removeAllListeners();
   }
 }
 
