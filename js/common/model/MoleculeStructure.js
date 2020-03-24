@@ -60,7 +60,15 @@ class MoleculeStructure {
    * @param {Bond} bond
    * @public
    */
-  addBond( bond ) {
+  addBond( a, b ) {
+    let bond;
+    if ( a instanceof Bond ) {
+      bond = a;
+    }
+    else {
+      debugger;
+      bond = new Bond( a, b );
+    }
     assert && assert( _.includes( this.atoms, bond.a ) );
     assert && assert( _.includes( this.atoms, bond.b ) );
     this.bonds.push( bond );
@@ -631,7 +639,7 @@ MoleculeStructure.getMoleculesFromBrokenBond = ( structure, bond, molA, molB ) =
   const dirtyAtoms = [ bond.a ];
   while ( dirtyAtoms.length > 0 ) {
     const atom = dirtyAtoms.pop();
-    dirtyAtoms.splice( dirtyAtoms.indexOf( atom ), 1 ); // TODO: replace with remove()
+    // dirtyAtoms.splice( dirtyAtoms.indexOf( atom ), 1 ); // TODO: replace with remove()
 
     // for all neighbors that don't use our 'bond'
     structure.bonds.forEach( otherBond => {
