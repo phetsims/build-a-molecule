@@ -66,7 +66,6 @@ class MoleculeStructure {
       bond = a;
     }
     else {
-      debugger;
       bond = new Bond( a, b );
     }
     assert && assert( _.includes( this.atoms, bond.a ) );
@@ -81,7 +80,7 @@ class MoleculeStructure {
    * @returns {Array.<Bond>}
    */
   getBondsInvolving( atom ) {
-    // TODO: performance: optimize out function allocation here?
+    // Note: (performance) optimize out function allocation here?
     return _.filter( this.bonds, bond => {
       return bond.contains( atom );
     } );
@@ -236,7 +235,7 @@ class MoleculeStructure {
    * @returns {boolean}
    */
   hasLoopsOrIsDisconnected() {
-    // TODO: performance: consider HashSet, or something that has a fast contains lookup
+    // Note: (performance) consider HashSet, or something that has a fast contains lookup
     const visitedAtoms = [];
     const dirtyAtoms = [];
 
@@ -316,7 +315,7 @@ class MoleculeStructure {
     return result;
   }
 
-  // TODO: performance: cache this?
+  // Note: (performance) cache this?
   /**
    * @public
    *
@@ -383,7 +382,7 @@ class MoleculeStructure {
       return false;
     }
 
-    // TODO: performance: sets instead of arrays here?
+    // Note: (performance) sets instead of arrays here?
     const myVisited = [];
     const otherVisited = [];
     const firstAtom = this.atoms[ 0 ]; // grab the 1st atom
@@ -406,7 +405,7 @@ class MoleculeStructure {
    * @returns {Array.<Atom>} All neighboring atoms that are connected by bonds to the passed in atom AND aren't in the exclusionSet
    */
   getNeighborsNotInSet( atom, exclusionSet ) {
-    // TODO: performance: hashset with fast lookup?
+    // Note: (performance) hashset with fast lookup?
     return _.filter( this.getNeighbors( atom ), otherAtom => {
       return !_.includes( exclusionSet, otherAtom );
     } );
@@ -630,7 +629,7 @@ MoleculeStructure.getMoleculesFromBrokenBond = ( structure, bond, molA, molB ) =
    * separate out which atoms belong in which remaining molecule
    *----------------------------------------------------------------------------*/
 
-  // TODO: performance: use sets for fast insertion, removal, and querying, wherever necessary in this function
+  // Note: (performance) use sets for fast insertion, removal, and querying, wherever necessary in this function
   const atomsInA = [ bond.a ];
 
   // atoms left after removing atoms
@@ -704,7 +703,7 @@ MoleculeStructure.getMoleculesFromBrokenBond = ( structure, bond, molA, molB ) =
  */
 MoleculeStructure.checkEquivalencyMatrix = ( equivalences, myIndex, otherRemainingIndices, size ) => {
   // var size = Math.sqrt( equivalences.length ); // it's square, so this technically works
-  // TODO: performance: this should leak memory in un-fun ways, and performance complexity should be sped up
+  // Note: (performance) this should leak memory in un-fun ways, and performance complexity should be sped up
 
   // should be inefficient, but not too bad (computational complexity is not optimal)
   const arr = otherRemainingIndices.slice( 0 );

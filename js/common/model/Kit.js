@@ -256,7 +256,7 @@ class Kit {
    * @returns {Molecule|null}
    */
   getMolecule( atom ) {
-    // TODO: performance: seems like this could be a bottleneck? faster ways?
+    // Note: (performance) seems like this could be a bottleneck? faster ways?
     const numMolecules = this.molecules.length;
     for ( let i = 0; i < numMolecules; i++ ) {
       const molecule = this.molecules[ i ];

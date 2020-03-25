@@ -84,7 +84,7 @@ class MoleculeList {
     }
 
     // use the allowed structure map as an acceleration feature
-    // TODO: performance: only do the lookup once
+    // Note: (performance) only do the lookup once
     if ( this.allowedStructureFormulaMap[ hashString ] ) {
       const moleculeStructures = this.allowedStructureFormulaMap[ hashString ];
       if ( moleculeStructures ) {
@@ -116,10 +116,10 @@ class MoleculeList {
 
   /**
    * @private
-   * @returns {Array.<Molecules>}
+   * @returns {Array.<Molecule>}
    */
   getAllCompleteMolecules() {
-    // TODO: performance: do we need a full copy here?
+    // Note: (performance) do we need a full copy here?
     return this.completeMolecules.slice( 0 );
   }
 
@@ -159,7 +159,7 @@ let initialized = false;
 const initialList = new MoleculeList();
 
 MoleculeList.startInitialization = () => {
-  // TODO: performance: use web worker or chop it up into bits of work
+  // Note: (performance) use web worker or chop it up into bits of work
   masterInstance = new MoleculeList();
   masterInstance.loadMasterData();
   initialized = true;
@@ -168,7 +168,7 @@ MoleculeList.startInitialization = () => {
 
 MoleculeList.getMasterInstance = () => {
   if ( !initialized ) {
-    // TODO: performance: threading-like replacement goes here
+    // Note: (performance) threading-like replacement goes here
     MoleculeList.startInitialization();
   }
 
@@ -278,7 +278,7 @@ MoleculeList.collectionBoxMolecules.forEach( molecule => {
   assert && assert( !!molecule );
 } );
 
-// TODO: performance: postpone all of the loading?
+// Note: (performance) postpone all of the loading?
 MoleculeList.getMasterInstance();
 
 buildAMolecule.register( 'MoleculeList', MoleculeList );

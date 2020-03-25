@@ -97,7 +97,7 @@ class StrippedMolecule extends PhetioObject {
       return true;
     }
 
-    // TODO: performance: use something more like HashSet here
+    // Note: (performance) use something more like HashSet here
     const myVisited = [];
     const otherVisited = [];
     const firstAtom = this.stripped.atoms[ 0 ]; // grab the 1st atom
