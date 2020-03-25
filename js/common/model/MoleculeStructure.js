@@ -60,14 +60,7 @@ class MoleculeStructure {
    * @param {Bond} bond
    * @public
    */
-  addBond( a, b ) {
-    let bond;
-    if ( a instanceof Bond ) {
-      bond = a;
-    }
-    else {
-      bond = new Bond( a, b );
-    }
+  addBond( bond ) {
     assert && assert( _.includes( this.atoms, bond.a ) );
     assert && assert( _.includes( this.atoms, bond.b ) );
     this.bonds.push( bond );
