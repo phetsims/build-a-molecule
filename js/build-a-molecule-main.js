@@ -17,10 +17,10 @@ const buildAMoleculeTitleString = buildAMoleculeStrings[ 'build-a-molecule' ].ti
 
 const simOptions = {
   credits: {
-    leadDesign: 'Amy Rouinfar',
+    leadDesign: 'Emily B. Moore, Amy Rouinfar',
     softwareDevelopment: 'Denzell Barnett, Johnathan Olson',
-    team: 'Ariel Paul, Kathy Perkins',
-    qualityAssurance: 'Ethan Johnson, Liam Mulhall, Benjamin Roberts, Jacob Romero,Kathryn Woessner'
+    team: 'Christine Denison, Kelly Lancaster, Ariel Paul, Kathy Perkins',
+    qualityAssurance: 'Logan Bray, Ethan Johnson, Liam Mulhall, Benjamin Roberts, Jacob Romero, Kathryn Woessner'
   },
   webgl: true
 };
