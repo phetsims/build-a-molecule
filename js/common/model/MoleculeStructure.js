@@ -265,22 +265,6 @@ class MoleculeStructure {
   }
 
   /**
-   * @public
-   * @returns {string}
-   */
-  getDebuggingDump() {
-    let str = 'Molecule\n';
-    this.atoms.forEach( atom => {
-      // TODO: was using hashcode, may need to create IDs for Atom instances (not Atom2, those have IDs)
-      str += 'atom: ' + atom.symbol + ' ' + atom.id + '\n';
-    } );
-    this.bonds.forEach( bond => {
-      str += 'bond: ' + bond.a.id + ' - ' + bond.b.id + '\n';
-    } );
-    return str;
-  }
-
-  /**
    * @param {Element} element
    * @private
    *
