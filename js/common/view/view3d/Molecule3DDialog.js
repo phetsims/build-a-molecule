@@ -205,7 +205,7 @@ class Molecule3DDialog extends Dialog {
     // Ball and stick icon
     const ballAndStickIcon = new ThreeNode( 50, 50, {
       cursor: 'pointer',
-      cameraPosition: new Vector3( 0, 0, 5 )
+      cameraPosition: new Vector3( 0, 0, 7 )
     } );
     const ballAndStickScene = ballAndStickIcon.stage.threeScene;
     const ballAndStickContainer = new THREE.Object3D();
@@ -222,7 +222,7 @@ class Molecule3DDialog extends Dialog {
 
     // Construct 3D view of moleculeNode
     const moleculeNode = new ThreeNode( 300, 200, {
-      cameraPosition: new Vector3( 0, 0, 5 )
+      cameraPosition: new Vector3( 0, 0, 7 )
     } );
     const moleculeContainer = new THREE.Object3D();
     const moleculeScene = moleculeNode.stage.threeScene;
