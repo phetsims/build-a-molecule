@@ -70,14 +70,8 @@ class MoleculeBondNode extends Node {
       openFile += '-up';
       closedFile += '-up';
     }
-    if ( platform.ie || platform.edge ) {
-      openFile += '.cur';
-      closedFile += '.cur';
-    }
-    else {
-      openFile += '.png';
-      closedFile += '.png';
-    }
+    openFile += '.png';
+    closedFile += '.png';
 
     const scissorsOpen = images[ openFile ]; // 23x20 or 20x23
     const scissorsClosed = images[ closedFile ]; //26x15 or 15x26
@@ -113,23 +107,18 @@ class MoleculeBondNode extends Node {
     cutTargetNode.addChild( new Circle( bondRadius, {
       fill: 'rgb(253,225,49)',
       stroke: 'rgb(253,225,49)',
-      cursor: openCursor,
+      cursor: !(platform.ie || platform.edge) ? openCursor : 'pointer',
       visible: true
     } ) );
 
     // Add outer circle
     cutTargetNode.addChild( new Circle( bondRadius * 1.5, {
       fill: 'rgba(253,225,49,0.4)',
-      cursor: openCursor,
+      cursor: !(platform.ie || platform.edge) ? openCursor : 'pointer',
       visible: true
     } ) );
 
     cutTargetNode.addInputListener( new ButtonListener( {
-      fire() {
-      },
-      up() {
-        cutTargetNode.cursor = openCursor;
-      },
       down() {
         cutTargetNode.cursor = closedCursor;
         kit.breakBond( bond.a, bond.b );
