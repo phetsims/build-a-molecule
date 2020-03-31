@@ -9,7 +9,7 @@
 
 import Dimension2 from '../../../dot/js/Dimension2.js';
 import Element from '../../../nitroglycerin/js/Element.js';
-import buildAMoleculeStrings from '../build-a-molecule-strings.js';
+import buildAMoleculeStrings from '../buildAMoleculeStrings.js';
 import buildAMolecule from '../buildAMolecule.js';
 import BAMConstants from '../common/BAMConstants.js';
 import Bucket from '../common/model/Bucket.js';

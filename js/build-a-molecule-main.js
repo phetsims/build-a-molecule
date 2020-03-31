@@ -8,7 +8,7 @@
 
 import Sim from '../../joist/js/Sim.js';
 import SimLauncher from '../../joist/js/SimLauncher.js';
-import buildAMoleculeStrings from './build-a-molecule-strings.js';
+import buildAMoleculeStrings from './buildAMoleculeStrings.js';
 import MultipleScreen from './multiple/MultipleScreen.js';
 import PlaygroundScreen from './playground/PlaygroundScreen.js';
 import SingleScreen from './single/SingleScreen.js';

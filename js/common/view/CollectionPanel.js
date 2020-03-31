@@ -16,7 +16,7 @@ import Node from '../../../../scenery/js/nodes/Node.js';
 import Text from '../../../../scenery/js/nodes/Text.js';
 import VBox from '../../../../scenery/js/nodes/VBox.js';
 import Panel from '../../../../sun/js/Panel.js';
-import buildAMoleculeStrings from '../../build-a-molecule-strings.js';
+import buildAMoleculeStrings from '../../buildAMoleculeStrings.js';
 import buildAMolecule from '../../buildAMolecule.js';
 import BAMConstants from '../BAMConstants.js';
 import BuildAMoleculeQueryParameters from '../BuildAMoleculeQueryParameters.js';

@@ -19,7 +19,7 @@ import Color from '../../../../scenery/js/util/Color.js';
 import TextPushButton from '../../../../sun/js/buttons/TextPushButton.js';
 import Dialog from '../../../../sun/js/Dialog.js';
 import Playable from '../../../../tambo/js/Playable.js';
-import buildAMoleculeStrings from '../../build-a-molecule-strings.js';
+import buildAMoleculeStrings from '../../buildAMoleculeStrings.js';
 import buildAMolecule from '../../buildAMolecule.js';
 import BAMConstants from '../BAMConstants.js';
 

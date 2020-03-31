@@ -12,7 +12,7 @@ import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import HBox from '../../../../scenery/js/nodes/HBox.js';
 import Dialog from '../../../../sun/js/Dialog.js';
 import FontAwesomeNode from '../../../../sun/js/FontAwesomeNode.js';
-import buildAMoleculeStrings from '../../build-a-molecule-strings.js';
+import buildAMoleculeStrings from '../../buildAMoleculeStrings.js';
 import buildAMolecule from '../../buildAMolecule.js';
 
 const warningString = buildAMoleculeStrings.warning;
