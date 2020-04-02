@@ -82,6 +82,7 @@ class Kit {
   reset() {
     // not resetting visible, since that is not handled by us
     this.hasMoleculesInBoxesProperty.reset();
+    this.selectedAtomProperty.reset();
 
     // send out notifications for all removed molecules
     this.molecules.slice( 0 ).forEach( this.removeMolecule.bind( this ) );

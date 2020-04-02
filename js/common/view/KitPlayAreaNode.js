@@ -41,12 +41,12 @@ class KitPlayAreaNode extends Node {
         kit.activeProperty.link( active => {
           this.atomLayer.children.forEach( atomNode => {
 
-            // Check if the atom is in the kit's play area and toggle its visiblity.
+            // Check if the atom is in the kit's play area and toggle its visibility.
             atomNode.visible = kit.atomsInPlayArea.contains( atomNode.atom ) && active;
           } );
           this.metadataLayer.children.forEach( metadataNode => {
 
-            // Check if the metadata molecule is a part of the active kit molecules  and toggle its visiblity.
+            // Check if the metadata molecule is a part of the active kit molecules  and toggle its visibility.
             metadataNode.visible = kit.molecules.includes( metadataNode.molecule ) && active;
           } );
         } );
@@ -64,7 +64,7 @@ class KitPlayAreaNode extends Node {
    * @public
    */
   addMoleculeBondNodes( molecule ) {
-    var moleculeBondContainerNode = new MoleculeBondContainerNode( this.currentKit, molecule );
+    const moleculeBondContainerNode = new MoleculeBondContainerNode( this.currentKit, molecule );
     this.metadataLayer.addChild( moleculeBondContainerNode );
     this.bondMap[ molecule.moleculeId ] = moleculeBondContainerNode;
   }
@@ -74,7 +74,7 @@ class KitPlayAreaNode extends Node {
    * @param {Molecule} molecule
    */
   removeMoleculeBondNodes( molecule ) {
-    var moleculeBondContainerNode = this.bondMap[ molecule.moleculeId ];
+    const moleculeBondContainerNode = this.bondMap[ molecule.moleculeId ];
     this.metadataLayer.removeChild( moleculeBondContainerNode );
     moleculeBondContainerNode.dispose();
     delete this.bondMap[ molecule.moleculeId ];
