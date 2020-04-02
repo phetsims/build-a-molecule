@@ -579,6 +579,7 @@ class Kit {
   attemptToBondMolecule( molecule ) {
     let bestLocation = null; // {BondingOption|null}
     let bestDistanceFromIdealLocation = Number.POSITIVE_INFINITY;
+    let atomsOverlap = false;
 
     // for each atom in our molecule, we try to see if it can bond to other atoms
     molecule.atoms.forEach( ourAtom => {
@@ -617,14 +618,17 @@ class Kit {
               bestLocation = location;
               bestDistanceFromIdealLocation = distance;
             }
+
+            if ( ourAtom.positionBounds.intersectsBounds( otherAtom.positionBounds ) ) {
+              atomsOverlap = true;
+            }
           } );
         }
       } );
     } );
 
-
-    // if our closest bond is too far, then ignore it
-    const isBondingInvalid = bestLocation === null || bestDistanceFromIdealLocation > Kit.bondDistanceThreshold;
+    // if our closest bond is too far and our atoms don't overlap, then ignore it
+    const isBondingInvalid = (bestLocation === null || bestDistanceFromIdealLocation > Kit.bondDistanceThreshold) && !atomsOverlap;
 
     if ( isBondingInvalid ) {
       this.separateMoleculeDestinations();
