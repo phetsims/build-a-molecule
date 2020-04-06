@@ -22,7 +22,7 @@
   window.phet.chipper.packageObject =
     {
       "name": "build-a-molecule",
-      "version": "1.0.0-dev.66",
+      "version": "1.0.0-dev.67",
       "license": "GPL-3.0",
       "repository": {
         "type": "git",
@@ -93,10 +93,6 @@
   const brandMatch = location.search.match( /brand=([^&]+)/ );
   const brand = brandMatch ? decodeURIComponent( brandMatch[ 1 ] ) : 'adapted-from-phet';
 
-  // Cache busting is applied by default, but can be disabled via ?cacheBust=false, see initialize-globals.js
-  const isCacheBustDisabled = /(^|\?|&)cacheBust=false/.test( location.search );
-  const queryAppend = isCacheBustDisabled ? '' : `?bust=${Date.now()}`;
-
   // Preloads, with more included for phet-io brand
   let preloads = [
     '../sherpa/lib/mdn-array-from-polyfill.js',
@@ -136,7 +132,7 @@
   const loadURL = ( preloadURL, type = 'text/javascript' ) => {
     const script = document.createElement( 'script' );
     script.type = type;
-    script.src = preloadURL + queryAppend;
+    script.src = preloadURL;
     script.async = false;
     document.head.appendChild( script );
   };
