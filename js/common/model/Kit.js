@@ -93,7 +93,7 @@ class Kit {
       atom.reset();
 
       // THEN place it so we overwrite its "bad" position and destination info
-      this.getBucketForElement( atom.element ).placeAtom( atom );
+      this.getBucketForElement( atom.element ).placeAtom( atom, true );
     } );
 
     // if reset kit ignores collection boxes, add in other atoms that are equivalent to how the bucket started

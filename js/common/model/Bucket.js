@@ -54,16 +54,21 @@ class Bucket extends SphereBucket {
 
     // Create the atoms for each element and add them to the bucket.
     for ( let i = 0; i < quantity; i++ ) {
-      this.addParticleFirstOpen( new Atom2( element, stepEmitter ), false );
+      this.addParticleNearestOpen( new Atom2( element, stepEmitter ), false );
     }
   }
 
   // Instantly place the atom in the correct position, whether or not it is in the bucket
-  placeAtom( atom ) {
+  placeAtom( atom, addFirstOpen ) {
     if ( this.containsParticle( atom ) ) {
       this.removeParticle( atom, true );
     }
-    this.addParticleFirstOpen( atom, false );
+    if ( addFirstOpen ) {
+      this.addParticleFirstOpen( atom, false );
+    }
+    else {
+      this.addParticleNearestOpen( atom, false );
+    }
   }
 
   /**
@@ -75,7 +80,7 @@ class Bucket extends SphereBucket {
     this.fullState.forEach( atom => {
       if ( !this.particleList.contains( atom ) ) {
         this.particleList.push( atom );
-        this.placeAtom( atom );
+        this.placeAtom( atom, true );
       }
     } );
   }

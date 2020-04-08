@@ -128,7 +128,7 @@ class KitNode extends Node {
 
         // Add the particle to the bucket atom layer and the bucket's particles.
         this.atomLayer.addChild( atomNode );
-        bucket.placeAtom( atom );
+        bucket.placeAtom( atom, false );
 
         // Add a drag listener that will move the model element when the user
         // drags this atom.
