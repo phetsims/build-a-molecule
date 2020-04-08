@@ -207,7 +207,7 @@ class BAMScreenView extends ScreenView {
           // Reset the kit before managing its listeners
           kit.reset();
 
-          // Removed previous listeners related to metadataLayer create and deletion.
+          // Removed previous listeners related to metadataLayer creation and deletion.
           kit.addedMoleculeEmitter.removeListener( this.addedEmitterListeners[ kit.id ] );
           kit.removedMoleculeEmitter.removeListener( this.removedEmitterListeners[ kit.id ] );
           delete this.addedEmitterListeners[ kit.id ];

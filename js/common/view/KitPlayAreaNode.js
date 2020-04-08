@@ -27,6 +27,7 @@ class KitPlayAreaNode extends Node {
 
     // Layers
     this.metadataLayer = new Node();
+    this.moleculeBondContainerLayer = new Node();
     this.atomLayer = new Node();
 
     // Maps for kit area elements
@@ -38,16 +39,16 @@ class KitPlayAreaNode extends Node {
     // have visible atoms.
     this.kitsProperty.link( kits => {
       kits.forEach( kit => {
-        kit.activeProperty.link( active => {
+        kit.activeProperty.link( () => {
           this.atomLayer.children.forEach( atomNode => {
 
             // Check if the atom is in the kit's play area and toggle its visibility.
-            atomNode.visible = kit.atomsInPlayArea.contains( atomNode.atom ) && active;
+            atomNode.visible = kit.atomsInPlayArea.contains( atomNode.atom );
           } );
           this.metadataLayer.children.forEach( metadataNode => {
 
             // Check if the metadata molecule is a part of the active kit molecules  and toggle its visibility.
-            metadataNode.visible = kit.molecules.includes( metadataNode.molecule ) && active;
+            metadataNode.visible = kit.molecules.includes( metadataNode.molecule );
           } );
         } );
       } );
@@ -55,6 +56,7 @@ class KitPlayAreaNode extends Node {
 
     this.addChild( this.atomLayer );
     this.addChild( this.metadataLayer );
+    this.addChild( this.moleculeBondContainerLayer );
   }
 
   /**
@@ -65,7 +67,7 @@ class KitPlayAreaNode extends Node {
    */
   addMoleculeBondNodes( molecule ) {
     const moleculeBondContainerNode = new MoleculeBondContainerNode( this.currentKit, molecule );
-    this.metadataLayer.addChild( moleculeBondContainerNode );
+    this.moleculeBondContainerLayer.addChild( moleculeBondContainerNode );
     this.bondMap[ molecule.moleculeId ] = moleculeBondContainerNode;
   }
 
@@ -75,7 +77,7 @@ class KitPlayAreaNode extends Node {
    */
   removeMoleculeBondNodes( molecule ) {
     const moleculeBondContainerNode = this.bondMap[ molecule.moleculeId ];
-    this.metadataLayer.removeChild( moleculeBondContainerNode );
+    this.moleculeBondContainerLayer.removeChild( moleculeBondContainerNode );
     moleculeBondContainerNode.dispose();
     delete this.bondMap[ molecule.moleculeId ];
   }
