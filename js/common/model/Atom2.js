@@ -37,7 +37,6 @@ class Atom2 extends Atom {
     this.userControlledProperty = new BooleanProperty( false );
     this.visibleProperty = new BooleanProperty( true );
     this.addedToModelProperty = new BooleanProperty( true );
-    this.isSeparatingProperty = new BooleanProperty( false );
 
     // @public {Emitter}
     this.grabbedByUserEmitter = new Emitter( { parameters: [ { valueType: Atom2 } ] } );
@@ -88,9 +87,7 @@ class Atom2 extends Atom {
    * @public
    */
   step( dt ) {
-    if ( this.isSeparatingProperty.value ) {
       this.stepAtomTowardsDestination( dt );
-    }
   }
 
   /**

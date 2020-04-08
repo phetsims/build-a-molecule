@@ -412,7 +412,6 @@ class BAMScreenView extends ScreenView {
         }
 
         // Consider an atom released and mark its position
-        atom.isSeparatingProperty.value = false;
         atom.userControlledProperty.value = false;
 
         // Keep track of view elements used later in the callback

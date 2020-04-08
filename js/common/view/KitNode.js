@@ -112,7 +112,7 @@ class KitNode extends Node {
 
         // Remove the atom from the bucket particles
         if ( bucket.containsParticle( atom ) ) {
-          bucket.removeParticle( atom, true );
+          bucket.removeParticle( atom, false );
         }
 
         // Remove atom from bucket particle observable array.

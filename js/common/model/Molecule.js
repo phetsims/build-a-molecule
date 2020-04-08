@@ -46,7 +46,6 @@ class Molecule extends MoleculeStructure {
    */
   shiftDestination( delta ) {
     this.atoms.forEach( atom => {
-      atom.isSeparatingProperty.value = true;
       atom.destinationProperty.value = atom.destinationProperty.value.plus( delta );
     } );
   }
