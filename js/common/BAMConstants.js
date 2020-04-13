@@ -1,6 +1,6 @@
 // Copyright 2020, University of Colorado Boulder
 
-
+import Property from '../../../axon/js/Property.js';
 import Dimension2 from '../../../dot/js/Dimension2.js';
 import Utils from '../../../dot/js/Utils.js';
 import Vector2 from '../../../dot/js/Vector2.js';
@@ -8,7 +8,6 @@ import ScreenView from '../../../joist/js/ScreenView.js';
 import Element from '../../../nitroglycerin/js/Element.js';
 import ModelViewTransform2 from '../../../phetcommon/js/view/ModelViewTransform2.js';
 import Color from '../../../scenery/js/util/Color.js';
-import Property from '../../../axon/js/Property.js';
 import buildAMolecule from '../buildAMolecule.js';
 
 // constants

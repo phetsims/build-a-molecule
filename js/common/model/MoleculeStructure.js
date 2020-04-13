@@ -15,8 +15,8 @@ import Atom from '../../../../nitroglycerin/js/Atom.js';
 import ChemUtils from '../../../../nitroglycerin/js/ChemUtils.js';
 import Element from '../../../../nitroglycerin/js/Element.js';
 import buildAMolecule from '../../buildAMolecule.js';
-import Bond from './Bond.js';
 import BuildAMoleculeQueryParameters from '../BuildAMoleculeQueryParameters.js';
+import Bond from './Bond.js';
 import ElementHistogram from './ElementHistogram.js';
 
 let nextMoleculeId = 0;

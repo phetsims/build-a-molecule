@@ -7,10 +7,11 @@
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 
+import Property from '../../../axon/js/Property.js';
 import Dimension2 from '../../../dot/js/Dimension2.js';
 import Element from '../../../nitroglycerin/js/Element.js';
-import buildAMoleculeStrings from '../buildAMoleculeStrings.js';
 import buildAMolecule from '../buildAMolecule.js';
+import buildAMoleculeStrings from '../buildAMoleculeStrings.js';
 import BAMConstants from '../common/BAMConstants.js';
 import Bucket from '../common/model/Bucket.js';
 import CollectionBox from '../common/model/CollectionBox.js';
@@ -18,7 +19,6 @@ import CollectionLayout from '../common/model/CollectionLayout.js';
 import Kit from '../common/model/Kit.js';
 import KitCollection from '../common/model/KitCollection.js';
 import MoleculeList from '../common/model/MoleculeList.js';
-import Property from '../../../axon/js/Property.js';
 import BAMIconFactory from '../common/view/BAMIconFactory.js';
 import BAMScreen from '../common/view/BAMScreen.js';
 import MoleculeCollectingScreenView from '../common/view/MoleculeCollectingScreenView.js';

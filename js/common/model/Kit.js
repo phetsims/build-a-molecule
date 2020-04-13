@@ -16,10 +16,10 @@ import Vector2 from '../../../../dot/js/Vector2.js';
 import arrayRemove from '../../../../phet-core/js/arrayRemove.js';
 import cleanArray from '../../../../phet-core/js/cleanArray.js';
 import buildAMolecule from '../../buildAMolecule.js';
+import BuildAMoleculeQueryParameters from '../BuildAMoleculeQueryParameters.js';
 import LewisDotModel from './LewisDotModel.js';
 import Molecule from './Molecule.js';
 import MoleculeList from './MoleculeList.js';
-import BuildAMoleculeQueryParameters from '../BuildAMoleculeQueryParameters.js';
 import MoleculeStructure from './MoleculeStructure.js';
 
 let kitIdCounter = 0;

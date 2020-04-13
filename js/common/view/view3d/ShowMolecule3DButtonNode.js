@@ -13,8 +13,8 @@ import ButtonListener from '../../../../../scenery/js/input/ButtonListener.js';
 import Text from '../../../../../scenery/js/nodes/Text.js';
 import RectangularPushButton from '../../../../../sun/js/buttons/RectangularPushButton.js';
 import Playable from '../../../../../tambo/js/Playable.js';
-import buildAMoleculeStrings from '../../../buildAMoleculeStrings.js';
 import buildAMolecule from '../../../buildAMolecule.js';
+import buildAMoleculeStrings from '../../../buildAMoleculeStrings.js';
 import BAMConstants from '../../BAMConstants.js';
 
 const threeDString = buildAMoleculeStrings.threeD;

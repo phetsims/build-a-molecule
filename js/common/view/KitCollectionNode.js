@@ -9,8 +9,8 @@
 import Node from '../../../../scenery/js/nodes/Node.js';
 import buildAMolecule from '../../buildAMolecule.js';
 import BAMConstants from '../BAMConstants.js';
-import KitPanel from './KitPanel.js';
 import KitNode from './KitNode.js';
+import KitPanel from './KitPanel.js';
 
 class KitCollectionNode extends Node {
   /**

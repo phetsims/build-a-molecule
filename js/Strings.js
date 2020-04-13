@@ -1,8 +1,7 @@
 // Copyright 2013-2020, University of Colorado Boulder
 
-
-import buildAMoleculeStrings from './buildAMoleculeStrings.js';
 import buildAMolecule from './buildAMolecule.js';
+import buildAMoleculeStrings from './buildAMoleculeStrings.js';
 
 const Strings = {};
 

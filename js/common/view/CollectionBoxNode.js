@@ -7,8 +7,8 @@
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 
-import Bounds2 from '../../../../dot/js/Bounds2.js';
 import timer from '../../../../axon/js/timer.js';
+import Bounds2 from '../../../../dot/js/Bounds2.js';
 import Shape from '../../../../kite/js/Shape.js';
 import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
 import Image from '../../../../scenery/js/nodes/Image.js';
