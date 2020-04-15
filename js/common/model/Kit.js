@@ -690,9 +690,9 @@ class BondingOption {
 }
 
 Kit.BondingOption = BondingOption;
-Kit.bondDistanceThreshold = 50;
-Kit.bucketPadding = 50;
-Kit.interMoleculePadding = 50;
+Kit.bondDistanceThreshold = 100; // Determines how close a molecule needs to be to attempt to bond
+Kit.bucketPadding = 50; // Distance between each bucket
+Kit.interMoleculePadding = 100; // Determines how far away to separate the molecules from each other
 
 buildAMolecule.register( 'Kit', Kit );
 export default Kit;
