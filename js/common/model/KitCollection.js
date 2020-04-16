@@ -10,6 +10,7 @@
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import Property from '../../../../axon/js/Property.js';
 import buildAMolecule from '../../buildAMolecule.js';
+import merge from '../../../../phet-core/js/merge.js';
 import BuildAMoleculeQueryParameters from '../BuildAMoleculeQueryParameters.js';
 
 let currentId = 0;
@@ -18,7 +19,10 @@ class KitCollection {
   /**
    * @constructor
    */
-  constructor() {
+  constructor( options ) {
+    options = merge( {
+      enableCues: false // Determines if the arrow cues should be shown
+    }, options );
 
     // @public {number}
     this.id = currentId++;
@@ -43,6 +47,18 @@ class KitCollection {
       }
       if ( newKit ) {
         newKit.activeProperty.value = true;
+
+        // Determine the visibility of the arrow cues when switching to new kit
+        this.collectionBoxes.forEach( box => {
+          box.cueVisibilityProperty.reset();
+          newKit.molecules.forEach( molecule => {
+
+            // Only handle visibility for the first collection
+            if ( molecule && options.enableCues === true && box.willAllowMoleculeDrop( molecule ) ) {
+              box.cueVisibilityProperty.value = true;
+            }
+          } );
+        } );
       }
     } );
 
@@ -84,23 +100,52 @@ class KitCollection {
       atom.droppedByUserEmitter.addListener( dropListener );
     } );
 
-    kit.addedMoleculeEmitter.addListener( molecule => {
+    // Cycle through molecules in the play area and check if the arrow cue needs to be updated
+    kit.addedMoleculeEmitter.addListener( () => {
       this.collectionBoxes.forEach( box => {
-        box.cueVisibilityProperty.value = box.willAllowMoleculeDrop( molecule );
-        if ( box.willAllowMoleculeDrop( molecule ) && ( options && options.triggerCue ) ) {
-          box.acceptedMoleculeCreationEmitter.emit( molecule );
-          box.cueVisibilityProperty.value = true;
-          this.hasBlinkedOnce = true;
-        }
-        else {
+        kit.molecules.forEach( molecule => {
+
+          // Added molecules should trigger an arrow cue if it can be dropped in a collection box
+          if ( box.willAllowMoleculeDrop( molecule ) && ( options && options.triggerCue ) ) {
+            box.cueVisibilityProperty.value = true;
+
+            // Trigger box blinking if it has not blinked already
+            if ( !this.hasBlinkedOnce ) {
+              box.acceptedMoleculeCreationEmitter.emit( molecule );
+              this.hasBlinkedOnce = true;
+            }
+          }
+        } );
+
+        // All boxes should not show an arrow cue if the box is full
+        if ( box.isFull() ) {
           box.cueVisibilityProperty.value = false;
-          this.hasBlinkedOnce = false;
         }
       } );
+    } );
 
-      kit.atomsInPlayArea.addItemRemovedListener( () => {
-        this.collectionBoxes.forEach( box => {
-          box.cueVisibilityProperty.value = box.willAllowMoleculeDrop( molecule );
+    // When a molecule is removed we need to check all of the molecules remaining to determine if they could
+    // possibly go in one of the collection oxes.
+    kit.removedMoleculeEmitter.addListener( molecule => {
+      this.collectionBoxes.forEach( box => {
+
+        // Hide arrow cues for the removed molecule. This works independently from other molecules that are present
+        // in the kit play area.
+        if ( box.willAllowMoleculeDrop( molecule ) && molecule && ( options && options.triggerCue ) ) {
+          box.cueVisibilityProperty.value = false;
+        }
+
+        // Cycle through all the remaining molecules and trigger the arrow cue if the molecule exists in the
+        // kit play area.
+        kit.molecules.forEach( remainingMolecule => {
+          if ( box.willAllowMoleculeDrop( remainingMolecule ) && molecule && ( options && options.triggerCue ) ) {
+            box.cueVisibilityProperty.value = box.willAllowMoleculeDrop( remainingMolecule ) && remainingMolecule && ( options && options.triggerCue );
+          }
+
+          // Last sanity check to make sure a full box doen't have an arrow cue shown.
+          if ( box.isFull() ) {
+            box.cueVisibilityProperty.value = false;
+          }
         } );
       } );
     } );
