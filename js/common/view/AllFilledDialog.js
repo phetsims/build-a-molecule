@@ -47,7 +47,7 @@ class AllFilledDialog extends Dialog {
     const smiley = new FaceNode( 120 ).smile();
     contentVBox.addChild( smiley );
 
-    // Add text
+    // Add a message regarding the completed collection
     const text = new Text( youCompletedYourCollectionString, {
       font: new PhetFont( {
         size: 20,
@@ -57,7 +57,7 @@ class AllFilledDialog extends Dialog {
     } );
     contentVBox.addChild( text );
 
-    // Add button
+    // Add the next collection button
     const button = new TextPushButton( nextCollectionString, {
       font: new PhetFont( {
         size: 18,

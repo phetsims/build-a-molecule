@@ -17,10 +17,6 @@ import buildAMolecule from '../../buildAMolecule.js';
 import BAMConstants from '../BAMConstants.js';
 import AtomNode from './AtomNode.js';
 
-// const MoleculeControlsHBox = require( '/build-a-molecule/js/common/view/MoleculeControlsHBox' );
-// const Rectangle = require( '/scenery/js/nodes/Rectangle' );
-// const Trail = require( '/scenery/js/util/Trail' );
-
 class KitNode extends Node {
   /**
    * @param {Kit} kit
@@ -29,21 +25,27 @@ class KitNode extends Node {
   constructor( kit, moleculeCollectingScreenView ) {
     super();
 
+    // @public {Kit}
     this.kit = kit;
 
     // Maps for KitNode elements.
     const atomNodeMap = {}; // atom.id => AtomNode
 
-    // Layers
+    // Layers used for buckets
     const topLayer = new Node();
-    this.atomLayer = new Node();
     const bottomLayer = new Node();
     this.bottomLayer = bottomLayer;
 
+    // @private {Node} Contains all the atoms within the buckets
+    this.atomLayer = new Node();
+
+    // Add our layers
     this.addChild( bottomLayer );
     this.addChild( this.atomLayer );
     this.addChild( topLayer );
 
+    // Create a bucket based on a the kit's model bucket. This includes a front and back for the bucket contained in
+    // different layout.
     kit.buckets.forEach( bucket => {
       const bucketFront = new BucketFront( bucket, BAMConstants.MODEL_VIEW_TRANSFORM, {
         labelFont: new PhetFont( {
@@ -73,34 +75,10 @@ class KitNode extends Node {
 
       // but don't pick the elliptical paths in the hole (that would be expensive to compute so often)
       bucketHole.children.forEach( child => { child.pickable = false; } );
-
-      // our hook to start dragging an atom (if available in the bucket)
-      // bucketHole.addInputListener( {
-      //   down: function( event ) {
-      //     // coordinate transforms to get our atom
-      //     var viewPoint = moleculeCollectingScreenView.globalToLocalPoint( event.pointer.point );
-      //     var modelPoint = BAMConstants.MODEL_VIEW_TRANSFORM.viewToModelPosition( viewPoint );
-      //     var atom = this.closestAtom( modelPoint, Number.POSITIVE_INFINITY, bucket.element ); // filter by the element
-      //
-      //     // if it's not in our bucket, ignore it (could skip weird cases where an atom outside of the bucket is technically closer)
-      //     if ( !_.includes( bucket.getParticleList(), atom ) ) {
-      //       return;
-      //     }
-      //
-      //     // move the atom to right under the pointer for this assisted drag - otherwise the offset would be too noticeable
-      //     atom.positionProperty.value = atom.destinationProperty.value = modelPoint;
-      //
-      //     var atomNode = this.atomNodeMap[ atom.id ];
-      //     event.target = event.currentTarget = atomNode; // for now, modify the event directly so we can "point" it towards the atom node instead
-      //
-      //     // trigger the drag start
-      //   }
-      // } );
-
       topLayer.addChild( bucketFront );
       bottomLayer.addChild( bucketHole );
 
-      // Listeners for bucket particle observable array.
+      // Listener for removing a particle from the bucket's observable array.
       const particleRemovedListener = atom => {
 
         // Remove atom view elements from bucket node and delete the reference from atom node map
@@ -118,6 +96,8 @@ class KitNode extends Node {
         // Remove atom from bucket particle observable array.
         bucket.particleList.remove( atom );
       };
+
+      // Listener for adding a particle from the bucket's observable array.
       const particleAddedListener = atom => {
 
         // AtomNode created based on atoms in bucket
@@ -177,8 +157,8 @@ class KitNode extends Node {
    * @param {Vector2} modelPoint
    * @param {number} threshold
    * @param {Element} element
-   * @private
    *
+   * @private
    * @returns {Atom2|*}
    */
   closestAtom( modelPoint, threshold, element ) {

@@ -4,6 +4,7 @@
  * Contains the kits and atoms in the play area.
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
+ * @author Denzell Barnett (PhET Interactive Simulations)
  */
 
 import Node from '../../../../scenery/js/nodes/Node.js';
@@ -21,6 +22,8 @@ class KitCollectionNode extends Node {
    */
   constructor( collection, view, isCollectingView ) {
     super();
+
+    // @public {KitPanel} Create a kit panel to contain the kit buckets
     this.kitPanel = new KitPanel( collection, BAMConstants.KIT_VIEW_WIDTH, BAMConstants.KIT_VIEW_HEIGHT, view, isCollectingView );
     this.kitPanel.bottom = BAMConstants.STAGE_SIZE.bottom - BAMConstants.VIEW_PADDING;
     this.kitPanel.left = BAMConstants.STAGE_SIZE.left + BAMConstants.VIEW_PADDING;

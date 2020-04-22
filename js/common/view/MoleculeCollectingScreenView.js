@@ -4,6 +4,7 @@
  * Subtype of BAMScreenView that shows kits, but also has a collection area to the right-hand side
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
+ * @author Denzell Barnett (PhET Interactive Simulations)
  */
 
 import Property from '../../../../axon/js/Property.js';
@@ -33,7 +34,7 @@ class MoleculeCollectingScreenView extends BAMScreenView {
     super( kitCollectionList );
     this.kitCollectionList = kitCollectionList;
 
-    // @private
+    // @private {boolean}
     this.hasShownOnce = false;
 
     // @private {TextPushButton} Create a next collection button
@@ -75,7 +76,7 @@ class MoleculeCollectingScreenView extends BAMScreenView {
         this.nextCollectionButton.visible = !isShowing && !buttonClicked;
       } );
 
-    // Adjust play area and carousel bounds to compensate for CollectionPanel
+    // @public {Bounds2} Adjust play area and carousel bounds to compensate for CollectionPanel
     this.mappedKitCollectionBounds = this.kitCollectionMap[ this.kitCollectionList.currentCollectionProperty.value.id ].bounds.dilatedX( 15 );
     const collectionAttachmentCallbacks = [];
     const collectionPanel = new CollectionPanel(
@@ -137,7 +138,6 @@ class MoleculeCollectingScreenView extends BAMScreenView {
         }
       }
     } );
-
     return kitCollectionNode;
   }
 }

@@ -3,6 +3,7 @@
 /**
  * Contains "bond breaking" nodes for a single molecule, so they can be cut apart with scissors
  *
+ * @author Denzell Barnett (PhET Interactive Simulations)
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 
@@ -18,8 +19,9 @@ class MoleculeBondContainerNode extends Node {
    */
   constructor( kit, molecule ) {
     super();
-    this.bondNodes = [];
 
+    // @private {Node}
+    this.bondNodes = [];
     this.bondNodes = molecule.bonds.map( bond => {
       const node = new MoleculeBondNode( bond, kit );
       this.addChild( node );
@@ -28,6 +30,7 @@ class MoleculeBondContainerNode extends Node {
   }
 
   /**
+   * @public
    * @override
    */
   dispose() {

@@ -39,8 +39,10 @@ class AtomNode extends Node {
       touchArea: grabbableArea
     }, options ) );
 
-    // @public
+    // @public {Atom2}
     this.atom = atom;
+
+    // Add an atom icon
     this.addChild( AtomNode.createIcon( atom.element ) );
 
     // @private {Function}
@@ -58,6 +60,7 @@ class AtomNode extends Node {
 
   /**
    * @override
+   * @public
    */
   dispose() {
     this.atom.positionProperty.unlink( this.translationListener );
@@ -66,6 +69,8 @@ class AtomNode extends Node {
   }
 
   /**
+   * Iconize the atom from a specific element
+   *
    * @param {Element} element
    * @returns {Node}
    * @private
@@ -100,10 +105,10 @@ class AtomNode extends Node {
 
   /**
    * Decides whether the atom node needs white text or black text.
-   *
    * @param {ColorDef} color
-   * @returns {ColorDef}
+   *
    * @public
+   * @returns {ColorDef}
    */
   static getTextColor( color ) {
     return 0.30 * color.r + 0.59 * color.g + 0.11 * color.b < 125 ? new Color( 225, 225, 255 ) : new Color( 0, 0, 0 );

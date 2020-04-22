@@ -3,6 +3,7 @@
 /**
  * Displays the molecule name, 3D button, and 'X' button to break apart the molecule
  *
+ * @author Denzell Barnett (PhET Interactive Simulations)
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 
@@ -38,6 +39,7 @@ class MoleculeControlsHBox extends HBox {
     this.molecule = molecule;
 
     if ( molecule.atoms.length < 2 ) {
+
       // we don't need anything at all if it is not a "molecule"
       return;
     }
@@ -93,6 +95,7 @@ class MoleculeControlsHBox extends HBox {
 
   /**
    * @override
+   * @public
    */
   dispose() {
     const listener = this.updatePositionListener;
@@ -104,6 +107,11 @@ class MoleculeControlsHBox extends HBox {
     HBox.prototype.dispose.call( this );
   }
 
+  /**
+   * Update the position of the controls.
+   *
+   * @private
+   */
   updatePosition() {
     const modelPositionBounds = this.molecule.positionBounds;
     const moleculeViewBounds = BAMConstants.MODEL_VIEW_TRANSFORM.modelToViewBounds( modelPositionBounds );
@@ -112,6 +120,5 @@ class MoleculeControlsHBox extends HBox {
       moleculeViewBounds.minY - this.height - BAMConstants.BUTTON_PADDING ); // offset from top of molecule
   }
 }
-
 buildAMolecule.register( 'MoleculeControlsHBox', MoleculeControlsHBox );
 export default MoleculeControlsHBox;

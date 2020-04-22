@@ -4,6 +4,7 @@
  * Displays a collection box that can collect multiple molecules with two text labels above. One shows the "goal", and the other shows the current
  * quantity present in the box.
  *
+ * @author Denzell Barnett (PhET Interactive Simulations)
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 
@@ -38,6 +39,7 @@ class MultipleCollectionBoxNode extends CollectionBoxNode {
       maxWidth: BAMConstants.TEXT_MAX_WIDTH
     } );
 
+    // Update the number of collections available
     box.quantityProperty.link( quantity => {
       if ( quantity === 0 ) {
         quantityNode.text = collectionMultipleQuantityEmptyString;

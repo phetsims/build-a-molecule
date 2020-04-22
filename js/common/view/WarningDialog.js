@@ -44,6 +44,8 @@ class WarningDialog extends Dialog {
       cursor: 'pointer'
     } );
     warningNode.mouseArea = warningNode.touchArea = warningNode.localBounds;
+
+    // If webgl is disabled, show this pop-up
     warningNode.addInputListener( {
       up: () => {
         openPopup( 'http://phet.colorado.edu/webgl-disabled-page?simLocale=' + phet.joist.sim.locale );

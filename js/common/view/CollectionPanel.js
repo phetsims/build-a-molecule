@@ -3,6 +3,7 @@
 /**
  * A panel that shows collection areas for different collections, and allows switching between those collections
  *
+ * @author Denzell Barnett (PhET Interactive Simulations)
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 
@@ -43,12 +44,19 @@ class CollectionPanel extends Panel {
     const layoutNode = new VBox( { spacing: 10 } );
     super( layoutNode, options );
 
+    // @private {Vbox}
     this.layoutNode = layoutNode;
+
+    // @private {Node}
     this.collectionAreaHolder = new Node();
+
+    // @private KitCollection id => node
     this.collectionAreaMap = {}; // kitCollection id => node
+
+    // @private {Array.<function>}
     this.collectionAttachmentCallbacks = collectionAttachmentCallbacks;
 
-    // Header text for panel
+    // Create header text for panel
     const yourMoleculesText = new Text( yourMoleculesString, {
       font: new PhetFont( {
         size: 22
@@ -102,9 +110,8 @@ class CollectionPanel extends Panel {
     kitCollectionList.removedCollectionEmitter.addListener( updateSwitcher );
     this.layoutNode.addChild( collectionSwitcher );
 
-    // all of the collection boxes themselves
+    // Add all of the collection boxes
     this.layoutNode.addChild( this.collectionAreaHolder );
-
 
     // anonymous function here, so we don't create a bunch of fields
     const createCollectionNode = collection => {
@@ -113,17 +120,17 @@ class CollectionPanel extends Panel {
       );
     };
 
-    // create nodes for all current collections
+    // Create nodes for all current collections
     kitCollectionList.collections.forEach( collection => {
       createCollectionNode( collection );
     } );
 
-    // if a new collection is added, create one for it
+    // If a new collection is added, create one for it
     kitCollectionList.addedCollectionEmitter.addListener( collection => {
       createCollectionNode( collection );
     } );
 
-    // use the current collection
+    // Use the current collection
     this.useCollection( kitCollectionList.currentCollectionProperty.value );
 
     // As the current collection changes, use that new collection
@@ -134,7 +141,9 @@ class CollectionPanel extends Panel {
 
 
   /**
+   * Swap to use the specified collection for this panel
    * @param {KitCollection} collection
+   *
    * @private
    */
   useCollection( collection ) {

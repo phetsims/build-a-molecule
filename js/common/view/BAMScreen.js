@@ -45,7 +45,6 @@ class BAMScreen extends Screen {
 
 /**
  * Generate a group of collection boxes and kits such that the boxes can be filled.
- *
  * @param {boolean} allowMultipleMolecules Whether collection boxes can have more than 1 molecule
  * @param {number} numBoxes               Number of collection boxes
  * @param {Emitter} stepEmitter
@@ -157,12 +156,18 @@ BAMScreen.generateKitCollection = ( allowMultipleMolecules, numBoxes, stepEmitte
   return collection;
 };
 
-
-// from array of CompleteMolecule, returns {CompleteMolecule}
+/**
+ * Select a random molecule from the data set of possible collection box molecules
+ * @param molecules
+ *
+ * @returns {CompleteMolecule}
+ */
 BAMScreen.pickRandomMoleculeNotIn = molecules => {
   // Infinite loop. We're living on the edge now, baby!
   while ( true ) { // eslint-disable-line no-constant-condition
-    const molecule = MoleculeList.collectionBoxMolecules[ phet.joist.random.nextIntBetween( 0, MoleculeList.collectionBoxMolecules.length - 1 ) ];
+    const molecule = MoleculeList.collectionBoxMolecules[
+      phet.joist.random.nextIntBetween( 0, MoleculeList.collectionBoxMolecules.length - 1 )
+      ];
     if ( !_.includes( molecules, molecule ) ) {
       return molecule;
     }

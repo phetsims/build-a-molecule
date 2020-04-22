@@ -21,7 +21,6 @@ const threeDString = buildAMoleculeStrings.threeD;
 
 class ShowMolecule3DButtonNode extends RectangularPushButton {
   /**
-   *
    * @param {CompleteMolecule} completeMolecule
    * @param {function} showDialogCallback
    * @param {Object} [options]

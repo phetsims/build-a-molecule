@@ -3,6 +3,7 @@
 /**
  * Contains the kit background and controls for switching between kits
  *
+ * @author Denzell Barnett (PhET Interactive Simulations)
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 
@@ -50,7 +51,7 @@ class KitPanel extends Node {
       } );
     } );
 
-    // @public {Carousel} Treats each kit as an item.
+    // @public {Carousel} Treats each kit as an item in the Carousel.
     this.kitCarousel = new Carousel( kitNodes, {
       fill: BAMConstants.KIT_BACKGROUND,
       stroke: BAMConstants.KIT_BORDER,
@@ -60,6 +61,7 @@ class KitPanel extends Node {
       buttonSoundPlayer: Playable.NO_SOUND
     } );
 
+    // When the page number changes update the current collection.
     this.kitCarousel.pageNumberProperty.link( page => {
       kitCollectionProperty.value.currentKitProperty.value = kitCollectionProperty.value.kits[ page ];
     } );
@@ -80,6 +82,7 @@ class KitPanel extends Node {
 
   /**
    * @public
+   * @override
    */
   reset() {
     this.kitCarousel.reset();

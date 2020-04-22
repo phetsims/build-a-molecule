@@ -5,6 +5,7 @@
  * etc.)
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
+ * @author Denzell Barnett (PhET Interactive Simulations)
  */
 
 import timer from '../../../../axon/js/timer.js';
@@ -33,12 +34,24 @@ class CollectionBoxNode extends VBox {
    */
   constructor( box, toModelBounds, showDialogCallback, options ) {
     super( options );
+
+    // @public {CollectionBox}
     this.box = box;
-    this.moleculeNodes = [];
-    this.moleculeNodeMap = {}; // molecule ID => node, stores nodes for each molecule
-    this.blinkTimeout = null; // NOT zero, since that could be a valid timeout ID for window.setTimeout!
+
+    // @public {Node|Rectangle}
     this.boxNode = new Node();
-    this.moleculeIdThumbnailMap = {}; // maps moleculeId => Node (thumbnail view for the molecule)
+
+    // @private {Array.<Node>}
+    this.moleculeNodes = [];
+
+    // @private {number|null} NOT zero, since that could be a valid timeout ID for window.setTimeout!
+    this.blinkTimeout = null;
+
+    // @private Molecule ID => node, stores nodes for each molecule
+    this.moleculeNodeMap = {};
+
+    // @private Maps moleculeId => Node (thumbnail view for the molecule)
+    this.moleculeIdThumbnailMap = {};
 
     this.blackBox = new Rectangle( 0, 0, 160, 50, {
       fill: BAMConstants.MOLECULE_COLLECTION_BOX_BACKGROUND
@@ -47,6 +60,7 @@ class CollectionBoxNode extends VBox {
       box.dropBoundsProperty.set( toModelBounds( this.blackBox ) );
     };
 
+    // Arrange button position for to trigger 3D representation
     if ( BAMConstants.HAS_3D ) {
       const show3dButton = new ShowMolecule3DButtonNode( box.moleculeType, showDialogCallback );
       show3dButton.touchArea = Shape.bounds( show3dButton.bounds.dilated( 10 ) );
@@ -87,11 +101,14 @@ class CollectionBoxNode extends VBox {
     );
     this.boxNode.addChild( this.cueNode );
 
+    // @private {Node} Layer to house molecules
     this.moleculeLayer = new Node();
     this.boxNode.addChild( this.moleculeLayer );
 
+    // Update all the boxes cueing
     this.updateBoxGraphics();
 
+    // Add listeners for the Collection Box
     box.addedMoleculeEmitter.addListener( this.addMolecule.bind( this ) );
     box.removedMoleculeEmitter.addListener( this.removeMolecule.bind( this ) );
     box.acceptedMoleculeCreationEmitter.addListener( this.blink.bind( this ) );
@@ -99,7 +116,7 @@ class CollectionBoxNode extends VBox {
     // TODO: this is somewhat of an ugly way of getting the fixed layout (where the molecules don't resize). consider changing
     // kept for now since it is much easier to revert back to the old behavior
 
-    // add invisible molecules to the molecule layer so that its size won't change later (fixes molecule positions)
+    // Add invisible molecules to the molecule layer so that its size won't change later (fixes molecule positions)
     const nodes = [];
     for ( let i = 0; i < box.capacity; i++ ) {
       const node = CollectionBoxNode.lookupThumbnail( box.moleculeType, this.moleculeNodeMap );
@@ -108,11 +125,9 @@ class CollectionBoxNode extends VBox {
       this.moleculeLayer.addChild( node );
     }
 
-    // position them like we would with the others
+    // Position them like we would with the others
     this.layOutMoleculeList( nodes );
-
     this.centerMoleculesInBlackBox();
-
     this.boxNode.y = 3;
     this.addChild( this.boxNode );
   }
@@ -120,6 +135,7 @@ class CollectionBoxNode extends VBox {
 
   /**
    * Allows us to set the model position of the collection boxes according to how they are laid out
+   *
    * @public
    */
   updateLocation() {
@@ -127,7 +143,9 @@ class CollectionBoxNode extends VBox {
   }
 
   /**
+   * Add molecule to map and molecule layer. Update the layer and graphics.
    * @param {Molecule} molecule
+   *
    * @public
    */
   addMolecule( molecule ) {
@@ -144,7 +162,9 @@ class CollectionBoxNode extends VBox {
   }
 
   /**
+   * Remove molecule to map and molecule layer. Update the layer and graphics.
    * @param {Molecule} molecule
+   *
    * @public
    */
   removeMolecule( molecule ) {
@@ -160,9 +180,12 @@ class CollectionBoxNode extends VBox {
   }
 
   /**
+   * Update the molecules that are within the box
+   *
    * @private
    */
   updateMoleculeLayout() {
+
     // position molecule nodes
     this.layOutMoleculeList( this.moleculeNodes );
 
@@ -176,8 +199,8 @@ class CollectionBoxNode extends VBox {
 
   /**
    * Layout of molecules. Spaced horizontally with moleculePadding, and vertically centered
-   *
    * @param {Array.<Node>} moleculeNodes List of molecules to lay out
+   *
    * @private
    */
   layOutMoleculeList( moleculeNodes ) {
@@ -193,17 +216,22 @@ class CollectionBoxNode extends VBox {
   }
 
   /**
+   * Return the molecule area. Excluding the area in the black box where the 3D button needs to go.
+   *
    * @private
-   * @returns {Bounds2} Molecule area. Excludes the area in the black box where the 3D button needs to go
+   * @returns {Bounds2}
    */
   getMoleculeAreaInBlackBox() {
     const bounds = this.blackBox.bounds;
-    return bounds.withMaxX( bounds.maxX - BLACK_BOX_PADDING - this.button3dWidth ); // leave room for 3d button on RHS
+
+    // leave room for 3d button on right hand side
+    return bounds.withMaxX( bounds.maxX - BLACK_BOX_PADDING - this.button3dWidth );
   }
 
   /**
    * Center the molecules, while considering if the black box can fit multiple molecules
    * @param {Boolean} isMultipleCollectionBox
+   *
    * @private
    */
   centerMoleculesInBlackBox( isMultipleCollectionBox ) {
@@ -221,6 +249,8 @@ class CollectionBoxNode extends VBox {
   }
 
   /**
+   * Update the stroke around the collection box.
+   *
    * @private
    */
   updateBoxGraphics() {
@@ -236,6 +266,7 @@ class CollectionBoxNode extends VBox {
 
   /**
    * Sets up a blinking box to register that a molecule was created that can go into a box
+   *
    * @private
    */
   blink() {
@@ -251,6 +282,7 @@ class CollectionBoxNode extends VBox {
     this.cancelBlinksInProgress();
 
     const tick = () => {
+
       // precautionarily set this to null so we never cancel a timeout that has occurred
       this.blinkTimeout = null;
 
@@ -259,6 +291,7 @@ class CollectionBoxNode extends VBox {
       assert && assert( counts >= 0 );
 
       if ( counts === 0 ) {
+
         // set up our normal graphics (border/background)
         this.updateBoxGraphics();
 
@@ -286,9 +319,12 @@ class CollectionBoxNode extends VBox {
   }
 
   /**
+   * Inturrupt the blinking
+   *
    * @private
    */
   cancelBlinksInProgress() {
+
     // stop any previous blinking from happening. don't want double-blinking
     if ( this.blinkTimeout !== null ) {
       window.clearTimeout( this.blinkTimeout );
@@ -297,10 +333,11 @@ class CollectionBoxNode extends VBox {
   }
 
   /**
+   * Search for a thumbnail that represents the completed molecule. Thumbnail is drawn using canvas.
    * @param {CompleteMolecule} completeMolecule
    * @param {object} moleculeIdThumbnailMap
-   * @static
    *
+   * @static
    * @returns {Node}
    */
   static lookupThumbnail( completeMolecule, moleculeIdThumbnailMap ) {
@@ -323,9 +360,9 @@ class CollectionBoxNode extends VBox {
 
   /**
    * Precomputation of largest collection box size
-   *
    * @param {SingleCollectionBoxNode|MultipleCollectionBoxNode} boxNode
    * @param {CollectionBox} box
+   *
    * @static
    */
   static getPsuedoBoxBounds( boxNode, box ) {

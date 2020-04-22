@@ -26,6 +26,8 @@ const BAMIconFactory = {
 
   /**
    * Create the home screen and nav-bar icon for the Single screen.
+   *
+   * @public
    * @returns {ScreenIcon}
    */
   createSingleScreen() {
@@ -59,7 +61,9 @@ const BAMIconFactory = {
   },
 
   /**
-   * Create the home screen and nav-bar icon for the Multiple screen.
+   * Create the home screen and nav-bar icon for the Multiple
+   *
+   * @public
    * @returns {ScreenIcon}
    */
   createMultipleScreen() {
@@ -107,6 +111,8 @@ const BAMIconFactory = {
 
   /**
    * Create the home screen and nav-bar icon for the Playground screen.
+   *
+   * @public
    * @returns {ScreenIcon}
    */
   createPlaygroundScreen() {

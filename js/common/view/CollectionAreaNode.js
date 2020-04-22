@@ -3,6 +3,7 @@
 /**
  * Area that shows all of the collection boxes and a reset collection button
  *
+ * @author Denzell Barnett (PhET Interactive Simulations)
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 
@@ -64,7 +65,7 @@ class CollectionAreaNode extends Node {
     } );
     resetCollectionButton.touchArea = Shape.bounds( resetCollectionButton.bounds.dilated( 7 ) );
 
-    // when any collection box quantity changes, re-update whether we are enabled
+    // When any collection box quantity changes, update whether it is enabled
     collection.collectionBoxes.forEach( box => {
       box.quantityProperty.link( () => {
         let enabled = false;
@@ -81,6 +82,7 @@ class CollectionAreaNode extends Node {
 
   /**
    * Update the location of each collection box node
+   *
    * @public
    */
   updateCollectionBoxLocations() {

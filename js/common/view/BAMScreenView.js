@@ -1,7 +1,8 @@
 // Copyright 2020, University of Colorado Boulder
 
 /**
- * Node canvas for Build a Molecule. It features kits shown at the bottom. Can be extended to add other parts
+ * Main screenview for Build a Molecule. It features kits shown at the bottom and a centeralized play area for
+ * building molecules.
  *
  * @author Denzell Barnett (PhET Interactive Simulations)
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
@@ -31,14 +32,14 @@ class BAMScreenView extends ScreenView {
    */
   constructor( kitCollectionList ) {
     super();
-    this.atomNodeMap = {};
+    this.atomNodeMap = {}; // maps Atom2 ID => AtomNode
     this.kitCollectionMap = {}; // maps KitCollection ID => KitCollectionNode
     this.metadataMap = {}; // moleculeId => MoleculeControlsHBox
     this.bondMap = {}; // moleculeId => MoleculeBondContainerNode
     this.addedEmitterListeners = {}; // kit ID => addedMoleculeListener
     this.removedEmitterListeners = {}; // kit ID => removedMoleculeListener
 
-    // @public {KitCollectionList}
+    // @public {KitCollectionList} Initialize and add the kit collection
     this.kitCollectionList = kitCollectionList;
     this.addCollection( kitCollectionList.currentCollectionProperty.value, false );
 
@@ -59,7 +60,6 @@ class BAMScreenView extends ScreenView {
 
     // Create a play area to house the molecules.
     this.kitPlayAreaNode = new KitPlayAreaNode( kits );
-
     kitCollectionList.currentCollectionProperty.link( ( newCollection, oldCollection ) => {
       if ( oldCollection ) {
 
@@ -95,7 +95,11 @@ class BAMScreenView extends ScreenView {
       } );
       this.updateRefillButton();
     };
+
+    // Create a kit panel to house the kit carousel
     const kitPanel = this.kitCollectionMap[ kitCollectionList.currentCollectionProperty.value.id ].kitPanel;
+
+    // Create a button to refill the kit buckets with atoms
     const refillButton = new RefillButton(
       refillListener, {
         left: kitPanel.left,
@@ -104,12 +108,16 @@ class BAMScreenView extends ScreenView {
       } );
     refillButton.touchArea = Shape.bounds( refillButton.selfBounds.union( refillButton.childBounds ).dilated( 10 ) );
 
-    // @private {function} Refill button is enabled if atoms exists outside of the bucket.
+    /**
+     * Refill button is enabled if atoms exists outside of the bucket
+     *
+     * @public
+     */
     this.updateRefillButton = () => {
       refillButton.enabled = !kitCollectionList.currentCollectionProperty.value.currentKitProperty.value.allBucketsFilled();
     };
 
-    // Create a reset all button. Position altered on "Larger" Screen.
+    // @public {ResetAllButton} Create a reset all button. Position of button is adjusted on "Larger" Screen.
     this.resetAllButton = new ResetAllButton( {
       listener: () => {
         this.interruptSubtreeInput();
@@ -140,10 +148,8 @@ class BAMScreenView extends ScreenView {
 
     /**
      * Handles adding molecules and molecule metadata to kit play area.
-     *
      * @param {Molecule} molecule
      * @param {Kit} kit
-     * @private
      */
     const addedMoleculeListener = ( molecule, kit ) => {
       const moleculeControlsHBox = new MoleculeControlsHBox( kit, molecule, this.showDialogCallback );
@@ -156,9 +162,7 @@ class BAMScreenView extends ScreenView {
 
     /**
      * Handles removing molecules and molecule metadata to kit play area.
-     *
      * @param {Molecule} molecule
-     * @private
      */
     const removedMoleculeListener = molecule => {
       const moleculeControlsHBox = this.kitPlayAreaNode.metadataMap[ molecule.moleculeId ];
@@ -175,7 +179,6 @@ class BAMScreenView extends ScreenView {
 
     /**
      * Handles adding atoms to play area and updates the refill button accordingly
-     *
      * @param {Atom2} atom
      */
     const addAtomNodeToPlayArea = atom => {
@@ -185,7 +188,6 @@ class BAMScreenView extends ScreenView {
 
     /**
      * Handles adding atoms to play area and updates the refill button accordingly
-     *
      * @param {Atom2} atom
      */
     const removeAtomNodeFromPlayArea = atom => {
@@ -193,7 +195,7 @@ class BAMScreenView extends ScreenView {
       this.updateRefillButton();
     };
 
-    // When a collection is changed, update the listeners to the kits and KitPlayAreaNode.
+    // When a collection is changed, update the listeners for the kits and KitPlayAreaNode.
     kitCollectionList.currentCollectionProperty.link( ( collection, previousCollection ) => {
       this.kitPlayAreaNode.atomLayer.children.forEach( otherAtomNode => {
         if ( otherAtomNode ) {
@@ -281,17 +283,17 @@ class BAMScreenView extends ScreenView {
       this.kitPlayAreaNode.currentKit.molecules.forEach( molecule => {
         hasTargetMolecule = molecule ? box.willAllowMoleculeDrop( molecule ) : hasTargetMolecule || false;
       } );
-      // box.cueVisibilityProperty.value = hasTargetMolecule;
     } );
   }
 
   /**
    * Responsible for showing 3d representation of molecule.
-   *
    * @param {CompleteMolecule} completeMolecule
+   *
    * @private
    */
   showDialog( completeMolecule ) {
+
     // Bail if we don't have a dialog, due to a lack of webgl support. See https://github.com/phetsims/build-a-molecule/issues/105
     if ( this.dialog ) {
       if ( ThreeUtils.isWebGLEnabled() ) {
@@ -302,10 +304,12 @@ class BAMScreenView extends ScreenView {
   }
 
   /**
-   *
+   * Add a collection to the kitCollectionNode
    * @param {KitCollection} collection
    * @param {boolean} isCollectingView
-   * @returns {*}
+   *
+   * @private
+   * @returns {KitCollectionNode}
    */
   addCollection( collection, isCollectingView ) {
     const kitCollectionNode = new KitCollectionNode( collection, this, isCollectingView );

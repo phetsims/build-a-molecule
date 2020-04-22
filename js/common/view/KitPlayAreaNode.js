@@ -3,6 +3,7 @@
 /**
  * Node canvas for Build a Molecule. It features kits shown at the bottom. Can be extended to add other parts
  *
+ * @author Denzell Barnett (PhET Interactive Simulations)
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 
@@ -25,15 +26,23 @@ class KitPlayAreaNode extends Node {
     // @public {Kit|null} Current kit set when atomNode is dragged
     this.currentKit = null;
 
-    // Layers
+    // @public {Node} Layer that contains the buttons and name of the molecule
     this.metadataLayer = new Node();
-    this.moleculeBondContainerLayer = new Node();
+
+    // @public {Node} Layer that contains the atoms
     this.atomLayer = new Node();
 
-    // Maps for kit area elements
-    this.atomNodeMap = {}; // atom.id => AtomNode
-    this.bondMap = {}; // moleculeId => MoleculeBondContainerNode
-    this.metadataMap = {}; // moleculeId => MoleculeControlsHBox
+    // @private {Node} Layer that contains the cut targets used for breaking bonds
+    this.moleculeBondContainerLayer = new Node();
+
+    // @public atom.id => AtomNode
+    this.atomNodeMap = {};
+
+    // @public moleculeId => MoleculeControlsHBox
+    this.metadataMap = {};
+
+    // @private moleculeId => MoleculeBondContainerNode
+    this.bondMap = {};
 
     // Every kit maps the visibility of its atoms in the play area to its active property. Active kits
     // have visible atoms.
@@ -53,7 +62,6 @@ class KitPlayAreaNode extends Node {
         } );
       } );
     } );
-
     this.addChild( this.atomLayer );
     this.addChild( this.metadataLayer );
     this.addChild( this.moleculeBondContainerLayer );
@@ -74,6 +82,8 @@ class KitPlayAreaNode extends Node {
   /**
    * Remove molecule bond nodes to the kit play area and its map.
    * @param {Molecule} molecule
+   *
+   * @public
    */
   removeMoleculeBondNodes( molecule ) {
     const moleculeBondContainerNode = this.bondMap[ molecule.moleculeId ];

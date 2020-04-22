@@ -59,6 +59,8 @@ class Molecule3DDialog extends Dialog {
 
     // @public {BooleanProperty} Property used for playing/pausing a rotating molecule
     this.isPlayingProperty = new BooleanProperty( true );
+
+    // @public {BooleanProperty}
     this.userControlledProperty = new BooleanProperty( false );
 
     // View styles for space filled and ball and stick views.
@@ -188,7 +190,7 @@ class Molecule3DDialog extends Dialog {
     };
     const colorSet = [ new Color( 159, 102, 218 ), new Color( 255, 255, 255 ) ];
 
-    // Build the icon the space filled representation
+    // Create a Space Filled icon and representation
     const spaceFilledIcon = new ThreeNode( 50, 50, iconOptions );
     const spaceFilledScene = spaceFilledIcon.stage.threeScene;
     const spaceFilledContainer = new THREE.Object3D();
@@ -202,7 +204,7 @@ class Molecule3DDialog extends Dialog {
       }
     } ) );
 
-    // Ball and stick icon
+    // Create a Ball and Stick icon and representation
     const ballAndStickIcon = new ThreeNode( 50, 50, {
       cursor: 'pointer',
       cameraPosition: new Vector3( 0, 0, 7 )
@@ -213,7 +215,7 @@ class Molecule3DDialog extends Dialog {
     buildAtomMesh( MoleculeList.O2, ballAndStickContainer, true, false, colorSet );
     buildBondMesh( MoleculeList.O2, ballAndStickContainer, true, 0.2 );
 
-    // Listener to change the view style to the ball and stick representation
+    // Updates the view style to the ball and stick representation
     ballAndStickIcon.addInputListener( new PressListener( {
       press: () => {
         viewStyleProperty.value = ViewStyle.BALL_AND_STICK;
@@ -228,6 +230,7 @@ class Molecule3DDialog extends Dialog {
     const moleculeScene = moleculeNode.stage.threeScene;
     moleculeScene.add( moleculeContainer );
 
+    // Handle the each 3D representation based on the current view style
     Property.multilink( [ viewStyleProperty, completeMoleculeProperty ], ( viewStyle, completeMolecule ) => {
       if ( completeMolecule ) {
 
@@ -249,7 +252,7 @@ class Molecule3DDialog extends Dialog {
       }
     } );
 
-    //  Creation of toggled modes for scene selection
+    // Create toggle buttons for scene selection
     const toggleButtonsContent = [ {
       value: ViewStyle.SPACE_FILL,
       node: spaceFilledIcon
@@ -258,7 +261,7 @@ class Molecule3DDialog extends Dialog {
       node: ballAndStickIcon
     } ];
 
-    // Creation of icons for scene selection
+    // Create the icons for scene selection
     const sceneRadioButtonGroup = new RadioButtonGroup( viewStyleProperty, toggleButtonsContent, {
       buttonContentXMargin: 5,
       buttonContentYMargin: -8, // Trimming of part of the icon node is acceptable in this case.
@@ -273,7 +276,7 @@ class Molecule3DDialog extends Dialog {
       spacing: 30
     } );
 
-    // Add lights to each scene for main molecule node and icons. Lights taken from MoleculeShapesScreenView.js
+    // Create and add lights to each scene for main molecule node and icons. Lights taken from MoleculeShapesScreenView.js
     const ambientLight = new THREE.AmbientLight( 0x191919 ); // closest to 0.1 like the original shader
     moleculeScene.add( ambientLight );
     spaceFilledScene.add( ambientLight.clone() );
@@ -291,6 +294,7 @@ class Molecule3DDialog extends Dialog {
     spaceFilledScene.add( moonLight.clone() );
     ballAndStickScene.add( moonLight.clone() );
 
+    // Correct the ordering of the dialogs children
     this.isShowingProperty.link( isShowing => {
 
       // Set the order of children for the VBox
@@ -303,7 +307,7 @@ class Molecule3DDialog extends Dialog {
       }
     } );
 
-    // @private {Property.<THREE.Quaternion>}
+    // @private {Property.<THREE.Quaternion>} Update matrix of the 3D representation
     this.quaternionProperty = new Property( new THREE.Quaternion() );
     this.quaternionProperty.link( quaternion => {
 
@@ -319,7 +323,7 @@ class Molecule3DDialog extends Dialog {
     this.ballAndStickIcon = ballAndStickIcon;
     let lastGlobalPoint = null;
 
-    // Listener that handles user input to rotate molecule
+    // Handles user input to rotate molecule
     const pressListener = new PressListener( {
       press: event => {
         this.userControlledProperty.value = true;

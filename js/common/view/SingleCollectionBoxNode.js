@@ -3,6 +3,7 @@
 /**
  * A panel that shows collection areas for different collections, and allows switching between those collections
  *
+ * @author Denzell Barnett (PhET Interactive Simulations)
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 

@@ -4,6 +4,7 @@
  * Contains "bond breaking" nodes for a single molecule, so they can be cut apart with scissors
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
+ * @author Denzell Barnett (PhET Interactive Simulations)
  */
 
 import platform from '../../../../phet-core/js/platform.js';
@@ -55,15 +56,20 @@ class MoleculeBondNode extends Node {
   constructor( bond, kit ) {
     super( {} );
 
-    // @private
+    // @private {Atom2}
     this.a = bond.a;
+
+    // @private {Atom2}
     this.b = bond.b;
+
+    // @private {Kit}
     this.kit = kit;
 
-    // use the lewis dot model to get our bond direction
+    // Use the lewis dot model to get our bond direction
     const bondDirection = kit.getBondDirection( this.a, this.b );
     const isHorizontal = bondDirection.id.name === 'WEST' || bondDirection.id.name === 'EAST';
 
+    // Define images for opened and closed scissors
     let openFile = 'scissors';
     let closedFile = 'scissors-closed';
     if ( isHorizontal ) {
@@ -77,7 +83,7 @@ class MoleculeBondNode extends Node {
     const scissorsClosed = images[ closedFile ]; //26x15 or 15x26
     const backup = ( isHorizontal ? 'col-resize' : 'row-resize' );
 
-    // offsets should center this
+    // Offsets should center this
     let openCursor;
     let closedCursor;
     if ( platform.ie ) {
@@ -126,7 +132,11 @@ class MoleculeBondNode extends Node {
     } ) );
     this.addChild( cutTargetNode );
 
-    // @private listener that will update the position of our hit target
+    /**
+     * Listener that will update the position of our hit target
+     *
+     * @private
+     */
     this.positionListener = () => {
       const orientation = this.b.positionProperty.value.minus( this.a.positionProperty.value );
       if ( orientation.magnitude > 0 ) {
@@ -136,7 +146,12 @@ class MoleculeBondNode extends Node {
       this.setTranslation( BAMConstants.MODEL_VIEW_TRANSFORM.modelToViewPosition( location ) );
     };
 
-    // @private Show the cut targets for the selected atom's bonds
+    /**
+     * Show the cut targets for the selected atom's bonds
+     * @param selectedAtom
+     *
+     * @private
+     */
     this.toggleTargetVisibility = selectedAtom => {
       cutTargetNode.visible = selectedAtom === this.a || selectedAtom === this.b;
     };

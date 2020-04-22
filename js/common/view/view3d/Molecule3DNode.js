@@ -124,6 +124,8 @@ class Molecule3DNode extends DOM {
    * @param {number} rb
    * @param {number} d
    * @param {number} theta
+   *
+   * @private
    * @returns {*}
    */
   ellipticalArcCut( ra, rb, d, theta ) {
@@ -181,6 +183,7 @@ class Molecule3DNode extends DOM {
   }
 
   /**
+   * Visually create the molecule 3D Node
    * @public
    *
    * @return
@@ -268,6 +271,7 @@ class Molecule3DNode extends DOM {
 
   /**
    * @param timeElapsed
+   *
    * @public
    */
   tick( timeElapsed ) {
@@ -292,8 +296,9 @@ class Molecule3DNode extends DOM {
   }
 
   /**
-   *
+   * Transform matrix of molecule
    * @param {Matrix3} matrix
+   *
    * @public
    */
   transformMolecule( matrix ) {
@@ -306,7 +311,9 @@ class Molecule3DNode extends DOM {
   }
 
   /**
+   * Set the bounds of the canvas
    * @param {Bounds2} globalBounds
+   *
    * @private
    */
   setMoleculeCanvasBounds( globalBounds ) {
@@ -354,7 +361,6 @@ Molecule3DNode.initialTransforms = {
     -0.18587417218418828, -0.7375332180401017, -0.6492268820696543,
     0.06346550494317185, 0.6503497714587849, -0.7569790647339203 )
 };
-
 
 buildAMolecule.register( 'Molecule3DNode', Molecule3DNode );
 export default Molecule3DNode;
