@@ -4,6 +4,7 @@
  * Contains multiple buckets of different types of atoms
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
+ * @author Denzell Barnett (PhET Interactive Simulations)
  */
 
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
@@ -38,29 +39,43 @@ class Kit {
     // @public {ObservableArray}
     this.atomsInPlayArea = new ObservableArray();
 
-    // @public {Property.<Atom|null>}
+    // @public {Property.<Atom|null>} Atom that has been clicked by user. Used for triggering cut targets for breaking bonds
     this.selectedAtomProperty = new Property( null );
 
-    // @public {Property.<boolean>}
+    // @public {BooleanProperty} Whether this kit is the present kit being displayed and interacted with
     this.activeProperty = new BooleanProperty( false );
+
+    // @public {BooleanProperty} Whether this kit is visible
     this.visibleProperty = new BooleanProperty( false );
-    this.hasMoleculesInBoxesProperty = new BooleanProperty( false ); // we record this so we know when the "reset kit" should be shown
+
+    // @public we{BooleanProperty} Record this so we know when the "reset kit" should be shown
+    this.hasMoleculesInBoxesProperty = new BooleanProperty( false );
 
     // @public {Emitter} - Called with a single parameter molecule
     this.addedMoleculeEmitter = new Emitter( { parameters: [ { valueType: Molecule } ] } );
     this.removedMoleculeEmitter = new Emitter( { parameters: [ { valueType: Molecule } ] } );
+
+    // @public {Array.<Atom2>} Master list of atoms (in and out of buckets), but not ones in collection boxes
+    this.atoms = [];
+
+    // @public {Array.<Atom2>} atoms in the collection box
+    this.atomsInCollectionBox = [];
+
+    // @public {Array.<Molecule>} molecules  in the play area
+    this.molecules = [];
+
+    // @public moleculeId => CollectionBox, molecule structures that were put into the collection box.
+    // Kept for now, since modifying the reset behavior will be much easier if we retain this
+    this.removedMolecules = {};
+
+    // @public {LewisDotModel|null} Created later, lewis-dot connections between atoms on the play area
+    this.lewisDotModel = null;
 
     // @public {Array.<Bucket>}
     this.buckets = buckets;
 
     // @public {CollectionLayout}
     this.collectionLayout = collectionLayout;
-
-    this.atoms = []; // our master list of atoms (in and out of buckets), but not ones in collection boxes
-    this.atomsInCollectionBox = []; // atoms in the collection box
-    this.molecules = []; // molecule structures in the play area
-    this.removedMolecules = {}; // moleculeId => CollectionBox, molecule structures that were put into the collection box. kept for now, since modifying the reset behavior will be much easier if we retain this
-    this.lewisDotModel = null; // created later, lewis-dot connections between atoms on the play area
 
     // Rest the kit and adjust the bucket layout
     this.reset();
@@ -162,6 +177,7 @@ class Kit {
   }
 
   /**
+   * Returns the bucket for a given element
    * @param {Element} element
    *
    * @returns {Bucket}
@@ -175,6 +191,7 @@ class Kit {
   }
 
   /**
+   * Returns kit bounds within the collection layout
    * @public
    *
    * @returns {Rectangle}
@@ -184,6 +201,9 @@ class Kit {
   }
 
   /**
+   * Returns play area bounds within the collection layout
+   * @public
+   *
    * @returns {Rectangle}
    */
   get availablePlayAreaBounds() {
@@ -241,16 +261,18 @@ class Kit {
   }
 
   /**
+   * Returns whether or not this atom registered in any of the molecule structures
    * @param {Atom2} atom
    * @public
    *
-   * @returns {boolean} Is this atom registered in our molecule structures?
+   * @returns {boolean}
    */
   isAtomInPlay( atom ) {
     return this.getMolecule( atom ) !== null;
   }
 
   /**
+   * Return the molecule of a given atom. This can return a molecule with only one atom and zero bonds (single atom).
    * @param {Atom2} atom
    * @public
    *
@@ -298,9 +320,9 @@ class Kit {
 
   /**
    * Breaks a bond between two atoms in a molecule.
-   *
    * @param {Atom2} a - Atom A
    * @param {Atom2} b - Atom B
+   *
    * @public
    */
   breakBond( a, b ) {
@@ -321,9 +343,10 @@ class Kit {
   }
 
   /**
-   *
+   * Return the direction of the bond between two atoms
    * @param {Atom2} a - An atom A
    * @param {Atom2} b - An atom B
+   *
    * @returns {Direction}
    */
   getBondDirection( a, b ) {
@@ -331,16 +354,9 @@ class Kit {
   }
 
   /**
-   * @returns {boolean}
-   */
-  hasAtomsOutsideOfBuckets() {
-    return !!( this.molecules.length || this.hasMoleculesInBoxesProperty.value );
-  }
-
-  /**
    * Checks if all of the buckets in the kit are filled.
-   * @public
    *
+   * @public
    * @returns {boolean}
    */
   allBucketsFilled() {
@@ -354,7 +370,9 @@ class Kit {
   }
 
   /**
+   * Add a molecule to this kit
    * @param {Molecule} molecule
+   *
    * @public
    */
   addMolecule( molecule ) {
@@ -363,7 +381,9 @@ class Kit {
   }
 
   /**
+   * Remove a molecule from this kit
    * @param {Molecule} molecule
+   *
    * @public
    */
   removeMolecule( molecule ) {
@@ -374,8 +394,9 @@ class Kit {
   /**
    * Takes an atom that was in a bucket and hooks it up within our structural model. It allocates a molecule for the
    * atom, and then attempts to bond with it.
+   * @param {Atom2} atom
    *
-   * @param {Atom2} atom An atom to add into play
+   * @public
    */
   addAtomToPlay( atom ) {
 
@@ -390,6 +411,7 @@ class Kit {
   }
 
   /**
+   * Returns whether or not the atom is contained in any of this kit's buckets
    * @param {Atom2} atom
    * @private
    *
@@ -403,9 +425,9 @@ class Kit {
 
   /**
    * Takes an atom, invalidates the structural bonds it may have, and puts it in the correct bucket
-   *
    * @param {Atom2} atom - the atom to recycle
    * @param {boolean} animate Whether we should display animation
+   *
    * @private
    */
   recycleAtomIntoBuckets( atom, animate ) {
@@ -420,8 +442,8 @@ class Kit {
 
   /**
    * Recycles an entire molecule by invalidating its bonds and putting its atoms into their respective buckets
+   * @param {Molecule} molecule
    *
-   * @param {Molecule} molecule - the molecule to recycle
    * @private
    */
   recycleMoleculeIntoBuckets( molecule ) {
@@ -432,9 +454,10 @@ class Kit {
   }
 
   /**
+   * Add padding to the molecule bounds.
    * @param {Bounds2} bounds
-   * @private
    *
+   * @private
    * @returns {Rectangle}
    */
   padMoleculeBounds( bounds ) {
@@ -444,6 +467,7 @@ class Kit {
 
   /**
    * Update atom destinations so that separate molecules will be separated visually
+   *
    * @private
    */
   separateMoleculeDestinations() {
@@ -517,10 +541,10 @@ class Kit {
 
   /**
    * Bonds one atom to another, and handles the corresponding structural changes between molecules.
-   *
    * @param {Atom2} a - An atom A
    * @param {Direction} dirAtoB - The direction from A that the bond will go in (for lewis-dot structure)
    * @param {Atom2} b - An atom B
+   *
    * @private
    */
   bond( a, dirAtoB, b ) {
@@ -571,7 +595,8 @@ class Kit {
   }
 
   /**
-   * @param {Molecule} molecule - A molecule that should attempt to bind to other atoms / molecules
+   * Attempt to bond a molecule to another molecule based on the open bonding options
+   * @param {Molecule} molecule - A molecule that should attempt to bind to other molecules
    * @private
    *
    * @returns {boolean}
@@ -647,10 +672,11 @@ class Kit {
   }
 
   /**
+   * Returns if two atoms can create a bond
    * @param {Atom2} a - An atom A
    * @param {Atom2} b - An atom B
-   * @private
    *
+   * @private
    * @returns {boolean}
    */
   canBond( a, b ) {
@@ -661,6 +687,7 @@ class Kit {
   }
 
   /**
+   * Checks if the molecule structure is found within our molecule data
    * @param {MoleculeStructure} moleculeStructure
    * @private
    *
@@ -689,7 +716,7 @@ class BondingOption {
   }
 }
 
-Kit.BondingOption = BondingOption;
+Kit.BondingOption = BondingOption; // Available bonding option
 Kit.bondDistanceThreshold = 100; // Determines how close a molecule needs to be to attempt to bond
 Kit.bucketPadding = 50; // Distance between each bucket
 Kit.interMoleculePadding = 100; // Determines how far away to separate the molecules from each other

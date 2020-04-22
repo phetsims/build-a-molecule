@@ -5,6 +5,7 @@
  * for their buckets and atoms.
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
+ * @author Denzell Barnett (PhET Interactive Simulations)
  */
 
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
@@ -41,6 +42,8 @@ class KitCollection {
 
     // @public {Property.<Kit|null>}
     this.currentKitProperty = new Property( null );
+
+    // Swap the current kit and update the visibility of the cue nodes in the collection boxes
     this.currentKitProperty.lazyLink( ( newKit, oldKit ) => {
       if ( oldKit ) {
         oldKit.activeProperty.value = false;
@@ -65,6 +68,7 @@ class KitCollection {
   }
 
   /**
+   * Add a kit to this kit collection. Here is where we add listeners to the added kit
    * @param {Kit} kit
    * @param {Object} [options]
    *
@@ -96,6 +100,7 @@ class KitCollection {
       }
     };
 
+    // Add dropped listeners for each atom in this kit
     kit.atoms.forEach( atom => {
       atom.droppedByUserEmitter.addListener( dropListener );
     } );
@@ -161,7 +166,7 @@ class KitCollection {
   }
 
   /**
-   *
+   * Add a collection box
    * @param {CollectionBox} box
    * @public
    */
@@ -185,9 +190,10 @@ class KitCollection {
   }
 
   /**
+   * Reset this kitCollection
    * @public
    */
-  resetAll() {
+  reset() {
     this.collectionBoxes.forEach( box => { box.reset(); } );
     this.kits.forEach( kit => { kit.reset(); } );
     this.hasCollectedMolecule = false;

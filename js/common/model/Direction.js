@@ -4,6 +4,7 @@
  * Represents a cardinal direction for use in our model. Also includes unit vector version
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
+ * @author Denzell Barnett (PhET Interactive Simulations)
  */
 
 import Vector2 from '../../../../dot/js/Vector2.js';

@@ -5,6 +5,7 @@
  * enough to handle other situations
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
+ * @author Denzell Barnett (PhET Interactive Simulations)
  */
 
 import Utils from '../../../../dot/js/Utils.js';
@@ -14,14 +15,26 @@ import Direction from './Direction.js';
 
 class LewisDotModel {
   constructor() {
-    // maps atom ID => LewisDotAtom
+    // @public Maps atom ID => LewisDotAtom
     this.atomMap = {};
   }
 
+  /**
+   * Add an atom to the atom map
+   *
+   * @param atom
+   * @public
+   */
   addAtom( atom ) {
     this.atomMap[ atom.id ] = new LewisDotAtom( atom );
   }
 
+  /**
+   * Remove the bonds from an atom
+   *
+   * @param atom
+   * @public
+   */
   breakBondsOfAtom( atom ) {
     const dotAtom = this.getLewisDotAtom( atom );
 
@@ -36,9 +49,10 @@ class LewisDotModel {
 
   /**
    * Break the bond between A and B (if it exists)
-   *
    * @param {Atom} a - A
    * @param {Atom} b - B
+   *
+   * @public
    */
   breakBond( a, b ) {
     const dotA = this.getLewisDotAtom( a );
@@ -54,6 +68,8 @@ class LewisDotModel {
    * @param {Atom}      a       A
    * @param {Direction} dirAtoB The direction from A to B. So if A is to the left, B is on the right, the direction would be East
    * @param {Atom}      b       B
+   *
+   * @public
    */
   bond( a, dirAtoB, b ) {
     const dotA = this.getLewisDotAtom( a );
@@ -63,8 +79,10 @@ class LewisDotModel {
   }
 
   /**
-   * @param {Atom} atom An atom
-   * @returns {Array[Direction]} All of the directions that are open (not bonded to another) on the atom
+   * Returns all of the directions that are open (not bonded to another) on the atom
+   * @param {Atom} atom
+   *
+   * @returns {Array.<Direction>}
    */
   getOpenDirections( atom ) {
     const result = [];
@@ -78,9 +96,12 @@ class LewisDotModel {
   }
 
   /**
+   * Returns the bond direction from A to B. If it doesn't exist, an exception is thrown
    * @param {Atom} a - A
    * @param {Atom} b - B
-   * @returns {Direction} The bond direction from A to B. If it doesn't exist, an exception is thrown
+   *
+   * @public
+   * @returns {Direction}
    */
   getBondDirection( a, b ) {
     const dotA = this.getLewisDotAtom( a );
@@ -96,10 +117,11 @@ class LewisDotModel {
   /**
    * Decide whether this bonding would cause any layout issues. Does NOT detect loops, and will
    * fail if given molecules with loops.
-   *
    * @param {Atom}      a         A
    * @param {Direction} direction Direction from A to B
    * @param {Atom}      b         B
+   *
+   * @public
    * @returns {boolean} Whether this bond is considered acceptable
    */
   willAllowBond( a, direction, b ) {
@@ -200,9 +222,10 @@ class LewisDotAtom {
   }
 
   /**
+   * Checks if a specific direction has any connections
    * @param {Direction} direction
-   * @public
    *
+   * @public
    * @returns {boolean}
    */
   hasConnection( direction ) {
@@ -210,16 +233,18 @@ class LewisDotAtom {
   }
 
   /**
+   * Returns the atom connected in a specific direction
    * @param {Direction} direction
-   * @public
    *
-   * @returns {*}
+   * @public
+   * @returns {LewisDotAtom}
    */
   getLewisDotAtom( direction ) {
     return this.connections[ direction.id ];
   }
 
   /**
+   * Assign a lewis dot atom connection to a specific direction
    * @param {Direction} direction
    * @param {LewisDotAtom} lewisDotAtom
    * @private
@@ -229,6 +254,7 @@ class LewisDotAtom {
   }
 
   /**
+   * Unassign a lewis dot atom connection to a specific direction
    * @param {Direction} direction
    * @private
    */

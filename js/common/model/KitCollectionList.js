@@ -4,6 +4,7 @@
  * An internal list of collections that a user will be able to scroll through using a control on the collection area
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
+ * @author Denzell Barnett (PhET Interactive Simulations)
  */
 
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
@@ -26,35 +27,49 @@ class KitCollectionList {
     // @public {Property.<KitCollection>}
     this.currentCollectionProperty = new Property( firstCollection );
 
-    // @public
+    // @public {BooleanProperty}
     this.buttonClickedProperty = new BooleanProperty( false );
 
     // @public {Emitter} - Fires single parameter of {KitCollection}
     this.addedCollectionEmitter = new Emitter( { parameters: [ { valueType: KitCollection } ] } );
     this.removedCollectionEmitter = new Emitter( { parameters: [ { valueType: KitCollection } ] } );
 
-    // @public
+    // @public {ObservableArray.<Atom2>}
     this.atomsInPlayArea = new ObservableArray();
+
+    // @public {function}
     this.createKitCollection = createKitCollection;
+
+    // @public {CollectionLayout}
     this.collectionLayout = collectionLayout;
+
+    // @public {Emitter}
     this.stepEmitter = stepEmitter;
+
+    // @public {Array.<Collection>}
     this.collections = [];
+
+    // @public {number}
     this.currentIndex = 0;
+
+    // @public {KitCollection} Declare the first collection we will add
     this.firstCollection = firstCollection;
     this.addCollection( firstCollection );
   }
 
   /**
+   * @param {number} dt
    *
-   * @param {number} timeElapsed
    * @public
    */
-  step( timeElapsed ) {
-    this.stepEmitter.emit( timeElapsed );
+  step( dt ) {
+    this.stepEmitter.emit( dt );
   }
 
   /**
+   * Generate the kit collection
    * @public
+   *
    * @returns {function}
    */
   generateKitCollection() {
@@ -62,7 +77,7 @@ class KitCollectionList {
   }
 
   /**
-   *
+   * Add a kit collection and make it the current collection
    * @param {KitCollection} collection
    */
   addCollection( collection ) {
@@ -83,7 +98,7 @@ class KitCollectionList {
     this.switchTo( this.collections[ 0 ] );
 
     // reset it
-    this.collections[ 0 ].resetAll();
+    this.collections[ 0 ].reset();
 
     // remove all the other collections
     this.collections.slice( 0 ).forEach( collection => {
@@ -95,6 +110,8 @@ class KitCollectionList {
   }
 
   /**
+   * Returns kit bounds within the collection layout
+   *
    * @returns {Rectangle}
    */
   availableKitBounds() {
@@ -102,6 +119,8 @@ class KitCollectionList {
   }
 
   /**
+   * Returns play area bounds bounds within the collection layout
+   *
    * @returns {Rectangle}
    */
   availablePlayAreaBounds() {
@@ -109,6 +128,8 @@ class KitCollectionList {
   }
 
   /**
+   * Checks if there exists a collection that is before the current collection
+   *
    * @public
    * @returns {boolean}
    */
@@ -117,6 +138,8 @@ class KitCollectionList {
   }
 
   /**
+   * Checks if there exists a collection that is after the current collection
+   *
    * @public
    * @returns {boolean}
    */
@@ -125,6 +148,8 @@ class KitCollectionList {
   }
 
   /**
+   * Swap to the collection before the current collection
+   *
    * @public
    */
   switchToPreviousCollection() {
@@ -132,6 +157,8 @@ class KitCollectionList {
   }
 
   /**
+   * Swap to the collection before the current collection
+   *
    * @public
    */
   switchToNextCollection() {
@@ -139,7 +166,9 @@ class KitCollectionList {
   }
 
   /**
+   * Swap to a specific collection
    * @param {KitCollection} collection
+   *
    * @private
    */
   switchTo( collection ) {
@@ -148,6 +177,7 @@ class KitCollectionList {
   }
 
   /**
+   * Remove a specific collection
    * @param {KitCollection} collection
    * @private
    */

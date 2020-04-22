@@ -104,7 +104,6 @@ BAMScreen.generateKitCollection = ( allowMultipleMolecules, numBoxes, stepEmitte
     } );
 
     const ableToIncreaseMultiple = allowMultipleMolecules && equivalentMoleculesRemaining > 1;
-    // var atomMultiple = 1 + ( ableToIncreaseMultiple ? random.nextInt( equivalentMoleculesRemaining ) : 0 );
     var atomMultiple = 1 + ( ableToIncreaseMultiple ? equivalentMoleculesRemaining : 0 );
 
     // for each type of atom

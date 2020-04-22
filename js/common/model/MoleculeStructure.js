@@ -9,6 +9,7 @@
  * Note: equivalency matrices are stored in row-major format (compared to the Java version)
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
+ * @author Denzell Barnett (PhET Interactive Simulations)
  */
 
 import Atom from '../../../../nitroglycerin/js/Atom.js';
@@ -45,9 +46,10 @@ class MoleculeStructure {
   }
 
   /**
+   * Add an atom to the molecule structure
    * @param {Atom2} atom
-   * @public
    *
+   * @public
    * @returns {Atom2}
    */
   addAtom( atom ) {
@@ -57,7 +59,9 @@ class MoleculeStructure {
   }
 
   /**
+   * Add a bond to the molecule structure
    * @param {Bond} bond
+   *
    * @public
    */
   addBond( bond ) {
@@ -67,9 +71,10 @@ class MoleculeStructure {
   }
 
   /**
+   * Return the bonds connected to a specific atom
    * @param {Atom2} atom
-   * @private
    *
+   * @private
    * @returns {Array.<Bond>}
    */
   getBondsInvolving( atom ) {
@@ -265,9 +270,10 @@ class MoleculeStructure {
   }
 
   /**
+   * Checks if this element is within the molecule structure
    * @param {Element} element
-   * @private
    *
+   * @private
    * @returns {boolean}
    */
   containsElement( element ) {
@@ -277,7 +283,8 @@ class MoleculeStructure {
   }
 
   /**
-   * Retreives bonds between atoms a and b
+   * Retrieves bonds between atoms a and b
+   *
    * @param {Atom2} a
    * @param {Atom2} b
    * @public
@@ -295,7 +302,6 @@ class MoleculeStructure {
   // Note: (performance) cache this?
   /**
    * @public
-   *
    * @returns {ElementHistogram}
    */
   getHistogram() {
@@ -303,8 +309,8 @@ class MoleculeStructure {
   }
 
   /**
+   * Return a copy of the molecule structure based on its bonds and atoms
    * @private
-   *
    * @returns {MoleculeStructure}
    */
   copy() {
@@ -316,7 +322,7 @@ class MoleculeStructure {
 
 
   /**
-   *
+   * Return a copy of the molecule structure with a specific atom removed
    * @param {Atom2} atomToRemove
    * @returns {MoleculeStructure}
    */

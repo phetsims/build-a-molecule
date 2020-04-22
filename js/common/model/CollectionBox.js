@@ -4,6 +4,7 @@
  * Stores multiple instances of a single type of molecule. Keeps track of quantity, and has a desired capacity.
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
+ * @author Denzell Barnett (PhET Interactive Simulations)
  */
 
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
@@ -33,10 +34,12 @@ class CollectionBox {
     this.quantityProperty = new NumberProperty( 0 );
     this.cueVisibilityProperty = new BooleanProperty( false );
 
-    // @public {Emitter} - Called with a single molecule parameter
+    // @public {Emitter} Called with a single molecule parameter
     this.addedMoleculeEmitter = new Emitter( { parameters: [ { valueType: Molecule } ] } );
     this.removedMoleculeEmitter = new Emitter( { parameters: [ { valueType: Molecule } ] } );
-    this.acceptedMoleculeCreationEmitter = new Emitter( { parameters: [ { valueType: Molecule } ] } ); // triggered from KitCollection
+
+    // @public {Emitter} An accepted molecule is a molecule that matches the goals in a collection box
+    this.acceptedMoleculeCreationEmitter = new Emitter( { parameters: [ { valueType: Molecule } ] } );
 
     // @public {CompleteMolecule}
     this.moleculeType = moleculeType;
@@ -57,6 +60,12 @@ class CollectionBox {
     } );
   }
 
+  /**
+   * Checks if the collection box is full.
+   *
+   * @public
+   * @returns {boolean}
+   */
   isFull() {
     return this.capacity === this.quantityProperty.value;
   }
@@ -74,6 +83,12 @@ class CollectionBox {
     return equivalent && this.quantityProperty.value < this.capacity;
   }
 
+  /**
+   * Add a molecule to this box
+   *
+   * @param {Molecule} molecule
+   * @public
+   */
   addMolecule( molecule ) {
     this.quantityProperty.value++;
     this.molecules.push( molecule );
@@ -81,6 +96,12 @@ class CollectionBox {
     this.addedMoleculeEmitter.emit( molecule );
   }
 
+  /**
+   * Remove a molecule from this box
+   *
+   * @param molecule
+   * @public
+   */
   removeMolecule( molecule ) {
     this.quantityProperty.value--;
     this.molecules.shift();
@@ -88,6 +109,8 @@ class CollectionBox {
   }
 
   /**
+   * Reset this box
+   *
    * @public
    */
   reset() {

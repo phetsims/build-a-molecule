@@ -29,29 +29,36 @@ class Atom2 extends Atom {
   constructor( element, stepEmitter ) {
     super( element );
 
-    // @public {Vector2Property} Current position
+    // @public {Vector2Property} Position of atom
     this.positionProperty = new Vector2Property( Vector2.ZERO );
+
+    // @public {Vector2Property} Destination of atom
     this.destinationProperty = new Vector2Property( Vector2.ZERO );
 
-    // @public {BooleanProperty} User
+    // @public {BooleanProperty}
     this.userControlledProperty = new BooleanProperty( false );
     this.visibleProperty = new BooleanProperty( true );
+
+    // @public {BooleanProperty} Regulates step function for this atom
     this.addedToModelProperty = new BooleanProperty( true );
 
-    // @public {Emitter}
+    // @public {Emitter} Responsible for grabbing and dropping an atom
     this.grabbedByUserEmitter = new Emitter( { parameters: [ { valueType: Atom2 } ] } );
     this.droppedByUserEmitter = new Emitter( { parameters: [ { valueType: Atom2 } ] } );
+
+    // @public {Emitter} Responsible for separating this atom from other atoms
     this.separateMoleculeEmitter = new Emitter();
 
     // @public {Emitter}
     this.stepEmitter = stepEmitter;
 
-    // @public {string}
+    // @public {string} Name of this atom
     this.name = Strings.getAtomName( element );
 
     // @private {Function} Passed into step function.
     this.clockListener = this.step.bind( this );
 
+    // Atom exists for entire sim lifetime. No need to dispose.
     this.addedToModelProperty.link( isAddedToModel => {
       if ( isAddedToModel ) {
         // added to the model
@@ -63,6 +70,7 @@ class Atom2 extends Atom {
       }
     } );
 
+    // Atom exists for entire sim life cycle. No need to dispose.
     this.userControlledProperty.lazyLink( controlled => {
       if ( controlled ) {
         this.grabbedByUserEmitter.emit( this );
@@ -73,10 +81,12 @@ class Atom2 extends Atom {
     } );
   }
 
+  // Returns bounds of atom's position considering its covalent radius
   get positionBounds() {
     return new Rectangle( this.positionProperty.value.x - this.covalentRadius, this.positionProperty.value.y - this.covalentRadius, this.covalentDiameter, this.covalentDiameter );
   }
 
+  // Returns bounds of atom's destination considering its covalent radius
   get destinationBounds() {
     return new Rectangle( this.destinationProperty.value.x - this.covalentRadius, this.destinationProperty.value.y - this.covalentRadius, this.covalentDiameter, this.covalentDiameter );
   }
@@ -125,20 +135,44 @@ class Atom2 extends Atom {
     }
   }
 
+  /**
+   * Add a vector to the current position and destination of the atom
+   * @param delta {Vector2}
+   *
+   * @public
+   */
   translatePositionAndDestination( delta ) {
     this.positionProperty.value = this.positionProperty.value.plus( delta );
     this.destinationProperty.value = this.destinationProperty.value.plus( delta );
   }
 
+  /**
+   * Update the position and destination to a specific point
+   * @param {Vector2} point
+   *
+   * @public
+   */
   setPositionAndDestination( point ) {
     this.positionProperty.value = point;
     this.destinationProperty.value = point;
   }
 
+  /**
+   * Update the position property to a new point
+   * @param {number} x
+   * @param {number} y
+   *
+   * @public
+   */
   translate( x, y ) {
     this.positionProperty.value = new Vector2( this.positionProperty.value.x + x, this.positionProperty.value.y + y );
   }
 
+  /**
+   * Reset the atom
+   *
+   * @public
+   */
   reset() {
     this.positionProperty.reset();
     this.destinationProperty.reset();

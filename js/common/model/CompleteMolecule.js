@@ -7,6 +7,7 @@
  * It's a MoleculeStructure using PubChemAtom
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
+ * @author Denzell Barnett (PhET Interactive Simulations)
  */
 
 import StringProperty from '../../../../axon/js/StringProperty.js';
@@ -50,8 +51,6 @@ import Strings from '../../Strings.js';
 import Bond from './Bond.js';
 import MoleculeStructure from './MoleculeStructure.js';
 
-// node type modules
-
 // constants
 const OFFSET = 2.5; // used to model our atoms with only 2d data into a 3d representation
 
@@ -82,11 +81,11 @@ class CompleteMolecule extends MoleculeStructure {
     this.has3d = has3d;
   }
 
-
   /**
    * Strip out the 'molecular ' part of the string and process the result.
    *
    * @public
+   * @returns {string}
    */
   filterCommonName() {
     let result = this.commonNameProperty.value;
@@ -97,15 +96,20 @@ class CompleteMolecule extends MoleculeStructure {
   }
 
   /**
-   * @returns {string} The translation string key that should be used to look up a translated value
+   * The translation string key that should be used to look up a translated value
+   *
+   * @returns {string}
    */
   get stringKey() {
     return 'molecule.' + this.commonNameProperty.value.replace( ' ', '_' );
   }
 
   /**
-   * @returns A translated display name if possible. This does a weird lookup so that we can only list some of the names in the translation, but can
-   *         accept an even larger number of translated names in a translation file
+   * A translated display name if possible. This does a weird lookup so that we can only list some of the names in the
+   * translation, but can accept an even larger number of translated names in a translation file
+   *
+   * @public
+   * @returns
    */
   getDisplayName() {
     // first check if we have it translated. do NOT warn on missing
@@ -122,7 +126,12 @@ class CompleteMolecule extends MoleculeStructure {
     }
   }
 
-  // @returns {Node} A node that represents a 2d but quasi-3D version
+  /**
+   * A node that represents a 2d but quasi-3D version
+   *
+   * @public
+   * @returns {Node}
+   */
   createPseudo3DNode() {
     const molecularFormula = this.molecularFormula;
     const molecularFormulaType = molecularFormula + 'Node';
@@ -152,6 +161,12 @@ class CompleteMolecule extends MoleculeStructure {
     return node;
   }
 
+  /**
+   * Returns serialized form of complete molecule data
+   *
+   * @public
+   * @returns {string}
+   */
   toSerial2() {
     // add in a header
     const format = ( this.has3d ? ( this.has2d ? 'full' : '3d' ) : '2d' );
@@ -278,7 +293,6 @@ class PubChemAtom extends Atom {
     this.z3d = 0;
   }
 }
-
 CompleteMolecule.PubChemAtom = PubChemAtom;
 
 // Signature for Atom with only a 2d representation
@@ -303,8 +317,9 @@ class PubChemAtom2 extends Atom {
 
   /**
    * Stringify the structure of the atom.
-   * @returns {string}
+   *
    * @public
+   * @returns {string}
    */
   toString() {
     return Atom.prototype.toString.call( this ) + ' ' + this.x2d + ' ' + this.y2d;
@@ -313,6 +328,7 @@ class PubChemAtom2 extends Atom {
   /**
    * Parser for PubChemAtom2
    * @param {string} atomString
+   *
    * @returns {PubChemAtom2}
    */
   static parser( atomString ) {
@@ -322,14 +338,12 @@ class PubChemAtom2 extends Atom {
       parseFloat( tokens[ 2 ] ) );
   }
 }
-
 CompleteMolecule.PubChemAtom2 = PubChemAtom2;
 
 // Signature for Atom with only a 3d representation
 class PubChemAtom3 extends Atom {
 
   /**
-   *
    * @param {Element} element
    * @param {number} x3d
    * @param {number} y3d
@@ -368,14 +382,12 @@ class PubChemAtom3 extends Atom {
       parseFloat( tokens[ 3 ] ) );
   }
 }
-
 CompleteMolecule.PubChemAtom3 = PubChemAtom3;
 
 // Signature for Atom with both a 2d and 3d representation
 class PubChemAtomFull extends Atom {
 
   /**
-   *
    * @param {Element} element
    * @param {number} x2d
    * @param {number} y2d
@@ -395,9 +407,10 @@ class PubChemAtomFull extends Atom {
   }
 
   /**
-   * Stringify the structure of the atom.
-   * @returns {string}
+   * Stringify the structure of the atom
+   *
    * @public
+   * @returns {string}
    */
   toString() {
     return Atom.prototype.toString.call( this ) + ' ' + this.x2d + ' ' + this.y2d + ' ' + this.x3d + ' ' + this.y3d + ' ' + this.z3d;
@@ -405,6 +418,7 @@ class PubChemAtomFull extends Atom {
 
   /**
    * Parser for PubChemAtomFull
+   *
    * @param atomString
    * @returns {PubChemAtomFull}
    */
@@ -433,6 +447,13 @@ class PubChemBond extends Bond {
     this.order = order;
   }
 
+  /**
+   * Returns serialized form of bond data including the bond order
+   * @param {string} index - Index of bond within molecule
+   *
+   * @public
+   * @returns {string}
+   */
   toSerial2( index ) {
     return index + '-' + this.order;
   }
@@ -451,7 +472,6 @@ class PubChemBond extends Bond {
     return new PubChemBond( connectedAtom, molecule.atoms[ index ], order );
   }
 }
-
 CompleteMolecule.PubChemBond = PubChemBond;
 
 buildAMolecule.register( 'CompleteMolecule', CompleteMolecule );

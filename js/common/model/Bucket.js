@@ -1,9 +1,10 @@
 // Copyright 2020, University of Colorado Boulder
 
 /**
- * A bucket for Atom2s
+ * A bucket for Atom2
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
+ * @author Denzell Barnett (PhET Interactive Simulations)
  */
 
 import ObservableArray from '../../../../axon/js/ObservableArray.js';
@@ -19,7 +20,7 @@ import Atom2 from './Atom2.js';
 
 class Bucket extends SphereBucket {
   /**
-   * The dimensions used are just numbers, i.e. they are not
+   * The dimensions used are unit less, i.e. they are not
    * meant to be any specific size (such as meters).  This enabled
    * reusability in any 2D model.
    * @param {Dimension2} size - Physical size of the bucket (model space)
@@ -41,34 +42,36 @@ class Bucket extends SphereBucket {
     // @private {Property.<Vector2>}
     this.positionProperty = new Vector2Property( this.position );
 
-    // @public {ObservableArray}
+    // @public {ObservableArray} Tracks all of the particles in this bucket
     this.particleList = new ObservableArray();
 
-    // @public {Array.<Atoms2>} Contains atoms for a bucket that is full.
-    // Set after buckets are initially filled at sim start up.
+    // @public {Array.<Atoms2>} Contains atoms for a bucket when the bucket is full.
     this.fullState = [];
 
-    // @public
+    // @public {Element}
     this.element = element;
+
+    // @public {number}
     this.width = this.containerShape.bounds.width * 0.95;
 
-    // Create the atoms for each element and add them to the bucket.
+    // Create the atoms for each element and add them to the bucket. These exists for the sims lifetime.
     for ( let i = 0; i < quantity; i++ ) {
       this.addParticleNearestOpen( new Atom2( element, stepEmitter ), false );
     }
   }
 
-  // Instantly place the atom in the correct position, whether or not it is in the bucket
+  /**
+   * Instantly place the atom in the correct position, whether or not it is in the bucket
+   * @param {Atom2} atom
+   * @param {boolean} addFirstOpen
+   *
+   * @public
+   */
   placeAtom( atom, addFirstOpen ) {
     if ( this.containsParticle( atom ) ) {
       this.removeParticle( atom, true );
     }
-    if ( addFirstOpen ) {
-      this.addParticleFirstOpen( atom, false );
-    }
-    else {
-      this.addParticleNearestOpen( atom, false );
-    }
+    addFirstOpen ? this.addParticleFirstOpen( atom, false ) : this.addParticleNearestOpen( atom, false );
   }
 
   /**
@@ -86,8 +89,9 @@ class Bucket extends SphereBucket {
   }
 
   /**
-   * Checks if the bucket is filled.
+   * Checks if the bucket is full.
    *
+   * @public
    * @returns {boolean}
    */
   isFull() {

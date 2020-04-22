@@ -7,6 +7,7 @@
  * of filtering molecules from months to minutes, along with significant reductions in the structures' file size.
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
+ * @author Denzell Barnett (PhET Interactive Simulations)
  */
 
 import PhetioObject from '../../../../tandem/js/PhetioObject.js';

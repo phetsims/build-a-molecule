@@ -6,6 +6,7 @@
  * call that requires the full molecule list or allowed structures will block until it is all read in or computed
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
+ * @author Denzell Barnett (PhET Interactive Simulations)
  */
 
 import buildAMolecule from '../../buildAMolecule.js';
@@ -18,12 +19,19 @@ import StrippedMolecule from './StrippedMolecule.js';
 
 class MoleculeList {
   constructor() {
-    this.completeMolecules = []; // all complete molecules
-    this.moleculeNameMap = {}; // unique name => complete molecule
-    this.allowedStructureFormulaMap = {}; // formula => allowed stripped molecules (array)
+
+    // @public {Array.<CompleteMolecule>}
+    this.completeMolecules = [];
+
+    // @private Unique name => complete molecule
+    this.moleculeNameMap = {};
+
+    // @private Formula => allowed stripped molecules (array)
+    this.allowedStructureFormulaMap = {};
   }
 
   /**
+   * Load in the initial list of complete molecules for the collection boxes (collectionMoleculesData)
    * @private
    */
   loadInitialData() {
@@ -34,6 +42,7 @@ class MoleculeList {
   }
 
   /**
+   * Load a list of all the remaining complete molecules (otherMoleculesData)
    * @private
    */
   loadMasterData() {
@@ -63,10 +72,9 @@ class MoleculeList {
   /**
    * Check whether this structure is allowed. Currently this means it is a "sub-molecule" of one of our complete
    * molecules
+   * @param {MoleculeStructure} moleculeStructure
    *
-   * @param moleculeStructure Molecule to check
    * @public
-   *
    * @returns {boolean} True if it is allowed
    */
   isAllowedStructure( moleculeStructure ) {
@@ -102,10 +110,9 @@ class MoleculeList {
 
   /**
    * Find a complete molecule with an equivalent structure to the passed in molecule
+   * @param {MoleculeStructure} moleculeStructure
    *
-   * @param moleculeStructure Molecule structure to match
    * @public
-   *
    * @returns {CompleteMolecule|null} Either a matching CompleteMolecule, or null if none is found
    */
   findMatchingCompleteMolecule( moleculeStructure ) {
@@ -115,7 +122,9 @@ class MoleculeList {
   }
 
   /**
+   * Return all the complected molecules
    * @private
+   *
    * @returns {Array.<Molecule>}
    */
   getAllCompleteMolecules() {
@@ -128,7 +137,9 @@ class MoleculeList {
    *----------------------------------------------------------------------------*/
 
   /**
+   * Add a complete molecule and map its common name
    * @param {CompleteMolecule} completeMolecule
+   *
    * @private
    */
   addCompleteMolecule( completeMolecule ) {
@@ -137,7 +148,9 @@ class MoleculeList {
   }
 
   /**
+   * Add the structure to the allowed structure map
    * @param {MoleculeStructure} structure
+   *
    * @private
    */
   addAllowedStructure( structure ) {
@@ -154,10 +167,14 @@ class MoleculeList {
   }
 }
 
+// statics
 let masterInstance = null;
 let initialized = false;
 const initialList = new MoleculeList();
 
+/**
+ * Load master data
+ */
 MoleculeList.startInitialization = () => {
   // Note: (performance) use web worker or chop it up into bits of work
   masterInstance = new MoleculeList();
@@ -166,6 +183,11 @@ MoleculeList.startInitialization = () => {
   console.log( 'Master list loaded.' );
 };
 
+/**
+ * Return master data
+ *
+ * @returns {*}
+ */
 MoleculeList.getMasterInstance = () => {
   if ( !initialized ) {
     // Note: (performance) threading-like replacement goes here
@@ -175,6 +197,12 @@ MoleculeList.getMasterInstance = () => {
   return masterInstance;
 };
 
+/**
+ * Return molecule name from master data
+ * @param {string} name
+ *
+ * @returns {string}
+ */
 MoleculeList.getMoleculeByName = name => {
   let result = initialList.moleculeNameMap[ name ];
 
@@ -186,13 +214,11 @@ MoleculeList.getMoleculeByName = name => {
   return result;
 };
 
-/*---------------------------------------------------------------------------*
- * static helper methods
- *----------------------------------------------------------------------------*/
-
 /**
- * {string} strings - File name relative to the sim's data directory
- * @returns A list of complete molecules
+ * Returns a list of complete molecules
+ * @param {string} strings - File name relative to the sim's data directory
+ *
+ * @returns
  */
 MoleculeList.readCompleteMoleculesFromData = strings => {
   return _.map( strings, string => {
@@ -208,8 +234,10 @@ MoleculeList.readCompleteMoleculesFromData = strings => {
 };
 
 /**
+ * Returns a list of molecule structures
  * @param {string} strings - File name relative to the sim's data directory
- * @returns A list of molecule structures
+ *
+ * @returns
  */
 MoleculeList.readMoleculeStructuresFromData = strings => {
   const len = strings.length;

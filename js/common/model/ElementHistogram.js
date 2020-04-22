@@ -4,6 +4,7 @@
  * Histogram of each element in a molecule, and allows fast comparison
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
+ * @author Denzell Barnett (PhET Interactive Simulations)
  */
 
 import PhetioObject from '../../../../tandem/js/PhetioObject.js';
@@ -12,26 +13,26 @@ import BAMConstants from '../BAMConstants.js';
 
 class ElementHistogram extends PhetioObject {
   /**
-   * @param {MoleculeStructure} molecule
+   * @param {MoleculeStructure} moleculeStructure
    * @constructor
    */
-  constructor( molecule ) {
+  constructor( moleculeStructure ) {
     super();
     this.quantities = {};
     BAMConstants.SUPPORTED_ELEMENTS.forEach( element => {
       this.quantities[ element.symbol ] = 0;
     } );
 
-    if ( molecule ) {
-      this.addMolecule( molecule );
+    if ( moleculeStructure ) {
+      this.addMolecule( moleculeStructure );
     }
   }
 
   /**
    * Returns the amount of a specific element
    * @param {Element} element
+   * 
    * @public
-   *
    * @returns {number}
    */
   getQuantity( element ) {
@@ -50,8 +51,9 @@ class ElementHistogram extends PhetioObject {
 
   /**
    * Adds elements from molecule
-   *
    * @param {MoleculeStructure} molecule
+   *
+   * @public
    */
   addMolecule( molecule ) {
     molecule.atoms.forEach( atom => {
