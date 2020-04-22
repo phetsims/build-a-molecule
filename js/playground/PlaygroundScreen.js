@@ -1,9 +1,10 @@
 // Copyright 2013-2020, University of Colorado Boulder
 
-/*
+/**
  * Module for the 3rd tab. Shows kits below as normal, but without collection boxes. Instead, the user is presented with an option of a "3d" view
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
+ * @author Denzell Barnett (PhET Interactive Simulations)
  */
 
 import Property from '../../../axon/js/Property.js';

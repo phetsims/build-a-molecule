@@ -1,9 +1,10 @@
 // Copyright 2013-2020, University of Colorado Boulder
 
-/*
+/**
  * Screen for 2nd tab. Collection boxes take multiple molecules of the same type, and start off with a different kit collection each time
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
+ * @author Denzell Barnett (PhET Interactive Simulations)
  */
 
 import Property from '../../../axon/js/Property.js';

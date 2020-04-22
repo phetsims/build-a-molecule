@@ -1,6 +1,6 @@
 // Copyright 2013-2020, University of Colorado Boulder
 
-/*
+/**
  * 1st screen: collection boxes only take 1 molecule, and our 1st kit collection is always the same
  *
  * @author Denzell Barnett (PhET Interactive Simulations)
@@ -76,7 +76,6 @@ class SingleScreen extends BAMScreen {
           model.addCollection( BAMScreen.generateKitCollection( false, 5, model.stepEmitter, model.collectionLayout ), true );
         } );
       },
-
       options );
   }
 }

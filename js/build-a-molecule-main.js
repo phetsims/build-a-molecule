@@ -25,9 +25,10 @@ const simOptions = {
   webgl: true
 };
 
-// if the flag is set on window, don't launch the sim
+// If the flag is set on window, don't launch the sim
 SimLauncher.launch( () => {
-  //Create and start the sim
+
+  // Create and start the sim
   new Sim( buildAMoleculeTitleString, [
     new SingleScreen(),
     new MultipleScreen(),
