@@ -33,8 +33,8 @@ class KitCollection {
     // @public {Array.<CollectionBox>}
     this.collectionBoxes = [];
 
-    // @private {boolean} Only show a blinking highlight once
-    this.hasBlinkedOnce = false;
+    // @private {boolean} Only show a blinking highlight if a molecule hasn't been collected
+    this.hasCollectedMolecule = false;
 
     // @public {Property.<boolean>} - this will remain false if we have no collection boxes
     this.allCollectionBoxesFilledProperty = new BooleanProperty( false );
@@ -100,19 +100,28 @@ class KitCollection {
       atom.droppedByUserEmitter.addListener( dropListener );
     } );
 
+    // Check if a molecule has been added to one of the collection boxes.
+    const checkForCompletedMolecule = () => {
+      this.collectionBoxes.forEach( box => {
+        if ( box.molecules.length > 0 ) {
+          this.hasCollectedMolecule = true;
+        }
+      } );
+    };
+
     // Cycle through molecules in the play area and check if the arrow cue needs to be updated
     kit.addedMoleculeEmitter.addListener( () => {
       this.collectionBoxes.forEach( box => {
         kit.molecules.forEach( molecule => {
+          checkForCompletedMolecule();
 
           // Added molecules should trigger an arrow cue if it can be dropped in a collection box
           if ( box.willAllowMoleculeDrop( molecule ) && ( options && options.triggerCue ) ) {
             box.cueVisibilityProperty.value = true;
 
-            // Trigger box blinking if it has not blinked already
-            if ( !this.hasBlinkedOnce ) {
+            // Trigger box blinking only if a molecule hasn't already been added
+            if ( !this.hasCollectedMolecule ) {
               box.acceptedMoleculeCreationEmitter.emit( molecule );
-              this.hasBlinkedOnce = true;
             }
           }
         } );
@@ -181,7 +190,7 @@ class KitCollection {
   resetAll() {
     this.collectionBoxes.forEach( box => { box.reset(); } );
     this.kits.forEach( kit => { kit.reset(); } );
-    this.hasBlinkedOnce = false;
+    this.hasCollectedMolecule = false;
     this.allCollectionBoxesFilledProperty.reset();
   }
 }

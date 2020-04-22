@@ -4,8 +4,8 @@
  * An atom, extended with position/destination information that is animated
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
+ * @author Denzell Barnett (PhET Interactive Simulations)
  */
-
 
 //modules
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
@@ -29,11 +29,11 @@ class Atom2 extends Atom {
   constructor( element, stepEmitter ) {
     super( element );
 
-    // @public {Vector2Property}
+    // @public {Vector2Property} Current position
     this.positionProperty = new Vector2Property( Vector2.ZERO );
     this.destinationProperty = new Vector2Property( Vector2.ZERO );
 
-    // @public {BooleanProperty} All atoms start off in the bucket and a link is used to trigger removal.
+    // @public {BooleanProperty} User
     this.userControlledProperty = new BooleanProperty( false );
     this.visibleProperty = new BooleanProperty( true );
     this.addedToModelProperty = new BooleanProperty( true );
