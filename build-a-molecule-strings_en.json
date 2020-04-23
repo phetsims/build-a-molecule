@@ -1,36 +1,12 @@
 {
-  "hydrogenPeroxide": {
-    "value": "Hydrogen Peroxide"
-  },
-  "formaldehyde": {
-    "value": "Formaldehyde"
-  },
-  "silane": {
-    "value": "Silane"
-  },
   "fluorine": {
     "value": "Fluorine"
-  },
-  "water": {
-    "value": "Water"
-  },
-  "borane": {
-    "value": "Borane"
   },
   "iodine": {
     "value": "Iodine"
   },
   "collectionMultipleGoalPattern": {
     "value": "Goal: {{number}}{{formula}}"
-  },
-  "hydrogenSulfide": {
-    "value": "Hydrogen Sulfide"
-  },
-  "carbonDioxide": {
-    "value": "Carbon Dioxide"
-  },
-  "chloromethane": {
-    "value": "Chloromethane"
   },
   "chlorine": {
     "value": "Chlorine"
@@ -47,26 +23,11 @@
   "silicon": {
     "value": "Silicon"
   },
-  "ballAndStick": {
-    "value": "Ball and Stick"
-  },
-  "phosphine": {
-    "value": "Phosphine"
-  },
-  "sulfurDioxide": {
-    "value": "Sulfur Dioxide"
-  },
-  "ozone": {
-    "value": "Ozone"
-  },
   "bromine": {
     "value": "Bromine"
   },
   "collectionSinglePattern": {
     "value": "{{general}} ({{display}})"
-  },
-  "fluoromethane": {
-    "value": "Fluoromethane"
   },
   "title.playground": {
     "value": "Playground"
@@ -80,23 +41,14 @@
   "phosphorus": {
     "value": "Phosphorus"
   },
-  "resetCollection": {
-    "value": "Reset Collection"
-  },
   "boron": {
     "value": "Boron"
   },
   "oxygen": {
     "value": "Oxygen"
   },
-  "spaceFilling": {
-    "value": "Space Filling"
-  },
   "collectionPattern": {
     "value": "Collection {{number}}"
-  },
-  "hydrogenCyanide": {
-    "value": "Hydrogen Cyanide"
   },
   "hydrogen": {
     "value": "Hydrogen"
@@ -104,50 +56,20 @@
   "title.single": {
     "value": "Single"
   },
-  "acetylene": {
-    "value": "Acetylene"
-  },
-  "kitPattern": {
-    "value": "Kit #{{number}}"
-  },
   "sulphur": {
     "value": "Sulfur"
   },
   "collectionMultipleQuantityEmpty": {
     "value": "You have: (empty)"
   },
-  "trifluoroborane": {
-    "value": "Trifluoroborane"
-  },
-  "carbonMonoxide": {
-    "value": "Carbon Monoxide"
-  },
   "build-a-molecule.title": {
     "value": "Build a Molecule"
-  },
-  "methane": {
-    "value": "Methane"
   },
   "title.multiple": {
     "value": "Multiple"
   },
-  "ammonia": {
-    "value": "Ammonia"
-  },
-  "ethylene": {
-    "value": "Ethylene"
-  },
-  "nitrousOxide": {
-    "value": "Nitrous Oxide"
-  },
   "youCompletedYourCollection": {
     "value": "You completed your collection!"
-  },
-  "nitricOxide": {
-    "value": "Nitric Oxide"
-  },
-  "refill": {
-    "value": "Refill"
   },
   "warning": {
     "value": "3D rendering of the molecule requires WebGL.\nWebGL is not enabled or not available. Click to learn more."
