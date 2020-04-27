@@ -7,7 +7,6 @@
  * @author Denzell Barnett (PhET Interactive Simulations)
  */
 
-//modules
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import Emitter from '../../../../axon/js/Emitter.js';
 import Rectangle from '../../../../dot/js/Rectangle.js';
