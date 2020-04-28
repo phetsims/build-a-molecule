@@ -34,7 +34,7 @@ const ViewStyle = Enumeration.byKeys( [ 'SPACE_FILL', 'BALL_AND_STICK' ] );
 class Molecule3DDialog extends Dialog {
   /**
    * @param {Property.<CompleteMolecule|null>} completeMoleculeProperty
-   * @constructor
+   * @constructor //REVIEW: We don't annotate constructors anymore
    */
   constructor( completeMoleculeProperty ) {
 
@@ -271,7 +271,7 @@ class Molecule3DDialog extends Dialog {
       selectedLineWidth: 1,
       deselectedLineWidth: .5,
       deselectedButtonOpacity: 0.25,
-      cornerRadius: 7,
+      cornerRadius: 7, //REVIEW: Is this a conscious decision to not use BAMConstants.CORNER_RADIUS?
       orientation: 'horizontal',
       spacing: 30
     } );
@@ -347,7 +347,7 @@ class Molecule3DDialog extends Dialog {
   }
 
   /**
-   * @param dt
+   * @param dt REVIEW: Type doc
    * @public
    */
   step( dt ) {

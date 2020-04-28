@@ -73,7 +73,7 @@ class CollectionBox {
   /**
    * Whether this molecule can be dropped into this collection box (at this point in time)
    *
-   * @param moleculeStructure The molecule's structure
+   * @param moleculeStructure The molecule's structure REVIEW: Type doc
    * @returns {boolean} Whether it can be dropped in
    */
   willAllowMoleculeDrop( moleculeStructure ) {
@@ -99,7 +99,7 @@ class CollectionBox {
   /**
    * Remove a molecule from this box
    *
-   * @param molecule
+   * @param molecule REVIEW: Type doc
    * @public
    */
   removeMolecule( molecule ) {

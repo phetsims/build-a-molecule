@@ -51,7 +51,7 @@ class MoleculeBondNode extends Node {
   /**
    * @param {Bond} bond
    * @param {Kit} kit
-   * @constructor
+   * @constructor //REVIEW: We don't annotate constructors anymore
    */
   constructor( bond, kit ) {
     super( {} );
@@ -148,10 +148,11 @@ class MoleculeBondNode extends Node {
 
     /**
      * Show the cut targets for the selected atom's bonds
-     * @param selectedAtom
+     * @param selectedAtom REVIEW: Type doc
      *
      * @private
      */
+    //REVIEW: Honestly, for this I wouldn't JSDoc-block it, I'd just say // @private {function(Atom2)}
     this.toggleTargetVisibility = selectedAtom => {
       cutTargetNode.visible = selectedAtom === this.a || selectedAtom === this.b;
     };

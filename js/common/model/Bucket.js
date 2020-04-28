@@ -18,10 +18,10 @@ import Strings from '../../Strings.js';
 import AtomNode from '../view/AtomNode.js';
 import Atom2 from './Atom2.js';
 
+//REVIEW: This extends SphereBucket which itself extends Bucket... maybe name it BAMBucket?
 class Bucket extends SphereBucket {
   /**
-   * The dimensions used are unit less, i.e. they are not
-   * meant to be any specific size (such as meters).  This enabled
+   * The dimensions used are unit less, i.e. they are not meant to be any specific size (such as meters).  This enabled
    * reusability in any 2D model.
    * @param {Dimension2} size - Physical size of the bucket (model space)
    * @param {Emitter} stepEmitter
@@ -42,10 +42,10 @@ class Bucket extends SphereBucket {
     // @private {Property.<Vector2>}
     this.positionProperty = new Vector2Property( this.position );
 
-    // @public {ObservableArray} Tracks all of the particles in this bucket
+    // @public {ObservableArray} Tracks all of the particles in this bucket REVIEW: ObservableArray.<Atom2>?
     this.particleList = new ObservableArray();
 
-    // @public {Array.<Atoms2>} Contains atoms for a bucket when the bucket is full.
+    // @public {Array.<Atom2>} Contains atoms for a bucket when the bucket is full.
     this.fullState = [];
 
     // @public {Element}
@@ -95,14 +95,15 @@ class Bucket extends SphereBucket {
    * @returns {boolean}
    */
   isFull() {
-    return this.fullState.length === this.particleList.getArray().length;
+    return this.fullState.length === this.particleList.getArray().length; //REVIEW: ObservableArray has a length getter itself, don't do getArray()
   }
 
   /**
    * Make sure we can fit all of our atoms in just two rows
+   * REVIEW: Should have visibility
    *
-   * @param radius   Atomic radius (picometers)
-   * @param quantity Quantity of atoms in bucket
+   * @param radius   Atomic radius (picometers) REVIEW: Type doc
+   * @param quantity Quantity of atoms in bucket REVIEW: Type doc
    * @returns {number} Width of bucket
    */
   static calculateIdealBucketWidth( radius, quantity ) {
@@ -116,6 +117,7 @@ class Bucket extends SphereBucket {
     return Math.floor( Math.max( 350, width + 1 ) );
   }
 
+  //REVIEW: JSDoc
   static createAutoSized( stepEmitter, element, quantity ) {
     return new Bucket( new Dimension2( Bucket.calculateIdealBucketWidth( element.covalentRadius, quantity ), 200 ), stepEmitter, element, quantity );
   }

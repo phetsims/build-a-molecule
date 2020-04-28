@@ -39,25 +39,35 @@ class Atom2 extends Atom {
     this.visibleProperty = new BooleanProperty( true );
 
     // @public {BooleanProperty} Regulates step function for this atom
+    //REVIEW: This is always true, I don't see why it's here? Let's remove it
     this.addedToModelProperty = new BooleanProperty( true );
 
     // @public {Emitter} Responsible for grabbing and dropping an atom
+    //REVIEW: I don't see any usages of grabbedByUserEmitter, let's remove it?
     this.grabbedByUserEmitter = new Emitter( { parameters: [ { valueType: Atom2 } ] } );
     this.droppedByUserEmitter = new Emitter( { parameters: [ { valueType: Atom2 } ] } );
 
     // @public {Emitter} Responsible for separating this atom from other atoms
+    //REVIEW: This is never emitted, AND I don't understand the naming... is it WHEN something happens, or TRIGGERING it?
+    //REVIEW: Can we just remove this?
     this.separateMoleculeEmitter = new Emitter();
 
     // @public {Emitter}
+    //REVIEW: I don't see any usage of an atom.stepEmitter, can we remove this?
     this.stepEmitter = stepEmitter;
 
     // @public {string} Name of this atom
+    //REVIEW: I can't find a usage of this, can we just remove it?
     this.name = Strings.getAtomName( element );
 
+    //REVIEW: Lower-casing of {function}
     // @private {Function} Passed into step function.
+    //REVIEW: We don't seem to use this outside of the constructor, just have a local variable. ALSO below it seems
+    //REVIEW: that we don't need to ever remove it, so just inline it
     this.clockListener = this.step.bind( this );
 
     // Atom exists for entire sim lifetime. No need to dispose.
+    //REVIEW: This Property is always true, let's remove the conditional here?
     this.addedToModelProperty.link( isAddedToModel => {
       if ( isAddedToModel ) {
         // added to the model
@@ -81,28 +91,32 @@ class Atom2 extends Atom {
   }
 
   // Returns bounds of atom's position considering its covalent radius
+  //REVIEW: JSDoc return type?
   get positionBounds() {
+    //REVIEW: Don't use Rectangle if possible here, just Bounds2.point( x, y ).dilated( this.covalentRadius / 2 )
     return new Rectangle( this.positionProperty.value.x - this.covalentRadius, this.positionProperty.value.y - this.covalentRadius, this.covalentDiameter, this.covalentDiameter );
   }
 
   // Returns bounds of atom's destination considering its covalent radius
+  //REVIEW: JSDoc return type?
   get destinationBounds() {
+    //REVIEW: Don't use Rectangle if possible here, just Bounds2.point( x, y ).dilated( this.covalentRadius / 2 )
     return new Rectangle( this.destinationProperty.value.x - this.covalentRadius, this.destinationProperty.value.y - this.covalentRadius, this.covalentDiameter, this.covalentDiameter );
   }
 
   /**
-   * @param dt {number} time elapsed in seconds
+   * @param dt {number} time elapsed in seconds REVIEW: jsdoc ordering
    *
    * @public
    */
   step( dt ) {
-      this.stepAtomTowardsDestination( dt );
+    this.stepAtomTowardsDestination( dt );
   }
 
   /**
    * Responsible stepping an atom towards its destination. Velocity of step is modified based on distance to destination.
    *
-   * @param dt
+   * @param dt REVIEW: type docs
    * @private
    */
   stepAtomTowardsDestination( dt ) {
@@ -110,6 +124,7 @@ class Atom2 extends Atom {
 
       // Move towards the current destination
       let distanceToTravel = MOTION_VELOCITY * dt;
+      //REVIEW: We used this above, can we factor this out above the if statement, and use it in the conditional?
       const distanceToTarget = this.positionProperty.value.distance( this.destinationProperty.value );
 
       const farDistanceMultiple = 10; // if we are this many times away, we speed up
@@ -136,7 +151,7 @@ class Atom2 extends Atom {
 
   /**
    * Add a vector to the current position and destination of the atom
-   * @param delta {Vector2}
+   * @param delta {Vector2} REVIEW: JSDoc ordering
    *
    * @public
    */
@@ -178,6 +193,8 @@ class Atom2 extends Atom {
     this.userControlledProperty.reset();
     this.visibleProperty.reset();
     this.addedToModelProperty.reset();
+    //REVIEW: I don't yet see a case where this would do anything. We reset things above, why would we want to change
+    //REVIEW: something here? Can we remove this line?
     this.destinationProperty.value = this.positionProperty.value;
   }
 }

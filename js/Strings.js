@@ -3,8 +3,12 @@
 import buildAMolecule from './buildAMolecule.js';
 import buildAMoleculeStrings from './buildAMoleculeStrings.js';
 
+// REVIEW: BAM prefix would be good for this file?
+
+// REVIEW: We can include the getAtomName definition in this object (and move the definition of this down)
 const Strings = {};
 
+// REVIEW: These strings can be inlined
 const boronString = buildAMoleculeStrings.boron;
 const bromineString = buildAMoleculeStrings.bromine;
 const carbonString = buildAMoleculeStrings.carbon;
@@ -33,6 +37,7 @@ const elementMap = {
   'Br': bromineString
 };
 
+// REVIEW: arrow functions for ES6
 Strings.getAtomName = function getAtomName( element ) {
   return elementMap[ element.symbol ];
 };

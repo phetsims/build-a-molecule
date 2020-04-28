@@ -45,12 +45,12 @@ class AtomNode extends Node {
     // Add an atom icon
     this.addChild( AtomNode.createIcon( atom.element ) );
 
-    // @private {Function}
+    // @private {Function} //REVIEW: Lower-casing of {function}
     this.translationListener = modelPosition => {
       this.setTranslation( BAMConstants.MODEL_VIEW_TRANSFORM.modelToViewPosition( modelPosition ) );
     };
 
-    // @private {Function}
+    // @private {Function} //REVIEW: Lower-casing of {function}
     this.updateVisibilityListener = visible => {
       this.visible = visible;
     };
@@ -105,7 +105,7 @@ class AtomNode extends Node {
 
   /**
    * Decides whether the atom node needs white text or black text.
-   * @param {ColorDef} color
+   * @param {ColorDef} color REVIEW: Does NOT take a ColorDef, only seems to take a Color
    *
    * @public
    * @returns {ColorDef}

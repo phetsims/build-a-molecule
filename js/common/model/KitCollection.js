@@ -18,7 +18,7 @@ let currentId = 0;
 
 class KitCollection {
   /**
-   * @constructor
+   * @constructor //REVIEW: We don't annotate constructors anymore
    */
   constructor( options ) {
     options = merge( {

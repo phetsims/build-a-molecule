@@ -27,7 +27,7 @@ const titleSingleString = buildAMoleculeStrings.title.single;
 
 class SingleScreen extends BAMScreen {
   /**
-   * @constructor
+   * @constructor //REVIEW: We don't annotate constructors anymore
    */
   constructor() {
     const options = {

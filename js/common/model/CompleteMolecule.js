@@ -419,7 +419,7 @@ class PubChemAtomFull extends Atom {
   /**
    * Parser for PubChemAtomFull
    *
-   * @param atomString
+   * @param atomString REVIEW: Type doc
    * @returns {PubChemAtomFull}
    */
   static parser( atomString ) {
@@ -449,7 +449,7 @@ class PubChemBond extends Bond {
 
   /**
    * Returns serialized form of bond data including the bond order
-   * @param {string} index - Index of bond within molecule
+   * @param {string} index - Index of bond within molecule REVIEW: Fairly sure that index is a number, not a string?
    *
    * @public
    * @returns {string}

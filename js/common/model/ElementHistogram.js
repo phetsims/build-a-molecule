@@ -14,10 +14,11 @@ import BAMConstants from '../BAMConstants.js';
 class ElementHistogram extends PhetioObject {
   /**
    * @param {MoleculeStructure} moleculeStructure
-   * @constructor
+   * @constructor //REVIEW: We don't annotate constructors anymore
    */
   constructor( moleculeStructure ) {
     super();
+    //REVIEW: JSDOc?
     this.quantities = {};
     BAMConstants.SUPPORTED_ELEMENTS.forEach( element => {
       this.quantities[ element.symbol ] = 0;
@@ -31,7 +32,7 @@ class ElementHistogram extends PhetioObject {
   /**
    * Returns the amount of a specific element
    * @param {Element} element
-   * 
+   *
    * @public
    * @returns {number}
    */

@@ -27,8 +27,8 @@ class MoleculeCollectingScreenView extends BAMScreenView {
   /**
    * @param {KitCollectionList} kitCollectionList
    * @param {boolean} isSingleCollectionMode
-   * @param {Function} regenerateCallback
-   * @constructor
+   * @param {Function} regenerateCallback //REVIEW: Lower-casing of {function}
+   * @constructor //REVIEW: We don't annotate constructors anymore
    */
   constructor( kitCollectionList, isSingleCollectionMode, regenerateCallback ) {
     super( kitCollectionList );
@@ -58,6 +58,7 @@ class MoleculeCollectingScreenView extends BAMScreenView {
     this.addChild( this.nextCollectionButton );
     this.nextCollectionButton.visible = false;
 
+    //REVIEW: Why the capitalization on the variable name? lower-case it
     // @private {Dialog} Dialog that shows when all the boxes are filled.
     this.AllFilledDialog = new AllFilledDialog(
       kitCollectionList.buttonClickedProperty,
@@ -99,6 +100,7 @@ class MoleculeCollectingScreenView extends BAMScreenView {
     );
 
     collectionPanel.setRightTop( new Vector2(
+      //REVIEW: Can we jsut use the layoutBounds here, since we're in the ScreenView?
       BAMConstants.STAGE_SIZE.width - BAMConstants.VIEW_PADDING / 2,
       BAMConstants.STAGE_SIZE.top + BAMConstants.VIEW_PADDING / 2
     ) );
@@ -115,6 +117,7 @@ class MoleculeCollectingScreenView extends BAMScreenView {
 
     // Adjust the center of the AllFilledDialog
     this.visibleBoundsProperty.link( () => {
+      //REVIEW: Use the layoutBounds instead of the constant?
       this.AllFilledDialog.center = BAMConstants.STAGE_SIZE.center;
     } );
   }

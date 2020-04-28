@@ -18,7 +18,7 @@ class Direction {
   /**
    * @param {Vector2} vector
    * @param {string} id
-   * @constructor
+   * @constructor //REVIEW: We don't annotate constructors anymore
    */
   constructor( vector, id ) {
     this.vector = vector;

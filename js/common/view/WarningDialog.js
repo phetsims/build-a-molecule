@@ -20,7 +20,7 @@ const warningString = buildAMoleculeStrings.warning;
 class WarningDialog extends Dialog {
   /**
    *
-   * @constructor
+   * @constructor //REVIEW: We don't annotate constructors anymore
    */
   constructor() {
 

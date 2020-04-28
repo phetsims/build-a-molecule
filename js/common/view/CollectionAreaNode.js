@@ -24,7 +24,7 @@ class CollectionAreaNode extends Node {
    * @param {function} toModelBounds
    * @param {function} showDialogCallback
    * @param {function} updateRefillButton
-   * @constructor
+   * @constructor //REVIEW: We don't annotate constructors anymore
    */
   constructor( collection, isSingleCollectionMode, toModelBounds, showDialogCallback, updateRefillButton ) {
     super( {} );

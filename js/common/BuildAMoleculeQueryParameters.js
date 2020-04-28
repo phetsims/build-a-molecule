@@ -11,6 +11,7 @@ import buildAMolecule from '../buildAMolecule.js';
 const BuildAMoleculeQueryParameters = QueryStringMachine.getAll( {
 
   // Triggers a successfully completed collection. The user just needs to fill a single box to go to next collection.
+  //REVIEW: Recommend adding the private:true flag, so that students can't just do this to bypass things
   easyMode: { type: 'flag' },
 
   // Triggers console logs for information related to created molecules, collected molecules, and split molecules
@@ -18,6 +19,9 @@ const BuildAMoleculeQueryParameters = QueryStringMachine.getAll( {
 
   // Increments collections by a defined amount. This only changes the naming convention for the collections.
   // It doesn't create additional collections. Used for testing.
+  //REVIEW: Recommend adding the private:true flag, so that students can't just do this to bypass things
+  //REVIEW: Also seems weird how the default is 1... wouldn't that skip 1 level? Why not have the default be zero, and
+  //REVIEW: have the index to number conversion add one?
   skipLevels: {
     type: 'number',
     isValidValue: value => ( value > 0 ),

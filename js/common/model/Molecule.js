@@ -13,9 +13,9 @@ import MoleculeStructure from './MoleculeStructure.js';
 
 class Molecule extends MoleculeStructure {
   /**
-   * @param numAtoms
-   * @param numBonds
-   * @constructor
+   * @param numAtoms REVIEW: Type doc
+   * @param numBonds REVIEW: Type doc
+   * @constructor //REVIEW: We don't annotate constructors anymore
    */
   constructor( numAtoms, numBonds ) {
     super( numAtoms || 0, numBonds || 0 );

@@ -24,7 +24,7 @@ class ShowMolecule3DButtonNode extends RectangularPushButton {
    * @param {CompleteMolecule} completeMolecule
    * @param {function} showDialogCallback
    * @param {Object} [options]
-   * @constructor
+   * @constructor //REVIEW: We don't annotate constructors anymore
    */
   constructor( completeMolecule, showDialogCallback, options ) {
     super( merge( {

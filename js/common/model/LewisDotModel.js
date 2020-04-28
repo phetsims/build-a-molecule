@@ -22,7 +22,7 @@ class LewisDotModel {
   /**
    * Add an atom to the atom map
    *
-   * @param atom
+   * @param atom REVIEW: Type doc
    * @public
    */
   addAtom( atom ) {
@@ -32,7 +32,7 @@ class LewisDotModel {
   /**
    * Remove the bonds from an atom
    *
-   * @param atom
+   * @param atom REVIEW: Type doc
    * @public
    */
   breakBondsOfAtom( atom ) {

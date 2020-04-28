@@ -15,7 +15,7 @@ class MoleculeBondContainerNode extends Node {
   /**
    * @param {Kit} kit
    * @param {Molecule} molecule
-   * @constructor
+   * @constructor //REVIEW: We don't annotate constructors anymore
    */
   constructor( kit, molecule ) {
     super();

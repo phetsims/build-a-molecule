@@ -22,7 +22,7 @@ class Bond {
 
   /**
    * Checks if the passed in atom is equal to one of the bond's atoms
-   * @param {Atom2} atom
+   * @param {Atom2} atom REVIEW: Pretty sure this is inaccurate, PubChemAtom3 for example isn't an Atom2. Maybe add type checks to this file?
    *
    * @returns {boolean}
    */
@@ -32,9 +32,9 @@ class Bond {
 
   /**
    * Returns the other atom within the bond that isn't the passed in atom
-   * @param {Atom2} atom
+   * @param {Atom2} atom REVIEW: Should be Atom, not Atom2, no?
    *
-   * @returns {Atom2}
+   * @returns {Atom2} REVIEW: Should be Atom, not Atom2, no?
    */
   getOtherAtom( atom ) {
     assert && assert( this.contains( atom ) );
@@ -44,7 +44,7 @@ class Bond {
 
   /**
    * Returns serialized form of bond data
-   * @param {string} index - Index of bond within molecule
+   * @param {string} index - Index of bond within molecule REVIEW: Fairly sure that index is a number, not a string?
    *
    * @public
    * @returns {string}

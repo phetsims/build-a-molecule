@@ -29,7 +29,7 @@ const SCALE = 1.2;
  * @param {Kit} kit
  * @param {Molecule} molecule
  * @param {function} showDialogCallback
- * @constructor
+ * @constructor //REVIEW: We don't annotate constructors anymore
  */
 class MoleculeControlsHBox extends HBox {
   constructor( kit, molecule, showDialogCallback ) {
