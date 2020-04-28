@@ -27,10 +27,8 @@ class MoleculeStructure {
   // NOTE from porting: StrippedMolecule relies on the ordering of atoms, and possibly bonds
 
   /**
-   *
    * @param {number} numAtoms
    * @param {number} numBonds
-   * @constructor //REVIEW: We don't annotate constructors anymore
    */
   constructor( numAtoms, numBonds ) {
     assert && assert( numAtoms !== undefined && numBonds !== undefined, 'numAtoms and numBonds required' );
@@ -178,7 +176,7 @@ class MoleculeStructure {
   }
 
   /**
-   * @param atom An atom REVIEW: Type doc
+   * @param {PubChemAtom*} atom
    * @public
    *
    * @returns All neighboring atoms that are connected by bonds to the passed in atom
@@ -346,7 +344,7 @@ class MoleculeStructure {
    * probably fail for cyclic graphs.
    * <p/>
    *
-   * @param other Another molecular structure REVIEW: Type doc
+   * @param {Molecule} other - Another molecular structure
    * @public
    *
    * @returns {boolean} True, if there is an isomorphism between the two molecular structures
@@ -664,10 +662,9 @@ MoleculeStructure.getMoleculesFromBrokenBond = ( structure, bond, molA, molB ) =
   } );
 
   if ( BuildAMoleculeQueryParameters.logData ) {
-    //REVIEW: Why the guard? console.log should be guaranteed to exist, no?
-    window.console && console.log && console.log( 'splitting ' + structure.toSerial() + ' into:' );
-    window.console && console.log && console.log( molA.toSerial() );
-    window.console && console.log && console.log( molB.toSerial() );
+    console.log( 'splitting ' + structure.toSerial() + ' into:' );
+    console.log( molA.toSerial() );
+    console.log( molB.toSerial() );
   }
   // return our two molecules
   return [ molA, molB ];
