@@ -27,7 +27,7 @@ import Dialog from '../../../../../sun/js/Dialog.js';
 import Playable from '../../../../../tambo/js/Playable.js';
 import buildAMolecule from '../../../buildAMolecule.js';
 import MoleculeList from '../../model/MoleculeList.js';
-import BAMConstants from '../../BAMConstants';
+import BAMConstants from '../../BAMConstants.js';
 
 // constants
 const ViewStyle = Enumeration.byKeys( [ 'SPACE_FILL', 'BALL_AND_STICK' ] );
@@ -347,7 +347,7 @@ class Molecule3DDialog extends Dialog {
   }
 
   /**
-   * @param dt REVIEW: Type doc
+   * @param {number} dt
    * @public
    */
   step( dt ) {

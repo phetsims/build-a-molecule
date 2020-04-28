@@ -24,10 +24,10 @@ import MoleculeList from '../model/MoleculeList.js';
 
 class BAMScreen extends Screen {
   /**
-   * @param {Function} createInitialKitCollection //REVIEW: Lower-casing of {function}
+   * @param {function} createInitialKitCollection
    * @param {CollectionLayout} collectionLayout
-   * @param {Function} createKitCollection //REVIEW: Lower-casing of {function}
-   * @param {Function} createView //REVIEW: Lower-casing of {function}
+   * @param {function} createKitCollection
+   * @param {function} createView
    * @param {Object} [options]
    */
   constructor( createInitialKitCollection, collectionLayout, createKitCollection, createView, options ) {
@@ -158,7 +158,7 @@ BAMScreen.generateKitCollection = ( allowMultipleMolecules, numBoxes, stepEmitte
 
 /**
  * Select a random molecule from the data set of possible collection box molecules
- * @param molecules REVIEW: Type doc
+ * @param {Array.<Molecules>}molecules
  *
  * @returns {CompleteMolecule}
  */

@@ -28,7 +28,6 @@ import WarningDialog from './WarningDialog.js';
 class BAMScreenView extends ScreenView {
   /**
    * @param {KitCollectionList} kitCollectionList
-   * @constructor //REVIEW: We don't annotate constructors anymore
    */
   constructor( kitCollectionList ) {
     super();
@@ -200,7 +199,7 @@ class BAMScreenView extends ScreenView {
       this.kitPlayAreaNode.atomLayer.children.forEach( otherAtomNode => {
         if ( otherAtomNode ) {
           otherAtomNode.interruptSubtreeInput();
-          otherAtomNode.atom.userControlledProperty.reset(); //REVIEW: Should we just set it to false? Is there ever any reason we would set this to true?
+          otherAtomNode.atom.userControlledProperty.value = false;
         }
       } );
       if ( previousCollection ) {
@@ -359,7 +358,7 @@ class BAMScreenView extends ScreenView {
         this.kitPlayAreaNode.atomLayer.children.forEach( otherAtomNode => {
           if ( otherAtomNode && atomNode !== otherAtomNode ) {
             otherAtomNode.interruptSubtreeInput();
-            otherAtomNode.atom.userControlledProperty.reset(); //REVIEW: Should we just set it to false? Is there ever any reason we would set this to true?
+            otherAtomNode.atom.userControlledProperty.value = false;
           }
         } );
         dragLength = 0;
@@ -439,7 +438,7 @@ class BAMScreenView extends ScreenView {
   /**
    * Removes atom elements from view.
    *
-   * @param atom {Atom2} REVIEW: JSDoc order
+   * @param {Atom2} atom
    * @private
    */
   onAtomRemovedFromPlayArea( atom ) {
