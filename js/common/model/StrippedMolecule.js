@@ -17,7 +17,6 @@ import MoleculeStructure from './MoleculeStructure.js';
 class StrippedMolecule extends PhetioObject {
   /**
    * @param {MoleculeStructure} original
-   * @constructor //REVIEW: We don't annotate constructors anymore
    */
   constructor( original ) {
     super();
