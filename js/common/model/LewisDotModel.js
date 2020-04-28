@@ -81,6 +81,7 @@ class LewisDotModel {
   /**
    * Returns all of the directions that are open (not bonded to another) on the atom
    * @param {Atom} atom
+   * REVIEW: missing visibility
    *
    * @returns {Array.<Direction>}
    */
@@ -152,6 +153,7 @@ class LewisDotModel {
   /**
    * Add "atom" to our coordinate map, and all of its neighbors EXCEPT for excludedAtom.
    * This allows mapping a molecule without loops quite easily
+   * REVIEW: missing visibility
    *
    * @param {Vector2}             coordinates   Coordinates of "atom"
    * @param {Atom}                atom          Atom to add
@@ -204,6 +206,7 @@ class LewisDotModel {
     return success;
   }
 
+  //REVIEW: JSDoc
   getLewisDotAtom( atom ) {
     return this.atomMap[ atom.id ];
   }
