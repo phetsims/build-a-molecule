@@ -27,6 +27,7 @@ import Dialog from '../../../../../sun/js/Dialog.js';
 import Playable from '../../../../../tambo/js/Playable.js';
 import buildAMolecule from '../../../buildAMolecule.js';
 import MoleculeList from '../../model/MoleculeList.js';
+import BAMConstants from '../../BAMConstants';
 
 // constants
 const ViewStyle = Enumeration.byKeys( [ 'SPACE_FILL', 'BALL_AND_STICK' ] );
@@ -34,7 +35,6 @@ const ViewStyle = Enumeration.byKeys( [ 'SPACE_FILL', 'BALL_AND_STICK' ] );
 class Molecule3DDialog extends Dialog {
   /**
    * @param {Property.<CompleteMolecule|null>} completeMoleculeProperty
-   * @constructor //REVIEW: We don't annotate constructors anymore
    */
   constructor( completeMoleculeProperty ) {
 
@@ -271,7 +271,7 @@ class Molecule3DDialog extends Dialog {
       selectedLineWidth: 1,
       deselectedLineWidth: .5,
       deselectedButtonOpacity: 0.25,
-      cornerRadius: 7, //REVIEW: Is this a conscious decision to not use BAMConstants.CORNER_RADIUS?
+      cornerRadius: BAMConstants.CORNER_RADIUS,
       orientation: 'horizontal',
       spacing: 30
     } );

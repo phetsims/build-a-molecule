@@ -270,7 +270,7 @@ class Molecule3DNode extends DOM {
   }
 
   /**
-   * @param timeElapsed REVIEW: Type doc
+   * @param {number} timeElapsed
    *
    * @public
    */
