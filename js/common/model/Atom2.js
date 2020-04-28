@@ -38,10 +38,6 @@ class Atom2 extends Atom {
     this.userControlledProperty = new BooleanProperty( false );
     this.visibleProperty = new BooleanProperty( true );
 
-    // @public {BooleanProperty} Regulates step function for this atom
-    //REVIEW: This is always true, I don't see why it's here? Let's remove it
-    this.addedToModelProperty = new BooleanProperty( true );
-
     // @public {Emitter} Responsible for grabbing and dropping an atom
     //REVIEW: I don't see any usages of grabbedByUserEmitter, let's remove it?
     this.grabbedByUserEmitter = new Emitter( { parameters: [ { valueType: Atom2 } ] } );
@@ -67,17 +63,7 @@ class Atom2 extends Atom {
     this.clockListener = this.step.bind( this );
 
     // Atom exists for entire sim lifetime. No need to dispose.
-    //REVIEW: This Property is always true, let's remove the conditional here?
-    this.addedToModelProperty.link( isAddedToModel => {
-      if ( isAddedToModel ) {
-        // added to the model
-        stepEmitter.addListener( this.clockListener );
-      }
-      else {
-        // removed from the model
-        stepEmitter.removeListener( this.clockListener );
-      }
-    } );
+    stepEmitter.addListener( this.clockListener );
 
     // Atom exists for entire sim life cycle. No need to dispose.
     this.userControlledProperty.lazyLink( controlled => {
@@ -192,7 +178,6 @@ class Atom2 extends Atom {
     this.destinationProperty.reset();
     this.userControlledProperty.reset();
     this.visibleProperty.reset();
-    this.addedToModelProperty.reset();
     //REVIEW: I don't yet see a case where this would do anything. We reset things above, why would we want to change
     //REVIEW: something here? Can we remove this line?
     this.destinationProperty.value = this.positionProperty.value;
