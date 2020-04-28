@@ -9,11 +9,11 @@
 
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import Emitter from '../../../../axon/js/Emitter.js';
-import Rectangle from '../../../../dot/js/Rectangle.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import Vector2Property from '../../../../dot/js/Vector2Property.js';
 import Atom from '../../../../nitroglycerin/js/Atom.js';
 import buildAMolecule from '../../buildAMolecule.js';
+import Bounds2 from '../../../../dot/js/Bounds2.js';
 
 // constants
 const MOTION_VELOCITY = 800; // In picometers per second of sim time.
@@ -38,6 +38,7 @@ class Atom2 extends Atom {
     this.visibleProperty = new BooleanProperty( true );
 
     // @public {Emitter} Responsible for grabbing and dropping an atom
+    this.grabbedByUserEmitter = new Emitter( { parameters: [ { valueType: Atom2 } ] } );
     this.droppedByUserEmitter = new Emitter( { parameters: [ { valueType: Atom2 } ] } );
 
     // Atom exists for entire sim lifetime. No need to dispose.
@@ -54,22 +55,28 @@ class Atom2 extends Atom {
     } );
   }
 
-  // Returns bounds of atom's position considering its covalent radius
-  //REVIEW: JSDoc return type?
+  /**
+   * Returns bounds of atom's position considering its covalent radius
+   *
+   * @public
+   * @returns {Bounds2}
+   */
   get positionBounds() {
-    //REVIEW: Don't use Rectangle if possible here, just Bounds2.point( x, y ).dilated( this.covalentRadius / 2 )
-    return new Rectangle( this.positionProperty.value.x - this.covalentRadius, this.positionProperty.value.y - this.covalentRadius, this.covalentDiameter, this.covalentDiameter );
-  }
-
-  // Returns bounds of atom's destination considering its covalent radius
-  //REVIEW: JSDoc return type?
-  get destinationBounds() {
-    //REVIEW: Don't use Rectangle if possible here, just Bounds2.point( x, y ).dilated( this.covalentRadius / 2 )
-    return new Rectangle( this.destinationProperty.value.x - this.covalentRadius, this.destinationProperty.value.y - this.covalentRadius, this.covalentDiameter, this.covalentDiameter );
+    return new Bounds2.point( this.positionProperty.value.x, this.positionProperty.value.y ).dilated( this.covalentRadius );
   }
 
   /**
-   * @param dt {number} time elapsed in seconds REVIEW: jsdoc ordering
+   * Returns bounds of atom's destination considering its covalent radius
+   *
+   * @public
+   * @returns {Bounds2}
+   */
+  get destinationBounds() {
+    return new Bounds2.point( this.destinationProperty.value.x, this.destinationProperty.value.y ).dilated( this.covalentRadius );
+  }
+
+  /**
+   * @param {number} dt - time elapsed in seconds
    *
    * @public
    */
@@ -80,16 +87,16 @@ class Atom2 extends Atom {
   /**
    * Responsible stepping an atom towards its destination. Velocity of step is modified based on distance to destination.
    *
-   * @param dt REVIEW: type docs
+   * @param {number} dt
    * @private
    */
   stepAtomTowardsDestination( dt ) {
-    if ( !this.userControlledProperty.value && this.positionProperty.value.distance( this.destinationProperty.value ) !== 0 ) {
+    const distance = this.positionProperty.value.distance( this.destinationProperty.value );
+    if ( !this.userControlledProperty.value && distance !== 0 ) {
 
       // Move towards the current destination
       let distanceToTravel = MOTION_VELOCITY * dt;
-      //REVIEW: We used this above, can we factor this out above the if statement, and use it in the conditional?
-      const distanceToTarget = this.positionProperty.value.distance( this.destinationProperty.value );
+      const distanceToTarget = distance;
 
       const farDistanceMultiple = 10; // if we are this many times away, we speed up
 
@@ -115,7 +122,7 @@ class Atom2 extends Atom {
 
   /**
    * Add a vector to the current position and destination of the atom
-   * @param delta {Vector2} REVIEW: JSDoc ordering
+   * @param {Vector2} delta
    *
    * @public
    */
@@ -156,9 +163,6 @@ class Atom2 extends Atom {
     this.destinationProperty.reset();
     this.userControlledProperty.reset();
     this.visibleProperty.reset();
-    //REVIEW: I don't yet see a case where this would do anything. We reset things above, why would we want to change
-    //REVIEW: something here? Can we remove this line?
-    this.destinationProperty.value = this.positionProperty.value;
   }
 }
 
