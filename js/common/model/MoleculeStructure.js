@@ -118,6 +118,7 @@ class MoleculeStructure {
   /**
    * Return the molecular formula, with structural information available if possible. Currently handles alcohol structure based on
    * https://secure.wikimedia.org/wikipedia/en/wiki/Alcohols#Common_Names
+   * REVIEW: missing visibility
    *
    * @returns {string} Text which is the structural formula
    */
@@ -179,6 +180,7 @@ class MoleculeStructure {
    * @param {PubChemAtom*} atom
    * @public
    *
+   * REVIEW: Missing JSDoc for atom
    * @returns All neighboring atoms that are connected by bonds to the passed in atom
    */
   getNeighbors( atom ) {
@@ -321,6 +323,7 @@ class MoleculeStructure {
 
   /**
    * Return a copy of the molecule structure with a specific atom removed
+   * REVIEW: missing visibility
    * @param {Atom2} atomToRemove
    * @returns {MoleculeStructure}
    */

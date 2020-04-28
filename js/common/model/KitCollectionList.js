@@ -78,6 +78,7 @@ class KitCollectionList {
 
   /**
    * Add a kit collection and make it the current collection
+   * REVIEW: Needs visibility
    * @param {KitCollection} collection
    */
   addCollection( collection ) {
@@ -111,8 +112,9 @@ class KitCollectionList {
 
   /**
    * Returns kit bounds within the collection layout
+   * REVIEW: Needs visibility
    *
-   * @returns {Rectangle}
+   * @returns {Rectangle} REVIEW: Please refer to this as a Bounds2, that's the exposed API
    */
   availableKitBounds() {
     return this.collectionLayout.availableKitBounds;
@@ -120,8 +122,9 @@ class KitCollectionList {
 
   /**
    * Returns play area bounds bounds within the collection layout
+   * REVIEW: Needs visibility
    *
-   * @returns {Rectangle}
+   * @returns {Rectangle} REVIEW: Please refer to this as a Bounds2, that's the exposed API
    */
   availablePlayAreaBounds() {
     return this.collectionLayout.availablePlayAreaBounds;

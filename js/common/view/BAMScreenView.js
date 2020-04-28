@@ -270,6 +270,8 @@ class BAMScreenView extends ScreenView {
 
   /**
    * @private
+   * REVIEW: Missing dt JSDoc
+   * REVIEW: Also, pretty sure this can't be private, since it's called from Sim.js (should be public)
    */
   step( dt ) {
     if ( this.dialog && ThreeUtils.isWebGLEnabled() ) {

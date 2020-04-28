@@ -64,6 +64,7 @@ class ElementHistogram extends PhetioObject {
 
   /**
    * A hash string that should be unique for each unique histogram, and the same for each equivalent histogram
+   * REVIEW: needs visibility
    *
    * @returns {string}
    */
@@ -78,6 +79,7 @@ class ElementHistogram extends PhetioObject {
 
   /**
    * Compares elements of each histogram
+   * REVIEW: needs visibility
    *
    * @param {ElementHistogram} otherHistogram
    * @returns {boolean}

@@ -178,6 +178,7 @@ class Kit {
   /**
    * Returns the bucket for a given element
    * @param {Element} element
+   * REVIEW: needs visibility
    *
    * @returns {Bucket}
    */
@@ -345,6 +346,7 @@ class Kit {
    * Return the direction of the bond between two atoms
    * @param {Atom2} a - An atom A
    * @param {Atom2} b - An atom B
+   * REVIEW: needs visibility
    *
    * @returns {Direction}
    */

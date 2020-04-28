@@ -23,6 +23,7 @@ class Molecule extends MoleculeStructure {
 
   /**
    * Returns the position bounds of the entire molecule
+   * REVIEW: missing visibility
    *
    * @returns {Bounds2}
    */
@@ -37,9 +38,11 @@ class Molecule extends MoleculeStructure {
 
   /**
    * Returns the destination bounds of the entire molecule
+   * REVIEW: missing visibility
    *
    * @returns {Bounds2}
-   */  get destinationBounds() {
+   */
+  get destinationBounds() {
     // mutable way of handling this, so we need to make a copy
     const bounds = Bounds2.NOTHING.copy();
     this.atoms.forEach( atom => {

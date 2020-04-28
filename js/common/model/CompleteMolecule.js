@@ -97,6 +97,7 @@ class CompleteMolecule extends MoleculeStructure {
 
   /**
    * The translation string key that should be used to look up a translated value
+   * REVIEW: needs JSDoc visibility
    *
    * @returns {string}
    */
@@ -328,6 +329,7 @@ class PubChemAtom2 extends Atom {
   /**
    * Parser for PubChemAtom2
    * @param {string} atomString
+   * REVIEW: Needs visibility
    *
    * @returns {PubChemAtom2}
    */
@@ -371,6 +373,7 @@ class PubChemAtom3 extends Atom {
 
   /**
    * Parser for PubChemAtom3
+   * REVIEW: Needs visibility
    * @param {string} atomString
    * @returns {PubChemAtom3}
    */
@@ -418,6 +421,7 @@ class PubChemAtomFull extends Atom {
 
   /**
    * Parser for PubChemAtomFull
+   * REVIEW: Needs visibility
    *
    * @param atomString REVIEW: Type doc
    * @returns {PubChemAtomFull}
@@ -460,6 +464,7 @@ class PubChemBond extends Bond {
 
   /**
    * Parser for PubChemBond
+   * REVIEW: Needs visibility
    * @param {string} bondString
    * @param {Atom} connectedAtom
    * @param {Molecule} molecule

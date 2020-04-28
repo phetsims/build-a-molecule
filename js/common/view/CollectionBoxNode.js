@@ -336,6 +336,7 @@ class CollectionBoxNode extends VBox {
    * Search for a thumbnail that represents the completed molecule. Thumbnail is drawn using canvas.
    * @param {CompleteMolecule} completeMolecule
    * @param {object} moleculeIdThumbnailMap
+   * REVIEW: Missing visibility
    *
    * @static
    * @returns {Node}
@@ -362,6 +363,7 @@ class CollectionBoxNode extends VBox {
    * Precomputation of largest collection box size
    * @param {SingleCollectionBoxNode|MultipleCollectionBoxNode} boxNode
    * @param {CollectionBox} box
+   * REVIEW: Missing visibility
    *
    * @static
    */

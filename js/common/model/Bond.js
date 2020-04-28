@@ -24,6 +24,8 @@ class Bond {
    * Checks if the passed in atom is equal to one of the bond's atoms
    * @param {Atom2} atom REVIEW: Pretty sure this is inaccurate, PubChemAtom3 for example isn't an Atom2. Maybe add type checks to this file?
    *
+   * REVIEW: Needs visibility
+   *
    * @returns {boolean}
    */
   contains( atom ) {
@@ -33,6 +35,8 @@ class Bond {
   /**
    * Returns the other atom within the bond that isn't the passed in atom
    * @param {Atom2} atom REVIEW: Should be Atom, not Atom2, no?
+   *
+   * REVIEW: Needs visibility
    *
    * @returns {Atom2} REVIEW: Should be Atom, not Atom2, no?
    */

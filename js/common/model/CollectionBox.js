@@ -30,7 +30,7 @@ class CollectionBox {
 
     const self = this;
 
-    // @public
+    // @public REVIEW: type docs?
     this.quantityProperty = new NumberProperty( 0 );
     this.cueVisibilityProperty = new BooleanProperty( false );
 
@@ -72,6 +72,7 @@ class CollectionBox {
 
   /**
    * Whether this molecule can be dropped into this collection box (at this point in time)
+   * REVIEW: JSDoc visibility
    *
    * @param moleculeStructure The molecule's structure REVIEW: Type doc
    * @returns {boolean} Whether it can be dropped in
