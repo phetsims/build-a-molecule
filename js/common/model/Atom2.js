@@ -14,7 +14,6 @@ import Vector2 from '../../../../dot/js/Vector2.js';
 import Vector2Property from '../../../../dot/js/Vector2Property.js';
 import Atom from '../../../../nitroglycerin/js/Atom.js';
 import buildAMolecule from '../../buildAMolecule.js';
-import Strings from '../../Strings.js';
 
 // constants
 const MOTION_VELOCITY = 800; // In picometers per second of sim time.
@@ -39,31 +38,10 @@ class Atom2 extends Atom {
     this.visibleProperty = new BooleanProperty( true );
 
     // @public {Emitter} Responsible for grabbing and dropping an atom
-    //REVIEW: I don't see any usages of grabbedByUserEmitter, let's remove it?
-    this.grabbedByUserEmitter = new Emitter( { parameters: [ { valueType: Atom2 } ] } );
     this.droppedByUserEmitter = new Emitter( { parameters: [ { valueType: Atom2 } ] } );
 
-    // @public {Emitter} Responsible for separating this atom from other atoms
-    //REVIEW: This is never emitted, AND I don't understand the naming... is it WHEN something happens, or TRIGGERING it?
-    //REVIEW: Can we just remove this?
-    this.separateMoleculeEmitter = new Emitter();
-
-    // @public {Emitter}
-    //REVIEW: I don't see any usage of an atom.stepEmitter, can we remove this?
-    this.stepEmitter = stepEmitter;
-
-    // @public {string} Name of this atom
-    //REVIEW: I can't find a usage of this, can we just remove it?
-    this.name = Strings.getAtomName( element );
-
-    //REVIEW: Lower-casing of {function}
-    // @private {Function} Passed into step function.
-    //REVIEW: We don't seem to use this outside of the constructor, just have a local variable. ALSO below it seems
-    //REVIEW: that we don't need to ever remove it, so just inline it
-    this.clockListener = this.step.bind( this );
-
     // Atom exists for entire sim lifetime. No need to dispose.
-    stepEmitter.addListener( this.clockListener );
+    stepEmitter.addListener( this.step.bind( this ) );
 
     // Atom exists for entire sim life cycle. No need to dispose.
     this.userControlledProperty.lazyLink( controlled => {

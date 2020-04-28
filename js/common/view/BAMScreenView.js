@@ -343,7 +343,6 @@ class BAMScreenView extends ScreenView {
   addAtomNodeToPlayArea( atom ) {
     const currentKit = this.kitCollectionList.currentCollectionProperty.value.currentKitProperty.value;
     const atomNode = this.addAtomNodeToPlayAreaNode( atom );
-    atom.separateMoleculeEmitter.addListener( currentKit.separateMoleculeDestinations.bind( currentKit ) );
     let lastPosition;
 
     // Track the length of a drag in model units
@@ -449,7 +448,6 @@ class BAMScreenView extends ScreenView {
     atomNode.dragListener.dispose();
     atomNode.dispose();
     delete this.kitPlayAreaNode.atomNodeMap[ atom.id ];
-    atom.separateMoleculeEmitter.removeAllListeners();
   }
 }
 
