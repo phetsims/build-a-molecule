@@ -29,14 +29,13 @@ class Kit {
   /**
    * @param {CollectionLayout} collectionLayout
    * @param {Array.<Bucket>} buckets
-   * @constructor //REVIEW: We don't annotate constructors anymore
    */
   constructor( collectionLayout, buckets ) {
 
     // @public {number}
     this.id = kitIdCounter++;
 
-    // @public {ObservableArray} REVIEW: Of what subtype? ObservableArray.<Atom2>?
+    // @public {ObservableArray.<Atom2>}
     this.atomsInPlayArea = new ObservableArray();
 
     // @public {Property.<Atom|null>} Atom that has been clicked by user. Used for triggering cut targets for breaking bonds
@@ -244,8 +243,7 @@ class Kit {
    */
   moleculePutInCollectionBox( molecule, box ) {
     if ( BuildAMoleculeQueryParameters.logData ) {
-      //REVIEW: Why the guard? console.log should be guaranteed to exist, no?
-      window.console && console.log && console.log( 'You have collected: ' + box.moleculeType.commonNameProperty.value );
+      console.log( 'You have collected: ' + box.moleculeType.commonNameProperty.value );
     }
     this.hasMoleculesInBoxesProperty.value = true;
     this.removeMolecule( molecule );
@@ -568,15 +566,13 @@ class Kit {
 
     if ( BuildAMoleculeQueryParameters.logData ) {
       const serializedForm = this.getMolecule( a ).toSerial2();
-      //REVIEW: Why the guard? console.log should be guaranteed to exist, no?
-      window.console && console.log && console.log( 'created structure: ' + serializedForm );
+      console.log( 'created structure: ' + serializedForm );
     }
     const structure = this.getMolecule( a );
     if ( structure.atoms.length > 2 ) {
       structure.bonds.forEach( bond => {
         if ( bond.a.hasSameElement( bond.b ) && bond.a.symbol === 'H' ) {
-          //REVIEW: Why the guard? console.log should be guaranteed to exist, no?
-          window.console && console.log && console.log( 'WARNING: Hydrogen bonded to another hydrogen in a molecule which is not diatomic hydrogen' );
+          console.log( 'WARNING: Hydrogen bonded to another hydrogen in a molecule which is not diatomic hydrogen' );
         }
       } );
     }
@@ -706,7 +702,7 @@ class Kit {
 class BondingOption {
   /**
    * @param {Atom2} a - An atom A
-   * @param direction REVIEW: Type doc
+   * @param {Direction} direction
    * @param {Atom2} b - An atom b
    */
   constructor( a, direction, b ) {
