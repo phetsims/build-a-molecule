@@ -32,6 +32,7 @@ class BAMScreenView extends ScreenView {
   constructor( kitCollectionList ) {
     super();
     //REVIEW: These should have {Object} included for types
+    //REVIEW: e.g. {Object.<atomId:number, AtomNode>}, {Object.<moleculeId:number, MoleculeControlsHBox}
     this.atomNodeMap = {}; // maps Atom2 ID => AtomNode
     this.kitCollectionMap = {}; // maps KitCollection ID => KitCollectionNode
     this.metadataMap = {}; // moleculeId => MoleculeControlsHBox

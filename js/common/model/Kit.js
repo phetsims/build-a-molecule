@@ -60,7 +60,7 @@ class Kit {
     // @public {Array.<Molecule>} molecules  in the play area
     this.molecules = [];
 
-    // @public {Object} moleculeId => CollectionBox, molecule structures that were put into the collection box.
+    // @public {Object.<moleculeId:number, CollectionBox>} molecule structures that were put into the collection box.
     // Kept for now, since modifying the reset behavior will be much easier if we retain this
     this.removedMolecules = {};
 

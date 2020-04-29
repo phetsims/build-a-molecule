@@ -53,7 +53,7 @@ class CollectionBoxNode extends VBox {
 
     // @private Maps moleculeId => Node (thumbnail view for the molecule)
     //REVIEW: doc with type {Object}, and ideally map types
-    //REVIEW: e.g. // @private {Object} - maps moleculeId: {number} => {Node} thumbnail view for the molecule
+    //REVIEW: e.g. // @private {Object.<moleculeId:number, Node>}
     this.moleculeIdThumbnailMap = {};
 
     //REVIEW: type/visibility docs

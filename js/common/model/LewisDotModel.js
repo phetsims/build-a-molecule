@@ -16,7 +16,8 @@ import Direction from './Direction.js';
 class LewisDotModel {
   constructor() {
 
-    //REVIEW: doc with {Object}, ideally mentioning other types after
+    //REVIEW: doc with {Object}, ideally mentioning other types after, e.g.
+    //REVIEW: {Object.<atomId:number, LewisDotAtom>}
     // @public Maps atom ID => LewisDotAtom
     this.atomMap = {};
   }

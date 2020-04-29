@@ -23,7 +23,8 @@ class MoleculeList {
     // @public {Array.<CompleteMolecule>}
     this.completeMolecules = [];
 
-    //REVIEW: doc with {Object}, ideally mentioning other types after
+    //REVIEW: doc with {Object}, ideally mentioning other types after, e.g.
+    //REVIEW: {Object.<name:string, CompleteMolecule>}
     // @private Unique name => complete molecule
     this.moleculeNameMap = {};
 
