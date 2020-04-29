@@ -24,7 +24,6 @@ class KitPanel extends Node {
    * @param {number} kitNodeHeight
    * @param {MoleculeCollectingScreenView|BAMScreenView} view
    * @param {boolean} isCollectingView
-   * @constructor //REVIEW: We don't annotate constructors anymore
    */
   constructor( kitCollection, kitNodeWidth, kitNodeHeight, view, isCollectingView ) {
     super();

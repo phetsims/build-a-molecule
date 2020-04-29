@@ -45,12 +45,12 @@ class AtomNode extends Node {
     // Add an atom icon
     this.addChild( AtomNode.createIcon( atom.element ) );
 
-    // @private {Function} //REVIEW: Lower-casing of {function}
+    // @private {function}
     this.translationListener = modelPosition => {
       this.setTranslation( BAMConstants.MODEL_VIEW_TRANSFORM.modelToViewPosition( modelPosition ) );
     };
 
-    // @private {Function} //REVIEW: Lower-casing of {function}
+    // @private {function}
     this.updateVisibilityListener = visible => {
       this.visible = visible;
     };
@@ -66,8 +66,7 @@ class AtomNode extends Node {
     this.atom.positionProperty.unlink( this.translationListener );
     this.atom.visibleProperty.unlink( this.updateVisibilityListener );
 
-    //REVIEW: super.dispose()
-    Node.prototype.dispose.call( this );
+    super.dispose();
   }
 
   /**
@@ -107,10 +106,10 @@ class AtomNode extends Node {
 
   /**
    * Decides whether the atom node needs white text or black text.
-   * @param {ColorDef} color REVIEW: Does NOT take a ColorDef, only seems to take a Color
+   * @param {Color} color
    *
    * @public
-   * @returns {ColorDef}
+   * @returns {Color}
    */
   static getTextColor( color ) {
     return 0.30 * color.r + 0.59 * color.g + 0.11 * color.b < 125 ? new Color( 225, 225, 255 ) : new Color( 0, 0, 0 );

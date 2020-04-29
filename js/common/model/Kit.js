@@ -47,10 +47,6 @@ class Kit {
     // @public {BooleanProperty} Whether this kit is visible
     this.visibleProperty = new BooleanProperty( false );
 
-    //REVIEW: I don't see any code that reads this value, can we get rid of it?
-    // @public {BooleanProperty} Record this so we know when the "reset kit" should be shown
-    this.hasMoleculesInBoxesProperty = new BooleanProperty( false );
-
     // @public {Emitter} - Called with a single parameter molecule
     this.addedMoleculeEmitter = new Emitter( { parameters: [ { valueType: Molecule } ] } );
     this.removedMoleculeEmitter = new Emitter( { parameters: [ { valueType: Molecule } ] } );
@@ -64,8 +60,7 @@ class Kit {
     // @public {Array.<Molecule>} molecules  in the play area
     this.molecules = [];
 
-    //REVIEW: Include {Object} in these type docs
-    // @public moleculeId => CollectionBox, molecule structures that were put into the collection box.
+    // @public {Object} moleculeId => CollectionBox, molecule structures that were put into the collection box.
     // Kept for now, since modifying the reset behavior will be much easier if we retain this
     this.removedMolecules = {};
 
@@ -97,12 +92,10 @@ class Kit {
    */
   reset() {
     // not resetting visible, since that is not handled by us
-    this.hasMoleculesInBoxesProperty.reset();
     this.selectedAtomProperty.reset();
 
     // send out notifications for all removed molecules
-    //REVIEW: slice() with no args is preferred
-    this.molecules.slice( 0 ).forEach( this.removeMolecule.bind( this ) );
+    this.molecules.slice().forEach( this.removeMolecule.bind( this ) );
 
     // put everything back in buckets
     this.atoms.concat( this.atomsInCollectionBox ).forEach( atom => {
@@ -249,7 +242,6 @@ class Kit {
     if ( BuildAMoleculeQueryParameters.logData ) {
       console.log( 'You have collected: ' + box.moleculeType.commonName );
     }
-    this.hasMoleculesInBoxesProperty.value = true;
     this.removeMolecule( molecule );
     molecule.atoms.forEach( atom => {
       this.atoms.splice( this.atoms.indexOf( atom ), 1 );

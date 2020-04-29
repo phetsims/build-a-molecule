@@ -105,7 +105,7 @@ class MoleculeStructure {
     const organic = containsCarbon && containsHydrogen;
 
     const sortedElements = _.sortBy( this.getElementList(), organic ? MoleculeStructure.organicSortValue         // carbon first, then hydrogen, then others alphabetically
-                                                                    : MoleculeStructure.electronegativeSortValue // sort by increasing electronegativity
+      : MoleculeStructure.electronegativeSortValue // sort by increasing electronegativity
     );
 
     // grab our formula out
@@ -567,8 +567,7 @@ MoleculeStructure.getMoleculesFromBrokenBond = ( structure, bond, molA, molB ) =
   const atomsInA = [ bond.a ];
 
   // atoms left after removing atoms
-  //REVIEW: slice() with no args is preferred
-  const remainingAtoms = structure.atoms.slice( 0 );
+  const remainingAtoms = structure.atoms.slice();
   remainingAtoms.splice( remainingAtoms.indexOf( bond.a ), 1 ); // TODO: replace with remove()
   const dirtyAtoms = [ bond.a ];
   while ( dirtyAtoms.length > 0 ) {
@@ -641,8 +640,7 @@ MoleculeStructure.checkEquivalencyMatrix = ( equivalences, myIndex, otherRemaini
   // Note: (performance) this should leak memory in un-fun ways, and performance complexity should be sped up
 
   // should be inefficient, but not too bad (computational complexity is not optimal)
-  //REVIEW: slice() with no args is preferred
-  const arr = otherRemainingIndices.slice( 0 );
+  const arr = otherRemainingIndices.slice();
   const len = arr.length;
   for ( let i = 0; i < len; i++ ) { // loop over all remaining others
     const otherIndex = arr[ i ];

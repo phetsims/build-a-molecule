@@ -15,7 +15,6 @@ class MoleculeBondContainerNode extends Node {
   /**
    * @param {Kit} kit
    * @param {Molecule} molecule
-   * @constructor //REVIEW: We don't annotate constructors anymore
    */
   constructor( kit, molecule ) {
     super();
@@ -38,8 +37,7 @@ class MoleculeBondContainerNode extends Node {
       bondNode.dispose();
     } );
 
-    //REVIEW: super.dispose()
-    Node.prototype.dispose.call( this );
+    super.dispose( this );
   }
 }
 

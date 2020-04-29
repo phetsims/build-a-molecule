@@ -9,7 +9,6 @@
 
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import Emitter from '../../../../axon/js/Emitter.js';
-import ObservableArray from '../../../../axon/js/ObservableArray.js';
 import Property from '../../../../axon/js/Property.js';
 import buildAMolecule from '../../buildAMolecule.js';
 import KitCollection from './KitCollection.js';
@@ -33,11 +32,6 @@ class KitCollectionList {
     // @public {Emitter} - Fires single parameter of {KitCollection}
     this.addedCollectionEmitter = new Emitter( { parameters: [ { valueType: KitCollection } ] } );
     this.removedCollectionEmitter = new Emitter( { parameters: [ { valueType: KitCollection } ] } );
-
-    //REVIEW: I don't see any usages of this, and I'm not sure why it would be in the KitCollectionList. Is this used
-    //REVIEW: any place, or is only the Kit version used?
-    // @public {ObservableArray.<Atom2>}
-    this.atomsInPlayArea = new ObservableArray();
 
     // @public {function}
     this.createKitCollection = createKitCollection;
@@ -105,8 +99,7 @@ class KitCollectionList {
     this.collections[ 0 ].reset();
 
     // remove all the other collections
-    //REVIEW: slice() with no args is preferred
-    this.collections.slice( 0 ).forEach( collection => {
+    this.collections.slice().forEach( collection => {
       if ( collection !== this.currentCollectionProperty.value ) {
         this.removeCollection( collection );
       }

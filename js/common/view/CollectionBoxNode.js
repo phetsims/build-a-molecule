@@ -230,8 +230,7 @@ class CollectionBoxNode extends VBox {
 
   /**
    * Center the molecules, while considering if the black box can fit multiple molecules
-   * @param {Boolean} isMultipleCollectionBox
-   * REVIEW: Boolean should be boolean (lower case)
+   * @param {boolean} isMultipleCollectionBox
    *
    * @private
    */
@@ -337,9 +336,9 @@ class CollectionBoxNode extends VBox {
    * Search for a thumbnail that represents the completed molecule. Thumbnail is drawn using canvas.
    * @param {CompleteMolecule} completeMolecule
    * @param {object} moleculeIdThumbnailMap
-   * REVIEW: Missing visibility
    *
    * @static
+   * @private
    * @returns {Node}
    */
   static lookupThumbnail( completeMolecule, moleculeIdThumbnailMap ) {
@@ -364,9 +363,9 @@ class CollectionBoxNode extends VBox {
    * Precomputation of largest collection box size
    * @param {SingleCollectionBoxNode|MultipleCollectionBoxNode} boxNode
    * @param {CollectionBox} box
-   * REVIEW: Missing visibility
    *
    * @static
+   * @public
    */
   static getPsuedoBoxBounds( boxNode, box ) {
     let maxBounds = Bounds2.NOTHING;

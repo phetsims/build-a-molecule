@@ -29,9 +29,8 @@ const youCompletedYourCollectionString = buildAMoleculeStrings.youCompletedYourC
 class AllFilledDialog extends Dialog {
   /**
    * @param {BooleanProperty} buttonClickedProperty
-   * @param {Function} regenerateCallback //REVIEW: Lower-casing of {function}
+   * @param {function} regenerateCallback
    * @param {Object} [options]
-   * @constructor //REVIEW: We don't annotate constructors anymore
    */
   constructor( buttonClickedProperty, regenerateCallback, options ) {
     options = merge( {
