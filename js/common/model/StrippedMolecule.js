@@ -2,7 +2,7 @@
 
 /**
  * Molecule structure with the hydrogens stripped out (but with the hydrogen count of an atom saved)
- * <p/>
+ *
  * This class was motivated by a need for efficient molecule comparison. It brought down the cost
  * of filtering molecules from months to minutes, along with significant reductions in the structures' file size.
  *
@@ -28,6 +28,7 @@ class StrippedMolecule extends PhetioObject {
     } );
 
     /**
+     * REVIEW: We don't want to have JSDoc-style /** comments here since it's not for a function? Line comments preferred.
      * Array indexed the same way as stripped.atoms for efficiency. It's essentially immutable, so this works
      */
     this.hydrogenCount = new Array( atomsToAdd.length );
