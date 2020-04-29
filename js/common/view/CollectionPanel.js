@@ -20,7 +20,6 @@ import Panel from '../../../../sun/js/Panel.js';
 import buildAMolecule from '../../buildAMolecule.js';
 import buildAMoleculeStrings from '../../buildAMoleculeStrings.js';
 import BAMConstants from '../BAMConstants.js';
-import BuildAMoleculeQueryParameters from '../BuildAMoleculeQueryParameters.js';
 import CollectionAreaNode from './CollectionAreaNode.js';
 
 const collectionPatternString = buildAMoleculeStrings.collectionPattern;
@@ -77,7 +76,7 @@ class CollectionPanel extends Panel {
     // Manages changing the label of the current collection
     kitCollectionList.currentCollectionProperty.link( () => {
       currentCollectionText.text = StringUtils.fillIn( collectionPatternString, {
-        number: kitCollectionList.currentIndex + BuildAMoleculeQueryParameters.skipLevels
+        number: kitCollectionList.currentIndex
       } );
     } );
 
