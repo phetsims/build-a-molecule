@@ -23,9 +23,11 @@ class MoleculeList {
     // @public {Array.<CompleteMolecule>}
     this.completeMolecules = [];
 
+    //REVIEW: doc with {Object}, ideally mentioning other types after
     // @private Unique name => complete molecule
     this.moleculeNameMap = {};
 
+    //REVIEW: doc with {Object}, ideally mentioning other types after
     // @private Formula => allowed stripped molecules (array)
     this.allowedStructureFormulaMap = {};
   }

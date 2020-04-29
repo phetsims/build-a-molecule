@@ -703,11 +703,13 @@ class BondingOption {
    * @param {Atom2} b - An atom b
    */
   constructor( a, direction, b ) {
+    //REVIEW: JSDocs here for visibility
     this.a = a;
     this.direction = direction;
     this.b = b;
 
     // The location the atom should be placed
+    //REVIEW: JSDoc fully for this
     this.idealLocation = a.positionProperty.value.plus( direction.vector.times( a.covalentRadius + b.covalentRadius ) );
   }
 }

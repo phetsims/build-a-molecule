@@ -2,7 +2,7 @@
 
 /**
  * Represents a general molecular structure (without position or instance information).
- * <p/>
+ *
  * Generics for the atom type significantly simplify a lot of other code that would need
  * either explicit casting or wrapper functions.
  *
@@ -93,7 +93,7 @@ class MoleculeStructure {
 
   /**
    * Our best attempt at getting a general molecular naming algorithm that handles organic and non-organic compounds.
-   * <p/>
+   *
    * @public
    *
    * @returns {string} Text which is the molecular formula
@@ -295,7 +295,7 @@ class MoleculeStructure {
   /**
    * Check whether the molecular structure is equivalent to another structure. Not terribly efficient, and will
    * probably fail for cyclic graphs.
-   * <p/>
+   *
    *
    * @param {Molecule} other - Another molecular structure
    * @public
@@ -446,7 +446,7 @@ class MoleculeStructure {
 
   /**
    * Format description, '|' is literal
-   * <p/>
+   *
    * line = numAtoms|numBonds(|atomBondSpec)*
    * atomBondSpec = atomSpec(,bondSpec)*
    * atomSpec --- determined by implementation of atom. does not contain '|' or ','

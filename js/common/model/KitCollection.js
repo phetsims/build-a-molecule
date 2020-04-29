@@ -18,7 +18,7 @@ let currentId = 0;
 
 class KitCollection {
   /**
-   * @param [Object] options
+   * @param {Object} [options]
    */
   constructor( options ) {
     options = merge( {
