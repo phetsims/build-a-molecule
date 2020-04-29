@@ -18,9 +18,7 @@ class CollectionLayout {
   /**
    * Construct the necessary layout
    *
-   * REVIEW: Boolean should be boolean (lower case)
-   * @param {Boolean} hasCollectionPanel - flag used to scale available bounds width to compensate for collection panel
-   * @constructor //REVIEW: We don't annotate constructors anymore
+   * @param {boolean} hasCollectionPanel - flag used to scale available bounds width to compensate for collection panel
    */
   constructor( hasCollectionPanel ) {
 

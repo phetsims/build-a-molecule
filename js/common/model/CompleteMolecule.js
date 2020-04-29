@@ -10,7 +10,6 @@
  * @author Denzell Barnett (PhET Interactive Simulations)
  */
 
-import StringProperty from '../../../../axon/js/StringProperty.js';
 import Atom from '../../../../nitroglycerin/js/Atom.js';
 import Element from '../../../../nitroglycerin/js/Element.js';
 import AtomNode from '../../../../nitroglycerin/js/nodes/AtomNode.js';
@@ -73,14 +72,21 @@ class CompleteMolecule extends MoleculeStructure {
   constructor( commonName, molecularFormula, atomCount, bondCount, has2d, has3d ) {
     super( atomCount, bondCount );
 
-    //REVIEW: Why is this a Property? I don't think it ever changes (or should change?)
-    // @public {Property.<string>}
-    this.commonNameProperty = new StringProperty( commonName ); // as said by pubchem (or overridden)
+    // @public {string} as said by pubchem (or overridden)
+    this.commonName = commonName;
 
-    //REVIEW: At least doc visibilities
-    this.molecularFormula = molecularFormula; // as said by pubchem
+    // @public {number}
+    this.cid = 0;
+
+    // @private {string} as said by pubchem
+    this.molecularFormula = molecularFormula;
+
+    // @private {boolean}
     this.has2d = has2d;
+
+    // @private {boolean}
     this.has3d = has3d;
+
   }
 
   /**
@@ -90,7 +96,7 @@ class CompleteMolecule extends MoleculeStructure {
    * @returns {string}
    */
   filterCommonName() {
-    let result = this.commonNameProperty.value;
+    let result = this.commonName;
     if ( result.indexOf( 'molecular ' ) === 0 ) {
       result = result.slice( 'molecular '.length );
     }
@@ -104,7 +110,7 @@ class CompleteMolecule extends MoleculeStructure {
    * @returns {string}
    */
   get stringKey() {
-    return 'molecule.' + this.commonNameProperty.value.replace( ' ', '_' );
+    return 'molecule.' + this.commonName.replace( ' ', '_' );
   }
 
   /**
@@ -125,7 +131,7 @@ class CompleteMolecule extends MoleculeStructure {
     }
     else {
       // if we didn't find it, pull it from our English data
-      return this.commonNameProperty.value;
+      return this.commonName;
     }
   }
 
@@ -149,20 +155,18 @@ class CompleteMolecule extends MoleculeStructure {
     }
 
     // otherwise, use our 2d positions to construct a version. we get the correct back-to-front rendering
-    //REVIEW: For this type of pattern, it's a preference to write it such as:
-    //REVIEW: return new Node( { children: wrappers.map( atomWrapper => { ... } )} )   -- with the arrow function content nicely formatted
-    const node = new Node();
-    //REVIEW: We don't need the braces for this arrow function
     const wrappers = _.sortBy( this.atoms, atom => {
       return atom.z3d;
     } );
-    wrappers.forEach( atomWrapper => {
-      node.addChild( new AtomNode( atomWrapper.element, {
+    const node = new Node( {
+      children: wrappers.map( atomWrapper => {
+        node.addChild( new AtomNode( atomWrapper.element, {
 
-        // custom scale for now
-        x: atomWrapper.x2d * 15,
-        y: atomWrapper.y2d * 15
-      } ) );
+          // custom scale for now
+          x: atomWrapper.x2d * 15,
+          y: atomWrapper.y2d * 15
+        } ) );
+      } )
     } );
     return node;
   }
@@ -177,11 +181,17 @@ class CompleteMolecule extends MoleculeStructure {
     // add in a header
     const format = ( this.has3d ? ( this.has2d ? 'full' : '3d' ) : '2d' );
     //REVIEW: Instead of MoleculeStructure.prototype, use `super.toSerial2()` instead?
-    return this.commonNameProperty.value + '|' + this.molecularFormula + '|' + this.cid + '|' + format + '|' + MoleculeStructure.prototype.toSerial2.call( this );
+    return this.commonName + '|' + this.molecularFormula + '|' + this.cid + '|' + format + '|' + MoleculeStructure.prototype.toSerial2.call( this );
   }
 }
 
-//REVIEW: JSDoc it?
+
+/**
+ * @
+ * @param {string} str
+ *
+ * @private
+ */
 CompleteMolecule.capitalize = str => {
   const characters = str.split( '' );
   let lastWasSpace = true;
@@ -246,13 +256,17 @@ CompleteMolecule.fromString = line => {
   }
 
   // Filled in by parsing completeMolecule
-  //REVIEW: I don't see this referenced, should we declare it in the constructor?
   completeMolecule.cid = parseInt( tokens[ idx++ ], 10 );
 
   return completeMolecule;
 };
 
-//REVIEW: JSDoc
+/**
+ * @param {string} line
+ *
+ * @public
+ * @returns {MoleculeStructure}
+ */
 CompleteMolecule.fromSerial2 = line => {
   /*---------------------------------------------------------------------------*
    * extract header
@@ -271,13 +285,13 @@ CompleteMolecule.fromSerial2 = line => {
   const burnedLength = commonName.length + 1 + molecularFormula.length + 1 + cidString.length + 1 + format.length + 1;
 
   // select the atom parser depending on the format
-  const atomParser = has3d ? ( has2dAnd3d ? PubChemAtomFull.parser : PubChemAtom3.parser ) : PubChemAtom2.parser;
+  const atomParser = has3d ? ( has2dAnd3d ? PubChemAtomFull.parse : PubChemAtom3.parse ) : PubChemAtom2.parse;
 
   return MoleculeStructure.fromSerial2( line.slice( burnedLength ), ( atomCount, bondCount ) => {
     const molecule = new CompleteMolecule( commonName, molecularFormula, atomCount, bondCount, has2d, has3d );
     molecule.cid = cid;
     return molecule;
-  }, atomParser, PubChemBond.parser );
+  }, atomParser, PubChemBond.parse );
 };
 
 /*---------------------------------------------------------------------------*
@@ -300,16 +314,21 @@ class PubChemAtom extends Atom {
   constructor( element ) {
     super( element );
 
-    //REVIEW: Probably all @public?
+    // @public {boolean}
     this.has2d = false;
     this.has3d = false;
+
+    // @private {number}
     this.x2d = 0;
     this.y2d = 0;
+
+    // @public {number}
     this.x3d = 0;
     this.y3d = 0;
     this.z3d = 0;
   }
 }
+
 CompleteMolecule.PubChemAtom = PubChemAtom;
 
 // Signature for Atom with only a 2d representation
@@ -322,13 +341,15 @@ class PubChemAtom2 extends Atom {
   constructor( element, x2d, y2d ) {
     super( element );
 
-    //REVIEW: Probably all @public?
+    // @private {boolean}
     this.has2d = true;
     this.has3d = false;
+
+    // @private {number}
     this.x2d = x2d;
     this.y2d = y2d;
 
-    // 3d representation uses only 2d data but is adjusted by an offset
+    // @public {number} 3d representation uses only 2d data but is adjusted by an offset
     this.x3d = x2d - OFFSET;
     this.y3d = y2d;
     this.z3d = 0;
@@ -336,35 +357,30 @@ class PubChemAtom2 extends Atom {
 
   /**
    * Stringify the structure of the atom.
-   * REVIEW: Technically needs @override
    *
    * @public
+   * @override
    * @returns {string}
    */
   toString() {
-    //REVIEW: super.toString()
-    return Atom.prototype.toString.call( this ) + ' ' + this.x2d + ' ' + this.y2d;
+    return super.toString( this ) + ' ' + this.x2d + ' ' + this.y2d;
   }
 
   /**
-   * Parser for PubChemAtom2
+   * Parse PubChemAtom2
    * @param {string} atomString
-<<<<<<< HEAD
-=======
-   * REVIEW: Needs visibility
-   * REVIEW: Ideally name parse(), since that's the verb (not the noun for what does the action)
->>>>>>> More REVIEW items, see https://github.com/phetsims/build-a-molecule/issues/173
    *
    * @public
    * @returns {PubChemAtom2}
    */
-  static parser( atomString ) {
+  static parse( atomString ) {
     const tokens = atomString.split( ' ' );
     return new PubChemAtom2( Element.getElementBySymbol( tokens[ 0 ] ),
       parseFloat( tokens[ 1 ] ),
       parseFloat( tokens[ 2 ] ) );
   }
 }
+
 CompleteMolecule.PubChemAtom2 = PubChemAtom2;
 
 // Signature for Atom with only a 3d representation
@@ -379,11 +395,15 @@ class PubChemAtom3 extends Atom {
   constructor( element, x3d, y3d, z3d ) {
     super( element );
 
-    //REVIEW: Probably all @public?
+    // @private {boolean}
     this.has2d = false;
     this.has3d = true;
+
+    // @private {number}
     this.x2d = x3d;
     this.y2d = 0;
+
+    // @public {number}
     this.x3d = x3d;
     this.y3d = y3d;
     this.z3d = z3d;
@@ -391,33 +411,23 @@ class PubChemAtom3 extends Atom {
 
   /**
    * Stringify the structure of the atom.
-<<<<<<< HEAD
    *
-=======
-   * REVIEW: Technically needs @override
-   * @returns {string}
->>>>>>> More REVIEW items, see https://github.com/phetsims/build-a-molecule/issues/173
    * @public
+   * @override
    * @returns {string}
    */
   toString() {
-    //REVIEW: super.toString()
-    return Atom.prototype.toString.call( this ) + ' ' + this.x3d + ' ' + this.y3d + ' ' + this.z3d;
+    return super.toString( this ) + ' ' + this.x3d + ' ' + this.y3d + ' ' + this.z3d;
   }
 
   /**
-   * Parser for PubChemAtom3
-<<<<<<< HEAD
-=======
-   * REVIEW: Needs visibility
-   * REVIEW: Ideally name parse(), since that's the verb (not the noun for what does the action)
->>>>>>> More REVIEW items, see https://github.com/phetsims/build-a-molecule/issues/173
+   * Parse PubChemAtom3
    * @param {string} atomString
    *
    * @public
    * @returns {PubChemAtom3}
    */
-  static parser( atomString ) {
+  static parse( atomString ) {
     const tokens = atomString.split( ' ' );
     return new PubChemAtom3( Element.getElementBySymbol( tokens[ 0 ] ),
       parseFloat( tokens[ 1 ] ),
@@ -425,6 +435,7 @@ class PubChemAtom3 extends Atom {
       parseFloat( tokens[ 3 ] ) );
   }
 }
+
 CompleteMolecule.PubChemAtom3 = PubChemAtom3;
 
 // Signature for Atom with both a 2d and 3d representation
@@ -441,11 +452,15 @@ class PubChemAtomFull extends Atom {
   constructor( element, x2d, y2d, x3d, y3d, z3d ) {
     super( element );
 
-    //REVIEW: Probably all @public?
+    // @private {boolean}
     this.has2d = true;
     this.has3d = true;
+
+    // @private {number}
     this.x2d = x2d;
     this.y2d = y2d;
+
+    // @public {boolean}
     this.x3d = x3d;
     this.y3d = y3d;
     this.z3d = z3d;
@@ -453,29 +468,23 @@ class PubChemAtomFull extends Atom {
 
   /**
    * Stringify the structure of the atom
-   * REVIEW: Technically needs @override
    *
    * @public
+   * @override
    * @returns {string}
    */
   toString() {
-    //REVIEW: super.toString()
-    return Atom.prototype.toString.call( this ) + ' ' + this.x2d + ' ' + this.y2d + ' ' + this.x3d + ' ' + this.y3d + ' ' + this.z3d;
+    return super.toString( this ) + ' ' + this.x2d + ' ' + this.y2d + ' ' + this.x3d + ' ' + this.y3d + ' ' + this.z3d;
   }
 
   /**
    * Parser for PubChemAtomFull
-<<<<<<< HEAD
    * @param {string} atomString
-=======
-   * REVIEW: Needs visibility
-   * REVIEW: Ideally name parse(), since that's the verb (not the noun for what does the action)
->>>>>>> More REVIEW items, see https://github.com/phetsims/build-a-molecule/issues/173
    *
-   * @public
+   *  @public
    * @returns {PubChemAtomFull}
    */
-  static parser( atomString ) {
+  static parse( atomString ) {
     const tokens = atomString.split( ' ' );
     return new PubChemAtomFull( Element.getElementBySymbol( tokens[ 0 ] ),
       parseFloat( tokens[ 1 ] ),
@@ -498,16 +507,16 @@ class PubChemBond extends Bond {
   constructor( a, b, order ) {
     super( a, b );
 
-    //REVIEW: Probably all @public?
+    // @private {number}
     this.order = order;
   }
 
   /**
    * Returns serialized form of bond data including the bond order
    * @param {number} index - Index of bond within molecule
-   * REVIEW: Technically needs @override
    *
    * @public
+   * @override
    * @returns {string}
    */
   toSerial2( index ) {
@@ -516,7 +525,6 @@ class PubChemBond extends Bond {
 
   /**
    * Parser for PubChemBond
-   * REVIEW: Ideally name parse(), since that's the verb (not the noun for what does the action)
    * @param {string} bondString
    * @param {Atom} connectedAtom
    * @param {Molecule} molecule
@@ -524,13 +532,14 @@ class PubChemBond extends Bond {
    * @public
    * @returns {PubChemBond}
    */
-  static parser( bondString, connectedAtom, molecule ) {
+  static parse( bondString, connectedAtom, molecule ) {
     const tokens = bondString.split( '-' );
     const index = parseInt( tokens[ 0 ], 10 );
     const order = parseInt( tokens[ 1 ], 10 );
     return new PubChemBond( connectedAtom, molecule.atoms[ index ], order );
   }
 }
+
 CompleteMolecule.PubChemBond = PubChemBond;
 
 buildAMolecule.register( 'CompleteMolecule', CompleteMolecule );

@@ -55,7 +55,7 @@ class MoleculeList {
     const mainMolecules = MoleculeList.readCompleteMoleculesFromData( otherMoleculesData );
     mainMolecules.forEach( function( molecule ) {
       // if our molecule was included in the initial lookup, use that initial version instead so we can have instance equality preserved
-      const initialListLookup = initialList.moleculeNameMap[ molecule.filterCommonName( molecule.commonNameProperty.value ) ];
+      const initialListLookup = initialList.moleculeNameMap[ molecule.filterCommonName( molecule.commonName ) ];
       if ( initialListLookup && molecule.isEquivalent( initialListLookup ) ) {
         molecule = initialListLookup;
       }
@@ -145,7 +145,7 @@ class MoleculeList {
    */
   addCompleteMolecule( completeMolecule ) {
     this.completeMolecules.push( completeMolecule );
-    this.moleculeNameMap[ completeMolecule.filterCommonName( completeMolecule.commonNameProperty.value ) ] = completeMolecule;
+    this.moleculeNameMap[ completeMolecule.filterCommonName( completeMolecule.commonName ) ] = completeMolecule;
   }
 
   /**
@@ -227,9 +227,9 @@ MoleculeList.readCompleteMoleculesFromData = strings => {
 
     // sanity checks
     assert && assert( !molecule.hasLoopsOrIsDisconnected(),
-      'has loops or is disconnected: ' + molecule.filterCommonName( molecule.commonNameProperty.value ) );
+      'has loops or is disconnected: ' + molecule.filterCommonName( molecule.commonName ) );
     assert && assert( !molecule.hasWeirdHydrogenProperties(),
-      'has weird hydrogen pattern in: ' + molecule.filterCommonName( molecule.commonNameProperty.value ) );
+      'has weird hydrogen pattern in: ' + molecule.filterCommonName( molecule.commonName ) );
     return molecule;
   } );
 };

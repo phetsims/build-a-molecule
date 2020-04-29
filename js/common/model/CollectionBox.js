@@ -28,9 +28,6 @@ class CollectionBox {
       initializeAudio: true
     }, options );
 
-    //REVIEW: This is unneeded with ES6 arrow functions, replace the one usage with `this`
-    const self = this;
-
     // @public {NumberProperty}
     this.quantityProperty = new NumberProperty( 0 );
 
@@ -54,7 +51,7 @@ class CollectionBox {
     this.molecules = [];
     this.dropBoundsProperty = new Property( Bounds2.NOTHING );
     this.addedMoleculeEmitter.addListener( () => {
-      if ( self.quantityProperty.value === capacity && options.initializeAudio ) {
+      if ( this.quantityProperty.value === capacity && options.initializeAudio ) {
 
         // Audio player for correct sound
         const gameAudioPlayer = new GameAudioPlayer();
@@ -120,8 +117,7 @@ class CollectionBox {
    * @public
    */
   reset() {
-    //REVIEW: slice() with no args is preferred
-    this.molecules.slice( 0 ).forEach( this.removeMolecule.bind( this ) );
+    this.molecules.slice().forEach( this.removeMolecule.bind( this ) );
     this.cueVisibilityProperty.reset();
   }
 }

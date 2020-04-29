@@ -247,7 +247,7 @@ class Kit {
    */
   moleculePutInCollectionBox( molecule, box ) {
     if ( BuildAMoleculeQueryParameters.logData ) {
-      console.log( 'You have collected: ' + box.moleculeType.commonNameProperty.value );
+      console.log( 'You have collected: ' + box.moleculeType.commonName );
     }
     this.hasMoleculesInBoxesProperty.value = true;
     this.removeMolecule( molecule );
