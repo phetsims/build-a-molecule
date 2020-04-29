@@ -36,12 +36,13 @@ class KitPlayAreaNode extends Node {
     this.moleculeBondContainerLayer = new Node();
 
     // @public atom.id => AtomNode
+    //REVIEW: doc map types e.g. @public {Object.<atom.id:number, AtomNode}
     this.atomNodeMap = {};
 
-    // @public moleculeId => MoleculeControlsHBox
+    // @public moleculeId => MoleculeControlsHBox REVIEW: doc with {Object} including types
     this.metadataMap = {};
 
-    // @private moleculeId => MoleculeBondContainerNode
+    // @private moleculeId => MoleculeBondContainerNode REVIEW: doc with {Object} including types
     this.bondMap = {};
 
     // Every kit maps the visibility of its atoms in the play area to its active property. Active kits

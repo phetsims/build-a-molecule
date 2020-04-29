@@ -49,7 +49,7 @@ class CollectionPanel extends Panel {
     // @private {Node}
     this.collectionAreaHolder = new Node();
 
-    // @private KitCollection id => node
+    // @private KitCollection id => node REVIEW: Doc with type, e.g. {Object.<kitCollectionId:number, Node} - or whatever it is
     this.collectionAreaMap = {}; // kitCollection id => node
 
     // @private {Array.<function>}

@@ -2,7 +2,7 @@
 
 /**
  * Represents a general molecular structure (without position or instance information).
- * <p/>
+ *
  * Generics for the atom type significantly simplify a lot of other code that would need
  * either explicit casting or wrapper functions.
  *
@@ -36,6 +36,7 @@ class MoleculeStructure {
     // @public {number}
     this.moleculeId = nextMoleculeId++; // used for molecule identification and ordering for optimization
 
+    //REVIEW: It looks like we can only guarantee {Atom}, CompleteMolecule.fromSerial2 (for instance) uses Pubchem-style atoms
     // @public {Array.<Atom2>}
     this.atoms = [];
 
@@ -45,10 +46,10 @@ class MoleculeStructure {
 
   /**
    * Add an atom to the molecule structure
-   * @param {Atom2} atom
+   * @param {Atom2} atom REVIEW: {Atom}?
    *
    * @public
-   * @returns {Atom2}
+   * @returns {Atom2} REVIEW: {Atom}?
    */
   addAtom( atom ) {
     assert && assert( !_.includes( this.atoms, atom ), 'Cannot add an already existing atom' );
@@ -93,7 +94,7 @@ class MoleculeStructure {
 
   /**
    * Our best attempt at getting a general molecular naming algorithm that handles organic and non-organic compounds.
-   * <p/>
+   *
    * @public
    *
    * @returns {string} Text which is the molecular formula
@@ -104,6 +105,7 @@ class MoleculeStructure {
 
     const organic = containsCarbon && containsHydrogen;
 
+    //REVIEW: Maybe better formatting on this ternary?
     const sortedElements = _.sortBy( this.getElementList(), organic ? MoleculeStructure.organicSortValue         // carbon first, then hydrogen, then others alphabetically
       : MoleculeStructure.electronegativeSortValue // sort by increasing electronegativity
     );
@@ -127,10 +129,10 @@ class MoleculeStructure {
   }
 
   /**
-   * @param {PubChemAtom*} atom
+   * @param {PubChemAtom*} atom REVIEW: Pretty sure the type needs to be {Atom}
    *
    * @public
-   * @returns {PubChemAtom*} All neighboring atoms that are connected by bonds to the passed in atom
+   * @returns {PubChemAtom*} All neighboring atoms that are connected by bonds to the passed in atom REVIEW: Pretty sure the type needs to be {Atom}
    */
   getNeighbors( atom ) {
     return _.map( this.getBondsInvolving( atom ), bond => {
@@ -210,6 +212,7 @@ class MoleculeStructure {
       }
 
       // move our atom from dirty to visited
+      //REVIEW: Why is this commented out?
       // dirtyAtoms.splice( _.indexOf( dirtyAtoms, atom ), 1 );
       visitedAtoms.push( atom );
     }
@@ -226,6 +229,7 @@ class MoleculeStructure {
    * @returns {boolean}
    */
   containsElement( element ) {
+    //REVIEW: Don't need the block on the arrow function, return _.some( this.atoms, atom => atom.element === element ); fits a bit nicer here
     return _.some( this.atoms, atom => {
       return atom.element === element;
     } );
@@ -248,6 +252,7 @@ class MoleculeStructure {
     return result;
   }
 
+  //REVIEW: If it's not relevant, can we remove this note? Performance I assume is fine?
   // Note: (performance) cache this?
   /**
    * @public
@@ -295,7 +300,7 @@ class MoleculeStructure {
   /**
    * Check whether the molecular structure is equivalent to another structure. Not terribly efficient, and will
    * probably fail for cyclic graphs.
-   * <p/>
+   *
    *
    * @param {Molecule} other - Another molecular structure
    * @public
@@ -397,6 +402,7 @@ class MoleculeStructure {
     }
 
     // remove the atoms from the visited sets, to hold our contract
+    //REVIEW: Handle TODOs here
     myVisited.splice( myVisited.indexOf( myAtom ), 1 ); // TODO: replace with remove()
     otherVisited.splice( otherVisited.indexOf( otherAtom ), 1 ); // TODO: replace with remove()
 
@@ -411,6 +417,7 @@ class MoleculeStructure {
    */
   getElementList() {
     // return defensive copy. if that is changed, examine all usages
+    //REVIEW: don't need the block here, prefer `return this.atoms.map( atom => atom.element );`
     return _.map( this.atoms, atom => {
       return atom.element;
     } );
@@ -446,7 +453,7 @@ class MoleculeStructure {
 
   /**
    * Format description, '|' is literal
-   * <p/>
+   *
    * line = numAtoms|numBonds(|atomBondSpec)*
    * atomBondSpec = atomSpec(,bondSpec)*
    * atomSpec --- determined by implementation of atom. does not contain '|' or ','
@@ -478,17 +485,20 @@ class MoleculeStructure {
   }
 }
 
-
+//REVIEW: Is this public? JSDoc?
 MoleculeStructure.formulaExceptions = {
   'H3N': 'NH3', // treated as if it is organic
   'CHN': 'HCN'  // not considered organic
 };
+
+//REVIEW: These static functions should be moved to static functions inside the class (ideally)
 
 /**
  * @param {Element} element
  * @returns {number}
  */
 MoleculeStructure.electronegativeSortValue = element => {
+  //REVIEW: This function could be declared in scope but NOT exported or static. It's only used internally in one place
   return element.electronegativity;
 };
 
@@ -497,6 +507,7 @@ MoleculeStructure.electronegativeSortValue = element => {
  * @returns {number}
  */
 MoleculeStructure.organicSortValue = element => {
+  //REVIEW: This function could be declared in scope but NOT exported or static. It's only used internally in one place
   if ( element.isCarbon() ) {
     return 0;
   }
@@ -513,6 +524,7 @@ MoleculeStructure.organicSortValue = element => {
  * @returns {number}
  */
 MoleculeStructure.alphabeticSortValue = element => {
+  //REVIEW: This function could be declared in scope but NOT exported or static. It's only used internally in one place
   let value = 1000 * element.symbol.charCodeAt( 0 );
   if ( element.symbol.length > 1 ) {
     value += element.symbol.charCodeAt( 1 );
@@ -522,6 +534,7 @@ MoleculeStructure.alphabeticSortValue = element => {
 
 /**
  * Combines molecules together by bonding their atoms A and B
+ * REVIEW: public?
  *
  * @param {MoleculeStructure} molA   Molecule A
  * @param {MoleculeStructure} molB   Molecule B
@@ -549,6 +562,7 @@ MoleculeStructure.getCombinedMoleculeFromBond = ( molA, molB, a, b, result ) => 
 
 /**
  * Split a bond in a molecule, and return the remaining molecule structure(s)
+ * REVIEW: public?
  *
  * @param {MoleculeStructure} structure The molecule
  * @param {Bond}              bond      The bond to break
@@ -626,6 +640,7 @@ MoleculeStructure.getMoleculesFromBrokenBond = ( structure, bond, molA, molB ) =
 /**
  * Given a matrix of equivalencies, can we find a permutation of the 'other' atoms that are equivalent to
  * their respective 'my' atoms?
+ * REVIEW: public?
  *
  * NOTE: equivalency matrices are stored in row-major format (compared to the Java version)
  *
@@ -665,6 +680,7 @@ MoleculeStructure.checkEquivalencyMatrix = ( equivalences, myIndex, otherRemaini
 
 /**
  * Deserialize a molecule structure
+ * REVIEW: public?
  *
  * @param {string}            line              The data (string) to deserialize
  * @param {MoleculeGenerator} moleculeGenerator function( atomCount, bondCount ):MoleculeStructure. Creates a molecule with properties that we can fill with atoms/bonds
@@ -693,6 +709,8 @@ MoleculeStructure.fromSerial2 = ( line, moleculeGenerator, atomParser, bondParse
 };
 
 /**
+ * REVIEW: public?
+ *
  * @param {string} line - The data (string) to deserialize
  * @returns {MoleculeStructure}
  */
@@ -702,6 +720,7 @@ MoleculeStructure.fromSerial2Basic = line => {
 };
 
 /**
+ * REVIEW: visibility
  * @param {number} atomCount
  * @param {number} bondCount
  * @returns {MoleculeStructure}
@@ -711,6 +730,7 @@ MoleculeStructure.defaultMoleculeGenerator = ( atomCount, bondCount ) => {
 };
 
 /**
+ * REVIEW: visibility
  * @param {string} atomString
  * @returns {Atom2}
  */
@@ -720,6 +740,7 @@ MoleculeStructure.defaultAtomParser = atomString => {
 };
 
 /**
+ * REVIEW: visibility
  * @param {string} bondString
  * @param {Atom2} connectedAtom
  * @param {MoleculeStructure} moleculeStructure

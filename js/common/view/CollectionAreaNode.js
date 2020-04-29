@@ -30,6 +30,7 @@ class CollectionAreaNode extends Node {
     const self = this;
 
     // Array for the black box for its text
+    //REVIEW: type/visibility docs
     this.collectionBoxNodes = [];
 
     // Container for collection boxes and reset collection button.

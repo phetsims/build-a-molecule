@@ -23,6 +23,9 @@ import scissorsImage from '../../../images/scissors_png.js';
 import buildAMolecule from '../../buildAMolecule.js';
 import BAMConstants from '../BAMConstants.js';
 
+//REVIEW: Imports don't match up with the image files, I would expect to see:
+//REVIEW: scissorsClosedUpImage, scissorsClosedUpImage, scissorsClosedImage, scissorsClosedImage, scissorsUpImage, scissorsUpImage, scissorsImage
+
 /* Notes on .cur file generation, all from the images directory, with "sudo apt-get install icoutils" for icotool:
  icotool -c -o scissors.ico scissors.png
  icotool -c -o scissors-closed.ico scissors-closed.png
@@ -136,6 +139,7 @@ class MoleculeBondNode extends Node {
      *
      * @private
      */
+    //REVIEW: Just doc as @private {function}
     this.positionListener = () => {
       const orientation = this.b.positionProperty.value.minus( this.a.positionProperty.value );
       if ( orientation.magnitude > 0 ) {

@@ -15,7 +15,7 @@ import Image from '../../../../scenery/js/nodes/Image.js';
 import Text from '../../../../scenery/js/nodes/Text.js';
 import RectangularPushButton from '../../../../sun/js/buttons/RectangularPushButton.js';
 import Playable from '../../../../tambo/js/Playable.js';
-import splitIconImage from '../../../images/split-blue_png.js';
+import splitIconImage from '../../../images/split-blue_png.js'; //REVIEW: splitBlueImage, based on the import name?
 import buildAMolecule from '../../buildAMolecule.js';
 import BAMConstants from '../BAMConstants.js';
 import MoleculeList from '../model/MoleculeList.js';
@@ -31,10 +31,13 @@ const SCALE = 1.2;
  * @param {function} showDialogCallback
  */
 class MoleculeControlsHBox extends HBox {
+  //REVIEW: JSDoc constructor
   constructor( kit, molecule, showDialogCallback ) {
     super( { spacing: 9 } );
 
     const self = this;
+
+    //REVIEW: visibility docs
     this.molecule = molecule;
 
     if ( molecule.atoms.length < 2 ) {
@@ -42,6 +45,8 @@ class MoleculeControlsHBox extends HBox {
       // we don't need anything at all if it is not a "molecule"
       return;
     }
+
+    //REVIEW: JSDocs, e.g. @private {function} probably?
     this.updatePositionListener = this.updatePosition.bind( this );
 
     // Check if molecule data exists

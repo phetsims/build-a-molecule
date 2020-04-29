@@ -317,7 +317,7 @@ class Molecule3DDialog extends Dialog {
       moleculeContainer.updateMatrixWorld();
     } );
 
-    // @private
+    // @private REVIEW: type doc these!
     this.moleculeNode = moleculeNode;
     this.spaceFilledIcon = spaceFilledIcon;
     this.ballAndStickIcon = ballAndStickIcon;

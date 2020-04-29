@@ -31,6 +31,8 @@ class BAMScreenView extends ScreenView {
    */
   constructor( kitCollectionList ) {
     super();
+    //REVIEW: These should have {Object} included for types
+    //REVIEW: e.g. {Object.<atomId:number, AtomNode>}, {Object.<moleculeId:number, MoleculeControlsHBox}
     this.atomNodeMap = {}; // maps Atom2 ID => AtomNode
     this.kitCollectionMap = {}; // maps KitCollection ID => KitCollectionNode
     this.metadataMap = {}; // moleculeId => MoleculeControlsHBox
@@ -46,7 +48,7 @@ class BAMScreenView extends ScreenView {
     this.atomDragBounds = new Bounds2( -1575, -850, 1575, 950 );
     this.mappedKitCollectionBounds = this.kitCollectionMap[ this.kitCollectionList.currentCollectionProperty.value.id ].bounds.dilatedX( 60 );
 
-    // @public Dialog used for representing 3D molecules.
+    // @public Dialog used for representing 3D molecules. REVIEW: missing type docs here
     // Only create a dialog if webgl is enabled. See https://github.com/phetsims/build-a-molecule/issues/105
     this.dialog = ThreeUtils.isWebGLEnabled() ? new Molecule3DDialog( new Property( null ) ) : new WarningDialog();
 
@@ -58,6 +60,7 @@ class BAMScreenView extends ScreenView {
     const kits = [];
 
     // Create a play area to house the molecules.
+    //REVIEW: type/visibility docs
     this.kitPlayAreaNode = new KitPlayAreaNode( kits );
     kitCollectionList.currentCollectionProperty.link( ( newCollection, oldCollection ) => {
       if ( oldCollection ) {
@@ -112,6 +115,7 @@ class BAMScreenView extends ScreenView {
      *
      * @public
      */
+    //REVIEW: if this is marked as public with JSDoc, we really should move it to a method
     this.updateRefillButton = () => {
       refillButton.enabled = !kitCollectionList.currentCollectionProperty.value.currentKitProperty.value.allBucketsFilled();
     };
@@ -255,6 +259,7 @@ class BAMScreenView extends ScreenView {
     } );
 
     // listener for 'click outside to dismiss'
+    //REVIEW: type/visibility docs
     this.clickToDismissListener = {
       down: () => {
         kitCollectionList.currentCollectionProperty.value.currentKitProperty.value.selectedAtomProperty.value = null;
