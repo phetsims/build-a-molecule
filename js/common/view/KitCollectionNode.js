@@ -22,8 +22,8 @@ class KitCollectionNode extends Node {
   constructor( collection, view, isCollectingView ) {
     super();
 
-    // @public {KitPanel} Create a kit panel to contain the kit buckets
-    this.kitPanel = new KitPanel( collection, BAMConstants.KIT_VIEW_WIDTH, BAMConstants.KIT_VIEW_HEIGHT, view, isCollectingView );
+    // @public {KitPanel} Create a kit panel to contain the kit buckets. Height/Widht are empirically determined
+    this.kitPanel = new KitPanel( collection, 655, 148, view, isCollectingView );
     this.kitPanel.bottom = view.layoutBounds.bottom - BAMConstants.VIEW_PADDING;
     this.kitPanel.left = view.layoutBounds.left + BAMConstants.VIEW_PADDING;
     this.addChild( this.kitPanel );

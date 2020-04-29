@@ -23,7 +23,7 @@ import Molecule3DNode from './view3d/Molecule3DNode.js';
 import ShowMolecule3DButtonNode from './view3d/ShowMolecule3DButtonNode.js';
 
 // constants
-const BLACK_BOX_PADDING = BAMConstants.HAS_3D ? 7 : 0;
+const BLACK_BOX_PADDING = 7;
 
 class CollectionBoxNode extends VBox {
   /**
@@ -61,7 +61,6 @@ class CollectionBoxNode extends VBox {
     };
 
     // Arrange button position for to trigger 3D representation
-    if ( BAMConstants.HAS_3D ) {
       const show3dButton = new ShowMolecule3DButtonNode( box.moleculeType, showDialogCallback );
       show3dButton.touchArea = Shape.bounds( show3dButton.bounds.dilated( 10 ) );
       show3dButton.right = this.blackBox.right - BLACK_BOX_PADDING;
@@ -74,10 +73,6 @@ class CollectionBoxNode extends VBox {
       box.removedMoleculeEmitter.addListener( update3dVisibility );
       update3dVisibility();
       this.blackBox.addChild( show3dButton );
-    }
-    else {
-      this.button3dWidth = 0;
-    }
     this.boxNode.addChild( this.blackBox );
 
     // Cue that tells the user where to drop the molecule.

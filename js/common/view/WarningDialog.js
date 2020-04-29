@@ -18,10 +18,6 @@ import buildAMoleculeStrings from '../../buildAMoleculeStrings.js';
 const warningString = buildAMoleculeStrings.warning;
 
 class WarningDialog extends Dialog {
-  /**
-   *
-   * @constructor //REVIEW: We don't annotate constructors anymore
-   */
   constructor() {
 
     // Message describing the lack of webgl support with a link for more information

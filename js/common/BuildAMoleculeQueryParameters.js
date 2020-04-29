@@ -11,8 +11,7 @@ import buildAMolecule from '../buildAMolecule.js';
 const BuildAMoleculeQueryParameters = QueryStringMachine.getAll( {
 
   // Triggers a successfully completed collection. The user just needs to fill a single box to go to next collection.
-  //REVIEW: Recommend adding the private:true flag, so that students can't just do this to bypass things
-  easyMode: { type: 'flag' },
+  easyMode: { type: 'flag', private: true },
 
   // Triggers console logs for information related to created molecules, collected molecules, and split molecules
   logData: { type: 'flag' },
@@ -24,8 +23,9 @@ const BuildAMoleculeQueryParameters = QueryStringMachine.getAll( {
   //REVIEW: have the index to number conversion add one?
   skipLevels: {
     type: 'number',
-    isValidValue: value => ( value > 0 ),
-    defaultValue: 1
+    private: true,
+    isValidValue: value => ( value >= 0 ),
+    defaultValue: 0
   }
 } );
 

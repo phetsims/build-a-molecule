@@ -29,7 +29,6 @@ const SCALE = 1.2;
  * @param {Kit} kit
  * @param {Molecule} molecule
  * @param {function} showDialogCallback
- * @constructor //REVIEW: We don't annotate constructors anymore
  */
 class MoleculeControlsHBox extends HBox {
   constructor( kit, molecule, showDialogCallback ) {
@@ -57,7 +56,6 @@ class MoleculeControlsHBox extends HBox {
       this.addChild( label );
 
       // 3D button
-      if ( BAMConstants.HAS_3D ) {
 
         // @private Button that shows 3d representation of molecule
         const button3d = new ShowMolecule3DButtonNode( completeMolecule, showDialogCallback, {
@@ -65,7 +63,6 @@ class MoleculeControlsHBox extends HBox {
         } );
         button3d.touchArea = Shape.bounds( button3d.childBounds.dilated( DILATION_FACTOR ) );
         this.addChild( button3d );
-      }
     }
 
     // Break-up button 'X'
@@ -104,8 +101,7 @@ class MoleculeControlsHBox extends HBox {
         atom.positionProperty.unlink( listener );
       } );
     }
-    //REVIEW: super.dispose()
-    HBox.prototype.dispose.call( this );
+    super.dispose( this );
   }
 
   /**
@@ -118,7 +114,7 @@ class MoleculeControlsHBox extends HBox {
     const moleculeViewBounds = BAMConstants.MODEL_VIEW_TRANSFORM.modelToViewBounds( modelPositionBounds );
 
     this.setTranslation( moleculeViewBounds.centerX - this.width / 2, // horizontally center
-      moleculeViewBounds.minY - this.height - BAMConstants.BUTTON_PADDING ); // offset from top of molecule
+      moleculeViewBounds.minY - this.height - 5 ); // offset from top of molecule
   }
 }
 buildAMolecule.register( 'MoleculeControlsHBox', MoleculeControlsHBox );

@@ -32,7 +32,7 @@ class BAMScreen extends Screen {
    */
   constructor( createInitialKitCollection, collectionLayout, createKitCollection, createView, options ) {
     options = merge( {
-      backgroundColorProperty: new Property( BAMConstants.CANVAS_BACKGROUND_COLOR )
+      backgroundColorProperty: new Property( BAMConstants.PLAY_AREA_BACKGROUND_COLOR )
     }, options );
     const stepEmitter = new Emitter( { parameters: [ { valueType: 'number' } ] } ); // emits 1 parameter, timeElapsed
 

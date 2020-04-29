@@ -34,7 +34,7 @@ const BAMIconFactory = {
 
     // Iconize Molecule for home screen and nav-bar
     const wrapperNode = new Rectangle( 0, 0, 548, 373, 0, 0, {
-      fill: BAMConstants.CANVAS_BACKGROUND_COLOR
+      fill: BAMConstants.PLAY_AREA_BACKGROUND_COLOR
     } );
     const moleculeNode = new Molecule3DNode( MoleculeList.H2O, new Bounds2( 0, 0, 548, 373 ), false );
     const transformMatrix = Molecule3DNode.initialTransforms[ MoleculeList.H2O.getGeneralFormula() ];
@@ -95,7 +95,7 @@ const BAMIconFactory = {
 
     // Wrapper node to house molecule icons
     const wrapperNode = new Rectangle( 0, 0, 548, 373, 0, 0, {
-      fill: BAMConstants.CANVAS_BACKGROUND_COLOR
+      fill: BAMConstants.PLAY_AREA_BACKGROUND_COLOR
     } );
     wrapperNode.addChild( moleculeIconOne );
     wrapperNode.addChild( moleculeIconTwo );
@@ -130,7 +130,7 @@ const BAMIconFactory = {
       scale: 0.95
     } );
     const wrapperNode = new Rectangle( 0, 0, 548, 373, 0, 0, {
-      fill: BAMConstants.CANVAS_BACKGROUND_COLOR
+      fill: BAMConstants.PLAY_AREA_BACKGROUND_COLOR
     } );
     wrapperNode.addChild( moleculeIcon );
     moleculeIcon.center = wrapperNode.center.minusXY( 0, 10 );

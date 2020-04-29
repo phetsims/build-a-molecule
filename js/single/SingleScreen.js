@@ -29,7 +29,7 @@ class SingleScreen extends BAMScreen {
   constructor() {
     const options = {
       name: titleSingleString,
-      backgroundColorProperty: new Property( BAMConstants.CANVAS_BACKGROUND_COLOR ),
+      backgroundColorProperty: new Property( BAMConstants.PLAY_AREA_BACKGROUND_COLOR ),
       homeScreenIcon: BAMIconFactory.createSingleScreen()
     };
 

@@ -23,9 +23,8 @@ const OFFSET = 3;
 
 class RefillButton extends RectangularPushButton {
   /**
-   * @param {Function} buttonListener //REVIEW: Lower-casing of {function}
+   * @param {function} buttonListener
    * @param {Object} [options]
-   * @constructor //REVIEW: We don't annotate constructors anymore
    */
   constructor( buttonListener, options ) {
     const replyIcon = new FontAwesomeNode( 'reply', {

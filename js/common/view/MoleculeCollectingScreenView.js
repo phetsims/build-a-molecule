@@ -120,9 +120,9 @@ class MoleculeCollectingScreenView extends BAMScreenView {
 
   /**
    * @param {KitCollection} collection
-   * REVIEW: Missing visibility
    *
    * @override
+   * @public
    * @returns {Node}
    */
   addCollection( collection ) {

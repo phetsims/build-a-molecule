@@ -154,9 +154,7 @@ class BAMScreenView extends ScreenView {
       const moleculeControlsHBox = new MoleculeControlsHBox( kit, molecule, this.showDialogCallback );
       this.kitPlayAreaNode.metadataLayer.addChild( moleculeControlsHBox );
       this.kitPlayAreaNode.metadataMap[ molecule.moleculeId ] = moleculeControlsHBox;
-      if ( BAMConstants.ALLOW_BOND_BREAKING ) {
-        this.kitPlayAreaNode.addMoleculeBondNodes( molecule );
-      }
+      this.kitPlayAreaNode.addMoleculeBondNodes( molecule );
     };
 
     /**
@@ -169,10 +167,7 @@ class BAMScreenView extends ScreenView {
         this.kitPlayAreaNode.metadataLayer.removeChild( moleculeControlsHBox );
         moleculeControlsHBox.dispose();
         delete this.kitPlayAreaNode.metadataMap[ molecule.moleculeId ];
-
-        if ( BAMConstants.ALLOW_BOND_BREAKING ) {
-          this.kitPlayAreaNode.removeMoleculeBondNodes( molecule );
-        }
+        this.kitPlayAreaNode.removeMoleculeBondNodes( molecule );
       }
     };
 
