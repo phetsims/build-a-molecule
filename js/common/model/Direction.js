@@ -23,11 +23,13 @@ class Direction {
   /**
    * @param {Vector2} vector
    * @param {string} id
-   * @constructor //REVIEW: We don't annotate constructors anymore
    */
   constructor( vector, id ) {
-    //REVIEW: Would at least need visibility here
+
+    // @public {Vector2}
     this.vector = vector;
+
+    // @public {number}
     this.id = id;
   }
 }
