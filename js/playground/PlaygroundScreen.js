@@ -13,7 +13,7 @@ import Element from '../../../nitroglycerin/js/Element.js';
 import buildAMolecule from '../buildAMolecule.js';
 import buildAMoleculeStrings from '../buildAMoleculeStrings.js';
 import BAMConstants from '../common/BAMConstants.js';
-import Bucket from '../common/model/Bucket.js';
+import BAMBucket from '../common/model/BAMBucket.js';
 import CollectionLayout from '../common/model/CollectionLayout.js';
 import Kit from '../common/model/Kit.js';
 import KitCollection from '../common/model/KitCollection.js';
@@ -43,60 +43,60 @@ class PlaygroundScreen extends BAMScreen {
 
         // general kit
         kitCollection.addKit( new Kit( bounds, [
-          Bucket.createAutoSized( stepEmitter, Element.H, 13 ),
-          Bucket.createAutoSized( stepEmitter, Element.O, 3 ),
-          Bucket.createAutoSized( stepEmitter, Element.C, 3 ),
-          Bucket.createAutoSized( stepEmitter, Element.N, 3 ),
-          Bucket.createAutoSized( stepEmitter, Element.Cl, 2 )
+          BAMBucket.createAutoSized( stepEmitter, Element.H, 13 ),
+          BAMBucket.createAutoSized( stepEmitter, Element.O, 3 ),
+          BAMBucket.createAutoSized( stepEmitter, Element.C, 3 ),
+          BAMBucket.createAutoSized( stepEmitter, Element.N, 3 ),
+          BAMBucket.createAutoSized( stepEmitter, Element.Cl, 2 )
         ] ) );
 
         // organics kit
         kitCollection.addKit( new Kit( bounds, [
-          new Bucket( BUCKET_DIMENSIONS, stepEmitter, Element.H, 21 ),
-          Bucket.createAutoSized( stepEmitter, Element.O, 4 ),
-          Bucket.createAutoSized( stepEmitter, Element.C, 4 ),
-          Bucket.createAutoSized( stepEmitter, Element.N, 4 )
+          new BAMBucket( BUCKET_DIMENSIONS, stepEmitter, Element.H, 21 ),
+          BAMBucket.createAutoSized( stepEmitter, Element.O, 4 ),
+          BAMBucket.createAutoSized( stepEmitter, Element.C, 4 ),
+          BAMBucket.createAutoSized( stepEmitter, Element.N, 4 )
         ] ) );
 
         // chlorine / fluorine
         kitCollection.addKit( new Kit( bounds, [
-          new Bucket( BUCKET_DIMENSIONS, stepEmitter, Element.H, 21 ),
-          Bucket.createAutoSized( stepEmitter, Element.C, 4 ),
-          Bucket.createAutoSized( stepEmitter, Element.Cl, 4 ),
-          Bucket.createAutoSized( stepEmitter, Element.F, 4 )
+          new BAMBucket( BUCKET_DIMENSIONS, stepEmitter, Element.H, 21 ),
+          BAMBucket.createAutoSized( stepEmitter, Element.C, 4 ),
+          BAMBucket.createAutoSized( stepEmitter, Element.Cl, 4 ),
+          BAMBucket.createAutoSized( stepEmitter, Element.F, 4 )
         ] ) );
 
         // boron / silicon
         kitCollection.addKit( new Kit( bounds, [
-          new Bucket( BUCKET_DIMENSIONS, stepEmitter, Element.H, 21 ),
-          Bucket.createAutoSized( stepEmitter, Element.C, 3 ),
-          Bucket.createAutoSized( stepEmitter, Element.B, 2 ),
-          Bucket.createAutoSized( stepEmitter, Element.Si, 2 )
+          new BAMBucket( BUCKET_DIMENSIONS, stepEmitter, Element.H, 21 ),
+          BAMBucket.createAutoSized( stepEmitter, Element.C, 3 ),
+          BAMBucket.createAutoSized( stepEmitter, Element.B, 2 ),
+          BAMBucket.createAutoSized( stepEmitter, Element.Si, 2 )
         ] ) );
 
         // sulphur / oxygen
         kitCollection.addKit( new Kit( bounds, [
-          new Bucket( BUCKET_DIMENSIONS, stepEmitter, Element.H, 21 ),
-          Bucket.createAutoSized( stepEmitter, Element.B, 1 ),
-          Bucket.createAutoSized( stepEmitter, Element.S, 2 ),
-          Bucket.createAutoSized( stepEmitter, Element.Si, 1 ),
-          Bucket.createAutoSized( stepEmitter, Element.P, 1 )
+          new BAMBucket( BUCKET_DIMENSIONS, stepEmitter, Element.H, 21 ),
+          BAMBucket.createAutoSized( stepEmitter, Element.B, 1 ),
+          BAMBucket.createAutoSized( stepEmitter, Element.S, 2 ),
+          BAMBucket.createAutoSized( stepEmitter, Element.Si, 1 ),
+          BAMBucket.createAutoSized( stepEmitter, Element.P, 1 )
         ] ) );
 
         // phosphorus
         kitCollection.addKit( new Kit( bounds, [
-          new Bucket( BUCKET_DIMENSIONS, stepEmitter, Element.H, 21 ),
-          Bucket.createAutoSized( stepEmitter, Element.C, 4 ),
-          Bucket.createAutoSized( stepEmitter, Element.O, 2 ),
-          Bucket.createAutoSized( stepEmitter, Element.P, 2 )
+          new BAMBucket( BUCKET_DIMENSIONS, stepEmitter, Element.H, 21 ),
+          BAMBucket.createAutoSized( stepEmitter, Element.C, 4 ),
+          BAMBucket.createAutoSized( stepEmitter, Element.O, 2 ),
+          BAMBucket.createAutoSized( stepEmitter, Element.P, 2 )
         ] ) );
 
         // bromine kit?
         kitCollection.addKit( new Kit( bounds, [
-          new Bucket( BUCKET_DIMENSIONS, stepEmitter, Element.H, 21 ),
-          Bucket.createAutoSized( stepEmitter, Element.Br, 2 ),
-          Bucket.createAutoSized( stepEmitter, Element.N, 3 ),
-          Bucket.createAutoSized( stepEmitter, Element.C, 3 )
+          new BAMBucket( BUCKET_DIMENSIONS, stepEmitter, Element.H, 21 ),
+          BAMBucket.createAutoSized( stepEmitter, Element.Br, 2 ),
+          BAMBucket.createAutoSized( stepEmitter, Element.N, 3 ),
+          BAMBucket.createAutoSized( stepEmitter, Element.C, 3 )
         ] ) );
 
         return kitCollection;

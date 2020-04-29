@@ -15,7 +15,7 @@ import Element from '../../../../nitroglycerin/js/Element.js';
 import merge from '../../../../phet-core/js/merge.js';
 import buildAMolecule from '../../buildAMolecule.js';
 import BAMConstants from '../BAMConstants.js';
-import Bucket from '../model/Bucket.js';
+import BAMBucket from '../model/BAMBucket.js';
 import CollectionBox from '../model/CollectionBox.js';
 import Kit from '../model/Kit.js';
 import KitCollection from '../model/KitCollection.js';
@@ -124,9 +124,9 @@ BAMScreen.generateKitCollection = ( allowMultipleMolecules, numBoxes, stepEmitte
       }
 
       // funky math part. sqrt scales it so that we can get two layers of atoms if the atom count is above 2
-      const bucketWidth = Bucket.calculateIdealBucketWidth( element.covalentRadius, atomCount );
+      const bucketWidth = BAMBucket.calculateIdealBucketWidth( element.covalentRadius, atomCount );
 
-      buckets.push( new Bucket( new Dimension2( bucketWidth, 200 ), stepEmitter, element, atomCount ) );
+      buckets.push( new BAMBucket( new Dimension2( bucketWidth, 200 ), stepEmitter, element, atomCount ) );
     } );
 
     // add the kit

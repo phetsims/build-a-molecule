@@ -13,7 +13,7 @@ import Element from '../../../nitroglycerin/js/Element.js';
 import buildAMolecule from '../buildAMolecule.js';
 import buildAMoleculeStrings from '../buildAMoleculeStrings.js';
 import BAMConstants from '../common/BAMConstants.js';
-import Bucket from '../common/model/Bucket.js';
+import BAMBucket from '../common/model/BAMBucket.js';
 import CollectionBox from '../common/model/CollectionBox.js';
 import CollectionLayout from '../common/model/CollectionLayout.js';
 import Kit from '../common/model/Kit.js';
@@ -41,17 +41,17 @@ class SingleScreen extends BAMScreen {
       ( bounds, stepEmitter ) => {
         const kitCollection = new KitCollection( { enableCues: true } );
         kitCollection.addKit( new Kit( bounds, [
-          new Bucket( new Dimension2( 400, 200 ), stepEmitter, Element.H, 2 ),
-          new Bucket( new Dimension2( 350, 200 ), stepEmitter, Element.O, 1 )
+          new BAMBucket( new Dimension2( 400, 200 ), stepEmitter, Element.H, 2 ),
+          new BAMBucket( new Dimension2( 350, 200 ), stepEmitter, Element.O, 1 )
         ] ), { triggerCue: true } );
         kitCollection.addKit( new Kit( bounds, [
-          new Bucket( new Dimension2( 400, 200 ), stepEmitter, Element.H, 2 ),
-          new Bucket( new Dimension2( 450, 200 ), stepEmitter, Element.O, 2 )
+          new BAMBucket( new Dimension2( 400, 200 ), stepEmitter, Element.H, 2 ),
+          new BAMBucket( new Dimension2( 450, 200 ), stepEmitter, Element.O, 2 )
         ] ), { triggerCue: true } );
         kitCollection.addKit( new Kit( bounds, [
-          new Bucket( new Dimension2( 350, 200 ), stepEmitter, Element.C, 1 ),
-          new Bucket( new Dimension2( 450, 200 ), stepEmitter, Element.O, 2 ),
-          new Bucket( new Dimension2( 500, 200 ), stepEmitter, Element.N, 2 )
+          new BAMBucket( new Dimension2( 350, 200 ), stepEmitter, Element.C, 1 ),
+          new BAMBucket( new Dimension2( 450, 200 ), stepEmitter, Element.O, 2 ),
+          new BAMBucket( new Dimension2( 500, 200 ), stepEmitter, Element.N, 2 )
         ] ), { triggerCue: true } );
 
         // Add the collection boxes.

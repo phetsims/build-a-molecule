@@ -18,8 +18,7 @@ import Strings from '../../BAMStrings.js';
 import AtomNode from '../view/AtomNode.js';
 import Atom2 from './Atom2.js';
 
-//REVIEW: This extends SphereBucket which itself extends Bucket... maybe name it BAMBucket?
-class Bucket extends SphereBucket {
+class BAMBucket extends SphereBucket {
   /**
    * The dimensions used are unit less, i.e. they are not meant to be any specific size (such as meters).  This enabled
    * reusability in any 2D model.
@@ -42,7 +41,7 @@ class Bucket extends SphereBucket {
     // @private {Property.<Vector2>}
     this.positionProperty = new Vector2Property( this.position );
 
-    // @public {ObservableArray} Tracks all of the particles in this bucket REVIEW: ObservableArray.<Atom2>?
+    // @public {ObservableArray.<Atom2>} Tracks all of the particles in this bucket
     this.particleList = new ObservableArray();
 
     // @public {Array.<Atom2>} Contains atoms for a bucket when the bucket is full.
@@ -95,15 +94,15 @@ class Bucket extends SphereBucket {
    * @returns {boolean}
    */
   isFull() {
-    return this.fullState.length === this.particleList.getArray().length; //REVIEW: ObservableArray has a length getter itself, don't do getArray()
+    return this.fullState.length === this.particleList.length;
   }
 
   /**
    * Make sure we can fit all of our atoms in just two rows
-   * REVIEW: Should have visibility
+   * @param {number} radius - Atomic radius (picometers)
+   * @param {number} quantity - quantity of atoms in bucket
    *
-   * @param radius   Atomic radius (picometers) REVIEW: Type doc
-   * @param quantity Quantity of atoms in bucket REVIEW: Type doc
+   * @public
    * @returns {number} Width of bucket
    */
   static calculateIdealBucketWidth( radius, quantity ) {
@@ -117,11 +116,20 @@ class Bucket extends SphereBucket {
     return Math.floor( Math.max( 350, width + 1 ) );
   }
 
-  //REVIEW: JSDoc
+
+  /**
+   * Return bucket with an ideal width to fit all its atoms.
+   * @param {Emitter} stepEmitter
+   * @param {Element} element
+   * @param {number} quantity
+   *
+   * @public
+   * @returns {BAMBucket}
+   */
   static createAutoSized( stepEmitter, element, quantity ) {
-    return new Bucket( new Dimension2( Bucket.calculateIdealBucketWidth( element.covalentRadius, quantity ), 200 ), stepEmitter, element, quantity );
+    return new BAMBucket( new Dimension2( BAMBucket.calculateIdealBucketWidth( element.covalentRadius, quantity ), 200 ), stepEmitter, element, quantity );
   }
 }
 
-buildAMolecule.register( 'Bucket', Bucket );
-export default Bucket;
+buildAMolecule.register( 'BAMBucket', BAMBucket );
+export default BAMBucket;
