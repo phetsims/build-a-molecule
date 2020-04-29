@@ -14,11 +14,11 @@ import BAMConstants from '../BAMConstants.js';
 class ElementHistogram extends PhetioObject {
   /**
    * @param {MoleculeStructure} moleculeStructure
-   * @constructor //REVIEW: We don't annotate constructors anymore
    */
   constructor( moleculeStructure ) {
     super();
-    //REVIEW: JSDOc?
+
+    // @private {Object} element => element quantity
     this.quantities = {};
     BAMConstants.SUPPORTED_ELEMENTS.forEach( element => {
       this.quantities[ element.symbol ] = 0;
@@ -64,8 +64,8 @@ class ElementHistogram extends PhetioObject {
 
   /**
    * A hash string that should be unique for each unique histogram, and the same for each equivalent histogram
-   * REVIEW: needs visibility
    *
+   * @public
    * @returns {string}
    */
   getHashString() {
@@ -79,9 +79,9 @@ class ElementHistogram extends PhetioObject {
 
   /**
    * Compares elements of each histogram
-   * REVIEW: needs visibility
-   *
    * @param {ElementHistogram} otherHistogram
+   *
+   * @public
    * @returns {boolean}
    */
   equals( otherHistogram ) {

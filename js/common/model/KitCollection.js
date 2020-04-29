@@ -18,8 +18,7 @@ let currentId = 0;
 
 class KitCollection {
   /**
-   * @constructor //REVIEW: We don't annotate constructors anymore
-   * REVIEW: Missing JSDoc for options
+   * @param [Object] options
    */
   constructor( options ) {
     options = merge( {

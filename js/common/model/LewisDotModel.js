@@ -15,14 +15,15 @@ import Direction from './Direction.js';
 
 class LewisDotModel {
   constructor() {
+
     // @public Maps atom ID => LewisDotAtom
     this.atomMap = {};
   }
 
   /**
    * Add an atom to the atom map
+   * @param {Atom} atom
    *
-   * @param atom REVIEW: Type doc
    * @public
    */
   addAtom( atom ) {
@@ -31,8 +32,8 @@ class LewisDotModel {
 
   /**
    * Remove the bonds from an atom
+   * @param {Atom} atom
    *
-   * @param atom REVIEW: Type doc
    * @public
    */
   breakBondsOfAtom( atom ) {
@@ -81,8 +82,8 @@ class LewisDotModel {
   /**
    * Returns all of the directions that are open (not bonded to another) on the atom
    * @param {Atom} atom
-   * REVIEW: missing visibility
    *
+   * @public
    * @returns {Array.<Direction>}
    */
   getOpenDirections( atom ) {
@@ -153,12 +154,13 @@ class LewisDotModel {
   /**
    * Add "atom" to our coordinate map, and all of its neighbors EXCEPT for excludedAtom.
    * This allows mapping a molecule without loops quite easily
-   * REVIEW: missing visibility
    *
    * @param {Vector2}             coordinates   Coordinates of "atom"
    * @param {Atom}                atom          Atom to add
    * @param {Atom}                excludedAtom  Atom not to
    * @param {Map x+','+y => Atom} coordinateMap Coordinate map to which we add the atoms to
+   *
+   * @private
    * @returns {boolean} Success. Will return false if any heavy atom overlaps on another atom. If it returns false, the coordinate map may be inconsistent
    */
   mapMolecule( coordinates, atom, excludedAtom, coordinateMap ) {
@@ -206,7 +208,12 @@ class LewisDotModel {
     return success;
   }
 
-  //REVIEW: JSDoc
+  /**
+   * @param {Atom} atom
+   *
+   * @private
+   * @returns {Atom}
+   */
   getLewisDotAtom( atom ) {
     return this.atomMap[ atom.id ];
   }

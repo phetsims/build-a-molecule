@@ -26,9 +26,6 @@ import MoleculeCollectingScreenView from '../common/view/MoleculeCollectingScree
 const titleSingleString = buildAMoleculeStrings.title.single;
 
 class SingleScreen extends BAMScreen {
-  /**
-   * @constructor //REVIEW: We don't annotate constructors anymore
-   */
   constructor() {
     const options = {
       name: titleSingleString,

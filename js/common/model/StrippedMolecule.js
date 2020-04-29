@@ -61,9 +61,9 @@ class StrippedMolecule extends PhetioObject {
   }
 
   /**
-   * @private
+   * @param {Atom} atom
    *
-   * REVIEW: missing atom JSDoc
+   * @private
    * @returns {number}
    */
   getIndex( atom ) {
@@ -227,9 +227,10 @@ class StrippedMolecule extends PhetioObject {
   }
 
   /**
+   * @param {Atom} atom
+   *
    * @public
-   * REVIEW: Missing JSDoc for atom
-   * @returns {atom}
+   * @returns {StrippedMolecule}
    */
   getCopyWithAtomRemoved( atom ) {
     const result = new StrippedMolecule( this.stripped.getCopyWithAtomRemoved( atom ) );

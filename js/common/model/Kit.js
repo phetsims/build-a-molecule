@@ -178,8 +178,8 @@ class Kit {
   /**
    * Returns the bucket for a given element
    * @param {Element} element
-   * REVIEW: needs visibility
    *
+   * @private
    * @returns {Bucket}
    */
   getBucketForElement( element ) {
@@ -192,8 +192,8 @@ class Kit {
 
   /**
    * Returns kit bounds within the collection layout
-   * @public
    *
+   * @public
    * @returns {Rectangle}
    */
   get availableKitBounds() {
@@ -346,8 +346,8 @@ class Kit {
    * Return the direction of the bond between two atoms
    * @param {Atom2} a - An atom A
    * @param {Atom2} b - An atom B
-   * REVIEW: needs visibility
    *
+   * @public
    * @returns {Direction}
    */
   getBondDirection( a, b ) {

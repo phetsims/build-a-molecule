@@ -13,9 +13,8 @@ import MoleculeStructure from './MoleculeStructure.js';
 
 class Molecule extends MoleculeStructure {
   /**
-   * @param numAtoms REVIEW: Type doc
-   * @param numBonds REVIEW: Type doc
-   * @constructor //REVIEW: We don't annotate constructors anymore
+   * @param {number} numAtoms
+   * @param {number} numBonds
    */
   constructor( numAtoms, numBonds ) {
     super( numAtoms || 0, numBonds || 0 );
@@ -23,8 +22,8 @@ class Molecule extends MoleculeStructure {
 
   /**
    * Returns the position bounds of the entire molecule
-   * REVIEW: missing visibility
    *
+   * @public
    * @returns {Bounds2}
    */
   get positionBounds() {
@@ -38,11 +37,12 @@ class Molecule extends MoleculeStructure {
 
   /**
    * Returns the destination bounds of the entire molecule
-   * REVIEW: missing visibility
    *
+   * @public
    * @returns {Bounds2}
    */
   get destinationBounds() {
+
     // mutable way of handling this, so we need to make a copy
     const bounds = Bounds2.NOTHING.copy();
     this.atoms.forEach( atom => {

@@ -115,61 +115,11 @@ class MoleculeStructure {
     return MoleculeStructure.formulaExceptions[ formula ] || formula;
   }
 
-  /**
-   * Return the molecular formula, with structural information available if possible. Currently handles alcohol structure based on
-   * https://secure.wikimedia.org/wikipedia/en/wiki/Alcohols#Common_Names
-   * REVIEW: missing visibility
-   *
-   * @returns {string} Text which is the structural formula
-   */
-  getStructuralFormula() {
-
-    // scan for alcohols (OH bonded to C)
-    let alcoholCount = 0;
-
-    // we pull of the alcohols so we can get that molecular formula (and we append the alcohols afterwards)
-    let structureWithoutAlcohols = this.copy();
-    this.atoms.forEach( oxygenAtom => {
-      // only process if it is an oxygen atom
-      if ( oxygenAtom.isOxygen() ) {
-        const neighbors = this.getNeighbors( oxygenAtom );
-
-        // for an alcohol subgroup (hydroxyl) we need:
-        if ( neighbors.length === 2 && // 2 neighbors
-             // 1st carbon, 2nd hydrogen
-             ( neighbors[ 0 ].isCarbon() && neighbors[ 1 ].isHydrogen() ) ||
-             // OR 2nd carbon, 1st hydrogen
-             ( neighbors[ 0 ].isHydrogen() && neighbors[ 1 ].isCarbon() ) ) {
-          alcoholCount++;
-
-          // pull off the hydrogen
-          structureWithoutAlcohols = structureWithoutAlcohols.getCopyWithAtomRemoved( neighbors[ neighbors[ 0 ].isHydrogen() ? 0 : 1 ] );
-
-          // and pull off the oxygen
-          structureWithoutAlcohols = structureWithoutAlcohols.getCopyWithAtomRemoved( oxygenAtom );
-        }
-      }
-    } );
-
-    if ( alcoholCount === 0 ) {
-      // no alcohols, use the regular formula
-      return this.getGeneralFormula();
-    }
-    else if ( alcoholCount === 1 ) {
-      // one alcohol, tag it at the end
-      return structureWithoutAlcohols.getGeneralFormula() + 'OH';
-    }
-    else {
-      // more than one alcohol. use a count at the end
-      return structureWithoutAlcohols.getGeneralFormula() + '(OH)' + alcoholCount;
-    }
-  }
-
 
   /**
    * Use the above general molecular formula, but return it with HTML subscripts
-   * @public
    *
+   * @public
    * @returns {string} Molecular formula with HTML subscripts
    */
   getGeneralFormulaFragment() {
@@ -178,10 +128,9 @@ class MoleculeStructure {
 
   /**
    * @param {PubChemAtom*} atom
-   * @public
    *
-   * REVIEW: Missing JSDoc for atom
-   * @returns All neighboring atoms that are connected by bonds to the passed in atom
+   * @public
+   * @returns {PubChemAtom*} All neighboring atoms that are connected by bonds to the passed in atom
    */
   getNeighbors( atom ) {
     return _.map( this.getBondsInvolving( atom ), bond => {
@@ -323,8 +272,9 @@ class MoleculeStructure {
 
   /**
    * Return a copy of the molecule structure with a specific atom removed
-   * REVIEW: missing visibility
    * @param {Atom2} atomToRemove
+   *
+   * @public
    * @returns {MoleculeStructure}
    */
   getCopyWithAtomRemoved( atomToRemove ) {

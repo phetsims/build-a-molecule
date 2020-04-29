@@ -27,11 +27,12 @@ class CollectionBox {
     options = merge( {
       initializeAudio: true
     }, options );
-
     const self = this;
 
-    // @public REVIEW: type docs?
+    // @public {NumberProperty}
     this.quantityProperty = new NumberProperty( 0 );
+
+    // @public {BooleanProperty}
     this.cueVisibilityProperty = new BooleanProperty( false );
 
     // @public {Emitter} Called with a single molecule parameter
@@ -72,9 +73,9 @@ class CollectionBox {
 
   /**
    * Whether this molecule can be dropped into this collection box (at this point in time)
-   * REVIEW: JSDoc visibility
+   * @param {MoleculeStructure} moleculeStructure - The molecule's structure
    *
-   * @param moleculeStructure The molecule's structure REVIEW: Type doc
+   * @public
    * @returns {boolean} Whether it can be dropped in
    */
   willAllowMoleculeDrop( moleculeStructure ) {
@@ -86,8 +87,8 @@ class CollectionBox {
 
   /**
    * Add a molecule to this box
-   *
    * @param {Molecule} molecule
+   *
    * @public
    */
   addMolecule( molecule ) {
@@ -99,8 +100,8 @@ class CollectionBox {
 
   /**
    * Remove a molecule from this box
+   * @param {Molecule} molecule
    *
-   * @param molecule REVIEW: Type doc
    * @public
    */
   removeMolecule( molecule ) {

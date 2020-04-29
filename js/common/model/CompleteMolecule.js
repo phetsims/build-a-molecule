@@ -97,8 +97,8 @@ class CompleteMolecule extends MoleculeStructure {
 
   /**
    * The translation string key that should be used to look up a translated value
-   * REVIEW: needs JSDoc visibility
    *
+   * @private
    * @returns {string}
    */
   get stringKey() {
@@ -108,8 +108,8 @@ class CompleteMolecule extends MoleculeStructure {
   /**
    * A translated display name if possible. This does a weird lookup so that we can only list some of the names in the
    * translation, but can accept an even larger number of translated names in a translation file
-   *
    * @public
+   *
    * @returns
    */
   getDisplayName() {
@@ -329,8 +329,8 @@ class PubChemAtom2 extends Atom {
   /**
    * Parser for PubChemAtom2
    * @param {string} atomString
-   * REVIEW: Needs visibility
    *
+   * @public
    * @returns {PubChemAtom2}
    */
   static parser( atomString ) {
@@ -364,8 +364,9 @@ class PubChemAtom3 extends Atom {
 
   /**
    * Stringify the structure of the atom.
-   * @returns {string}
+   *
    * @public
+   * @returns {string}
    */
   toString() {
     return Atom.prototype.toString.call( this ) + ' ' + this.x3d + ' ' + this.y3d + ' ' + this.z3d;
@@ -373,8 +374,9 @@ class PubChemAtom3 extends Atom {
 
   /**
    * Parser for PubChemAtom3
-   * REVIEW: Needs visibility
    * @param {string} atomString
+   *
+   * @public
    * @returns {PubChemAtom3}
    */
   static parser( atomString ) {
@@ -421,9 +423,9 @@ class PubChemAtomFull extends Atom {
 
   /**
    * Parser for PubChemAtomFull
-   * REVIEW: Needs visibility
+   * @param {string} atomString
    *
-   * @param atomString REVIEW: Type doc
+   * @public
    * @returns {PubChemAtomFull}
    */
   static parser( atomString ) {
@@ -453,7 +455,7 @@ class PubChemBond extends Bond {
 
   /**
    * Returns serialized form of bond data including the bond order
-   * @param {string} index - Index of bond within molecule REVIEW: Fairly sure that index is a number, not a string?
+   * @param {number} index - Index of bond within molecule
    *
    * @public
    * @returns {string}
@@ -464,10 +466,11 @@ class PubChemBond extends Bond {
 
   /**
    * Parser for PubChemBond
-   * REVIEW: Needs visibility
    * @param {string} bondString
    * @param {Atom} connectedAtom
    * @param {Molecule} molecule
+   *
+   * @public
    * @returns {PubChemBond}
    */
   static parser( bondString, connectedAtom, molecule ) {
