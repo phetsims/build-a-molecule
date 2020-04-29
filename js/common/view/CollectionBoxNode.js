@@ -48,14 +48,19 @@ class CollectionBoxNode extends VBox {
     this.blinkTimeout = null;
 
     // @private Molecule ID => node, stores nodes for each molecule
+    //REVIEW: doc for types
     this.moleculeNodeMap = {};
 
     // @private Maps moleculeId => Node (thumbnail view for the molecule)
+    //REVIEW: doc with type {Object}, and ideally map types
+    //REVIEW: e.g. // @private {Object} - maps moleculeId: {number} => {Node} thumbnail view for the molecule
     this.moleculeIdThumbnailMap = {};
 
+    //REVIEW: type/visibility docs
     this.blackBox = new Rectangle( 0, 0, 160, 50, {
       fill: BAMConstants.MOLECULE_COLLECTION_BOX_BACKGROUND
     } );
+    //REVIEW: type/visibility docs -- @private {function} ?
     this.locationUpdateObserver = () => {
       box.dropBoundsProperty.set( toModelBounds( this.blackBox ) );
     };
@@ -66,6 +71,7 @@ class CollectionBoxNode extends VBox {
       show3dButton.touchArea = Shape.bounds( show3dButton.bounds.dilated( 10 ) );
       show3dButton.right = this.blackBox.right - BLACK_BOX_PADDING;
       show3dButton.centerY = this.blackBox.centerY;
+      //REVIEW: type/visibility docs, and ideally HAS_3D is true so we declare it in one place?
       this.button3dWidth = show3dButton.width;
       const update3dVisibility = () => {
         show3dButton.visible = box.quantityProperty.value > 0;
@@ -81,6 +87,7 @@ class CollectionBoxNode extends VBox {
     this.boxNode.addChild( this.blackBox );
 
     // Cue that tells the user where to drop the molecule.
+    //REVIEW: type/visibility docs
     this.cueNode = new ArrowNode( 10, 0, 34, 0, {
       fill: 'blue',
       stroke: 'black',
@@ -335,7 +342,7 @@ class CollectionBoxNode extends VBox {
   /**
    * Search for a thumbnail that represents the completed molecule. Thumbnail is drawn using canvas.
    * @param {CompleteMolecule} completeMolecule
-   * @param {object} moleculeIdThumbnailMap
+   * @param {object} moleculeIdThumbnailMap REVIEW: {Object}
    *
    * @static
    * @private

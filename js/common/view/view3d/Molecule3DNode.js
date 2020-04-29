@@ -41,6 +41,7 @@ class Molecule3DNode extends DOM {
     this.draggingProperty = new BooleanProperty( false );
 
     // prepare the canvas
+    //REVIEW: type/visibility docs on everythign defined here!
     this.canvas = canvas;
     this.context = this.canvas.getContext( '2d' );
     this.backingScale = useHighRes ? Utils.backingScale( this.context ) : 1;
@@ -51,6 +52,7 @@ class Molecule3DNode extends DOM {
     this.setMoleculeCanvasBounds( initialBounds );
 
     // map the atoms into our enhanced format
+    //REVIEW: type/visibility docs
     this.currentAtoms = completeMolecule.atoms.map( atom => {
 
       // similar to picometers from angstroms? hopefully?
@@ -83,6 +85,7 @@ class Molecule3DNode extends DOM {
     this.maxTotalRadius = maxTotalRadius;
 
     const gradientMap = {}; // element symbol => gradient
+    //REVIEW: type/visibility docs on everything here
     this.currentAtoms.forEach( atom => {
       if ( !gradientMap[ atom.element.symbol ] ) {
         gradientMap[ atom.element.symbol ] = this.createGradient( atom.element );
@@ -94,6 +97,7 @@ class Molecule3DNode extends DOM {
     this.currentPosition = Vector2.ZERO;
 
     if ( GRAB_INITIAL_TRANSFORMS ) {
+      //REVIEW: type/visibility docs
       this.masterMatrix = Matrix3.identity();
     }
   }

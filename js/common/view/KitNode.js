@@ -34,6 +34,8 @@ class KitNode extends Node {
     // Layers used for buckets
     const topLayer = new Node();
     const bottomLayer = new Node();
+
+    //REVIEW: JSDoc
     this.bottomLayer = bottomLayer;
 
     // @private {Node} Contains all the atoms within the buckets

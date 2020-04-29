@@ -31,6 +31,8 @@ class MoleculeCollectingScreenView extends BAMScreenView {
    */
   constructor( kitCollectionList, isSingleCollectionMode, regenerateCallback ) {
     super( kitCollectionList );
+
+    //REVIEW: visibility docs (public?)
     this.kitCollectionList = kitCollectionList;
 
     // @private {boolean}
