@@ -37,6 +37,8 @@ class MoleculeBondContainerNode extends Node {
     this.bondNodes.forEach( bondNode => {
       bondNode.dispose();
     } );
+
+    //REVIEW: super.dispose()
     Node.prototype.dispose.call( this );
   }
 }

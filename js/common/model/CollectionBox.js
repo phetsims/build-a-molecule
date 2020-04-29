@@ -27,6 +27,8 @@ class CollectionBox {
     options = merge( {
       initializeAudio: true
     }, options );
+
+    //REVIEW: This is unneeded with ES6 arrow functions, replace the one usage with `this`
     const self = this;
 
     // @public {NumberProperty}
@@ -106,6 +108,8 @@ class CollectionBox {
    */
   removeMolecule( molecule ) {
     this.quantityProperty.value--;
+
+    //REVIEW: Is this because they are removed in order? Maybe we should remove the actual molecule instead?
     this.molecules.shift();
     this.removedMoleculeEmitter.emit( molecule );
   }
@@ -116,6 +120,7 @@ class CollectionBox {
    * @public
    */
   reset() {
+    //REVIEW: slice() with no args is preferred
     this.molecules.slice( 0 ).forEach( this.removeMolecule.bind( this ) );
     this.cueVisibilityProperty.reset();
   }

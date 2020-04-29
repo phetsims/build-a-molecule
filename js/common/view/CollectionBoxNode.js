@@ -231,6 +231,7 @@ class CollectionBoxNode extends VBox {
   /**
    * Center the molecules, while considering if the black box can fit multiple molecules
    * @param {Boolean} isMultipleCollectionBox
+   * REVIEW: Boolean should be boolean (lower case)
    *
    * @private
    */

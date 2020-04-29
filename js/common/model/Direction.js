@@ -14,6 +14,11 @@ import buildAMolecule from '../../buildAMolecule.js';
 // constants
 const DirectionOrientation = Enumeration.byKeys( [ 'NORTH', 'EAST', 'SOUTH', 'WEST' ] );
 
+//REVIEW: a rich-style enumeration should probably be used here, using Enumeration.byMap() so that we can provide the
+//REVIEW: directions. We'll then get Direction.values for free, and this is essentially an enumeration.
+//REVIEW: Probably will need to use beforeFreeze to specify the connecting data, e.g. in that callback, you can
+//REVIEW: execute the "opposite direction" setters, etc.
+
 class Direction {
   /**
    * @param {Vector2} vector
@@ -21,10 +26,13 @@ class Direction {
    * @constructor //REVIEW: We don't annotate constructors anymore
    */
   constructor( vector, id ) {
+    //REVIEW: Would at least need visibility here
     this.vector = vector;
     this.id = id;
   }
 }
+
+//REVIEW: If we're using a class, these would require visibilities/types. Prefer the Enumeration above significantly
 
 // Declare directions
 Direction.North = new Direction( new Vector2( 0, 1 ), DirectionOrientation.NORTH );

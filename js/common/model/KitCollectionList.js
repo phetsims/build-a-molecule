@@ -34,6 +34,8 @@ class KitCollectionList {
     this.addedCollectionEmitter = new Emitter( { parameters: [ { valueType: KitCollection } ] } );
     this.removedCollectionEmitter = new Emitter( { parameters: [ { valueType: KitCollection } ] } );
 
+    //REVIEW: I don't see any usages of this, and I'm not sure why it would be in the KitCollectionList. Is this used
+    //REVIEW: any place, or is only the Kit version used?
     // @public {ObservableArray.<Atom2>}
     this.atomsInPlayArea = new ObservableArray();
 
@@ -103,6 +105,7 @@ class KitCollectionList {
     this.collections[ 0 ].reset();
 
     // remove all the other collections
+    //REVIEW: slice() with no args is preferred
     this.collections.slice( 0 ).forEach( collection => {
       if ( collection !== this.currentCollectionProperty.value ) {
         this.removeCollection( collection );
@@ -193,6 +196,7 @@ class KitCollectionList {
 
     // Remove listeners for collection boxes.
     collection.collectionBoxes.forEach( collectionBox => {
+      //REVIEW: CollectionBox adds its own listener... we really shouldn't be removing all listeners, especially ones that are "private" no?
       collectionBox.addedMoleculeEmitter.removeAllListeners();
       collectionBox.removedMoleculeEmitter.removeAllListeners();
       collectionBox.acceptedMoleculeCreationEmitter.removeAllListeners();

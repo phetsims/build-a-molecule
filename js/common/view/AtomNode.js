@@ -65,6 +65,8 @@ class AtomNode extends Node {
   dispose() {
     this.atom.positionProperty.unlink( this.translationListener );
     this.atom.visibleProperty.unlink( this.updateVisibilityListener );
+
+    //REVIEW: super.dispose()
     Node.prototype.dispose.call( this );
   }
 

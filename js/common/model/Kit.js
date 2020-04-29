@@ -47,6 +47,7 @@ class Kit {
     // @public {BooleanProperty} Whether this kit is visible
     this.visibleProperty = new BooleanProperty( false );
 
+    //REVIEW: I don't see any code that reads this value, can we get rid of it?
     // @public {BooleanProperty} Record this so we know when the "reset kit" should be shown
     this.hasMoleculesInBoxesProperty = new BooleanProperty( false );
 
@@ -63,6 +64,7 @@ class Kit {
     // @public {Array.<Molecule>} molecules  in the play area
     this.molecules = [];
 
+    //REVIEW: Include {Object} in these type docs
     // @public moleculeId => CollectionBox, molecule structures that were put into the collection box.
     // Kept for now, since modifying the reset behavior will be much easier if we retain this
     this.removedMolecules = {};
@@ -99,6 +101,7 @@ class Kit {
     this.selectedAtomProperty.reset();
 
     // send out notifications for all removed molecules
+    //REVIEW: slice() with no args is preferred
     this.molecules.slice( 0 ).forEach( this.removeMolecule.bind( this ) );
 
     // put everything back in buckets

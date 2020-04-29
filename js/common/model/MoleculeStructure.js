@@ -567,6 +567,7 @@ MoleculeStructure.getMoleculesFromBrokenBond = ( structure, bond, molA, molB ) =
   const atomsInA = [ bond.a ];
 
   // atoms left after removing atoms
+  //REVIEW: slice() with no args is preferred
   const remainingAtoms = structure.atoms.slice( 0 );
   remainingAtoms.splice( remainingAtoms.indexOf( bond.a ), 1 ); // TODO: replace with remove()
   const dirtyAtoms = [ bond.a ];
@@ -640,6 +641,7 @@ MoleculeStructure.checkEquivalencyMatrix = ( equivalences, myIndex, otherRemaini
   // Note: (performance) this should leak memory in un-fun ways, and performance complexity should be sped up
 
   // should be inefficient, but not too bad (computational complexity is not optimal)
+  //REVIEW: slice() with no args is preferred
   const arr = otherRemainingIndices.slice( 0 );
   const len = arr.length;
   for ( let i = 0; i < len; i++ ) { // loop over all remaining others

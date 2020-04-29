@@ -104,6 +104,7 @@ class MoleculeControlsHBox extends HBox {
         atom.positionProperty.unlink( listener );
       } );
     }
+    //REVIEW: super.dispose()
     HBox.prototype.dispose.call( this );
   }
 

@@ -171,6 +171,8 @@ class MoleculeBondNode extends Node {
     this.kit.selectedAtomProperty.unlink( this.toggleTargetVisibility );
     this.a.positionProperty.unlink( this.positionListener );
     this.b.positionProperty.unlink( this.positionListener );
+
+    //REVIEW: super.dispose()
     Node.prototype.dispose.call( this );
   }
 }

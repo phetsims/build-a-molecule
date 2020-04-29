@@ -126,6 +126,7 @@ class MoleculeCollectingScreenView extends BAMScreenView {
    * @returns {Node}
    */
   addCollection( collection ) {
+    //REVIEW: super.addCollection( ... )
     const kitCollectionNode = BAMScreenView.prototype.addCollection.call( this, collection, true );
     this.hasShownOnce = false;
 

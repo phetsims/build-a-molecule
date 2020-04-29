@@ -129,6 +129,7 @@ class MoleculeList {
    */
   getAllCompleteMolecules() {
     // Note: (performance) do we need a full copy here?
+    //REVIEW: slice() with no args is preferred
     return this.completeMolecules.slice( 0 );
   }
 

@@ -73,9 +73,11 @@ class CompleteMolecule extends MoleculeStructure {
   constructor( commonName, molecularFormula, atomCount, bondCount, has2d, has3d ) {
     super( atomCount, bondCount );
 
+    //REVIEW: Why is this a Property? I don't think it ever changes (or should change?)
     // @public {Property.<string>}
     this.commonNameProperty = new StringProperty( commonName ); // as said by pubchem (or overridden)
 
+    //REVIEW: At least doc visibilities
     this.molecularFormula = molecularFormula; // as said by pubchem
     this.has2d = has2d;
     this.has3d = has3d;
@@ -147,7 +149,10 @@ class CompleteMolecule extends MoleculeStructure {
     }
 
     // otherwise, use our 2d positions to construct a version. we get the correct back-to-front rendering
+    //REVIEW: For this type of pattern, it's a preference to write it such as:
+    //REVIEW: return new Node( { children: wrappers.map( atomWrapper => { ... } )} )   -- with the arrow function content nicely formatted
     const node = new Node();
+    //REVIEW: We don't need the braces for this arrow function
     const wrappers = _.sortBy( this.atoms, atom => {
       return atom.z3d;
     } );
@@ -171,10 +176,12 @@ class CompleteMolecule extends MoleculeStructure {
   toSerial2() {
     // add in a header
     const format = ( this.has3d ? ( this.has2d ? 'full' : '3d' ) : '2d' );
+    //REVIEW: Instead of MoleculeStructure.prototype, use `super.toSerial2()` instead?
     return this.commonNameProperty.value + '|' + this.molecularFormula + '|' + this.cid + '|' + format + '|' + MoleculeStructure.prototype.toSerial2.call( this );
   }
 }
 
+//REVIEW: JSDoc it?
 CompleteMolecule.capitalize = str => {
   const characters = str.split( '' );
   let lastWasSpace = true;
@@ -239,11 +246,13 @@ CompleteMolecule.fromString = line => {
   }
 
   // Filled in by parsing completeMolecule
+  //REVIEW: I don't see this referenced, should we declare it in the constructor?
   completeMolecule.cid = parseInt( tokens[ idx++ ], 10 );
 
   return completeMolecule;
 };
 
+//REVIEW: JSDoc
 CompleteMolecule.fromSerial2 = line => {
   /*---------------------------------------------------------------------------*
    * extract header
@@ -275,6 +284,11 @@ CompleteMolecule.fromSerial2 = line => {
  * atom varieties, depending on what information we have from PubChem. varieties
  * are necessary for memory size requirements so we don't store more data than
  * necessary.
+ * REVIEW: It looks like our in-memory format is the same for all of the varieties. Would it simplify things to
+ * REVIEW: Have one "Type" (PubChemAtom), that has an enumeration flag for what data is encoded? That could affect
+ * REVIEW: the serialization and could have deserialization methods for each, but then we can properly type
+ * REVIEW: PubChemBond and other things out, and it will save the amount of code. Thoughts? I'm not set on a way
+ * REVIEW: of doing it.
  *----------------------------------------------------------------------------*/
 
 // Signature for Atom without 2d or 3d representation
@@ -285,6 +299,8 @@ class PubChemAtom extends Atom {
    */
   constructor( element ) {
     super( element );
+
+    //REVIEW: Probably all @public?
     this.has2d = false;
     this.has3d = false;
     this.x2d = 0;
@@ -305,6 +321,8 @@ class PubChemAtom2 extends Atom {
    */
   constructor( element, x2d, y2d ) {
     super( element );
+
+    //REVIEW: Probably all @public?
     this.has2d = true;
     this.has3d = false;
     this.x2d = x2d;
@@ -318,17 +336,24 @@ class PubChemAtom2 extends Atom {
 
   /**
    * Stringify the structure of the atom.
+   * REVIEW: Technically needs @override
    *
    * @public
    * @returns {string}
    */
   toString() {
+    //REVIEW: super.toString()
     return Atom.prototype.toString.call( this ) + ' ' + this.x2d + ' ' + this.y2d;
   }
 
   /**
    * Parser for PubChemAtom2
    * @param {string} atomString
+<<<<<<< HEAD
+=======
+   * REVIEW: Needs visibility
+   * REVIEW: Ideally name parse(), since that's the verb (not the noun for what does the action)
+>>>>>>> More REVIEW items, see https://github.com/phetsims/build-a-molecule/issues/173
    *
    * @public
    * @returns {PubChemAtom2}
@@ -353,6 +378,8 @@ class PubChemAtom3 extends Atom {
    */
   constructor( element, x3d, y3d, z3d ) {
     super( element );
+
+    //REVIEW: Probably all @public?
     this.has2d = false;
     this.has3d = true;
     this.x2d = x3d;
@@ -364,16 +391,27 @@ class PubChemAtom3 extends Atom {
 
   /**
    * Stringify the structure of the atom.
+<<<<<<< HEAD
    *
+=======
+   * REVIEW: Technically needs @override
+   * @returns {string}
+>>>>>>> More REVIEW items, see https://github.com/phetsims/build-a-molecule/issues/173
    * @public
    * @returns {string}
    */
   toString() {
+    //REVIEW: super.toString()
     return Atom.prototype.toString.call( this ) + ' ' + this.x3d + ' ' + this.y3d + ' ' + this.z3d;
   }
 
   /**
    * Parser for PubChemAtom3
+<<<<<<< HEAD
+=======
+   * REVIEW: Needs visibility
+   * REVIEW: Ideally name parse(), since that's the verb (not the noun for what does the action)
+>>>>>>> More REVIEW items, see https://github.com/phetsims/build-a-molecule/issues/173
    * @param {string} atomString
    *
    * @public
@@ -402,6 +440,8 @@ class PubChemAtomFull extends Atom {
    */
   constructor( element, x2d, y2d, x3d, y3d, z3d ) {
     super( element );
+
+    //REVIEW: Probably all @public?
     this.has2d = true;
     this.has3d = true;
     this.x2d = x2d;
@@ -413,17 +453,24 @@ class PubChemAtomFull extends Atom {
 
   /**
    * Stringify the structure of the atom
+   * REVIEW: Technically needs @override
    *
    * @public
    * @returns {string}
    */
   toString() {
+    //REVIEW: super.toString()
     return Atom.prototype.toString.call( this ) + ' ' + this.x2d + ' ' + this.y2d + ' ' + this.x3d + ' ' + this.y3d + ' ' + this.z3d;
   }
 
   /**
    * Parser for PubChemAtomFull
+<<<<<<< HEAD
    * @param {string} atomString
+=======
+   * REVIEW: Needs visibility
+   * REVIEW: Ideally name parse(), since that's the verb (not the noun for what does the action)
+>>>>>>> More REVIEW items, see https://github.com/phetsims/build-a-molecule/issues/173
    *
    * @public
    * @returns {PubChemAtomFull}
@@ -450,12 +497,15 @@ class PubChemBond extends Bond {
    */
   constructor( a, b, order ) {
     super( a, b );
+
+    //REVIEW: Probably all @public?
     this.order = order;
   }
 
   /**
    * Returns serialized form of bond data including the bond order
    * @param {number} index - Index of bond within molecule
+   * REVIEW: Technically needs @override
    *
    * @public
    * @returns {string}
@@ -466,6 +516,7 @@ class PubChemBond extends Bond {
 
   /**
    * Parser for PubChemBond
+   * REVIEW: Ideally name parse(), since that's the verb (not the noun for what does the action)
    * @param {string} bondString
    * @param {Atom} connectedAtom
    * @param {Molecule} molecule

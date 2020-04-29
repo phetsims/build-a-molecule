@@ -24,6 +24,9 @@ class ElementHistogram extends PhetioObject {
       this.quantities[ element.symbol ] = 0;
     } );
 
+    //REVIEW: The constructor parameter is not marked as optional, why do we have this conditional?
+    //REVIEW: Doesn't look like it's used. Also... since it's only used in MoleculeStructure, should this be integrated
+    //REVIEW: into that code? I'm happy to keep it separate
     if ( moleculeStructure ) {
       this.addMolecule( moleculeStructure );
     }
