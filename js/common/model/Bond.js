@@ -8,6 +8,7 @@
  */
 
 import buildAMolecule from '../../buildAMolecule.js';
+import Atom from '../../../../nitroglycerin/js/Atom.js';
 
 class Bond {
   /**
@@ -22,33 +23,32 @@ class Bond {
 
   /**
    * Checks if the passed in atom is equal to one of the bond's atoms
-   * @param {Atom2} atom REVIEW: Pretty sure this is inaccurate, PubChemAtom3 for example isn't an Atom2. Maybe add type checks to this file?
+   * @param {Atom|PubChemAtom*} atom
    *
-   * REVIEW: Needs visibility
-   *
+   * @public
    * @returns {boolean}
    */
   contains( atom ) {
+    assert && assert( atom instanceof Atom );
     return atom === this.a || atom === this.b;
   }
 
   /**
    * Returns the other atom within the bond that isn't the passed in atom
-   * @param {Atom2} atom REVIEW: Should be Atom, not Atom2, no?
+   * @param {Atom|PubChemAtom*} atom
    *
-   * REVIEW: Needs visibility
-   *
-   * @returns {Atom2} REVIEW: Should be Atom, not Atom2, no?
+   * @public
+   * @returns {Atom}
    */
   getOtherAtom( atom ) {
+    assert && assert( atom instanceof Atom );
     assert && assert( this.contains( atom ) );
-
     return ( this.a === atom ? this.b : this.a );
   }
 
   /**
    * Returns serialized form of bond data
-   * @param {string} index - Index of bond within molecule REVIEW: Fairly sure that index is a number, not a string?
+   * @param {number} index - Index of bond within molecule
    *
    * @public
    * @returns {string}
