@@ -169,6 +169,9 @@ class CollectionPanel extends Panel {
    * Walk up the scene graph, looking to see if we are a (grand)child of a canvas
    * @private
    *
+   * REVIEW: All of this "Canvas" naming seems like it's ported from the Java version.
+   * REVIEW: hasScreenViewAsAncestor() would be more accurate.
+   *
    * @returns {boolean} If an ancestor is a BuildAMoleculeCanvas
    */
   hasCanvasAsParent() {
