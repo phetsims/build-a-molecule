@@ -28,17 +28,24 @@ const BLACK_BOX_PADDING = 7;
 class CollectionBoxNode extends VBox {
   /**
    * @param {CollectionBox} box
-   * @param {function} toModelBounds
+   * @param {function} toModelBounds REVIEW: doc types or usage for this? unclear what it does without examining usage
    * @param {function} showDialogCallback
    * @param {Object} [options]
    */
   constructor( box, toModelBounds, showDialogCallback, options ) {
+    //REVIEW: For Node subtypes, we'll really want to call `super()`` at the start, and then a `this.mutate( options )`
+    //REVIEW: at the end, so that positional or bounds-based options will operate on a fully-constructed node.
     super( options );
 
     // @public {CollectionBox}
     this.box = box;
 
     // @public {Node|Rectangle}
+    //REVIEW: How is this ever a Rectangle? It looks like a grouping node used to store the main box, while subtypes
+    //REVIEW: poke contents in before/after.
+    //REVIEW: Instead, can we get rid of this boxNode, just put the children (e.g. blackBox, cueNode, etc.) directly
+    //REVIEW: into children of this node (change it from VBox => Node), and then SingleCollectionBoxNode and
+    //REVIEW: MultipleCollectionBoxNode can be VBoxes that have this as a child (instead of using inheritance?).
     this.boxNode = new Node();
 
     // @private {Array.<Node>}
@@ -57,6 +64,13 @@ class CollectionBoxNode extends VBox {
     //REVIEW: doc with type {Object}, and ideally map types
     //REVIEW: e.g. // @private {Object.<moleculeId:number, Node>}
     this.moleculeIdThumbnailMap = {};
+    //REVIEW: Also, we're stuffing in-play-area molecules in this map ALONG WITH complete molecules. While I would
+    //REVIEW: prefer different maps for each, it should at least be documented that this is happening.
+    //REVIEW: WAIT!!!! `this.moleculeIdThumbnailMap` is actually not used when being passed to lookupThumbnail.
+    //REVIEW: Just use this map for the thumbnails, AND the other map for the other nodes!
+    //REVIEW: ALSO if we're sharing nodes with a static lookupThumbnail method, can we just have this be a constant
+    //REVIEW: for all CollectionBoxNodes? e.g. declare it at the top-level as `const moleculeIdThumbnailMap = {}`
+    //REVIEW: outside of the constructor.
 
     //REVIEW: type/visibility docs (looks private?)
     this.blackBox = new Rectangle( 0, 0, 160, 50, {
@@ -377,6 +391,7 @@ class CollectionBoxNode extends VBox {
 
     // wrap the returned image in an extra node so we can transform them independently, and that takes up the proper amount of space
     const node = moleculeIdThumbnailMap[ completeMolecule.moleculeId ];
+    //REVIEW: Just `return new Rectangle( 0, 0, 50, 50, { children: [ node ] } );`
     const wrapperNode = new Rectangle( 0, 0, 50, 50 );
     wrapperNode.addChild( node );
     return wrapperNode;
