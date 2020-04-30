@@ -1,6 +1,7 @@
 // Copyright 2020, University of Colorado Boulder
 
 /**
+ * REVIEW: Not a canvas.
  * Node canvas for Build a Molecule. It features kits shown at the bottom. Can be extended to add other parts
  *
  * @author Denzell Barnett (PhET Interactive Simulations)
