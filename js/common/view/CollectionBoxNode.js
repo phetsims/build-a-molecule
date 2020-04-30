@@ -86,6 +86,9 @@ class CollectionBoxNode extends VBox {
       fill: BAMConstants.MOLECULE_COLLECTION_BOX_BACKGROUND
     } );
     //REVIEW: type/visibility docs -- @private {function} ?
+    //REVIEW: Also since we are calling this from a method, it seems like this SHOULD be a method.
+    //REVIEW: We have access to the box, and can store the toModelBounds instead of this, and then collapse things into
+    //REVIEW: updateLocation() -- which is just calling this anyway.
     this.locationUpdateObserver = () => {
       box.dropBoundsProperty.set( toModelBounds( this.blackBox ) );
     };
