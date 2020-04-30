@@ -22,6 +22,7 @@ const SCREEN_ICON_OPTIONS = {
   maxIconHeightProportion: 1
 };
 
+//REVIEW: Some duplicated code here and with CollectionBoxNode.lookupThumbnail. Can we factor this out?
 const BAMIconFactory = {
 
   /**

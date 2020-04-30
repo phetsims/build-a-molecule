@@ -19,7 +19,7 @@ class KitCollectionList {
    * @param {KitCollection} firstCollection
    * @param {CollectionLayout} collectionLayout
    * @param {Emitter} stepEmitter
-   * @param {function} createKitCollection
+   * @param {function} createKitCollection REVIEW: I can find no evidence of this ever being called? Can we remove this parameter?
    */
   constructor( firstCollection, collectionLayout, stepEmitter, createKitCollection ) {
 
@@ -34,6 +34,7 @@ class KitCollectionList {
     this.removedCollectionEmitter = new Emitter( { parameters: [ { valueType: KitCollection } ] } );
 
     // @public {function}
+    //REVIEW: I can find no evidence of this ever being called?
     this.createKitCollection = createKitCollection;
 
     // @public {CollectionLayout}
@@ -66,7 +67,9 @@ class KitCollectionList {
    * Generate the kit collection
    * @public
    *
-   * @returns {function}
+   * REVIEW: I don't see any usage of this
+   *
+   * @returns {function} REVIEW: Are we SURE that this would return a function anyway? Seems like a KitCollection?
    */
   generateKitCollection() {
     return this.createKitCollection( this.collectionLayout, this.stepEmitter );

@@ -44,7 +44,9 @@ class CollectionBoxNode extends VBox {
     // @private {Array.<Node>}
     this.moleculeNodes = [];
 
+    //REVIEW: documentation reference to window.setTimeout seems erroneous, as we should NOT use window.setTimeout
     // @private {number|null} NOT zero, since that could be a valid timeout ID for window.setTimeout!
+    //REVIEW: Also, this should be {function|null}, since timer.setTimeout returns a function!
     this.blinkTimeout = null;
 
     // @private Molecule ID => node, stores nodes for each molecule
@@ -56,8 +58,11 @@ class CollectionBoxNode extends VBox {
     //REVIEW: e.g. // @private {Object.<moleculeId:number, Node>}
     this.moleculeIdThumbnailMap = {};
 
-    //REVIEW: type/visibility docs
+    //REVIEW: type/visibility docs (looks private?)
     this.blackBox = new Rectangle( 0, 0, 160, 50, {
+      //REVIEW: blackBox alternates between a black fill and another black fill. And is called blackBox.
+      //REVIEW: Can we just set it to black here? (fine to use the constant, but if this is the only usage, we could
+      //REVIEW: just use 'black')
       fill: BAMConstants.MOLECULE_COLLECTION_BOX_BACKGROUND
     } );
     //REVIEW: type/visibility docs -- @private {function} ?
@@ -91,6 +96,7 @@ class CollectionBoxNode extends VBox {
       tailWidth: 8,
       headWidth: 14,
       pickable: false,
+      //REVIEW: we set this below in the very next statement. Can we remove this following line and just have the link?
       visible: box.cueVisibilityProperty.value
     } );
     box.cueVisibilityProperty.link( visible => {
@@ -258,6 +264,8 @@ class CollectionBoxNode extends VBox {
    * @private
    */
   updateBoxGraphics() {
+    //REVIEW: The blackBox lineWidth always seems to be 4. Can we just move this to the blackBox construction above,
+    //REVIEW: instead of having it in our update function?
     this.blackBox.lineWidth = 4;
     if ( this.box.isFull() ) {
       this.blackBox.stroke = BAMConstants.MOLECULE_COLLECTION_BOX_HIGHLIGHT;
@@ -307,10 +315,12 @@ class CollectionBoxNode extends VBox {
 
         // draw graphics
         if ( on ) {
+          //REVIEW: blackBox alternates between a black fill and another black fill. And is called blackBox. Can we remove the changing of the fill here?
           this.blackBox.fill = BAMConstants.MOLECULE_COLLECTION_BOX_BACKGROUND_BLINK;
           this.blackBox.stroke = BAMConstants.MOLECULE_COLLECTION_BOX_BORDER_BLINK;
         }
         else {
+          //REVIEW: blackBox alternates between a black fill and another black fill. And is called blackBox. Can we remove the changing of the fill here?
           this.blackBox.fill = BAMConstants.MOLECULE_COLLECTION_BOX_BACKGROUND;
           this.blackBox.stroke = BAMConstants.MOLECULE_COLLECTION_BACKGROUND;
         }
@@ -331,6 +341,10 @@ class CollectionBoxNode extends VBox {
 
     // stop any previous blinking from happening. don't want double-blinking
     if ( this.blinkTimeout !== null ) {
+      //REVIEW: do NOT use window.clearTimeout!:
+      //REVIEW: 1. We don't use window.setTimeout/clearTimeout in sims
+      //REVIEW: 2. We didn't create this timeout with window.setTimeout, but with timer.setTimeout! It happens to be a
+      //REVIEW:    function, NOT an integer as window.clearTimeout would expect
       window.clearTimeout( this.blinkTimeout );
       this.blinkTimeout = null;
     }
@@ -339,14 +353,16 @@ class CollectionBoxNode extends VBox {
   /**
    * Search for a thumbnail that represents the completed molecule. Thumbnail is drawn using canvas.
    * @param {CompleteMolecule} completeMolecule
-   * @param {object} moleculeIdThumbnailMap REVIEW: {Object}
+   * @param {object} moleculeIdThumbnailMap REVIEW: {Object} - Also should document the parts of the map (keys and values)
    *
-   * @static
+   * @static REVIEW: We don't mark things with @static, since it's already noted as static in the actual definition
    * @private
    * @returns {Node}
    */
   static lookupThumbnail( completeMolecule, moleculeIdThumbnailMap ) {
     if ( !moleculeIdThumbnailMap[ completeMolecule.moleculeId ] ) {
+      //REVIEW: A lot of this code looks duplicated with many usages in BAMIconFactory, can we factor out the creation of
+      //REVIEW: the moleculeNode, transformMatrix reference, optional transform, the draw, and grabbing the URL out?
       const moleculeNode = new Molecule3DNode( completeMolecule, new Bounds2( 0, 0, 50, 50 ), false );
       const transformMatrix = Molecule3DNode.initialTransforms[ completeMolecule.getGeneralFormula() ];
       if ( transformMatrix ) {
@@ -364,11 +380,17 @@ class CollectionBoxNode extends VBox {
   }
 
   /**
-   * Precomputation of largest collection box size
-   * @param {SingleCollectionBoxNode|MultipleCollectionBoxNode} boxNode
-   * @param {CollectionBox} box
+   * REVIEW: This doesn't seem to actually be computing anything that is used.
+   * REVIEW: SingleCollectionBoxNode.maxWidth/maxHeight and MultipleCollectionBoxNode.maxWidth/maxHeight are computed
+   * REVIEW: I can't find a single usage.
+   * REVIEW: Since this is non-standard, assumes type information, adds non-documented properties to a type, and
+   * REVIEW: doesn't seem to be used, can we remove this?
    *
-   * @static
+   * Precomputation of largest collection box size
+   * @param {SingleCollectionBoxNode|MultipleCollectionBoxNode} boxNode REVIEW: Can't this just be a CollectionBoxNode in the docs? REVIEW: on later note, it needs to be a constructor, so it should be {function} with the relevant types
+   * @param {CollectionBox} box REVIEW: This is also not a box, but a box type?
+   *
+   * @static REVIEW: We don't mark things with @static, since it's already noted as static in the actual definition
    * @public
    */
   static getPsuedoBoxBounds( boxNode, box ) {
@@ -377,7 +399,9 @@ class CollectionBoxNode extends VBox {
     MoleculeList.collectionBoxMolecules.forEach( molecule => {
 
       // fake boxes
+      //REVIEW: Capitalized names should be used for things that are invoked as a constructor
       const boxBounds = new boxNode(
+        //REVIEW: Capitalized names should be used for things that are invoked as a constructor
         new box( molecule, 1, { initializeAudio: false } ),
         node => {
           return node.bounds;
@@ -387,6 +411,8 @@ class CollectionBoxNode extends VBox {
       maxBounds = maxBounds.union( boxBounds );
     } );
 
+    //REVIEW: These static properties are not documented on the given types!
+    //REVIEW: Wait, where are these even used? I can't find any usages
     boxNode.maxWidth = maxBounds.width;
     boxNode.maxHeight = maxBounds.height;
   }

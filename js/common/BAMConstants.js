@@ -43,7 +43,7 @@ const BAMConstants = {
   MOLECULE_COLLECTION_BACKGROUND: new Color( 238, 238, 238 ), // collection area background
   MOLECULE_COLLECTION_BOX_HIGHLIGHT: Color.YELLOW,             // box highlight (border when it's full)
   MOLECULE_COLLECTION_BOX_BACKGROUND: Color.BLACK,             // box background
-  MOLECULE_COLLECTION_BOX_BACKGROUND_BLINK: Color.BLACK,        // box background while blinking
+  MOLECULE_COLLECTION_BOX_BACKGROUND_BLINK: Color.BLACK,        // box background while blinking  --- REVIEW: This is only used in one place where it's setting black to black. Can we remove this, if we are unlikely to change the colors?
   MOLECULE_COLLECTION_BOX_BORDER_BLINK: Color.BLUE,             // box border when blinking
   KIT_BACKGROUND: Color.WHITE,                               // kit area background
   KIT_BORDER: Color.BLACK,                                   // border around the kit area

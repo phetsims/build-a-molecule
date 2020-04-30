@@ -48,7 +48,7 @@ class BAMScreenView extends ScreenView {
     this.atomDragBounds = new Bounds2( -1575, -850, 1575, 950 );
     this.mappedKitCollectionBounds = this.kitCollectionMap[ this.kitCollectionList.currentCollectionProperty.value.id ].bounds.dilatedX( 60 );
 
-    // @public Dialog used for representing 3D molecules. REVIEW: missing type docs here
+    // @public Dialog used for representing 3D molecules. REVIEW: missing type docs here (or it doesn't use braces?)
     // Only create a dialog if webgl is enabled. See https://github.com/phetsims/build-a-molecule/issues/105
     this.dialog = ThreeUtils.isWebGLEnabled() ? new Molecule3DDialog( new Property( null ) ) : new WarningDialog();
 

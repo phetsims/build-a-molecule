@@ -26,7 +26,7 @@ class BAMScreen extends Screen {
   /**
    * @param {function} createInitialKitCollection
    * @param {CollectionLayout} collectionLayout
-   * @param {function} createKitCollection
+   * @param {function} createKitCollection REVIEW: I can find no evidence of this ever being called? Can we remove this parameter? See KitCollectionList and its unused generateKitCollection method for more info
    * @param {function} createView
    * @param {Object} [options]
    */

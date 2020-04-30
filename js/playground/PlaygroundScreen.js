@@ -104,7 +104,11 @@ class PlaygroundScreen extends BAMScreen {
       },
 
       // CollectionLayout
+      //REVIEW: Confusing formatting here, two options are specified on the same line!
       new CollectionLayout( false ), () => {
+        //REVIEW: This parameter ends up being unused in general
+        //REVIEW: See KitCollectionList and its unused generateKitCollection method for more info
+        //REVIEW: Please remove this callback and usages of the 3rd parameter in BAMScreen
         throw new Error( 'There are no more kit collections in the 3rd tab' );
       },
 
