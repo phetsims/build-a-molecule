@@ -35,6 +35,7 @@ class MoleculeControlsHBox extends HBox {
   constructor( kit, molecule, showDialogCallback ) {
     super( { spacing: 9 } );
 
+    //REVIEW: We don't need self with ES6 and arrow functions here
     const self = this;
 
     //REVIEW: visibility docs

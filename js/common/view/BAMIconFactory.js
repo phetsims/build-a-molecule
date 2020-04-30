@@ -31,6 +31,8 @@ const BAMIconFactory = {
    * @returns {ScreenIcon}
    */
   createSingleScreen() {
+    //REVIEW: A lot of the constants (548, 373) seem to be based on Screen.MINIMUM_HOME_SCREEN_ICON_SIZE
+    //REVIEW: Can we grab those out from there, and have them in a constant here if we're using them?
 
     // Iconize Molecule for home screen and nav-bar
     const wrapperNode = new Rectangle( 0, 0, 548, 373, 0, 0, {
@@ -55,6 +57,7 @@ const BAMIconFactory = {
     moleculeIcon.center = wrapperNode.center.plusXY( 0, 20 );
 
     // Return the icon in its wrapper
+    //REVIEW: Why wrapping this with new Node()?
     return new ScreenIcon( new Node( {
       children: [ wrapperNode ]
     } ), SCREEN_ICON_OPTIONS );
@@ -104,6 +107,7 @@ const BAMIconFactory = {
     moleculeIconOne.center = wrapperNode.center.minusXY( 125, 0 );
     moleculeIconTwo.center = wrapperNode.center.plusXY( 115, 0 );
 
+    //REVIEW: Why wrapping this with new Node()?
     return new ScreenIcon( new Node( {
       children: [ wrapperNode ]
     } ), SCREEN_ICON_OPTIONS );
@@ -134,6 +138,8 @@ const BAMIconFactory = {
     } );
     wrapperNode.addChild( moleculeIcon );
     moleculeIcon.center = wrapperNode.center.minusXY( 0, 10 );
+
+    //REVIEW: Why wrapping this with new Node()?
     return new ScreenIcon( new Node( {
       children: [ wrapperNode ]
     } ), SCREEN_ICON_OPTIONS );
