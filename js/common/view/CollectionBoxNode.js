@@ -50,7 +50,7 @@ class CollectionBoxNode extends VBox {
     this.blinkTimeout = null;
 
     // @private Molecule ID => node, stores nodes for each molecule
-    //REVIEW: doc for types
+    //REVIEW: doc for types, e.g. {Object.<moleculeId:number,Node>}
     this.moleculeNodeMap = {};
 
     // @private Maps moleculeId => Node (thumbnail view for the molecule)
@@ -214,6 +214,9 @@ class CollectionBoxNode extends VBox {
    * @private
    */
   layOutMoleculeList( moleculeNodes ) {
+    //REVIEW: Neat trick to do this: const maxHeight = _.max( moleculeNodes.map( node => node.height ) );
+    //REVIEW: Alternatively instead of _.max, you CAN use Math.max, BUT you need to use the spread operator since it
+    //REVIEW: doesn't work with an array, e.g. Math.max( ...moleculeNodes.map( node => node.height ) )
     let maxHeight = 0;
     moleculeNodes.forEach( moleculeNode => {
       maxHeight = Math.max( maxHeight, moleculeNode.height );
