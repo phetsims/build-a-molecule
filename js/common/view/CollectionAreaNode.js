@@ -26,7 +26,10 @@ class CollectionAreaNode extends Node {
    * @param {function} updateRefillButton
    */
   constructor( collection, isSingleCollectionMode, toModelBounds, showDialogCallback, updateRefillButton ) {
+    //REVIEW: Just super()
     super( {} );
+
+    //REVIEW: due to arrow functions, shouldn't need self
     const self = this;
 
     // Array for the black box for its text

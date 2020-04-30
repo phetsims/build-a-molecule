@@ -560,6 +560,7 @@ MoleculeStructure.getMoleculesFromBrokenBond = ( structure, bond, molA, molB ) =
   const atomsInA = [ bond.a ];
 
   // atoms left after removing atoms
+  //REVIEW: Handle the TODOs here and in the file
   const remainingAtoms = structure.atoms.slice();
   remainingAtoms.splice( remainingAtoms.indexOf( bond.a ), 1 ); // TODO: replace with remove()
   const dirtyAtoms = [ bond.a ];

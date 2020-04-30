@@ -47,6 +47,7 @@ class MoleculeList {
    */
   loadMasterData() {
     const startTime = Date.now();
+    //REVIEW: Replace with ES6 arrow function, then no self needed
     const self = this;
     // load in our collection molecules first
     initialList.getAllCompleteMolecules().forEach( this.addCompleteMolecule.bind( this ) );
@@ -172,8 +173,11 @@ let masterInstance = null;
 let initialized = false;
 const initialList = new MoleculeList();
 
+//REVIEW: Put static methods in class as static
+
 /**
  * Load master data
+ * REVIEW: visibility
  */
 MoleculeList.startInitialization = () => {
   // Note: (performance) use web worker or chop it up into bits of work
@@ -185,6 +189,7 @@ MoleculeList.startInitialization = () => {
 
 /**
  * Return master data
+ * REVIEW: visibility
  *
  * @returns {*}
  */
@@ -200,6 +205,7 @@ MoleculeList.getMasterInstance = () => {
 /**
  * Return molecule name from master data
  * @param {string} name
+ * REVIEW: visibility
  *
  * @returns {string}
  */
@@ -217,6 +223,7 @@ MoleculeList.getMoleculeByName = name => {
 /**
  * Returns a list of complete molecules
  * @param {string} strings - File name relative to the sim's data directory
+ * REVIEW: visibility
  *
  * @returns
  */
@@ -236,6 +243,7 @@ MoleculeList.readCompleteMoleculesFromData = strings => {
 /**
  * Returns a list of molecule structures
  * @param {string} strings - File name relative to the sim's data directory
+ * REVIEW: visibility
  *
  * @returns
  */
@@ -259,6 +267,7 @@ initialList.loadInitialData();
  * molecule references and customized names
  *----------------------------------------------------------------------------*/
 
+//REVIEW: JSDoc (type, visibility)
 MoleculeList.CO2 = MoleculeList.getMoleculeByName( 'Carbon Dioxide' );
 MoleculeList.H2O = MoleculeList.getMoleculeByName( 'Water' );
 MoleculeList.N2 = MoleculeList.getMoleculeByName( 'Nitrogen' );
@@ -272,6 +281,7 @@ MoleculeList.C2H4O2 = MoleculeList.getMoleculeByName( 'Acetic Acid' );
 
 /**
  * Molecules that can be used for collection boxes
+ * REVIEW: JSDoc (type, visibility)
  */
 MoleculeList.collectionBoxMolecules = [
   MoleculeList.CO2,

@@ -164,6 +164,7 @@ class Kit {
       bucket.position = new Vector2( bucket.position.x - usedWidth / 2 + bucket.width / 2, bucketBounds.centerY );
 
       // since changing the bucket's position doesn't change contained atoms!
+      //REVIEW: Handle the TODO here?
       // TODO: have the bucket position change do this?
       bucket.getParticleList().forEach( atom => {
         atom.translatePositionAndDestination( bucket.position );
@@ -718,6 +719,7 @@ class BondingOption {
   }
 }
 
+//REVIEW: JSDocs
 Kit.BondingOption = BondingOption; // Available bonding option
 Kit.bondDistanceThreshold = 100; // Determines how close a molecule needs to be to attempt to bond
 Kit.bucketPadding = 50; // Distance between each bucket

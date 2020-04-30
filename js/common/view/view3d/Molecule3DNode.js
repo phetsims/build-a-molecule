@@ -119,6 +119,8 @@ class Molecule3DNode extends DOM {
     this.currentAtoms.forEach( atom => {
       maxTotalRadius = Math.max( maxTotalRadius, atom.magnitude + atom.covalentRadius );
     } );
+
+    //REVIEW: jsdoc?
     this.maxTotalRadius = maxTotalRadius;
   }
 
@@ -304,6 +306,7 @@ class Molecule3DNode extends DOM {
       matrix = Matrix3.rotationY( timeElapsed );
     }
     else {
+      //REVIEW: handle the TODO here?
       // TODO: WARNING: test high-res on iPad, this may be a bug here (includes scaled-up version!)
       const correctScale = 4 / this.canvas.width;
       const delta = this.currentPosition.minus( this.lastPosition );
@@ -350,6 +353,7 @@ class Molecule3DNode extends DOM {
   }
 }
 
+//REVIEW: doc/visibility?
 Molecule3DNode.initialTransforms = {
   'H2O': Matrix3.createFromPool( 0.181499678570479, -0.7277838769374022, -0.6613535326501101,
     0.7878142178395282, 0.5101170681131106, -0.34515117700738,

@@ -18,6 +18,7 @@ const elementMap = {
 };
 // REVIEW: We can include the getAtomName definition in this object (and move the definition of this down)
 const Strings = {};
+//REVIEW: Also JSDoc this if we keep it
 Strings.getAtomName = element => {
   return elementMap[ element.symbol ];
 };

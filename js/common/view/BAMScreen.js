@@ -49,6 +49,7 @@ class BAMScreen extends Screen {
  * @param {number} numBoxes               Number of collection boxes
  * @param {Emitter} stepEmitter
  * @param {CollectionLayout} collectionLayout
+ * REVIEW: visibility (and move into class as super)
  *
  * @returns {KitCollection} A consistent kitCollection
  */
@@ -159,6 +160,7 @@ BAMScreen.generateKitCollection = ( allowMultipleMolecules, numBoxes, stepEmitte
 /**
  * Select a random molecule from the data set of possible collection box molecules
  * @param {Array.<Molecules>}molecules
+ * REVIEW: visibility (and move into class as super)
  *
  * @returns {CompleteMolecule}
  */

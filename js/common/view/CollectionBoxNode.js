@@ -115,6 +115,7 @@ class CollectionBoxNode extends VBox {
     box.removedMoleculeEmitter.addListener( this.removeMolecule.bind( this ) );
     box.acceptedMoleculeCreationEmitter.addListener( this.blink.bind( this ) );
 
+    //REVIEW: Handle TODO
     // TODO: this is somewhat of an ugly way of getting the fixed layout (where the molecules don't resize). consider changing
     // kept for now since it is much easier to revert back to the old behavior
 
@@ -175,6 +176,7 @@ class CollectionBoxNode extends VBox {
 
     const lastMoleculeNode = this.moleculeNodeMap[ molecule.moleculeId ];
     this.moleculeLayer.removeChild( lastMoleculeNode );
+    //REVIEW: handle TODO
     this.moleculeNodes.splice( this.moleculeNodes.indexOf( lastMoleculeNode ), 1 ); // TODO: replace splice with remove
     delete this.moleculeNodeMap[ molecule.moleculeId ];
 

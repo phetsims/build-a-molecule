@@ -218,6 +218,7 @@ CompleteMolecule.capitalize = str => {
 
 /**
  * Construct a molecule out of a pipe-separated line.
+ * REVIEW: visibility, and ideally move as a static class method
  *
  * WARNING: this always writes out in a "full" configuration, even if the data wasn't contained before
  *
