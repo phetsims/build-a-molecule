@@ -22,6 +22,7 @@ import buildAMoleculeStrings from '../../buildAMoleculeStrings.js';
 import BAMConstants from '../BAMConstants.js';
 import CollectionAreaNode from './CollectionAreaNode.js';
 
+//REVIEW: Can inline these now if desired
 const collectionPatternString = buildAMoleculeStrings.collectionPattern;
 const yourMoleculesString = buildAMoleculeStrings.yourMolecules;
 

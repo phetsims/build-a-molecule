@@ -21,6 +21,7 @@ import AllFilledDialog from './AllFilledDialog.js';
 import BAMScreenView from './BAMScreenView.js';
 import CollectionPanel from './CollectionPanel.js';
 
+//REVIEW: Can inline these now if desired
 const nextCollectionString = buildAMoleculeStrings.nextCollection;
 
 class MoleculeCollectingScreenView extends BAMScreenView {
@@ -45,6 +46,7 @@ class MoleculeCollectingScreenView extends BAMScreenView {
       font: new PhetFont( {
         size: 18,
         weight: 'bold',
+        //REVIEW: I don't believe maxWidth is a PhetFont option, do you need the option elsewhere?
         maxWidth: BAMConstants.TEXT_MAX_WIDTH
       } ),
       baseColor: Color.ORANGE,

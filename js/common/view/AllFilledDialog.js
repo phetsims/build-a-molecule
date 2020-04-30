@@ -23,6 +23,7 @@ import buildAMolecule from '../../buildAMolecule.js';
 import buildAMoleculeStrings from '../../buildAMoleculeStrings.js';
 import BAMConstants from '../BAMConstants.js';
 
+//REVIEW: Can inline these now if desired
 const nextCollectionString = buildAMoleculeStrings.nextCollection;
 const youCompletedYourCollectionString = buildAMoleculeStrings.youCompletedYourCollection;
 

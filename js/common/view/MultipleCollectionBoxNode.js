@@ -17,6 +17,7 @@ import BAMConstants from '../BAMConstants.js';
 import CollectionBox from '../model/CollectionBox.js';
 import CollectionBoxNode from './CollectionBoxNode.js';
 
+//REVIEW: Can inline these now if desired
 const collectionMultipleGoalPatternString = buildAMoleculeStrings.collectionMultipleGoalPattern;
 const collectionMultipleQuantityEmptyString = buildAMoleculeStrings.collectionMultipleQuantityEmpty;
 const collectionMultipleQuantityPatternString = buildAMoleculeStrings.collectionMultipleQuantityPattern;

@@ -21,6 +21,7 @@ import BAMIconFactory from '../common/view/BAMIconFactory.js';
 import BAMScreen from '../common/view/BAMScreen.js';
 import BAMScreenView from '../common/view/BAMScreenView.js';
 
+//REVIEW: Can inline these now if desired
 const titlePlaygroundString = buildAMoleculeStrings.title.playground;
 
 // constants

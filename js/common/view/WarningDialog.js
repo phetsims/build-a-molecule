@@ -15,6 +15,7 @@ import FontAwesomeNode from '../../../../sun/js/FontAwesomeNode.js';
 import buildAMolecule from '../../buildAMolecule.js';
 import buildAMoleculeStrings from '../../buildAMoleculeStrings.js';
 
+//REVIEW: Can inline these now if desired
 const warningString = buildAMoleculeStrings.warning;
 
 class WarningDialog extends Dialog {

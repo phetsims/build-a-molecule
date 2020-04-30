@@ -16,6 +16,7 @@ import BAMConstants from '../BAMConstants.js';
 import CollectionBox from '../model/CollectionBox.js';
 import CollectionBoxNode from './CollectionBoxNode.js';
 
+//REVIEW: Can inline these now if desired
 const collectionSinglePatternString = buildAMoleculeStrings.collectionSinglePattern;
 
 class SingleCollectionBoxNode extends CollectionBoxNode {

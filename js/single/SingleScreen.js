@@ -23,6 +23,7 @@ import BAMIconFactory from '../common/view/BAMIconFactory.js';
 import BAMScreen from '../common/view/BAMScreen.js';
 import MoleculeCollectingScreenView from '../common/view/MoleculeCollectingScreenView.js';
 
+//REVIEW: Can inline these now if desired
 const titleSingleString = buildAMoleculeStrings.title.single;
 
 class SingleScreen extends BAMScreen {
