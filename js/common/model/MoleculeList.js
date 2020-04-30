@@ -54,6 +54,7 @@ class MoleculeList {
 
     // then load other molecules
     const mainMolecules = MoleculeList.readCompleteMoleculesFromData( otherMoleculesData );
+    //REVIEW: es6 arrow function?
     mainMolecules.forEach( function( molecule ) {
       // if our molecule was included in the initial lookup, use that initial version instead so we can have instance equality preserved
       const initialListLookup = initialList.moleculeNameMap[ molecule.filterCommonName( molecule.commonName ) ];

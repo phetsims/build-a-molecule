@@ -50,6 +50,8 @@ class BAMScreenView extends ScreenView {
 
     // @public Dialog used for representing 3D molecules. REVIEW: missing type docs here (or it doesn't use braces?)
     // Only create a dialog if webgl is enabled. See https://github.com/phetsims/build-a-molecule/issues/105
+    //REVIEW: Can we have the Property.<CompleteMolecule|null> created in the model, instead of undocumented here in
+    //REVIEW: the view?
     this.dialog = ThreeUtils.isWebGLEnabled() ? new Molecule3DDialog( new Property( null ) ) : new WarningDialog();
 
     // @public {function} Reference to callback that displays dialog for 3d node representation

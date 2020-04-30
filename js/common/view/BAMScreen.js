@@ -36,7 +36,11 @@ class BAMScreen extends Screen {
     }, options );
     const stepEmitter = new Emitter( { parameters: [ { valueType: 'number' } ] } ); // emits 1 parameter, timeElapsed
 
+    //REVIEW: formatting a bit funky?
     super( () => {
+        //REVIEW: The main model object for simulations is normally named with <ScreenName>Model or <Sim>Model, something
+        //REVIEW: representative for various subtypes. This KitCollectionList SEEMS to be acting in this capacity,
+        //REVIEW: so it should presumably be renamed BAMModel?
         return new KitCollectionList( createInitialKitCollection( collectionLayout, stepEmitter ), collectionLayout, stepEmitter, createKitCollection );
       },
       createView, options );

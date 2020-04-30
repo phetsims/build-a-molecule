@@ -54,7 +54,7 @@ class Molecule3DDialog extends Dialog {
       closeButtonColor: 'white'
     } );
 
-    // @public {Property.<CompleteMoleculeProperty>}
+    // @public {Property.<CompleteMoleculeProperty>} REVIEW: Type doc should presumably match the parameter above? Seems like a typo
     this.completeMoleculeProperty = completeMoleculeProperty;
 
     // @public {BooleanProperty} Property used for playing/pausing a rotating molecule

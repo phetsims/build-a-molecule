@@ -127,7 +127,6 @@ class KitCollectionList {
    * @returns {Bounds2}
    */
   availablePlayAreaBounds() {
-
     return this.collectionLayout.availablePlayAreaBounds;
   }
 

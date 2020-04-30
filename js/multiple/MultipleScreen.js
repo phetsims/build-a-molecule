@@ -37,7 +37,7 @@ class MultipleScreen extends BAMScreen {
     super(
       // createInitialKitCollection
       ( bounds, stepEmitter ) => {
-        const kitCollection = new KitCollection({ enableCues: true });
+        const kitCollection = new KitCollection( { enableCues: true } );
         kitCollection.addKit( new Kit( bounds, [
           new BAMBucket( new Dimension2( 400, 200 ), stepEmitter, Element.H, 2 ),
           new BAMBucket( new Dimension2( 450, 200 ), stepEmitter, Element.O, 2 )
