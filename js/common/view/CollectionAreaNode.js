@@ -51,6 +51,7 @@ class CollectionAreaNode extends Node {
     // Reset collection button
     const resetCollectionButton = new RefreshButton( {
       listener() {
+        //REVIEW: A lot of this looks like model logic, can we move the body of this listener to KitCollection as a method?
         // when clicked, reset the kits and empty collection boxes
         collection.kits.forEach( kit => {
           kit.reset();
@@ -66,9 +67,16 @@ class CollectionAreaNode extends Node {
       baseColor: Color.ORANGE,
       soundPlayer: Playable.NO_SOUND
     } );
+    //REVIEW: touchArea accepts {Bounds2}, don't need Shape.bounds wrapping
     resetCollectionButton.touchArea = Shape.bounds( resetCollectionButton.bounds.dilated( 7 ) );
 
     // When any collection box quantity changes, update whether it is enabled
+    //REVIEW: We don't need a separate callback for each box, and in fact the inner "box" is shadowing the outer "box"
+    //REVIEW: reference because of scoping rules. I'd define `const updateEnabled = () => { ... }` or something
+    //REVIEW: with the inner link closure, and then link it to each box, e.g.:
+    //REVIEW:   const updateEnabled = () => { resetCollectionButton.enabled = _.some( collection.collectionBoxes, box => box.quantityProperty.value ); };
+    //REVIEW:   collection.collectionBoxes.forEach( box => box.quantityProperty.link( updateEnabled ) );
+    //REVIEW: (or formatting for readability, that's a bit condensed)
     collection.collectionBoxes.forEach( box => {
       box.quantityProperty.link( () => {
         let enabled = false;
@@ -84,7 +92,7 @@ class CollectionAreaNode extends Node {
   }
 
   /**
-   * Update the location of each collection box node
+   * Update the location of each collection box node REVIEW: Note somehow that it's updating the location in the model here
    *
    * @public
    */

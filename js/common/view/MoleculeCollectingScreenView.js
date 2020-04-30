@@ -52,6 +52,7 @@ class MoleculeCollectingScreenView extends BAMScreenView {
       baseColor: Color.ORANGE,
       soundPlayer: Playable.NO_SOUND
     } );
+    //RREVIEW: touchArea accepts {Bounds2}, no need for Shape.bounds wrapping
     this.nextCollectionButton.touchArea = Shape.bounds( this.nextCollectionButton.localBounds.dilated( 20 ) );
     this.nextCollectionButton.addListener( () => {
       regenerateCallback();

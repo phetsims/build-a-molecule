@@ -108,6 +108,7 @@ class BAMScreenView extends ScreenView {
         bottom: kitPanel.top - 7,
         scale: 0.85
       } );
+    //RREVIEW: touchArea accepts {Bounds2}, no need for Shape.bounds wrapping
     refillButton.touchArea = Shape.bounds( refillButton.selfBounds.union( refillButton.childBounds ).dilated( 10 ) );
 
     /**
@@ -144,6 +145,7 @@ class BAMScreenView extends ScreenView {
       right: this.layoutBounds.right - BAMConstants.VIEW_PADDING / 2,
       bottom: kitPanel.bottom
     } );
+    //RREVIEW: touchArea accepts {Bounds2}, no need for Shape.bounds wrapping
     this.resetAllButton.touchArea = Shape.bounds( this.resetAllButton.bounds.dilated( 7 ) );
     this.addChild( this.resetAllButton );
     this.resetAllButton.moveToBack();

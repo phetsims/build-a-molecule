@@ -67,7 +67,7 @@ class AllFilledDialog extends Dialog {
       baseColor: Color.ORANGE,
       soundPlayer: Playable.NO_SOUND
     } );
-    button.touchArea = Shape.bounds( button.localBounds.dilated( 20 ) );
+    button.touchArea = Shape.bounds( button.localBounds.dilated( 20 ) ); //RREVIEW: touchArea accepts {Bounds2}, no need for Shape.bounds wrapping
     contentVBox.addChild( button );
     super( contentVBox, options );
 

@@ -67,6 +67,7 @@ class MoleculeControlsHBox extends HBox {
         const button3d = new ShowMolecule3DButtonNode( completeMolecule, showDialogCallback, {
           scale: SCALE
         } );
+        //RREVIEW: touchArea accepts {Bounds2}, no need for Shape.bounds wrapping
         button3d.touchArea = Shape.bounds( button3d.childBounds.dilated( DILATION_FACTOR ) );
         this.addChild( button3d );
     }
@@ -80,6 +81,7 @@ class MoleculeControlsHBox extends HBox {
       yMargin: 0,
       soundPlayer: Playable.NO_SOUND
     } );
+    //RREVIEW: touchArea accepts {Bounds2}, no need for Shape.bounds wrapping
     buttonBreak.touchArea = Shape.bounds( buttonBreak.childBounds.dilated( DILATION_FACTOR ) );
     buttonBreak.addInputListener( new ButtonListener( {
       fire: () => {
