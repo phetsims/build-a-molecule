@@ -76,7 +76,7 @@ class CollectionPanel extends Panel {
     // Manages changing the label of the current collection
     kitCollectionList.currentCollectionProperty.link( () => {
       currentCollectionText.text = StringUtils.fillIn( collectionPatternString, {
-        number: kitCollectionList.currentIndex
+        number: kitCollectionList.currentIndex + 1
       } );
     } );
 

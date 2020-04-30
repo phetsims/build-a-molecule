@@ -40,19 +40,31 @@ class Molecule3DNode extends DOM {
     // @private {BooleanProperty}
     this.draggingProperty = new BooleanProperty( false );
 
-    // prepare the canvas
-    //REVIEW: type/visibility docs on everythign defined here!
+    // @public {MoleculeBondNode}
     this.canvas = canvas;
+
+    // @private {CanvasRenderingContext2D}
     this.context = this.canvas.getContext( '2d' );
+
+    // @private {number}
     this.backingScale = useHighRes ? Utils.backingScale( this.context ) : 1;
+
+    // @private {string}
     this.canvas.className = 'canvas-3d';
+
+    // @private {string}
     this.canvas.style.position = 'absolute';
+
+    // @private {string}
     this.canvas.style.left = '0';
+
+    // @private {string}
     this.canvas.style.top = '0';
+
+    // @private
     this.setMoleculeCanvasBounds( initialBounds );
 
-    // map the atoms into our enhanced format
-    //REVIEW: type/visibility docs
+    // @private {Array.<Vector3>} map the atoms into our enhanced format
     this.currentAtoms = completeMolecule.atoms.map( atom => {
 
       // similar to picometers from angstroms? hopefully?
@@ -62,6 +74,31 @@ class Molecule3DNode extends DOM {
       v.color = atom.element.color;
       return v;
     } );
+
+    const gradientMap = {}; // element symbol => gradient
+    this.currentAtoms.forEach( atom => {
+      if ( !gradientMap[ atom.element.symbol ] ) {
+        gradientMap[ atom.element.symbol ] = this.createGradient( atom.element );
+      }
+    } );
+
+    // @private {Object}
+    this.gradientMap = gradientMap;
+
+    // @private boolean
+    this.dragging = false;
+
+    // @private {Vector2}
+    this.lastPosition = Vector2.ZERO;
+
+    // @private {Vector2}
+    this.currentPosition = Vector2.ZERO;
+
+    if ( GRAB_INITIAL_TRANSFORMS ) {
+
+      // @private {Matrix3}
+      this.masterMatrix = Matrix3.identity();
+    }
 
     // center the bounds of the atoms
     const bounds3 = Bounds3.NOTHING.copy();
@@ -83,23 +120,6 @@ class Molecule3DNode extends DOM {
       maxTotalRadius = Math.max( maxTotalRadius, atom.magnitude + atom.covalentRadius );
     } );
     this.maxTotalRadius = maxTotalRadius;
-
-    const gradientMap = {}; // element symbol => gradient
-    //REVIEW: type/visibility docs on everything here
-    this.currentAtoms.forEach( atom => {
-      if ( !gradientMap[ atom.element.symbol ] ) {
-        gradientMap[ atom.element.symbol ] = this.createGradient( atom.element );
-      }
-    } );
-    this.gradientMap = gradientMap;
-    this.dragging = false;
-    this.lastPosition = Vector2.ZERO;
-    this.currentPosition = Vector2.ZERO;
-
-    if ( GRAB_INITIAL_TRANSFORMS ) {
-      //REVIEW: type/visibility docs
-      this.masterMatrix = Matrix3.identity();
-    }
   }
 
   /**

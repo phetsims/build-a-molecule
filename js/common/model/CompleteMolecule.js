@@ -46,7 +46,7 @@ import SO2Node from '../../../../nitroglycerin/js/nodes/SO2Node.js';
 import SO3Node from '../../../../nitroglycerin/js/nodes/SO3Node.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import buildAMolecule from '../../buildAMolecule.js';
-import Strings from '../../BAMStrings.js'; //REVIEW: import as BAMStrings?
+import BAMStrings from '../../BAMStrings.js';
 import Bond from './Bond.js';
 import MoleculeStructure from './MoleculeStructure.js';
 
@@ -123,7 +123,7 @@ class CompleteMolecule extends MoleculeStructure {
   getDisplayName() {
     // first check if we have it translated. do NOT warn on missing
     const lookupKey = this.stringKey;
-    const stringLookup = Strings[ lookupKey ]; // NOTE: do NOT warn or error on missing strings, this is generally expected
+    const stringLookup = BAMStrings[ lookupKey ]; // NOTE: do NOT warn or error on missing strings, this is generally expected
 
     // we need to check whether it came back the same as the key due to how getString works.
     if ( stringLookup && stringLookup !== lookupKey ) {

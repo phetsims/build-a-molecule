@@ -36,8 +36,7 @@ class MoleculeStructure {
     // @public {number}
     this.moleculeId = nextMoleculeId++; // used for molecule identification and ordering for optimization
 
-    //REVIEW: It looks like we can only guarantee {Atom}, CompleteMolecule.fromSerial2 (for instance) uses Pubchem-style atoms
-    // @public {Array.<Atom2>}
+    // @public {Array.<Atom>}
     this.atoms = [];
 
     // @public {Array.<Bond>}
@@ -46,10 +45,10 @@ class MoleculeStructure {
 
   /**
    * Add an atom to the molecule structure
-   * @param {Atom2} atom REVIEW: {Atom}?
+   * @param {Atom} atom
    *
    * @public
-   * @returns {Atom2} REVIEW: {Atom}?
+   * @returns {Atom}
    */
   addAtom( atom ) {
     assert && assert( !_.includes( this.atoms, atom ), 'Cannot add an already existing atom' );
@@ -105,9 +104,35 @@ class MoleculeStructure {
 
     const organic = containsCarbon && containsHydrogen;
 
-    //REVIEW: Maybe better formatting on this ternary?
-    const sortedElements = _.sortBy( this.getElementList(), organic ? MoleculeStructure.organicSortValue         // carbon first, then hydrogen, then others alphabetically
-      : MoleculeStructure.electronegativeSortValue // sort by increasing electronegativity
+    const electronegativeSortValue = element => {
+      return element.electronegativity;
+    };
+
+    const alphabeticSortValue = element => {
+      let value = 1000 * element.symbol.charCodeAt( 0 );
+      if ( element.symbol.length > 1 ) {
+        value += element.symbol.charCodeAt( 1 );
+      }
+      return value;
+    };
+
+    const organicSortValue = element => {
+      if ( element.isCarbon() ) {
+        return 0;
+      }
+      else if ( element.isHydrogen() ) {
+        return 1;
+      }
+      else {
+        return alphabeticSortValue( element );
+      }
+    };
+
+    const sortedElements = _.sortBy(
+      this.getElementList(),
+
+      // carbon first, then hydrogen, then others alphabetically, otherwise sort by increasing electronegativity
+      organic ? organicSortValue : electronegativeSortValue
     );
 
     // grab our formula out
@@ -129,10 +154,10 @@ class MoleculeStructure {
   }
 
   /**
-   * @param {PubChemAtom*} atom REVIEW: Pretty sure the type needs to be {Atom}
+   * @param {Atom} atom
    *
    * @public
-   * @returns {PubChemAtom*} All neighboring atoms that are connected by bonds to the passed in atom REVIEW: Pretty sure the type needs to be {Atom}
+   * @returns {Atom} All neighboring atoms that are connected by bonds to the passed in atom
    */
   getNeighbors( atom ) {
     return _.map( this.getBondsInvolving( atom ), bond => {
@@ -229,10 +254,7 @@ class MoleculeStructure {
    * @returns {boolean}
    */
   containsElement( element ) {
-    //REVIEW: Don't need the block on the arrow function, return _.some( this.atoms, atom => atom.element === element ); fits a bit nicer here
-    return _.some( this.atoms, atom => {
-      return atom.element === element;
-    } );
+    return _.some( this.atoms, atom => atom.element === element );
   }
 
   /**
@@ -252,8 +274,6 @@ class MoleculeStructure {
     return result;
   }
 
-  //REVIEW: If it's not relevant, can we remove this note? Performance I assume is fine?
-  // Note: (performance) cache this?
   /**
    * @public
    * @returns {ElementHistogram}
@@ -329,6 +349,7 @@ class MoleculeStructure {
     for ( let i = 0; i < length; i++ ) {
       const otherAtom = other.atoms[ i ];
       if ( this.checkEquivalency( other, myVisited, otherVisited, firstAtom, otherAtom ) ) {
+
         // we found an isomorphism with firstAtom => otherAtom
         return true;
       }
@@ -416,11 +437,9 @@ class MoleculeStructure {
    * @returns {Array.<Element>}
    */
   getElementList() {
+
     // return defensive copy. if that is changed, examine all usages
-    //REVIEW: don't need the block here, prefer `return this.atoms.map( atom => atom.element );`
-    return _.map( this.atoms, atom => {
-      return atom.element;
-    } );
+    return _.map( this.atoms, atom => atom.element );
   }
 
   /*---------------------------------------------------------------------------*
@@ -485,62 +504,22 @@ class MoleculeStructure {
   }
 }
 
-//REVIEW: Is this public? JSDoc?
+// @private {Object}
 MoleculeStructure.formulaExceptions = {
   'H3N': 'NH3', // treated as if it is organic
   'CHN': 'HCN'  // not considered organic
 };
 
-//REVIEW: These static functions should be moved to static functions inside the class (ideally)
-
-/**
- * @param {Element} element
- * @returns {number}
- */
-MoleculeStructure.electronegativeSortValue = element => {
-  //REVIEW: This function could be declared in scope but NOT exported or static. It's only used internally in one place
-  return element.electronegativity;
-};
-
-/**
- * @param {Element} element
- * @returns {number}
- */
-MoleculeStructure.organicSortValue = element => {
-  //REVIEW: This function could be declared in scope but NOT exported or static. It's only used internally in one place
-  if ( element.isCarbon() ) {
-    return 0;
-  }
-  else if ( element.isHydrogen() ) {
-    return 1;
-  }
-  else {
-    return MoleculeStructure.alphabeticSortValue( element );
-  }
-};
-
-/**
- * @param {Element} element
- * @returns {number}
- */
-MoleculeStructure.alphabeticSortValue = element => {
-  //REVIEW: This function could be declared in scope but NOT exported or static. It's only used internally in one place
-  let value = 1000 * element.symbol.charCodeAt( 0 );
-  if ( element.symbol.length > 1 ) {
-    value += element.symbol.charCodeAt( 1 );
-  }
-  return value;
-};
-
 /**
  * Combines molecules together by bonding their atoms A and B
- * REVIEW: public?
  *
  * @param {MoleculeStructure} molA   Molecule A
  * @param {MoleculeStructure} molB   Molecule B
  * @param {Atom2}              a      Atom A
  * @param {Atom2}              b      Atom B
  * @param {MoleculeStructure} result An empty molecule to fill
+ *
+ * @public
  * @returns {MoleculeStructure} A completely new molecule with all atoms in A and B, where atom A is joined to atom B
  */
 MoleculeStructure.getCombinedMoleculeFromBond = ( molA, molB, a, b, result ) => {
@@ -562,12 +541,12 @@ MoleculeStructure.getCombinedMoleculeFromBond = ( molA, molB, a, b, result ) => 
 
 /**
  * Split a bond in a molecule, and return the remaining molecule structure(s)
- * REVIEW: public?
- *
  * @param {MoleculeStructure} structure The molecule
  * @param {Bond}              bond      The bond to break
  * @param {MoleculeStructure} molA      An empty molecule for the 1st broken part
  * @param {MoleculeStructure} molB      An empty molecule for the 2nd broken part
+ *
+ * @public
  * @returns {Array.<MoleculeStructure>}   A list of remaining structures
  */
 MoleculeStructure.getMoleculesFromBrokenBond = ( structure, bond, molA, molB ) => {
@@ -640,7 +619,6 @@ MoleculeStructure.getMoleculesFromBrokenBond = ( structure, bond, molA, molB ) =
 /**
  * Given a matrix of equivalencies, can we find a permutation of the 'other' atoms that are equivalent to
  * their respective 'my' atoms?
- * REVIEW: public?
  *
  * NOTE: equivalency matrices are stored in row-major format (compared to the Java version)
  *
@@ -648,6 +626,8 @@ MoleculeStructure.getMoleculesFromBrokenBond = ( structure, bond, molA, molB ) =
  * @param {number}          myIndex               Index for the row (index into our atoms). calls with myIndex + 1 to children
  * @param {Array.<number>}  otherRemainingIndices Remaining available 'other' indices
  * @param {number}          size                  This square matrix is size x size in dimensions
+ *
+ * @public
  * @returns {boolean} Whether a successful matching permutation was found
  */
 MoleculeStructure.checkEquivalencyMatrix = ( equivalences, myIndex, otherRemainingIndices, size ) => {
@@ -680,12 +660,12 @@ MoleculeStructure.checkEquivalencyMatrix = ( equivalences, myIndex, otherRemaini
 
 /**
  * Deserialize a molecule structure
- * REVIEW: public?
- *
  * @param {string}            line              The data (string) to deserialize
  * @param {MoleculeGenerator} moleculeGenerator function( atomCount, bondCount ):MoleculeStructure. Creates a molecule with properties that we can fill with atoms/bonds
  * @param {AtomParser}        atomParser        function( atomString ):Atom. Creates an atom from a string representing an atom
  * @param {BondParser}        bondParser        function( bondString, connectedAtom, moleculeStructure ):Bond. Creates a bond from a string representing a bond
+ *
+ * @public
  * @returns {MoleculeStructure} A constructed molecule
  */
 MoleculeStructure.fromSerial2 = ( line, moleculeGenerator, atomParser, bondParser ) => {
@@ -709,9 +689,9 @@ MoleculeStructure.fromSerial2 = ( line, moleculeGenerator, atomParser, bondParse
 };
 
 /**
- * REVIEW: public?
- *
  * @param {string} line - The data (string) to deserialize
+ *
+ * @public
  * @returns {MoleculeStructure}
  */
 MoleculeStructure.fromSerial2Basic = line => {
@@ -720,9 +700,10 @@ MoleculeStructure.fromSerial2Basic = line => {
 };
 
 /**
- * REVIEW: visibility
  * @param {number} atomCount
  * @param {number} bondCount
+ *
+ * @protected
  * @returns {MoleculeStructure}
  */
 MoleculeStructure.defaultMoleculeGenerator = ( atomCount, bondCount ) => {
@@ -730,20 +711,23 @@ MoleculeStructure.defaultMoleculeGenerator = ( atomCount, bondCount ) => {
 };
 
 /**
- * REVIEW: visibility
  * @param {string} atomString
+ *
+ * @protected
  * @returns {Atom2}
  */
 MoleculeStructure.defaultAtomParser = atomString => {
+
   // atomString is an element symbol
   return new Atom( Element.getElementBySymbol( atomString ) );
 };
 
 /**
- * REVIEW: visibility
  * @param {string} bondString
  * @param {Atom2} connectedAtom
  * @param {MoleculeStructure} moleculeStructure
+ *
+ * @protected
  * @returns {Bond}
  */
 MoleculeStructure.defaultBondParser = ( bondString, connectedAtom, moleculeStructure ) => {
