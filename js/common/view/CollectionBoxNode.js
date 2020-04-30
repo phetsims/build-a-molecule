@@ -72,6 +72,12 @@ class CollectionBoxNode extends VBox {
     //REVIEW: for all CollectionBoxNodes? e.g. declare it at the top-level as `const moleculeIdThumbnailMap = {}`
     //REVIEW: outside of the constructor.
 
+    //REVIEW: Also, the thumbnail nodes are being "wrapped" with a Node() for each entry, but I don't see where this
+    //REVIEW: parent/child relationship is removed. We'll want to remove this (e.g. node.detach() is probably the
+    //REVIEW: easiest), otherwise adding a bunch of parents to the thumbnails will leak memory.
+    //REVIEW: NOTE: this will still leak even if we have only a small set of CollectionBoxNodes, unlike the other
+    //REVIEW: "probably not leaks" in the file.
+
     //REVIEW: type/visibility docs (looks private?)
     this.blackBox = new Rectangle( 0, 0, 160, 50, {
       //REVIEW: blackBox alternates between a black fill and another black fill. And is called blackBox.
@@ -84,13 +90,21 @@ class CollectionBoxNode extends VBox {
       box.dropBoundsProperty.set( toModelBounds( this.blackBox ) );
     };
 
+    //REVIEW: What happened with the indentation below? WebStorm should fix this presumably? HAS_3D removal refactoring?
     // Arrange button position for to trigger 3D representation
       const show3dButton = new ShowMolecule3DButtonNode( box.moleculeType, showDialogCallback );
+      //REVIEW: touchArea can be a {Bounds2}, so we can just say show3dButton.touchArea = show3dButton.bounds.dilated( 10 );
       show3dButton.touchArea = Shape.bounds( show3dButton.bounds.dilated( 10 ) );
       show3dButton.right = this.blackBox.right - BLACK_BOX_PADDING;
       show3dButton.centerY = this.blackBox.centerY;
       //REVIEW: type/visibility docs, and ideally HAS_3D is true so we declare it in one place?
       this.button3dWidth = show3dButton.width;
+      //REVIEW: Our listener cares about box.quantityProperty, but we're adding it to two other emitters.
+      //REVIEW: Can we only listen to the box.quantityProperty instead, with a link()? Then the immediate callback below
+      //REVIEW: can be removed. e.g. `box.quantityProperty.link( quantity => { show3dButton.visible = quantity > 0; } );`
+      //REVIEW: ALSO I believe multiple CollectionBoxNodes will not be created and disposed while one CollectionBox
+      //REVIEW: survives, but please document this if it's the case (otherwise we'll be leaking memory by not removing
+      //REVIEW: this listener).
       const update3dVisibility = () => {
         show3dButton.visible = box.quantityProperty.value > 0;
       };
@@ -113,11 +127,15 @@ class CollectionBoxNode extends VBox {
       //REVIEW: we set this below in the very next statement. Can we remove this following line and just have the link?
       visible: box.cueVisibilityProperty.value
     } );
+    //REVIEW: Another listener where we should document that the box has a similar (the same?) lifetime as the node,
+    //REVIEW: or this would be a potential memory leak.
     box.cueVisibilityProperty.link( visible => {
       this.cueNode.visible = visible;
     } );
 
     // Bounds are expanded to compensate for layout including a cueNode.
+    //REVIEW: If the cueNode is added to the boxNode, presumably it wouldn't need localBounds expansion?
+    //REVIEW: why would this be needed?
     this.blackBox.localBounds = this.blackBox.localBounds.withMaxX(
       this.blackBox.localBounds.right + this.blackBox.left - this.cueNode.left
     );
@@ -131,6 +149,7 @@ class CollectionBoxNode extends VBox {
     this.updateBoxGraphics();
 
     // Add listeners for the Collection Box
+    //REVIEW: Note about lifetimes, as above
     box.addedMoleculeEmitter.addListener( this.addMolecule.bind( this ) );
     box.removedMoleculeEmitter.addListener( this.removeMolecule.bind( this ) );
     box.acceptedMoleculeCreationEmitter.addListener( this.blink.bind( this ) );
@@ -140,6 +159,7 @@ class CollectionBoxNode extends VBox {
     // kept for now since it is much easier to revert back to the old behavior
 
     // Add invisible molecules to the molecule layer so that its size won't change later (fixes molecule positions)
+    //REVIEW: consider rename so that it's known that these nodes are just for layout? layoutNodes?
     const nodes = [];
     for ( let i = 0; i < box.capacity; i++ ) {
       const node = CollectionBoxNode.lookupThumbnail( box.moleculeType, this.moleculeNodeMap );
@@ -151,7 +171,7 @@ class CollectionBoxNode extends VBox {
     // Position them like we would with the others
     this.layOutMoleculeList( nodes );
     this.centerMoleculesInBlackBox();
-    this.boxNode.y = 3;
+    this.boxNode.y = 3; //REVIEW: Right now this is a layout box, so it will wipe away this positioning when it's added in the statement below
     this.addChild( this.boxNode );
   }
 
