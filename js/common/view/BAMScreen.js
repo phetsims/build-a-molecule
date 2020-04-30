@@ -41,6 +41,15 @@ class BAMScreen extends Screen {
         //REVIEW: The main model object for simulations is normally named with <ScreenName>Model or <Sim>Model, something
         //REVIEW: representative for various subtypes. This KitCollectionList SEEMS to be acting in this capacity,
         //REVIEW: so it should presumably be renamed BAMModel?
+        //REVIEW: Also, the main model gets stepped, so we don't need to create a stepEmitter here and have this
+        //REVIEW: complicated forwarding with all the callbacks being passed in here.
+        //REVIEW: Create the Emitter in BAMModel(e.g. KitCollectionList). Subtype it for MultipleModel, PlaygroundModel
+        //REVIEW: and SingleModel. In those subtypes, do the actual model creation that you have now in the
+        //REVIEW: Screen types (but now they'll have access to the collectionLayout, stepEmitter, etc.) We won't need
+        //REVIEW: access to the BAMScreen or callbacks to create the models now, they should be fairly self-contained,
+        //REVIEW: e.g. new PlaygroundModel() should be able to create the model.
+        //REVIEW: THEN, you can have the Screen essentially be:
+        //REVIEW: () => new PlaygroundModel(), model => new SomeScreenView( model ) without callbacks.
         return new KitCollectionList( createInitialKitCollection( collectionLayout, stepEmitter ), collectionLayout, stepEmitter, createKitCollection );
       },
       createView, options );
