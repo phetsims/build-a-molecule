@@ -40,7 +40,7 @@ class Molecule3DNode extends DOM {
     // @private {BooleanProperty}
     this.draggingProperty = new BooleanProperty( false );
 
-    // @public {MoleculeBondNode}
+    // @public {MoleculeBondNode} REVIEW: This looks like {HTMLCanvasElement}, not a MoleculeBondNode
     this.canvas = canvas;
 
     // @private {CanvasRenderingContext2D}
@@ -48,6 +48,9 @@ class Molecule3DNode extends DOM {
 
     // @private {number}
     this.backingScale = useHighRes ? Utils.backingScale( this.context ) : 1;
+
+    //REVIEW: Sorry, we're setting already-defined-and-typed parameters on a Canvas below. We don't put type names in
+    //REVIEW: from of those, so anything like `this.canvas.X = Y` should not include type documentation
 
     // @private {string}
     this.canvas.className = 'canvas-3d';
@@ -61,7 +64,7 @@ class Molecule3DNode extends DOM {
     // @private {string}
     this.canvas.style.top = '0';
 
-    // @private
+    // @private REVIEW: This is a method call/expression, not a definition, so it shouldn't have a visibility
     this.setMoleculeCanvasBounds( initialBounds );
 
     // @private {Array.<Vector3>} map the atoms into our enhanced format
@@ -82,10 +85,10 @@ class Molecule3DNode extends DOM {
       }
     } );
 
-    // @private {Object}
+    // @private {Object} REVIEW: Should include the map type documentation (from what to wht)
     this.gradientMap = gradientMap;
 
-    // @private boolean
+    // @private boolean REVIEW: missing braces?
     this.dragging = false;
 
     // @private {Vector2}
@@ -195,6 +198,10 @@ class Molecule3DNode extends DOM {
     assert && assert( isFinite( rx ) );
 
     //REVIEW: Maybe work this out with JO (Not the best example of documentation)
+    //REVIEW: JO: Looks like it's my fault! Usages somewhat give clues, can always doc in @returns with
+    //REVIEW: {ix:number, iy:number, ...}. Doesn't look performance-criticial anymore (just used for icon displays and
+    //REVIEW: things of that nature), so we could potentially properly type things, and switch things to Vector2?
+    //REVIEW: e.g. instead of ix/iy, it would be intersectionPoint:Vector2, etc.
     return {
       ix: ix,
       iy: iy,

@@ -70,7 +70,7 @@ class MoleculeStructure {
 
   /**
    * Return the bonds connected to a specific atom
-   * @param {Atom2} atom
+   * @param {Atom2} atom REVIEW: {Atom} probably instead of {Atom2}?
    *
    * @private
    * @returns {Array.<Bond>}
@@ -260,8 +260,8 @@ class MoleculeStructure {
   /**
    * Retrieves bonds between atoms a and b
    *
-   * @param {Atom2} a
-   * @param {Atom2} b
+   * @param {Atom2} a REVIEW: {Atom} probably instead of {Atom2}?
+   * @param {Atom2} b REVIEW: {Atom} probably instead of {Atom2}?
    * @public
    *
    * @returns {Bond}
@@ -297,7 +297,7 @@ class MoleculeStructure {
 
   /**
    * Return a copy of the molecule structure with a specific atom removed
-   * @param {Atom2} atomToRemove
+   * @param {Atom2} atomToRemove REVIEW: {Atom} probably instead of {Atom2}?
    *
    * @public
    * @returns {MoleculeStructure}
@@ -358,6 +358,7 @@ class MoleculeStructure {
   }
 
   /**
+   *  REVIEW: {Atom} probably instead of {Atom2}?
    * @param {Atom2} atom         An atom
    * @param {Array.<Atom2>} exclusionSet A set of atoms that should not be in the return value
    * @public
@@ -372,6 +373,7 @@ class MoleculeStructure {
   }
 
   /**
+   * REVIEW: {Atom} probably instead of {Atom2}?
    * @param {MoleculeStructure} other
    * @param {Array.<Atom2>}       myVisited
    * @param {Array.<Atom2>}       otherVisited
@@ -510,8 +512,14 @@ MoleculeStructure.formulaExceptions = {
   'CHN': 'HCN'  // not considered organic
 };
 
+//REVIEW: Previous review comment said:
+//REVIEW: > //REVIEW: These static functions should be moved to static functions inside the class (ideally)
+//REVIEW: They are still declared as MoleculeStructure.something = ...
+//REVIEW: Ideally they would be nested under the class MoleculeStructure { ... } as something() { ... }
+
 /**
  * Combines molecules together by bonding their atoms A and B
+ * REVIEW: {Atom} probably instead of {Atom2}?
  *
  * @param {MoleculeStructure} molA   Molecule A
  * @param {MoleculeStructure} molB   Molecule B
@@ -704,7 +712,7 @@ MoleculeStructure.fromSerial2Basic = line => {
  * @param {number} atomCount
  * @param {number} bondCount
  *
- * @protected
+ * @protected REVIEW: This is static, so protected doesn't make sense (because a supertype wouldn't inherit). @private if it's only used in this file?
  * @returns {MoleculeStructure}
  */
 MoleculeStructure.defaultMoleculeGenerator = ( atomCount, bondCount ) => {
@@ -714,8 +722,8 @@ MoleculeStructure.defaultMoleculeGenerator = ( atomCount, bondCount ) => {
 /**
  * @param {string} atomString
  *
- * @protected
- * @returns {Atom2}
+ * @protected REVIEW: This is static, so protected doesn't make sense (because a supertype wouldn't inherit). @private if it's only used in this file?
+ * @returns {Atom2} REVIEW: Looks like it returns an Atom, very explicitly not an Atom2
  */
 MoleculeStructure.defaultAtomParser = atomString => {
 
@@ -725,10 +733,10 @@ MoleculeStructure.defaultAtomParser = atomString => {
 
 /**
  * @param {string} bondString
- * @param {Atom2} connectedAtom
+ * @param {Atom2} connectedAtom REVIEW: {Atom}?
  * @param {MoleculeStructure} moleculeStructure
  *
- * @protected
+ * @protected REVIEW: This is static, so protected doesn't make sense (because a supertype wouldn't inherit). @private if it's only used in this file?
  * @returns {Bond}
  */
 MoleculeStructure.defaultBondParser = ( bondString, connectedAtom, moleculeStructure ) => {

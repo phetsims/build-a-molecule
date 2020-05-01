@@ -160,6 +160,8 @@ class CompleteMolecule extends MoleculeStructure {
     } );
     const node = new Node( {
       children: wrappers.map( atomWrapper => {
+        //REVIEW: A map function should return something, not have no return value, particularly if it's setting
+        //REVIEW: children, e.g. children: wrappers.map( atomWrapper => new AtomNode( ... ) )
         node.addChild( new AtomNode( atomWrapper.element, {
 
           // custom scale for now
@@ -364,6 +366,7 @@ class PubChemAtom2 extends Atom {
    * @returns {string}
    */
   toString() {
+    //REVIEW: Should be super.toString(), supertype's toString doesn't take parameters
     return super.toString( this ) + ' ' + this.x2d + ' ' + this.y2d;
   }
 
@@ -418,6 +421,7 @@ class PubChemAtom3 extends Atom {
    * @returns {string}
    */
   toString() {
+    //REVIEW: Should be super.toString(), supertype's toString doesn't take parameters
     return super.toString( this ) + ' ' + this.x3d + ' ' + this.y3d + ' ' + this.z3d;
   }
 
@@ -475,6 +479,7 @@ class PubChemAtomFull extends Atom {
    * @returns {string}
    */
   toString() {
+    //REVIEW: Should be super.toString(), supertype's toString doesn't take parameters
     return super.toString( this ) + ' ' + this.x2d + ' ' + this.y2d + ' ' + this.x3d + ' ' + this.y3d + ' ' + this.z3d;
   }
 

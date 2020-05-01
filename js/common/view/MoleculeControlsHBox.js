@@ -62,6 +62,7 @@ class MoleculeControlsHBox extends HBox {
       this.addChild( label );
 
       // 3D button
+      //REVIEW: Formatting?
 
         // @private Button that shows 3d representation of molecule
         const button3d = new ShowMolecule3DButtonNode( completeMolecule, showDialogCallback, {
@@ -109,6 +110,7 @@ class MoleculeControlsHBox extends HBox {
         atom.positionProperty.unlink( listener );
       } );
     }
+    //REVIEW: super's dispose doesn't take arguments, should be `super.dispose()`?
     super.dispose( this );
   }
 

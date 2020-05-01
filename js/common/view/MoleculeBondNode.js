@@ -169,6 +169,7 @@ class MoleculeBondNode extends Node {
     this.a.positionProperty.unlink( this.positionListener );
     this.b.positionProperty.unlink( this.positionListener );
 
+    //REVIEW: super's dispose doesn't take arguments, should be `super.dispose()`?
     super.dispose( this );
   }
 }

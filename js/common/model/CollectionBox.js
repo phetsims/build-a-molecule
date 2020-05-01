@@ -47,10 +47,10 @@ class CollectionBox {
     // @public {number}
     this.capacity = capacity;
 
-    // @private {Molecule}
+    // @private {Molecule} REVIEW: seems like Array.<Molecule>?
     this.molecules = [];
 
-    // @private {Bounds2}
+    // @private {Bounds2} REVIEW: Seems like Property.<Bounds2>?
     this.dropBoundsProperty = new Property( Bounds2.NOTHING );
     this.addedMoleculeEmitter.addListener( () => {
       if ( this.quantityProperty.value === capacity && options.initializeAudio ) {

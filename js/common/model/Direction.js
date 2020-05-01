@@ -22,14 +22,14 @@ const DirectionOrientation = Enumeration.byKeys( [ 'NORTH', 'EAST', 'SOUTH', 'WE
 class Direction {
   /**
    * @param {Vector2} vector
-   * @param {string} id
+   * @param {string} id REVIEW: Currently doesn't seem to be a string, seems like it's enumeration values
    */
   constructor( vector, id ) {
 
     // @public {Vector2}
     this.vector = vector;
 
-    // @public {number}
+    // @public {number} REVIEW: Doesn't seem to be a string (as above) or a number (here), currently an enumeration value
     this.id = id;
   }
 }

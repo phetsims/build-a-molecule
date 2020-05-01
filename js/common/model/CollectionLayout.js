@@ -32,9 +32,11 @@ class CollectionLayout {
     const kitAvailableWidth = hasCollectionPanel ? 0.75 : 1;
 
     // @public {Bounds2} Refers to the bucket region
+    //REVIEW: Bounds2.rect( ...same params... ) is preferred
     this.availableKitBounds = new Rectangle( -halfWidth, kitBottom, availableWidth * kitAvailableWidth, KIT_HEIGHT );
 
     // @public {Bounds2} Refers to the play area above the bucket region, where molecules can be built, broken, and moved
+    //REVIEW: Bounds2.rect( ...same params... ) is preferred
     this.availablePlayAreaBounds = new Rectangle(
       -BAMConstants.MODEL_SIZE.width / 2, // far left part of model
       kitTop, // top of kit

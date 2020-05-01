@@ -191,7 +191,7 @@ class Kit {
    * Returns kit bounds within the collection layout
    *
    * @public
-   * @returns {Rectangle}
+   * @returns {Rectangle} REVIEW: Please refer to this as a Bounds2, that's the exposed API
    */
   get availableKitBounds() {
     return this.collectionLayout.availableKitBounds;
@@ -201,7 +201,7 @@ class Kit {
    * Returns play area bounds within the collection layout
    * @public
    *
-   * @returns {Rectangle}
+   * @returns {Rectangle} REVIEW: Please refer to this as a Bounds2, that's the exposed API
    */
   get availablePlayAreaBounds() {
     return this.collectionLayout.availablePlayAreaBounds;
@@ -455,10 +455,11 @@ class Kit {
    * @param {Bounds2} bounds
    *
    * @private
-   * @returns {Rectangle}
+   * @returns {Rectangle} REVIEW: Please refer to this as a Bounds2, that's the exposed API
    */
   padMoleculeBounds( bounds ) {
     const halfPadding = Kit.interMoleculePadding / 2;
+    //REVIEW: Bounds2.rect( ...same params... ) is preferred
     return new Rectangle( bounds.x - halfPadding, bounds.y - halfPadding, bounds.width + Kit.interMoleculePadding, bounds.height + Kit.interMoleculePadding );
   }
 
