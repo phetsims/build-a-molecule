@@ -29,7 +29,7 @@ const youCompletedYourCollectionString = buildAMoleculeStrings.youCompletedYourC
 
 class AllFilledDialog extends Dialog {
   /**
-   * @param {BooleanProperty} buttonClickedProperty
+   * @param {BooleanProperty} buttonClickedProperty REVIEW: Prefer doc'ing requirements as Property.<Boolean>, doesn't appear we need that more-specific type here
    * @param {function} regenerateCallback
    * @param {Object} [options]
    */
@@ -37,7 +37,7 @@ class AllFilledDialog extends Dialog {
     options = merge( {
       stroke: new Color( 0, 0, 0 ),
       fill: BAMConstants.COMPLETE_BACKGROUND_COLOR,
-      center: new Vector2( 0, 0 ),
+      center: new Vector2( 0, 0 ), //REVIEW: Prefer Vector2.ZERO reference here
       bottomMargin: 10,
       cornerRadius: BAMConstants.CORNER_RADIUS
     }, options );
@@ -48,10 +48,12 @@ class AllFilledDialog extends Dialog {
     contentVBox.addChild( smiley );
 
     // Add a message regarding the completed collection
+    //REVIEW: variable only used once, can we inline it in the addChild?
     const text = new Text( youCompletedYourCollectionString, {
       font: new PhetFont( {
         size: 20,
         weight: 'bold',
+        //REVIEW: maxWidth isn't an option for PhetFont, do we want this in the Text instead?
         maxWidth: BAMConstants.TEXT_MAX_WIDTH
       } )
     } );
@@ -67,11 +69,14 @@ class AllFilledDialog extends Dialog {
       baseColor: Color.ORANGE,
       soundPlayer: Playable.NO_SOUND
     } );
+    //REVIEW: actually can we use touchAreaXDilation/touchAreaYDilation? THEN we can start nesting everything into one
+    //REVIEW: easy-to-read children setter, e.g.:
+    //REVIEW: super( new VBox( { ..., children: [ new FaceNode( 120 ).smile, ...]})), nested with nice formatting.
     button.touchArea = Shape.bounds( button.localBounds.dilated( 20 ) ); //RREVIEW: touchArea accepts {Bounds2}, no need for Shape.bounds wrapping
     contentVBox.addChild( button );
     super( contentVBox, options );
 
-    // @private
+    // @private REVIEW: we're not declaring a property or method, don't want a visibility annotation
     button.addListener( () => {
       buttonClickedProperty.value = true;
       regenerateCallback();

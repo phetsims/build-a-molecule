@@ -31,6 +31,8 @@ class MoleculeStructure {
    * @param {number} numBonds
    */
   constructor( numAtoms, numBonds ) {
+    //REVIEW: Actually, why do we provide numAtoms/numBonds before? If it was performance before, it's not necessary
+    //REVIEW: now, and isn't being used besides the assertion. Can we remove that?
     assert && assert( numAtoms !== undefined && numBonds !== undefined, 'numAtoms and numBonds required' );
 
     // @public {number}

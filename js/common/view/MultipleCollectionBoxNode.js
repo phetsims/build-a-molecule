@@ -27,7 +27,6 @@ class MultipleCollectionBoxNode extends CollectionBoxNode {
    * @param {CollectionBox} box
    * @param {function} toModelBounds
    * @param {function} showDialogCallback
-   *
    */
   constructor( box, toModelBounds, showDialogCallback ) {
     super( box, toModelBounds, showDialogCallback, { spacing: 2 } );
