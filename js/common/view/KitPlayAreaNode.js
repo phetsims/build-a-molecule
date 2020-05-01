@@ -15,8 +15,7 @@ import MoleculeBondContainerNode from './MoleculeBondContainerNode.js';
 
 class KitPlayAreaNode extends Node {
   /**
-   *
-   * @param {array.<Kit>} kits
+   * @param {Array.<Kit>} kits
    */
   constructor( kits ) {
     super();
