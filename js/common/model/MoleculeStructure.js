@@ -322,7 +322,7 @@ class MoleculeStructure {
    * probably fail for cyclic graphs.
    *
    *
-   * @param {Molecule} other - Another molecular structure
+   * @param {Molecule} other - Another molecular structure REVIEW: Should this be {MoleculeStructure}?
    * @public
    *
    * @returns {boolean} True, if there is an isomorphism between the two molecular structures
