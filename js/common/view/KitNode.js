@@ -35,7 +35,7 @@ class KitNode extends Node {
     const topLayer = new Node();
     const bottomLayer = new Node();
 
-    //REVIEW: JSDoc
+    // @private {Node}
     this.bottomLayer = bottomLayer;
 
     // @private {Node} Contains all the atoms within the buckets
@@ -121,7 +121,7 @@ class KitNode extends Node {
           atom.positionProperty.value = BAMConstants.MODEL_VIEW_TRANSFORM.viewToModelPosition( viewPoint );
 
           // Add new atom to the play area.
-          const currentKit = moleculeCollectingScreenView.kitCollectionList.currentCollectionProperty.value.currentKitProperty.value;
+          const currentKit = moleculeCollectingScreenView.bamModel.currentCollectionProperty.value.currentKitProperty.value;
           currentKit.atomsInPlayArea.push( atom );
 
           // Handle removing particles from bucket

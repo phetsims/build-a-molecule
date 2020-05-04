@@ -13,15 +13,13 @@ import Property from '../../../../axon/js/Property.js';
 import buildAMolecule from '../../buildAMolecule.js';
 import KitCollection from './KitCollection.js';
 
-class KitCollectionList {
+class BAMModel {
 
   /**
    * @param {KitCollection} firstCollection
    * @param {CollectionLayout} collectionLayout
-   * @param {Emitter} stepEmitter
-   * @param {function} createKitCollection REVIEW: I can find no evidence of this ever being called? Can we remove this parameter?
    */
-  constructor( firstCollection, collectionLayout, stepEmitter, createKitCollection ) {
+  constructor( firstCollection, collectionLayout ) {
 
     // @public {Property.<KitCollection>}
     this.currentCollectionProperty = new Property( firstCollection );
@@ -33,15 +31,11 @@ class KitCollectionList {
     this.addedCollectionEmitter = new Emitter( { parameters: [ { valueType: KitCollection } ] } );
     this.removedCollectionEmitter = new Emitter( { parameters: [ { valueType: KitCollection } ] } );
 
-    // @public {function}
-    //REVIEW: I can find no evidence of this ever being called?
-    this.createKitCollection = createKitCollection;
-
     // @public {CollectionLayout}
     this.collectionLayout = collectionLayout;
 
     // @public {Emitter}
-    this.stepEmitter = stepEmitter;
+    this.stepEmitter = new Emitter( { parameters: [ { valueType: 'number' } ] } );
 
     // @public {Array.<Collection>}
     this.collections = [];
@@ -61,18 +55,6 @@ class KitCollectionList {
    */
   step( dt ) {
     this.stepEmitter.emit( dt );
-  }
-
-  /**
-   * Generate the kit collection
-   * @public
-   *
-   * REVIEW: I don't see any usage of this
-   *
-   * @returns {function} REVIEW: Are we SURE that this would return a function anyway? Seems like a KitCollection?
-   */
-  generateKitCollection() {
-    return this.createKitCollection( this.collectionLayout, this.stepEmitter );
   }
 
   /**
@@ -199,5 +181,5 @@ class KitCollectionList {
   }
 }
 
-buildAMolecule.register( 'KitCollectionList', KitCollectionList );
-export default KitCollectionList;
+buildAMolecule.register( 'BAMModel', BAMModel );
+export default BAMModel;

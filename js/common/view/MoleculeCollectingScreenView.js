@@ -26,15 +26,15 @@ const nextCollectionString = buildAMoleculeStrings.nextCollection;
 
 class MoleculeCollectingScreenView extends BAMScreenView {
   /**
-   * @param {KitCollectionList} kitCollectionList
+   * @param {BAMModel} bamModel
    * @param {boolean} isSingleCollectionMode
    * @param {function} regenerateCallback
    */
-  constructor( kitCollectionList, isSingleCollectionMode, regenerateCallback ) {
-    super( kitCollectionList );
+  constructor( bamModel, isSingleCollectionMode, regenerateCallback ) {
+    super( bamModel );
 
     //REVIEW: visibility docs (public?)
-    this.kitCollectionList = kitCollectionList;
+    this.bamModel = bamModel;
 
     // @private {boolean}
     this.hasShownOnce = false;
@@ -56,7 +56,7 @@ class MoleculeCollectingScreenView extends BAMScreenView {
     this.nextCollectionButton.touchArea = Shape.bounds( this.nextCollectionButton.localBounds.dilated( 20 ) );
     this.nextCollectionButton.addListener( () => {
       regenerateCallback();
-      kitCollectionList.buttonClickedProperty.value = false;
+      bamModel.buttonClickedProperty.value = false;
       this.nextCollectionButton.visible = false;
     } );
     this.addChild( this.nextCollectionButton );
@@ -64,7 +64,7 @@ class MoleculeCollectingScreenView extends BAMScreenView {
 
     // @private {Dialog} Dialog that shows when all the boxes are filled.
     this.allFilledDialog = new AllFilledDialog(
-      kitCollectionList.buttonClickedProperty,
+      bamModel.buttonClickedProperty,
       regenerateCallback, {
         //REVIEW: this layoutStrategy seems to be used for all of the usages (e.g. this one), and seems like it
         //REVIEW: belongs in AllFilledDialog itself (since it's using nothing from the screen view here).
@@ -73,21 +73,21 @@ class MoleculeCollectingScreenView extends BAMScreenView {
           this.allFilledDialog.center = screenBounds.center.times( 1.0 / scale ).minusXY( 75, 75 );
         },
         showCallback: () => {
-          this.kitCollectionList.buttonClickedProperty.value = false;
+          this.bamModel.buttonClickedProperty.value = false;
         }
       }
     );
 
-    Property.lazyMultilink( [ this.allFilledDialog.isShowingProperty, this.kitCollectionList.buttonClickedProperty ],
+    Property.lazyMultilink( [ this.allFilledDialog.isShowingProperty, this.bamModel.buttonClickedProperty ],
       ( isShowing, buttonClicked ) => {
         this.nextCollectionButton.visible = !isShowing && !buttonClicked;
       } );
 
     // @public {Bounds2} Adjust play area and carousel bounds to compensate for CollectionPanel
-    this.mappedKitCollectionBounds = this.kitCollectionMap[ this.kitCollectionList.currentCollectionProperty.value.id ].bounds.dilatedX( 15 );
+    this.mappedKitCollectionBounds = this.kitCollectionMap[ this.bamModel.currentCollectionProperty.value.id ].bounds.dilatedX( 15 );
     const collectionAttachmentCallbacks = [];
     const collectionPanel = new CollectionPanel(
-      this.kitCollectionList,
+      this.bamModel,
       isSingleCollectionMode,
       collectionAttachmentCallbacks,
       node => {

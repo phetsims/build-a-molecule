@@ -28,7 +28,7 @@ const yourMoleculesString = buildAMoleculeStrings.yourMolecules;
 
 class CollectionPanel extends Panel {
   /**
-   * @param {KitCollectionList} kitCollectionList
+   * @param {BAMModel} bamModel
    * @param {boolean} isSingleCollectionMode
    * @param {Array.<function>} collectionAttachmentCallbacks
    * @param {function} toModelBounds
@@ -36,7 +36,7 @@ class CollectionPanel extends Panel {
    * @param {function} updateRefillButton
    * @param {Object} [options]
    */
-  constructor( kitCollectionList, isSingleCollectionMode, collectionAttachmentCallbacks, toModelBounds,
+  constructor( bamModel, isSingleCollectionMode, collectionAttachmentCallbacks, toModelBounds,
                showDialogCallback, updateRefillButton, options ) {
     options = merge( {
       cornerRadius: BAMConstants.CORNER_RADIUS
@@ -75,9 +75,9 @@ class CollectionPanel extends Panel {
     } );
 
     // Manages changing the label of the current collection
-    kitCollectionList.currentCollectionProperty.link( () => {
+    bamModel.currentCollectionProperty.link( () => {
       currentCollectionText.text = StringUtils.fillIn( collectionPatternString, {
-        number: kitCollectionList.currentIndex + 1
+        number: bamModel.currentIndex + 1
       } );
     } );
 
@@ -88,10 +88,10 @@ class CollectionPanel extends Panel {
       arrowWidth: 14,
       arrowHeight: 18,
       next() {
-        kitCollectionList.switchToNextCollection();
+        bamModel.switchToNextCollection();
       },
       previous() {
-        kitCollectionList.switchToPreviousCollection();
+        bamModel.switchToPreviousCollection();
       },
       createTouchAreaShape( shape ) {
         // square touch area
@@ -101,13 +101,13 @@ class CollectionPanel extends Panel {
 
     // Update the arrows that indicate the next/previous collection
     const updateSwitcher = () => {
-      collectionSwitcher.hasNextProperty.value = kitCollectionList.hasNextCollection();
-      collectionSwitcher.hasPreviousProperty.value = kitCollectionList.hasPreviousCollection();
+      collectionSwitcher.hasNextProperty.value = bamModel.hasNextCollection();
+      collectionSwitcher.hasPreviousProperty.value = bamModel.hasPreviousCollection();
     };
 
-    kitCollectionList.currentCollectionProperty.link( updateSwitcher );
-    kitCollectionList.addedCollectionEmitter.addListener( updateSwitcher );
-    kitCollectionList.removedCollectionEmitter.addListener( updateSwitcher );
+    bamModel.currentCollectionProperty.link( updateSwitcher );
+    bamModel.addedCollectionEmitter.addListener( updateSwitcher );
+    bamModel.removedCollectionEmitter.addListener( updateSwitcher );
     this.layoutNode.addChild( collectionSwitcher );
 
     // Add all of the collection boxes
@@ -121,20 +121,20 @@ class CollectionPanel extends Panel {
     };
 
     // Create nodes for all current collections
-    kitCollectionList.collections.forEach( collection => {
+    bamModel.collections.forEach( collection => {
       createCollectionNode( collection );
     } );
 
     // If a new collection is added, create one for it
-    kitCollectionList.addedCollectionEmitter.addListener( collection => {
+    bamModel.addedCollectionEmitter.addListener( collection => {
       createCollectionNode( collection );
     } );
 
     // Use the current collection
-    this.useCollection( kitCollectionList.currentCollectionProperty.value );
+    this.useCollection( bamModel.currentCollectionProperty.value );
 
     // As the current collection changes, use that new collection
-    kitCollectionList.currentCollectionProperty.link( newCollection => {
+    bamModel.currentCollectionProperty.link( newCollection => {
       this.useCollection( newCollection );
     } );
   }

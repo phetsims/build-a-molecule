@@ -8,77 +8,33 @@
  */
 
 import Property from '../../../axon/js/Property.js';
-import Dimension2 from '../../../dot/js/Dimension2.js';
-import Element from '../../../nitroglycerin/js/Element.js';
 import buildAMolecule from '../buildAMolecule.js';
 import buildAMoleculeStrings from '../buildAMoleculeStrings.js';
 import BAMConstants from '../common/BAMConstants.js';
-import BAMBucket from '../common/model/BAMBucket.js';
-import CollectionBox from '../common/model/CollectionBox.js';
-import CollectionLayout from '../common/model/CollectionLayout.js';
-import Kit from '../common/model/Kit.js';
-import KitCollection from '../common/model/KitCollection.js';
-import MoleculeList from '../common/model/MoleculeList.js';
 import BAMIconFactory from '../common/view/BAMIconFactory.js';
 import BAMScreen from '../common/view/BAMScreen.js';
 import MoleculeCollectingScreenView from '../common/view/MoleculeCollectingScreenView.js';
-
-//REVIEW: Can inline these now if desired
-const titleSingleString = buildAMoleculeStrings.title.single;
+import SingleModel from './model/SingleModel.js';
 
 class SingleScreen extends BAMScreen {
   constructor() {
     const options = {
-      name: titleSingleString,
+      name: buildAMoleculeStrings.title.single,
       backgroundColorProperty: new Property( BAMConstants.PLAY_AREA_BACKGROUND_COLOR ),
       homeScreenIcon: BAMIconFactory.createSingleScreen()
     };
-
     super(
-      // createInitialKitCollection
-      ( bounds, stepEmitter ) => {
-        const kitCollection = new KitCollection( { enableCues: true } );
-        kitCollection.addKit( new Kit( bounds, [
-          new BAMBucket( new Dimension2( 400, 200 ), stepEmitter, Element.H, 2 ),
-          new BAMBucket( new Dimension2( 350, 200 ), stepEmitter, Element.O, 1 )
-        ] ), { triggerCue: true } );
-        kitCollection.addKit( new Kit( bounds, [
-          new BAMBucket( new Dimension2( 400, 200 ), stepEmitter, Element.H, 2 ),
-          new BAMBucket( new Dimension2( 450, 200 ), stepEmitter, Element.O, 2 )
-        ] ), { triggerCue: true } );
-        kitCollection.addKit( new Kit( bounds, [
-          new BAMBucket( new Dimension2( 350, 200 ), stepEmitter, Element.C, 1 ),
-          new BAMBucket( new Dimension2( 450, 200 ), stepEmitter, Element.O, 2 ),
-          new BAMBucket( new Dimension2( 500, 200 ), stepEmitter, Element.N, 2 )
-        ] ), { triggerCue: true } );
-
-        // Add the collection boxes.
-        kitCollection.addCollectionBox( new CollectionBox( MoleculeList.H2O, 1 ) );
-        kitCollection.addCollectionBox( new CollectionBox( MoleculeList.O2, 1 ) );
-        kitCollection.addCollectionBox( new CollectionBox( MoleculeList.H2, 1 ) );
-        kitCollection.addCollectionBox( new CollectionBox( MoleculeList.CO2, 1 ) );
-        kitCollection.addCollectionBox( new CollectionBox( MoleculeList.N2, 1 ) );
-        return kitCollection;
+      () => {
+        return new SingleModel();
       },
-
-      // CollectionLayout
-      //REVIEW: Confusing formatting here, two options are specified on the same line!
-      new CollectionLayout( true ), ( bounds, stepEmitter ) => {
-        //REVIEW: This parameter ends up being unused in general
-        //REVIEW: See KitCollectionList and its unused generateKitCollection method for more info
-        //REVIEW: Please remove this callback and usages of the 3rd parameter in BAMScreen
-        return BAMScreen.generateKitCollection( false, 5, stepEmitter, bounds );
-      },
-
-      // createKitCollection REVIEW: What is this comment saying?
       model => {
-        // create the view
         return new MoleculeCollectingScreenView( model, true, () => {
           // next collection callback
-          model.addCollection( BAMScreen.generateKitCollection( false, 5, model.stepEmitter, model.collectionLayout ), true );
+          model.addCollection( this.generateKitCollection( false, 5, model.stepEmitter, model.collectionLayout ), true );
         } );
       },
-      options );
+      options
+    );
   }
 }
 

@@ -27,9 +27,9 @@ import WarningDialog from './WarningDialog.js';
 
 class BAMScreenView extends ScreenView {
   /**
-   * @param {KitCollectionList} kitCollectionList
+   * @param {BAMModel} bamModel
    */
-  constructor( kitCollectionList ) {
+  constructor( bamModel ) {
     super();
     //REVIEW: These should have {Object} included for types
     //REVIEW: e.g. {Object.<atomId:number, AtomNode>}, {Object.<moleculeId:number, MoleculeControlsHBox}
@@ -40,13 +40,13 @@ class BAMScreenView extends ScreenView {
     this.addedEmitterListeners = {}; // kit ID => addedMoleculeListener
     this.removedEmitterListeners = {}; // kit ID => removedMoleculeListener
 
-    // @public {KitCollectionList} Initialize and add the kit collection
-    this.kitCollectionList = kitCollectionList;
-    this.addCollection( kitCollectionList.currentCollectionProperty.value, false );
+    // @public {BAMModel} Initialize and add the kit collection
+    this.bamModel = bamModel;
+    this.addCollection( bamModel.currentCollectionProperty.value, false );
 
     // @public {Bounds2} Bounds used to limit where molecules can reside in the play area.
     this.atomDragBounds = new Bounds2( -1575, -850, 1575, 950 );
-    this.mappedKitCollectionBounds = this.kitCollectionMap[ this.kitCollectionList.currentCollectionProperty.value.id ].bounds.dilatedX( 60 );
+    this.mappedKitCollectionBounds = this.kitCollectionMap[ this.bamModel.currentCollectionProperty.value.id ].bounds.dilatedX( 60 );
 
     // @public Dialog used for representing 3D molecules. REVIEW: missing type docs here (or it doesn't use braces?)
     // Only create a dialog if webgl is enabled. See https://github.com/phetsims/build-a-molecule/issues/105
@@ -64,7 +64,7 @@ class BAMScreenView extends ScreenView {
     // Create a play area to house the molecules.
     //REVIEW: type/visibility docs
     this.kitPlayAreaNode = new KitPlayAreaNode( kits );
-    kitCollectionList.currentCollectionProperty.link( ( newCollection, oldCollection ) => {
+    bamModel.currentCollectionProperty.link( ( newCollection, oldCollection ) => {
       if ( oldCollection ) {
 
         // Check if a KitCollectionNode exists and remove it.
@@ -83,7 +83,7 @@ class BAMScreenView extends ScreenView {
       // Set the current kit of the KitPlayAreaNode
       this.kitPlayAreaNode.currentKit = newCollection.currentKitProperty.value;
     } );
-    kitCollectionList.addedCollectionEmitter.addListener( this.addCollection.bind( this ) );
+    bamModel.addedCollectionEmitter.addListener( this.addCollection.bind( this ) );
 
     this.addChild( this.kitPlayAreaNode );
 
@@ -94,14 +94,14 @@ class BAMScreenView extends ScreenView {
       this.kitPlayAreaNode.currentKit.buckets.forEach( bucket => {
         bucket.setToFullState();
       } );
-      kitCollectionList.currentCollectionProperty.value.collectionBoxes.forEach( box => {
+      bamModel.currentCollectionProperty.value.collectionBoxes.forEach( box => {
         box.cueVisibilityProperty.value = false;
       } );
       this.updateRefillButton();
     };
 
     // Create a kit panel to house the kit carousel
-    const kitPanel = this.kitCollectionMap[ kitCollectionList.currentCollectionProperty.value.id ].kitPanel;
+    const kitPanel = this.kitCollectionMap[ bamModel.currentCollectionProperty.value.id ].kitPanel;
 
     // Create a button to refill the kit buckets with atoms
     const refillButton = new RefillButton(
@@ -120,7 +120,7 @@ class BAMScreenView extends ScreenView {
      */
     //REVIEW: if this is marked as public with JSDoc, we really should move it to a method
     this.updateRefillButton = () => {
-      refillButton.enabled = !kitCollectionList.currentCollectionProperty.value.currentKitProperty.value.allBucketsFilled();
+      refillButton.enabled = !bamModel.currentCollectionProperty.value.currentKitProperty.value.allBucketsFilled();
     };
 
     // @public {ResetAllButton} Create a reset all button. Position of button is adjusted on "Larger" Screen.
@@ -129,13 +129,13 @@ class BAMScreenView extends ScreenView {
         this.interruptSubtreeInput();
 
         // When clicked, empty collection boxes
-        kitCollectionList.currentCollectionProperty.value.collectionBoxes.forEach( box => {
+        bamModel.currentCollectionProperty.value.collectionBoxes.forEach( box => {
           box.reset();
         } );
-        kitCollectionList.currentCollectionProperty.value.kits.forEach( kit => {
+        bamModel.currentCollectionProperty.value.kits.forEach( kit => {
           kit.reset();
         } );
-        kitCollectionList.reset();
+        bamModel.reset();
         kitPanel.reset();
         this.updateRefillButton();
 
@@ -198,7 +198,7 @@ class BAMScreenView extends ScreenView {
     };
 
     // When a collection is changed, update the listeners for the kits and KitPlayAreaNode.
-    kitCollectionList.currentCollectionProperty.link( ( collection, previousCollection ) => {
+    bamModel.currentCollectionProperty.link( ( collection, previousCollection ) => {
       this.kitPlayAreaNode.atomLayer.children.forEach( otherAtomNode => {
         if ( otherAtomNode ) {
           otherAtomNode.interruptSubtreeInput();
@@ -266,7 +266,7 @@ class BAMScreenView extends ScreenView {
     //REVIEW: type/visibility docs
     this.clickToDismissListener = {
       down: () => {
-        kitCollectionList.currentCollectionProperty.value.currentKitProperty.value.selectedAtomProperty.value = null;
+        bamModel.currentCollectionProperty.value.currentKitProperty.value.selectedAtomProperty.value = null;
       }
     };
     phet.joist.display.addInputListener( this.clickToDismissListener );
@@ -284,7 +284,7 @@ class BAMScreenView extends ScreenView {
 
     // Update the visibility of the cues in each collection box
     let hasTargetMolecule = false;
-    this.kitCollectionList.currentCollectionProperty.value.collectionBoxes.forEach( box => {
+    this.bamModel.currentCollectionProperty.value.collectionBoxes.forEach( box => {
       this.kitPlayAreaNode.currentKit.molecules.forEach( molecule => {
         hasTargetMolecule = molecule ? box.willAllowMoleculeDrop( molecule ) : hasTargetMolecule || false;
       } );
@@ -346,7 +346,7 @@ class BAMScreenView extends ScreenView {
    * @returns {AtomNode}
    */
   addAtomNodeToPlayArea( atom ) {
-    const currentKit = this.kitCollectionList.currentCollectionProperty.value.currentKitProperty.value;
+    const currentKit = this.bamModel.currentCollectionProperty.value.currentKitProperty.value;
     const atomNode = this.addAtomNodeToPlayAreaNode( atom );
     let lastPosition;
 
