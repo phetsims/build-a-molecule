@@ -54,7 +54,7 @@ class Molecule3DDialog extends Dialog {
       closeButtonColor: 'white'
     } );
 
-    // @public {Property.<CompleteMoleculeProperty>} REVIEW: Type doc should presumably match the parameter above? Seems like a typo
+    // @public {Property.<CompleteMolecule|null>}
     this.completeMoleculeProperty = completeMoleculeProperty;
 
     // @public {BooleanProperty} Property used for playing/pausing a rotating molecule
@@ -317,9 +317,13 @@ class Molecule3DDialog extends Dialog {
       moleculeContainer.updateMatrixWorld();
     } );
 
-    // @private REVIEW: type doc these!
+    // @private {ThreeNode}
     this.moleculeNode = moleculeNode;
+
+    // @private {ThreeNode}
     this.spaceFilledIcon = spaceFilledIcon;
+
+    // @private {ThreeNode}
     this.ballAndStickIcon = ballAndStickIcon;
     let lastGlobalPoint = null;
 
