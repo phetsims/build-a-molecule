@@ -14,7 +14,7 @@ import Vector2Property from '../../../../dot/js/Vector2Property.js';
 import SphereBucket from '../../../../phetcommon/js/model/SphereBucket.js';
 import Color from '../../../../scenery/js/util/Color.js';
 import buildAMolecule from '../../buildAMolecule.js';
-import Strings from '../../BAMStrings.js'; //REVIEW: We should import this has BAMStrings?
+import BAMStrings from '../../BAMStrings.js';
 import AtomNode from '../view/AtomNode.js';
 import Atom2 from './Atom2.js';
 
@@ -33,7 +33,7 @@ class BAMBucket extends SphereBucket {
       size: size,
       sphereRadius: element.covalentRadius,
       baseColor: element.color,
-      captionText: Strings.getAtomName( element ),
+      captionText: BAMStrings.getAtomName( element ),
       captionColor: AtomNode.getTextColor( new Color( element.color ) ),
       verticalParticleOffset: -30 + element.covalentRadius / 2
     } );

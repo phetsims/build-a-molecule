@@ -18,8 +18,10 @@ class Bond {
   constructor( a, b ) {
     assert && assert( a !== b, 'Bonds cannot connect an atom to itself' );
 
-    //REVIEW: visibility docs (public?)
+    // @public {Atom}
     this.a = a;
+
+    // @public {Atom}
     this.b = b;
   }
 

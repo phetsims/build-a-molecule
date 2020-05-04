@@ -40,31 +40,18 @@ class Molecule3DNode extends DOM {
     // @private {BooleanProperty}
     this.draggingProperty = new BooleanProperty( false );
 
-    // @public {MoleculeBondNode} REVIEW: This looks like {HTMLCanvasElement}, not a MoleculeBondNode
+    // @public {HTMLCanvasElement}
     this.canvas = canvas;
-
-    // @private {CanvasRenderingContext2D}
-    this.context = this.canvas.getContext( '2d' );
 
     // @private {number}
     this.backingScale = useHighRes ? Utils.backingScale( this.context ) : 1;
 
-    //REVIEW: Sorry, we're setting already-defined-and-typed parameters on a Canvas below. We don't put type names in
-    //REVIEW: from of those, so anything like `this.canvas.X = Y` should not include type documentation
-
-    // @private {string}
+    // @private {CanvasRenderingContext2D}
+    this.context = this.canvas.getContext( '2d' );
     this.canvas.className = 'canvas-3d';
-
-    // @private {string}
     this.canvas.style.position = 'absolute';
-
-    // @private {string}
     this.canvas.style.left = '0';
-
-    // @private {string}
     this.canvas.style.top = '0';
-
-    // @private REVIEW: This is a method call/expression, not a definition, so it shouldn't have a visibility
     this.setMoleculeCanvasBounds( initialBounds );
 
     // @private {Array.<Vector3>} map the atoms into our enhanced format
@@ -85,10 +72,10 @@ class Molecule3DNode extends DOM {
       }
     } );
 
-    // @private {Object} REVIEW: Should include the map type documentation (from what to wht)
+    // @private {Object.<string,CanvasGradient>}
     this.gradientMap = gradientMap;
 
-    // @private boolean REVIEW: missing braces?
+    // @private {boolean}
     this.dragging = false;
 
     // @private {Vector2}
@@ -123,7 +110,7 @@ class Molecule3DNode extends DOM {
       maxTotalRadius = Math.max( maxTotalRadius, atom.magnitude + atom.covalentRadius );
     } );
 
-    //REVIEW: jsdoc?
+    // @private {number}
     this.maxTotalRadius = maxTotalRadius;
   }
 
@@ -360,7 +347,7 @@ class Molecule3DNode extends DOM {
   }
 }
 
-//REVIEW: doc/visibility?
+// @public {Matrix3} Custom transforms for specific molecules to correct the molecule orientation for viewing purposes
 Molecule3DNode.initialTransforms = {
   'H2O': Matrix3.createFromPool( 0.181499678570479, -0.7277838769374022, -0.6613535326501101,
     0.7878142178395282, 0.5101170681131106, -0.34515117700738,

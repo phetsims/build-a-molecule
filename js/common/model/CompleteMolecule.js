@@ -158,19 +158,16 @@ class CompleteMolecule extends MoleculeStructure {
     const wrappers = _.sortBy( this.atoms, atom => {
       return atom.z3d;
     } );
-    const node = new Node( {
+    return new Node( {
       children: wrappers.map( atomWrapper => {
-        //REVIEW: A map function should return something, not have no return value, particularly if it's setting
-        //REVIEW: children, e.g. children: wrappers.map( atomWrapper => new AtomNode( ... ) )
-        node.addChild( new AtomNode( atomWrapper.element, {
+        return new AtomNode( atomWrapper.element, {
 
           // custom scale for now
           x: atomWrapper.x2d * 15,
           y: atomWrapper.y2d * 15
-        } ) );
+        } );
       } )
     } );
-    return node;
   }
 
   /**
@@ -182,8 +179,7 @@ class CompleteMolecule extends MoleculeStructure {
   toSerial2() {
     // add in a header
     const format = ( this.has3d ? ( this.has2d ? 'full' : '3d' ) : '2d' );
-    //REVIEW: Instead of MoleculeStructure.prototype, use `super.toSerial2()` instead?
-    return this.commonName + '|' + this.molecularFormula + '|' + this.cid + '|' + format + '|' + MoleculeStructure.prototype.toSerial2.call( this );
+    return this.commonName + '|' + this.molecularFormula + '|' + this.cid + '|' + format + '|' + super.toSerial2.call( this );
   }
 }
 
@@ -366,8 +362,7 @@ class PubChemAtom2 extends Atom {
    * @returns {string}
    */
   toString() {
-    //REVIEW: Should be super.toString(), supertype's toString doesn't take parameters
-    return super.toString( this ) + ' ' + this.x2d + ' ' + this.y2d;
+    return super.toString() + ' ' + this.x2d + ' ' + this.y2d;
   }
 
   /**
