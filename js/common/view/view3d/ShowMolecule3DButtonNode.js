@@ -17,9 +17,6 @@ import buildAMolecule from '../../../buildAMolecule.js';
 import buildAMoleculeStrings from '../../../buildAMoleculeStrings.js';
 import BAMConstants from '../../BAMConstants.js';
 
-//REVIEW: Can inline these now if desired
-const threeDString = buildAMoleculeStrings.threeD;
-
 class ShowMolecule3DButtonNode extends RectangularPushButton {
   /**
    * @param {CompleteMolecule} completeMolecule
@@ -28,7 +25,7 @@ class ShowMolecule3DButtonNode extends RectangularPushButton {
    */
   constructor( completeMolecule, showDialogCallback, options ) {
     super( merge( {
-      content: new Text( threeDString, {
+      content: new Text( buildAMoleculeStrings.threeD, {
         font: new PhetFont( {
           size: 12,
           weight: 'bold'
