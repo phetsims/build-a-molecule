@@ -28,12 +28,7 @@ class MultipleScreen extends BAMScreen {
         return new MultipleModel();
       },
       model => {
-        // create the view
-        return new MoleculeCollectingScreenView( model, false, () => {
-          // next collection callback
-          //REVIEW: This seems like a model action, why are we specifying this in the view?
-          model.addCollection( this.generateKitCollection( true, 4, model.stepEmitter, model.collectionLayout ), true );
-        } );
+        return new MoleculeCollectingScreenView( model, false );
       },
       options );
   }

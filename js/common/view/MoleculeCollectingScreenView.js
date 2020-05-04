@@ -28,9 +28,8 @@ class MoleculeCollectingScreenView extends BAMScreenView {
   /**
    * @param {BAMModel} bamModel
    * @param {boolean} isSingleCollectionMode
-   * @param {function} regenerateCallback
    */
-  constructor( bamModel, isSingleCollectionMode, regenerateCallback ) {
+  constructor( bamModel, isSingleCollectionMode ) {
     super( bamModel );
 
     //REVIEW: visibility docs (public?)
@@ -55,7 +54,7 @@ class MoleculeCollectingScreenView extends BAMScreenView {
     //RREVIEW: touchArea accepts {Bounds2}, no need for Shape.bounds wrapping
     this.nextCollectionButton.touchArea = Shape.bounds( this.nextCollectionButton.localBounds.dilated( 20 ) );
     this.nextCollectionButton.addListener( () => {
-      regenerateCallback();
+      bamModel.regenerateCallback;
       bamModel.buttonClickedProperty.value = false;
       this.nextCollectionButton.visible = false;
     } );
@@ -65,7 +64,7 @@ class MoleculeCollectingScreenView extends BAMScreenView {
     // @private {Dialog} Dialog that shows when all the boxes are filled.
     this.allFilledDialog = new AllFilledDialog(
       bamModel.buttonClickedProperty,
-      regenerateCallback, {
+      bamModel.regenerateCallback, {
         //REVIEW: this layoutStrategy seems to be used for all of the usages (e.g. this one), and seems like it
         //REVIEW: belongs in AllFilledDialog itself (since it's using nothing from the screen view here).
         layoutStrategy: ( dialog, simBounds, screenBounds, scale ) => {

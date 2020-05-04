@@ -43,7 +43,6 @@ class SingleModel extends BAMModel {
     kitCollection.addCollectionBox( new CollectionBox( MoleculeList.H2, 1 ) );
     kitCollection.addCollectionBox( new CollectionBox( MoleculeList.CO2, 1 ) );
     kitCollection.addCollectionBox( new CollectionBox( MoleculeList.N2, 1 ) );
-
   }
 }
 

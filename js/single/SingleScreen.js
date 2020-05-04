@@ -28,10 +28,7 @@ class SingleScreen extends BAMScreen {
         return new SingleModel();
       },
       model => {
-        return new MoleculeCollectingScreenView( model, true, () => {
-          // next collection callback
-          model.addCollection( this.generateKitCollection( false, 5, model.stepEmitter, model.collectionLayout ), true );
-        } );
+        return new MoleculeCollectingScreenView( model, true );
       },
       options
     );
