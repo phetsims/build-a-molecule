@@ -40,6 +40,7 @@ class ShowMolecule3DButtonNode extends RectangularPushButton {
       soundPlayer: Playable.NO_SOUND
     }, options ) );
 
+    //REVIEW: ButtonListener is deprecated, can we use FireListener instead?
     this.addInputListener( new ButtonListener( {
       fire() {
         showDialogCallback( completeMolecule );

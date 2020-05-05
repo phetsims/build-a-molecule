@@ -126,6 +126,7 @@ class MoleculeBondNode extends Node {
       visible: true
     } ) );
 
+    //REVIEW: ButtonListener is deprecated, can we use FireListener?
     cutTargetNode.addInputListener( new ButtonListener( {
       down() {
         cutTargetNode.cursor = closedCursor;

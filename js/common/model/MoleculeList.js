@@ -257,6 +257,7 @@ class MoleculeList {
 }
 
 // statics
+//REVIEW: visibility/type info on these?
 MoleculeList.masterInstance = null;
 MoleculeList.initialized = false;
 MoleculeList.initialList = new MoleculeList();

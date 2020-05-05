@@ -34,6 +34,8 @@ class WarningDialog extends Dialog {
       ],
       spacing: 15,
       align: 'center',
+
+      //REVIEW: What is this xMargin option for?
       xMargin: 15,
       cursor: 'pointer'
     } );
