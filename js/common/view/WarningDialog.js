@@ -15,9 +15,6 @@ import FontAwesomeNode from '../../../../sun/js/FontAwesomeNode.js';
 import buildAMolecule from '../../buildAMolecule.js';
 import buildAMoleculeStrings from '../../buildAMoleculeStrings.js';
 
-//REVIEW: Can inline these now if desired
-const warningString = buildAMoleculeStrings.warning;
-
 class WarningDialog extends Dialog {
   constructor() {
 
@@ -28,7 +25,7 @@ class WarningDialog extends Dialog {
           fill: '#E87600', // "safety orange", according to Wikipedia
           scale: 0.8
         } ),
-        new MultiLineText( warningString, {
+        new MultiLineText( buildAMoleculeStrings.warning, {
           font: new PhetFont( 16 ),
           fill: '#000',
           align: 'left',

@@ -31,14 +31,20 @@ class BAMScreenView extends ScreenView {
    */
   constructor( bamModel ) {
     super();
-    //REVIEW: These should have {Object} included for types
-    //REVIEW: e.g. {Object.<atomId:number, AtomNode>}, {Object.<moleculeId:number, MoleculeControlsHBox}
+    // @public {Object.<atomId:number, AtomNode>}
     this.atomNodeMap = {}; // maps Atom2 ID => AtomNode
-    this.kitCollectionMap = {}; // maps KitCollection ID => KitCollectionNode
-    this.metadataMap = {}; // moleculeId => MoleculeControlsHBox
-    this.bondMap = {}; // moleculeId => MoleculeBondContainerNode
-    this.addedEmitterListeners = {}; // kit ID => addedMoleculeListener
-    this.removedEmitterListeners = {}; // kit ID => removedMoleculeListener
+
+    // @public {Object.<kitCollectionId:number, KitCollectionNode}
+    this.kitCollectionMap = {};
+
+    // @private {Object.<moleculeId:number,MoleculeControlsHBox>}
+    this.metadataMap = {};
+
+    // @private {Object.<kitID:number,function>}
+    this.addedEmitterListeners = {};
+
+    // @private {Object.<kitID:number,function>}
+    this.removedEmitterListeners = {};
 
     // @public {BAMModel} Initialize and add the kit collection
     this.bamModel = bamModel;
@@ -100,25 +106,14 @@ class BAMScreenView extends ScreenView {
     // Create a kit panel to house the kit carousel
     const kitPanel = this.kitCollectionMap[ bamModel.currentCollectionProperty.value.id ].kitPanel;
 
-    // Create a button to refill the kit buckets with atoms
-    const refillButton = new RefillButton(
+    // @private {RefillButton} Create a button to refill the kit buckets with atoms
+    this.refillButton = new RefillButton(
       refillListener, {
         left: kitPanel.left,
         bottom: kitPanel.top - 7,
         scale: 0.85
       } );
-    //RREVIEW: touchArea accepts {Bounds2}, no need for Shape.bounds wrapping
-    refillButton.touchArea = Shape.bounds( refillButton.selfBounds.union( refillButton.childBounds ).dilated( 10 ) );
-
-    /**
-     * Refill button is enabled if atoms exists outside of the bucket
-     *
-     * @public
-     */
-    //REVIEW: if this is marked as public with JSDoc, we really should move it to a method
-    this.updateRefillButton = () => {
-      refillButton.enabled = !bamModel.currentCollectionProperty.value.currentKitProperty.value.allBucketsFilled();
-    };
+    this.refillButton.touchArea = this.refillButton.selfBounds.union( this.refillButton.childBounds ).dilated( 10 );
 
     // @public {ResetAllButton} Create a reset all button. Position of button is adjusted on "Larger" Screen.
     this.resetAllButton = new ResetAllButton( {
@@ -148,7 +143,7 @@ class BAMScreenView extends ScreenView {
     this.resetAllButton.touchArea = Shape.bounds( this.resetAllButton.bounds.dilated( 7 ) );
     this.addChild( this.resetAllButton );
     this.resetAllButton.moveToBack();
-    this.addChild( refillButton );
+    this.addChild( this.refillButton );
 
     /**
      * Handles adding molecules and molecule metadata to kit play area.
@@ -259,8 +254,7 @@ class BAMScreenView extends ScreenView {
       } );
     } );
 
-    // listener for 'click outside to dismiss'
-    //REVIEW: type/visibility docs
+    // @private {function} listener for 'click outside to dismiss'
     this.clickToDismissListener = {
       down: () => {
         bamModel.currentCollectionProperty.value.currentKitProperty.value.selectedAtomProperty.value = null;
@@ -303,6 +297,15 @@ class BAMScreenView extends ScreenView {
       }
       this.dialog.show();
     }
+  }
+
+  /**
+   * Refill button is enabled if atoms exists outside of the bucket
+   *
+   * @public
+   */
+  updateRefillButton() {
+    this.refillButton.enabled = !this.bamModel.currentCollectionProperty.value.currentKitProperty.value.allBucketsFilled();
   }
 
   /**

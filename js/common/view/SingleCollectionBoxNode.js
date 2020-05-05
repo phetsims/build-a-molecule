@@ -16,9 +16,6 @@ import BAMConstants from '../BAMConstants.js';
 import CollectionBox from '../model/CollectionBox.js';
 import CollectionBoxNode from './CollectionBoxNode.js';
 
-//REVIEW: Can inline these now if desired
-const collectionSinglePatternString = buildAMoleculeStrings.collectionSinglePattern;
-
 class SingleCollectionBoxNode extends CollectionBoxNode {
 
   /**
@@ -30,7 +27,7 @@ class SingleCollectionBoxNode extends CollectionBoxNode {
   constructor( box, toModelBounds, showDialogCallback ) {
     super( box, toModelBounds, showDialogCallback );
     assert && assert( box.capacity === 1 );
-    this.insertChild( 0, new RichText( StringUtils.fillIn( collectionSinglePatternString, {
+    this.insertChild( 0, new RichText( StringUtils.fillIn( buildAMoleculeStrings.collectionSinglePattern, {
       general: box.moleculeType.getGeneralFormulaFragment(),
       display: box.moleculeType.getDisplayName()
     } ), {

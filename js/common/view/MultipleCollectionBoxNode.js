@@ -17,11 +17,6 @@ import BAMConstants from '../BAMConstants.js';
 import CollectionBox from '../model/CollectionBox.js';
 import CollectionBoxNode from './CollectionBoxNode.js';
 
-//REVIEW: Can inline these now if desired
-const collectionMultipleGoalPatternString = buildAMoleculeStrings.collectionMultipleGoalPattern;
-const collectionMultipleQuantityEmptyString = buildAMoleculeStrings.collectionMultipleQuantityEmpty;
-const collectionMultipleQuantityPatternString = buildAMoleculeStrings.collectionMultipleQuantityPattern;
-
 class MultipleCollectionBoxNode extends CollectionBoxNode {
   /**
    * @param {CollectionBox} box
@@ -42,10 +37,10 @@ class MultipleCollectionBoxNode extends CollectionBoxNode {
     // Update the number of collections available
     box.quantityProperty.link( quantity => {
       if ( quantity === 0 ) {
-        quantityNode.text = collectionMultipleQuantityEmptyString;
+        quantityNode.text = buildAMoleculeStrings.collectionMultipleQuantityEmpty;
       }
       else {
-        quantityNode.text = StringUtils.fillIn( collectionMultipleQuantityPatternString, {
+        quantityNode.text = StringUtils.fillIn( buildAMoleculeStrings.collectionMultipleQuantityPattern, {
           number: quantity,
           formula: box.moleculeType.getGeneralFormulaFragment()
         } );
@@ -54,7 +49,7 @@ class MultipleCollectionBoxNode extends CollectionBoxNode {
     this.insertChild( 0, quantityNode );
 
     // General formula for the molecule goal
-    this.insertChild( 0, new RichText( StringUtils.fillIn( collectionMultipleGoalPatternString, {
+    this.insertChild( 0, new RichText( StringUtils.fillIn( buildAMoleculeStrings.collectionMultipleGoalPattern, {
       number: box.capacity,
       formula: box.moleculeType.getGeneralFormulaFragment()
     } ), {

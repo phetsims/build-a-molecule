@@ -26,11 +26,7 @@ class CollectionAreaNode extends Node {
    * @param {function} updateRefillButton
    */
   constructor( collection, isSingleCollectionMode, toModelBounds, showDialogCallback, updateRefillButton ) {
-    //REVIEW: Just super()
-    super( {} );
-
-    //REVIEW: due to arrow functions, shouldn't need self
-    const self = this;
+    super();
 
     // Array for the black box for its text
     //REVIEW: type/visibility docs
@@ -44,7 +40,7 @@ class CollectionAreaNode extends Node {
     collection.collectionBoxes.forEach( collectionBox => {
       const collectionBoxNode = isSingleCollectionMode ? new SingleCollectionBoxNode( collectionBox, toModelBounds, showDialogCallback ) :
                                 new MultipleCollectionBoxNode( collectionBox, toModelBounds, showDialogCallback );
-      self.collectionBoxNodes.push( collectionBoxNode );
+      this.collectionBoxNodes.push( collectionBoxNode );
       allCollectionItemsVBox.addChild( collectionBoxNode );
     } );
 

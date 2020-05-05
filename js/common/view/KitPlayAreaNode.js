@@ -39,7 +39,7 @@ class KitPlayAreaNode extends Node {
     //REVIEW: doc map types e.g. @public {Object.<atom.id:number, AtomNode}
     this.atomNodeMap = {};
 
-    // @public moleculeId => MoleculeControlsHBox REVIEW: doc with {Object} including types
+    // @public {Object.<moleculeId:number,MoleculeControlsHBox>}
     this.metadataMap = {};
 
     // @private moleculeId => MoleculeBondContainerNode REVIEW: doc with {Object} including types

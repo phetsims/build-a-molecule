@@ -21,6 +21,7 @@ import BAMConstants from '../BAMConstants.js';
 import MoleculeList from '../model/MoleculeList.js';
 import Molecule3DNode from './view3d/Molecule3DNode.js';
 import ShowMolecule3DButtonNode from './view3d/ShowMolecule3DButtonNode.js';
+import Color from '../../../../scenery/js/util/Color.js';
 
 // constants
 const BLACK_BOX_PADDING = 7;
@@ -80,10 +81,7 @@ class CollectionBoxNode extends VBox {
 
     //REVIEW: type/visibility docs (looks private?)
     this.blackBox = new Rectangle( 0, 0, 160, 50, {
-      //REVIEW: blackBox alternates between a black fill and another black fill. And is called blackBox.
-      //REVIEW: Can we just set it to black here? (fine to use the constant, but if this is the only usage, we could
-      //REVIEW: just use 'black')
-      fill: BAMConstants.MOLECULE_COLLECTION_BOX_BACKGROUND
+      fill: Color.BLACK
     } );
     //REVIEW: type/visibility docs -- @private {function} ?
     //REVIEW: Also since we are calling this from a method, it seems like this SHOULD be a method.
@@ -355,13 +353,10 @@ class CollectionBoxNode extends VBox {
 
         // draw graphics
         if ( on ) {
-          //REVIEW: blackBox alternates between a black fill and another black fill. And is called blackBox. Can we remove the changing of the fill here?
-          this.blackBox.fill = BAMConstants.MOLECULE_COLLECTION_BOX_BACKGROUND_BLINK;
           this.blackBox.stroke = BAMConstants.MOLECULE_COLLECTION_BOX_BORDER_BLINK;
         }
         else {
           //REVIEW: blackBox alternates between a black fill and another black fill. And is called blackBox. Can we remove the changing of the fill here?
-          this.blackBox.fill = BAMConstants.MOLECULE_COLLECTION_BOX_BACKGROUND;
           this.blackBox.stroke = BAMConstants.MOLECULE_COLLECTION_BACKGROUND;
         }
 

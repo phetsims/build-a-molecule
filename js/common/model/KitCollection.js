@@ -148,7 +148,7 @@ class KitCollection {
             box.cueVisibilityProperty.value = box.willAllowMoleculeDrop( remainingMolecule ) && remainingMolecule && ( options && options.triggerCue );
           }
 
-          // Last sanity check to make sure a full box doen't have an arrow cue shown.
+          // Last sanity check to make sure a full box doesn't have an arrow cue shown.
           if ( box.isFull() ) {
             box.cueVisibilityProperty.value = false;
           }
