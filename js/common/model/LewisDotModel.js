@@ -16,9 +16,7 @@ import Direction from './Direction.js';
 class LewisDotModel {
   constructor() {
 
-    //REVIEW: doc with {Object}, ideally mentioning other types after, e.g.
-    //REVIEW: {Object.<atomId:number, LewisDotAtom>}
-    // @public Maps atom ID => LewisDotAtom
+    // @public {Object.<atomId:number, LewisDotAtom>}
     this.atomMap = {};
   }
 
@@ -226,9 +224,12 @@ class LewisDotAtom {
    * @param {Atom} atom
    */
   constructor( atom ) {
-    //REVIEW: JSDoc on both of these
+
+    // @private {Atom}
     this.atom = atom;
-    this.connections = {}; // maps Direction ID => LewisDotAtom
+
+    // @private {Object.<DirectionID:null|LewisDotAtom>}
+    this.connections = {};
     Direction.values.forEach( direction => {
       this.connections[ direction.id ] = null; // nothing in this direction
     } );

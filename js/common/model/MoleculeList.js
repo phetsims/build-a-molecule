@@ -30,6 +30,7 @@ class MoleculeList {
     this.allowedStructureFormulaMap = {};
   }
 
+
   /**
    * Load in the initial list of complete molecules for the collection boxes (collectionMoleculesData)
    * @private
@@ -47,22 +48,19 @@ class MoleculeList {
    */
   loadMasterData() {
     const startTime = Date.now();
-    //REVIEW: Replace with ES6 arrow function, then no self needed
-    const self = this;
     // load in our collection molecules first
-    initialList.getAllCompleteMolecules().forEach( this.addCompleteMolecule.bind( this ) );
+    MoleculeList.initialList.getAllCompleteMolecules().forEach( this.addCompleteMolecule.bind( this ) );
 
     // then load other molecules
     const mainMolecules = MoleculeList.readCompleteMoleculesFromData( otherMoleculesData );
-    //REVIEW: es6 arrow function?
-    mainMolecules.forEach( function( molecule ) {
+    mainMolecules.forEach( molecule => {
       // if our molecule was included in the initial lookup, use that initial version instead so we can have instance equality preserved
-      const initialListLookup = initialList.moleculeNameMap[ molecule.filterCommonName( molecule.commonName ) ];
+      const initialListLookup = MoleculeList.initialList.moleculeNameMap[ molecule.filterCommonName( molecule.commonName ) ];
       if ( initialListLookup && molecule.isEquivalent( initialListLookup ) ) {
         molecule = initialListLookup;
       }
 
-      self.addCompleteMolecule( molecule );
+      this.addCompleteMolecule( molecule );
     } );
 
     // then load structures
@@ -167,108 +165,109 @@ class MoleculeList {
       this.allowedStructureFormulaMap[ hashString ] = [ strippedMolecule ];
     }
   }
+
+  /**
+   * Load master data
+   *
+   * @private
+   */
+  static startInitialization() {
+    // Note: (performance) use web worker or chop it up into bits of work
+    MoleculeList.masterInstance = new MoleculeList();
+    MoleculeList.masterInstance.loadMasterData();
+    MoleculeList.initialized = true;
+    console.log( 'Master list loaded.' );
+  }
+
+
+  /**
+   * Return master data
+   *
+   * @public
+   * @returns {*}
+   */
+  static getMasterInstance() {
+    if ( !MoleculeList.initialized ) {
+      // Note: (performance) threading-like replacement goes here
+      MoleculeList.startInitialization();
+    }
+
+    return MoleculeList.masterInstance;
+  }
+
+
+  /**
+   * Return molecule name from master data
+   * @param {string} name
+   *
+   * @private
+   * @returns {string}
+   */
+  static getMoleculeByName( name ) {
+    let result = MoleculeList.initialList.moleculeNameMap[ name ];
+
+    if ( !result ) {
+      console.log( 'Searching', name, 'in master instance.' );
+      result = MoleculeList.getMasterInstance().moleculeNameMap[ name ];
+    }
+
+    return result;
+  }
+
+  /**
+   * Returns a list of complete molecules
+   * @param {string} strings - File name relative to the sim's data directory
+   *
+   * @private
+   * @returns
+   */
+  static readCompleteMoleculesFromData( strings ) {
+    return _.map( strings, string => {
+      const molecule = CompleteMolecule.fromSerial2( string );
+
+      // sanity checks
+      assert && assert( !molecule.hasLoopsOrIsDisconnected(),
+        'has loops or is disconnected: ' + molecule.filterCommonName( molecule.commonName ) );
+      assert && assert( !molecule.hasWeirdHydrogenProperties(),
+        'has weird hydrogen pattern in: ' + molecule.filterCommonName( molecule.commonName ) );
+      return molecule;
+    } );
+  }
+
+  /**
+   * Returns a list of molecule structures
+   * @param {string} strings - File name relative to the sim's data directory
+   *
+   * @private
+   * @returns
+   */
+  static readMoleculeStructuresFromData( strings ) {
+    const len = strings.length;
+    const arr = new Array( len );
+    for ( let i = 0; i < len; i++ ) {
+      const string = strings[ i ];
+      const structure = MoleculeStructure.fromSerial2Basic( string );
+
+      // sanity checks
+      assert && assert( !structure.hasWeirdHydrogenProperties(), 'Weird hydrogen pattern in structure: ' + string );
+      arr[ i ] = structure;
+    }
+    return arr;
+  }
 }
 
 // statics
-let masterInstance = null;
-let initialized = false;
-const initialList = new MoleculeList();
+MoleculeList.masterInstance = null;
+MoleculeList.initialized = false;
+MoleculeList.initialList = new MoleculeList();
 
-//REVIEW: Put static methods in class as static
-
-/**
- * Load master data
- * REVIEW: visibility
- */
-MoleculeList.startInitialization = () => {
-  // Note: (performance) use web worker or chop it up into bits of work
-  masterInstance = new MoleculeList();
-  masterInstance.loadMasterData();
-  initialized = true;
-  console.log( 'Master list loaded.' );
-};
-
-/**
- * Return master data
- * REVIEW: visibility
- *
- * @returns {*}
- */
-MoleculeList.getMasterInstance = () => {
-  if ( !initialized ) {
-    // Note: (performance) threading-like replacement goes here
-    MoleculeList.startInitialization();
-  }
-
-  return masterInstance;
-};
-
-/**
- * Return molecule name from master data
- * @param {string} name
- * REVIEW: visibility
- *
- * @returns {string}
- */
-MoleculeList.getMoleculeByName = name => {
-  let result = initialList.moleculeNameMap[ name ];
-
-  if ( !result ) {
-    console.log( 'Searching', name, 'in master instance.' );
-    result = MoleculeList.getMasterInstance().moleculeNameMap[ name ];
-  }
-
-  return result;
-};
-
-/**
- * Returns a list of complete molecules
- * @param {string} strings - File name relative to the sim's data directory
- * REVIEW: visibility
- *
- * @returns
- */
-MoleculeList.readCompleteMoleculesFromData = strings => {
-  return _.map( strings, string => {
-    const molecule = CompleteMolecule.fromSerial2( string );
-
-    // sanity checks
-    assert && assert( !molecule.hasLoopsOrIsDisconnected(),
-      'has loops or is disconnected: ' + molecule.filterCommonName( molecule.commonName ) );
-    assert && assert( !molecule.hasWeirdHydrogenProperties(),
-      'has weird hydrogen pattern in: ' + molecule.filterCommonName( molecule.commonName ) );
-    return molecule;
-  } );
-};
-
-/**
- * Returns a list of molecule structures
- * @param {string} strings - File name relative to the sim's data directory
- * REVIEW: visibility
- *
- * @returns
- */
-MoleculeList.readMoleculeStructuresFromData = strings => {
-  const len = strings.length;
-  const arr = new Array( len );
-  for ( let i = 0; i < len; i++ ) {
-    const string = strings[ i ];
-    const structure = MoleculeStructure.fromSerial2Basic( string );
-
-    // sanity checks
-    assert && assert( !structure.hasWeirdHydrogenProperties(), 'Weird hydrogen pattern in structure: ' + string );
-    arr[ i ] = structure;
-  }
-  return arr;
-};
-
-initialList.loadInitialData();
+MoleculeList.initialList.loadInitialData();
 
 /*---------------------------------------------------------------------------*
  * molecule references and customized names
  *----------------------------------------------------------------------------*/
 
-//REVIEW: JSDoc (type, visibility)
+// @public {string}
 MoleculeList.CO2 = MoleculeList.getMoleculeByName( 'Carbon Dioxide' );
 MoleculeList.H2O = MoleculeList.getMoleculeByName( 'Water' );
 MoleculeList.N2 = MoleculeList.getMoleculeByName( 'Nitrogen' );
@@ -280,10 +279,7 @@ MoleculeList.Cl2 = MoleculeList.getMoleculeByName( 'Chlorine' );
 MoleculeList.NH3 = MoleculeList.getMoleculeByName( 'Ammonia' );
 MoleculeList.C2H4O2 = MoleculeList.getMoleculeByName( 'Acetic Acid' );
 
-/**
- * Molecules that can be used for collection boxes
- * REVIEW: JSDoc (type, visibility)
- */
+// @public {Array.<String>} Molecules that can be used for collection boxes
 MoleculeList.collectionBoxMolecules = [
   MoleculeList.CO2,
   MoleculeList.H2O,

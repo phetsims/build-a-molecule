@@ -12,7 +12,6 @@ import Emitter from '../../../../axon/js/Emitter.js';
 import ObservableArray from '../../../../axon/js/ObservableArray.js';
 import Property from '../../../../axon/js/Property.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
-import Rectangle from '../../../../dot/js/Rectangle.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import arrayRemove from '../../../../phet-core/js/arrayRemove.js';
 import cleanArray from '../../../../phet-core/js/cleanArray.js';
@@ -191,7 +190,7 @@ class Kit {
    * Returns kit bounds within the collection layout
    *
    * @public
-   * @returns {Rectangle} REVIEW: Please refer to this as a Bounds2, that's the exposed API
+   * @returns {Bounds2}
    */
   get availableKitBounds() {
     return this.collectionLayout.availableKitBounds;
@@ -201,7 +200,7 @@ class Kit {
    * Returns play area bounds within the collection layout
    * @public
    *
-   * @returns {Rectangle} REVIEW: Please refer to this as a Bounds2, that's the exposed API
+   * @returns {Bounds2}
    */
   get availablePlayAreaBounds() {
     return this.collectionLayout.availablePlayAreaBounds;
@@ -455,12 +454,11 @@ class Kit {
    * @param {Bounds2} bounds
    *
    * @private
-   * @returns {Rectangle} REVIEW: Please refer to this as a Bounds2, that's the exposed API
+   * @returns {Bounds2}
    */
   padMoleculeBounds( bounds ) {
     const halfPadding = Kit.interMoleculePadding / 2;
-    //REVIEW: Bounds2.rect( ...same params... ) is preferred
-    return new Rectangle( bounds.x - halfPadding, bounds.y - halfPadding, bounds.width + Kit.interMoleculePadding, bounds.height + Kit.interMoleculePadding );
+    return Bounds2.rect( bounds.x - halfPadding, bounds.y - halfPadding, bounds.width + Kit.interMoleculePadding, bounds.height + Kit.interMoleculePadding );
   }
 
   /**
@@ -720,11 +718,17 @@ class BondingOption {
   }
 }
 
-//REVIEW: JSDocs
-Kit.BondingOption = BondingOption; // Available bonding option
-Kit.bondDistanceThreshold = 100; // Determines how close a molecule needs to be to attempt to bond
-Kit.bucketPadding = 50; // Distance between each bucket
-Kit.interMoleculePadding = 100; // Determines how far away to separate the molecules from each other
+// @private {BondingOption} Available bonding option
+Kit.BondingOption = BondingOption;
+
+// @private {number} Determines how close a molecule needs to be to attempt to bond
+Kit.bondDistanceThreshold = 100;
+
+// @private {number} Distance between each bucket
+Kit.bucketPadding = 50;
+
+// @private {number} Determines how far away to separate the molecules from each other
+Kit.interMoleculePadding = 100;
 
 buildAMolecule.register( 'Kit', Kit );
 export default Kit;

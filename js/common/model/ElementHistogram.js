@@ -18,8 +18,7 @@ class ElementHistogram extends PhetioObject {
   constructor( moleculeStructure ) {
     super();
 
-    //REVIEW: @private {Object.<element.symbol:string, quantity:number>}
-    // @private {Object} element => element quantity
+    // @private {Object.<element.symbol:string, quantity:number>}
     this.quantities = {};
     BAMConstants.SUPPORTED_ELEMENTS.forEach( element => {
       this.quantities[ element.symbol ] = 0;
