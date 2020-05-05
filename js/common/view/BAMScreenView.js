@@ -48,11 +48,9 @@ class BAMScreenView extends ScreenView {
     this.atomDragBounds = new Bounds2( -1575, -850, 1575, 950 );
     this.mappedKitCollectionBounds = this.kitCollectionMap[ this.bamModel.currentCollectionProperty.value.id ].bounds.dilatedX( 60 );
 
-    // @public Dialog used for representing 3D molecules. REVIEW: missing type docs here (or it doesn't use braces?)
+    // @public {Molecule3DDialog| WarningDialog } Used for representing 3D molecules.
     // Only create a dialog if webgl is enabled. See https://github.com/phetsims/build-a-molecule/issues/105
-    //REVIEW: Can we have the Property.<CompleteMolecule|null> created in the model, instead of undocumented here in
-    //REVIEW: the view?
-    this.dialog = ThreeUtils.isWebGLEnabled() ? new Molecule3DDialog( new Property( null ) ) : new WarningDialog();
+    this.dialog = ThreeUtils.isWebGLEnabled() ? new Molecule3DDialog( bamModel.dialogMolecule ) : new WarningDialog();
 
     // @public {function} Reference to callback that displays dialog for 3d node representation
     this.showDialogCallback = this.showDialog.bind( this );
@@ -61,8 +59,7 @@ class BAMScreenView extends ScreenView {
     // its content.
     const kits = [];
 
-    // Create a play area to house the molecules.
-    //REVIEW: type/visibility docs
+    // @public {KitPlayAreaNode} Create a play area to house the molecules.
     this.kitPlayAreaNode = new KitPlayAreaNode( kits );
     bamModel.currentCollectionProperty.link( ( newCollection, oldCollection ) => {
       if ( oldCollection ) {
