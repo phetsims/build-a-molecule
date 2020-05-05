@@ -9,7 +9,6 @@
  */
 
 import Vector2 from '../../../../dot/js/Vector2.js';
-import Shape from '../../../../kite/js/Shape.js';
 import merge from '../../../../phet-core/js/merge.js';
 import FaceNode from '../../../../scenery-phet/js/FaceNode.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
@@ -23,13 +22,9 @@ import buildAMolecule from '../../buildAMolecule.js';
 import buildAMoleculeStrings from '../../buildAMoleculeStrings.js';
 import BAMConstants from '../BAMConstants.js';
 
-//REVIEW: Can inline these now if desired
-const nextCollectionString = buildAMoleculeStrings.nextCollection;
-const youCompletedYourCollectionString = buildAMoleculeStrings.youCompletedYourCollection;
-
 class AllFilledDialog extends Dialog {
   /**
-   * @param {BooleanProperty} buttonClickedProperty REVIEW: Prefer doc'ing requirements as Property.<Boolean>, doesn't appear we need that more-specific type here
+   * @param {Property.<Boolean>} buttonClickedProperty
    * @param {function} regenerateCallback
    * @param {Object} [options]
    */
@@ -37,51 +32,47 @@ class AllFilledDialog extends Dialog {
     options = merge( {
       stroke: new Color( 0, 0, 0 ),
       fill: BAMConstants.COMPLETE_BACKGROUND_COLOR,
-      center: new Vector2( 0, 0 ), //REVIEW: Prefer Vector2.ZERO reference here
+      center: Vector2.ZERO,
       bottomMargin: 10,
       cornerRadius: BAMConstants.CORNER_RADIUS
     }, options );
-    const contentVBox = new VBox( { spacing: 7, align: 'center' } );
 
-    // Add smiley face
-    const smiley = new FaceNode( 120 ).smile();
-    contentVBox.addChild( smiley );
+    super( new VBox( {
+      spacing: 7,
+      align: 'center',
+      children: [
 
-    // Add a message regarding the completed collection
-    //REVIEW: variable only used once, can we inline it in the addChild?
-    const text = new Text( youCompletedYourCollectionString, {
-      font: new PhetFont( {
-        size: 20,
-        weight: 'bold',
-        //REVIEW: maxWidth isn't an option for PhetFont, do we want this in the Text instead?
-        maxWidth: BAMConstants.TEXT_MAX_WIDTH
-      } )
-    } );
-    contentVBox.addChild( text );
+        // Add smiley face
+        new FaceNode( 120 ).smile(),
 
-    // Add the next collection button
-    const button = new TextPushButton( nextCollectionString, {
-      font: new PhetFont( {
-        size: 18,
-        weight: 'bold',
-        maxWidth: BAMConstants.TEXT_MAX_WIDTH
-      } ),
-      baseColor: Color.ORANGE,
-      soundPlayer: Playable.NO_SOUND
-    } );
-    //REVIEW: actually can we use touchAreaXDilation/touchAreaYDilation? THEN we can start nesting everything into one
-    //REVIEW: easy-to-read children setter, e.g.:
-    //REVIEW: super( new VBox( { ..., children: [ new FaceNode( 120 ).smile, ...]})), nested with nice formatting.
-    button.touchArea = Shape.bounds( button.localBounds.dilated( 20 ) ); //RREVIEW: touchArea accepts {Bounds2}, no need for Shape.bounds wrapping
-    contentVBox.addChild( button );
-    super( contentVBox, options );
+        // Add a message regarding the completed collection
+        new Text( buildAMoleculeStrings.youCompletedYourCollection, {
+          font: new PhetFont( {
+            size: 20,
+            weight: 'bold'
+          } ),
+          maxWidth: BAMConstants.TEXT_MAX_WIDTH * 1.5
+        } ),
 
-    // @private REVIEW: we're not declaring a property or method, don't want a visibility annotation
-    button.addListener( () => {
-      buttonClickedProperty.value = true;
-      regenerateCallback();
-      this.hide();
-    } );
+        // Add the next collection button
+        new TextPushButton( buildAMoleculeStrings.nextCollection, {
+          font: new PhetFont( {
+            size: 18,
+            weight: 'bold'
+          } ),
+          maxWidth: BAMConstants.TEXT_MAX_WIDTH * 1.5,
+          touchAreaXDilation: 20,
+          touchAreaYDilation: 20,
+          baseColor: Color.ORANGE,
+          soundPlayer: Playable.NO_SOUND,
+          listener: () => {
+            buttonClickedProperty.value = true;
+            regenerateCallback();
+            this.hide();
+          }
+        } )
+      ]
+    } ), options );
   }
 }
 

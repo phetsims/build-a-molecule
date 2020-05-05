@@ -9,12 +9,12 @@
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import ScreenIcon from '../../../../joist/js/ScreenIcon.js';
 import Image from '../../../../scenery/js/nodes/Image.js';
-import Node from '../../../../scenery/js/nodes/Node.js';
 import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
 import buildAMolecule from '../../buildAMolecule.js';
 import BAMConstants from '../../common/BAMConstants.js';
 import MoleculeList from '../../common/model/MoleculeList.js';
 import Molecule3DNode from '../../common/view/view3d/Molecule3DNode.js';
+import Screen from '../../../../joist/js/Screen.js';
 
 // Options for screen icons
 const SCREEN_ICON_OPTIONS = {
@@ -32,14 +32,16 @@ const BAMIconFactory = {
    * @returns {ScreenIcon}
    */
   createSingleScreen() {
-    //REVIEW: A lot of the constants (548, 373) seem to be based on Screen.MINIMUM_HOME_SCREEN_ICON_SIZE
-    //REVIEW: Can we grab those out from there, and have them in a constant here if we're using them?
 
     // Iconize Molecule for home screen and nav-bar
-    const wrapperNode = new Rectangle( 0, 0, 548, 373, 0, 0, {
+    const wrapperNode = new Rectangle( 0, 0, Screen.MINIMUM_HOME_SCREEN_ICON_SIZE.width, Screen.MINIMUM_HOME_SCREEN_ICON_SIZE.height, 0, 0, {
       fill: BAMConstants.PLAY_AREA_BACKGROUND_COLOR
     } );
-    const moleculeNode = new Molecule3DNode( MoleculeList.H2O, new Bounds2( 0, 0, 548, 373 ), false );
+    const moleculeNode = new Molecule3DNode(
+      MoleculeList.H2O,
+      new Bounds2( 0, 0, Screen.MINIMUM_HOME_SCREEN_ICON_SIZE.width, Screen.MINIMUM_HOME_SCREEN_ICON_SIZE.height ),
+      false
+    );
     const transformMatrix = Molecule3DNode.initialTransforms[ MoleculeList.H2O.getGeneralFormula() ];
     if ( transformMatrix ) {
       moleculeNode.transformMolecule( transformMatrix );
@@ -58,10 +60,7 @@ const BAMIconFactory = {
     moleculeIcon.center = wrapperNode.center.plusXY( 0, 20 );
 
     // Return the icon in its wrapper
-    //REVIEW: Why wrapping this with new Node()?
-    return new ScreenIcon( new Node( {
-      children: [ wrapperNode ]
-    } ), SCREEN_ICON_OPTIONS );
+    return new ScreenIcon( wrapperNode, SCREEN_ICON_OPTIONS );
   },
 
   /**
@@ -73,7 +72,11 @@ const BAMIconFactory = {
   createMultipleScreen() {
 
     // Iconize first O2 Molecule
-    const moleculeNodeOne = new Molecule3DNode( MoleculeList.O2, new Bounds2( 0, 0, 548, 373 ), false );
+    const moleculeNodeOne = new Molecule3DNode(
+      MoleculeList.O2,
+      new Bounds2( 0, 0, Screen.MINIMUM_HOME_SCREEN_ICON_SIZE.width, Screen.MINIMUM_HOME_SCREEN_ICON_SIZE.height ),
+      false
+    );
     const transformMatrix = Molecule3DNode.initialTransforms[ MoleculeList.O2.getGeneralFormula() ];
     if ( transformMatrix ) {
       moleculeNodeOne.transformMolecule( transformMatrix );
@@ -86,7 +89,11 @@ const BAMIconFactory = {
     } );
 
     // Iconize second O2 molecule
-    const moleculeNodeTwo = new Molecule3DNode( MoleculeList.O2, new Bounds2( 0, 0, 548, 373 ), false );
+    const moleculeNodeTwo = new Molecule3DNode(
+      MoleculeList.O2,
+      new Bounds2( 0, 0, Screen.MINIMUM_HOME_SCREEN_ICON_SIZE.width, Screen.MINIMUM_HOME_SCREEN_ICON_SIZE.height ),
+      false
+    );
     if ( transformMatrix ) {
       moleculeNodeTwo.transformMolecule( transformMatrix );
     }
@@ -98,9 +105,10 @@ const BAMIconFactory = {
     } );
 
     // Wrapper node to house molecule icons
-    const wrapperNode = new Rectangle( 0, 0, 548, 373, 0, 0, {
-      fill: BAMConstants.PLAY_AREA_BACKGROUND_COLOR
-    } );
+    const wrapperNode = new Rectangle(
+      0, 0, Screen.MINIMUM_HOME_SCREEN_ICON_SIZE.width, Screen.MINIMUM_HOME_SCREEN_ICON_SIZE.height, 0, 0, {
+        fill: BAMConstants.PLAY_AREA_BACKGROUND_COLOR
+      } );
     wrapperNode.addChild( moleculeIconOne );
     wrapperNode.addChild( moleculeIconTwo );
 
@@ -108,10 +116,7 @@ const BAMIconFactory = {
     moleculeIconOne.center = wrapperNode.center.minusXY( 125, 0 );
     moleculeIconTwo.center = wrapperNode.center.plusXY( 115, 0 );
 
-    //REVIEW: Why wrapping this with new Node()?
-    return new ScreenIcon( new Node( {
-      children: [ wrapperNode ]
-    } ), SCREEN_ICON_OPTIONS );
+    return new ScreenIcon( wrapperNode, SCREEN_ICON_OPTIONS );
   },
 
   /**
@@ -123,7 +128,11 @@ const BAMIconFactory = {
   createPlaygroundScreen() {
 
     // Iconize Molecule for home screen and nav-bar
-    const moleculeNode = new Molecule3DNode( MoleculeList.C2H4O2, new Bounds2( 0, 0, 548, 373 ), false );
+    const moleculeNode = new Molecule3DNode(
+      MoleculeList.C2H4O2,
+      new Bounds2( 0, 0, Screen.MINIMUM_HOME_SCREEN_ICON_SIZE.width, Screen.MINIMUM_HOME_SCREEN_ICON_SIZE.height ),
+      false
+    );
     const transformMatrix = Molecule3DNode.initialTransforms[ MoleculeList.C2H4O2.getGeneralFormula() ];
     if ( transformMatrix ) {
       moleculeNode.transformMolecule( transformMatrix );
@@ -134,16 +143,14 @@ const BAMIconFactory = {
       initialHeight: moleculeNode.canvas.height,
       scale: 0.95
     } );
-    const wrapperNode = new Rectangle( 0, 0, 548, 373, 0, 0, {
-      fill: BAMConstants.PLAY_AREA_BACKGROUND_COLOR
-    } );
+    const wrapperNode = new Rectangle(
+      0, 0, Screen.MINIMUM_HOME_SCREEN_ICON_SIZE.width, Screen.MINIMUM_HOME_SCREEN_ICON_SIZE.height, 0, 0, {
+        fill: BAMConstants.PLAY_AREA_BACKGROUND_COLOR
+      } );
     wrapperNode.addChild( moleculeIcon );
     moleculeIcon.center = wrapperNode.center.minusXY( 0, 10 );
 
-    //REVIEW: Why wrapping this with new Node()?
-    return new ScreenIcon( new Node( {
-      children: [ wrapperNode ]
-    } ), SCREEN_ICON_OPTIONS );
+    return new ScreenIcon( wrapperNode, SCREEN_ICON_OPTIONS );
   }
 };
 
