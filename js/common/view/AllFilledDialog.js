@@ -34,7 +34,10 @@ class AllFilledDialog extends Dialog {
       fill: BAMConstants.COMPLETE_BACKGROUND_COLOR,
       center: Vector2.ZERO,
       bottomMargin: 10,
-      cornerRadius: BAMConstants.CORNER_RADIUS
+      cornerRadius: BAMConstants.CORNER_RADIUS,
+      layoutStrategy: ( dialog, simBounds, screenBounds, scale ) => {
+        this.center = screenBounds.center.times( 1.0 / scale ).minusXY( 75, 75 );
+      }
     }, options );
 
     super( new VBox( {

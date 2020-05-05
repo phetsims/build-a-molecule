@@ -43,7 +43,7 @@ class MoleculeCollectingScreenView extends BAMScreenView {
         size: 18,
         weight: 'bold'
       } ),
-      maxWidth: BAMConstants.TEXT_MAX_WIDTH / 2,
+      maxWidth: BAMConstants.TEXT_MAX_WIDTH,
       baseColor: Color.ORANGE,
       soundPlayer: Playable.NO_SOUND
     } );
@@ -61,12 +61,6 @@ class MoleculeCollectingScreenView extends BAMScreenView {
     this.allFilledDialog = new AllFilledDialog(
       bamModel.buttonClickedProperty,
       bamModel.regenerateCallback, {
-        //REVIEW: this layoutStrategy seems to be used for all of the usages (e.g. this one), and seems like it
-        //REVIEW: belongs in AllFilledDialog itself (since it's using nothing from the screen view here).
-        layoutStrategy: ( dialog, simBounds, screenBounds, scale ) => {
-          //REVIEW: Also if called synchronously, this.allFilledDialog wouldn't be available yet
-          this.allFilledDialog.center = screenBounds.center.times( 1.0 / scale ).minusXY( 75, 75 );
-        },
         showCallback: () => {
           this.bamModel.buttonClickedProperty.value = false;
         }
