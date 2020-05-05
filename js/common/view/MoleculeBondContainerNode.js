@@ -37,8 +37,7 @@ class MoleculeBondContainerNode extends Node {
       bondNode.dispose();
     } );
 
-    //REVIEW: super's dispose doesn't take arguments, should be `super.dispose()`?
-    super.dispose( this );
+    super.dispose();
   }
 }
 

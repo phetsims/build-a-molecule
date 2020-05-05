@@ -21,9 +21,6 @@ import AllFilledDialog from './AllFilledDialog.js';
 import BAMScreenView from './BAMScreenView.js';
 import CollectionPanel from './CollectionPanel.js';
 
-//REVIEW: Can inline these now if desired
-const nextCollectionString = buildAMoleculeStrings.nextCollection;
-
 class MoleculeCollectingScreenView extends BAMScreenView {
   /**
    * @param {BAMModel} bamModel
@@ -32,22 +29,21 @@ class MoleculeCollectingScreenView extends BAMScreenView {
   constructor( bamModel, isSingleCollectionMode ) {
     super( bamModel );
 
-    //REVIEW: visibility docs (public?)
+    // @public {BAMModel}
     this.bamModel = bamModel;
 
     // @private {boolean}
     this.hasShownOnce = false;
 
     // @private {TextPushButton} Create a next collection button
-    this.nextCollectionButton = new TextPushButton( nextCollectionString, {
+    this.nextCollectionButton = new TextPushButton( buildAMoleculeStrings.nextCollection, {
       centerX: this.layoutBounds.centerX - 100,
       top: this.layoutBounds.top + BAMConstants.VIEW_PADDING,
       font: new PhetFont( {
         size: 18,
-        weight: 'bold',
-        //REVIEW: I don't believe maxWidth is a PhetFont option, do you need the option elsewhere?
-        maxWidth: BAMConstants.TEXT_MAX_WIDTH
+        weight: 'bold'
       } ),
+      maxWidth: BAMConstants.TEXT_MAX_WIDTH / 2,
       baseColor: Color.ORANGE,
       soundPlayer: Playable.NO_SOUND
     } );
@@ -133,8 +129,7 @@ class MoleculeCollectingScreenView extends BAMScreenView {
    * @returns {Node}
    */
   addCollection( collection ) {
-    //REVIEW: super.addCollection( ... )
-    const kitCollectionNode = BAMScreenView.prototype.addCollection.call( this, collection, true );
+    const kitCollectionNode = super.addCollection( collection, true );
     this.hasShownOnce = false;
 
     // show dialog the 1st time all collection boxes are filled

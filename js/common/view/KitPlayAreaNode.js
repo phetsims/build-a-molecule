@@ -1,8 +1,8 @@
 // Copyright 2020, University of Colorado Boulder
 
 /**
- * REVIEW: Not a canvas.
- * Node canvas for Build a Molecule. It features kits shown at the bottom. Can be extended to add other parts
+ * Contains all of the atoms in the center of the screen. These are atoms that have been removed from a kit and not placed
+ * in the collection area.
  *
  * @author Denzell Barnett (PhET Interactive Simulations)
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
@@ -35,14 +35,13 @@ class KitPlayAreaNode extends Node {
     // @private {Node} Layer that contains the cut targets used for breaking bonds
     this.moleculeBondContainerLayer = new Node();
 
-    // @public atom.id => AtomNode
-    //REVIEW: doc map types e.g. @public {Object.<atom.id:number, AtomNode}
+    // @public {Object.<atom.id:number, AtomNode}
     this.atomNodeMap = {};
 
     // @public {Object.<moleculeId:number,MoleculeControlsHBox>}
     this.metadataMap = {};
 
-    // @private moleculeId => MoleculeBondContainerNode REVIEW: doc with {Object} including types
+    // @private {Object.<moleculeId, MoleculeBondContainerNode>}
     this.bondMap = {};
 
     // Every kit maps the visibility of its atoms in the play area to its active property. Active kits
