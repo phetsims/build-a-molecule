@@ -27,16 +27,9 @@ class StrippedMolecule extends PhetioObject {
       return !atom.isHydrogen();
     } );
 
-    /**
-     * REVIEW: We don't want to have JSDoc-style /** comments here since it's not for a function? Line comments preferred.
-     * Array indexed the same way as stripped.atoms for efficiency. It's essentially immutable, so this works
-     */
-    //REVIEW: JSDoc
+    // @private {Array.<number>} Array indexed the same way as stripped.atoms for efficiency. It's essentially immutable, so this works
     this.hydrogenCount = new Array( atomsToAdd.length );
-    for ( let i = 0; i < this.hydrogenCount.length; i++ ) {
-      this.hydrogenCount[ i ] = 0;
-      //REVIEW: this.hydrogenCount = _.range( 0, atomsToAdd.length ).map( () => 0 );
-    }
+    this.hydrogenCount = _.range( 0, atomsToAdd.length ).map( () => 0 );
 
     // copy non-hydrogen honds, and mark hydrogen bonds
     original.bonds.forEach( bond => {
@@ -57,7 +50,7 @@ class StrippedMolecule extends PhetioObject {
       }
     } );
 
-    // construct the stripped structure REVIEW: JSDoc
+    // @public {MoleculeStructure} Construct the stripped structure
     this.stripped = new MoleculeStructure( atomsToAdd.length, bondsToAdd.length );
     atomsToAdd.forEach( this.stripped.addAtom.bind( this.stripped ) );
     bondsToAdd.forEach( this.stripped.addBond.bind( this.stripped ) );
