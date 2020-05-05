@@ -25,29 +25,25 @@ import ShowMolecule3DButtonNode from './view3d/ShowMolecule3DButtonNode.js';
 const DILATION_FACTOR = 4 / 1.2;
 const SCALE = 1.2;
 
-/**
- * @param {Kit} kit
- * @param {Molecule} molecule
- * @param {function} showDialogCallback
- */
 class MoleculeControlsHBox extends HBox {
-  //REVIEW: JSDoc constructor
+
+  /**
+   * @param {Kit} kit
+   * @param {Molecule} molecule
+   * @param {function} showDialogCallback
+   */
   constructor( kit, molecule, showDialogCallback ) {
     super( { spacing: 9 } );
 
-    //REVIEW: We don't need self with ES6 and arrow functions here
-    const self = this;
-
-    //REVIEW: visibility docs
+    // @public {Molecule}
     this.molecule = molecule;
-
     if ( molecule.atoms.length < 2 ) {
 
       // we don't need anything at all if it is not a "molecule"
       return;
     }
 
-    //REVIEW: JSDocs, e.g. @private {function} probably?
+    // @private {function}
     this.updatePositionListener = this.updatePosition.bind( this );
 
     // Check if molecule data exists
@@ -61,16 +57,13 @@ class MoleculeControlsHBox extends HBox {
       } );
       this.addChild( label );
 
-      // 3D button
-      //REVIEW: Formatting?
-
-        // @private Button that shows 3d representation of molecule
-        const button3d = new ShowMolecule3DButtonNode( completeMolecule, showDialogCallback, {
-          scale: SCALE
-        } );
-        //RREVIEW: touchArea accepts {Bounds2}, no need for Shape.bounds wrapping
-        button3d.touchArea = Shape.bounds( button3d.childBounds.dilated( DILATION_FACTOR ) );
-        this.addChild( button3d );
+      // @private Button that shows 3d representation of molecule
+      const button3d = new ShowMolecule3DButtonNode( completeMolecule, showDialogCallback, {
+        scale: SCALE
+      } );
+      //RREVIEW: touchArea accepts {Bounds2}, no need for Shape.bounds wrapping
+      button3d.touchArea = Shape.bounds( button3d.childBounds.dilated( DILATION_FACTOR ) );
+      this.addChild( button3d );
     }
 
     // Break-up button 'X'
@@ -82,8 +75,7 @@ class MoleculeControlsHBox extends HBox {
       yMargin: 0,
       soundPlayer: Playable.NO_SOUND
     } );
-    //RREVIEW: touchArea accepts {Bounds2}, no need for Shape.bounds wrapping
-    buttonBreak.touchArea = Shape.bounds( buttonBreak.childBounds.dilated( DILATION_FACTOR ) );
+    buttonBreak.touchArea = buttonBreak.childBounds.dilated( DILATION_FACTOR );
     buttonBreak.addInputListener( new ButtonListener( {
       fire: () => {
         kit.breakMolecule( molecule );
@@ -92,7 +84,7 @@ class MoleculeControlsHBox extends HBox {
     this.addChild( buttonBreak );
 
     molecule.atoms.forEach( atom => {
-      atom.positionProperty.link( self.updatePositionListener );
+      atom.positionProperty.link( this.updatePositionListener );
     } );
 
     // sanity check. should update (unfortunately) a number of times above
@@ -110,8 +102,7 @@ class MoleculeControlsHBox extends HBox {
         atom.positionProperty.unlink( listener );
       } );
     }
-    //REVIEW: super's dispose doesn't take arguments, should be `super.dispose()`?
-    super.dispose( this );
+    super.dispose();
   }
 
   /**
