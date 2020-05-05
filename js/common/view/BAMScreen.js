@@ -27,6 +27,5 @@ class BAMScreen extends Screen {
   }
 }
 
-
 buildAMolecule.register( 'BAMScreen', BAMScreen );
 export default BAMScreen;

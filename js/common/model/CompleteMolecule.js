@@ -181,117 +181,118 @@ class CompleteMolecule extends MoleculeStructure {
     const format = ( this.has3d ? ( this.has2d ? 'full' : '3d' ) : '2d' );
     return this.commonName + '|' + this.molecularFormula + '|' + this.cid + '|' + format + '|' + super.toSerial2.call( this );
   }
-}
 
 
-/**
- * @
- * @param {string} str
- *
- * @private
- */
-CompleteMolecule.capitalize = str => {
-  const characters = str.split( '' );
-  let lastWasSpace = true;
-  for ( let i = 0; i < characters.length; i++ ) {
-    const character = characters[ i ];
+  /**
+   * @
+   * @param {string} str
+   *
+   * @private
+   */
+  static capitalize( str ) {
+    const characters = str.split( '' );
+    let lastWasSpace = true;
+    for ( let i = 0; i < characters.length; i++ ) {
+      const character = characters[ i ];
 
-    // whitespace check in general
-    if ( /\s/.test( character ) ) {
-      lastWasSpace = true;
-    }
-    else {
-      if ( lastWasSpace && /[a-z]/.test( character ) ) {
-        characters[ i ] = character.toUpperCase();
+      // whitespace check in general
+      if ( /\s/.test( character ) ) {
+        lastWasSpace = true;
       }
-      lastWasSpace = false;
+      else {
+        if ( lastWasSpace && /[a-z]/.test( character ) ) {
+          characters[ i ] = character.toUpperCase();
+        }
+        lastWasSpace = false;
+      }
     }
-  }
-  return characters.join( '' );
-};
-
-/*---------------------------------------------------------------------------*
- * serialization
- *----------------------------------------------------------------------------*/
-
-/**
- * Construct a molecule out of a pipe-separated line.
- * REVIEW: visibility, and ideally move as a static class method
- *
- * WARNING: this always writes out in a "full" configuration, even if the data wasn't contained before
- *
- * @param {string} line A string that is essentially a serialized molecule
- * @returns {CompleteMolecule} that is properly constructed
- */
-CompleteMolecule.fromString = line => {
-  let i;
-  const tokens = line.split( '|' );
-  let idx = 0;
-  const commonName = tokens[ idx++ ];
-  const molecularFormula = tokens[ idx++ ];
-  const atomCount = parseInt( tokens[ idx++ ], 10 );
-  const bondCount = parseInt( tokens[ idx++ ], 10 );
-  const completeMolecule = new CompleteMolecule( commonName, molecularFormula, atomCount, bondCount, true, true );
-
-  // for each atom, read its symbol, then 2d coordinates, then 3d coordinates (total of 6 fields)
-  for ( i = 0; i < atomCount; i++ ) {
-    const symbol = tokens[ idx++ ];
-    const x2d = parseFloat( tokens[ idx++ ] );
-    const y2d = parseFloat( tokens[ idx++ ] );
-    const x3d = parseFloat( tokens[ idx++ ] );
-    const y3d = parseFloat( tokens[ idx++ ] );
-    const z3d = parseFloat( tokens[ idx++ ] );
-    const atom = new PubChemAtomFull( Element.getElementBySymbol( symbol ), x2d, y2d, x3d, y3d, z3d );
-    completeMolecule.addAtom( atom );
+    return characters.join( '' );
   }
 
-  // for each bond, read atom indices (2 of them, which are 1-indexed), and then the order of the bond (single, double, triple, etc.)
-  for ( i = 0; i < bondCount; i++ ) {
-    const a = parseInt( tokens[ idx++ ], 10 );
-    const b = parseInt( tokens[ idx++ ], 10 );
-    const order = parseInt( tokens[ idx++ ], 10 );
-    const bond = new PubChemBond( completeMolecule.atoms[ a - 1 ], completeMolecule.atoms[ b - 1 ], order ); // -1 since our format is 1-based
-    completeMolecule.addBond( bond );
-  }
-
-  // Filled in by parsing completeMolecule
-  completeMolecule.cid = parseInt( tokens[ idx++ ], 10 );
-
-  return completeMolecule;
-};
-
-/**
- * @param {string} line
- *
- * @public
- * @returns {MoleculeStructure}
- */
-CompleteMolecule.fromSerial2 = line => {
   /*---------------------------------------------------------------------------*
-   * extract header
+   * serialization
    *----------------------------------------------------------------------------*/
-  const tokens = line.split( '|' );
-  let idx = 0;
-  const commonName = tokens[ idx++ ];
-  const molecularFormula = tokens[ idx++ ];
-  const cidString = tokens[ idx++ ];
-  const cid = parseInt( cidString, 10 );
-  const format = tokens[ idx++ ];
 
-  const has2dAnd3d = format === 'full';
-  const has2d = format === '2d' || has2dAnd3d;
-  const has3d = format === '3d' || has2dAnd3d;
-  const burnedLength = commonName.length + 1 + molecularFormula.length + 1 + cidString.length + 1 + format.length + 1;
+  /**
+   * Construct a molecule out of a pipe-separated line.
+   * REVIEW: visibility, and ideally move as a static class method
+   *
+   * WARNING: this always writes out in a "full" configuration, even if the data wasn't contained before
+   *
+   * @param {string} line A string that is essentially a serialized molecule
+   * @returns {CompleteMolecule} that is properly constructed
+   */
+  static fromString( line ) {
+    let i;
+    const tokens = line.split( '|' );
+    let idx = 0;
+    const commonName = tokens[ idx++ ];
+    const molecularFormula = tokens[ idx++ ];
+    const atomCount = parseInt( tokens[ idx++ ], 10 );
+    const bondCount = parseInt( tokens[ idx++ ], 10 );
+    const completeMolecule = new CompleteMolecule( commonName, molecularFormula, atomCount, bondCount, true, true );
 
-  // select the atom parser depending on the format
-  const atomParser = has3d ? ( has2dAnd3d ? PubChemAtomFull.parse : PubChemAtom3.parse ) : PubChemAtom2.parse;
+    // for each atom, read its symbol, then 2d coordinates, then 3d coordinates (total of 6 fields)
+    for ( i = 0; i < atomCount; i++ ) {
+      const symbol = tokens[ idx++ ];
+      const x2d = parseFloat( tokens[ idx++ ] );
+      const y2d = parseFloat( tokens[ idx++ ] );
+      const x3d = parseFloat( tokens[ idx++ ] );
+      const y3d = parseFloat( tokens[ idx++ ] );
+      const z3d = parseFloat( tokens[ idx++ ] );
+      const atom = new PubChemAtomFull( Element.getElementBySymbol( symbol ), x2d, y2d, x3d, y3d, z3d );
+      completeMolecule.addAtom( atom );
+    }
 
-  return MoleculeStructure.fromSerial2( line.slice( burnedLength ), ( atomCount, bondCount ) => {
-    const molecule = new CompleteMolecule( commonName, molecularFormula, atomCount, bondCount, has2d, has3d );
-    molecule.cid = cid;
-    return molecule;
-  }, atomParser, PubChemBond.parse );
-};
+    // for each bond, read atom indices (2 of them, which are 1-indexed), and then the order of the bond (single, double, triple, etc.)
+    for ( i = 0; i < bondCount; i++ ) {
+      const a = parseInt( tokens[ idx++ ], 10 );
+      const b = parseInt( tokens[ idx++ ], 10 );
+      const order = parseInt( tokens[ idx++ ], 10 );
+      const bond = new PubChemBond( completeMolecule.atoms[ a - 1 ], completeMolecule.atoms[ b - 1 ], order ); // -1 since our format is 1-based
+      completeMolecule.addBond( bond );
+    }
+
+    // Filled in by parsing completeMolecule
+    completeMolecule.cid = parseInt( tokens[ idx++ ], 10 );
+
+    return completeMolecule;
+  }
+
+
+  /**
+   * @param {string} line
+   *
+   * @public
+   * @returns {MoleculeStructure}
+   */
+  static fromSerial2( line ) {
+    /*---------------------------------------------------------------------------*
+     * extract header
+     *----------------------------------------------------------------------------*/
+    const tokens = line.split( '|' );
+    let idx = 0;
+    const commonName = tokens[ idx++ ];
+    const molecularFormula = tokens[ idx++ ];
+    const cidString = tokens[ idx++ ];
+    const cid = parseInt( cidString, 10 );
+    const format = tokens[ idx++ ];
+
+    const has2dAnd3d = format === 'full';
+    const has2d = format === '2d' || has2dAnd3d;
+    const has3d = format === '3d' || has2dAnd3d;
+    const burnedLength = commonName.length + 1 + molecularFormula.length + 1 + cidString.length + 1 + format.length + 1;
+
+    // select the atom parser depending on the format
+    const atomParser = has3d ? ( has2dAnd3d ? PubChemAtomFull.parse : PubChemAtom3.parse ) : PubChemAtom2.parse;
+
+    return MoleculeStructure.fromSerial2( line.slice( burnedLength ), ( atomCount, bondCount ) => {
+      const molecule = new CompleteMolecule( commonName, molecularFormula, atomCount, bondCount, has2d, has3d );
+      molecule.cid = cid;
+      return molecule;
+    }, atomParser, PubChemBond.parse );
+  }
+}
 
 /*---------------------------------------------------------------------------*
  * atom varieties, depending on what information we have from PubChem. varieties
@@ -416,8 +417,7 @@ class PubChemAtom3 extends Atom {
    * @returns {string}
    */
   toString() {
-    //REVIEW: Should be super.toString(), supertype's toString doesn't take parameters
-    return super.toString( this ) + ' ' + this.x3d + ' ' + this.y3d + ' ' + this.z3d;
+    return super.toString() + ' ' + this.x3d + ' ' + this.y3d + ' ' + this.z3d;
   }
 
   /**
@@ -474,8 +474,7 @@ class PubChemAtomFull extends Atom {
    * @returns {string}
    */
   toString() {
-    //REVIEW: Should be super.toString(), supertype's toString doesn't take parameters
-    return super.toString( this ) + ' ' + this.x2d + ' ' + this.y2d + ' ' + this.x3d + ' ' + this.y3d + ' ' + this.z3d;
+    return super.toString() + ' ' + this.x2d + ' ' + this.y2d + ' ' + this.x3d + ' ' + this.y3d + ' ' + this.z3d;
   }
 
   /**

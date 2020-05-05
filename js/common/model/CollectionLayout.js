@@ -7,9 +7,9 @@
  * @author Denzell Barnett (PhET Interactive Simulations)
  */
 
-import Rectangle from '../../../../dot/js/Rectangle.js';
 import buildAMolecule from '../../buildAMolecule.js';
 import BAMConstants from '../BAMConstants.js';
+import Bounds2 from '../../../../dot/js/Bounds2.js';
 
 // constants
 const KIT_HEIGHT = 550;
@@ -32,12 +32,10 @@ class CollectionLayout {
     const kitAvailableWidth = hasCollectionPanel ? 0.75 : 1;
 
     // @public {Bounds2} Refers to the bucket region
-    //REVIEW: Bounds2.rect( ...same params... ) is preferred
-    this.availableKitBounds = new Rectangle( -halfWidth, kitBottom, availableWidth * kitAvailableWidth, KIT_HEIGHT );
+    this.availableKitBounds = Bounds2.rect( -halfWidth, kitBottom, availableWidth * kitAvailableWidth, KIT_HEIGHT );
 
     // @public {Bounds2} Refers to the play area above the bucket region, where molecules can be built, broken, and moved
-    //REVIEW: Bounds2.rect( ...same params... ) is preferred
-    this.availablePlayAreaBounds = new Rectangle(
+    this.availablePlayAreaBounds = Bounds2.rect(
       -BAMConstants.MODEL_SIZE.width / 2, // far left part of model
       kitTop, // top of kit
       this.availableKitBounds.width + BAMConstants.MODEL_PADDING * 2, // add in padding, since there is padding in-between the kit and collection area
