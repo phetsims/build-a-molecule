@@ -22,10 +22,6 @@ import buildAMoleculeStrings from '../../buildAMoleculeStrings.js';
 import BAMConstants from '../BAMConstants.js';
 import CollectionAreaNode from './CollectionAreaNode.js';
 
-//REVIEW: Can inline these now if desired
-const collectionPatternString = buildAMoleculeStrings.collectionPattern;
-const yourMoleculesString = buildAMoleculeStrings.yourMolecules;
-
 class CollectionPanel extends Panel {
   /**
    * @param {BAMModel} bamModel
@@ -50,14 +46,14 @@ class CollectionPanel extends Panel {
     // @private {Node}
     this.collectionAreaHolder = new Node();
 
-    // @private KitCollection id => node REVIEW: Doc with type, e.g. {Object.<kitCollectionId:number, Node} - or whatever it is
-    this.collectionAreaMap = {}; // kitCollection id => node
+    // @private {Object.<kitCollectionId:number, Node}
+    this.collectionAreaMap = {};
 
     // @private {Array.<function>}
     this.collectionAttachmentCallbacks = collectionAttachmentCallbacks;
 
     // Create header text for panel
-    const yourMoleculesText = new Text( yourMoleculesString, {
+    const yourMoleculesText = new Text( buildAMoleculeStrings.yourMolecules, {
       font: new PhetFont( {
         size: 22
       } ),
@@ -76,7 +72,7 @@ class CollectionPanel extends Panel {
 
     // Manages changing the label of the current collection
     bamModel.currentCollectionProperty.link( () => {
-      currentCollectionText.text = StringUtils.fillIn( collectionPatternString, {
+      currentCollectionText.text = StringUtils.fillIn( buildAMoleculeStrings.collectionPattern, {
         number: bamModel.currentIndex + 1
       } );
     } );
@@ -154,7 +150,7 @@ class CollectionPanel extends Panel {
     this.collectionAreaHolder.addChild( collectionAreaNode );
 
     // if we are hooked up, update the box locations. otherwise, listen to the canvas for when it is
-    if ( this.hasCanvasAsParent() ) {
+    if ( this.hasScreenViewAsAncestor() ) {
       collectionAreaNode.updateCollectionBoxLocations();
     }
     else {
@@ -167,14 +163,11 @@ class CollectionPanel extends Panel {
 
   /**
    * Walk up the scene graph, looking to see if we are a (grand)child of a canvas
+   *
    * @private
-   *
-   * REVIEW: All of this "Canvas" naming seems like it's ported from the Java version.
-   * REVIEW: hasScreenViewAsAncestor() would be more accurate.
-   *
    * @returns {boolean} If an ancestor is a BuildAMoleculeCanvas
    */
-  hasCanvasAsParent() {
+  hasScreenViewAsAncestor() {
     let node = this; // eslint-disable-line consistent-this
     while ( node.getParent() !== null ) {
       node = node.getParent();

@@ -64,7 +64,7 @@ class CollectionAreaNode extends Node {
   }
 
   /**
-   * Update the location of each collection box node REVIEW: Note somehow that it's updating the location in the model here
+   * Update the location of each collection box node
    *
    * @public
    */

@@ -28,14 +28,12 @@ const BLACK_BOX_PADDING = 7;
 class CollectionBoxNode extends VBox {
   /**
    * @param {CollectionBox} box
-   * @param {function} toModelBounds REVIEW: doc types or usage for this? unclear what it does without examining usage
+   * @param {function} toModelBounds - Used to update location of the collection box
    * @param {function} showDialogCallback
    * @param {Object} [options]
    */
   constructor( box, toModelBounds, showDialogCallback, options ) {
-    //REVIEW: For Node subtypes, we'll really want to call `super()`` at the start, and then a `this.mutate( options )`
-    //REVIEW: at the end, so that positional or bounds-based options will operate on a fully-constructed node.
-    super( options );
+    super();
 
     // @public {CollectionBox}
     this.box = box;
@@ -43,9 +41,7 @@ class CollectionBoxNode extends VBox {
     // @private {function}
     this.toModelBounds = toModelBounds;
 
-    // @public {Node|Rectangle}
-    //REVIEW: How is this ever a Rectangle? It looks like a grouping node used to store the main box, while subtypes
-    //REVIEW: poke contents in before/after.
+    // @public {Node}
     //REVIEW: Instead, can we get rid of this boxNode, just put the children (e.g. blackBox, cueNode, etc.) directly
     //REVIEW: into children of this node (change it from VBox => Node), and then SingleCollectionBoxNode and
     //REVIEW: MultipleCollectionBoxNode can be VBoxes that have this as a child (instead of using inheritance?).
@@ -54,18 +50,14 @@ class CollectionBoxNode extends VBox {
     // @private {Array.<Node>}
     this.moleculeNodes = [];
 
-    //REVIEW: documentation reference to window.setTimeout seems erroneous, as we should NOT use window.setTimeout
-    // @private {number|null} NOT zero, since that could be a valid timeout ID for window.setTimeout!
-    //REVIEW: Also, this should be {function|null}, since timer.setTimeout returns a function!
+    // @private {function|null} NOT zero, since that could be a valid timeout ID for timer.setTimeout!
     this.blinkTimeout = null;
 
-    // @private Molecule ID => node, stores nodes for each molecule
-    //REVIEW: doc for types, e.g. {Object.<moleculeId:number,Node>}
+    // @private {Object.<moleculeId:number,Node>} stores nodes for each molecule
     this.moleculeNodeMap = {};
 
     // @private Maps moleculeId => Node (thumbnail view for the molecule)
-    //REVIEW: doc with type {Object}, and ideally map types
-    //REVIEW: e.g. // @private {Object.<moleculeId:number, Node>}
+    // @private {Object.<moleculeId:number, Node>}
     this.moleculeIdThumbnailMap = {};
     //REVIEW: Also, we're stuffing in-play-area molecules in this map ALONG WITH complete molecules. While I would
     //REVIEW: prefer different maps for each, it should at least be documented that this is happening.
@@ -83,7 +75,8 @@ class CollectionBoxNode extends VBox {
 
     // @private {Rectangle}
     this.blackBox = new Rectangle( 0, 0, 160, 50, {
-      fill: Color.BLACK
+      fill: Color.BLACK,
+      lineWidth: 4
     } );
 
     //REVIEW: What happened with the indentation below? WebStorm should fix this presumably? HAS_3D removal refactoring?
@@ -119,8 +112,8 @@ class CollectionBoxNode extends VBox {
       headWidth: 14,
       pickable: false
     } );
-    //REVIEW: Another listener where we should document that the box has a similar (the same?) lifetime as the node,
-    //REVIEW: or this would be a potential memory leak.
+
+    // Cues exists for the duration of sim lifetime.
     box.cueVisibilityProperty.link( visible => {
       this.cueNode.visible = visible;
     } );
@@ -151,20 +144,19 @@ class CollectionBoxNode extends VBox {
     // kept for now since it is much easier to revert back to the old behavior
 
     // Add invisible molecules to the molecule layer so that its size won't change later (fixes molecule positions)
-    //REVIEW: consider rename so that it's known that these nodes are just for layout? layoutNodes?
-    const nodes = [];
+    const layoutNodes = [];
     for ( let i = 0; i < box.capacity; i++ ) {
       const node = CollectionBoxNode.lookupThumbnail( box.moleculeType, this.moleculeNodeMap );
       node.visible = false;
-      nodes.push( node );
+      layoutNodes.push( node );
       this.moleculeLayer.addChild( node );
     }
 
     // Position them like we would with the others
-    this.layOutMoleculeList( nodes );
+    this.layOutMoleculeList( layoutNodes );
     this.centerMoleculesInBlackBox();
-    this.boxNode.y = 3; //REVIEW: Right now this is a layout box, so it will wipe away this positioning when it's added in the statement below
     this.addChild( this.boxNode );
+    this.mutate( options );
   }
 
 
@@ -235,18 +227,12 @@ class CollectionBoxNode extends VBox {
 
   /**
    * Layout of molecules. Spaced horizontally with moleculePadding, and vertically centered
-   * @param {Array.<Node>} moleculeNodes List of molecules to lay out
+   * @param {Array.<Rectangle>} moleculeNodes List of molecules to lay out
    *
    * @private
    */
   layOutMoleculeList( moleculeNodes ) {
-    //REVIEW: Neat trick to do this: const maxHeight = _.max( moleculeNodes.map( node => node.height ) );
-    //REVIEW: Alternatively instead of _.max, you CAN use Math.max, BUT you need to use the spread operator since it
-    //REVIEW: doesn't work with an array, e.g. Math.max( ...moleculeNodes.map( node => node.height ) )
-    let maxHeight = 0;
-    moleculeNodes.forEach( moleculeNode => {
-      maxHeight = Math.max( maxHeight, moleculeNode.height );
-    } );
+    const maxHeight = _.max( moleculeNodes.map( node => node.height ) );
     let x = 0;
     moleculeNodes.forEach( moleculeNode => {
       moleculeNode.setTranslation( x, ( maxHeight - moleculeNode.height ) / 2 );
@@ -293,9 +279,6 @@ class CollectionBoxNode extends VBox {
    * @private
    */
   updateBoxGraphics() {
-    //REVIEW: The blackBox lineWidth always seems to be 4. Can we just move this to the blackBox construction above,
-    //REVIEW: instead of having it in our update function?
-    this.blackBox.lineWidth = 4;
     if ( this.box.isFull() ) {
       this.blackBox.stroke = BAMConstants.MOLECULE_COLLECTION_BOX_HIGHLIGHT;
       this.box.cueVisibilityProperty.value = false;
@@ -347,7 +330,6 @@ class CollectionBoxNode extends VBox {
           this.blackBox.stroke = BAMConstants.MOLECULE_COLLECTION_BOX_BORDER_BLINK;
         }
         else {
-          //REVIEW: blackBox alternates between a black fill and another black fill. And is called blackBox. Can we remove the changing of the fill here?
           this.blackBox.stroke = BAMConstants.MOLECULE_COLLECTION_BACKGROUND;
         }
 
@@ -359,7 +341,7 @@ class CollectionBoxNode extends VBox {
   }
 
   /**
-   * Inturrupt the blinking
+   * Interrupt the blinking
    *
    * @private
    */
@@ -379,9 +361,8 @@ class CollectionBoxNode extends VBox {
   /**
    * Search for a thumbnail that represents the completed molecule. Thumbnail is drawn using canvas.
    * @param {CompleteMolecule} completeMolecule
-   * @param {object} moleculeIdThumbnailMap REVIEW: {Object} - Also should document the parts of the map (keys and values)
+   * @param {Object.<moleculeId:number, Node>} moleculeIdThumbnailMap
    *
-   * @static REVIEW: We don't mark things with @static, since it's already noted as static in the actual definition
    * @private
    * @returns {Node}
    */
@@ -400,10 +381,7 @@ class CollectionBoxNode extends VBox {
 
     // wrap the returned image in an extra node so we can transform them independently, and that takes up the proper amount of space
     const node = moleculeIdThumbnailMap[ completeMolecule.moleculeId ];
-    //REVIEW: Just `return new Rectangle( 0, 0, 50, 50, { children: [ node ] } );`
-    const wrapperNode = new Rectangle( 0, 0, 50, 50 );
-    wrapperNode.addChild( node );
-    return wrapperNode;
+    return new Rectangle( 0, 0, 50, 50, { children: [ node ] } );
   }
 
   /**
@@ -434,14 +412,8 @@ class CollectionBoxNode extends VBox {
           return node.bounds;
         },
         () => {} ).bounds;
-
       maxBounds = maxBounds.union( boxBounds );
     } );
-
-    //REVIEW: These static properties are not documented on the given types!
-    //REVIEW: Wait, where are these even used? I can't find any usages
-    boxNode.maxWidth = maxBounds.width;
-    boxNode.maxHeight = maxBounds.height;
   }
 }
 
