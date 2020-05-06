@@ -115,6 +115,11 @@ class BAMScreenView extends ScreenView {
       } );
     this.refillButton.touchArea = this.refillButton.selfBounds.union( this.refillButton.childBounds ).dilated( 10 );
 
+    // @public {function} Refill button is enabled if atoms exists outside of the bucket
+    //REVIEW: if this is marked as public with JSDoc, we really should move it to a method
+    this.updateRefillButton = () => {
+      this.refillButton.enabled = !this.bamModel.currentCollectionProperty.value.currentKitProperty.value.allBucketsFilled();
+    };
     // @public {ResetAllButton} Create a reset all button. Position of button is adjusted on "Larger" Screen.
     this.resetAllButton = new ResetAllButton( {
       listener: () => {
@@ -297,15 +302,6 @@ class BAMScreenView extends ScreenView {
       }
       this.dialog.show();
     }
-  }
-
-  /**
-   * Refill button is enabled if atoms exists outside of the bucket
-   *
-   * @public
-   */
-  updateRefillButton() {
-    this.refillButton.enabled = !this.bamModel.currentCollectionProperty.value.currentKitProperty.value.allBucketsFilled();
   }
 
   /**

@@ -134,12 +134,7 @@ class MoleculeBondNode extends Node {
     } ) );
     this.addChild( cutTargetNode );
 
-    /**
-     * Listener that will update the position of our hit target
-     *
-     * @private
-     */
-    //REVIEW: Just doc as @private {function}
+    // @private {function} Listener that will update the position of our hit target
     this.positionListener = () => {
       const orientation = this.b.positionProperty.value.minus( this.a.positionProperty.value );
       if ( orientation.magnitude > 0 ) {
@@ -169,8 +164,7 @@ class MoleculeBondNode extends Node {
     this.a.positionProperty.unlink( this.positionListener );
     this.b.positionProperty.unlink( this.positionListener );
 
-    //REVIEW: super's dispose doesn't take arguments, should be `super.dispose()`?
-    super.dispose( this );
+    super.dispose();
   }
 }
 

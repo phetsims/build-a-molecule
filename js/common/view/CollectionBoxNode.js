@@ -10,7 +10,6 @@
 
 import timer from '../../../../axon/js/timer.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
-import Shape from '../../../../kite/js/Shape.js';
 import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
 import Image from '../../../../scenery/js/nodes/Image.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
@@ -40,6 +39,9 @@ class CollectionBoxNode extends VBox {
 
     // @public {CollectionBox}
     this.box = box;
+
+    // @private {function}
+    this.toModelBounds = toModelBounds;
 
     // @public {Node|Rectangle}
     //REVIEW: How is this ever a Rectangle? It looks like a grouping node used to store the main box, while subtypes
@@ -79,44 +81,35 @@ class CollectionBoxNode extends VBox {
     //REVIEW: NOTE: this will still leak even if we have only a small set of CollectionBoxNodes, unlike the other
     //REVIEW: "probably not leaks" in the file.
 
-    //REVIEW: type/visibility docs (looks private?)
+    // @private {Rectangle}
     this.blackBox = new Rectangle( 0, 0, 160, 50, {
       fill: Color.BLACK
     } );
-    //REVIEW: type/visibility docs -- @private {function} ?
-    //REVIEW: Also since we are calling this from a method, it seems like this SHOULD be a method.
-    //REVIEW: We have access to the box, and can store the toModelBounds instead of this, and then collapse things into
-    //REVIEW: updateLocation() -- which is just calling this anyway.
-    this.locationUpdateObserver = () => {
-      box.dropBoundsProperty.set( toModelBounds( this.blackBox ) );
-    };
 
     //REVIEW: What happened with the indentation below? WebStorm should fix this presumably? HAS_3D removal refactoring?
     // Arrange button position for to trigger 3D representation
-      const show3dButton = new ShowMolecule3DButtonNode( box.moleculeType, showDialogCallback );
-      //REVIEW: touchArea can be a {Bounds2}, so we can just say show3dButton.touchArea = show3dButton.bounds.dilated( 10 );
-      show3dButton.touchArea = Shape.bounds( show3dButton.bounds.dilated( 10 ) );
-      show3dButton.right = this.blackBox.right - BLACK_BOX_PADDING;
-      show3dButton.centerY = this.blackBox.centerY;
-      //REVIEW: type/visibility docs, and ideally HAS_3D is true so we declare it in one place?
-      this.button3dWidth = show3dButton.width;
-      //REVIEW: Our listener cares about box.quantityProperty, but we're adding it to two other emitters.
-      //REVIEW: Can we only listen to the box.quantityProperty instead, with a link()? Then the immediate callback below
-      //REVIEW: can be removed. e.g. `box.quantityProperty.link( quantity => { show3dButton.visible = quantity > 0; } );`
-      //REVIEW: ALSO I believe multiple CollectionBoxNodes will not be created and disposed while one CollectionBox
-      //REVIEW: survives, but please document this if it's the case (otherwise we'll be leaking memory by not removing
-      //REVIEW: this listener).
-      const update3dVisibility = () => {
-        show3dButton.visible = box.quantityProperty.value > 0;
-      };
-      box.addedMoleculeEmitter.addListener( update3dVisibility );
-      box.removedMoleculeEmitter.addListener( update3dVisibility );
-      update3dVisibility();
-      this.blackBox.addChild( show3dButton );
+    const show3dButton = new ShowMolecule3DButtonNode( box.moleculeType, showDialogCallback );
+    show3dButton.touchArea = show3dButton.bounds.dilated( 10 );
+    show3dButton.right = this.blackBox.right - BLACK_BOX_PADDING;
+    show3dButton.centerY = this.blackBox.centerY;
+    //REVIEW: type/visibility docs, and ideally HAS_3D is true so we declare it in one place?
+    this.button3dWidth = show3dButton.width;
+    //REVIEW: Our listener cares about box.quantityProperty, but we're adding it to two other emitters.
+    //REVIEW: Can we only listen to the box.quantityProperty instead, with a link()? Then the immediate callback below
+    //REVIEW: can be removed. e.g. `box.quantityProperty.link( quantity => { show3dButton.visible = quantity > 0; } );`
+    //REVIEW: ALSO I believe multiple CollectionBoxNodes will not be created and disposed while one CollectionBox
+    //REVIEW: survives, but please document this if it's the case (otherwise we'll be leaking memory by not removing
+    //REVIEW: this listener).
+    const update3dVisibility = () => {
+      show3dButton.visible = box.quantityProperty.value > 0;
+    };
+    box.addedMoleculeEmitter.addListener( update3dVisibility );
+    box.removedMoleculeEmitter.addListener( update3dVisibility );
+    update3dVisibility();
+    this.blackBox.addChild( show3dButton );
     this.boxNode.addChild( this.blackBox );
 
-    // Cue that tells the user where to drop the molecule.
-    //REVIEW: type/visibility docs
+    // @private {ArrowNode}Cue that tells the user where to drop the molecule.
     this.cueNode = new ArrowNode( 10, 0, 34, 0, {
       fill: 'blue',
       stroke: 'black',
@@ -124,9 +117,7 @@ class CollectionBoxNode extends VBox {
       centerY: this.blackBox.centerY,
       tailWidth: 8,
       headWidth: 14,
-      pickable: false,
-      //REVIEW: we set this below in the very next statement. Can we remove this following line and just have the link?
-      visible: box.cueVisibilityProperty.value
+      pickable: false
     } );
     //REVIEW: Another listener where we should document that the box has a similar (the same?) lifetime as the node,
     //REVIEW: or this would be a potential memory leak.
@@ -183,7 +174,7 @@ class CollectionBoxNode extends VBox {
    * @public
    */
   updateLocation() {
-    this.locationUpdateObserver();
+    this.box.dropBoundsProperty.set( this.toModelBounds( this.blackBox ) );
   }
 
   /**

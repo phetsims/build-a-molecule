@@ -191,6 +191,19 @@ class KitCollection {
     this.hasBlinkedOnce = false;
     this.allCollectionBoxesFilledProperty.reset();
   }
+
+  /**
+   * Resest only the kits and boxes
+   * @public
+   */
+  resetKitsAndBoxes() {
+    this.kits.forEach( kit => {
+      kit.reset();
+    } );
+    this.collectionBoxes.forEach( box => {
+      box.reset();
+    } );
+  }
 }
 
 buildAMolecule.register( 'KitCollection', KitCollection );

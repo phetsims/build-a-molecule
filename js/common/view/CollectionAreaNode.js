@@ -7,7 +7,6 @@
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 
-import Shape from '../../../../kite/js/Shape.js';
 import RefreshButton from '../../../../scenery-phet/js/buttons/RefreshButton.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import VBox from '../../../../scenery/js/nodes/VBox.js';
@@ -28,8 +27,7 @@ class CollectionAreaNode extends Node {
   constructor( collection, isSingleCollectionMode, toModelBounds, showDialogCallback, updateRefillButton ) {
     super();
 
-    // Array for the black box for its text
-    //REVIEW: type/visibility docs
+    // @private {Array.<SingleCollectionBoxNode|MultipleCollectionBoxNode>} Array for the black box for its text
     this.collectionBoxNodes = [];
 
     // Container for collection boxes and reset collection button.
@@ -47,14 +45,7 @@ class CollectionAreaNode extends Node {
     // Reset collection button
     const resetCollectionButton = new RefreshButton( {
       listener() {
-        //REVIEW: A lot of this looks like model logic, can we move the body of this listener to KitCollection as a method?
-        // when clicked, reset the kits and empty collection boxes
-        collection.kits.forEach( kit => {
-          kit.reset();
-        } );
-        collection.collectionBoxes.forEach( box => {
-          box.reset();
-        } );
+        collection.resetKitsAndBoxes();
         updateRefillButton();
       },
       iconScale: 0.5,
@@ -63,27 +54,12 @@ class CollectionAreaNode extends Node {
       baseColor: Color.ORANGE,
       soundPlayer: Playable.NO_SOUND
     } );
-    //REVIEW: touchArea accepts {Bounds2}, don't need Shape.bounds wrapping
-    resetCollectionButton.touchArea = Shape.bounds( resetCollectionButton.bounds.dilated( 7 ) );
+    resetCollectionButton.touchArea = resetCollectionButton.bounds.dilated( 7 );
 
     // When any collection box quantity changes, update whether it is enabled
-    //REVIEW: We don't need a separate callback for each box, and in fact the inner "box" is shadowing the outer "box"
-    //REVIEW: reference because of scoping rules. I'd define `const updateEnabled = () => { ... }` or something
-    //REVIEW: with the inner link closure, and then link it to each box, e.g.:
-    //REVIEW:   const updateEnabled = () => { resetCollectionButton.enabled = _.some( collection.collectionBoxes, box => box.quantityProperty.value ); };
-    //REVIEW:   collection.collectionBoxes.forEach( box => box.quantityProperty.link( updateEnabled ) );
-    //REVIEW: (or formatting for readability, that's a bit condensed)
-    collection.collectionBoxes.forEach( box => {
-      box.quantityProperty.link( () => {
-        let enabled = false;
-        collection.collectionBoxes.forEach( box => {
-          if ( box.quantityProperty.value > 0 ) {
-            enabled = true;
-          }
-        } );
-        resetCollectionButton.enabled = enabled;
-      } );
-    } );
+    const updateEnabled = () => { resetCollectionButton.enabled = _.some( collection.collectionBoxes, box => box.quantityProperty.value ); };
+    collection.collectionBoxes.forEach( box => box.quantityProperty.link( updateEnabled ) );
+
     allCollectionItemsVBox.addChild( resetCollectionButton );
   }
 

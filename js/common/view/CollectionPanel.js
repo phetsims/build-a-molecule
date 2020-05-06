@@ -44,7 +44,7 @@ class CollectionPanel extends Panel {
     const layoutNode = new VBox( { spacing: 10 } );
     super( layoutNode, options );
 
-    // @private {Vbox}
+    // @private {VBox}
     this.layoutNode = layoutNode;
 
     // @private {Node}
