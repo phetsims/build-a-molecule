@@ -50,6 +50,7 @@ class KitNode extends Node {
     // different layout.
     kit.buckets.forEach( bucket => {
       const bucketFront = new BucketFront( bucket, BAMConstants.MODEL_VIEW_TRANSFORM, {
+        //REVIEW: I can't see where this labelFont option is used? Can you find the API point?
         labelFont: new PhetFont( {
           weight: 'bold',
           size: 18

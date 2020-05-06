@@ -54,6 +54,7 @@ class KitPanel extends Node {
     this.kitCarousel = new Carousel( kitNodes, {
       fill: BAMConstants.KIT_BACKGROUND,
       stroke: BAMConstants.KIT_BORDER,
+      //REVIEW: I don't see xMargin in any doc for Carousel, what is the option doing here?
       xMargin: 10,
       itemsPerPage: 1,
       animationEnabled: false,
