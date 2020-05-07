@@ -23,7 +23,7 @@ class PlaygroundScreen extends BAMScreen {
       backgroundColorProperty: new Property( BAMConstants.PLAY_AREA_BACKGROUND_COLOR ),
       homeScreenIcon: BAMIconFactory.createPlaygroundScreen()
     };
-    super(
+    super( //REVIEW: Prefer non-block arrow functions here, e.g. () => new PlaygroundModel(),...
       () => {
         return new PlaygroundModel();
       },

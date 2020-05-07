@@ -36,7 +36,7 @@ class ShowMolecule3DButtonNode extends RectangularPushButton {
       xMargin: 3,
       yMargin: 3,
       cursor: 'pointer',
-      maxWidth: BAMConstants.TEXT_MAX_WIDTH / 4,
+      maxWidth: BAMConstants.TEXT_MAX_WIDTH / 4, //REVIEW: Let's put the maxWidth on the text instead, otherwise the button can get really thin
       soundPlayer: Playable.NO_SOUND
     }, options ) );
 

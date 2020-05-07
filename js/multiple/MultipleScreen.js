@@ -23,7 +23,7 @@ class MultipleScreen extends BAMScreen {
       backgroundColorProperty: new Property( BAMConstants.PLAY_AREA_BACKGROUND_COLOR ),
       homeScreenIcon: BAMIconFactory.createMultipleScreen()
     };
-    super(
+    super( //REVIEW: Prefer non-block arrow functions here, e.g. () => new MultipleModel(),...
       () => {
         return new MultipleModel();
       },

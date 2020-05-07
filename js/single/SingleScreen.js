@@ -23,7 +23,7 @@ class SingleScreen extends BAMScreen {
       backgroundColorProperty: new Property( BAMConstants.PLAY_AREA_BACKGROUND_COLOR ),
       homeScreenIcon: BAMIconFactory.createSingleScreen()
     };
-    super(
+    super( //REVIEW: Prefer non-block arrow functions here, e.g. () => new SingleModel(),...
       () => {
         return new SingleModel();
       },
