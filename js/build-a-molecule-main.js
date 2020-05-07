@@ -7,7 +7,7 @@
  */
 
 import Sim from '../../joist/js/Sim.js';
-import SimLauncher from '../../joist/js/SimLauncher.js';
+import simLauncher from '../../joist/js/simLauncher.js';
 import buildAMoleculeStrings from './buildAMoleculeStrings.js';
 import MultipleScreen from './multiple/MultipleScreen.js';
 import PlaygroundScreen from './playground/PlaygroundScreen.js';
@@ -26,7 +26,7 @@ const simOptions = {
 };
 
 // If the flag is set on window, don't launch the sim
-SimLauncher.launch( () => {
+simLauncher.launch( () => {
 
   // Create and start the sim
   new Sim( buildAMoleculeTitleString, [
