@@ -2,7 +2,7 @@
 import buildAMolecule from './buildAMolecule.js';
 import buildAMoleculeStrings from './buildAMoleculeStrings.js';
 
-const elementMap = {
+const Strings = {
   'H': buildAMoleculeStrings.hydrogen,
   'O': buildAMoleculeStrings.oxygen,
   'C': buildAMoleculeStrings.carbon,
@@ -15,12 +15,6 @@ const elementMap = {
   'P': buildAMoleculeStrings.phosphorus,
   'I': buildAMoleculeStrings.iodine,
   'Br': buildAMoleculeStrings.bromine
-};
-// REVIEW: We can include the getAtomName definition in this object (and move the definition of this down)
-const Strings = {};
-//REVIEW: Also JSDoc this if we keep it
-Strings.getAtomName = element => {
-  return elementMap[ element.symbol ];
 };
 
 buildAMolecule.register( 'Strings', Strings );

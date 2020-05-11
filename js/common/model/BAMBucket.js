@@ -33,7 +33,7 @@ class BAMBucket extends SphereBucket {
       size: size,
       sphereRadius: element.covalentRadius,
       baseColor: element.color,
-      captionText: BAMStrings.getAtomName( element ),
+      captionText: BAMStrings[ element ],
       captionColor: AtomNode.getTextColor( new Color( element.color ) ),
       verticalParticleOffset: -30 + element.covalentRadius / 2
     } );
