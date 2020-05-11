@@ -11,16 +11,15 @@
 import timer from '../../../../axon/js/timer.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
-import Image from '../../../../scenery/js/nodes/Image.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
 import VBox from '../../../../scenery/js/nodes/VBox.js';
 import buildAMolecule from '../../buildAMolecule.js';
 import BAMConstants from '../BAMConstants.js';
 import MoleculeList from '../model/MoleculeList.js';
-import Molecule3DNode from './view3d/Molecule3DNode.js';
 import ShowMolecule3DButtonNode from './view3d/ShowMolecule3DButtonNode.js';
 import Color from '../../../../scenery/js/util/Color.js';
+import BAMIconFactory from './BAMIconFactory.js';
 
 // constants
 const BLACK_BOX_PADDING = 7;
@@ -367,21 +366,20 @@ class CollectionBoxNode extends VBox {
    * @returns {Node}
    */
   static lookupThumbnail( completeMolecule, moleculeIdThumbnailMap ) {
+    const dimensionLength = 50;
     if ( !moleculeIdThumbnailMap[ completeMolecule.moleculeId ] ) {
-      //REVIEW: A lot of this code looks duplicated with many usages in BAMIconFactory, can we factor out the creation of
-      //REVIEW: the moleculeNode, transformMatrix reference, optional transform, the draw, and grabbing the URL out?
-      const moleculeNode = new Molecule3DNode( completeMolecule, new Bounds2( 0, 0, 50, 50 ), false );
-      const transformMatrix = Molecule3DNode.initialTransforms[ completeMolecule.getGeneralFormula() ];
-      if ( transformMatrix ) {
-        moleculeNode.transformMolecule( transformMatrix );
-      }
-      moleculeNode.draw();
-      moleculeIdThumbnailMap[ completeMolecule.moleculeId ] = new Image( moleculeNode.canvas.toDataURL() );
+      moleculeIdThumbnailMap[ completeMolecule.moleculeId ] = BAMIconFactory.createIconImage(
+        completeMolecule,
+        dimensionLength,
+        dimensionLength,
+        1,
+        true
+      );
     }
 
     // wrap the returned image in an extra node so we can transform them independently, and that takes up the proper amount of space
     const node = moleculeIdThumbnailMap[ completeMolecule.moleculeId ];
-    return new Rectangle( 0, 0, 50, 50, { children: [ node ] } );
+    return new Rectangle( 0, 0, dimensionLength, dimensionLength, { children: [ node ] } );
   }
 
   /**

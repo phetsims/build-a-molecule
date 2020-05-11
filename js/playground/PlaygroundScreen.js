@@ -21,7 +21,7 @@ class PlaygroundScreen extends BAMScreen {
     const options = {
       name: buildAMoleculeStrings.title.playground,
       backgroundColorProperty: new Property( BAMConstants.PLAY_AREA_BACKGROUND_COLOR ),
-      homeScreenIcon: BAMIconFactory.createPlaygroundScreen()
+      homeScreenIcon: BAMIconFactory.createPlaygroundScreenIcon()
     };
     super(
       () => new PlaygroundModel(),

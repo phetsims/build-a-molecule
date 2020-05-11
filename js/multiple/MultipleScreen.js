@@ -21,7 +21,7 @@ class MultipleScreen extends BAMScreen {
     const options = {
       name: buildAMoleculeStrings.title.multiple,
       backgroundColorProperty: new Property( BAMConstants.PLAY_AREA_BACKGROUND_COLOR ),
-      homeScreenIcon: BAMIconFactory.createMultipleScreen()
+      homeScreenIcon: BAMIconFactory.createMultipleScreenIcon()
     };
     super(
       () => new MultipleModel(),

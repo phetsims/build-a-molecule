@@ -21,7 +21,7 @@ class SingleScreen extends BAMScreen {
     const options = {
       name: buildAMoleculeStrings.title.single,
       backgroundColorProperty: new Property( BAMConstants.PLAY_AREA_BACKGROUND_COLOR ),
-      homeScreenIcon: BAMIconFactory.createSingleScreen()
+      homeScreenIcon: BAMIconFactory.createSingleScreenIcon()
     };
     super(
       () => new SingleModel(),
