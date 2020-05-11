@@ -11,14 +11,21 @@ import Vector2 from '../../../../dot/js/Vector2.js';
 import Enumeration from '../../../../phet-core/js/Enumeration.js';
 import buildAMolecule from '../../buildAMolecule.js';
 
+// constants
+const DirectionOrientation = Enumeration.byKeys( [ 'NORTH', 'EAST', 'SOUTH', 'WEST' ] );
+
 class DirectionValue {
   /**
    * @param {Vector2} vector
+   * @param {string} id
    */
-  constructor( vector ) {
+  constructor( vector, id ) {
 
     // @public {Vector2}
     this.vector = vector;
+
+    // @public {number}
+    this.id = id;
 
     // @public {DirectionValue}
     this.opposite = null;
@@ -26,10 +33,10 @@ class DirectionValue {
 }
 
 // Declare cardinal direction values
-const NORTH = new DirectionValue( new Vector2( 0, 1 ) );
-const SOUTH = new DirectionValue( new Vector2( 0, -1 ) );
-const EAST = new DirectionValue( new Vector2( 1, 0 ) );
-const WEST = new DirectionValue( new Vector2( -1, 0 ) );
+const NORTH = new DirectionValue( new Vector2( 0, 1 ), DirectionOrientation.NORTH );
+const SOUTH = new DirectionValue( new Vector2( 0, -1 ), DirectionOrientation.SOUTH );
+const EAST = new DirectionValue( new Vector2( 1, 0 ), DirectionOrientation.EAST );
+const WEST = new DirectionValue( new Vector2( -1, 0 ), DirectionOrientation.WEST );
 
 // Declare opposites
 NORTH.opposite = SOUTH;
