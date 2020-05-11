@@ -8,7 +8,6 @@
  */
 
 import platform from '../../../../phet-core/js/platform.js';
-import ButtonListener from '../../../../scenery/js/input/ButtonListener.js';
 import Circle from '../../../../scenery/js/nodes/Circle.js';
 import Line from '../../../../scenery/js/nodes/Line.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
@@ -23,6 +22,7 @@ import scissorsImage from '../../../images/scissors_png.js';
 import buildAMolecule from '../../buildAMolecule.js';
 import BAMConstants from '../BAMConstants.js';
 import Direction from '../model/Direction.js';
+import FireListener from '../../../../scenery/js/listeners/FireListener.js';
 
 //REVIEW: Imports don't match up with the image files, I would expect to see:
 //REVIEW: scissorsClosedUpImage, scissorsClosedUpImage, scissorsClosedImage, scissorsClosedImage, scissorsUpImage, scissorsUpImage, scissorsImage
@@ -127,9 +127,9 @@ class MoleculeBondNode extends Node {
       visible: true
     } ) );
 
-    //REVIEW: ButtonListener is deprecated, can we use FireListener?
-    cutTargetNode.addInputListener( new ButtonListener( {
-      down() {
+    cutTargetNode.addInputListener( new FireListener( {
+      fireOnDown: true,
+      fire() {
         cutTargetNode.cursor = closedCursor;
         kit.breakBond( bond.a, bond.b );
       }
