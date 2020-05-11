@@ -11,7 +11,6 @@ import BooleanProperty from '../../../../../axon/js/BooleanProperty.js';
 import Bounds3 from '../../../../../dot/js/Bounds3.js';
 import Matrix3 from '../../../../../dot/js/Matrix3.js';
 import Quaternion from '../../../../../dot/js/Quaternion.js';
-import Vector2 from '../../../../../dot/js/Vector2.js';
 import Vector3 from '../../../../../dot/js/Vector3.js';
 import Arc from '../../../../../kite/js/segments/Arc.js';
 import EllipticalArc from '../../../../../kite/js/segments/EllipticalArc.js';
@@ -19,6 +18,7 @@ import DOM from '../../../../../scenery/js/nodes/DOM.js';
 import Color from '../../../../../scenery/js/util/Color.js';
 import Utils from '../../../../../scenery/js/util/Utils.js';
 import buildAMolecule from '../../../buildAMolecule.js';
+import Vector2 from '../../../../../dot/js/Vector2.js';
 
 // constants
 // debug flag, specifies whether master transforms are tracked and printed to determine "pretty" setup transformations
@@ -142,63 +142,58 @@ class Molecule3DNode extends DOM {
    * @param {number} theta
    *
    * @private
-   * @returns {*}
+   * @returns {Object.<number,number>}
    */
   ellipticalArcCut( ra, rb, d, theta ) {
     if ( theta > Math.PI / 2 ) {
       // other one is in front, bail!
     }
 
-    // 2d circle-circle intersection point (ix,iy)
-    const ix = ( d * d + ra * ra - rb * rb ) / ( 2 * d );
-    const ixnorm = ix * ix / ( ra * ra );
+    // 2d circle-circle intersection point (interSectionPointX,interSectionPointY)
+    const interSectionPointX = ( d * d + ra * ra - rb * rb ) / ( 2 * d );
+    const ixnorm = interSectionPointX * interSectionPointX / ( ra * ra );
     if ( ixnorm > 1 ) {
       // one contains the other
       return null;
     }
-    const iy = ra * Math.sqrt( 1 - ixnorm );
+    const interSectionPointY = ra * Math.sqrt( 1 - ixnorm );
+    const interSectionPoint = new Vector2( interSectionPointX, interSectionPointY );
 
     // elliptical arc center
-    const cx = ix * Math.sin( theta );
-    const cy = 0;
+    const arcCenterX = interSectionPoint.x * Math.sin( theta );
+    const arcCenterY = 0;
+    const arcCenter = new Vector2( arcCenterX, arcCenterY );
 
     // elliptical semi-minor/major axes
-    const rx = iy * Math.cos( theta );
-    const ry = iy;
+    const ellipticalSemiMinor = interSectionPoint.y * Math.cos( theta );
+    const ellipticalSemiMajor = interSectionPoint.y;
 
-    // yes, tan( ix/iy ) converts to this, don't let your instincts tell you otherwise
-    const cutoffTheta = Math.atan2( ix, iy );
+    // yes, tan( interSectionPointX/interSectionPointY ) converts to this, don't let your instincts tell you otherwise
+    const cutoffTheta = Math.atan2( interSectionPoint.x, interSectionPoint.y );
 
     if ( theta < cutoffTheta - 1e-7 ) {
       // no arc needed
       return null;
     }
 
-    const nx = ix / ( ra * Math.sin( theta ) );
+    const nx = interSectionPoint.x / ( ra * Math.sin( theta ) );
 
     // start angle for our elliptical arc (from our ra circle's parametric frame)
-    const psi = Math.acos( nx );
+    const startAngle = Math.acos( nx );
 
     // start angle for our elliptical arc (from the elliptical arc's parametric frame)
-    const alpha = Math.atan2( ra * Math.sqrt( 1 - nx * nx ) / ry, ( ra * nx - cx ) / rx );
+    const alpha = Math.atan2( ra * Math.sqrt( 1 - nx * nx ) / ellipticalSemiMajor, ( ra * nx - arcCenter.x ) / ellipticalSemiMinor );
 
-    assert && assert( isFinite( rx ) );
-
-    //REVIEW: Maybe work this out with JO (Not the best example of documentation)
-    //REVIEW: JO: Looks like it's my fault! Usages somewhat give clues, can always doc in @returns with
-    //REVIEW: {ix:number, iy:number, ...}. Doesn't look performance-criticial anymore (just used for icon displays and
-    //REVIEW: things of that nature), so we could potentially properly type things, and switch things to Vector2?
-    //REVIEW: e.g. instead of ix/iy, it would be intersectionPoint:Vector2, etc.
+    assert && assert( isFinite( ellipticalSemiMinor ) );
     return {
-      ix: ix,
-      iy: iy,
-      cx: cx,
-      cy: cy,
-      rx: rx,
-      ry: ry,
-      nx: nx,
-      psi: psi,
-      alpha: alpha
+      interSectionPointX: interSectionPoint.x, // Vector2  intersectionPointX
+      interSectionPointY: interSectionPoint.y, // Vector2  intersectionPointY
+      arcCenterX: arcCenter.x, // Vector2  arcCenterX
+      arcCenterY: arcCenter.y, // Vector2  arcCenterY
+      ellipticalSemiMinor: ellipticalSemiMinor, // number  ellipticalSemiMinor
+      ellipticalSemiMajor: ellipticalSemiMajor, // number  ellipticalSemiMajor
+      startAngle: startAngle, // number startAngle
+      alpha: alpha // number
     };
   }
 
@@ -243,14 +238,14 @@ class Molecule3DNode extends DOM {
 
             // angle to center of ellipse
             const phi = Math.atan2( delta.y, delta.x );
-            const center = new Vector2( arcData.cx, arcData.cy ).rotated( phi );
+            const center = new Vector2( arcData.arcCenterX, arcData.arcCenterY ).rotated( phi );
             arcs.push( {
               center: center,
-              rx: arcData.rx,
-              ry: arcData.ry,
+              rx: arcData.ellipticalSemiMinor,
+              ry: arcData.ellipticalSemiMajor,
               rotation: phi,
-              circleStart: phi - arcData.psi,
-              circleEnd: phi + arcData.psi,
+              circleStart: phi - arcData.startAngle,
+              circleEnd: phi + arcData.startAngle,
               ellipseStart: -arcData.alpha,
               ellipseEnd: arcData.alpha
             } );

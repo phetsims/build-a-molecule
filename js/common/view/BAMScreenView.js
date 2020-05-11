@@ -11,7 +11,6 @@
 import Property from '../../../../axon/js/Property.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import ScreenView from '../../../../joist/js/ScreenView.js';
-import Shape from '../../../../kite/js/Shape.js';
 import ThreeUtils from '../../../../mobius/js/ThreeUtils.js';
 import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.js';
 import DragListener from '../../../../scenery/js/listeners/DragListener.js';
@@ -116,7 +115,6 @@ class BAMScreenView extends ScreenView {
     this.refillButton.touchArea = this.refillButton.selfBounds.union( this.refillButton.childBounds ).dilated( 10 );
 
     // @public {function} Refill button is enabled if atoms exists outside of the bucket
-    //REVIEW: if this is marked as public with JSDoc, we really should move it to a method
     this.updateRefillButton = () => {
       this.refillButton.enabled = !this.bamModel.currentCollectionProperty.value.currentKitProperty.value.allBucketsFilled();
     };
@@ -144,8 +142,7 @@ class BAMScreenView extends ScreenView {
       right: this.layoutBounds.right - BAMConstants.VIEW_PADDING / 2,
       bottom: kitPanel.bottom
     } );
-    //RREVIEW: touchArea accepts {Bounds2}, no need for Shape.bounds wrapping
-    this.resetAllButton.touchArea = Shape.bounds( this.resetAllButton.bounds.dilated( 7 ) );
+    this.resetAllButton.touchArea = this.resetAllButton.bounds.dilated( 7 );
     this.addChild( this.resetAllButton );
     this.resetAllButton.moveToBack();
     this.addChild( this.refillButton );

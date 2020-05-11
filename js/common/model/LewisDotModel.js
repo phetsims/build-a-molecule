@@ -40,7 +40,7 @@ class LewisDotModel {
     const dotAtom = this.getLewisDotAtom( atom );
 
     // disconnect all of its bonds
-    Direction.values.forEach( direction => {
+    Direction.VALUES.forEach( direction => {
       if ( dotAtom && dotAtom.hasConnection( direction ) ) {
         const otherDotAtom = dotAtom.getLewisDotAtom( direction );
         this.breakBond( dotAtom.atom, otherDotAtom.atom );
@@ -89,7 +89,7 @@ class LewisDotModel {
   getOpenDirections( atom ) {
     const result = [];
     const dotAtom = this.getLewisDotAtom( atom );
-    Direction.values.forEach( direction => {
+    Direction.VALUES.forEach( direction => {
       if ( dotAtom && !dotAtom.hasConnection( direction ) ) {
         result.push( direction );
       }
@@ -108,7 +108,7 @@ class LewisDotModel {
   getBondDirection( a, b ) {
     const dotA = this.getLewisDotAtom( a );
     for ( let i = 0; i < 4; i++ ) {
-      const direction = Direction.values[ i ];
+      const direction = Direction.VALUES[ i ];
       if ( dotA && dotA.hasConnection( direction ) && dotA.getLewisDotAtom( direction ).atom === b ) {
         return direction;
       }
@@ -188,7 +188,7 @@ class LewisDotModel {
 
     // check all directions so we can explore all other atoms that need to be mapped
     for ( let i = 0; i < 4; i++ ) {
-      const direction = Direction.values[ i ];
+      const direction = Direction.VALUES[ i ];
       if ( dotAtom && dotAtom.hasConnection( direction ) ) {
         const otherDot = dotAtom.getLewisDotAtom( direction );
 
@@ -230,7 +230,7 @@ class LewisDotAtom {
 
     // @private {Object.<DirectionID:null|LewisDotAtom>}
     this.connections = {};
-    Direction.values.forEach( direction => {
+    Direction.VALUES.forEach( direction => {
       this.connections[ direction.id ] = null; // nothing in this direction
     } );
   }

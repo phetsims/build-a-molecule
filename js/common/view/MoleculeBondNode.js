@@ -22,6 +22,7 @@ import cursorImage from '../../../images/scissors_cur.js';
 import scissorsImage from '../../../images/scissors_png.js';
 import buildAMolecule from '../../buildAMolecule.js';
 import BAMConstants from '../BAMConstants.js';
+import Direction from '../model/Direction.js';
 
 //REVIEW: Imports don't match up with the image files, I would expect to see:
 //REVIEW: scissorsClosedUpImage, scissorsClosedUpImage, scissorsClosedImage, scissorsClosedImage, scissorsUpImage, scissorsUpImage, scissorsImage
@@ -69,7 +70,7 @@ class MoleculeBondNode extends Node {
 
     // Use the lewis dot model to get our bond direction
     const bondDirection = kit.getBondDirection( this.a, this.b );
-    const isHorizontal = bondDirection.id.name === 'WEST' || bondDirection.id.name === 'EAST';
+    const isHorizontal = bondDirection === Direction.WEST || bondDirection === Direction.EAST;
 
     // Define images for opened and closed scissors
     let openFile = 'scissors';
