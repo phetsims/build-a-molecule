@@ -10,7 +10,6 @@
 import Shape from '../../../../kite/js/Shape.js';
 import BucketFront from '../../../../scenery-phet/js/bucket/BucketFront.js';
 import BucketHole from '../../../../scenery-phet/js/bucket/BucketHole.js';
-import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import DragListener from '../../../../scenery/js/listeners/DragListener.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import buildAMolecule from '../../buildAMolecule.js';
@@ -49,13 +48,7 @@ class KitNode extends Node {
     // Create a bucket based on a the kit's model bucket. This includes a front and back for the bucket contained in
     // different layout.
     kit.buckets.forEach( bucket => {
-      const bucketFront = new BucketFront( bucket, BAMConstants.MODEL_VIEW_TRANSFORM, {
-        //REVIEW: I can't see where this labelFont option is used? Can you find the API point?
-        labelFont: new PhetFont( {
-          weight: 'bold',
-          size: 18
-        } )
-      } );
+      const bucketFront = new BucketFront( bucket, BAMConstants.MODEL_VIEW_TRANSFORM );
       const bucketHole = new BucketHole( bucket, BAMConstants.MODEL_VIEW_TRANSFORM );
       // NOTE: we will use the Bucket's hole with an expanded touch area to trigger the "grab by touching the bucket" behavior
       bucketHole.touchArea = bucketHole.mouseArea = new Shape()

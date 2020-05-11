@@ -23,13 +23,9 @@ class MultipleScreen extends BAMScreen {
       backgroundColorProperty: new Property( BAMConstants.PLAY_AREA_BACKGROUND_COLOR ),
       homeScreenIcon: BAMIconFactory.createMultipleScreen()
     };
-    super( //REVIEW: Prefer non-block arrow functions here, e.g. () => new MultipleModel(),...
-      () => {
-        return new MultipleModel();
-      },
-      model => {
-        return new MoleculeCollectingScreenView( model, false );
-      },
+    super(
+      () => new MultipleModel(),
+      model => new MoleculeCollectingScreenView( model, false ),
       options );
   }
 }

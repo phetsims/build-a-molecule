@@ -11,21 +11,18 @@ import platform from '../../../../phet-core/js/platform.js';
 import Circle from '../../../../scenery/js/nodes/Circle.js';
 import Line from '../../../../scenery/js/nodes/Line.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
-import closedUpCursorImage from '../../../images/scissors-closed-up_cur.js';
-import closedUpImage from '../../../images/scissors-closed-up_png.js';
-import closedCursorImage from '../../../images/scissors-closed_cur.js';
-import closedImage from '../../../images/scissors-closed_png.js';
-import upCursorImage from '../../../images/scissors-up_cur.js';
-import upImage from '../../../images/scissors-up_png.js';
-import cursorImage from '../../../images/scissors_cur.js';
+import scissorsClosedUpCursorImage from '../../../images/scissors-closed-up_cur.js';
+import scissorsClosedUpImage from '../../../images/scissors-closed-up_png.js';
+import scissorsClosedCursorImage from '../../../images/scissors-closed_cur.js';
+import scissorsClosedImage from '../../../images/scissors-closed_png.js';
+import scissorsUpCursorImage from '../../../images/scissors-up_cur.js';
+import scissorsUpImage from '../../../images/scissors-up_png.js';
+import scissorsCursorImage from '../../../images/scissors_cur.js';
 import scissorsImage from '../../../images/scissors_png.js';
 import buildAMolecule from '../../buildAMolecule.js';
 import BAMConstants from '../BAMConstants.js';
 import Direction from '../model/Direction.js';
 import FireListener from '../../../../scenery/js/listeners/FireListener.js';
-
-//REVIEW: Imports don't match up with the image files, I would expect to see:
-//REVIEW: scissorsClosedUpImage, scissorsClosedUpImage, scissorsClosedImage, scissorsClosedImage, scissorsUpImage, scissorsUpImage, scissorsImage
 
 /* Notes on .cur file generation, all from the images directory, with "sudo apt-get install icoutils" for icotool:
  icotool -c -o scissors.ico scissors.png
@@ -41,13 +38,13 @@ import FireListener from '../../../../scenery/js/listeners/FireListener.js';
 
 const images = {
   'scissors.png': scissorsImage,
-  'scissors-closed.png': closedImage,
-  'scissors-up.png': upImage,
-  'scissors-closed-up.png': closedUpImage,
-  'scissors.cur': cursorImage,
-  'scissors-closed.cur': closedCursorImage,
-  'scissors-up.cur': upCursorImage,
-  'scissors-closed-up.cur': closedUpCursorImage
+  'scissors-closed.png': scissorsClosedImage,
+  'scissors-up.png': scissorsUpImage,
+  'scissors-closed-up.png': scissorsClosedUpImage,
+  'scissors.cur': scissorsCursorImage,
+  'scissors-closed.cur': scissorsClosedCursorImage,
+  'scissors-up.cur': scissorsUpCursorImage,
+  'scissors-closed-up.cur': scissorsClosedUpCursorImage
 };
 const bondRadius = 6; // "Radius" of the bond target that will break the bond
 
