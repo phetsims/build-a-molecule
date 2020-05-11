@@ -186,14 +186,13 @@ class Molecule3DNode extends DOM {
 
     assert && assert( isFinite( ellipticalSemiMinor ) );
     return {
-      interSectionPointX: interSectionPoint.x, // Vector2  intersectionPointX
-      interSectionPointY: interSectionPoint.y, // Vector2  intersectionPointY
-      arcCenterX: arcCenter.x, // Vector2  arcCenterX
-      arcCenterY: arcCenter.y, // Vector2  arcCenterY
-      ellipticalSemiMinor: ellipticalSemiMinor, // number  ellipticalSemiMinor
-      ellipticalSemiMajor: ellipticalSemiMajor, // number  ellipticalSemiMajor
-      startAngle: startAngle, // number startAngle
-      alpha: alpha // number
+      interSectionPointX: interSectionPoint.x,
+      arcCenterX: arcCenter.x,
+      arcCenterY: arcCenter.y,
+      ellipticalSemiMinor: ellipticalSemiMinor,
+      ellipticalSemiMajor: ellipticalSemiMajor,
+      startAngle: startAngle,
+      alpha: alpha
     };
   }
 
