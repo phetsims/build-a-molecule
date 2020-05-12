@@ -8,6 +8,7 @@
  */
 
 import platform from '../../../../phet-core/js/platform.js';
+import FireListener from '../../../../scenery/js/listeners/FireListener.js';
 import Circle from '../../../../scenery/js/nodes/Circle.js';
 import Line from '../../../../scenery/js/nodes/Line.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
@@ -22,7 +23,6 @@ import scissorsImage from '../../../images/scissors_png.js';
 import buildAMolecule from '../../buildAMolecule.js';
 import BAMConstants from '../BAMConstants.js';
 import Direction from '../model/Direction.js';
-import FireListener from '../../../../scenery/js/listeners/FireListener.js';
 
 /* Notes on .cur file generation, all from the images directory, with "sudo apt-get install icoutils" for icotool:
  icotool -c -o scissors.ico scissors.png

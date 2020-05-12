@@ -1,4 +1,5 @@
 // Copyright 2020, University of Colorado Boulder
+
 import buildAMolecule from './buildAMolecule.js';
 import buildAMoleculeStrings from './buildAMoleculeStrings.js';
 

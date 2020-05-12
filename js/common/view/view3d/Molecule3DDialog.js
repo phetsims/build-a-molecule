@@ -14,20 +14,20 @@ import Matrix3 from '../../../../../dot/js/Matrix3.js';
 import Vector3 from '../../../../../dot/js/Vector3.js';
 import ThreeNode from '../../../../../mobius/js/ThreeNode.js';
 import Enumeration from '../../../../../phet-core/js/Enumeration.js';
-import PlayPauseButton from '../../../../../scenery-phet/js/buttons/PlayPauseButton.js';
 import PhetFont from '../../../../../scenery-phet/js/PhetFont.js';
+import PlayPauseButton from '../../../../../scenery-phet/js/buttons/PlayPauseButton.js';
 import PressListener from '../../../../../scenery/js/listeners/PressListener.js';
 import Rectangle from '../../../../../scenery/js/nodes/Rectangle.js';
 import RichText from '../../../../../scenery/js/nodes/RichText.js';
 import Text from '../../../../../scenery/js/nodes/Text.js';
 import VBox from '../../../../../scenery/js/nodes/VBox.js';
 import Color from '../../../../../scenery/js/util/Color.js';
-import RadioButtonGroup from '../../../../../sun/js/buttons/RadioButtonGroup.js';
 import Dialog from '../../../../../sun/js/Dialog.js';
+import RadioButtonGroup from '../../../../../sun/js/buttons/RadioButtonGroup.js';
 import Playable from '../../../../../tambo/js/Playable.js';
 import buildAMolecule from '../../../buildAMolecule.js';
-import MoleculeList from '../../model/MoleculeList.js';
 import BAMConstants from '../../BAMConstants.js';
+import MoleculeList from '../../model/MoleculeList.js';
 
 // constants
 const ViewStyle = Enumeration.byKeys( [ 'SPACE_FILL', 'BALL_AND_STICK' ] );

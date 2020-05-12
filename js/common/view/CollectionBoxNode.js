@@ -14,12 +14,12 @@ import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
 import VBox from '../../../../scenery/js/nodes/VBox.js';
+import Color from '../../../../scenery/js/util/Color.js';
 import buildAMolecule from '../../buildAMolecule.js';
 import BAMConstants from '../BAMConstants.js';
 import MoleculeList from '../model/MoleculeList.js';
-import ShowMolecule3DButtonNode from './view3d/ShowMolecule3DButtonNode.js';
-import Color from '../../../../scenery/js/util/Color.js';
 import BAMIconFactory from './BAMIconFactory.js';
+import ShowMolecule3DButtonNode from './view3d/ShowMolecule3DButtonNode.js';
 
 // constants
 const BLACK_BOX_PADDING = 7;

@@ -11,6 +11,7 @@ import BooleanProperty from '../../../../../axon/js/BooleanProperty.js';
 import Bounds3 from '../../../../../dot/js/Bounds3.js';
 import Matrix3 from '../../../../../dot/js/Matrix3.js';
 import Quaternion from '../../../../../dot/js/Quaternion.js';
+import Vector2 from '../../../../../dot/js/Vector2.js';
 import Vector3 from '../../../../../dot/js/Vector3.js';
 import Arc from '../../../../../kite/js/segments/Arc.js';
 import EllipticalArc from '../../../../../kite/js/segments/EllipticalArc.js';
@@ -18,7 +19,6 @@ import DOM from '../../../../../scenery/js/nodes/DOM.js';
 import Color from '../../../../../scenery/js/util/Color.js';
 import Utils from '../../../../../scenery/js/util/Utils.js';
 import buildAMolecule from '../../../buildAMolecule.js';
-import Vector2 from '../../../../../dot/js/Vector2.js';
 
 // constants
 // debug flag, specifies whether master transforms are tracked and printed to determine "pretty" setup transformations

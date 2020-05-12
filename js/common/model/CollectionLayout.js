@@ -7,9 +7,9 @@
  * @author Denzell Barnett (PhET Interactive Simulations)
  */
 
+import Bounds2 from '../../../../dot/js/Bounds2.js';
 import buildAMolecule from '../../buildAMolecule.js';
 import BAMConstants from '../BAMConstants.js';
-import Bounds2 from '../../../../dot/js/Bounds2.js';
 
 // constants
 const KIT_HEIGHT = 550;
