@@ -78,13 +78,13 @@ class CollectionBoxNode extends VBox {
       lineWidth: 4
     } );
 
-    //REVIEW: What happened with the indentation below? WebStorm should fix this presumably? HAS_3D removal refactoring?
     // Arrange button position for to trigger 3D representation
     const show3dButton = new ShowMolecule3DButtonNode( box.moleculeType, showDialogCallback );
     show3dButton.touchArea = show3dButton.bounds.dilated( 10 );
     show3dButton.right = this.blackBox.right - BLACK_BOX_PADDING;
     show3dButton.centerY = this.blackBox.centerY;
-    //REVIEW: type/visibility docs, and ideally HAS_3D is true so we declare it in one place?
+
+    // @private {number}
     this.button3dWidth = show3dButton.width;
     //REVIEW: Our listener cares about box.quantityProperty, but we're adding it to two other emitters.
     //REVIEW: Can we only listen to the box.quantityProperty instead, with a link()? Then the immediate callback below
