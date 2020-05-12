@@ -13,8 +13,8 @@ import Vector2 from '../../../../dot/js/Vector2.js';
 import Vector2Property from '../../../../dot/js/Vector2Property.js';
 import SphereBucket from '../../../../phetcommon/js/model/SphereBucket.js';
 import Color from '../../../../scenery/js/util/Color.js';
-import buildAMolecule from '../../buildAMolecule.js';
 import BAMStrings from '../../BAMStrings.js';
+import buildAMolecule from '../../buildAMolecule.js';
 import AtomNode from '../view/AtomNode.js';
 import Atom2 from './Atom2.js';
 

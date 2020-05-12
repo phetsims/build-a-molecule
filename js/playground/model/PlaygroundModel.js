@@ -6,14 +6,14 @@
  * @author Denzell Barnett (PhET Interactive Simulations)
  */
 
-import BAMModel from '../../common/model/BAMModel.js';
-import buildAMolecule from '../../buildAMolecule.js';
-import Kit from '../../common/model/Kit.js';
-import KitCollection from '../../common/model/KitCollection.js';
-import BAMBucket from '../../common/model/BAMBucket.js';
-import CollectionLayout from '../../common/model/CollectionLayout.js';
 import Dimension2 from '../../../../dot/js/Dimension2.js';
 import Element from '../../../../nitroglycerin/js/Element.js';
+import buildAMolecule from '../../buildAMolecule.js';
+import BAMBucket from '../../common/model/BAMBucket.js';
+import BAMModel from '../../common/model/BAMModel.js';
+import CollectionLayout from '../../common/model/CollectionLayout.js';
+import Kit from '../../common/model/Kit.js';
+import KitCollection from '../../common/model/KitCollection.js';
 
 // constants
 const BUCKET_DIMENSIONS = new Dimension2( 670, 200 );

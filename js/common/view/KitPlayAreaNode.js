@@ -48,6 +48,7 @@ class KitPlayAreaNode extends Node {
     // have visible atoms.
     this.kitsProperty.link( kits => {
       kits.forEach( kit => {
+        //REVIEW: Presumably mention that the kit is no longer referenced, so we don't have to unlink this? Is that true?
         kit.activeProperty.link( () => {
           this.atomLayer.children.forEach( atomNode => {
 

@@ -21,8 +21,8 @@ import KitCollectionNode from './KitCollectionNode.js';
 import KitPlayAreaNode from './KitPlayAreaNode.js';
 import MoleculeControlsHBox from './MoleculeControlsHBox.js';
 import RefillButton from './RefillButton.js';
-import Molecule3DDialog from './view3d/Molecule3DDialog.js';
 import WarningDialog from './WarningDialog.js';
+import Molecule3DDialog from './view3d/Molecule3DDialog.js';
 
 class BAMScreenView extends ScreenView {
   /**
@@ -38,6 +38,7 @@ class BAMScreenView extends ScreenView {
 
     // @private {Object.<moleculeId:number,MoleculeControlsHBox>}
     this.metadataMap = {};
+    //REVIEW: I don't see this metadataMap being used, only the this.kitPlayAreaNode.metadataMap. Check for usages and/or delete?
 
     // @private {Object.<kitID:number,function>}
     this.addedEmitterListeners = {};

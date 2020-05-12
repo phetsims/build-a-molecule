@@ -9,15 +9,15 @@
 
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import Emitter from '../../../../axon/js/Emitter.js';
+import Property from '../../../../axon/js/Property.js';
+import Dimension2 from '../../../../dot/js/Dimension2.js';
+import Element from '../../../../nitroglycerin/js/Element.js';
 import buildAMolecule from '../../buildAMolecule.js';
-import KitCollection from './KitCollection.js';
 import BAMBucket from '../model/BAMBucket.js';
 import CollectionBox from '../model/CollectionBox.js';
 import Kit from '../model/Kit.js';
 import MoleculeList from '../model/MoleculeList.js';
-import Element from '../../../../nitroglycerin/js/Element.js';
-import Dimension2 from '../../../../dot/js/Dimension2.js';
-import Property from '../../../../axon/js/Property.js';
+import KitCollection from './KitCollection.js';
 
 class BAMModel {
 

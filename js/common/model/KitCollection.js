@@ -10,8 +10,8 @@
 
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import Property from '../../../../axon/js/Property.js';
-import buildAMolecule from '../../buildAMolecule.js';
 import merge from '../../../../phet-core/js/merge.js';
+import buildAMolecule from '../../buildAMolecule.js';
 import BAMQueryParameters from '../BAMQueryParameters.js';
 
 let currentId = 0;

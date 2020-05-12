@@ -8,6 +8,7 @@
  */
 
 import platform from '../../../../phet-core/js/platform.js';
+import FireListener from '../../../../scenery/js/listeners/FireListener.js';
 import Circle from '../../../../scenery/js/nodes/Circle.js';
 import Line from '../../../../scenery/js/nodes/Line.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
@@ -22,7 +23,6 @@ import scissorsImage from '../../../images/scissors_png.js';
 import buildAMolecule from '../../buildAMolecule.js';
 import BAMConstants from '../BAMConstants.js';
 import Direction from '../model/Direction.js';
-import FireListener from '../../../../scenery/js/listeners/FireListener.js';
 
 /* Notes on .cur file generation, all from the images directory, with "sudo apt-get install icoutils" for icotool:
  icotool -c -o scissors.ico scissors.png
@@ -87,6 +87,7 @@ class MoleculeBondNode extends Node {
     let openCursor;
     let closedCursor;
     if ( platform.ie ) {
+      //REVIEW: We shouldn't reference external URLs here! Do the cursors work on IE?
       openCursor = 'url(' + scissorsOpen.src + '), url(http://phetsims.github.io/build-a-molecule/images/' + openFile + '), ' + backup;
       closedCursor = 'url(' + scissorsClosed.src + '), url(http://phetsims.github.io/build-a-molecule/images/' + closedFile + '), ' + backup;
     }
@@ -113,14 +114,14 @@ class MoleculeBondNode extends Node {
     cutTargetNode.addChild( new Circle( bondRadius, {
       fill: 'rgb(253,225,49)',
       stroke: 'rgb(253,225,49)',
-      cursor: !(platform.ie ) ? openCursor : 'pointer',
+      cursor: !( platform.ie ) ? openCursor : 'pointer',
       visible: true
     } ) );
 
     // Add outer circle
     cutTargetNode.addChild( new Circle( bondRadius * 1.5, {
       fill: 'rgba(253,225,49,0.4)',
-      cursor: !(platform.ie ) ? openCursor : 'pointer',
+      cursor: !( platform.ie ) ? openCursor : 'pointer',
       visible: true
     } ) );
 

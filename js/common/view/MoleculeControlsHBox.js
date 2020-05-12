@@ -37,6 +37,9 @@ class MoleculeControlsHBox extends HBox {
 
     // @public {Molecule}
     this.molecule = molecule;
+
+    //REVIEW: Instead of this check AND the check for our listener in disposal, can we just not create this if this
+    //REVIEW: condition is not satisfied? (e.g. from BAMScreenView)
     if ( molecule.atoms.length < 2 ) {
 
       // we don't need anything at all if it is not a "molecule"

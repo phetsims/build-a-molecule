@@ -2,6 +2,7 @@
 
 /**
  * Contains multiple buckets of different types of atoms
+ * REVIEW: Doc should mention more than just the buckets here
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  * @author Denzell Barnett (PhET Interactive Simulations)
@@ -56,11 +57,12 @@ class Kit {
     // @public {Array.<Atom2>} atoms in the collection box
     this.atomsInCollectionBox = [];
 
-    // @public {Array.<Molecule>} molecules  in the play area
+    // @public {Array.<Molecule>} molecules in the play area
     this.molecules = [];
 
     // @public {Object.<moleculeId:number, CollectionBox>} molecule structures that were put into the collection box.
     // Kept for now, since modifying the reset behavior will be much easier if we retain this
+    //REVIEW: I only see setters here, and don't see anything accessed. Seems like this can safely be removed?
     this.removedMolecules = {};
 
     // @public {LewisDotModel|null} Created later, lewis-dot connections between atoms on the play area
