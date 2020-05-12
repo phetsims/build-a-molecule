@@ -12,7 +12,7 @@ import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import Property from '../../../../axon/js/Property.js';
 import buildAMolecule from '../../buildAMolecule.js';
 import merge from '../../../../phet-core/js/merge.js';
-import BuildAMoleculeQueryParameters from '../BuildAMoleculeQueryParameters.js';
+import BAMQueryParameters from '../BAMQueryParameters.js';
 
 let currentId = 0;
 
@@ -172,7 +172,7 @@ class KitCollection {
       } );
 
       // Used for debugging.
-      if ( BuildAMoleculeQueryParameters.easyMode ) {
+      if ( BAMQueryParameters.easyMode ) {
         this.allCollectionBoxesFilledProperty.value = true;
       }
       else {

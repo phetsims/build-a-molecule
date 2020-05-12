@@ -16,7 +16,7 @@ import Atom from '../../../../nitroglycerin/js/Atom.js';
 import ChemUtils from '../../../../nitroglycerin/js/ChemUtils.js';
 import Element from '../../../../nitroglycerin/js/Element.js';
 import buildAMolecule from '../../buildAMolecule.js';
-import BuildAMoleculeQueryParameters from '../BuildAMoleculeQueryParameters.js';
+import BAMQueryParameters from '../BAMQueryParameters.js';
 import Bond from './Bond.js';
 import ElementHistogram from './ElementHistogram.js';
 
@@ -618,7 +618,7 @@ MoleculeStructure.getMoleculesFromBrokenBond = ( structure, bond, molA, molB ) =
     }
   } );
 
-  if ( BuildAMoleculeQueryParameters.logData ) {
+  if ( BAMQueryParameters.logData ) {
     console.log( 'splitting ' + structure.toSerial() + ' into:' );
     console.log( molA.toSerial() );
     console.log( molB.toSerial() );

@@ -16,7 +16,7 @@ import Vector2 from '../../../../dot/js/Vector2.js';
 import arrayRemove from '../../../../phet-core/js/arrayRemove.js';
 import cleanArray from '../../../../phet-core/js/cleanArray.js';
 import buildAMolecule from '../../buildAMolecule.js';
-import BuildAMoleculeQueryParameters from '../BuildAMoleculeQueryParameters.js';
+import BAMQueryParameters from '../BAMQueryParameters.js';
 import LewisDotModel from './LewisDotModel.js';
 import Molecule from './Molecule.js';
 import MoleculeList from './MoleculeList.js';
@@ -239,7 +239,7 @@ class Kit {
    * @public
    */
   moleculePutInCollectionBox( molecule, box ) {
-    if ( BuildAMoleculeQueryParameters.logData ) {
+    if ( BAMQueryParameters.logData ) {
       console.log( 'You have collected: ' + box.moleculeType.commonName );
     }
     this.removeMolecule( molecule );
@@ -561,7 +561,7 @@ class Kit {
      * bonding diagnostics and sanity checks
      *----------------------------------------------------------------------------*/
 
-    if ( BuildAMoleculeQueryParameters.logData ) {
+    if ( BAMQueryParameters.logData ) {
       const serializedForm = this.getMolecule( a ).toSerial2();
       console.log( 'created structure: ' + serializedForm );
     }

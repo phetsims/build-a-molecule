@@ -8,7 +8,7 @@
 
 import buildAMolecule from '../buildAMolecule.js';
 
-const BuildAMoleculeQueryParameters = QueryStringMachine.getAll( {
+const BAMQueryParameters = QueryStringMachine.getAll( {
 
   // Triggers a successfully completed collection. The user just needs to fill a single box to go to next collection.
   easyMode: { type: 'flag', private: true },
@@ -17,5 +17,5 @@ const BuildAMoleculeQueryParameters = QueryStringMachine.getAll( {
   logData: { type: 'flag' }
 } );
 
-buildAMolecule.register( 'BuildAMoleculeQueryParameters', BuildAMoleculeQueryParameters );
-export default BuildAMoleculeQueryParameters;
+buildAMolecule.register( 'BAMQueryParameters', BAMQueryParameters );
+export default BAMQueryParameters;
