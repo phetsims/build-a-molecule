@@ -38,6 +38,7 @@ class BAMScreenView extends ScreenView {
 
     // @private {Object.<moleculeId:number,MoleculeControlsHBox>}
     this.metadataMap = {};
+    //REVIEW: I don't see this metadataMap being used, only the this.kitPlayAreaNode.metadataMap. Check for usages and/or delete?
 
     // @private {Object.<kitID:number,function>}
     this.addedEmitterListeners = {};

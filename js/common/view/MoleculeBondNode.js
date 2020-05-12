@@ -87,6 +87,7 @@ class MoleculeBondNode extends Node {
     let openCursor;
     let closedCursor;
     if ( platform.ie ) {
+      //REVIEW: We shouldn't reference external URLs here! Do the cursors work on IE?
       openCursor = 'url(' + scissorsOpen.src + '), url(http://phetsims.github.io/build-a-molecule/images/' + openFile + '), ' + backup;
       closedCursor = 'url(' + scissorsClosed.src + '), url(http://phetsims.github.io/build-a-molecule/images/' + closedFile + '), ' + backup;
     }
@@ -113,14 +114,14 @@ class MoleculeBondNode extends Node {
     cutTargetNode.addChild( new Circle( bondRadius, {
       fill: 'rgb(253,225,49)',
       stroke: 'rgb(253,225,49)',
-      cursor: !(platform.ie ) ? openCursor : 'pointer',
+      cursor: !( platform.ie ) ? openCursor : 'pointer',
       visible: true
     } ) );
 
     // Add outer circle
     cutTargetNode.addChild( new Circle( bondRadius * 1.5, {
       fill: 'rgba(253,225,49,0.4)',
-      cursor: !(platform.ie ) ? openCursor : 'pointer',
+      cursor: !( platform.ie ) ? openCursor : 'pointer',
       visible: true
     } ) );
 
