@@ -108,8 +108,9 @@ class CollectionBox {
   removeMolecule( molecule ) {
     this.quantityProperty.value--;
 
-    //REVIEW: Is this because they are removed in order? Maybe we should remove the actual molecule instead?
-    this.molecules.shift();
+    _.remove( this.molecules, moleculeEntry => {
+      return moleculeEntry === molecule ? molecule : null;
+    } );
     this.removedMoleculeEmitter.emit( molecule );
   }
 
