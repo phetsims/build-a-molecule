@@ -574,7 +574,9 @@ MoleculeStructure.getMoleculesFromBrokenBond = ( structure, bond, molA, molB ) =
   const dirtyAtoms = [ bond.a ];
   while ( dirtyAtoms.length > 0 ) {
     const atom = dirtyAtoms.pop();
-    // dirtyAtoms.splice( dirtyAtoms.indexOf( atom ), 1 ); // TODO: replace with remove()
+    _.remove( dirtyAtoms, item => {
+      return item === atom ? atom : null;
+    } );
 
     // for all neighbors that don't use our 'bond'
     structure.bonds.forEach( otherBond => {
