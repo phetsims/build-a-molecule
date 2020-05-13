@@ -27,13 +27,10 @@ class MoleculeStructure {
   // NOTE from porting: StrippedMolecule relies on the ordering of atoms, and possibly bonds
 
   /**
-   * @param {number} numAtoms
-   * @param {number} numBonds
+   * @param {number} [numAtoms]
+   * @param {number} [numBonds]
    */
   constructor( numAtoms, numBonds ) {
-    //REVIEW: Actually, why do we provide numAtoms/numBonds before? If it was performance before, it's not necessary
-    //REVIEW: now, and isn't being used besides the assertion. Can we remove that?
-    assert && assert( numAtoms !== undefined && numBonds !== undefined, 'numAtoms and numBonds required' );
 
     // @public {number}
     this.moleculeId = nextMoleculeId++; // used for molecule identification and ordering for optimization
@@ -72,7 +69,7 @@ class MoleculeStructure {
 
   /**
    * Return the bonds connected to a specific atom
-   * @param {Atom2} atom REVIEW: {Atom} probably instead of {Atom2}?
+   * @param {Atom} atom
    *
    * @private
    * @returns {Array.<Bond>}
@@ -262,8 +259,8 @@ class MoleculeStructure {
   /**
    * Retrieves bonds between atoms a and b
    *
-   * @param {Atom2} a REVIEW: {Atom} probably instead of {Atom2}?
-   * @param {Atom2} b REVIEW: {Atom} probably instead of {Atom2}?
+   * @param {Atom} a
+   * @param {Atom} b
    * @public
    *
    * @returns {Bond}
@@ -299,7 +296,7 @@ class MoleculeStructure {
 
   /**
    * Return a copy of the molecule structure with a specific atom removed
-   * @param {Atom2} atomToRemove REVIEW: {Atom} probably instead of {Atom2}?
+   * @param {Atom} atomToRemove
    *
    * @public
    * @returns {MoleculeStructure}
@@ -324,7 +321,7 @@ class MoleculeStructure {
    * probably fail for cyclic graphs.
    *
    *
-   * @param {Molecule} other - Another molecular structure REVIEW: Should this be {MoleculeStructure}?
+   * @param {MoleculeStructure} other - Another molecular structure
    * @public
    *
    * @returns {boolean} True, if there is an isomorphism between the two molecular structures
@@ -360,9 +357,8 @@ class MoleculeStructure {
   }
 
   /**
-   *  REVIEW: {Atom} probably instead of {Atom2}?
-   * @param {Atom2} atom         An atom
-   * @param {Array.<Atom2>} exclusionSet A set of atoms that should not be in the return value
+   * @param {Atom} atom
+   * @param {Array.<Atom2>} exclusionSet: A set of atoms that should not be in the return value
    * @public
    *
    * @returns {Array.<Atom>} All neighboring atoms that are connected by bonds to the passed in atom AND aren't in the exclusionSet
@@ -375,12 +371,11 @@ class MoleculeStructure {
   }
 
   /**
-   * REVIEW: {Atom} probably instead of {Atom2}?
    * @param {MoleculeStructure} other
-   * @param {Array.<Atom2>}       myVisited
-   * @param {Array.<Atom2>}       otherVisited
-   * @param {Atom2}              myAtom
-   * @param {Atom2}              otherAtom
+   * @param {Array.<Atom2>} myVisited
+   * @param {Array.<Atom2>} otherVisited
+   * @param {Atom} myAtom
+   * @param {Atom} otherAtom
    * @public
    *
    * @returns {boolean}
@@ -521,12 +516,11 @@ MoleculeStructure.formulaExceptions = {
 
 /**
  * Combines molecules together by bonding their atoms A and B
- * REVIEW: {Atom} probably instead of {Atom2}?
  *
  * @param {MoleculeStructure} molA   Molecule A
  * @param {MoleculeStructure} molB   Molecule B
- * @param {Atom2}              a      Atom A
- * @param {Atom2}              b      Atom B
+ * @param {Atom}              a      Atom A
+ * @param {Atom}              b      Atom B
  * @param {MoleculeStructure} result An empty molecule to fill
  *
  * @public
@@ -714,7 +708,7 @@ MoleculeStructure.fromSerial2Basic = line => {
  * @param {number} atomCount
  * @param {number} bondCount
  *
- * @protected REVIEW: This is static, so protected doesn't make sense (because a supertype wouldn't inherit). @private if it's only used in this file?
+ * @private
  * @returns {MoleculeStructure}
  */
 MoleculeStructure.defaultMoleculeGenerator = ( atomCount, bondCount ) => {
@@ -724,8 +718,8 @@ MoleculeStructure.defaultMoleculeGenerator = ( atomCount, bondCount ) => {
 /**
  * @param {string} atomString
  *
- * @protected REVIEW: This is static, so protected doesn't make sense (because a supertype wouldn't inherit). @private if it's only used in this file?
- * @returns {Atom2} REVIEW: Looks like it returns an Atom, very explicitly not an Atom2
+ * @private
+ * @returns {Atom}
  */
 MoleculeStructure.defaultAtomParser = atomString => {
 
@@ -735,10 +729,10 @@ MoleculeStructure.defaultAtomParser = atomString => {
 
 /**
  * @param {string} bondString
- * @param {Atom2} connectedAtom REVIEW: {Atom}?
+ * @param {Atom} connectedAtom
  * @param {MoleculeStructure} moleculeStructure
  *
- * @protected REVIEW: This is static, so protected doesn't make sense (because a supertype wouldn't inherit). @private if it's only used in this file?
+ * @private
  * @returns {Bond}
  */
 MoleculeStructure.defaultBondParser = ( bondString, connectedAtom, moleculeStructure ) => {

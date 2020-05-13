@@ -215,11 +215,10 @@ class CompleteMolecule extends MoleculeStructure {
 
   /**
    * Construct a molecule out of a pipe-separated line.
-   * REVIEW: visibility, and ideally move as a static class method
-   *
    * WARNING: this always writes out in a "full" configuration, even if the data wasn't contained before
-   *
    * @param {string} line A string that is essentially a serialized molecule
+   *
+   * @public
    * @returns {CompleteMolecule} that is properly constructed
    */
   static fromString( line ) {

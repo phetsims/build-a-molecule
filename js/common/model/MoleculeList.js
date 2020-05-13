@@ -257,11 +257,14 @@ class MoleculeList {
 }
 
 // statics
-//REVIEW: visibility/type info on these?
+// @private {MoleculeList|null}
 MoleculeList.masterInstance = null;
-MoleculeList.initialized = false;
-MoleculeList.initialList = new MoleculeList();
 
+// @private {boolean}
+MoleculeList.initialized = false;
+
+// @private {MoleculeList}
+MoleculeList.initialList = new MoleculeList();
 MoleculeList.initialList.loadInitialData();
 
 /*---------------------------------------------------------------------------*

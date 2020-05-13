@@ -13,9 +13,8 @@ import MoleculeStructure from './MoleculeStructure.js';
 
 class Molecule extends MoleculeStructure {
   /**
-   * REVIEW: Many call sites that don't specify these documented-required options. See MoleculeStrucutre, and mark as optional?
-   * @param {number} numAtoms
-   * @param {number} numBonds
+   * @param {number} [numAtoms]
+   * @param {number} [numBonds]
    */
   constructor( numAtoms, numBonds ) {
     super( numAtoms || 0, numBonds || 0 );

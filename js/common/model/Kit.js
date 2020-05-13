@@ -1,8 +1,9 @@
 // Copyright 2020, University of Colorado Boulder
 
 /**
- * Contains multiple buckets of different types of atoms
- * REVIEW: Doc should mention more than just the buckets here
+ * Contains multiple buckets of different types of atoms and a kit play area for dropping the atoms. There is only one
+ * "active" kit at a time, which is regulated by toggling the carousel pages. Active kits have their buckets and kit
+ * play area's visible for interaction
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  * @author Denzell Barnett (PhET Interactive Simulations)
@@ -60,11 +61,6 @@ class Kit {
     // @public {Array.<Molecule>} molecules in the play area
     this.molecules = [];
 
-    // @public {Object.<moleculeId:number, CollectionBox>} molecule structures that were put into the collection box.
-    // Kept for now, since modifying the reset behavior will be much easier if we retain this
-    //REVIEW: I only see setters here, and don't see anything accessed. Seems like this can safely be removed?
-    this.removedMolecules = {};
-
     // @public {LewisDotModel|null} Created later, lewis-dot connections between atoms on the play area
     this.lewisDotModel = null;
 
@@ -116,7 +112,6 @@ class Kit {
     this.atomsInPlayArea.reset();
     this.lewisDotModel = new LewisDotModel();
     cleanArray( this.molecules );
-    this.removedMolecules = {};
 
     // keep track of all atoms in our kit
     this.buckets.forEach( bucket => {
@@ -254,7 +249,6 @@ class Kit {
       this.atomsInPlayArea.remove( atom );
     } );
     box.addMolecule( molecule );
-    this.removedMolecules[ molecule.moleculeId ] = box;
   }
 
   /**
