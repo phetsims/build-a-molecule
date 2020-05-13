@@ -51,24 +51,11 @@ class CollectionBoxNode extends VBox {
     // @private {Object.<moleculeId:number,Node>} stores nodes for each molecule
     this.moleculeNodeMap = {};
 
-    // @private Maps moleculeId => Node (thumbnail view for the molecule)
     // @private {Object.<moleculeId:number, Node>}
     this.moleculeIdThumbnailMap = {};
-    // REVIEW: USE ONE MAP FOR THE NODES AND THE OTHER FOR THE THUMBNAILS
-    //REVIEW: Also, we're stuffing in-play-area molecules in this map ALONG WITH complete molecules. While I would
-    //REVIEW: prefer different maps for each, it should at least be documented that this is happening.
-    //REVIEW: WAIT!!!! `this.moleculeIdThumbnailMap` is actually not used when being passed to lookupThumbnail.
-    //REVIEW: Just use this map for the thumbnails, AND the other map for the other nodes!
-    //REVIEW: ALSO if we're sharing nodes with a static lookupThumbnail method, can we just have this be a constant
+    //REVIEW: We're sharing nodes with a static lookupThumbnail method, can we just have this be a constant
     //REVIEW: for all CollectionBoxNodes? e.g. declare it at the top-level as `const moleculeIdThumbnailMap = {}`
     //REVIEW: outside of the constructor.
-
-    // REVIEW: WHEN A COLLECTIONBOXNODE IS DISPOSED WE SHOULD ALSO DETACH THE REFERENCES TO THE THUMBNAILS
-    //REVIEW: Also, the thumbnail nodes are being "wrapped" with a Node() for each entry, but I don't see where this
-    //REVIEW: parent/child relationship is removed. We'll want to remove this (e.g. node.detach() is probably the
-    //REVIEW: easiest), otherwise adding a bunch of parents to the thumbnails will leak memory.
-    //REVIEW: NOTE: this will still leak even if we have only a small set of CollectionBoxNodes, unlike the other
-    //REVIEW: "probably not leaks" in the file.
 
     // @private {Rectangle}
     this.blackBox = new Rectangle( 0, 0, 160, 50, {
@@ -143,7 +130,7 @@ class CollectionBoxNode extends VBox {
     // Add invisible molecules to the molecule layer so that its size won't change later (fixes molecule positions)
     const layoutNodes = [];
     for ( let i = 0; i < box.capacity; i++ ) {
-      const node = CollectionBoxNode.lookupThumbnail( box.moleculeType, this.moleculeNodeMap );
+      const node = CollectionBoxNode.lookupThumbnail( box.moleculeType, this.moleculeIdThumbnailMap );
       node.visible = false;
       layoutNodes.push( node );
       this.moleculeLayer.addChild( node );
@@ -155,7 +142,6 @@ class CollectionBoxNode extends VBox {
     this.addChild( this.boxNode );
     this.mutate( options );
   }
-
 
   /**
    * Allows us to set the model position of the collection boxes according to how they are laid out
@@ -177,7 +163,7 @@ class CollectionBoxNode extends VBox {
     this.updateBoxGraphics();
 
     const completeMolecule = MoleculeList.getMasterInstance().findMatchingCompleteMolecule( molecule );
-    const pseudo3DNode = CollectionBoxNode.lookupThumbnail( completeMolecule, this.moleculeNodeMap );
+    const pseudo3DNode = CollectionBoxNode.lookupThumbnail( completeMolecule, this.moleculeIdThumbnailMap );
     this.moleculeLayer.addChild( pseudo3DNode );
     this.moleculeNodes.push( pseudo3DNode );
     this.moleculeNodeMap[ molecule.moleculeId ] = pseudo3DNode;
@@ -199,6 +185,7 @@ class CollectionBoxNode extends VBox {
     this.moleculeLayer.removeChild( lastMoleculeNode );
     //REVIEW: handle TODO
     this.moleculeNodes.splice( this.moleculeNodes.indexOf( lastMoleculeNode ), 1 ); // TODO: replace splice with remove
+    this.moleculeNodeMap[ molecule.moleculeId ].detach();
     delete this.moleculeNodeMap[ molecule.moleculeId ];
 
     this.updateMoleculeLayout();
@@ -354,15 +341,15 @@ class CollectionBoxNode extends VBox {
   /**
    * Search for a thumbnail that represents the completed molecule. Thumbnail is drawn using canvas.
    * @param {CompleteMolecule} completeMolecule
-   * @param {Object.<moleculeId:number, Node>} moleculeIdThumbnailMap
+   * @param {Object.<moleculeId:number, Node>} moleculeMap
    *
    * @private
    * @returns {Node}
    */
-  static lookupThumbnail( completeMolecule, moleculeIdThumbnailMap ) {
+  static lookupThumbnail( completeMolecule, moleculeMap ) {
     const dimensionLength = 50;
-    if ( !moleculeIdThumbnailMap[ completeMolecule.moleculeId ] ) {
-      moleculeIdThumbnailMap[ completeMolecule.moleculeId ] = BAMIconFactory.createIconImage(
+    if ( !moleculeMap[ completeMolecule.moleculeId ] ) {
+      moleculeMap[ completeMolecule.moleculeId ] = BAMIconFactory.createIconImage(
         completeMolecule,
         dimensionLength,
         dimensionLength,
@@ -370,10 +357,8 @@ class CollectionBoxNode extends VBox {
         true
       );
     }
-
     // wrap the returned image in an extra node so we can transform them independently, and that takes up the proper amount of space
-    const node = moleculeIdThumbnailMap[ completeMolecule.moleculeId ];
-    return new Rectangle( 0, 0, dimensionLength, dimensionLength, { children: [ node ] } );
+    return new Rectangle( 0, 0, dimensionLength, dimensionLength, { children: [ moleculeMap[ completeMolecule.moleculeId ] ] } );
   }
 }
 
