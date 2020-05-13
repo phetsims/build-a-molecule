@@ -9,7 +9,6 @@
 
 import merge from '../../../../../phet-core/js/merge.js';
 import PhetFont from '../../../../../scenery-phet/js/PhetFont.js';
-import ButtonListener from '../../../../../scenery/js/input/ButtonListener.js';
 import Text from '../../../../../scenery/js/nodes/Text.js';
 import RectangularPushButton from '../../../../../sun/js/buttons/RectangularPushButton.js';
 import Playable from '../../../../../tambo/js/Playable.js';
@@ -25,6 +24,9 @@ class ShowMolecule3DButtonNode extends RectangularPushButton {
    */
   constructor( completeMolecule, showDialogCallback, options ) {
     super( merge( {
+      listener: () => {
+        showDialogCallback( completeMolecule );
+      },
       content: new Text( buildAMoleculeStrings.threeD, {
         font: new PhetFont( {
           size: 12,
@@ -39,13 +41,6 @@ class ShowMolecule3DButtonNode extends RectangularPushButton {
       cursor: 'pointer',
       soundPlayer: Playable.NO_SOUND
     }, options ) );
-
-    //REVIEW: ButtonListener is deprecated, can we use FireListener instead?
-    this.addInputListener( new ButtonListener( {
-      fire() {
-        showDialogCallback( completeMolecule );
-      }
-    } ) );
   }
 }
 

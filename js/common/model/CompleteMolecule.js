@@ -49,6 +49,7 @@ import BAMStrings from '../BAMStrings.js';
 import buildAMolecule from '../../buildAMolecule.js';
 import Bond from './Bond.js';
 import MoleculeStructure from './MoleculeStructure.js';
+import Enumeration from '../../../../phet-core/js/Enumeration.js';
 
 // constants
 const OFFSET = 2.5; // used to model our atoms with only 2d data into a 3d representation
@@ -239,7 +240,7 @@ class CompleteMolecule extends MoleculeStructure {
       const x3d = parseFloat( tokens[ idx++ ] );
       const y3d = parseFloat( tokens[ idx++ ] );
       const z3d = parseFloat( tokens[ idx++ ] );
-      const atom = new PubChemAtomFull( Element.getElementBySymbol( symbol ), x2d, y2d, x3d, y3d, z3d );
+      const atom = new PubChemAtom( Element.getElementBySymbol( symbol ), x2d, y2d, x3d, y3d, z3d );
       completeMolecule.addAtom( atom );
     }
 
@@ -283,7 +284,7 @@ class CompleteMolecule extends MoleculeStructure {
     const burnedLength = commonName.length + 1 + molecularFormula.length + 1 + cidString.length + 1 + format.length + 1;
 
     // select the atom parser depending on the format
-    const atomParser = has3d ? ( has2dAnd3d ? PubChemAtomFull.parse : PubChemAtom3.parse ) : PubChemAtom2.parse;
+    const atomParser = has3d ? ( has2dAnd3d ? PubChemAtom.parseFull : PubChemAtom.parse3d ) : PubChemAtom.parse2d;
 
     return MoleculeStructure.fromSerial2( line.slice( burnedLength ), ( atomCount, bondCount ) => {
       const molecule = new CompleteMolecule( commonName, molecularFormula, atomCount, bondCount, has2d, has3d );
@@ -293,114 +294,19 @@ class CompleteMolecule extends MoleculeStructure {
   }
 }
 
-/*---------------------------------------------------------------------------*
- * atom varieties, depending on what information we have from PubChem. varieties
- * are necessary for memory size requirements so we don't store more data than
- * necessary.
- * REVIEW: It looks like our in-memory format is the same for all of the varieties. Would it simplify things to
- * REVIEW: Have one "Type" (PubChemAtom), that has an enumeration flag for what data is encoded? That could affect
- * REVIEW: the serialization and could have deserialization methods for each, but then we can properly type
- * REVIEW: PubChemBond and other things out, and it will save the amount of code. Thoughts? I'm not set on a way
- * REVIEW: of doing it.
- *----------------------------------------------------------------------------*/
-
 // Signature for Atom without 2d or 3d representation
+const PubChemAtomType = Enumeration.byKeys( [ 'TWO_DIMENSION', 'THREE_DIMENSION', 'FULL' ] );
+
 class PubChemAtom extends Atom {
-
-  /**
-   * @param {Element} element
-   */
-  constructor( element ) {
+  constructor( element, type, x2d, y2d, x3d, y3d, z3d ) {
     super( element );
 
-    // @public {boolean}
-    this.has2d = false;
-    this.has3d = false;
-
-    // @private {number}
-    this.x2d = 0;
-    this.y2d = 0;
-
-    // @public {number}
-    this.x3d = 0;
-    this.y3d = 0;
-    this.z3d = 0;
-  }
-}
-
-CompleteMolecule.PubChemAtom = PubChemAtom;
-
-// Signature for Atom with only a 2d representation
-class PubChemAtom2 extends Atom {
-  /**
-   * @param {Element} element
-   * @param {number} x2d
-   * @param {number} y2d
-   */
-  constructor( element, x2d, y2d ) {
-    super( element );
-
-    // @private {boolean}
-    this.has2d = true;
-    this.has3d = false;
+    // @public {PubChemAtom}
+    this.type = type;
 
     // @private {number}
     this.x2d = x2d;
     this.y2d = y2d;
-
-    // @public {number} 3d representation uses only 2d data but is adjusted by an offset
-    this.x3d = x2d - OFFSET;
-    this.y3d = y2d;
-    this.z3d = 0;
-  }
-
-  /**
-   * Stringify the structure of the atom.
-   *
-   * @public
-   * @override
-   * @returns {string}
-   */
-  toString() {
-    return super.toString() + ' ' + this.x2d + ' ' + this.y2d;
-  }
-
-  /**
-   * Parse PubChemAtom2
-   * @param {string} atomString
-   *
-   * @public
-   * @returns {PubChemAtom2}
-   */
-  static parse( atomString ) {
-    const tokens = atomString.split( ' ' );
-    return new PubChemAtom2( Element.getElementBySymbol( tokens[ 0 ] ),
-      parseFloat( tokens[ 1 ] ),
-      parseFloat( tokens[ 2 ] ) );
-  }
-}
-
-CompleteMolecule.PubChemAtom2 = PubChemAtom2;
-
-// Signature for Atom with only a 3d representation
-class PubChemAtom3 extends Atom {
-
-  /**
-   * @param {Element} element
-   * @param {number} x3d
-   * @param {number} y3d
-   * @param {number} z3d
-   */
-  constructor( element, x3d, y3d, z3d ) {
-    super( element );
-
-    // @private {boolean}
-    this.has2d = false;
-    this.has3d = true;
-
-    // @private {number}
-    this.x2d = x3d;
-    this.y2d = 0;
 
     // @public {number}
     this.x3d = x3d;
@@ -415,86 +321,68 @@ class PubChemAtom3 extends Atom {
    * @override
    * @returns {string}
    */
-  toString() {
-    return super.toString() + ' ' + this.x3d + ' ' + this.y3d + ' ' + this.z3d;
+  static toString() {
+    if ( this.type === PubChemAtomType.TWO_DIMENSION ) {
+      return super.toString() + ' ' + this.x2d + ' ' + this.y2d;
+    }
+    else if ( this.type === PubChemAtom.THREE_DIMENSION ) {
+      return super.toString() + ' ' + this.x3d + ' ' + this.y3d + ' ' + this.z3d;
+    }
+    else if ( this.type === PubChemAtom.FULL ) {
+      return super.toString() + ' ' + this.x2d + ' ' + this.y2d + ' ' + this.x3d + ' ' + this.y3d + ' ' + this.z3d;
+
+    }
   }
 
   /**
-   * Parse PubChemAtom3
+   * Parser for PubChemAtom with only 2d data
    * @param {string} atomString
    *
-   * @public
-   * @returns {PubChemAtom3}
+   * @private
+   * @returns {PubChemAtom}
    */
-  static parse( atomString ) {
+  static parse2d( atomString ) {
     const tokens = atomString.split( ' ' );
-    return new PubChemAtom3( Element.getElementBySymbol( tokens[ 0 ] ),
-      parseFloat( tokens[ 1 ] ),
-      parseFloat( tokens[ 2 ] ),
-      parseFloat( tokens[ 3 ] ) );
-  }
-}
-
-CompleteMolecule.PubChemAtom3 = PubChemAtom3;
-
-// Signature for Atom with both a 2d and 3d representation
-class PubChemAtomFull extends Atom {
-
-  /**
-   * @param {Element} element
-   * @param {number} x2d
-   * @param {number} y2d
-   * @param {number} x3d
-   * @param {number} y3d
-   * @param {number} z3d
-   */
-  constructor( element, x2d, y2d, x3d, y3d, z3d ) {
-    super( element );
-
-    // @private {boolean}
-    this.has2d = true;
-    this.has3d = true;
-
-    // @private {number}
-    this.x2d = x2d;
-    this.y2d = y2d;
-
-    // @public {boolean}
-    this.x3d = x3d;
-    this.y3d = y3d;
-    this.z3d = z3d;
+    const element = Element.getElementBySymbol( tokens[ 0 ] );
+    const x2d = parseFloat( tokens[ 1 ] );
+    const y2d = parseFloat( tokens[ 2 ] );
+    return new PubChemAtom( element, PubChemAtomType.TWO_DIMENSION, x2d, y2d, x2d - OFFSET, y2d, 0 );
   }
 
   /**
-   * Stringify the structure of the atom
-   *
-   * @public
-   * @override
-   * @returns {string}
-   */
-  toString() {
-    return super.toString() + ' ' + this.x2d + ' ' + this.y2d + ' ' + this.x3d + ' ' + this.y3d + ' ' + this.z3d;
-  }
-
-  /**
-   * Parser for PubChemAtomFull
+   * Parser for PubChemAtom with only 3d data
    * @param {string} atomString
    *
-   *  @public
-   * @returns {PubChemAtomFull}
+   * @private
+   * @returns {PubChemAtom}
    */
-  static parse( atomString ) {
+  static parse3d( atomString ) {
     const tokens = atomString.split( ' ' );
-    return new PubChemAtomFull( Element.getElementBySymbol( tokens[ 0 ] ),
-      parseFloat( tokens[ 1 ] ),
-      parseFloat( tokens[ 2 ] ),
-      parseFloat( tokens[ 3 ] ),
-      parseFloat( tokens[ 4 ] ),
-      parseFloat( tokens[ 5 ] ) );
+    const element = Element.getElementBySymbol( tokens[ 0 ] );
+    const x3d = parseFloat( tokens[ 1 ] );
+    const y3d = parseFloat( tokens[ 2 ] );
+    const z3d = parseFloat( tokens[ 3 ] );
+    return new PubChemAtom( element, PubChemAtomType.THREE_DIMENSION, 0, 0, x3d, y3d, z3d );
+  }
+
+  /**
+   * Parser for PubChemAtom with 2d and 3d data
+   * @param {string} atomString
+   *
+   * @private
+   * @returns {PubChemAtom}
+   */
+  static parseFull( atomString ) {
+    const tokens = atomString.split( ' ' );
+    const element = Element.getElementBySymbol( tokens[ 0 ] );
+    const x2d = parseFloat( tokens[ 1 ] );
+    const y2d = parseFloat( tokens[ 2 ] );
+    const x3d = parseFloat( tokens[ 3 ] );
+    const y3d = parseFloat( tokens[ 4 ] );
+    const z3d = parseFloat( tokens[ 5 ] );
+    return new PubChemAtom( element, PubChemAtomType.FULL, x2d, y2d, x3d, y3d, z3d );
   }
 }
-
-CompleteMolecule.PubChemAtomFull = PubChemAtomFull;
 
 // Signature for bonds, where a and b are PubChemAtoms of some type
 class PubChemBond extends Bond {

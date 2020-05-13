@@ -14,7 +14,6 @@ import RichText from '../../../../scenery/js/nodes/RichText.js';
 import buildAMolecule from '../../buildAMolecule.js';
 import buildAMoleculeStrings from '../../buildAMoleculeStrings.js';
 import BAMConstants from '../BAMConstants.js';
-import CollectionBox from '../model/CollectionBox.js';
 import CollectionBoxNode from './CollectionBoxNode.js';
 
 class MultipleCollectionBoxNode extends CollectionBoxNode {
@@ -62,8 +61,6 @@ class MultipleCollectionBoxNode extends CollectionBoxNode {
   }
 }
 
-// Precomputation of largest multiple collection box size
-CollectionBoxNode.getPsuedoBoxBounds( MultipleCollectionBoxNode, CollectionBox );
 
 buildAMolecule.register( 'MultipleCollectionBoxNode', MultipleCollectionBoxNode );
 export default MultipleCollectionBoxNode;

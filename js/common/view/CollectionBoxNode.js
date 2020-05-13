@@ -9,7 +9,6 @@
  */
 
 import timer from '../../../../axon/js/timer.js';
-import Bounds2 from '../../../../dot/js/Bounds2.js';
 import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
@@ -34,16 +33,13 @@ class CollectionBoxNode extends VBox {
   constructor( box, toModelBounds, showDialogCallback, options ) {
     super();
 
-    // @public {CollectionBox}
+    // @private {CollectionBox}
     this.box = box;
 
     // @private {function}
     this.toModelBounds = toModelBounds;
 
-    // @public {Node}
-    //REVIEW: Instead, can we get rid of this boxNode, just put the children (e.g. blackBox, cueNode, etc.) directly
-    //REVIEW: into children of this node (change it from VBox => Node), and then SingleCollectionBoxNode and
-    //REVIEW: MultipleCollectionBoxNode can be VBoxes that have this as a child (instead of using inheritance?).
+    // @private {Node}
     this.boxNode = new Node();
 
     // @private {Array.<Node>}
@@ -58,6 +54,7 @@ class CollectionBoxNode extends VBox {
     // @private Maps moleculeId => Node (thumbnail view for the molecule)
     // @private {Object.<moleculeId:number, Node>}
     this.moleculeIdThumbnailMap = {};
+    // REVIEW: USE ONE MAP FOR THE NODES AND THE OTHER FOR THE THUMBNAILS
     //REVIEW: Also, we're stuffing in-play-area molecules in this map ALONG WITH complete molecules. While I would
     //REVIEW: prefer different maps for each, it should at least be documented that this is happening.
     //REVIEW: WAIT!!!! `this.moleculeIdThumbnailMap` is actually not used when being passed to lookupThumbnail.
@@ -66,6 +63,7 @@ class CollectionBoxNode extends VBox {
     //REVIEW: for all CollectionBoxNodes? e.g. declare it at the top-level as `const moleculeIdThumbnailMap = {}`
     //REVIEW: outside of the constructor.
 
+    // REVIEW: WHEN A COLLECTIONBOXNODE IS DISPOSED WE SHOULD ALSO DETACH THE REFERENCES TO THE THUMBNAILS
     //REVIEW: Also, the thumbnail nodes are being "wrapped" with a Node() for each entry, but I don't see where this
     //REVIEW: parent/child relationship is removed. We'll want to remove this (e.g. node.detach() is probably the
     //REVIEW: easiest), otherwise adding a bunch of parents to the thumbnails will leak memory.
@@ -191,7 +189,7 @@ class CollectionBoxNode extends VBox {
    * Remove molecule to map and molecule layer. Update the layer and graphics.
    * @param {Molecule} molecule
    *
-   * @public
+   * @private
    */
   removeMolecule( molecule ) {
     this.cancelBlinksInProgress();
@@ -348,11 +346,7 @@ class CollectionBoxNode extends VBox {
 
     // stop any previous blinking from happening. don't want double-blinking
     if ( this.blinkTimeout !== null ) {
-      //REVIEW: do NOT use window.clearTimeout!:
-      //REVIEW: 1. We don't use window.setTimeout/clearTimeout in sims
-      //REVIEW: 2. We didn't create this timeout with window.setTimeout, but with timer.setTimeout! It happens to be a
-      //REVIEW:    function, NOT an integer as window.clearTimeout would expect
-      window.clearTimeout( this.blinkTimeout );
+      timer.clearTimeout( this.blinkTimeout );
       this.blinkTimeout = null;
     }
   }
@@ -380,38 +374,6 @@ class CollectionBoxNode extends VBox {
     // wrap the returned image in an extra node so we can transform them independently, and that takes up the proper amount of space
     const node = moleculeIdThumbnailMap[ completeMolecule.moleculeId ];
     return new Rectangle( 0, 0, dimensionLength, dimensionLength, { children: [ node ] } );
-  }
-
-  /**
-   * REVIEW: This doesn't seem to actually be computing anything that is used.
-   * REVIEW: SingleCollectionBoxNode.maxWidth/maxHeight and MultipleCollectionBoxNode.maxWidth/maxHeight are computed
-   * REVIEW: I can't find a single usage.
-   * REVIEW: Since this is non-standard, assumes type information, adds non-documented properties to a type, and
-   * REVIEW: doesn't seem to be used, can we remove this?
-   *
-   * Precomputation of largest collection box size
-   * @param {SingleCollectionBoxNode|MultipleCollectionBoxNode} boxNode REVIEW: Can't this just be a CollectionBoxNode in the docs? REVIEW: on later note, it needs to be a constructor, so it should be {function} with the relevant types
-   * @param {CollectionBox} box REVIEW: This is also not a box, but a box type?
-   *
-   * @static REVIEW: We don't mark things with @static, since it's already noted as static in the actual definition
-   * @public
-   */
-  static getPsuedoBoxBounds( boxNode, box ) {
-    let maxBounds = Bounds2.NOTHING;
-
-    MoleculeList.collectionBoxMolecules.forEach( molecule => {
-
-      // fake boxes
-      //REVIEW: Capitalized names should be used for things that are invoked as a constructor
-      const boxBounds = new boxNode(
-        //REVIEW: Capitalized names should be used for things that are invoked as a constructor
-        new box( molecule, 1, { initializeAudio: false } ),
-        node => {
-          return node.bounds;
-        },
-        () => {} ).bounds;
-      maxBounds = maxBounds.union( boxBounds );
-    } );
   }
 }
 

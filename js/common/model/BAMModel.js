@@ -194,6 +194,7 @@ class BAMModel {
     // Remove listeners for collection boxes.
     collection.collectionBoxes.forEach( collectionBox => {
       //REVIEW: CollectionBox adds its own listener... we really shouldn't be removing all listeners, especially ones that are "private" no?
+      // REVIEW: Don't remove listeners for things BAMModel doesn't add
       collectionBox.addedMoleculeEmitter.removeAllListeners();
       collectionBox.removedMoleculeEmitter.removeAllListeners();
       collectionBox.acceptedMoleculeCreationEmitter.removeAllListeners();

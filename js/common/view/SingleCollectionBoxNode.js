@@ -13,7 +13,6 @@ import RichText from '../../../../scenery/js/nodes/RichText.js';
 import buildAMolecule from '../../buildAMolecule.js';
 import buildAMoleculeStrings from '../../buildAMoleculeStrings.js';
 import BAMConstants from '../BAMConstants.js';
-import CollectionBox from '../model/CollectionBox.js';
 import CollectionBoxNode from './CollectionBoxNode.js';
 
 class SingleCollectionBoxNode extends CollectionBoxNode {
@@ -35,9 +34,6 @@ class SingleCollectionBoxNode extends CollectionBoxNode {
     } ) );
   }
 }
-
-// Precomputation of largest single collection box size
-CollectionBoxNode.getPsuedoBoxBounds( SingleCollectionBoxNode, CollectionBox );
 
 buildAMolecule.register( 'SingleCollectionBoxNode', SingleCollectionBoxNode );
 export default SingleCollectionBoxNode;

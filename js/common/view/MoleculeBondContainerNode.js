@@ -21,10 +21,9 @@ class MoleculeBondContainerNode extends Node {
 
     // @private {Node}
     this.bondNodes = molecule.bonds.map( bond => {
-      const node = new MoleculeBondNode( bond, kit );
-      this.addChild( node ); //REVIEW: At the end, we can just say `this.children = this.bondNodes` instead of this
-      return node;
+      return new MoleculeBondNode( bond, kit );
     } );
+    this.children = this.bondNodes;
   }
 
   /**

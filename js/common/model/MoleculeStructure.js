@@ -504,251 +504,249 @@ class MoleculeStructure {
     }
     return result;
   }
-}
 
-// @private {Object}
-MoleculeStructure.formulaExceptions = {
-  'H3N': 'NH3', // treated as if it is organic
-  'CHN': 'HCN'  // not considered organic
-};
+  /**
+   * Combines molecules together by bonding their atoms A and B
+   *
+   * @param {MoleculeStructure} molA   Molecule A
+   * @param {MoleculeStructure} molB   Molecule B
+   * @param {Atom}              a      Atom A
+   * @param {Atom}              b      Atom B
+   * @param {MoleculeStructure} result An empty molecule to fill
+   *
+   * @public
+   * @returns {MoleculeStructure} A completely new molecule with all atoms in A and B, where atom A is joined to atom B
+   */
+  static getCombinedMoleculeFromBond( molA, molB, a, b, result ) {
+    molA.atoms.forEach( atom => {
+      result.addAtom( atom );
+    } );
+    molB.atoms.forEach( atom => {
+      result.addAtom( atom );
+    } );
+    molA.bonds.forEach( bond => {
+      result.addBond( bond );
+    } );
+    molB.bonds.forEach( bond => {
+      result.addBond( bond );
+    } );
+    result.addBond( new Bond( a, b ) );
+    return result;
+  }
 
-//REVIEW: Previous review comment said:
-//REVIEW: > //REVIEW: These static functions should be moved to static functions inside the class (ideally)
-//REVIEW: They are still declared as MoleculeStructure.something = ...
-//REVIEW: Ideally they would be nested under the class MoleculeStructure { ... } as something() { ... }
+  /**
+   * Split a bond in a molecule, and return the remaining molecule structure(s)
+   * @param {MoleculeStructure} structure The molecule
+   * @param {Bond}              bond      The bond to break
+   * @param {MoleculeStructure} molA      An empty molecule for the 1st broken part
+   * @param {MoleculeStructure} molB      An empty molecule for the 2nd broken part
+   *
+   * @public
+   * @returns {Array.<MoleculeStructure>}   A list of remaining structures
+   */
+  static getMoleculesFromBrokenBond( structure, bond, molA, molB ) {
+    // NOTE: in the future when we have loops, we can't assume that this will break a molecule into two separate molecules!
 
-/**
- * Combines molecules together by bonding their atoms A and B
- *
- * @param {MoleculeStructure} molA   Molecule A
- * @param {MoleculeStructure} molB   Molecule B
- * @param {Atom}              a      Atom A
- * @param {Atom}              b      Atom B
- * @param {MoleculeStructure} result An empty molecule to fill
- *
- * @public
- * @returns {MoleculeStructure} A completely new molecule with all atoms in A and B, where atom A is joined to atom B
- */
-MoleculeStructure.getCombinedMoleculeFromBond = ( molA, molB, a, b, result ) => {
-  molA.atoms.forEach( atom => {
-    result.addAtom( atom );
-  } );
-  molB.atoms.forEach( atom => {
-    result.addAtom( atom );
-  } );
-  molA.bonds.forEach( bond => {
-    result.addBond( bond );
-  } );
-  molB.bonds.forEach( bond => {
-    result.addBond( bond );
-  } );
-  result.addBond( new Bond( a, b ) );
-  return result;
-};
+    /*---------------------------------------------------------------------------*
+     * separate out which atoms belong in which remaining molecule
+     *----------------------------------------------------------------------------*/
 
-/**
- * Split a bond in a molecule, and return the remaining molecule structure(s)
- * @param {MoleculeStructure} structure The molecule
- * @param {Bond}              bond      The bond to break
- * @param {MoleculeStructure} molA      An empty molecule for the 1st broken part
- * @param {MoleculeStructure} molB      An empty molecule for the 2nd broken part
- *
- * @public
- * @returns {Array.<MoleculeStructure>}   A list of remaining structures
- */
-MoleculeStructure.getMoleculesFromBrokenBond = ( structure, bond, molA, molB ) => {
-  // NOTE: in the future when we have loops, we can't assume that this will break a molecule into two separate molecules!
+    // Note: (performance) use sets for fast insertion, removal, and querying, wherever necessary in this function
+    const atomsInA = [ bond.a ];
 
-  /*---------------------------------------------------------------------------*
-   * separate out which atoms belong in which remaining molecule
-   *----------------------------------------------------------------------------*/
+    // atoms left after removing atoms
+    const remainingAtoms = structure.atoms.slice();
+    _.remove( remainingAtoms, item => {
+      return item === bond.a ? bond.a : null;
+    } );
+    const dirtyAtoms = [ bond.a ];
+    while ( dirtyAtoms.length > 0 ) {
+      const atom = dirtyAtoms.pop();
+      _.remove( dirtyAtoms, item => {
+        return item === atom ? atom : null;
+      } );
 
-  // Note: (performance) use sets for fast insertion, removal, and querying, wherever necessary in this function
-  const atomsInA = [ bond.a ];
+      // for all neighbors that don't use our 'bond'
+      structure.bonds.forEach( otherBond => {
+        if ( otherBond !== bond && otherBond.contains( atom ) ) {
+          const neighbor = otherBond.getOtherAtom( atom );
 
-  // atoms left after removing atoms
-  const remainingAtoms = structure.atoms.slice();
-  _.remove( remainingAtoms, item => {
-    return item === bond.a ? bond.a : null;
-  } );
-  const dirtyAtoms = [ bond.a ];
-  while ( dirtyAtoms.length > 0 ) {
-    const atom = dirtyAtoms.pop();
-    _.remove( dirtyAtoms, item => {
-      return item === atom ? atom : null;
+          // pick out our neighbor, mark it as in 'A', and mark it as dirty so we can process its neighbors
+          if ( _.includes( remainingAtoms, neighbor ) ) {
+            _.remove( remainingAtoms, item => {
+              return item === neighbor ? neighbor : null;
+            } );
+            dirtyAtoms.push( neighbor );
+            atomsInA.push( neighbor );
+          }
+        }
+      } );
+    }
+
+    /*---------------------------------------------------------------------------*
+     * construct our two molecules
+     *----------------------------------------------------------------------------*/
+
+    structure.atoms.forEach( atom => {
+      if ( _.includes( atomsInA, atom ) ) {
+        molA.addAtom( atom );
+      }
+      else {
+        molB.addAtom( atom );
+      }
     } );
 
-    // for all neighbors that don't use our 'bond'
     structure.bonds.forEach( otherBond => {
-      if ( otherBond !== bond && otherBond.contains( atom ) ) {
-        const neighbor = otherBond.getOtherAtom( atom );
-
-        // pick out our neighbor, mark it as in 'A', and mark it as dirty so we can process its neighbors
-        if ( _.includes( remainingAtoms, neighbor ) ) {
-          _.remove( remainingAtoms, item => {
-            return item === neighbor ? neighbor : null;
-          } );
-          dirtyAtoms.push( neighbor );
-          atomsInA.push( neighbor );
+      if ( otherBond !== bond ) {
+        if ( _.includes( atomsInA, otherBond.a ) ) {
+          assert && assert( _.includes( atomsInA, otherBond.b ) );
+          molA.addBond( otherBond );
+        }
+        else {
+          molB.addBond( otherBond );
         }
       }
     } );
+
+    if ( BAMQueryParameters.logData ) {
+      console.log( 'splitting ' + structure.toSerial() + ' into:' );
+      console.log( molA.toSerial() );
+      console.log( molB.toSerial() );
+    }
+    // return our two molecules
+    return [ molA, molB ];
   }
 
-  /*---------------------------------------------------------------------------*
-   * construct our two molecules
-   *----------------------------------------------------------------------------*/
+  /**
+   * Given a matrix of equivalencies, can we find a permutation of the 'other' atoms that are equivalent to
+   * their respective 'my' atoms?
+   *
+   * NOTE: equivalency matrices are stored in row-major format (compared to the Java version)
+   *
+   * @param {Array.<boolean>} equivalences          Equivalence Matrix, square!, row-major (stored as one boolean array)
+   * @param {number}          myIndex               Index for the row (index into our atoms). calls with myIndex + 1 to children
+   * @param {Array.<number>}  otherRemainingIndices Remaining available 'other' indices
+   * @param {number}          size                  This square matrix is size x size in dimensions
+   *
+   * @public
+   * @returns {boolean} Whether a successful matching permutation was found
+   */
+  static checkEquivalencyMatrix( equivalences, myIndex, otherRemainingIndices, size ) {
+    // var size = Math.sqrt( equivalences.length ); // it's square, so this technically works
+    // Note: (performance) this should leak memory in un-fun ways, and performance complexity should be sped up
 
-  structure.atoms.forEach( atom => {
-    if ( _.includes( atomsInA, atom ) ) {
-      molA.addAtom( atom );
-    }
-    else {
-      molB.addAtom( atom );
-    }
-  } );
+    // should be inefficient, but not too bad (computational complexity is not optimal)
+    const arr = otherRemainingIndices.slice();
+    const len = arr.length;
+    for ( let i = 0; i < len; i++ ) { // loop over all remaining others
+      const otherIndex = arr[ i ];
+      if ( equivalences[ myIndex * size + otherIndex ] ) { // only follow path if it is true (equivalent)
 
-  structure.bonds.forEach( otherBond => {
-    if ( otherBond !== bond ) {
-      if ( _.includes( atomsInA, otherBond.a ) ) {
-        assert && assert( _.includes( atomsInA, otherBond.b ) );
-        molA.addBond( otherBond );
-      }
-      else {
-        molB.addBond( otherBond );
-      }
-    }
-  } );
+        // remove the index from consideration for checking the following submatrix
+        _.remove( otherRemainingIndices, item => {
+          return item === otherIndex ? otherIndex : null;
+        } );
 
-  if ( BAMQueryParameters.logData ) {
-    console.log( 'splitting ' + structure.toSerial() + ' into:' );
-    console.log( molA.toSerial() );
-    console.log( molB.toSerial() );
-  }
-  // return our two molecules
-  return [ molA, molB ];
-};
+        const success = ( myIndex === size - 1 ) || // there are no more permutations to check
+                        MoleculeStructure.checkEquivalencyMatrix( equivalences, myIndex + 1, otherRemainingIndices, size ); // or we can find a good combination of the remaining indices
 
-/**
- * Given a matrix of equivalencies, can we find a permutation of the 'other' atoms that are equivalent to
- * their respective 'my' atoms?
- *
- * NOTE: equivalency matrices are stored in row-major format (compared to the Java version)
- *
- * @param {Array.<boolean>} equivalences          Equivalence Matrix, square!, row-major (stored as one boolean array)
- * @param {number}          myIndex               Index for the row (index into our atoms). calls with myIndex + 1 to children
- * @param {Array.<number>}  otherRemainingIndices Remaining available 'other' indices
- * @param {number}          size                  This square matrix is size x size in dimensions
- *
- * @public
- * @returns {boolean} Whether a successful matching permutation was found
- */
-MoleculeStructure.checkEquivalencyMatrix = ( equivalences, myIndex, otherRemainingIndices, size ) => {
-  // var size = Math.sqrt( equivalences.length ); // it's square, so this technically works
-  // Note: (performance) this should leak memory in un-fun ways, and performance complexity should be sped up
+        // add it back in so the calling function's contract for otherRemainingIndices is satisfied
+        otherRemainingIndices.push( otherIndex );
 
-  // should be inefficient, but not too bad (computational complexity is not optimal)
-  const arr = otherRemainingIndices.slice();
-  const len = arr.length;
-  for ( let i = 0; i < len; i++ ) { // loop over all remaining others
-    const otherIndex = arr[ i ];
-    if ( equivalences[ myIndex * size + otherIndex ] ) { // only follow path if it is true (equivalent)
-
-      // remove the index from consideration for checking the following submatrix
-      _.remove( otherRemainingIndices, item => {
-        return item === otherIndex ? otherIndex : null;
-      } );
-
-      const success = ( myIndex === size - 1 ) || // there are no more permutations to check
-                      MoleculeStructure.checkEquivalencyMatrix( equivalences, myIndex + 1, otherRemainingIndices, size ); // or we can find a good combination of the remaining indices
-
-      // add it back in so the calling function's contract for otherRemainingIndices is satisfied
-      otherRemainingIndices.push( otherIndex );
-
-      if ( success ) {
-        return true;
+        if ( success ) {
+          return true;
+        }
       }
     }
+    return false;
   }
-  return false;
-};
 
-/**
- * Deserialize a molecule structure
- * @param {string}            line              The data (string) to deserialize
- * @param {MoleculeGenerator} moleculeGenerator function( atomCount, bondCount ):MoleculeStructure. Creates a molecule with properties that we can fill with atoms/bonds
- * @param {AtomParser}        atomParser        function( atomString ):Atom. Creates an atom from a string representing an atom
- * @param {BondParser}        bondParser        function( bondString, connectedAtom, moleculeStructure ):Bond. Creates a bond from a string representing a bond
- *
- * @public
- * @returns {MoleculeStructure} A constructed molecule
- */
-MoleculeStructure.fromSerial2 = ( line, moleculeGenerator, atomParser, bondParser ) => {
-  const tokens = line.split( '|' );
-  let idx = 0;
-  const atomCount = parseInt( tokens[ idx++ ], 10 );
-  const bondCount = parseInt( tokens[ idx++ ], 10 );
-  const molecule = moleculeGenerator( atomCount, bondCount );
-  for ( let i = 0; i < atomCount; i++ ) {
-    const atomBondString = tokens[ idx++ ];
-    let subIdx = 0;
-    const subTokens = atomBondString.split( ',' );
-    const atom = atomParser( subTokens[ subIdx++ ] );
-    molecule.addAtom( atom );
-    while ( subIdx < subTokens.length ) {
-      const bond = bondParser( subTokens[ subIdx++ ], atom, molecule );
-      molecule.addBond( bond );
+  /**
+   * Deserialize a molecule structure
+   * @param {string}            line              The data (string) to deserialize
+   * @param {MoleculeGenerator} moleculeGenerator function( atomCount, bondCount ):MoleculeStructure. Creates a molecule with properties that we can fill with atoms/bonds
+   * @param {AtomParser}        atomParser        function( atomString ):Atom. Creates an atom from a string representing an atom
+   * @param {BondParser}        bondParser        function( bondString, connectedAtom, moleculeStructure ):Bond. Creates a bond from a string representing a bond
+   *
+   * @public
+   * @returns {MoleculeStructure} A constructed molecule
+   */
+  static fromSerial2( line, moleculeGenerator, atomParser, bondParser ) {
+    const tokens = line.split( '|' );
+    let idx = 0;
+    const atomCount = parseInt( tokens[ idx++ ], 10 );
+    const bondCount = parseInt( tokens[ idx++ ], 10 );
+    const molecule = moleculeGenerator( atomCount, bondCount );
+    for ( let i = 0; i < atomCount; i++ ) {
+      const atomBondString = tokens[ idx++ ];
+      let subIdx = 0;
+      const subTokens = atomBondString.split( ',' );
+      const atom = atomParser( subTokens[ subIdx++ ] );
+      molecule.addAtom( atom );
+      while ( subIdx < subTokens.length ) {
+        const bond = bondParser( subTokens[ subIdx++ ], atom, molecule );
+        molecule.addBond( bond );
+      }
     }
+    return molecule;
   }
-  return molecule;
-};
 
-/**
- * @param {string} line - The data (string) to deserialize
- *
- * @public
- * @returns {MoleculeStructure}
- */
-MoleculeStructure.fromSerial2Basic = line => {
-  // assumes atom base class (just symbol) and simple bonds (just connectivity)
-  return MoleculeStructure.fromSerial2( line, MoleculeStructure.defaultMoleculeGenerator, MoleculeStructure.defaultAtomParser, MoleculeStructure.defaultBondParser );
-};
+  /**
+   * @param {string} line - The data (string) to deserialize
+   *
+   * @public
+   * @returns {MoleculeStructure}
+   */
+  static fromSerial2Basic( line ) {
+    // assumes atom base class (just symbol) and simple bonds (just connectivity)
+    return MoleculeStructure.fromSerial2( line, MoleculeStructure.defaultMoleculeGenerator, MoleculeStructure.defaultAtomParser, MoleculeStructure.defaultBondParser );
+  }
 
-/**
- * @param {number} atomCount
- * @param {number} bondCount
- *
- * @private
- * @returns {MoleculeStructure}
- */
-MoleculeStructure.defaultMoleculeGenerator = ( atomCount, bondCount ) => {
-  return new MoleculeStructure( atomCount, bondCount );
-};
+  /**
+   * @param {number} atomCount
+   * @param {number} bondCount
+   *
+   * @private
+   * @returns {MoleculeStructure}
+   */
+  static defaultMoleculeGenerator( atomCount, bondCount ) {
+    return new MoleculeStructure( atomCount, bondCount );
+  }
 
-/**
- * @param {string} atomString
- *
- * @private
- * @returns {Atom}
- */
-MoleculeStructure.defaultAtomParser = atomString => {
+  /**
+   * @param {string} atomString
+   *
+   * @private
+   * @returns {Atom}
+   */
+  static defaultAtomParser( atomString ) {
 
-  // atomString is an element symbol
-  return new Atom( Element.getElementBySymbol( atomString ) );
-};
+    // atomString is an element symbol
+    return new Atom( Element.getElementBySymbol( atomString ) );
+  }
 
-/**
- * @param {string} bondString
- * @param {Atom} connectedAtom
- * @param {MoleculeStructure} moleculeStructure
- *
- * @private
- * @returns {Bond}
- */
-MoleculeStructure.defaultBondParser = ( bondString, connectedAtom, moleculeStructure ) => {
-  // bondString is index of other atom to bond
-  return new Bond( connectedAtom, moleculeStructure.atoms[ parseInt( bondString, 10 ) ] );
-};
+  /**
+   * @param {string} bondString
+   * @param {Atom} connectedAtom
+   * @param {MoleculeStructure} moleculeStructure
+   *
+   * @private
+   * @returns {Bond}
+   */
+  static defaultBondParser( bondString, connectedAtom, moleculeStructure ) {
+    // bondString is index of other atom to bond
+    return new Bond( connectedAtom, moleculeStructure.atoms[ parseInt( bondString, 10 ) ] );
+  }
+
+  // @private {Object}
+  static formulaExceptions() {
+    return {
+      'H3N': 'NH3', // treated as if it is organic
+      'CHN': 'HCN'  // not considered organic
+
+    };
+  }
+}
 
 buildAMolecule.register( 'MoleculeStructure', MoleculeStructure );
 export default MoleculeStructure;

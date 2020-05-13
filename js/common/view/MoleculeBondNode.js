@@ -84,17 +84,8 @@ class MoleculeBondNode extends Node {
     const backup = ( isHorizontal ? 'col-resize' : 'row-resize' );
 
     // Offsets should center this
-    let openCursor;
-    let closedCursor;
-    if ( platform.ie ) {
-      //REVIEW: We shouldn't reference external URLs here! Do the cursors work on IE?
-      openCursor = 'url(' + scissorsOpen.src + '), url(http://phetsims.github.io/build-a-molecule/images/' + openFile + '), ' + backup;
-      closedCursor = 'url(' + scissorsClosed.src + '), url(http://phetsims.github.io/build-a-molecule/images/' + closedFile + '), ' + backup;
-    }
-    else {
-      openCursor = 'url(' + scissorsOpen.src + ') ' + ( isHorizontal ? '10 11' : '11 10' ) + ', ' + backup;
-      closedCursor = 'url(' + scissorsClosed.src + ') ' + ( isHorizontal ? '7 13' : '13 7' ) + ', ' + backup;
-    }
+    const openCursor = 'url(' + scissorsOpen.src + ') ' + ( isHorizontal ? '10 11' : '11 10' ) + ', ' + backup;
+    const closedCursor = 'url(' + scissorsClosed.src + ') ' + ( isHorizontal ? '7 13' : '13 7' ) + ', ' + backup;
 
     // Cut here icon is subject to change. See https://github.com/phetsims/build-a-molecule/issues/113
     const cutTargetNode = new Node();
