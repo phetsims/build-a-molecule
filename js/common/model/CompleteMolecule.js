@@ -45,7 +45,7 @@ import PH3Node from '../../../../nitroglycerin/js/nodes/PH3Node.js';
 import SO2Node from '../../../../nitroglycerin/js/nodes/SO2Node.js';
 import SO3Node from '../../../../nitroglycerin/js/nodes/SO3Node.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
-import BAMStrings from '../../BAMStrings.js';
+import BAMStrings from '../BAMStrings.js';
 import buildAMolecule from '../../buildAMolecule.js';
 import Bond from './Bond.js';
 import MoleculeStructure from './MoleculeStructure.js';

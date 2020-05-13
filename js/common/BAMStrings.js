@@ -1,9 +1,7 @@
 // Copyright 2020, University of Colorado Boulder
 
-import buildAMolecule from './buildAMolecule.js';
-import buildAMoleculeStrings from './buildAMoleculeStrings.js';
-
-//REVIEW: Seems like this should exist under common/
+import buildAMolecule from '../buildAMolecule.js';
+import buildAMoleculeStrings from '../buildAMoleculeStrings.js';
 
 const Strings = {
   'H': buildAMoleculeStrings.hydrogen,

@@ -36,10 +36,6 @@ class BAMScreenView extends ScreenView {
     // @public {Object.<kitCollectionId:number, KitCollectionNode}
     this.kitCollectionMap = {};
 
-    // @private {Object.<moleculeId:number,MoleculeControlsHBox>}
-    this.metadataMap = {};
-    //REVIEW: I don't see this metadataMap being used, only the this.kitPlayAreaNode.metadataMap. Check for usages and/or delete?
-
     // @private {Object.<kitID:number,function>}
     this.addedEmitterListeners = {};
 
@@ -154,9 +150,13 @@ class BAMScreenView extends ScreenView {
      * @param {Kit} kit
      */
     const addedMoleculeListener = ( molecule, kit ) => {
-      const moleculeControlsHBox = new MoleculeControlsHBox( kit, molecule, this.showDialogCallback );
-      this.kitPlayAreaNode.metadataLayer.addChild( moleculeControlsHBox );
-      this.kitPlayAreaNode.metadataMap[ molecule.moleculeId ] = moleculeControlsHBox;
+      if ( molecule.atoms.length > 1 ) {
+
+        // Only create this if there are multiple atoms
+        const moleculeControlsHBox = new MoleculeControlsHBox( kit, molecule, this.showDialogCallback );
+        this.kitPlayAreaNode.metadataLayer.addChild( moleculeControlsHBox );
+        this.kitPlayAreaNode.metadataMap[ molecule.moleculeId ] = moleculeControlsHBox;
+      }
       this.kitPlayAreaNode.addMoleculeBondNodes( molecule );
     };
 
