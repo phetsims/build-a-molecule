@@ -71,18 +71,7 @@ class CollectionBoxNode extends VBox {
 
     // @private {number}
     this.button3dWidth = show3dButton.width;
-    //REVIEW: Our listener cares about box.quantityProperty, but we're adding it to two other emitters.
-    //REVIEW: Can we only listen to the box.quantityProperty instead, with a link()? Then the immediate callback below
-    //REVIEW: can be removed. e.g. `box.quantityProperty.link( quantity => { show3dButton.visible = quantity > 0; } );`
-    //REVIEW: ALSO I believe multiple CollectionBoxNodes will not be created and disposed while one CollectionBox
-    //REVIEW: survives, but please document this if it's the case (otherwise we'll be leaking memory by not removing
-    //REVIEW: this listener).
-    const update3dVisibility = () => {
-      show3dButton.visible = box.quantityProperty.value > 0;
-    };
-    box.addedMoleculeEmitter.addListener( update3dVisibility );
-    box.removedMoleculeEmitter.addListener( update3dVisibility );
-    update3dVisibility();
+    box.quantityProperty.link( quantity => { show3dButton.visible = quantity > 0; } );
     this.blackBox.addChild( show3dButton );
     this.boxNode.addChild( this.blackBox );
 
