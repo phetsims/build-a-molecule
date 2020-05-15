@@ -26,7 +26,7 @@ const BLACK_BOX_PADDING = 7;
 class CollectionBoxNode extends VBox {
   /**
    * @param {CollectionBox} box
-   * @param {function} toModelBounds - Used to update location of the collection box
+   * @param {function} toModelBounds - Used to update position of the collection box
    * @param {function} showDialogCallback
    * @param {Object} [options]
    */
@@ -137,7 +137,7 @@ class CollectionBoxNode extends VBox {
    *
    * @public
    */
-  updateLocation() {
+  updatePosition() {
     this.box.dropBoundsProperty.set( this.toModelBounds( this.blackBox ) );
   }
 

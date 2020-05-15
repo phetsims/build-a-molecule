@@ -64,13 +64,13 @@ class CollectionAreaNode extends Node {
   }
 
   /**
-   * Update the location of each collection box node
+   * Update the positions of each collection box node
    *
    * @public
    */
-  updateCollectionBoxLocations() {
+  updateCollectionBoxPositions() {
     this.collectionBoxNodes.forEach( collectionBoxNode => {
-      collectionBoxNode.updateLocation();
+      collectionBoxNode.updatePosition();
     } );
   }
 }

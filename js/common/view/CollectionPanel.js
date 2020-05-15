@@ -149,14 +149,14 @@ class CollectionPanel extends Panel {
     const collectionAreaNode = this.collectionAreaMap[ collection.id ];
     this.collectionAreaHolder.addChild( collectionAreaNode );
 
-    // if we are hooked up, update the box locations. otherwise, listen to the canvas for when it is
+    // if we are hooked up, update the box positions. otherwise, listen to the canvas for when it is
     if ( this.hasScreenViewAsAncestor() ) {
-      collectionAreaNode.updateCollectionBoxLocations();
+      collectionAreaNode.updateCollectionBoxPositions();
     }
     else {
       // we need to listen for this because the update needs to use canvas' global/local/view coordinate transformations
       this.collectionAttachmentCallbacks.push( () => {
-        collectionAreaNode.updateCollectionBoxLocations();
+        collectionAreaNode.updateCollectionBoxPositions();
       } );
     }
   }

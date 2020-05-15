@@ -50,7 +50,7 @@ class CollectionBox {
     // @private {Array.<Molecule>}
     this.molecules = [];
 
-    // @private {Property.<Bounds2>} This is updated in CollectionBoxNode.updateLocation()
+    // @private {Property.<Bounds2>} This is updated in CollectionBoxNode.updatePosition()
     this.dropBoundsProperty = new Property( Bounds2.NOTHING );
     this.addedMoleculeEmitter.addListener( () => {
       if ( this.quantityProperty.value === capacity && options.initializeAudio ) {

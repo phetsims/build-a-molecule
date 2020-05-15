@@ -594,8 +594,8 @@ class Kit {
    * @returns {boolean}
    */
   attemptToBondMolecule( molecule ) {
-    let bestLocation = null; // {BondingOption|null}
-    let bestDistanceFromIdealLocation = Number.POSITIVE_INFINITY;
+    let bestBondingOption = null; // {BondingOption|null}
+    let bestDistanceFromIdealPosition = Number.POSITIVE_INFINITY;
     let atomsOverlap = false;
 
     // for each atom in our molecule, we try to see if it can bond to other atoms
@@ -629,11 +629,11 @@ class Kit {
               return; // continue, in the inner loop
             }
 
-            const location = new BondingOption( otherAtom, otherDirection, ourAtom );
-            const distance = ourAtom.positionProperty.value.distance( location.idealLocation );
-            if ( distance < bestDistanceFromIdealLocation ) {
-              bestLocation = location;
-              bestDistanceFromIdealLocation = distance;
+            const bondingOption = new BondingOption( otherAtom, otherDirection, ourAtom );
+            const distance = ourAtom.positionProperty.value.distance( bondingOption.idealPosition );
+            if ( distance < bestDistanceFromIdealPosition ) {
+              bestBondingOption = bondingOption;
+              bestDistanceFromIdealPosition = distance;
             }
 
             if ( ourAtom.positionBounds.intersectsBounds( otherAtom.positionBounds ) ) {
@@ -645,21 +645,21 @@ class Kit {
     } );
 
     // if our closest bond is too far and our atoms don't overlap, then ignore it
-    const isBondingInvalid = (bestLocation === null || bestDistanceFromIdealLocation > Kit.bondDistanceThreshold) && !atomsOverlap;
+    const isBondingInvalid = (bestBondingOption === null || bestDistanceFromIdealPosition > Kit.bondDistanceThreshold) && !atomsOverlap;
 
     if ( isBondingInvalid ) {
       this.separateMoleculeDestinations();
       return false;
     }
 
-    // cause all atoms in the molecule to move to that location
-    const delta = bestLocation.idealLocation.minus( bestLocation.b.positionProperty.value );
-    this.getMolecule( bestLocation.b ).atoms.forEach( atomInMolecule => {
+    // cause all atoms in the molecule to move to that position
+    const delta = bestBondingOption.idealPosition.minus( bestBondingOption.b.positionProperty.value );
+    this.getMolecule( bestBondingOption.b ).atoms.forEach( atomInMolecule => {
       atomInMolecule.setPositionAndDestination( atomInMolecule.positionProperty.value.plus( delta ) );
     } );
 
     // we now will bond the atom
-    this.bond( bestLocation.a, bestLocation.direction, bestLocation.b ); // model bonding
+    this.bond( bestBondingOption.a, bestBondingOption.direction, bestBondingOption.b ); // model bonding
     return true;
   }
 
@@ -691,7 +691,7 @@ class Kit {
   }
 }
 
-// A bond option from A to B. B would be moved to the location near A to bond.
+// A bond option from A to B. B would be moved to the position near A to bond.
 class BondingOption {
   /**
    * @param {Atom2} a - An atom A
@@ -709,8 +709,8 @@ class BondingOption {
     // @public {Atom2}
     this.b = b;
 
-    // @private {Vector2} The location the atom should be placed
-    this.idealLocation = a.positionProperty.value.plus( direction.vector.times( a.covalentRadius + b.covalentRadius ) );
+    // @private {Vector2} The position the atom should be placed
+    this.idealPosition = a.positionProperty.value.plus( direction.vector.times( a.covalentRadius + b.covalentRadius ) );
   }
 }
 
