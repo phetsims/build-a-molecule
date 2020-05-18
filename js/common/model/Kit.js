@@ -157,14 +157,7 @@ class Kit {
     // centers the buckets horizontally within the kit
     buckets.forEach( bucket => {
       // also note: this moves the atoms also!
-      bucket.position = new Vector2( bucket.position.x - usedWidth / 2 + bucket.width / 2, bucketBounds.centerY );
-
-      // since changing the bucket's position doesn't change contained atoms!
-      //REVIEW: Handle the TODO here?
-      // TODO: have the bucket position change do this?
-      bucket.getParticleList().forEach( atom => {
-        atom.translatePositionAndDestination( bucket.position );
-      } );
+      bucket.positionProperty.value = new Vector2( bucket.position.x - usedWidth / 2 + bucket.width / 2, bucketBounds.centerY );
     } );
   }
 

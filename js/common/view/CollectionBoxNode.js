@@ -172,8 +172,9 @@ class CollectionBoxNode extends VBox {
 
     const lastMoleculeNode = this.moleculeNodeMap[ molecule.moleculeId ];
     this.moleculeLayer.removeChild( lastMoleculeNode );
-    //REVIEW: handle TODO
-    this.moleculeNodes.splice( this.moleculeNodes.indexOf( lastMoleculeNode ), 1 ); // TODO: replace splice with remove
+    _.remove( this.moleculeNodes, item => {
+      return lastMoleculeNode === item ? lastMoleculeNode : null;
+    } );
     this.moleculeNodeMap[ molecule.moleculeId ].detach();
     delete this.moleculeNodeMap[ molecule.moleculeId ];
 

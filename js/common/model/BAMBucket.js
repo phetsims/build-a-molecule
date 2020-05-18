@@ -53,6 +53,13 @@ class BAMBucket extends SphereBucket {
     // @public {number}
     this.width = this.containerShape.bounds.width * 0.95;
 
+    // Update the atoms when bucket's position is changed
+    this.positionProperty.link( position => {
+      this.getParticleList().forEach( atom => {
+        atom.translatePositionAndDestination( position );
+      } );
+    } );
+
     // Create the atoms for each element and add them to the bucket. These exists for the sims lifetime.
     for ( let i = 0; i < quantity; i++ ) {
       this.addParticleNearestOpen( new Atom2( element, stepEmitter ), false );
