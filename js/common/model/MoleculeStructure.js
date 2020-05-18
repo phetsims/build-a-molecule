@@ -236,8 +236,9 @@ class MoleculeStructure {
       }
 
       // move our atom from dirty to visited
-      //REVIEW: Why is this commented out?
-      // dirtyAtoms.splice( _.indexOf( dirtyAtoms, atom ), 1 );
+      _.remove( dirtyAtoms, item => {
+        return item === atom ? atom : null;
+      } );
       visitedAtoms.push( atom );
     }
 
