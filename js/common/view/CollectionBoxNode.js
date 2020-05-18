@@ -97,7 +97,7 @@ class CollectionBoxNode extends VBox {
     this.boxNode.addChild( this.cueNode );
 
     // @private {Node} Layer to house molecules
-    this.moleculeLayer = new Node();
+    this.moleculeLayer = new Node( {} );
     this.boxNode.addChild( this.moleculeLayer );
 
     // Update all the boxes cueing
@@ -109,22 +109,6 @@ class CollectionBoxNode extends VBox {
     box.removedMoleculeEmitter.addListener( this.removeMolecule.bind( this ) );
     box.acceptedMoleculeCreationEmitter.addListener( this.blink.bind( this ) );
 
-    //REVIEW: Handle TODO
-    // TODO: this is somewhat of an ugly way of getting the fixed layout (where the molecules don't resize). consider changing
-    // kept for now since it is much easier to revert back to the old behavior
-
-    // Add invisible molecules to the molecule layer so that its size won't change later (fixes molecule positions)
-    const layoutNodes = [];
-    for ( let i = 0; i < box.capacity; i++ ) {
-      const node = CollectionBoxNode.lookupThumbnail( box.moleculeType, moleculeIdThumbnailMap );
-      node.visible = false;
-      layoutNodes.push( node );
-      this.moleculeLayer.addChild( node );
-    }
-
-    // Position them like we would with the others
-    this.layOutMoleculeList( layoutNodes );
-    this.centerMoleculesInBlackBox();
     this.addChild( this.boxNode );
     this.mutate( options );
   }
