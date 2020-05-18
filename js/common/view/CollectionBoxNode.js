@@ -23,6 +23,9 @@ import ShowMolecule3DButtonNode from './view3d/ShowMolecule3DButtonNode.js';
 // constants
 const BLACK_BOX_PADDING = 7;
 
+// {Object.<moleculeId:number, Node>} Used to map molecules to their respective thumbnails
+const moleculeIdThumbnailMap = {};
+
 class CollectionBoxNode extends VBox {
   /**
    * @param {CollectionBox} box
@@ -50,12 +53,6 @@ class CollectionBoxNode extends VBox {
 
     // @private {Object.<moleculeId:number,Node>} stores nodes for each molecule
     this.moleculeNodeMap = {};
-
-    // @private {Object.<moleculeId:number, Node>}
-    this.moleculeIdThumbnailMap = {};
-    //REVIEW: We're sharing nodes with a static lookupThumbnail method, can we just have this be a constant
-    //REVIEW: for all CollectionBoxNodes? e.g. declare it at the top-level as `const moleculeIdThumbnailMap = {}`
-    //REVIEW: outside of the constructor.
 
     // @private {Rectangle}
     this.blackBox = new Rectangle( 0, 0, 160, 50, {
@@ -119,7 +116,7 @@ class CollectionBoxNode extends VBox {
     // Add invisible molecules to the molecule layer so that its size won't change later (fixes molecule positions)
     const layoutNodes = [];
     for ( let i = 0; i < box.capacity; i++ ) {
-      const node = CollectionBoxNode.lookupThumbnail( box.moleculeType, this.moleculeIdThumbnailMap );
+      const node = CollectionBoxNode.lookupThumbnail( box.moleculeType, moleculeIdThumbnailMap );
       node.visible = false;
       layoutNodes.push( node );
       this.moleculeLayer.addChild( node );
@@ -152,7 +149,7 @@ class CollectionBoxNode extends VBox {
     this.updateBoxGraphics();
 
     const completeMolecule = MoleculeList.getMasterInstance().findMatchingCompleteMolecule( molecule );
-    const pseudo3DNode = CollectionBoxNode.lookupThumbnail( completeMolecule, this.moleculeIdThumbnailMap );
+    const pseudo3DNode = CollectionBoxNode.lookupThumbnail( completeMolecule, moleculeIdThumbnailMap );
     this.moleculeLayer.addChild( pseudo3DNode );
     this.moleculeNodes.push( pseudo3DNode );
     this.moleculeNodeMap[ molecule.moleculeId ] = pseudo3DNode;
