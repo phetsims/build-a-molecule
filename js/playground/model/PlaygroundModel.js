@@ -22,7 +22,7 @@ class PlaygroundModel extends BAMModel {
   constructor() {
     const collectionLayout = new CollectionLayout( false );
     const kitCollection = new KitCollection();
-    super( kitCollection, collectionLayout );
+    super( kitCollection, collectionLayout, { isMultipleCollection: false } );
 
     // NOTE: if kits are modified here, examine MAX_NUM_HEAVY_ATOMS in MoleculeSDFCombinedParser, as it may need to be changed
 

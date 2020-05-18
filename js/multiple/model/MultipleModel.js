@@ -21,7 +21,7 @@ class MultipleModel extends BAMModel {
   constructor() {
     const collectionLayout = new CollectionLayout( true );
     const kitCollection = new KitCollection( { enableCues: true } );
-    super( kitCollection, collectionLayout );
+    super( kitCollection, collectionLayout, { isMultipleCollection: true } );
 
     kitCollection.addKit( new Kit( collectionLayout, [
       new BAMBucket( new Dimension2( 400, 200 ), this.stepEmitter, Element.H, 2 ),

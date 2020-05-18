@@ -18,14 +18,25 @@ import CollectionBox from '../model/CollectionBox.js';
 import Kit from '../model/Kit.js';
 import MoleculeList from '../model/MoleculeList.js';
 import KitCollection from './KitCollection.js';
+import merge from '../../../../phet-core/js/merge.js';
+import required from '../../../../phet-core/js/required.js';
 
 class BAMModel {
 
   /**
    * @param {KitCollection} firstCollection
    * @param {CollectionLayout} collectionLayout
+   * @param {Object} config
    */
-  constructor( firstCollection, collectionLayout ) {
+  constructor( firstCollection, collectionLayout, config ) {
+    config = merge( {
+
+      // {boolean} Determines whether the collection is built for a single or multiple collection box
+      isMultipleCollection: required( config.isMultipleCollection )
+
+    }, config );
+    assert && assert( config.isMultipleCollection !== null, 'isSingleCollection is required' );
+
 
     // @public {Property.<KitCollection>}
     this.currentCollectionProperty = new Property( firstCollection );
@@ -59,7 +70,7 @@ class BAMModel {
     // @public {function} Generates a new kit collection
     this.regenerateCallback = () => {
       this.addCollection( this.generateKitCollection(
-        false,
+        config.isMultipleCollection,
         this.firstCollection.collectionBoxes.length === 5 ? 5 : 4, // The Multiple Screen requires only 4 collection boxes.
         this.stepEmitter,
         this.collectionLayout
@@ -232,7 +243,6 @@ class BAMModel {
    */
   generateKitCollection( allowMultipleMolecules, numBoxes, stepEmitter, collectionLayout ) {
     const maxInBox = 3;
-
     const usedMolecules = []; // [CompleteMolecule]
     const kits = [];
     const boxes = [];
