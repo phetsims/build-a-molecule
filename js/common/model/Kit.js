@@ -156,8 +156,9 @@ class Kit {
 
     // centers the buckets horizontally within the kit
     buckets.forEach( bucket => {
+
       // also note: this moves the atoms also!
-      bucket.positionProperty.value = new Vector2( bucket.position.x - usedWidth / 2 + bucket.width / 2, bucketBounds.centerY );
+      bucket.position = new Vector2( bucket.position.x - usedWidth / 2 + bucket.width / 2, bucketBounds.centerY );
     } );
   }
 
