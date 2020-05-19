@@ -65,6 +65,7 @@ class Molecule3DDialog extends Dialog {
 
     // View styles for space filled and ball and stick views.
     const viewStyleProperty = new EnumerationProperty( ViewStyle, ViewStyle.SPACE_FILL );
+    //REVIEW: playPauseButton could use a bigger touch area? Maybe the other buttons too in this dialog.
     const playPauseButton = new PlayPauseButton( this.isPlayingProperty, {
       radius: 15,
       valueOffSoundPlayer: Playable.NO_SOUND,
