@@ -170,18 +170,22 @@ class StrippedMolecule extends PhetioObject {
       // if the atoms are of different types, bail. subtrees can't possibly be equivalent
       return false;
     }
-    if ( !subCheck ) {
-      // if the atoms have different numbers of hydrogen containing them, bail
-      if ( this.getHydrogenCount( myAtom ) !== other.getHydrogenCount( otherAtom ) ) {
-        return false;
-      }
-    }
-    else {
-      // if the other atom has more hydrogens, bail
-      if ( this.getHydrogenCount( myAtom ) < other.getHydrogenCount( otherAtom ) ) {
-        return false;
-      }
-    }
+
+    // REVIEW: Incomplete implementation. Ask JO for help.
+    // POI: https://github.com/phetsims/build-a-molecule/issues/148
+    // CHECK: Can’t bond C-O-C-C . See MoleculeStructure.checkEquivalencyMatrix()
+    // if ( !subCheck ) {
+    //   // if the atoms have different numbers of hydrogen containing them, bail
+    //   if ( this.getHydrogenCount( myAtom ) !== other.getHydrogenCount( otherAtom ) ) {
+    //     return false;
+    //   }
+    // }
+    // else {
+    //   // if the other atom has more hydrogens, bail
+    //   if ( this.getHydrogenCount( myAtom ) < other.getHydrogenCount( otherAtom ) ) {
+    //     return false;
+    //   }
+    // }
     const myUnvisitedNeighbors = this.stripped.getNeighborsNotInSet( myAtom, myVisited );
     const otherUnvisitedNeighbors = other.stripped.getNeighborsNotInSet( otherAtom, otherVisited );
     if ( myUnvisitedNeighbors.length !== otherUnvisitedNeighbors.length ) {
