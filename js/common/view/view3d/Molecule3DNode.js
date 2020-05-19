@@ -294,8 +294,6 @@ class Molecule3DNode extends DOM {
       matrix = Matrix3.rotationY( timeElapsed );
     }
     else {
-      //REVIEW: handle the TODO here?
-      // TODO: WARNING: test high-res on iPad, this may be a bug here (includes scaled-up version!)
       const correctScale = 4 / this.canvas.width;
       const delta = this.currentPosition.minus( this.lastPosition );
       const quat = Quaternion.fromEulerAngles(

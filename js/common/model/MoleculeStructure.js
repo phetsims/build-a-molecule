@@ -23,9 +23,8 @@ import ElementHistogram from './ElementHistogram.js';
 let nextMoleculeId = 0;
 
 class MoleculeStructure {
-  //REVIEW comments below indicate that ordering is important. Describe why ordering is significant.
-  // NOTE from porting: StrippedMolecule relies on the ordering of atoms, and possibly bonds
-
+  // NOTE from porting: StrippedMolecule relies on the ordering of atoms, and possibly bonds for efficiency in checking
+  // equivalencies. Also to make sure molecule separation isn't duplicated on the same molecule pair.
   /**
    * @param {number} [numAtoms]
    * @param {number} [numBonds]
