@@ -171,9 +171,6 @@ class StrippedMolecule extends PhetioObject {
       return false;
     }
 
-    // REVIEW: Incomplete implementation. Ask JO for help.
-    // POI: https://github.com/phetsims/build-a-molecule/issues/148
-    // CHECK: Can’t bond C-O-C-C-C . See MoleculeStructure.checkEquivalencyMatrix()
     if ( !subCheck ) {
       // if the atoms have different numbers of hydrogen containing them, bail
       if ( this.getHydrogenCount( myAtom ) !== other.getHydrogenCount( otherAtom ) ) {
@@ -219,8 +216,8 @@ class StrippedMolecule extends PhetioObject {
     }
 
     // remove the atoms from the visited sets, to hold our contract
-    myVisited.splice();
-    otherVisited.shift();
+    myVisited.pop();
+    otherVisited.pop();
 
     // return whether we can find a successful permutation matching from our equivalency matrix
     return MoleculeStructure.checkEquivalencyMatrix( equivalences, 0, availableIndices, size );
