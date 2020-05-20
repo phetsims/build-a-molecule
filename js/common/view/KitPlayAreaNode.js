@@ -59,7 +59,7 @@ class KitPlayAreaNode extends Node {
       kits.forEach( kit => {
 
         // Link the active property listener to this kit
-        const activePropertyListener = kit => {
+        const activePropertyListener = () => {
           this.atomLayer.children.forEach( atomNode => {
 
             // Check if the atom is in the kit's play area and toggle its visibility.

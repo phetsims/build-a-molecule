@@ -69,8 +69,56 @@ class KitNode extends Node {
       kit.removedMoleculeEmitter.addListener( bucketHoleCursorUpdate );
       bucketHoleCursorUpdate();
 
+
+      // Used for grabbing atoms in bucket. Will be triggered by grabbing the atoms themselves and the bucket the atoms
+      // are contained in.
+      const atomNodeDragCallback = ( event, atom ) => {
+
+        // Adjust position of atom
+        const viewPoint = moleculeCollectingScreenView.globalToLocalPoint( event.pointer.point );
+        atom.positionProperty.value = BAMConstants.MODEL_VIEW_TRANSFORM.viewToModelPosition( viewPoint );
+
+        // Add new atom to the play area.
+        const currentKit = moleculeCollectingScreenView.bamModel.currentCollectionProperty.value.currentKitProperty.value;
+        currentKit.atomsInPlayArea.push( atom );
+
+        // Handle removing particles from bucket
+        if ( bucket.containsParticle( atom ) ) {
+
+          // Remove the atom from the bucket's model and trigger its removal from the atomLayer in the view.
+          particleRemovedListener( atom );
+
+          // Get reference to atomNode and call the dragListener
+          const atomNode = moleculeCollectingScreenView.kitPlayAreaNode.atomNodeMap[ atom.id ];
+
+          if ( atomNode ) {
+            atomNode.dragListener.press( event, atomNode );
+          }
+        }
+      };
+
       // but don't pick the elliptical paths in the hole (that would be expensive to compute so often)
-      bucketHole.children.forEach( child => { child.pickable = false; } );
+      bucketHole.children.forEach( () => {
+
+        // our hook to start dragging an atom (if available in the bucket)
+        bucketHole.addInputListener( {
+          down: event => {
+            this.interruptSubtreeInput();
+
+            // coordinate transforms to get our atom
+            const viewPoint = this.globalToLocalPoint( event.pointer.point );
+            const modelPoint = BAMConstants.MODEL_VIEW_TRANSFORM.viewToModelPosition( viewPoint );
+            const atom = this.closestAtom( modelPoint, Number.POSITIVE_INFINITY, bucket.element ); // filter by the element
+
+            // if it's not in our bucket, ignore it (could skip weird cases where an atom outside of the bucket is technically closer)
+            if ( !bucket.particleList.contains( atom ) ) {
+              return;
+            }
+            atomNodeDragCallback( event, atom );
+          }
+        } );
+
+      } );
       topLayer.addChild( bucketFront );
       bottomLayer.addChild( bucketHole );
 
@@ -109,28 +157,7 @@ class KitNode extends Node {
         // Add a drag listener that will move the model element when the user
         // drags this atom.
         atomNode.addInputListener( DragListener.createForwardingListener( event => {
-
-          // Adjust position of atom
-          const viewPoint = moleculeCollectingScreenView.globalToLocalPoint( event.pointer.point );
-          atom.positionProperty.value = BAMConstants.MODEL_VIEW_TRANSFORM.viewToModelPosition( viewPoint );
-
-          // Add new atom to the play area.
-          const currentKit = moleculeCollectingScreenView.bamModel.currentCollectionProperty.value.currentKitProperty.value;
-          currentKit.atomsInPlayArea.push( atom );
-
-          // Handle removing particles from bucket
-          if ( bucket.containsParticle( atom ) ) {
-
-            // Remove the atom from the bucket's model and trigger its removal from the atomLayer in the view.
-            particleRemovedListener( atom );
-
-            // Get reference to atomNode and call the dragListener
-            const atomNode = moleculeCollectingScreenView.kitPlayAreaNode.atomNodeMap[ atom.id ];
-
-            if ( atomNode ) {
-              atomNode.dragListener.press( event, atomNode );
-            }
-          }
+          atomNodeDragCallback( event, atom );
         }, {
           allowTouchSnag: false
         } ) );

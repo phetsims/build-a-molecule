@@ -42,6 +42,9 @@ class AtomNode extends Node {
     // @public {Atom2}
     this.atom = atom;
 
+    // @public {DragListener|null}
+    this.dragListener = null;
+
     // Add an atom icon
     this.addChild( AtomNode.createIcon( atom.element ) );
 

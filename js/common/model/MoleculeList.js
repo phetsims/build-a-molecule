@@ -26,7 +26,7 @@ class MoleculeList {
     // @private {Object.<name:string, CompleteMolecule>} Unique name => complete molecule
     this.moleculeNameMap = {};
 
-    // @private {Object.<spot:string, StrippedMolecule>} Formula => allowed stripped molecules (array)
+    // @private {Object.<spot:string, Array.<StrippedMolecule>} Formula => allowed stripped molecules (array)
     this.allowedStructureFormulaMap = {};
   }
 
