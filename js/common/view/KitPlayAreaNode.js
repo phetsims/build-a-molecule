@@ -44,12 +44,22 @@ class KitPlayAreaNode extends Node {
     // @private {Object.<moleculeId, MoleculeBondContainerNode>}
     this.bondMap = {};
 
+    // @private {Object.<kitId:number, activePropertyListener>}
+    this.kitActivePropertyListenerMap = {};
+
     // Every kit maps the visibility of its atoms in the play area to its active property. Active kits
     // have visible atoms.
-    this.kitsProperty.link( kits => {
+    this.kitsProperty.link( ( kits, oldKits ) => {
+
+      // Unlink the active property listeners for old kits
+      oldKits && oldKits.forEach( oldKit => {
+        oldKit.activeProperty.unlink( this.kitActivePropertyListenerMap[ oldKit.id ] );
+        delete this.kitActivePropertyListenerMap[ oldKit.id ];
+      } );
       kits.forEach( kit => {
-        //REVIEW: Presumably mention that the kit is no longer referenced, so we don't have to unlink this? Is that true?
-        kit.activeProperty.link( () => {
+
+        // Link the active property listener to this kit
+        const activePropertyListener = kit => {
           this.atomLayer.children.forEach( atomNode => {
 
             // Check if the atom is in the kit's play area and toggle its visibility.
@@ -60,7 +70,9 @@ class KitPlayAreaNode extends Node {
             // Check if the metadata molecule is a part of the active kit molecules  and toggle its visibility.
             metadataNode.visible = kit.molecules.includes( metadataNode.molecule );
           } );
-        } );
+        };
+        kit.activeProperty.link( activePropertyListener );
+        this.kitActivePropertyListenerMap[ kit.id ] = activePropertyListener;
       } );
     } );
     this.addChild( this.atomLayer );

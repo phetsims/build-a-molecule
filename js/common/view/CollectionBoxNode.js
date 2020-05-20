@@ -88,11 +88,8 @@ class CollectionBoxNode extends VBox {
       this.cueNode.visible = visible;
     } );
 
-    // Bounds are expanded to compensate for layout including a cueNode.
-    //REVIEW: If the cueNode is added to the boxNode, presumably it wouldn't need localBounds expansion?
-    //REVIEW: why would this be needed?
-    //*REVIEW: (DB) This was done so the cue node would be shifted to the left of the black box without having the any
-    //*REVIEW: other components update their postion. I think would both (JO&DB) paired on this implementation so we should revisit this.
+    // The black box's bounds are expanded to keep the black box symmetrical with the panel. The arrow node is
+    // positioned to the right side of the centered black box.
     this.blackBox.localBounds = this.blackBox.localBounds.withMaxX(
       this.blackBox.localBounds.right + this.blackBox.left - this.cueNode.left
     );

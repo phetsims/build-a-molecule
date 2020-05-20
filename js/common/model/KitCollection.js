@@ -193,7 +193,7 @@ class KitCollection {
   }
 
   /**
-   * Resest only the kits and boxes
+   * Reset only the kits and boxes
    * @public
    */
   resetKitsAndBoxes() {
