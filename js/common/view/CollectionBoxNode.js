@@ -99,7 +99,7 @@ class CollectionBoxNode extends VBox {
     this.moleculeLayer = new Node( {} );
     this.boxNode.addChild( this.moleculeLayer );
 
-    // Update all the boxes cueing
+    // Toggle the box's cues
     this.updateBoxGraphics();
 
     // Add listeners for the Collection Box that exist for the sim lifetime.
