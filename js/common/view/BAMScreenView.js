@@ -156,8 +156,8 @@ class BAMScreenView extends ScreenView {
         const moleculeControlsHBox = new MoleculeControlsHBox( kit, molecule, this.showDialogCallback );
         this.kitPlayAreaNode.metadataLayer.addChild( moleculeControlsHBox );
         this.kitPlayAreaNode.metadataMap[ molecule.moleculeId ] = moleculeControlsHBox;
+        this.kitPlayAreaNode.addMoleculeBondNodes( molecule );
       }
-      this.kitPlayAreaNode.addMoleculeBondNodes( molecule );
     };
 
     /**

@@ -20,7 +20,8 @@ import buildAMolecule from '../../buildAMolecule.js';
 import BAMConstants from '../BAMConstants.js';
 
 // constants
-// map from element symbol => graphical node for the atom, so that we can use the DAG to save overhead and costs
+// {Object.<symbol:string,Node> element symbol => graphical node for the atom, so that we can use the DAG to save
+// overhead and costs
 const ELEMENT_MAP = {};
 const GRABBABLE_OFFSET = 35;
 
