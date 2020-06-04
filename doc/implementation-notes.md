@@ -6,7 +6,7 @@ Build a Molecule - Implementation Notes
 - Atom: Singular representation of an element.
 - Molecule: A representation of one or more atoms that are bonded
 - Kit Collection: The whole grouping of kits and collection boxes
-- Kit: A grouping of buckets and their atoms. This is houses within the carousel at the bottom of the screen.
+- Kit: A grouping of buckets and their atoms. This is housed within the carousel at the bottom of the screen.
 - Collection Box: Area that houses a goal molecule. Collection boxes have cues to indicate dropping an atom in the area
 and are housed in a Collection Panel
 - Goal Molecule: These molecules are the targets for successfully completing a collection. For example, H20 on the first
