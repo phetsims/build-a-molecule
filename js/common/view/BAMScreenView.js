@@ -129,6 +129,9 @@ class BAMScreenView extends ScreenView {
         } );
         bamModel.reset();
         kitPanel.reset();
+        if ( this.dialog instanceof Molecule3DDialog ) {
+          this.dialog.isPlayingProperty.reset();
+        }
         this.updateRefillButton();
 
         // If the nextCollectionButton is present on screen hide it.
