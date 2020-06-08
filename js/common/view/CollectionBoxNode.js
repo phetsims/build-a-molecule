@@ -34,7 +34,7 @@ class CollectionBoxNode extends VBox {
    * @param {Object} [options]
    */
   constructor( box, toModelBounds, showDialogCallback, options ) {
-    super();
+    super( { spacing: 2 } );
 
     // @private {CollectionBox}
     this.box = box;

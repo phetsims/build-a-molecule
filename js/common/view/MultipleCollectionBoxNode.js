@@ -23,7 +23,7 @@ class MultipleCollectionBoxNode extends CollectionBoxNode {
    * @param {function} showDialogCallback
    */
   constructor( box, toModelBounds, showDialogCallback ) {
-    super( box, toModelBounds, showDialogCallback, { spacing: 2 } );
+    super( box, toModelBounds, showDialogCallback );
 
     // Number of molecules that can be collected
     const quantityNode = new RichText( '', {
