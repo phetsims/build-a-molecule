@@ -140,8 +140,9 @@ class BAMScreenView extends ScreenView {
         }
       },
       right: this.layoutBounds.right - BAMConstants.VIEW_PADDING / 2,
-      bottom: kitPanel.bottom
-    } );
+      bottom: kitPanel.bottom + BAMConstants.VIEW_PADDING / 4
+  } )
+    ;
     this.resetAllButton.touchArea = this.resetAllButton.bounds.dilated( 7 );
     this.addChild( this.resetAllButton );
     this.resetAllButton.moveToBack();
