@@ -135,7 +135,7 @@ class BAMScreenView extends ScreenView {
         this.updateRefillButton();
 
         // If the nextCollectionButton is present on screen hide it.
-        if ( this.children.includes( this.nextCollectionButton ) ) {
+        if ( _.includes( this.children, this.nextCollectionButton ) ) {
           this.nextCollectionButton.visible = false;
         }
       },

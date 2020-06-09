@@ -68,7 +68,7 @@ class KitPlayAreaNode extends Node {
           this.metadataLayer.children.forEach( metadataNode => {
 
             // Check if the metadata molecule is a part of the active kit molecules  and toggle its visibility.
-            metadataNode.visible = kit.molecules.includes( metadataNode.molecule );
+            metadataNode.visible = _.includes( kit.molecules, metadataNode.molecule );
           } );
         };
         kit.activeProperty.link( activePropertyListener );
