@@ -63,9 +63,8 @@ class Molecule3DDialog extends Dialog {
     // @public {BooleanProperty}
     this.userControlledProperty = new BooleanProperty( false );
 
-    // View styles for space filled and ball and stick views.
-    const viewStyleProperty = new EnumerationProperty( ViewStyle, ViewStyle.SPACE_FILL );
-    //REVIEW: playPauseButton could use a bigger touch area? Maybe the other buttons too in this dialog.
+    // @public {EnumerationProperty} View styles for space filled and ball and stick views.
+    this.viewStyleProperty = new EnumerationProperty( ViewStyle, ViewStyle.SPACE_FILL );
     const playPauseButton = new PlayPauseButton( this.isPlayingProperty, {
       radius: 15,
       valueOffSoundPlayer: Playable.NO_SOUND,
@@ -201,7 +200,7 @@ class Molecule3DDialog extends Dialog {
     // Listener to change the view style to the space filled representation
     spaceFilledIcon.addInputListener( new PressListener( {
       press: () => {
-        viewStyleProperty.value = ViewStyle.SPACE_FILL;
+        this.viewStyleProperty.value = ViewStyle.SPACE_FILL;
       }
     } ) );
 
@@ -219,7 +218,7 @@ class Molecule3DDialog extends Dialog {
     // Updates the view style to the ball and stick representation
     ballAndStickIcon.addInputListener( new PressListener( {
       press: () => {
-        viewStyleProperty.value = ViewStyle.BALL_AND_STICK;
+        this.viewStyleProperty.value = ViewStyle.BALL_AND_STICK;
       }
     } ) );
 
@@ -232,7 +231,7 @@ class Molecule3DDialog extends Dialog {
     moleculeScene.add( moleculeContainer );
 
     // Handle the each 3D representation based on the current view style
-    Property.multilink( [ viewStyleProperty, completeMoleculeProperty ], ( viewStyle, completeMolecule ) => {
+    Property.multilink( [ this.viewStyleProperty, completeMoleculeProperty ], ( viewStyle, completeMolecule ) => {
       if ( completeMolecule ) {
 
         // Remove all previous mesh elements if they exists from a previous build
@@ -263,7 +262,7 @@ class Molecule3DDialog extends Dialog {
     } ];
 
     // Create the icons for scene selection
-    const sceneRadioButtonGroup = new RadioButtonGroup( viewStyleProperty, toggleButtonsContent, {
+    const sceneRadioButtonGroup = new RadioButtonGroup( this.viewStyleProperty, toggleButtonsContent, {
       buttonContentXMargin: 5,
       buttonContentYMargin: -8, // Trimming of part of the icon node is acceptable in this case.
       baseColor: 'black',

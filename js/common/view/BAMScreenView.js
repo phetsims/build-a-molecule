@@ -115,6 +115,7 @@ class BAMScreenView extends ScreenView {
     this.updateRefillButton = () => {
       this.refillButton.enabled = !this.bamModel.currentCollectionProperty.value.currentKitProperty.value.allBucketsFilled();
     };
+
     // @public {ResetAllButton} Create a reset all button. Position of button is adjusted on "Larger" Screen.
     this.resetAllButton = new ResetAllButton( {
       listener: () => {
@@ -131,6 +132,7 @@ class BAMScreenView extends ScreenView {
         kitPanel.reset();
         if ( this.dialog instanceof Molecule3DDialog ) {
           this.dialog.isPlayingProperty.reset();
+          this.dialog.viewStyleProperty.reset();
         }
         this.updateRefillButton();
 
@@ -141,8 +143,8 @@ class BAMScreenView extends ScreenView {
       },
       right: this.layoutBounds.right - BAMConstants.VIEW_PADDING / 2,
       bottom: kitPanel.bottom + BAMConstants.VIEW_PADDING / 4
-  } )
-    ;
+    } );
+
     this.resetAllButton.touchArea = this.resetAllButton.bounds.dilated( 7 );
     this.addChild( this.resetAllButton );
     this.resetAllButton.moveToBack();
