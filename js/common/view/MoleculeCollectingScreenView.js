@@ -47,7 +47,6 @@ class MoleculeCollectingScreenView extends BAMScreenView {
       baseColor: Color.ORANGE,
       soundPlayer: Playable.NO_SOUND
     } );
-    //RREVIEW: touchArea accepts {Bounds2}, no need for Shape.bounds wrapping
     this.nextCollectionButton.touchArea = Shape.bounds( this.nextCollectionButton.localBounds.dilated( 20 ) );
     this.nextCollectionButton.addListener( () => {
       bamModel.regenerateCallback();
@@ -128,7 +127,7 @@ class MoleculeCollectingScreenView extends BAMScreenView {
     // show dialog the 1st time all collection boxes are filled
     collection.allCollectionBoxesFilledProperty.link( filled => {
       if ( filled ) {
-        if ( !this.hasShownOnce ) {
+        if ( !this.hasShownOnce && !this.bamModel.hasNextCollection() ) {
           this.allFilledDialog.show();
           this.hasShownOnce = true;
         }
