@@ -7,6 +7,7 @@
  * @author Denzell Barnett (PhET Interactive Simulations)
  */
 
+import StringUtils from '../../../../../phetcommon/js/util/StringUtils.js';
 import BooleanProperty from '../../../../../axon/js/BooleanProperty.js';
 import EnumerationProperty from '../../../../../axon/js/EnumerationProperty.js';
 import Property from '../../../../../axon/js/Property.js';
@@ -26,6 +27,7 @@ import Dialog from '../../../../../sun/js/Dialog.js';
 import RadioButtonGroup from '../../../../../sun/js/buttons/RadioButtonGroup.js';
 import Playable from '../../../../../tambo/js/Playable.js';
 import buildAMolecule from '../../../buildAMolecule.js';
+import buildAMoleculeStrings from '../../../buildAMoleculeStrings.js';
 import BAMConstants from '../../BAMConstants.js';
 import MoleculeList from '../../model/MoleculeList.js';
 
@@ -81,7 +83,9 @@ class Molecule3DDialog extends Dialog {
     // Update formula text for displayed molecule.
     completeMoleculeProperty.link( completeMolecule => {
       if ( completeMolecule ) {
-        title.setText( completeMolecule.getDisplayName() );
+        title.setText( StringUtils.fillIn( buildAMoleculeStrings.moleculeNamePattern, {
+          display: completeMolecule.getDisplayName()
+        } ) );
         formulaText.setText( completeMolecule.getGeneralFormulaFragment() );
       }
     } );

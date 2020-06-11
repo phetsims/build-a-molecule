@@ -7,6 +7,7 @@
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 
+import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
 import Shape from '../../../../kite/js/Shape.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import ButtonListener from '../../../../scenery/js/input/ButtonListener.js';
@@ -17,6 +18,7 @@ import RectangularPushButton from '../../../../sun/js/buttons/RectangularPushBut
 import Playable from '../../../../tambo/js/Playable.js';
 import splitBlueImage from '../../../images/split-blue_png.js';
 import buildAMolecule from '../../buildAMolecule.js';
+import buildAMoleculeStrings from '../../buildAMoleculeStrings.js';
 import BAMConstants from '../BAMConstants.js';
 import MoleculeList from '../model/MoleculeList.js';
 import ShowMolecule3DButtonNode from './view3d/ShowMolecule3DButtonNode.js';
@@ -46,7 +48,9 @@ class MoleculeControlsHBox extends HBox {
     if ( completeMolecule ) {
 
       // Label with chemical formula and common name
-      const label = new Text( completeMolecule.getDisplayName(), {
+      const label = new Text( StringUtils.fillIn( buildAMoleculeStrings.moleculeNamePattern, {
+        display: completeMolecule.getDisplayName()
+      } ), {
         font: new PhetFont( { size: 17, weight: 'bold' } ),
         maxWidth: BAMConstants.TEXT_MAX_WIDTH
       } );

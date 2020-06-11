@@ -26,6 +26,9 @@
   "bromine": {
     "value": "Bromine"
   },
+  "moleculeNamePattern": {
+    "value": "{{display}}"
+  },
   "collectionSinglePattern": {
     "value": "{{general}} ({{display}})"
   },
