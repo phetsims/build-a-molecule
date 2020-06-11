@@ -1,5 +1,5 @@
 {
-  "comment": "# build-a-molecule 1.0.0-dev.76 Tue Jun 09 2020 20:59:41 GMT-0400 (Eastern Daylight Time)",
+  "comment": "# build-a-molecule 1.0.0-dev.77 Thu Jun 11 2020 07:45:28 GMT-0400 (Eastern Daylight Time)",
   "assert": {
     "sha": "0b7a48c6b9ba48af48ae7419bd30c280c785f2cc",
     "branch": "master"
@@ -13,11 +13,11 @@
     "branch": "master"
   },
   "build-a-molecule": {
-    "sha": "942c361f35a002d0783b94c4117781d9a83f61df",
+    "sha": "badc3d4048d1bbc3c1bc600ea4fc912a314595e7",
     "branch": "master"
   },
   "chipper": {
-    "sha": "65f9d0c344a9118a899d09cdf648bc3e6ab36346",
+    "sha": "fbb7b1f980a3d3cfd2249c10a8856f953080b94e",
     "branch": "master"
   },
   "dot": {
@@ -25,7 +25,7 @@
     "branch": "master"
   },
   "joist": {
-    "sha": "0e79ffdf4a8cc290cafb5dce07a65c005b9e84f0",
+    "sha": "6bb7ee2ec766d78994f9a3034434e12b8f2262ae",
     "branch": "master"
   },
   "kite": {
@@ -41,15 +41,15 @@
     "branch": "master"
   },
   "phet-core": {
-    "sha": "bbaa6f8324c78f6ddd53b9a3129a9ccfb29e84d8",
+    "sha": "01983673bf5e0e8afe9a0e0b9507b42f67563405",
     "branch": "master"
   },
   "phet-io": {
-    "sha": "6142481c8c1132b9190ad70102ca3e3984e0d488",
+    "sha": "7585c9bf0ff6303b227bb9e6c14706ab77174413",
     "branch": "master"
   },
   "phet-io-wrappers": {
-    "sha": "bd3f9af9aaf4aa0ecc62e78efab7f49efc2109e3",
+    "sha": "fbbd2b97e1a1769aef02d092d5ea165fb13ea2d3",
     "branch": "master"
   },
   "phetcommon": {
@@ -65,7 +65,7 @@
     "branch": "master"
   },
   "scenery": {
-    "sha": "b0babf87fd26f44b143edb83e225f149239a25cb",
+    "sha": "39f6b959857f3909964b72967eef1337365abf8b",
     "branch": "master"
   },
   "scenery-phet": {
@@ -85,7 +85,7 @@
     "branch": "master"
   },
   "tambo": {
-    "sha": "b7c69db1b299e92a879b7bee471ec62f099e3cb3",
+    "sha": "15b00fe58e2f33121b73283c43c2e0e4ade7cde3",
     "branch": "master"
   },
   "tandem": {
