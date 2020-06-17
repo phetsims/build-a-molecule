@@ -1,11 +1,11 @@
 {
-  "comment": "# build-a-molecule 1.0.0-dev.78 Wed Jun 17 2020 07:38:33 GMT-0400 (Eastern Daylight Time)",
+  "comment": "# build-a-molecule 1.0.0-dev.79 Wed Jun 17 2020 10:35:24 GMT-0400 (Eastern Daylight Time)",
   "assert": {
     "sha": "0b7a48c6b9ba48af48ae7419bd30c280c785f2cc",
     "branch": "master"
   },
   "axon": {
-    "sha": "aefb873b3f28191410bdb9da2eb1576cf86a922b",
+    "sha": "03af6115c89ddfee7c08d7554c56d10b58117357",
     "branch": "master"
   },
   "brand": {
@@ -13,11 +13,11 @@
     "branch": "master"
   },
   "build-a-molecule": {
-    "sha": "88bfce9dcdd448246e0da44f4d91c83a1c231a05",
+    "sha": "1befbaba884c2b8e41460771d4bc168794936eb5",
     "branch": "master"
   },
   "chipper": {
-    "sha": "fbb7b1f980a3d3cfd2249c10a8856f953080b94e",
+    "sha": "aaca7ea994f30c859d974e7438410b683717747b",
     "branch": "master"
   },
   "dot": {
@@ -25,7 +25,7 @@
     "branch": "master"
   },
   "joist": {
-    "sha": "6bb7ee2ec766d78994f9a3034434e12b8f2262ae",
+    "sha": "d3e5d3df8c606523aec0bafff23784d14b933a28",
     "branch": "master"
   },
   "kite": {
@@ -45,15 +45,15 @@
     "branch": "master"
   },
   "phet-io": {
-    "sha": "7585c9bf0ff6303b227bb9e6c14706ab77174413",
+    "sha": "5e249f15bfd58d4553163c30c0f50fbbbda64f6c",
     "branch": "master"
   },
   "phet-io-wrappers": {
-    "sha": "fbbd2b97e1a1769aef02d092d5ea165fb13ea2d3",
+    "sha": "9832c2812042b4fad19ad80f9cabcf976d7a2fb7",
     "branch": "master"
   },
   "phetcommon": {
-    "sha": "f107d0e97d30642f6c0e7894c540995f00bdc26b",
+    "sha": "9f5ea542bef0cb05955cb150bd9e89d69c07220a",
     "branch": "master"
   },
   "phetmarks": {
@@ -65,11 +65,11 @@
     "branch": "master"
   },
   "scenery": {
-    "sha": "39f6b959857f3909964b72967eef1337365abf8b",
+    "sha": "baeba684a517e6544b10bc8d02cb2a146887a2eb",
     "branch": "master"
   },
   "scenery-phet": {
-    "sha": "0c72deab9df8cf70effaf893abce7d69b23fdc04",
+    "sha": "5c0826794e0346460d9bc1b42c70c3b5cc6c3f2c",
     "branch": "master"
   },
   "sherpa": {
@@ -77,15 +77,15 @@
     "branch": "master"
   },
   "studio": {
-    "sha": "d8deda20096d97c3ce61e23eea4c078b90658f24",
+    "sha": "03d6b50ea0dcaa9f06b9662d544a2fe31a749e39",
     "branch": "master"
   },
   "sun": {
-    "sha": "b1f82991f7bc34bc0c441541e74289e363116219",
+    "sha": "c7c8c2101a0c4c86fa715b3c4d6de8e91626e073",
     "branch": "master"
   },
   "tambo": {
-    "sha": "15b00fe58e2f33121b73283c43c2e0e4ade7cde3",
+    "sha": "8ca479f4b913b758a279e28dccc15eef238c216c",
     "branch": "master"
   },
   "tandem": {
