@@ -270,6 +270,10 @@ class BAMScreenView extends ScreenView {
       }
     };
     phet.joist.display.addInputListener( this.clickToDismissListener );
+
+    kitPanel.kitCarousel.pageNumberProperty.link( () => {
+      this.interruptSubtreeInput();
+    } );
   }
 
   /**
