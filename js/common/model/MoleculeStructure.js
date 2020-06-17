@@ -643,9 +643,7 @@ class MoleculeStructure {
       if ( equivalences[ myIndex * size + otherIndex ] ) { // only follow path if it is true (equivalent)
 
         // remove the index from consideration for checking the following submatrix
-        _.remove( otherRemainingIndices, item => {
-          return item === otherIndex ? otherIndex : null;
-        } );
+        otherRemainingIndices.splice( otherRemainingIndices.indexOf( otherIndex ), 1 );
 
         const success = ( myIndex === size - 1 ) || // there are no more permutations to check
                         MoleculeStructure.checkEquivalencyMatrix( equivalences, myIndex + 1, otherRemainingIndices, size ); // or we can find a good combination of the remaining indices
