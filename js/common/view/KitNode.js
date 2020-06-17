@@ -108,11 +108,12 @@ class KitNode extends Node {
             // coordinate transforms to get our atom
             const viewPoint = this.globalToLocalPoint( event.pointer.point );
             const modelPoint = BAMConstants.MODEL_VIEW_TRANSFORM.viewToModelPosition( viewPoint );
-            const atom = this.closestAtom( modelPoint, Number.POSITIVE_INFINITY, bucket.element ); // filter by the element
+            let atom = this.closestAtom( modelPoint, Number.POSITIVE_INFINITY, bucket.element ); // filter by the element
 
-            // if it's not in our bucket, ignore it (could skip weird cases where an atom outside of the bucket is technically closer)
+            // if it's not in our bucket, ignore it (could skip weird cases where an atom outside of the bucket is
+            // technically closer)
             if ( !bucket.particleList.contains( atom ) ) {
-              return;
+              atom = bucket.particleList.getArray()[ 0 ];
             }
             atomNodeDragCallback( event, atom );
           }
