@@ -421,7 +421,7 @@ class Kit {
     this.atomsInPlayArea.remove( atom );
     const bucket = this.getBucketForElement( atom.element );
     bucket.addParticleNearestOpen( atom, animate );
-    if ( !bucket.particleList.contains( atom ) ) {
+    if ( !bucket.particleList.includes( atom ) ) {
       bucket.particleList.push( atom );
     }
   }

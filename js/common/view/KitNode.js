@@ -112,7 +112,7 @@ class KitNode extends Node {
 
             // if it's not in our bucket, ignore it (could skip weird cases where an atom outside of the bucket is
             // technically closer)
-            if ( !bucket.particleList.contains( atom ) ) {
+            if ( !bucket.particleList.includes( atom ) ) {
               const bucketAtoms = bucket.particleList.getArray();
               if ( bucketAtoms.length ) {
                 atom = bucketAtoms[ 0 ];

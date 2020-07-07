@@ -63,7 +63,7 @@ class KitPlayAreaNode extends Node {
           this.atomLayer.children.forEach( atomNode => {
 
             // Check if the atom is in the kit's play area and toggle its visibility.
-            atomNode.visible = kit.atomsInPlayArea.contains( atomNode.atom );
+            atomNode.visible = kit.atomsInPlayArea.includes( atomNode.atom );
           } );
           this.metadataLayer.children.forEach( metadataNode => {
 
