@@ -36,7 +36,7 @@ class AllFilledDialog extends Dialog {
       bottomMargin: 10,
       cornerRadius: BAMConstants.CORNER_RADIUS,
       layoutStrategy: ( dialog, simBounds, screenBounds, scale ) => {
-        this.center = screenBounds.center.times( 1.0 / scale ).minusXY( 75, 75 );
+        this.center = dialog.layoutBounds.center.minusXY( 75, 75 );
       }
     }, options );
 
