@@ -14,6 +14,7 @@ import Property from '../../../../../axon/js/Property.js';
 import Matrix3 from '../../../../../dot/js/Matrix3.js';
 import Vector3 from '../../../../../dot/js/Vector3.js';
 import ThreeNode from '../../../../../mobius/js/ThreeNode.js';
+import ThreeStage from '../../../../../mobius/js/ThreeStage.js';
 import Enumeration from '../../../../../phet-core/js/Enumeration.js';
 import PhetFont from '../../../../../scenery-phet/js/PhetFont.js';
 import PlayPauseButton from '../../../../../scenery-phet/js/buttons/PlayPauseButton.js';
@@ -30,9 +31,31 @@ import buildAMolecule from '../../../buildAMolecule.js';
 import buildAMoleculeStrings from '../../../buildAMoleculeStrings.js';
 import BAMConstants from '../../BAMConstants.js';
 import MoleculeList from '../../model/MoleculeList.js';
+import Image from '../../../../../scenery/js/nodes/Image.js';
+import ThreeUtils from '../../../../../mobius/js/ThreeUtils.js';
 
 // constants
+const SCALE = 0.5;
 const ViewStyle = Enumeration.byKeys( [ 'SPACE_FILL', 'BALL_AND_STICK' ] );
+
+const colorSet = [ new Color( 159, 102, 218 ), new Color( 255, 255, 255 ) ];
+
+// Create and add lights to each scene for main molecule node and icons. Lights taken from MoleculeShapesScreenView.js
+const ambientLight = new THREE.AmbientLight( 0x191919 ); // closest to 0.1 like the original shader
+const sunLight = new THREE.DirectionalLight( 0xffffff, 0.8 * 0.9 );
+const moonLight = new THREE.DirectionalLight( 0xffffff, 0.6 * 0.9 );
+sunLight.position.set( -1.0, 0.5, 2.0 );
+moonLight.position.set( 2.0, -1.0, 1.0 );
+
+// Create a Space Filled icon and representation
+const icon = new ThreeStage( { backgroundProperty: new Property( Color.TRANSPARENT ) } );
+icon.setDimensions( 100, 60 );
+icon.threeCamera.updateProjectionMatrix();
+
+const iconScene = icon.threeScene;
+iconScene.add( ambientLight.clone() );
+iconScene.add( sunLight.clone() );
+iconScene.add( moonLight.clone() );
 
 class Molecule3DDialog extends Dialog {
   /**
@@ -186,53 +209,16 @@ class Molecule3DDialog extends Dialog {
       } );
     };
 
-    // Construct icons from MoleculeList.O2, see https://github.com/phetsims/build-a-molecule/issues/139.
-    // Options for ThreeNode icons.
-    const iconOptions = {
-      cursor: 'pointer',
-      cameraPosition: new Vector3( 0, 0, 5 )
-    };
-    const colorSet = [ new Color( 159, 102, 218 ), new Color( 255, 255, 255 ) ];
-
-    // Create a Space Filled icon and representation
-    const spaceFilledIcon = new ThreeNode( 50, 50, iconOptions );
-    const spaceFilledScene = spaceFilledIcon.stage.threeScene;
-    const spaceFilledContainer = new THREE.Object3D();
-    spaceFilledScene.add( spaceFilledContainer );
-    buildAtomMesh( MoleculeList.O2, spaceFilledContainer, false, false, colorSet );
-
-    // Listener to change the view style to the space filled representation
-    spaceFilledIcon.addInputListener( new PressListener( {
-      press: () => {
-        this.viewStyleProperty.value = ViewStyle.SPACE_FILL;
-      }
-    } ) );
-
-    // Create a Ball and Stick icon and representation
-    const ballAndStickIcon = new ThreeNode( 50, 50, {
-      cursor: 'pointer',
-      cameraPosition: new Vector3( 0, 0, 7 )
-    } );
-    const ballAndStickScene = ballAndStickIcon.stage.threeScene;
-    const ballAndStickContainer = new THREE.Object3D();
-    ballAndStickScene.add( ballAndStickContainer );
-    buildAtomMesh( MoleculeList.O2, ballAndStickContainer, true, false, colorSet );
-    buildBondMesh( MoleculeList.O2, ballAndStickContainer, true, 0.2 );
-
-    // Updates the view style to the ball and stick representation
-    ballAndStickIcon.addInputListener( new PressListener( {
-      press: () => {
-        this.viewStyleProperty.value = ViewStyle.BALL_AND_STICK;
-      }
-    } ) );
-
     // Construct 3D view of moleculeNode
-    const moleculeNode = new ThreeNode( 300, 200, {
+    const moleculeNode = new ThreeNode( 300, 225, {
       cameraPosition: new Vector3( 0, 0, 7 )
     } );
     const moleculeContainer = new THREE.Object3D();
     const moleculeScene = moleculeNode.stage.threeScene;
     moleculeScene.add( moleculeContainer );
+    moleculeScene.add( ambientLight.clone() );
+    moleculeScene.add( sunLight.clone() );
+    moleculeScene.add( moonLight.clone() );
 
     // Handle the each 3D representation based on the current view style
     Property.multilink( [ this.viewStyleProperty, completeMoleculeProperty ], ( viewStyle, completeMolecule ) => {
@@ -259,16 +245,16 @@ class Molecule3DDialog extends Dialog {
     // Create toggle buttons for scene selection
     const toggleButtonsContent = [ {
       value: ViewStyle.SPACE_FILL,
-      node: spaceFilledIcon
+      node: Molecule3DDialog.SPACE_FILL_ICON( buildAtomMesh, colorSet, iconScene, icon )
     }, {
       value: ViewStyle.BALL_AND_STICK,
-      node: ballAndStickIcon
+      node: Molecule3DDialog.BALL_AND_STICK_ICON( buildAtomMesh, buildBondMesh, colorSet, iconScene, icon )
     } ];
 
     // Create the icons for scene selection
     const sceneRadioButtonGroup = new RadioButtonGroup( this.viewStyleProperty, toggleButtonsContent, {
-      buttonContentXMargin: 5,
-      buttonContentYMargin: -8, // Trimming of part of the icon node is acceptable in this case.
+      buttonContentXMargin: 0,
+      buttonContentYMargin: 0, // Trimming of part of the icon node is acceptable in this case.
       baseColor: 'black',
       selectedStroke: 'yellow',
       deselectedStroke: 'white',
@@ -280,34 +266,13 @@ class Molecule3DDialog extends Dialog {
       spacing: 30
     } );
 
-    // Create and add lights to each scene for main molecule node and icons. Lights taken from MoleculeShapesScreenView.js
-    const ambientLight = new THREE.AmbientLight( 0x191919 ); // closest to 0.1 like the original shader
-    moleculeScene.add( ambientLight );
-    spaceFilledScene.add( ambientLight.clone() );
-    ballAndStickScene.add( ambientLight.clone() );
-
-    const sunLight = new THREE.DirectionalLight( 0xffffff, 0.8 * 0.9 );
-    sunLight.position.set( -1.0, 0.5, 2.0 );
-    moleculeScene.add( sunLight );
-    spaceFilledScene.add( sunLight.clone() );
-    ballAndStickScene.add( sunLight.clone() );
-
-    const moonLight = new THREE.DirectionalLight( 0xffffff, 0.6 * 0.9 );
-    moonLight.position.set( 2.0, -1.0, 1.0 );
-    moleculeScene.add( moonLight );
-    spaceFilledScene.add( moonLight.clone() );
-    ballAndStickScene.add( moonLight.clone() );
-
     // Correct the ordering of the dialogs children
     this.isShowingProperty.link( isShowing => {
+      contentVBox.removeAllChildren();
 
       // Set the order of children for the VBox
       if ( isShowing ) {
-        contentVBox.removeAllChildren();
         contentVBox.children = [ formulaText, moleculeNode, sceneRadioButtonGroup, playPauseButton ];
-      }
-      else {
-        contentVBox.removeAllChildren();
       }
     } );
 
@@ -325,10 +290,7 @@ class Molecule3DDialog extends Dialog {
     this.moleculeNode = moleculeNode;
 
     // @private {ThreeNode}
-    this.spaceFilledIcon = spaceFilledIcon;
-
-    // @private {ThreeNode}
-    this.ballAndStickIcon = ballAndStickIcon;
+    this.icon = icon;
     let lastGlobalPoint = null;
 
     // Handles user input to rotate molecule
@@ -383,16 +345,56 @@ class Molecule3DDialog extends Dialog {
     // Main molecule
     this.moleculeNode.layout();
     this.moleculeNode.render( undefined );
-
-    // Space filled icon
-    this.spaceFilledIcon.layout();
-    this.spaceFilledIcon.render( undefined );
-
-    // Ball and stick icon
-    this.ballAndStickIcon.layout();
-    this.ballAndStickIcon.render( undefined );
   }
 }
+
+Molecule3DDialog.SPACE_FILL_ICON = ( buildAtomMesh, colorSet, iconScene, icon ) => {
+  icon.threeCamera.position.copy( ThreeUtils.vectorToThree( new Vector3( 0, 0, 7 ) ) );
+  icon.threeCamera.updateProjectionMatrix();
+
+  // Add the Space Filled Container to the icon
+  const spaceFilledContainer = new THREE.Object3D();
+  spaceFilledContainer.scale.copy( new Vector3( 1.5, 2.3, 2.2 ) );
+  iconScene.add( spaceFilledContainer );
+  buildAtomMesh( MoleculeList.O2, spaceFilledContainer, false, false, colorSet );
+
+  // Capture the three node icon as an image node
+  const spaceFilledIcon = new Image( icon.renderToCanvas( 4 ), { scale: SCALE } );
+
+  // Listener to change the view style to the space filled representation
+  spaceFilledIcon.addInputListener( new PressListener( {
+    press: () => {
+      this.viewStyleProperty.value = ViewStyle.SPACE_FILL;
+    }
+  } ) );
+  iconScene.remove( spaceFilledContainer );
+  return spaceFilledIcon;
+};
+
+Molecule3DDialog.BALL_AND_STICK_ICON = ( buildAtomMesh, buildBondMesh, colorSet, iconScene, icon ) => {
+
+  icon.threeCamera.position.copy( ThreeUtils.vectorToThree( new Vector3( 0, 0, 7 ) ) );
+  icon.threeCamera.updateProjectionMatrix();
+
+  // Create a Ball and Stick icon and representation
+  const ballAndStickContainer = new THREE.Object3D();
+  ballAndStickContainer.scale.copy( new Vector3( 1.3, 2.2, 2.2 ) );
+  iconScene.add( ballAndStickContainer );
+  buildAtomMesh( MoleculeList.O2, ballAndStickContainer, true, false, colorSet );
+  buildBondMesh( MoleculeList.O2, ballAndStickContainer, true, 0.1 );
+
+  // Capture the three node icon as an image node
+  const ballAndStickIcon = new Image( icon.renderToCanvas( 4 ), { scale: SCALE } );
+
+  // Updates the view style to the ball and stick representation
+  ballAndStickIcon.addInputListener( new PressListener( {
+    press: () => {
+      this.viewStyleProperty.value = ViewStyle.BALL_AND_STICK;
+    }
+  } ) );
+  iconScene.remove( ballAndStickContainer );
+  return ballAndStickIcon;
+};
 
 buildAMolecule.register( 'Molecule3DDialog', Molecule3DDialog );
 export default Molecule3DDialog;
