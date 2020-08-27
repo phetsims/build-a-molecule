@@ -1,5 +1,5 @@
 {
-  "comment": "# build-a-molecule 1.0.0-rc.2 Wed Aug 26 2020 12:07:02 GMT-0400 (Eastern Daylight Time)",
+  "comment": "# build-a-molecule 1.0.0-rc.2 Thu Aug 27 2020 15:12:33 GMT-0400 (Eastern Daylight Time)",
   "assert": {
     "sha": "73ed687cbea36db888079159cf9b43d41b8b8854",
     "branch": "HEAD"
@@ -13,7 +13,7 @@
     "branch": "HEAD"
   },
   "build-a-molecule": {
-    "sha": "31578dec04b534f022150b4ef92879eed73d71f9",
+    "sha": "9c3a66ff0a7bd8d37cf34c54231dea205bcc25b5",
     "branch": "1.0"
   },
   "chipper": {
@@ -89,8 +89,8 @@
     "branch": "HEAD"
   },
   "tandem": {
-    "sha": "f7ba25a60956c7821e90e35fedc04d8d55c0a035",
-    "branch": "HEAD"
+    "sha": "4898f92dc0d8341d37590fab30c1b37ca1c0b4b9",
+    "branch": "build-a-molecule-1.0"
   },
   "utterance-queue": {
     "sha": "03e02b7290d549558a20aa62511b3260070b6294",
