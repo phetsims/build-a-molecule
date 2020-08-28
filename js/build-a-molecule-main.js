@@ -20,7 +20,7 @@ const simOptions = {
     leadDesign: 'Emily B. Moore, Amy Rouinfar',
     softwareDevelopment: 'Denzell Barnett, Johnathan Olson',
     team: 'Christine Denison, Kelly Lancaster, Ariel Paul, Kathy Perkins',
-    qualityAssurance: 'Logan Bray, Ethan Johnson, Liam Mulhall, Benjamin Roberts, Jacob Romero, Kathryn Woessner'
+    qualityAssurance: 'Jaspe Arias, Logan Bray, Steele Dalton, Ethan Johnson, Liam Mulhall, Benjamin Roberts, Jacob Romero, Kathryn Woessner'
   },
   webgl: true
 };
