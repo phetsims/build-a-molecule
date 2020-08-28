@@ -137,7 +137,7 @@ class MoleculeStructure {
     const formula = ChemUtils.createSymbolWithoutSubscripts( sortedElements );
 
     // return the formula, unless it is in our exception list (in which case, handle the exception case)
-    return MoleculeStructure.formulaExceptions[ formula ] || formula;
+    return MoleculeStructure.formulaExceptions()[ formula ] || formula;
   }
 
 
@@ -739,9 +739,10 @@ class MoleculeStructure {
   // @private {Object}
   static formulaExceptions() {
     return {
+      'O2S': 'SO2',
+      'H4Si': 'SiH4',
       'H3N': 'NH3', // treated as if it is organic
       'CHN': 'HCN'  // not considered organic
-
     };
   }
 }
