@@ -336,6 +336,10 @@ class Molecule3DDialog extends Dialog {
       press: event => {
         this.userControlledProperty.value = true;
         lastGlobalPoint = event.pointer.point.copy();
+
+        // mark the Intent of this pointer listener to indicate that we want to drag and therefore NOT
+        // pan while zoomed in
+        event.pointer.reserveForDrag();
       },
       drag: event => {
         const delta = event.pointer.point.minus( lastGlobalPoint );
