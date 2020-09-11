@@ -8,7 +8,7 @@
  * @author Denzell Barnett (PhET Interactive Simulations)
  */
 
-import timer from '../../../../axon/js/timer.js';
+import stepTimer from '../../../../axon/js/stepTimer.js';
 import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
@@ -48,7 +48,7 @@ class CollectionBoxNode extends VBox {
     // @private {Array.<Node>}
     this.moleculeNodes = [];
 
-    // @private {function|null} NOT zero, since that could be a valid timeout ID for timer.setTimeout!
+    // @private {function|null} NOT zero, since that could be a valid timeout ID for stepTimer.setTimeout!
     this.blinkTimeout = null;
 
     // @private {Object.<moleculeId:number,Node>} stores nodes for each molecule
@@ -287,10 +287,10 @@ class CollectionBoxNode extends VBox {
         }
 
         // set the blinkTimeout so it can be canceled
-        this.blinkTimeout = timer.setTimeout( tick, blinkDelayInMs );
+        this.blinkTimeout = stepTimer.setTimeout( tick, blinkDelayInMs );
       }
     };
-    this.blinkTimeout = timer.setTimeout( tick, blinkDelayInMs );
+    this.blinkTimeout = stepTimer.setTimeout( tick, blinkDelayInMs );
   }
 
   /**
@@ -302,7 +302,7 @@ class CollectionBoxNode extends VBox {
 
     // stop any previous blinking from happening. don't want double-blinking
     if ( this.blinkTimeout !== null ) {
-      timer.clearTimeout( this.blinkTimeout );
+      stepTimer.clearTimeout( this.blinkTimeout );
       this.blinkTimeout = null;
     }
   }
