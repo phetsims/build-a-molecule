@@ -37,7 +37,7 @@ class CollectionPanel extends Panel {
     options = merge( {
       cornerRadius: BAMConstants.CORNER_RADIUS
     }, options );
-    const layoutNode = new VBox( { spacing: 10 } );
+    const layoutNode = new VBox( { spacing: 8 } );
     super( layoutNode, options );
 
     // @private {VBox}
