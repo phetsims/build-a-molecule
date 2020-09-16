@@ -76,6 +76,10 @@ class Molecule3DDialog extends Dialog {
       xAlign: 'center',
       title: title,
       resize: false,
+      closeButtonTouchAreaXDilation: 10,
+      closeButtonTouchAreaYDilation: 10,
+      closeButtonMouseAreaXDilation: 10,
+      closeButtonMouseAreaYDilation: 10,
       closeButtonColor: 'white'
     } );
 
