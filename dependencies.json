@@ -1,5 +1,5 @@
 {
-  "comment": "# build-a-molecule 1.0.0-rc.2 Thu Aug 27 2020 15:12:33 GMT-0400 (Eastern Daylight Time)",
+  "comment": "# build-a-molecule 1.0.0-rc.2 Wed Sep 16 2020 14:36:42 GMT-0600 (Mountain Daylight Time)",
   "assert": {
     "sha": "73ed687cbea36db888079159cf9b43d41b8b8854",
     "branch": "HEAD"
@@ -13,12 +13,12 @@
     "branch": "HEAD"
   },
   "build-a-molecule": {
-    "sha": "9c3a66ff0a7bd8d37cf34c54231dea205bcc25b5",
+    "sha": "024ca9b745b40c8d59358a01c3c5fa536b1727a1",
     "branch": "1.0"
   },
   "chipper": {
-    "sha": "985a7dbb6ce503898afce625ddba906a11ad7a21",
-    "branch": "HEAD"
+    "sha": "7903f7ed8bb8b048cb009a928d9236352fdcd1a2",
+    "branch": "build-a-molecule-1.0"
   },
   "dot": {
     "sha": "867eb6d7f10bb6ddb19eea2082525e290ce5a575",
@@ -46,6 +46,10 @@
   },
   "phet-io": {
     "sha": "ee7ffcefc4ec88451cedaa0d49500dbc949853ed",
+    "branch": "HEAD"
+  },
+  "phet-io-client-guides": {
+    "sha": "03ad7db09f93034342d74396e900ded0eb8dfa63",
     "branch": "HEAD"
   },
   "phet-io-wrappers": {
@@ -90,7 +94,7 @@
   },
   "tandem": {
     "sha": "4898f92dc0d8341d37590fab30c1b37ca1c0b4b9",
-    "branch": "build-a-molecule-1.0"
+    "branch": "HEAD"
   },
   "twixt": {
     "sha": "1cb642f8035d28a723a961510a13b3c32f871e20",
