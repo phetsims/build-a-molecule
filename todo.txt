@@ -8,8 +8,8 @@ Build a Molecule
 ✓Assertions (strippable)
 
 ✓Fix BucketFront colors - seems to be hue shifting
-✓CollectionList/KitCollection - consider extending ObservableArray instead?
-    - { Modules are responsible for more than Observable Array can handle }
+✓CollectionList/KitCollection - consider using createObservableArray instead?
+    - { Modules are responsible for more than ObservableArrayDef can handle }
 
 ✓Check usages of getFirstTargetBox for handling undefined instead of null as a negative result
     - { No more usages }

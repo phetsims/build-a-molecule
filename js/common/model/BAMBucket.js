@@ -41,7 +41,7 @@ class BAMBucket extends SphereBucket {
     // @private {Property.<Vector2>}
     this.positionProperty = new Vector2Property( this.position );
 
-    // @public {ObservableArray.<Atom2>} Tracks all of the particles in this bucket
+    // @public {ObservableArrayDef.<Atom2>} Tracks all of the particles in this bucket
     this.particleList = createObservableArray();
 
     // @public {Array.<Atom2>} Contains atoms for a bucket when the bucket is full.

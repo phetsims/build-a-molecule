@@ -36,7 +36,7 @@ class Kit {
     // @public {number}
     this.id = kitIdCounter++;
 
-    // @public {ObservableArray.<Atom2>}
+    // @public {ObservableArrayDef.<Atom2>}
     this.atomsInPlayArea = createObservableArray();
 
     // @public {Property.<Atom|null>} Atom that has been clicked by user. Used for triggering cut targets for breaking bonds
