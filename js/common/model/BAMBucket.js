@@ -7,7 +7,7 @@
  * @author Denzell Barnett (PhET Interactive Simulations)
  */
 
-import ObservableArray from '../../../../axon/js/ObservableArray.js';
+import createObservableArray from '../../../../axon/js/createObservableArray.js';
 import Dimension2 from '../../../../dot/js/Dimension2.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import Vector2Property from '../../../../dot/js/Vector2Property.js';
@@ -42,7 +42,7 @@ class BAMBucket extends SphereBucket {
     this.positionProperty = new Vector2Property( this.position );
 
     // @public {ObservableArray.<Atom2>} Tracks all of the particles in this bucket
-    this.particleList = new ObservableArray();
+    this.particleList = createObservableArray();
 
     // @public {Array.<Atom2>} Contains atoms for a bucket when the bucket is full.
     this.fullState = [];

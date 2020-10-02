@@ -11,7 +11,7 @@
 
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import Emitter from '../../../../axon/js/Emitter.js';
-import ObservableArray from '../../../../axon/js/ObservableArray.js';
+import createObservableArray from '../../../../axon/js/createObservableArray.js';
 import Property from '../../../../axon/js/Property.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
@@ -37,7 +37,7 @@ class Kit {
     this.id = kitIdCounter++;
 
     // @public {ObservableArray.<Atom2>}
-    this.atomsInPlayArea = new ObservableArray();
+    this.atomsInPlayArea = createObservableArray();
 
     // @public {Property.<Atom|null>} Atom that has been clicked by user. Used for triggering cut targets for breaking bonds
     this.selectedAtomProperty = new Property( null );
