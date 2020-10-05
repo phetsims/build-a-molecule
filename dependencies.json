@@ -1,5 +1,5 @@
 {
-  "comment": "# build-a-molecule 1.0.0-rc.3 Wed Sep 16 2020 19:45:03 GMT-0400 (Eastern Daylight Time)",
+  "comment": "# build-a-molecule 1.0.0-rc.3 Mon Oct 05 2020 13:12:09 GMT-0400 (Eastern Daylight Time)",
   "assert": {
     "sha": "73ed687cbea36db888079159cf9b43d41b8b8854",
     "branch": "HEAD"
@@ -13,7 +13,7 @@
     "branch": "HEAD"
   },
   "build-a-molecule": {
-    "sha": "d5d4bff2853ecb1b2ab6e82128cbb8ff1a9e403d",
+    "sha": "78919365ed7c2a612b0f984dd51d2b44725de3f2",
     "branch": "1.0"
   },
   "chipper": {
@@ -33,8 +33,8 @@
     "branch": "HEAD"
   },
   "mobius": {
-    "sha": "c5fdd56612bf2684611feca35028a0f31c08b41d",
-    "branch": "HEAD"
+    "sha": "92d52bd6988e7d9a5d512c91628bb014ff36092a",
+    "branch": "build-a-molecule-1.0"
   },
   "nitroglycerin": {
     "sha": "7bf64a49d2e365ada27461081ca899c62d165e93",
