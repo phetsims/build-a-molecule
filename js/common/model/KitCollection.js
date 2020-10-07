@@ -90,9 +90,9 @@ class KitCollection {
           // permissive, so that if the box bounds and molecule bounds intersect, we call it a 'hit'
           if ( box.dropBoundsProperty.value.intersectsBounds( molecule.positionBounds ) ) {
 
-            // if our box takes this type of molecule. Only do this for visible atoms to handle multi-touch cases where,
+            // if our box takes this type of molecule. Only do this for the active kit to handle multi-touch cases where,
             // atoms can be dropped by switching kits. See https://github.com/phetsims/build-a-molecule/issues/212.
-            if ( box.willAllowMoleculeDrop( molecule ) && atom.visibleProperty.value ) {
+            if ( box.willAllowMoleculeDrop( molecule ) && kit.activeProperty.value ) {
               kit.moleculePutInCollectionBox( molecule, box );
               break;
             }
