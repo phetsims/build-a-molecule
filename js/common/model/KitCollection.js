@@ -87,8 +87,8 @@ class KitCollection {
         for ( let i = 0; i < numBoxes; i++ ) {
           const box = this.collectionBoxes[ i ];
 
-          // permissive, so that if the box bounds and molecule bounds intersect, we call it a 'hit'
-          if ( box.dropBoundsProperty.value.intersectsBounds( molecule.positionBounds ) ) {
+          // permissive, so that if the box bounds and molecule bounds intersect and the box accepts molecules, we call it a 'hit'.
+          if ( box.allowMoleculeDropProperty.value && box.dropBoundsProperty.value.intersectsBounds( molecule.positionBounds ) ) {
 
             // if our box takes this type of molecule. Only do this for the active kit to handle multi-touch cases where,
             // atoms can be dropped by switching kits. See https://github.com/phetsims/build-a-molecule/issues/212.
@@ -105,7 +105,6 @@ class KitCollection {
     kit.atoms.forEach( atom => {
       atom.droppedByUserEmitter.addListener( dropListener );
     } );
-
 
     // Cycle through molecules in the play area and check if the arrow cue needs to be updated
     kit.addedMoleculeEmitter.addListener( () => {

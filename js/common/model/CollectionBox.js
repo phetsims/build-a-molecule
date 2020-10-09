@@ -34,6 +34,9 @@ class CollectionBox {
     // @public {BooleanProperty}
     this.cueVisibilityProperty = new BooleanProperty( false );
 
+    // @public {BooleanProperty} Determines whether a box should or shouldn't allow molecules to fill its occupancy
+    this.allowMoleculeDropProperty = new BooleanProperty( true );
+
     // @public {Emitter} Called with a single molecule parameter
     this.addedMoleculeEmitter = new Emitter( { parameters: [ { valueType: Molecule } ] } );
     this.removedMoleculeEmitter = new Emitter( { parameters: [ { valueType: Molecule } ] } );
@@ -122,6 +125,7 @@ class CollectionBox {
   reset() {
     this.molecules.slice().forEach( this.removeMolecule.bind( this ) );
     this.cueVisibilityProperty.reset();
+    this.allowMoleculeDropProperty.reset();
   }
 }
 

@@ -129,8 +129,14 @@ class CollectionPanel extends Panel {
     // Use the current collection
     this.useCollection( bamModel.currentCollectionProperty.value );
 
-    // As the current collection changes, use that new collection
+    // As the current collection changes, use that new collection.
     bamModel.currentCollectionProperty.link( newCollection => {
+
+      // Make sure to allow atoms to drop into boxes on the new collection.
+      newCollection.collectionBoxes.forEach( collectionBox => {
+          collectionBox.allowMoleculeDropProperty.value = true;
+        }
+      );
       this.useCollection( newCollection );
     } );
   }

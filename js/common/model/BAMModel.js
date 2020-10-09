@@ -169,6 +169,12 @@ class BAMModel {
    * @public
    */
   switchToPreviousCollection() {
+
+    // Current collection should no longer be filled with molecules.
+    this.currentCollectionProperty.value.collectionBoxes.forEach( collectionBox => {
+        collectionBox.allowMoleculeDropProperty.value = false;
+      }
+    );
     this.switchTo( this.collections[ this.currentIndex - 1 ] );
   }
 
@@ -178,6 +184,12 @@ class BAMModel {
    * @public
    */
   switchToNextCollection() {
+
+    // Current collection should no longer be filled with molecules.
+    this.currentCollectionProperty.value.collectionBoxes.forEach( collectionBox => {
+        collectionBox.allowMoleculeDropProperty.value = false;
+      }
+    );
     this.switchTo( this.collections[ this.currentIndex + 1 ] );
   }
 
