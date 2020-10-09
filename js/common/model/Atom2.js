@@ -62,7 +62,7 @@ class Atom2 extends Atom {
    * @returns {Bounds2}
    */
   get positionBounds() {
-    return new Bounds2.point( this.positionProperty.value.x, this.positionProperty.value.y ).dilated( this.covalentRadius );
+    return Bounds2.point( this.positionProperty.value.x, this.positionProperty.value.y ).dilated( this.covalentRadius );
   }
 
   /**
@@ -72,7 +72,7 @@ class Atom2 extends Atom {
    * @returns {Bounds2}
    */
   get destinationBounds() {
-    return new Bounds2.point( this.destinationProperty.value.x, this.destinationProperty.value.y ).dilated( this.covalentRadius );
+    return Bounds2.point( this.destinationProperty.value.x, this.destinationProperty.value.y ).dilated( this.covalentRadius );
   }
 
   /**
