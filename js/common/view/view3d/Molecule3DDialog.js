@@ -24,7 +24,7 @@ import Text from '../../../../../scenery/js/nodes/Text.js';
 import VBox from '../../../../../scenery/js/nodes/VBox.js';
 import Color from '../../../../../scenery/js/util/Color.js';
 import Dialog from '../../../../../sun/js/Dialog.js';
-import RadioButtonGroup from '../../../../../sun/js/buttons/RadioButtonGroup.js';
+import RectangularRadioButtonGroup from '../../../../../sun/js/buttons/RectangularRadioButtonGroup.js';
 import Playable from '../../../../../tambo/js/Playable.js';
 import buildAMolecule from '../../../buildAMolecule.js';
 import buildAMoleculeStrings from '../../../buildAMoleculeStrings.js';
@@ -266,7 +266,7 @@ class Molecule3DDialog extends Dialog {
     } ];
 
     // Create the icons for scene selection
-    const sceneRadioButtonGroup = new RadioButtonGroup( this.viewStyleProperty, toggleButtonsContent, {
+    const sceneRadioButtonGroup = new RectangularRadioButtonGroup( this.viewStyleProperty, toggleButtonsContent, {
       buttonContentXMargin: 5,
       buttonContentYMargin: -8, // Trimming of part of the icon node is acceptable in this case.
       baseColor: 'black',
