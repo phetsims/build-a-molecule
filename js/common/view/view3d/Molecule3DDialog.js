@@ -268,7 +268,6 @@ class Molecule3DDialog extends Dialog {
     // Create the icons for scene selection
     const sceneRadioButtonGroup = new RectangularRadioButtonGroup( this.viewStyleProperty, toggleButtonsContent, {
       buttonContentXMargin: 5,
-      buttonContentYMargin: -8, // Trimming of part of the icon node is acceptable in this case.
       baseColor: 'black',
       selectedStroke: 'yellow',
       deselectedStroke: 'white',
