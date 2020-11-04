@@ -45,8 +45,8 @@ import PH3Node from '../../../../nitroglycerin/js/nodes/PH3Node.js';
 import SO2Node from '../../../../nitroglycerin/js/nodes/SO2Node.js';
 import SO3Node from '../../../../nitroglycerin/js/nodes/SO3Node.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
-import BAMStrings from '../BAMStrings.js';
 import buildAMolecule from '../../buildAMolecule.js';
+import buildAMoleculeStrings from '../../buildAMoleculeStrings.js';
 import Bond from './Bond.js';
 import MoleculeStructure from './MoleculeStructure.js';
 import Enumeration from '../../../../phet-core/js/Enumeration.js';
@@ -105,16 +105,6 @@ class CompleteMolecule extends MoleculeStructure {
   }
 
   /**
-   * The translation string key that should be used to look up a translated value
-   *
-   * @private
-   * @returns {string}
-   */
-  get stringKey() {
-    return 'molecule.' + this.commonName.replace( ' ', '_' );
-  }
-
-  /**
    * A translated display name if possible. This does a weird lookup so that we can only list some of the names in the
    * translation, but can accept an even larger number of translated names in a translation file
    * @public
@@ -122,16 +112,13 @@ class CompleteMolecule extends MoleculeStructure {
    * @returns
    */
   getDisplayName() {
-    // first check if we have it translated. do NOT warn on missing
-    const lookupKey = this.stringKey;
-    const stringLookup = BAMStrings[ lookupKey ]; // NOTE: do NOT warn or error on missing strings, this is generally expected
-
-    // we need to check whether it came back the same as the key due to how getString works.
-    if ( stringLookup && stringLookup !== lookupKey ) {
-      return stringLookup;
+    // first check if we have the name translated. Do NOT warn on missing
+    const translatableCommonName = buildAMoleculeStrings[ _.camelCase( this.commonName ) ];
+    if ( translatableCommonName ) {
+      return translatableCommonName;
     }
     else {
-      // if we didn't find it, pull it from our English data
+      // if we didn't find it in the strings file, pull it from our English data
       return this.commonName;
     }
   }
