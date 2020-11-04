@@ -54,6 +54,36 @@ import Enumeration from '../../../../phet-core/js/Enumeration.js';
 // constants
 const OFFSET = 2.5; // used to model our atoms with only 2d data into a 3d representation
 
+// Used to avoid stripping out unused strings, when string.json is accessed via bracket notation. See getDisplayName().
+const TRANSLATABLE_MOLECULE_NAMES = {
+  acetylene: buildAMoleculeStrings.acetylene,
+  ammonia: buildAMoleculeStrings.ammonia,
+  borane: buildAMoleculeStrings.borane,
+  carbonDioxide: buildAMoleculeStrings.carbonDioxide,
+  carbonMonoxide: buildAMoleculeStrings.carbonMonoxide,
+  chloromethane: buildAMoleculeStrings.chloromethane,
+  ethylene: buildAMoleculeStrings.ethylene,
+  fluoromethane: buildAMoleculeStrings.fluoromethane,
+  formaldehyde: buildAMoleculeStrings.formaldehyde,
+  hydrogenCyanide: buildAMoleculeStrings.hydrogenCyanide,
+  hydrogenPeroxide: buildAMoleculeStrings.hydrogenPeroxide,
+  hydrogenSulfide: buildAMoleculeStrings.hydrogenSulfide,
+  methane: buildAMoleculeStrings.methane,
+  molecularChlorine: buildAMoleculeStrings.molecularChlorine,
+  molecularFluorine: buildAMoleculeStrings.molecularFluorine,
+  molecularHydrogen: buildAMoleculeStrings.molecularHydrogen,
+  molecularNitrogen: buildAMoleculeStrings.molecularNitrogen,
+  molecularOxygen: buildAMoleculeStrings.molecularOxygen,
+  nitricOxide: buildAMoleculeStrings.nitricOxide,
+  nitrousOxide: buildAMoleculeStrings.nitrousOxide,
+  ozone: buildAMoleculeStrings.ozone,
+  phosphine: buildAMoleculeStrings.phosphine,
+  silane: buildAMoleculeStrings.silane,
+  sulfurDioxide: buildAMoleculeStrings.sulfurDioxide,
+  trifluoroborane: buildAMoleculeStrings.trifluoroborane,
+  water: buildAMoleculeStrings.water
+};
+
 // Node types used for molecules
 const nodeTypes = [
   Cl2Node, CO2Node, CO2Node, CS2Node, F2Node, H2Node, N2Node, NONode, N2ONode, O2Node, C2H2Node, C2H4Node, C2H5ClNode,
@@ -113,7 +143,7 @@ class CompleteMolecule extends MoleculeStructure {
    */
   getDisplayName() {
     // first check if we have the name translated. Do NOT warn on missing
-    const translatableCommonName = buildAMoleculeStrings[ _.camelCase( this.commonName ) ];
+    const translatableCommonName = TRANSLATABLE_MOLECULE_NAMES[ _.camelCase( this.commonName ) ];
     if ( translatableCommonName ) {
       return translatableCommonName;
     }
