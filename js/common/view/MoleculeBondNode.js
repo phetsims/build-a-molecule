@@ -7,7 +7,6 @@
  * @author Denzell Barnett (PhET Interactive Simulations)
  */
 
-import platform from '../../../../phet-core/js/platform.js';
 import FireListener from '../../../../scenery/js/listeners/FireListener.js';
 import Circle from '../../../../scenery/js/nodes/Circle.js';
 import Line from '../../../../scenery/js/nodes/Line.js';
@@ -105,14 +104,14 @@ class MoleculeBondNode extends Node {
     cutTargetNode.addChild( new Circle( bondRadius, {
       fill: 'rgb(253,225,49)',
       stroke: 'rgb(253,225,49)',
-      cursor: !( platform.ie ) ? openCursor : 'pointer',
+      cursor: openCursor ,
       visible: true
     } ) );
 
     // Add outer circle
     cutTargetNode.addChild( new Circle( bondRadius * 1.5, {
       fill: 'rgba(253,225,49,0.4)',
-      cursor: !( platform.ie ) ? openCursor : 'pointer',
+      cursor: openCursor ,
       visible: true
     } ) );
 
