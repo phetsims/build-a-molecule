@@ -144,7 +144,9 @@ class KitNode extends Node {
         }
 
         // Remove atom from bucket particle observable array.
-        bucket.particleList.remove( atom );
+        if ( bucket.particleList.includes( atom ) ) {
+          bucket.particleList.remove( atom );
+        }
       };
 
       // Listener for adding a particle from the bucket's observable array.
