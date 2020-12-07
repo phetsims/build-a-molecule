@@ -86,7 +86,7 @@ class KitNode extends Node {
         if ( bucket.containsParticle( atom ) ) {
 
           // Remove the atom from the bucket's model and trigger its removal from the atomLayer in the view.
-          particleRemovedListener( atom );
+          bucket.particleList.remove( atom );
 
           // Get reference to atomNode and call the dragListener
           const atomNode = moleculeCollectingScreenView.kitPlayAreaNode.atomNodeMap[ atom.id ];
@@ -141,11 +141,6 @@ class KitNode extends Node {
         // Remove the atom from the bucket particles
         if ( bucket.containsParticle( atom ) ) {
           bucket.removeParticle( atom, false );
-        }
-
-        // Remove atom from bucket particle observable array.
-        if ( bucket.particleList.includes( atom ) ) {
-          bucket.particleList.remove( atom );
         }
       };
 
