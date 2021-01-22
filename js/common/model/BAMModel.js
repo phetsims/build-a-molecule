@@ -11,6 +11,7 @@ import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import Emitter from '../../../../axon/js/Emitter.js';
 import Property from '../../../../axon/js/Property.js';
 import Dimension2 from '../../../../dot/js/Dimension2.js';
+import dotRandom from '../../../../dot/js/dotRandom.js';
 import Element from '../../../../nitroglycerin/js/Element.js';
 import buildAMolecule from '../../buildAMolecule.js';
 import BAMBucket from '../model/BAMBucket.js';
@@ -214,7 +215,7 @@ class BAMModel {
     // Infinite loop. We're living on the edge now, baby!
     while ( true ) { // eslint-disable-line no-constant-condition
       const molecule = MoleculeList.collectionBoxMolecules[
-        phet.joist.random.nextIntBetween( 0, MoleculeList.collectionBoxMolecules.length - 1 )
+        dotRandom.nextIntBetween( 0, MoleculeList.collectionBoxMolecules.length - 1 )
         ];
       if ( !_.includes( molecules, molecule ) ) {
         return molecule;
@@ -245,7 +246,7 @@ class BAMModel {
       molecule = this.pickRandomMoleculeNotIn( usedMolecules );
       usedMolecules.push( molecule );
 
-      let numberInBox = allowMultipleMolecules ? phet.joist.random.nextIntBetween( 1, maxInBox ) : 1;
+      let numberInBox = allowMultipleMolecules ? dotRandom.nextIntBetween( 1, maxInBox ) : 1;
 
       // restrict the number of carbon that we can have
       const carbonCount = molecule.getHistogram().getQuantity( Element.C );
@@ -263,7 +264,7 @@ class BAMModel {
     }
 
     // randomize the molecules that we will pull from
-    molecules = phet.joist.random.shuffle( molecules );
+    molecules = dotRandom.shuffle( molecules );
 
     // while more molecules to construct are left, create another kit
     while ( molecules.length ) {
@@ -299,7 +300,7 @@ class BAMModel {
 
         // possibly add more, if we can only have 1 molecule per box
         if ( !element.isCarbon() && ( element.isHydrogen() || atomCount < 4 ) ) {
-          atomCount += phet.joist.random.nextIntBetween( 0, 1 );
+          atomCount += dotRandom.nextIntBetween( 0, 1 );
         }
 
         // funky math part. sqrt scales it so that we can get two layers of atoms if the atom count is above 2

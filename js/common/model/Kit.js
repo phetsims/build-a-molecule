@@ -14,6 +14,7 @@ import Emitter from '../../../../axon/js/Emitter.js';
 import createObservableArray from '../../../../axon/js/createObservableArray.js';
 import Property from '../../../../axon/js/Property.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
+import dotRandom from '../../../../dot/js/dotRandom.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import arrayRemove from '../../../../phet-core/js/arrayRemove.js';
 import cleanArray from '../../../../phet-core/js/cleanArray.js';
@@ -500,8 +501,8 @@ class Kit {
             foundOverlap = true;
 
             // get perturbed centers. this is so that if two molecules have the exact same centers, we will push them away
-            const aCenter = aBounds.center.add( new Vector2( phet.joist.random.nextDouble() - 0.5, phet.joist.random.nextDouble() - 0.5 ) );
-            const bCenter = bBounds.center.add( new Vector2( phet.joist.random.nextDouble() - 0.5, phet.joist.random.nextDouble() - 0.5 ) );
+            const aCenter = aBounds.center.add( new Vector2( dotRandom.nextDouble() - 0.5, dotRandom.nextDouble() - 0.5 ) );
+            const bCenter = bBounds.center.add( new Vector2( dotRandom.nextDouble() - 0.5, dotRandom.nextDouble() - 0.5 ) );
 
             // delta from center of A to center of B, scaled to half of our push amount.
             const delta = bCenter.minus( aCenter ).normalized().times( pushAmount );
