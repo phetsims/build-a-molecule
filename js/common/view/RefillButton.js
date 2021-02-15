@@ -1,7 +1,7 @@
 // Copyright 2020, University of Colorado Boulder
 
 /**
- * Button that refills the kit buckets with the intial atoms.
+ * Button that refills the kit buckets with the initial atoms.
  *
  * @author Denzell Barnett
  */
