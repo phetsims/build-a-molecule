@@ -739,8 +739,8 @@ class MoleculeStructure {
   // @private {Object}
   static formulaExceptions() {
     return {
-      'H3N': 'NH3', // treated as if it is organic
-      'CHN': 'HCN'  // not considered organic
+      H3N: 'NH3', // treated as if it is organic
+      CHN: 'HCN'  // not considered organic
 
     };
   }
