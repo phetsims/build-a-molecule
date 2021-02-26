@@ -104,14 +104,14 @@ class MoleculeBondNode extends Node {
     cutTargetNode.addChild( new Circle( bondRadius, {
       fill: 'rgb(253,225,49)',
       stroke: 'rgb(253,225,49)',
-      cursor: openCursor ,
+      cursor: openCursor,
       visible: true
     } ) );
 
     // Add outer circle
     cutTargetNode.addChild( new Circle( bondRadius * 1.5, {
       fill: 'rgba(253,225,49,0.4)',
-      cursor: openCursor ,
+      cursor: openCursor,
       visible: true
     } ) );
 

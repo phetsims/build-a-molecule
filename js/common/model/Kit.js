@@ -640,7 +640,7 @@ class Kit {
     } );
 
     // if our closest bond is too far and our atoms don't overlap, then ignore it
-    const isBondingInvalid = (bestBondingOption === null || bestDistanceFromIdealPosition > Kit.bondDistanceThreshold) && !atomsOverlap;
+    const isBondingInvalid = ( bestBondingOption === null || bestDistanceFromIdealPosition > Kit.bondDistanceThreshold ) && !atomsOverlap;
 
     if ( isBondingInvalid ) {
       this.separateMoleculeDestinations();
