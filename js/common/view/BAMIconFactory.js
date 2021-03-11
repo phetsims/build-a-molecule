@@ -60,7 +60,7 @@ const BAMIconFactory = {
       MoleculeList.H2O,
       Screen.MINIMUM_HOME_SCREEN_ICON_SIZE.width,
       Screen.MINIMUM_HOME_SCREEN_ICON_SIZE.height,
-      .85,
+      0.85,
       false
     );
 
@@ -89,7 +89,7 @@ const BAMIconFactory = {
       MoleculeList.O2,
       Screen.MINIMUM_HOME_SCREEN_ICON_SIZE.width,
       Screen.MINIMUM_HOME_SCREEN_ICON_SIZE.height,
-      .50,
+      0.50,
       false
     );
 
@@ -98,7 +98,7 @@ const BAMIconFactory = {
       MoleculeList.O2,
       Screen.MINIMUM_HOME_SCREEN_ICON_SIZE.width,
       Screen.MINIMUM_HOME_SCREEN_ICON_SIZE.height,
-      .50,
+      0.50,
       false
     );
 

@@ -272,7 +272,7 @@ class Molecule3DDialog extends Dialog {
       selectedStroke: 'yellow',
       deselectedStroke: 'white',
       selectedLineWidth: 1,
-      deselectedLineWidth: .5,
+      deselectedLineWidth: 0.5,
       deselectedButtonOpacity: 0.25,
       cornerRadius: BAMConstants.CORNER_RADIUS,
       orientation: 'horizontal',
