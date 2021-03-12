@@ -39,7 +39,7 @@ class MoleculeList {
     const startTime = Date.now();
     const mainMolecules = MoleculeList.readCompleteMoleculesFromData( collectionMoleculesData );
     mainMolecules.forEach( this.addCompleteMolecule.bind( this ) );
-    console.log( 'loaded initial data in ' + ( Date.now() - startTime ) + 'ms' );
+    console.log( `loaded initial data in ${Date.now() - startTime}ms` );
   }
 
   /**
@@ -66,7 +66,7 @@ class MoleculeList {
     // then load structures
     const mainStructures = MoleculeList.readMoleculeStructuresFromData( structuresData );
     mainStructures.forEach( this.addAllowedStructure.bind( this ) );
-    console.log( 'loaded master data in ' + ( Date.now() - startTime ) + 'ms' );
+    console.log( `loaded master data in ${Date.now() - startTime}ms` );
   }
 
   /**
@@ -227,9 +227,9 @@ class MoleculeList {
 
       // sanity checks
       assert && assert( !molecule.hasLoopsOrIsDisconnected(),
-        'has loops or is disconnected: ' + molecule.filterCommonName( molecule.commonName ) );
+        `has loops or is disconnected: ${molecule.filterCommonName( molecule.commonName )}` );
       assert && assert( !molecule.hasWeirdHydrogenProperties(),
-        'has weird hydrogen pattern in: ' + molecule.filterCommonName( molecule.commonName ) );
+        `has weird hydrogen pattern in: ${molecule.filterCommonName( molecule.commonName )}` );
       return molecule;
     } );
   }
@@ -249,7 +249,7 @@ class MoleculeList {
       const structure = MoleculeStructure.fromSerial2Basic( string );
 
       // sanity checks
-      assert && assert( !structure.hasWeirdHydrogenProperties(), 'Weird hydrogen pattern in structure: ' + string );
+      assert && assert( !structure.hasWeirdHydrogenProperties(), `Weird hydrogen pattern in structure: ${string}` );
       arr[ i ] = structure;
     }
     return arr;

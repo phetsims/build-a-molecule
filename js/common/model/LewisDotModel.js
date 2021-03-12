@@ -170,7 +170,7 @@ class LewisDotModel {
     // for sanity and equality (negative zero equals zero, so don't worry about that)
     const point = new Vector2( Utils.roundSymmetric( coordinates.x ), Utils.roundSymmetric( coordinates.y ) );
 
-    const idx = point.x + ',' + point.y;
+    const idx = `${point.x},${point.y}`;
 
     // if we have seen a different atom in this position
     if ( coordinateMap[ idx ] ) {

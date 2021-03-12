@@ -58,7 +58,7 @@ class Bond {
    * @returns {string}
    */
   toSerial2( index ) {
-    return index + '';
+    return `${index}`;
   }
 }
 

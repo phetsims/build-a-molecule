@@ -459,14 +459,14 @@ class MoleculeStructure {
    * @returns [string]
    */
   toSerial() {
-    let ret = this.atoms.length + '|' + this.bonds.length;
+    let ret = `${this.atoms.length}|${this.bonds.length}`;
     this.atoms.forEach( atom => {
-      ret += '|' + atom.symbol;
+      ret += `|${atom.symbol}`;
     } );
     this.bonds.forEach( bond => {
       const a = this.atoms.indexOf( bond.a );
       const b = this.atoms.indexOf( bond.b );
-      ret += '|' + a + '|' + b;
+      ret += `|${a}|${b}`;
     } );
 
     return ret;
@@ -488,16 +488,16 @@ class MoleculeStructure {
 
     // serializing and the following builder appends are not a performance bottleneck. they are left in a more readable form
     // write header: # of atoms
-    result += this.atoms.length + '|' + this.bonds.length;
+    result += `${this.atoms.length}|${this.bonds.length}`;
     for ( let i = 0; i < this.atoms.length; i++ ) {
       const atom = this.atoms[ i ];
-      result += '|' + atom.toString();
+      result += `|${atom.toString()}`;
       this.bonds.forEach( bond => {
         if ( bond.contains( atom ) ) {
           const otherAtom = bond.getOtherAtom( atom );
           const index = this.atoms.indexOf( otherAtom );
           if ( index < i ) {
-            result += ',' + bond.toSerial2( index );
+            result += `,${bond.toSerial2( index )}`;
           }
         }
       } );
@@ -609,7 +609,7 @@ class MoleculeStructure {
     } );
 
     if ( BAMQueryParameters.logData ) {
-      console.log( 'splitting ' + structure.toSerial() + ' into:' );
+      console.log( `splitting ${structure.toSerial()} into:` );
       console.log( molA.toSerial() );
       console.log( molB.toSerial() );
     }

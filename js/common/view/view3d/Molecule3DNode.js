@@ -332,10 +332,10 @@ class Molecule3DNode extends DOM {
   setMoleculeCanvasBounds( globalBounds ) {
     this.canvas.width = globalBounds.width * this.backingScale;
     this.canvas.height = globalBounds.height * this.backingScale;
-    this.canvas.style.width = globalBounds.width + 'px';
-    this.canvas.style.height = globalBounds.height + 'px';
-    this.canvas.style.left = globalBounds.x + 'px';
-    this.canvas.style.top = globalBounds.y + 'px';
+    this.canvas.style.width = `${globalBounds.width}px`;
+    this.canvas.style.height = `${globalBounds.height}px`;
+    this.canvas.style.left = `${globalBounds.x}px`;
+    this.canvas.style.top = `${globalBounds.y}px`;
   }
 }
 

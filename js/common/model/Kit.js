@@ -232,7 +232,7 @@ class Kit {
    */
   moleculePutInCollectionBox( molecule, box ) {
     if ( BAMQueryParameters.logData ) {
-      console.log( 'You have collected: ' + box.moleculeType.commonName );
+      console.log( `You have collected: ${box.moleculeType.commonName}` );
     }
     this.removeMolecule( molecule );
     molecule.atoms.forEach( atom => {
@@ -554,7 +554,7 @@ class Kit {
 
     if ( BAMQueryParameters.logData ) {
       const serializedForm = this.getMolecule( a ).toSerial2();
-      console.log( 'created structure: ' + serializedForm );
+      console.log( `created structure: ${serializedForm}` );
     }
     const structure = this.getMolecule( a );
     if ( structure.atoms.length > 2 ) {

@@ -161,7 +161,7 @@ class CompleteMolecule extends MoleculeStructure {
    */
   createPseudo3DNode() {
     const molecularFormula = this.molecularFormula;
-    const molecularFormulaType = molecularFormula + 'Node';
+    const molecularFormulaType = `${molecularFormula}Node`;
 
     // if we can find it in the common chemistry nodes, use that
     const length = nodeTypes.length;
@@ -197,7 +197,7 @@ class CompleteMolecule extends MoleculeStructure {
   toSerial2() {
     // add in a header
     const format = ( this.has3d ? ( this.has2d ? 'full' : '3d' ) : '2d' );
-    return this.commonName + '|' + this.molecularFormula + '|' + this.cid + '|' + format + '|' + super.toSerial2.call( this );
+    return `${this.commonName}|${this.molecularFormula}|${this.cid}|${format}|${super.toSerial2.call( this )}`;
   }
 
 
@@ -340,13 +340,13 @@ class PubChemAtom extends Atom {
    */
   static toString() {
     if ( this.type === PubChemAtomType.TWO_DIMENSION ) {
-      return super.toString() + ' ' + this.x2d + ' ' + this.y2d;
+      return `${super.toString()} ${this.x2d} ${this.y2d}`;
     }
     else if ( this.type === PubChemAtom.THREE_DIMENSION ) {
-      return super.toString() + ' ' + this.x3d + ' ' + this.y3d + ' ' + this.z3d;
+      return `${super.toString()} ${this.x3d} ${this.y3d} ${this.z3d}`;
     }
     else if ( this.type === PubChemAtom.FULL ) {
-      return super.toString() + ' ' + this.x2d + ' ' + this.y2d + ' ' + this.x3d + ' ' + this.y3d + ' ' + this.z3d;
+      return `${super.toString()} ${this.x2d} ${this.y2d} ${this.x3d} ${this.y3d} ${this.z3d}`;
 
     }
   }
@@ -424,7 +424,7 @@ class PubChemBond extends Bond {
    * @returns {string}
    */
   toSerial2( index ) {
-    return index + '-' + this.order;
+    return `${index}-${this.order}`;
   }
 
   /**

@@ -70,7 +70,7 @@ class ElementHistogram extends PhetioObject {
     let hashString = '';
 
     BAMConstants.SUPPORTED_ELEMENTS.forEach( element => {
-      hashString += '_' + this.getQuantity( element );
+      hashString += `_${this.getQuantity( element )}`;
     } );
     return hashString;
   }
