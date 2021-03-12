@@ -219,7 +219,7 @@ class MoleculeStructure {
       const atom = dirtyAtoms.pop();
 
       // for each neighbor, make 'unvisited' atoms dirty and count 'visited' atoms
-      var visitedCount = 0;
+      let visitedCount = 0;
       this.getNeighbors( atom ).forEach( otherAtom => {
         if ( _.includes( visitedAtoms, otherAtom ) ) {
           visitedCount += 1;

@@ -268,14 +268,14 @@ class BAMModel {
 
     // while more molecules to construct are left, create another kit
     while ( molecules.length ) {
-      var buckets = [];
+      const buckets = [];
 
       // pull off the 1st molecule
       molecule = molecules[ 0 ];
 
       // NOTE: for the future, we could potentially add another type of atom?
 
-      var equivalentMoleculesRemaining = 0;
+      let equivalentMoleculesRemaining = 0;
       molecules.forEach( moleculeStructure => {
         if ( moleculeStructure.getHillSystemFormulaFragment() === molecule.getHillSystemFormulaFragment() ) {
           equivalentMoleculesRemaining++;
@@ -283,7 +283,7 @@ class BAMModel {
       } );
 
       const ableToIncreaseMultiple = allowMultipleMolecules && equivalentMoleculesRemaining > 1;
-      var atomMultiple = 1 + ( ableToIncreaseMultiple ? equivalentMoleculesRemaining : 0 );
+      var atomMultiple = 1 + ( ableToIncreaseMultiple ? equivalentMoleculesRemaining : 0 ); // eslint-disable-line no-var
 
       // for each type of atom
       _.uniq( molecule.getElementList() ).forEach( element => {
