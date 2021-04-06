@@ -342,12 +342,14 @@ class PubChemAtom extends Atom {
     if ( this.type === PubChemAtomType.TWO_DIMENSION ) {
       return `${super.toString()} ${this.x2d} ${this.y2d}`;
     }
-    else if ( this.type === PubChemAtom.THREE_DIMENSION ) {
+    else if ( this.type === PubChemAtomType.THREE_DIMENSION ) {
       return `${super.toString()} ${this.x3d} ${this.y3d} ${this.z3d}`;
     }
-    else if ( this.type === PubChemAtom.FULL ) {
+    else if ( this.type === PubChemAtomType.FULL ) {
       return `${super.toString()} ${this.x2d} ${this.y2d} ${this.x3d} ${this.y3d} ${this.z3d}`;
-
+    }
+    else {
+      throw new Error( `Unsupported type: ${this.type}` );
     }
   }
 
