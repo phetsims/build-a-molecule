@@ -283,7 +283,7 @@ class BAMModel {
       } );
 
       const ableToIncreaseMultiple = allowMultipleMolecules && equivalentMoleculesRemaining > 1;
-      var atomMultiple = 1 + ( ableToIncreaseMultiple ? equivalentMoleculesRemaining : 0 ); // eslint-disable-line no-var
+      let atomMultiple = 1 + ( ableToIncreaseMultiple ? equivalentMoleculesRemaining : 0 );
 
       // for each type of atom
       _.uniq( molecule.getElementList() ).forEach( element => {
