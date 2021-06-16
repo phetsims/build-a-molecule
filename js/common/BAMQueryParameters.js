@@ -1,4 +1,4 @@
-[object Promise]
+// Copyright 2019-2021, University of Colorado Boulder
 
 /**
  * Query parameters supported by this simulation.

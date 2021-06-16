@@ -1,4 +1,4 @@
-[object Promise]
+// Copyright 2020-2021, University of Colorado Boulder
 
 /**
  * Displays the molecule name, 3D button, and 'X' button to break apart the molecule

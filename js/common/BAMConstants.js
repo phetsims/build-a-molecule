@@ -1,4 +1,4 @@
-[object Promise]
+// Copyright 2020-2021, University of Colorado Boulder
 
 import Dimension2 from '../../../dot/js/Dimension2.js';
 import Utils from '../../../dot/js/Utils.js';

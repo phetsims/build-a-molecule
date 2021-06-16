@@ -1,4 +1,4 @@
-[object Promise]
+// Copyright 2020-2021, University of Colorado Boulder
 
 /**
  * Subtype of BAMScreenView that shows kits, but also has a collection area to the right-hand side

@@ -1,4 +1,4 @@
-[object Promise]
+// Copyright 2013-2021, University of Colorado Boulder
 
 /**
  * 1st screen: collection boxes only take 1 molecule, and our 1st kit collection is always the same

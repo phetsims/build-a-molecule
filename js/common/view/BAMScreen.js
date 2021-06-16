@@ -1,4 +1,4 @@
-[object Promise]
+// Copyright 2013-2021, University of Colorado Boulder
 
 /**
  * Supertype for modules in Build a Molecule. Handles code required for all modules (bounds and the ability to switch models)
