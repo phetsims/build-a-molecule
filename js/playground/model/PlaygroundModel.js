@@ -1,4 +1,4 @@
-// Copyright 2020, University of Colorado Boulder
+[object Promise]
 
 /**
  * Main model for Playground Screen. This screen doesn't include a collection area.

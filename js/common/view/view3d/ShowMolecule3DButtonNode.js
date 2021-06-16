@@ -1,4 +1,4 @@
-// Copyright 2020, University of Colorado Boulder
+[object Promise]
 
 /**
  * Button responsible for showing a 3D representation of the molecule.

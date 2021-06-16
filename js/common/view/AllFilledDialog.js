@@ -1,4 +1,4 @@
-// Copyright 2020, University of Colorado Boulder
+[object Promise]
 
 /**
  * Displays a node that tells the user that all collection boxes are full. Allows the user

@@ -1,4 +1,4 @@
-// Copyright 2020, University of Colorado Boulder
+[object Promise]
 
 /**
  * Represents a cardinal direction for use in our model. Also includes unit vector version

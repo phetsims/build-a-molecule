@@ -1,4 +1,4 @@
-// Copyright 2020, University of Colorado Boulder
+[object Promise]
 
 /**
  * Displays a collection box that can collect multiple molecules with two text labels above. One shows the "goal", and the other shows the current

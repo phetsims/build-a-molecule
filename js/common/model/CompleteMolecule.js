@@ -1,4 +1,4 @@
-// Copyright 2020-2021, University of Colorado Boulder
+[object Promise]
 
 /**
  * Represents a complete (stable) molecule with a name and structure. Includes 2d and 3d representations,

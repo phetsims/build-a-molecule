@@ -1,4 +1,4 @@
-// Copyright 2020, University of Colorado Boulder
+[object Promise]
 
 /**
  * Represents a "Build a Molecule" molecule. Also useful as a type alias for code readability

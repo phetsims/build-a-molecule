@@ -1,4 +1,4 @@
-// Copyright 2020-2021, University of Colorado Boulder
+[object Promise]
 
 /**
  * Dialog that displays a warning text. Used as a webgl fallback when webgl isn't supported.

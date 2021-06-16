@@ -1,4 +1,4 @@
-// Copyright 2020, University of Colorado Boulder
+[object Promise]
 
 /**
  * Contains layout information relevant to where the kits are placed, where molecules can exist in the play area, etc.

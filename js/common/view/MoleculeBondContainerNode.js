@@ -1,4 +1,4 @@
-// Copyright 2020, University of Colorado Boulder
+[object Promise]
 
 /**
  * Contains "bond breaking" nodes for a single molecule, so they can be cut apart with scissors

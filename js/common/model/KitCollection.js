@@ -1,4 +1,4 @@
-// Copyright 2020, University of Colorado Boulder
+[object Promise]
 
 /**
  * Represents a main running model for the 1st two tabs. Contains a collection of kits and boxes. Kits are responsible

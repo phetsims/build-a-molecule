@@ -1,4 +1,4 @@
-// Copyright 2020, University of Colorado Boulder
+[object Promise]
 
 /**
  * Main screenview for Build a Molecule. It features kits shown at the bottom and a centeralized play area for

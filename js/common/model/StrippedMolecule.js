@@ -1,4 +1,4 @@
-// Copyright 2020, University of Colorado Boulder
+[object Promise]
 
 /**
  * Molecule structure with the hydrogens stripped out (but with the hydrogen count of an atom saved)

@@ -1,4 +1,4 @@
-// Copyright 2020, University of Colorado Boulder
+[object Promise]
 
 /**
  * Stores multiple instances of a single type of molecule. Keeps track of quantity, and has a desired capacity.

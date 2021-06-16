@@ -1,4 +1,4 @@
-// Copyright 2020, University of Colorado Boulder
+[object Promise]
 
 /**
  * A panel that shows collection areas for different collections, and allows switching between those collections

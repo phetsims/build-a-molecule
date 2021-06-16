@@ -1,4 +1,4 @@
-// Copyright 2013-2020, University of Colorado Boulder
+[object Promise]
 
 /**
  * 2nd screen: Collection boxes take multiple molecules of the same type.

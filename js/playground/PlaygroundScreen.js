@@ -1,4 +1,4 @@
-// Copyright 2013-2020, University of Colorado Boulder
+[object Promise]
 
 /**
  * 3rd screen: Shows kits below as normal, but without collection boxes.

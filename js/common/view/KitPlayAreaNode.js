@@ -1,4 +1,4 @@
-// Copyright 2020, University of Colorado Boulder
+[object Promise]
 
 /**
  * Contains all of the atoms in the center of the screen. These are atoms that have been removed from a kit and not placed
