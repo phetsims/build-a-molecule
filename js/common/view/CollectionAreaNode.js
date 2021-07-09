@@ -48,7 +48,7 @@ class CollectionAreaNode extends Node {
         collection.resetKitsAndBoxes();
         updateRefillButton();
       },
-      iconScale: 0.5,
+      iconHeight: 20,
       xMargin: 15,
       yMargin: 5,
       baseColor: Color.ORANGE,
