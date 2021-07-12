@@ -12,7 +12,8 @@ import SphereBucket from '../../../../phetcommon/js/model/SphereBucket.js';
 import BucketFront from '../../../../scenery-phet/js/bucket/BucketFront.js';
 import BucketHole from '../../../../scenery-phet/js/bucket/BucketHole.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
-import FontAwesomeNode from '../../../../sun/js/FontAwesomeNode.js';
+import Path from '../../../../scenery/js/nodes/Path.js';
+import replySolidShape from '../../../../sherpa/js/fontawesome-5/replySolidShape.js';
 import RectangularPushButton from '../../../../sun/js/buttons/RectangularPushButton.js';
 import Playable from '../../../../tambo/js/Playable.js';
 import buildAMolecule from '../../buildAMolecule.js';
@@ -27,9 +28,9 @@ class RefillButton extends RectangularPushButton {
    * @param {Object} [options]
    */
   constructor( buttonListener, options ) {
-    const replyIcon = new FontAwesomeNode( 'reply', {
+    const replyIcon = new Path( replySolidShape, {
       fill: 'black', // "safety orange", according to Wikipedia
-      scale: 0.55
+      scale: 0.05
     } );
     const sphereBucket = new SphereBucket( {
       sphereRadius: 1,

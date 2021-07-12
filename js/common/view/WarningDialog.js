@@ -10,8 +10,9 @@ import openPopup from '../../../../phet-core/js/openPopup.js';
 import MultiLineText from '../../../../scenery-phet/js/MultiLineText.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import HBox from '../../../../scenery/js/nodes/HBox.js';
+import Path from '../../../../scenery/js/nodes/Path.js';
+import exclamationTriangleSolidShape from '../../../../sherpa/js/fontawesome-5/exclamationTriangleSolidShape.js';
 import Dialog from '../../../../sun/js/Dialog.js';
-import FontAwesomeNode from '../../../../sun/js/FontAwesomeNode.js';
 import buildAMolecule from '../../buildAMolecule.js';
 import buildAMoleculeStrings from '../../buildAMoleculeStrings.js';
 
@@ -21,9 +22,9 @@ class WarningDialog extends Dialog {
     // Message describing the lack of webgl support with a link for more information
     const warningNode = new HBox( {
       children: [
-        new FontAwesomeNode( 'warning_sign', {
+        new Path( exclamationTriangleSolidShape, {
           fill: '#E87600', // "safety orange", according to Wikipedia
-          scale: 0.8
+          scale: 0.06
         } ),
         new MultiLineText( buildAMoleculeStrings.warning, {
           font: new PhetFont( 16 ),
