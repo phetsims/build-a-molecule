@@ -25,7 +25,7 @@ import VBox from '../../../../../scenery/js/nodes/VBox.js';
 import Color from '../../../../../scenery/js/util/Color.js';
 import Dialog from '../../../../../sun/js/Dialog.js';
 import RectangularRadioButtonGroup from '../../../../../sun/js/buttons/RectangularRadioButtonGroup.js';
-import Playable from '../../../../../tambo/js/Playable.js';
+import SoundPlayer from '../../../../../tambo/js/SoundPlayer.js';
 import buildAMolecule from '../../../buildAMolecule.js';
 import buildAMoleculeStrings from '../../../buildAMoleculeStrings.js';
 import BAMConstants from '../../BAMConstants.js';
@@ -69,8 +69,8 @@ class Molecule3DDialog extends Dialog {
     this.viewStyleProperty = new EnumerationProperty( ViewStyle, ViewStyle.SPACE_FILL );
     const playPauseButton = new PlayPauseButton( this.isPlayingProperty, {
       radius: 15,
-      valueOffSoundPlayer: Playable.NO_SOUND,
-      valueOnSoundPlayer: Playable.NO_SOUND,
+      valueOffSoundPlayer: SoundPlayer.NO_SOUND,
+      valueOnSoundPlayer: SoundPlayer.NO_SOUND,
       baseColor: Color.ORANGE
     } );
 

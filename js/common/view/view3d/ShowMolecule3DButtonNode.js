@@ -11,7 +11,7 @@ import merge from '../../../../../phet-core/js/merge.js';
 import PhetFont from '../../../../../scenery-phet/js/PhetFont.js';
 import Text from '../../../../../scenery/js/nodes/Text.js';
 import RectangularPushButton from '../../../../../sun/js/buttons/RectangularPushButton.js';
-import Playable from '../../../../../tambo/js/Playable.js';
+import SoundPlayer from '../../../../../tambo/js/SoundPlayer.js';
 import buildAMolecule from '../../../buildAMolecule.js';
 import buildAMoleculeStrings from '../../../buildAMoleculeStrings.js';
 import BAMConstants from '../../BAMConstants.js';
@@ -39,7 +39,7 @@ class ShowMolecule3DButtonNode extends RectangularPushButton {
       xMargin: 3,
       yMargin: 3,
       cursor: 'pointer',
-      soundPlayer: Playable.NO_SOUND
+      soundPlayer: SoundPlayer.NO_SOUND
     }, options ) );
   }
 }

@@ -15,7 +15,7 @@ import HBox from '../../../../scenery/js/nodes/HBox.js';
 import Image from '../../../../scenery/js/nodes/Image.js';
 import Text from '../../../../scenery/js/nodes/Text.js';
 import RectangularPushButton from '../../../../sun/js/buttons/RectangularPushButton.js';
-import Playable from '../../../../tambo/js/Playable.js';
+import SoundPlayer from '../../../../tambo/js/SoundPlayer.js';
 import splitBlueImage from '../../../images/split-blue_png.js';
 import buildAMolecule from '../../buildAMolecule.js';
 import buildAMoleculeStrings from '../../buildAMoleculeStrings.js';
@@ -72,7 +72,7 @@ class MoleculeControlsHBox extends HBox {
       cursor: 'pointer',
       xMargin: 0, // Setting margins to zero so the 'X' image takes up the whole button view
       yMargin: 0,
-      soundPlayer: Playable.NO_SOUND
+      soundPlayer: SoundPlayer.NO_SOUND
     } );
     buttonBreak.touchArea = buttonBreak.childBounds.dilated( DILATION_FACTOR );
     buttonBreak.addInputListener( new ButtonListener( {

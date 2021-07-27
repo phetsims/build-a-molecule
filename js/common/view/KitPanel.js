@@ -12,7 +12,7 @@ import Node from '../../../../scenery/js/nodes/Node.js';
 import Color from '../../../../scenery/js/util/Color.js';
 import Carousel from '../../../../sun/js/Carousel.js';
 import PageControl from '../../../../sun/js/PageControl.js';
-import Playable from '../../../../tambo/js/Playable.js';
+import SoundPlayer from '../../../../tambo/js/SoundPlayer.js';
 import buildAMolecule from '../../buildAMolecule.js';
 import BAMConstants from '../BAMConstants.js';
 import KitNode from './KitNode.js';
@@ -56,7 +56,7 @@ class KitPanel extends Node {
       stroke: BAMConstants.KIT_BORDER,
       itemsPerPage: 1,
       animationEnabled: false,
-      buttonSoundPlayer: Playable.NO_SOUND
+      buttonSoundPlayer: SoundPlayer.NO_SOUND
     } );
 
     // When the page number changes update the current collection.

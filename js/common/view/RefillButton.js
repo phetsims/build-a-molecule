@@ -15,7 +15,7 @@ import Node from '../../../../scenery/js/nodes/Node.js';
 import Path from '../../../../scenery/js/nodes/Path.js';
 import replySolidShape from '../../../../sherpa/js/fontawesome-5/replySolidShape.js';
 import RectangularPushButton from '../../../../sun/js/buttons/RectangularPushButton.js';
-import Playable from '../../../../tambo/js/Playable.js';
+import SoundPlayer from '../../../../tambo/js/SoundPlayer.js';
 import buildAMolecule from '../../buildAMolecule.js';
 import BAMConstants from '../BAMConstants.js';
 
@@ -59,7 +59,7 @@ class RefillButton extends RectangularPushButton {
       content: contentNode,
       listener: buttonListener,
       baseColor: 'rgb(234,225,88)',
-      soundPlayer: Playable.NO_SOUND
+      soundPlayer: SoundPlayer.NO_SOUND
     }, options );
     super( options );
   }

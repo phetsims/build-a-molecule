@@ -11,7 +11,7 @@ import RefreshButton from '../../../../scenery-phet/js/buttons/RefreshButton.js'
 import Node from '../../../../scenery/js/nodes/Node.js';
 import VBox from '../../../../scenery/js/nodes/VBox.js';
 import Color from '../../../../scenery/js/util/Color.js';
-import Playable from '../../../../tambo/js/Playable.js';
+import SoundPlayer from '../../../../tambo/js/SoundPlayer.js';
 import buildAMolecule from '../../buildAMolecule.js';
 import MultipleCollectionBoxNode from './MultipleCollectionBoxNode.js';
 import SingleCollectionBoxNode from './SingleCollectionBoxNode.js';
@@ -52,7 +52,7 @@ class CollectionAreaNode extends Node {
       xMargin: 15,
       yMargin: 5,
       baseColor: Color.ORANGE,
-      soundPlayer: Playable.NO_SOUND
+      soundPlayer: SoundPlayer.NO_SOUND
     } );
     resetCollectionButton.touchArea = resetCollectionButton.bounds.dilated( 7 );
 

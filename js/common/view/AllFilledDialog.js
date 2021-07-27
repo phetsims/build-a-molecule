@@ -17,7 +17,7 @@ import VBox from '../../../../scenery/js/nodes/VBox.js';
 import Color from '../../../../scenery/js/util/Color.js';
 import Dialog from '../../../../sun/js/Dialog.js';
 import TextPushButton from '../../../../sun/js/buttons/TextPushButton.js';
-import Playable from '../../../../tambo/js/Playable.js';
+import SoundPlayer from '../../../../tambo/js/SoundPlayer.js';
 import buildAMolecule from '../../buildAMolecule.js';
 import buildAMoleculeStrings from '../../buildAMoleculeStrings.js';
 import BAMConstants from '../BAMConstants.js';
@@ -67,7 +67,7 @@ class AllFilledDialog extends Dialog {
           touchAreaXDilation: 20,
           touchAreaYDilation: 20,
           baseColor: Color.ORANGE,
-          soundPlayer: Playable.NO_SOUND,
+          soundPlayer: SoundPlayer.NO_SOUND,
           listener: () => {
             buttonClickedProperty.value = true;
             regenerateCallback();
