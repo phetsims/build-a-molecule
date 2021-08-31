@@ -42,7 +42,7 @@ class WarningDialog extends Dialog {
     // If webgl is disabled, show this pop-up
     warningNode.addInputListener( {
       up: () => {
-        openPopup( `http://phet.colorado.edu/webgl-disabled-page?simLocale=${phet.joist.sim.locale}` );
+        openPopup( `https://phet.colorado.edu/webgl-disabled-page?simLocale=${phet.joist.sim.locale}` );
       }
     } );
     super( warningNode, {
