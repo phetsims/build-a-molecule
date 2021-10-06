@@ -25,7 +25,7 @@
     "branch": "HEAD"
   },
   "joist": {
-    "sha": "e44f4d84f7cfa7ee401cbe4db7d3a8fd536d3379",
+    "sha": "c2130f68de63958a33f43e511c824319cc49e859",
     "branch": "HEAD"
   },
   "kite": {
@@ -89,7 +89,7 @@
     "branch": "HEAD"
   },
   "tambo": {
-    "sha": "ab28d38e943cc6ad26c7b9201a3090eb2cd63ef7",
+    "sha": "6096246172b8de83b6e468e8c4f1754761639d86",
     "branch": "HEAD"
   },
   "tandem": {
@@ -105,7 +105,7 @@
     "branch": "HEAD"
   },
   "vegas": {
-    "sha": "bac4df8b625f8b3dcb051940da68dcfd1b1a5b66",
+    "sha": "d9e74915a05ca354d3b23b38e532f7469f5f7843",
     "branch": "HEAD"
   }
 }
