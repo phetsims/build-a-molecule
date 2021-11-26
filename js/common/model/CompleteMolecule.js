@@ -44,7 +44,7 @@ import PF3Node from '../../../../nitroglycerin/js/nodes/PF3Node.js';
 import PH3Node from '../../../../nitroglycerin/js/nodes/PH3Node.js';
 import SO2Node from '../../../../nitroglycerin/js/nodes/SO2Node.js';
 import SO3Node from '../../../../nitroglycerin/js/nodes/SO3Node.js';
-import Node from '../../../../scenery/js/nodes/Node.js';
+import { Node } from '../../../../scenery/js/imports.js';
 import buildAMolecule from '../../buildAMolecule.js';
 import buildAMoleculeStrings from '../../buildAMoleculeStrings.js';
 import Bond from './Bond.js';

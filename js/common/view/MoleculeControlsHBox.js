@@ -10,10 +10,10 @@
 import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
 import Shape from '../../../../kite/js/Shape.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
-import ButtonListener from '../../../../scenery/js/input/ButtonListener.js';
-import HBox from '../../../../scenery/js/nodes/HBox.js';
-import Image from '../../../../scenery/js/nodes/Image.js';
-import Text from '../../../../scenery/js/nodes/Text.js';
+import { ButtonListener } from '../../../../scenery/js/imports.js';
+import { HBox } from '../../../../scenery/js/imports.js';
+import { Image } from '../../../../scenery/js/imports.js';
+import { Text } from '../../../../scenery/js/imports.js';
 import RectangularPushButton from '../../../../sun/js/buttons/RectangularPushButton.js';
 import SoundPlayer from '../../../../tambo/js/SoundPlayer.js';
 import splitBlueImage from '../../../images/split-blue_png.js';

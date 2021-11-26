@@ -7,7 +7,7 @@
  * @author Denzell Barnett (PhET Interactive Simulations)
  */
 
-import Node from '../../../../scenery/js/nodes/Node.js';
+import { Node } from '../../../../scenery/js/imports.js';
 import buildAMolecule from '../../buildAMolecule.js';
 import BAMConstants from '../BAMConstants.js';
 import KitNode from './KitNode.js';

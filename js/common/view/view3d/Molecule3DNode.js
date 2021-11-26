@@ -15,9 +15,9 @@ import Vector2 from '../../../../../dot/js/Vector2.js';
 import Vector3 from '../../../../../dot/js/Vector3.js';
 import Arc from '../../../../../kite/js/segments/Arc.js';
 import EllipticalArc from '../../../../../kite/js/segments/EllipticalArc.js';
-import DOM from '../../../../../scenery/js/nodes/DOM.js';
-import Color from '../../../../../scenery/js/util/Color.js';
-import Utils from '../../../../../scenery/js/util/Utils.js';
+import { DOM } from '../../../../../scenery/js/imports.js';
+import { Color } from '../../../../../scenery/js/imports.js';
+import { Utils } from '../../../../../scenery/js/imports.js';
 import buildAMolecule from '../../../buildAMolecule.js';
 
 // constants

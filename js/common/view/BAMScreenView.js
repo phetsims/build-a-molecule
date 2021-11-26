@@ -13,7 +13,7 @@ import Bounds2 from '../../../../dot/js/Bounds2.js';
 import ScreenView from '../../../../joist/js/ScreenView.js';
 import ThreeUtils from '../../../../mobius/js/ThreeUtils.js';
 import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.js';
-import DragListener from '../../../../scenery/js/listeners/DragListener.js';
+import { DragListener } from '../../../../scenery/js/imports.js';
 import buildAMolecule from '../../buildAMolecule.js';
 import BAMConstants from '../BAMConstants.js';
 import AtomNode from './AtomNode.js';

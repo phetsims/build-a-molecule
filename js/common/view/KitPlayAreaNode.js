@@ -9,7 +9,7 @@
  */
 
 import Property from '../../../../axon/js/Property.js';
-import Node from '../../../../scenery/js/nodes/Node.js';
+import { Node } from '../../../../scenery/js/imports.js';
 import buildAMolecule from '../../buildAMolecule.js';
 import MoleculeBondContainerNode from './MoleculeBondContainerNode.js';
 

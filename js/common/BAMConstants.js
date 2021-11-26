@@ -6,7 +6,7 @@ import Vector2 from '../../../dot/js/Vector2.js';
 import ScreenView from '../../../joist/js/ScreenView.js';
 import Element from '../../../nitroglycerin/js/Element.js';
 import ModelViewTransform2 from '../../../phetcommon/js/view/ModelViewTransform2.js';
-import Color from '../../../scenery/js/util/Color.js';
+import { Color } from '../../../scenery/js/imports.js';
 import buildAMolecule from '../buildAMolecule.js';
 
 // constants

@@ -7,10 +7,10 @@
  * @author Denzell Barnett (PhET Interactive Simulations)
  */
 
-import FireListener from '../../../../scenery/js/listeners/FireListener.js';
-import Circle from '../../../../scenery/js/nodes/Circle.js';
-import Line from '../../../../scenery/js/nodes/Line.js';
-import Node from '../../../../scenery/js/nodes/Node.js';
+import { FireListener } from '../../../../scenery/js/imports.js';
+import { Circle } from '../../../../scenery/js/imports.js';
+import { Line } from '../../../../scenery/js/imports.js';
+import { Node } from '../../../../scenery/js/imports.js';
 import scissorsClosedUpCursorImage from '../../../images/scissors-closed-up_cur.js';
 import scissorsClosedUpImage from '../../../images/scissors-closed-up_png.js';
 import scissorsClosedCursorImage from '../../../images/scissors-closed_cur.js';
