@@ -14,7 +14,7 @@ import Property from '../../../../../axon/js/Property.js';
 import Matrix3 from '../../../../../dot/js/Matrix3.js';
 import Vector3 from '../../../../../dot/js/Vector3.js';
 import ThreeNode from '../../../../../mobius/js/ThreeNode.js';
-import Enumeration from '../../../../../phet-core/js/Enumeration.js';
+import EnumerationDeprecated from '../../../../../phet-core/js/EnumerationDeprecated.js';
 import PhetFont from '../../../../../scenery-phet/js/PhetFont.js';
 import PlayPauseButton from '../../../../../scenery-phet/js/buttons/PlayPauseButton.js';
 import { PressListener } from '../../../../../scenery/js/imports.js';
@@ -32,7 +32,7 @@ import BAMConstants from '../../BAMConstants.js';
 import MoleculeList from '../../model/MoleculeList.js';
 
 // constants
-const ViewStyle = Enumeration.byKeys( [ 'SPACE_FILL', 'BALL_AND_STICK' ] );
+const ViewStyle = EnumerationDeprecated.byKeys( [ 'SPACE_FILL', 'BALL_AND_STICK' ] );
 
 class Molecule3DDialog extends Dialog {
   /**

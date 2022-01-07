@@ -49,7 +49,7 @@ import buildAMolecule from '../../buildAMolecule.js';
 import buildAMoleculeStrings from '../../buildAMoleculeStrings.js';
 import Bond from './Bond.js';
 import MoleculeStructure from './MoleculeStructure.js';
-import Enumeration from '../../../../phet-core/js/Enumeration.js';
+import EnumerationDeprecated from '../../../../phet-core/js/EnumerationDeprecated.js';
 
 // constants
 const OFFSET = 2.5; // used to model our atoms with only 2d data into a 3d representation
@@ -312,7 +312,7 @@ class CompleteMolecule extends MoleculeStructure {
 }
 
 // Signature for Atom without 2d or 3d representation
-const PubChemAtomType = Enumeration.byKeys( [ 'TWO_DIMENSION', 'THREE_DIMENSION', 'FULL' ] );
+const PubChemAtomType = EnumerationDeprecated.byKeys( [ 'TWO_DIMENSION', 'THREE_DIMENSION', 'FULL' ] );
 
 class PubChemAtom extends Atom {
   constructor( element, type, x2d, y2d, x3d, y3d, z3d ) {

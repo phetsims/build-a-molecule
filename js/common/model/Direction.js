@@ -8,11 +8,11 @@
  */
 
 import Vector2 from '../../../../dot/js/Vector2.js';
-import Enumeration from '../../../../phet-core/js/Enumeration.js';
+import EnumerationDeprecated from '../../../../phet-core/js/EnumerationDeprecated.js';
 import buildAMolecule from '../../buildAMolecule.js';
 
 // constants
-const DirectionOrientation = Enumeration.byKeys( [ 'NORTH', 'EAST', 'SOUTH', 'WEST' ] );
+const DirectionOrientation = EnumerationDeprecated.byKeys( [ 'NORTH', 'EAST', 'SOUTH', 'WEST' ] );
 
 class DirectionValue {
   /**
@@ -44,7 +44,7 @@ SOUTH.opposite = NORTH;
 EAST.opposite = WEST;
 WEST.opposite = EAST;
 
-const Direction = Enumeration.byMap( {
+const Direction = EnumerationDeprecated.byMap( {
   NORTH: NORTH,
   SOUTH: SOUTH,
   EAST: EAST,
