@@ -9,7 +9,7 @@
 
 import StringUtils from '../../../../../phetcommon/js/util/StringUtils.js';
 import BooleanProperty from '../../../../../axon/js/BooleanProperty.js';
-import EnumerationProperty from '../../../../../axon/js/EnumerationProperty.js';
+import EnumerationDeprecatedProperty from '../../../../../axon/js/EnumerationDeprecatedProperty.js';
 import Property from '../../../../../axon/js/Property.js';
 import Matrix3 from '../../../../../dot/js/Matrix3.js';
 import Vector3 from '../../../../../dot/js/Vector3.js';
@@ -65,8 +65,8 @@ class Molecule3DDialog extends Dialog {
     // @public {BooleanProperty}
     this.userControlledProperty = new BooleanProperty( false );
 
-    // @public {EnumerationProperty} View styles for space filled and ball and stick views.
-    this.viewStyleProperty = new EnumerationProperty( ViewStyle, ViewStyle.SPACE_FILL );
+    // @public {EnumerationDeprecatedProperty} View styles for space filled and ball and stick views.
+    this.viewStyleProperty = new EnumerationDeprecatedProperty( ViewStyle, ViewStyle.SPACE_FILL );
     const playPauseButton = new PlayPauseButton( this.isPlayingProperty, {
       radius: 15,
       valueOffSoundPlayer: SoundPlayer.NO_SOUND,
