@@ -1,5 +1,5 @@
 {
-  "comment": "# build-a-molecule 1.0.5 Tue Oct 12 2021 17:49:46 GMT-0600 (Mountain Daylight Time)",
+  "comment": "# build-a-molecule 1.0.6-rc.1 Wed Jan 26 2022 12:04:01 GMT-0700 (Mountain Standard Time)",
   "assert": {
     "sha": "73ed687cbea36db888079159cf9b43d41b8b8854",
     "branch": "HEAD"
@@ -13,7 +13,7 @@
     "branch": "HEAD"
   },
   "build-a-molecule": {
-    "sha": "b6581f0db4f119a05754b844f55de1b092c8c3d0",
+    "sha": "ee2d7e02d8f6c6064d44485252a00456c53fa145",
     "branch": "1.0"
   },
   "chipper": {
