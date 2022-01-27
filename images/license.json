@@ -15,7 +15,7 @@
     "license": "Public Domain",
     "notes": "Modified by PhET"
   },
-  "scissors-closed.cur": {
+  "scissorsClosed.cur": {
     "text": [
       "Public Domain"
     ],
@@ -23,7 +23,7 @@
     "license": "Public Domain",
     "notes": "Modified by PhET"
   },
-  "scissors-closed.png": {
+  "scissorsClosed.png": {
     "text": [
       "Public Domain"
     ],
@@ -31,7 +31,7 @@
     "license": "Public Domain",
     "notes": "Modified by PhET"
   },
-  "scissors-closed-up.cur": {
+  "scissorsClosedUp.cur": {
     "text": [
       "Public Domain"
     ],
@@ -39,7 +39,7 @@
     "license": "Public Domain",
     "notes": "Modified by PhET"
   },
-  "scissors-closed-up.png": {
+  "scissorsClosedUp.png": {
     "text": [
       "Public Domain"
     ],
@@ -47,7 +47,7 @@
     "license": "Public Domain",
     "notes": "Modified by PhET"
   },
-  "scissors-up.cur": {
+  "scissorsUp.cur": {
     "text": [
       "Public Domain"
     ],
@@ -55,7 +55,7 @@
     "license": "Public Domain",
     "notes": "Modified by PhET"
   },
-  "scissors-up.png": {
+  "scissorsUp.png": {
     "text": [
       "Public Domain"
     ],
@@ -63,9 +63,9 @@
     "license": "Public Domain",
     "notes": "Modified by PhET"
   },
-  "split-blue.png": {
+  "splitBlue.png": {
     "text": [
-      "Copyright 2002-2015 University of Colorado Boulder"
+      "Copyright 20022015 University of Colorado Boulder"
     ],
     "projectURL": "https://phet.colorado.edu",
     "license": "contact phethelp@colorado.edu",

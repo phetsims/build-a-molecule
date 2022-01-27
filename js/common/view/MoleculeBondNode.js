@@ -11,14 +11,14 @@ import { FireListener } from '../../../../scenery/js/imports.js';
 import { Circle } from '../../../../scenery/js/imports.js';
 import { Line } from '../../../../scenery/js/imports.js';
 import { Node } from '../../../../scenery/js/imports.js';
-import scissorsClosedUpCursorImage from '../../../images/scissors-closed-up_cur.js';
-import scissorsClosedUpImage from '../../../images/scissors-closed-up_png.js';
-import scissorsClosedCursorImage from '../../../images/scissors-closed_cur.js';
-import scissorsClosedImage from '../../../images/scissors-closed_png.js';
-import scissorsUpCursorImage from '../../../images/scissors-up_cur.js';
-import scissorsUpImage from '../../../images/scissors-up_png.js';
-import scissorsCursorImage from '../../../images/scissors_cur.js';
-import scissorsImage from '../../../images/scissors_png.js';
+import scissorsClosedUp_cur from '../../../images/scissorsClosedUp_cur.js';
+import scissorsClosedUp_png from '../../../images/scissorsClosedUp_png.js';
+import scissorsClosed_cur from '../../../images/scissorsClosed_cur.js';
+import scissorsClosed_png from '../../../images/scissorsClosed_png.js';
+import scissorsUp_cur from '../../../images/scissorsUp_cur.js';
+import scissorsUp_png from '../../../images/scissorsUp_png.js';
+import scissors_cur from '../../../images/scissors_cur.js';
+import scissors_png from '../../../images/scissors_png.js';
 import buildAMolecule from '../../buildAMolecule.js';
 import BAMConstants from '../BAMConstants.js';
 import Direction from '../model/Direction.js';
@@ -36,14 +36,14 @@ import Direction from '../model/Direction.js';
  */
 
 const images = {
-  'scissors.png': scissorsImage,
-  'scissors-closed.png': scissorsClosedImage,
-  'scissors-up.png': scissorsUpImage,
-  'scissors-closed-up.png': scissorsClosedUpImage,
-  'scissors.cur': scissorsCursorImage,
-  'scissors-closed.cur': scissorsClosedCursorImage,
-  'scissors-up.cur': scissorsUpCursorImage,
-  'scissors-closed-up.cur': scissorsClosedUpCursorImage
+  'scissors.png': scissors_png,
+  'scissors-closed.png': scissorsClosed_png,
+  'scissors-up.png': scissorsUp_png,
+  'scissors-closed-up.png': scissorsClosedUp_png,
+  'scissors.cur': scissors_cur,
+  'scissors-closed.cur': scissorsClosed_cur,
+  'scissors-up.cur': scissorsUp_cur,
+  'scissors-closed-up.cur': scissorsClosedUp_cur
 };
 const bondRadius = 6; // "Radius" of the bond target that will break the bond
 

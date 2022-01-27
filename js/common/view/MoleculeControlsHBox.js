@@ -16,7 +16,7 @@ import { Image } from '../../../../scenery/js/imports.js';
 import { Text } from '../../../../scenery/js/imports.js';
 import RectangularPushButton from '../../../../sun/js/buttons/RectangularPushButton.js';
 import SoundPlayer from '../../../../tambo/js/SoundPlayer.js';
-import splitBlueImage from '../../../images/split-blue_png.js';
+import splitBlue_png from '../../../images/splitBlue_png.js';
 import buildAMolecule from '../../buildAMolecule.js';
 import buildAMoleculeStrings from '../../buildAMoleculeStrings.js';
 import BAMConstants from '../BAMConstants.js';
@@ -67,7 +67,7 @@ class MoleculeControlsHBox extends HBox {
 
     // Break-up button 'X'
     const buttonBreak = new RectangularPushButton( {
-      content: new Image( splitBlueImage ),
+      content: new Image( splitBlue_png ),
       scale: SCALE,
       cursor: 'pointer',
       xMargin: 0, // Setting margins to zero so the 'X' image takes up the whole button view
