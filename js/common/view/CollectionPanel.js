@@ -8,7 +8,7 @@
  */
 
 import ScreenView from '../../../../joist/js/ScreenView.js';
-import Shape from '../../../../kite/js/Shape.js';
+import { Shape } from '../../../../kite/js/imports.js';
 import merge from '../../../../phet-core/js/merge.js';
 import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
 import NextPreviousNavigationNode from '../../../../scenery-phet/js/NextPreviousNavigationNode.js';

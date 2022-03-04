@@ -13,11 +13,8 @@ import Matrix3 from '../../../../../dot/js/Matrix3.js';
 import Quaternion from '../../../../../dot/js/Quaternion.js';
 import Vector2 from '../../../../../dot/js/Vector2.js';
 import Vector3 from '../../../../../dot/js/Vector3.js';
-import Arc from '../../../../../kite/js/segments/Arc.js';
-import EllipticalArc from '../../../../../kite/js/segments/EllipticalArc.js';
-import { DOM } from '../../../../../scenery/js/imports.js';
-import { Color } from '../../../../../scenery/js/imports.js';
-import { Utils } from '../../../../../scenery/js/imports.js';
+import { Arc, EllipticalArc } from '../../../../../kite/js/imports.js';
+import { Color, DOM, Utils } from '../../../../../scenery/js/imports.js';
 import buildAMolecule from '../../../buildAMolecule.js';
 
 // constants
