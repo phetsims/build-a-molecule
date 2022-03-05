@@ -1,4 +1,4 @@
-// Copyright 2020-2021, University of Colorado Boulder
+// Copyright 2020-2022, University of Colorado Boulder
 
 /**
  * Subtype of BAMScreenView that shows kits, but also has a collection area to the right-hand side
