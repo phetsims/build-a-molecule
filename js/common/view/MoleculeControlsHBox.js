@@ -7,15 +7,12 @@
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 
-import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
 import { Shape } from '../../../../kite/js/imports.js';
+import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
-import { ButtonListener } from '../../../../scenery/js/imports.js';
-import { HBox } from '../../../../scenery/js/imports.js';
-import { Image } from '../../../../scenery/js/imports.js';
-import { Text } from '../../../../scenery/js/imports.js';
+import { ButtonListener, HBox, Image, Text } from '../../../../scenery/js/imports.js';
 import RectangularPushButton from '../../../../sun/js/buttons/RectangularPushButton.js';
-import SoundPlayer from '../../../../tambo/js/SoundPlayer.js';
+import nullSoundPlayer from '../../../../tambo/js/shared-sound-players/nullSoundPlayer.js';
 import splitBlue_png from '../../../images/splitBlue_png.js';
 import buildAMolecule from '../../buildAMolecule.js';
 import buildAMoleculeStrings from '../../buildAMoleculeStrings.js';
@@ -72,7 +69,7 @@ class MoleculeControlsHBox extends HBox {
       cursor: 'pointer',
       xMargin: 0, // Setting margins to zero so the 'X' image takes up the whole button view
       yMargin: 0,
-      soundPlayer: SoundPlayer.NO_SOUND
+      soundPlayer: nullSoundPlayer
     } );
     buttonBreak.touchArea = buttonBreak.childBounds.dilated( DILATION_FACTOR );
     buttonBreak.addInputListener( new ButtonListener( {

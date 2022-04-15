@@ -8,11 +8,10 @@
  */
 
 import Property from '../../../../axon/js/Property.js';
-import { Node } from '../../../../scenery/js/imports.js';
-import { Color } from '../../../../scenery/js/imports.js';
+import { Color, Node } from '../../../../scenery/js/imports.js';
 import Carousel from '../../../../sun/js/Carousel.js';
 import PageControl from '../../../../sun/js/PageControl.js';
-import SoundPlayer from '../../../../tambo/js/SoundPlayer.js';
+import nullSoundPlayer from '../../../../tambo/js/shared-sound-players/nullSoundPlayer.js';
 import buildAMolecule from '../../buildAMolecule.js';
 import BAMConstants from '../BAMConstants.js';
 import KitNode from './KitNode.js';
@@ -56,7 +55,7 @@ class KitPanel extends Node {
       stroke: BAMConstants.KIT_BORDER,
       itemsPerPage: 1,
       animationEnabled: false,
-      buttonSoundPlayer: SoundPlayer.NO_SOUND
+      buttonSoundPlayer: nullSoundPlayer
     } );
 
     // When the page number changes update the current collection.

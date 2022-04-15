@@ -12,12 +12,10 @@ import Vector2 from '../../../../dot/js/Vector2.js';
 import merge from '../../../../phet-core/js/merge.js';
 import FaceNode from '../../../../scenery-phet/js/FaceNode.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
-import { Text } from '../../../../scenery/js/imports.js';
-import { VBox } from '../../../../scenery/js/imports.js';
-import { Color } from '../../../../scenery/js/imports.js';
-import Dialog from '../../../../sun/js/Dialog.js';
+import { Color, Text, VBox } from '../../../../scenery/js/imports.js';
 import TextPushButton from '../../../../sun/js/buttons/TextPushButton.js';
-import SoundPlayer from '../../../../tambo/js/SoundPlayer.js';
+import Dialog from '../../../../sun/js/Dialog.js';
+import nullSoundPlayer from '../../../../tambo/js/shared-sound-players/nullSoundPlayer.js';
 import buildAMolecule from '../../buildAMolecule.js';
 import buildAMoleculeStrings from '../../buildAMoleculeStrings.js';
 import BAMConstants from '../BAMConstants.js';
@@ -67,7 +65,7 @@ class AllFilledDialog extends Dialog {
           touchAreaXDilation: 20,
           touchAreaYDilation: 20,
           baseColor: Color.ORANGE,
-          soundPlayer: SoundPlayer.NO_SOUND,
+          soundPlayer: nullSoundPlayer,
           listener: () => {
             buttonClickedProperty.value = true;
             regenerateCallback();

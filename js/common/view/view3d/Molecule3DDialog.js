@@ -7,7 +7,6 @@
  * @author Denzell Barnett (PhET Interactive Simulations)
  */
 
-import StringUtils from '../../../../../phetcommon/js/util/StringUtils.js';
 import BooleanProperty from '../../../../../axon/js/BooleanProperty.js';
 import EnumerationDeprecatedProperty from '../../../../../axon/js/EnumerationDeprecatedProperty.js';
 import Property from '../../../../../axon/js/Property.js';
@@ -15,17 +14,13 @@ import Matrix3 from '../../../../../dot/js/Matrix3.js';
 import Vector3 from '../../../../../dot/js/Vector3.js';
 import ThreeNode from '../../../../../mobius/js/ThreeNode.js';
 import EnumerationDeprecated from '../../../../../phet-core/js/EnumerationDeprecated.js';
-import PhetFont from '../../../../../scenery-phet/js/PhetFont.js';
+import StringUtils from '../../../../../phetcommon/js/util/StringUtils.js';
 import PlayPauseButton from '../../../../../scenery-phet/js/buttons/PlayPauseButton.js';
-import { PressListener } from '../../../../../scenery/js/imports.js';
-import { Rectangle } from '../../../../../scenery/js/imports.js';
-import { RichText } from '../../../../../scenery/js/imports.js';
-import { Text } from '../../../../../scenery/js/imports.js';
-import { VBox } from '../../../../../scenery/js/imports.js';
-import { Color } from '../../../../../scenery/js/imports.js';
-import Dialog from '../../../../../sun/js/Dialog.js';
+import PhetFont from '../../../../../scenery-phet/js/PhetFont.js';
+import { Color, PressListener, Rectangle, RichText, Text, VBox } from '../../../../../scenery/js/imports.js';
 import RectangularRadioButtonGroup from '../../../../../sun/js/buttons/RectangularRadioButtonGroup.js';
-import SoundPlayer from '../../../../../tambo/js/SoundPlayer.js';
+import Dialog from '../../../../../sun/js/Dialog.js';
+import nullSoundPlayer from '../../../../../tambo/js/shared-sound-players/nullSoundPlayer.js';
 import buildAMolecule from '../../../buildAMolecule.js';
 import buildAMoleculeStrings from '../../../buildAMoleculeStrings.js';
 import BAMConstants from '../../BAMConstants.js';
@@ -69,8 +64,8 @@ class Molecule3DDialog extends Dialog {
     this.viewStyleProperty = new EnumerationDeprecatedProperty( ViewStyle, ViewStyle.SPACE_FILL );
     const playPauseButton = new PlayPauseButton( this.isPlayingProperty, {
       radius: 15,
-      valueOffSoundPlayer: SoundPlayer.NO_SOUND,
-      valueOnSoundPlayer: SoundPlayer.NO_SOUND,
+      valueOffSoundPlayer: nullSoundPlayer,
+      valueOnSoundPlayer: nullSoundPlayer,
       baseColor: Color.ORANGE
     } );
 

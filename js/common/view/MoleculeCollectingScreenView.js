@@ -13,7 +13,7 @@ import { Shape } from '../../../../kite/js/imports.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import { Color } from '../../../../scenery/js/imports.js';
 import TextPushButton from '../../../../sun/js/buttons/TextPushButton.js';
-import SoundPlayer from '../../../../tambo/js/SoundPlayer.js';
+import nullSoundPlayer from '../../../../tambo/js/shared-sound-players/nullSoundPlayer.js';
 import buildAMolecule from '../../buildAMolecule.js';
 import buildAMoleculeStrings from '../../buildAMoleculeStrings.js';
 import BAMConstants from '../BAMConstants.js';
@@ -45,7 +45,7 @@ class MoleculeCollectingScreenView extends BAMScreenView {
       } ),
       maxWidth: BAMConstants.TEXT_MAX_WIDTH,
       baseColor: Color.ORANGE,
-      soundPlayer: SoundPlayer.NO_SOUND
+      soundPlayer: nullSoundPlayer
     } );
     this.nextCollectionButton.touchArea = Shape.bounds( this.nextCollectionButton.localBounds.dilated( 20 ) );
     this.nextCollectionButton.addListener( () => {
