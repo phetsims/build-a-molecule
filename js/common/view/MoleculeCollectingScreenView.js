@@ -7,7 +7,7 @@
  * @author Denzell Barnett (PhET Interactive Simulations)
  */
 
-import Property from '../../../../axon/js/Property.js';
+import Multilink from '../../../../axon/js/Multilink.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import { Shape } from '../../../../kite/js/imports.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
@@ -66,7 +66,7 @@ class MoleculeCollectingScreenView extends BAMScreenView {
       }
     );
 
-    Property.lazyMultilink( [ this.allFilledDialog.isShowingProperty, this.bamModel.buttonClickedProperty ],
+    Multilink.lazyMultilink( [ this.allFilledDialog.isShowingProperty, this.bamModel.buttonClickedProperty ],
       ( isShowing, buttonClicked ) => {
         this.nextCollectionButton.visible = !isShowing && !buttonClicked;
       } );

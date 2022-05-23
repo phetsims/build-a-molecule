@@ -10,6 +10,7 @@
 import BooleanProperty from '../../../../../axon/js/BooleanProperty.js';
 import EnumerationDeprecatedProperty from '../../../../../axon/js/EnumerationDeprecatedProperty.js';
 import Property from '../../../../../axon/js/Property.js';
+import Multilink from '../../../../../axon/js/Multilink.js';
 import Matrix3 from '../../../../../dot/js/Matrix3.js';
 import Vector3 from '../../../../../dot/js/Vector3.js';
 import ThreeNode from '../../../../../mobius/js/ThreeNode.js';
@@ -230,7 +231,7 @@ class Molecule3DDialog extends Dialog {
     moleculeScene.add( moleculeContainer );
 
     // Handle the each 3D representation based on the current view style
-    Property.multilink( [ this.viewStyleProperty, completeMoleculeProperty ], ( viewStyle, completeMolecule ) => {
+    Multilink.multilink( [ this.viewStyleProperty, completeMoleculeProperty ], ( viewStyle, completeMolecule ) => {
       if ( completeMolecule ) {
 
         // Remove all previous mesh elements if they exists from a previous build
