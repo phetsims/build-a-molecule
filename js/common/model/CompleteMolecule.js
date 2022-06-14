@@ -245,8 +245,8 @@ class CompleteMolecule extends MoleculeStructure {
     let idx = 0;
     const commonName = tokens[ idx++ ];
     const molecularFormula = tokens[ idx++ ];
-    const atomCount = parseInt( tokens[ idx++ ], 10 );
-    const bondCount = parseInt( tokens[ idx++ ], 10 );
+    const atomCount = Number( tokens[ idx++ ] );
+    const bondCount = Number( tokens[ idx++ ] );
     const completeMolecule = new CompleteMolecule( commonName, molecularFormula, atomCount, bondCount, true, true );
 
     // for each atom, read its symbol, then 2d coordinates, then 3d coordinates (total of 6 fields)
@@ -263,15 +263,15 @@ class CompleteMolecule extends MoleculeStructure {
 
     // for each bond, read atom indices (2 of them, which are 1-indexed), and then the order of the bond (single, double, triple, etc.)
     for ( i = 0; i < bondCount; i++ ) {
-      const a = parseInt( tokens[ idx++ ], 10 );
-      const b = parseInt( tokens[ idx++ ], 10 );
-      const order = parseInt( tokens[ idx++ ], 10 );
+      const a = Number( tokens[ idx++ ] );
+      const b = Number( tokens[ idx++ ] );
+      const order = Number( tokens[ idx++ ] );
       const bond = new PubChemBond( completeMolecule.atoms[ a - 1 ], completeMolecule.atoms[ b - 1 ], order ); // -1 since our format is 1-based
       completeMolecule.addBond( bond );
     }
 
     // Filled in by parsing completeMolecule
-    completeMolecule.cid = parseInt( tokens[ idx++ ], 10 );
+    completeMolecule.cid = Number( tokens[ idx++ ] );
 
     return completeMolecule;
   }
@@ -292,7 +292,7 @@ class CompleteMolecule extends MoleculeStructure {
     const commonName = tokens[ idx++ ];
     const molecularFormula = tokens[ idx++ ];
     const cidString = tokens[ idx++ ];
-    const cid = parseInt( cidString, 10 );
+    const cid = Number( cidString );
     const format = tokens[ idx++ ];
 
     const has2dAnd3d = format === 'full';
@@ -440,8 +440,8 @@ class PubChemBond extends Bond {
    */
   static parse( bondString, connectedAtom, molecule ) {
     const tokens = bondString.split( '-' );
-    const index = parseInt( tokens[ 0 ], 10 );
-    const order = parseInt( tokens[ 1 ], 10 );
+    const index = Number( tokens[ 0 ] );
+    const order = Number( tokens[ 1 ] );
     return new PubChemBond( connectedAtom, molecule.atoms[ index ], order );
   }
 }

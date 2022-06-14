@@ -672,8 +672,8 @@ class MoleculeStructure {
   static fromSerial2( line, moleculeGenerator, atomParser, bondParser ) {
     const tokens = line.split( '|' );
     let idx = 0;
-    const atomCount = parseInt( tokens[ idx++ ], 10 );
-    const bondCount = parseInt( tokens[ idx++ ], 10 );
+    const atomCount = Number( tokens[ idx++ ] );
+    const bondCount = Number( tokens[ idx++ ] );
     const molecule = moleculeGenerator( atomCount, bondCount );
     for ( let i = 0; i < atomCount; i++ ) {
       const atomBondString = tokens[ idx++ ];
@@ -733,7 +733,7 @@ class MoleculeStructure {
    */
   static defaultBondParser( bondString, connectedAtom, moleculeStructure ) {
     // bondString is index of other atom to bond
-    return new Bond( connectedAtom, moleculeStructure.atoms[ parseInt( bondString, 10 ) ] );
+    return new Bond( connectedAtom, moleculeStructure.atoms[ Number( bondString ) ] );
   }
 
   // @private {Object}
