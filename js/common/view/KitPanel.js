@@ -65,7 +65,7 @@ class KitPanel extends Node {
     this.addChild( this.kitCarousel );
 
     // Page control for input carousel
-    const inputPageControl = new PageControl( this.kitCarousel.numberOfPages, this.kitCarousel.pageNumberProperty, {
+    const inputPageControl = new PageControl( this.kitCarousel.pageNumberProperty, this.kitCarousel.numberOfPages, {
       top: this.kitCarousel.bottom + BAMConstants.VIEW_PADDING / 2,
       centerX: this.kitCarousel.centerX,
       pageFill: Color.WHITE,
