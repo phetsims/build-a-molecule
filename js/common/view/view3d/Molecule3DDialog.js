@@ -263,16 +263,18 @@ class Molecule3DDialog extends Dialog {
 
     // Create the icons for scene selection
     const sceneRadioButtonGroup = new RectangularRadioButtonGroup( this.viewStyleProperty, toggleButtonsContent, {
-      buttonContentXMargin: 5,
-      baseColor: 'black',
-      selectedStroke: 'yellow',
-      deselectedStroke: 'white',
-      selectedLineWidth: 1,
-      deselectedLineWidth: 0.5,
-      deselectedButtonOpacity: 0.25,
-      cornerRadius: BAMConstants.CORNER_RADIUS,
       orientation: 'horizontal',
-      spacing: 30
+      spacing: 30,
+      radioButtonOptions: {
+        xMargin: 5,
+        baseColor: 'black',
+        selectedStroke: 'yellow',
+        deselectedStroke: 'white',
+        selectedLineWidth: 1,
+        deselectedLineWidth: 0.5,
+        deselectedButtonOpacity: 0.25,
+        cornerRadius: BAMConstants.CORNER_RADIUS
+      }
     } );
 
     // Create and add lights to each scene for main molecule node and icons. Lights taken from MoleculeShapesScreenView.js
