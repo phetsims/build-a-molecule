@@ -21,9 +21,9 @@ import C2H6Node from '../../../../nitroglycerin/js/nodes/C2H6Node.js';
 import CH2ONode from '../../../../nitroglycerin/js/nodes/CH2ONode.js';
 import CH3OHNode from '../../../../nitroglycerin/js/nodes/CH3OHNode.js';
 import CH4Node from '../../../../nitroglycerin/js/nodes/CH4Node.js';
+import Cl2Node from '../../../../nitroglycerin/js/nodes/Cl2Node.js';
 import CO2Node from '../../../../nitroglycerin/js/nodes/CO2Node.js';
 import CS2Node from '../../../../nitroglycerin/js/nodes/CS2Node.js';
-import Cl2Node from '../../../../nitroglycerin/js/nodes/Cl2Node.js';
 import F2Node from '../../../../nitroglycerin/js/nodes/F2Node.js';
 import H2Node from '../../../../nitroglycerin/js/nodes/H2Node.js';
 import H2ONode from '../../../../nitroglycerin/js/nodes/H2ONode.js';
@@ -44,12 +44,12 @@ import PF3Node from '../../../../nitroglycerin/js/nodes/PF3Node.js';
 import PH3Node from '../../../../nitroglycerin/js/nodes/PH3Node.js';
 import SO2Node from '../../../../nitroglycerin/js/nodes/SO2Node.js';
 import SO3Node from '../../../../nitroglycerin/js/nodes/SO3Node.js';
+import EnumerationDeprecated from '../../../../phet-core/js/EnumerationDeprecated.js';
 import { Node } from '../../../../scenery/js/imports.js';
 import buildAMolecule from '../../buildAMolecule.js';
 import buildAMoleculeStrings from '../../buildAMoleculeStrings.js';
 import Bond from './Bond.js';
 import MoleculeStructure from './MoleculeStructure.js';
-import EnumerationDeprecated from '../../../../phet-core/js/EnumerationDeprecated.js';
 
 // constants
 const OFFSET = 2.5; // used to model our atoms with only 2d data into a 3d representation

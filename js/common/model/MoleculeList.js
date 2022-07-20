@@ -11,11 +11,11 @@
 
 import buildAMolecule from '../../buildAMolecule.js';
 import CompleteMolecule from './CompleteMolecule.js';
-import MoleculeStructure from './MoleculeStructure.js';
-import StrippedMolecule from './StrippedMolecule.js';
 import collectionMoleculesData from './data/collectionMoleculesData.js';
 import otherMoleculesData from './data/otherMoleculesData.js';
 import structuresData from './data/structuresData.js';
+import MoleculeStructure from './MoleculeStructure.js';
+import StrippedMolecule from './StrippedMolecule.js';
 
 class MoleculeList {
   constructor() {

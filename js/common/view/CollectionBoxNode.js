@@ -10,10 +10,7 @@
 
 import stepTimer from '../../../../axon/js/stepTimer.js';
 import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
-import { Node } from '../../../../scenery/js/imports.js';
-import { Rectangle } from '../../../../scenery/js/imports.js';
-import { VBox } from '../../../../scenery/js/imports.js';
-import { Color } from '../../../../scenery/js/imports.js';
+import { Color, Node, Rectangle, VBox } from '../../../../scenery/js/imports.js';
 import buildAMolecule from '../../buildAMolecule.js';
 import BAMConstants from '../BAMConstants.js';
 import MoleculeList from '../model/MoleculeList.js';

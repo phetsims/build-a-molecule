@@ -9,8 +9,7 @@
 import openPopup from '../../../../phet-core/js/openPopup.js';
 import MultiLineText from '../../../../scenery-phet/js/MultiLineText.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
-import { HBox } from '../../../../scenery/js/imports.js';
-import { Path } from '../../../../scenery/js/imports.js';
+import { HBox, Path } from '../../../../scenery/js/imports.js';
 import exclamationTriangleSolidShape from '../../../../sherpa/js/fontawesome-5/exclamationTriangleSolidShape.js';
 import Dialog from '../../../../sun/js/Dialog.js';
 import buildAMolecule from '../../buildAMolecule.js';

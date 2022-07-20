@@ -7,18 +7,15 @@
  * @author Denzell Barnett (PhET Interactive Simulations)
  */
 
-import { FireListener } from '../../../../scenery/js/imports.js';
-import { Circle } from '../../../../scenery/js/imports.js';
-import { Line } from '../../../../scenery/js/imports.js';
-import { Node } from '../../../../scenery/js/imports.js';
-import scissorsClosedUp_cur from '../../../images/scissorsClosedUp_cur.js';
-import scissorsClosedUp_png from '../../../images/scissorsClosedUp_png.js';
-import scissorsClosed_cur from '../../../images/scissorsClosed_cur.js';
-import scissorsClosed_png from '../../../images/scissorsClosed_png.js';
-import scissorsUp_cur from '../../../images/scissorsUp_cur.js';
-import scissorsUp_png from '../../../images/scissorsUp_png.js';
+import { Circle, FireListener, Line, Node } from '../../../../scenery/js/imports.js';
 import scissors_cur from '../../../images/scissors_cur.js';
 import scissors_png from '../../../images/scissors_png.js';
+import scissorsClosed_cur from '../../../images/scissorsClosed_cur.js';
+import scissorsClosed_png from '../../../images/scissorsClosed_png.js';
+import scissorsClosedUp_cur from '../../../images/scissorsClosedUp_cur.js';
+import scissorsClosedUp_png from '../../../images/scissorsClosedUp_png.js';
+import scissorsUp_cur from '../../../images/scissorsUp_cur.js';
+import scissorsUp_png from '../../../images/scissorsUp_png.js';
 import buildAMolecule from '../../buildAMolecule.js';
 import BAMConstants from '../BAMConstants.js';
 import Direction from '../model/Direction.js';

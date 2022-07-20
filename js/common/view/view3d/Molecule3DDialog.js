@@ -9,8 +9,8 @@
 
 import BooleanProperty from '../../../../../axon/js/BooleanProperty.js';
 import EnumerationDeprecatedProperty from '../../../../../axon/js/EnumerationDeprecatedProperty.js';
-import Property from '../../../../../axon/js/Property.js';
 import Multilink from '../../../../../axon/js/Multilink.js';
+import Property from '../../../../../axon/js/Property.js';
 import Matrix3 from '../../../../../dot/js/Matrix3.js';
 import Vector3 from '../../../../../dot/js/Vector3.js';
 import ThreeNode from '../../../../../mobius/js/ThreeNode.js';

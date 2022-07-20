@@ -13,14 +13,14 @@ import Property from '../../../../axon/js/Property.js';
 import Dimension2 from '../../../../dot/js/Dimension2.js';
 import dotRandom from '../../../../dot/js/dotRandom.js';
 import Element from '../../../../nitroglycerin/js/Element.js';
+import merge from '../../../../phet-core/js/merge.js';
+import required from '../../../../phet-core/js/required.js';
 import buildAMolecule from '../../buildAMolecule.js';
 import BAMBucket from '../model/BAMBucket.js';
 import CollectionBox from '../model/CollectionBox.js';
 import Kit from '../model/Kit.js';
 import MoleculeList from '../model/MoleculeList.js';
 import KitCollection from './KitCollection.js';
-import merge from '../../../../phet-core/js/merge.js';
-import required from '../../../../phet-core/js/required.js';
 
 class BAMModel {
 
