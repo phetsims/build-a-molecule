@@ -1,4 +1,4 @@
-// Copyright 2020-2021, University of Colorado Boulder
+// Copyright 2020-2022, University of Colorado Boulder
 
 /**
  * Main screenview for Build a Molecule. It features kits shown at the bottom and a centeralized play area for
