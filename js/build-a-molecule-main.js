@@ -13,7 +13,7 @@ import MultipleScreen from './multiple/MultipleScreen.js';
 import PlaygroundScreen from './playground/PlaygroundScreen.js';
 import SingleScreen from './single/SingleScreen.js';
 
-const buildAMoleculeTitleString = buildAMoleculeStrings[ 'build-a-molecule' ].title;
+const buildAMoleculeTitleStringProperty = buildAMoleculeStrings[ 'build-a-molecule' ].titleStringProperty;
 
 const simOptions = {
   credits: {
@@ -29,7 +29,7 @@ const simOptions = {
 simLauncher.launch( () => {
 
   // Create and start the sim
-  new Sim( buildAMoleculeTitleString, [
+  new Sim( buildAMoleculeTitleStringProperty, [
     new SingleScreen(),
     new MultipleScreen(),
     new PlaygroundScreen()
