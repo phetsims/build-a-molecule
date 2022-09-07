@@ -121,8 +121,8 @@ type StringsType = {
   'carbonStringProperty': TReadOnlyProperty<string>;
 };
 
-const buildAMoleculeStrings = getStringModule( 'BUILD_A_MOLECULE' ) as StringsType;
+const BuildAMoleculeStrings = getStringModule( 'BUILD_A_MOLECULE' ) as StringsType;
 
-buildAMolecule.register( 'buildAMoleculeStrings', buildAMoleculeStrings );
+buildAMolecule.register( 'BuildAMoleculeStrings', BuildAMoleculeStrings );
 
-export default buildAMoleculeStrings;
+export default BuildAMoleculeStrings;

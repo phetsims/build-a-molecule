@@ -14,7 +14,7 @@ import RectangularPushButton from '../../../../../sun/js/buttons/RectangularPush
 import ButtonNode from '../../../../../sun/js/buttons/ButtonNode.js';
 import nullSoundPlayer from '../../../../../tambo/js/shared-sound-players/nullSoundPlayer.js';
 import buildAMolecule from '../../../buildAMolecule.js';
-import buildAMoleculeStrings from '../../../buildAMoleculeStrings.js';
+import BuildAMoleculeStrings from '../../../BuildAMoleculeStrings.js';
 import BAMConstants from '../../BAMConstants.js';
 
 class ShowMolecule3DButtonNode extends RectangularPushButton {
@@ -24,7 +24,7 @@ class ShowMolecule3DButtonNode extends RectangularPushButton {
    * @param {Object} [options]
    */
   constructor( completeMolecule, showDialogCallback, options ) {
-    const content = new Text( buildAMoleculeStrings.threeD, {
+    const content = new Text( BuildAMoleculeStrings.threeD, {
       font: new PhetFont( {
         size: 12,
         weight: 'bold'

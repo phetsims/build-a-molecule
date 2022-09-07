@@ -12,7 +12,7 @@ import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import { RichText } from '../../../../scenery/js/imports.js';
 import buildAMolecule from '../../buildAMolecule.js';
-import buildAMoleculeStrings from '../../buildAMoleculeStrings.js';
+import BuildAMoleculeStrings from '../../BuildAMoleculeStrings.js';
 import BAMConstants from '../BAMConstants.js';
 import CollectionBoxNode from './CollectionBoxNode.js';
 
@@ -36,10 +36,10 @@ class MultipleCollectionBoxNode extends CollectionBoxNode {
     // Update the number of collections available
     box.quantityProperty.link( quantity => {
       if ( quantity === 0 ) {
-        quantityNode.text = buildAMoleculeStrings.collectionMultipleQuantityEmpty;
+        quantityNode.text = BuildAMoleculeStrings.collectionMultipleQuantityEmpty;
       }
       else {
-        quantityNode.text = StringUtils.fillIn( buildAMoleculeStrings.collectionMultipleQuantityPattern, {
+        quantityNode.text = StringUtils.fillIn( BuildAMoleculeStrings.collectionMultipleQuantityPattern, {
           number: quantity,
           formula: box.moleculeType.getGeneralFormulaFragment()
         } );
@@ -48,7 +48,7 @@ class MultipleCollectionBoxNode extends CollectionBoxNode {
     this.insertChild( 0, quantityNode );
 
     // General formula for the molecule goal
-    this.insertChild( 0, new RichText( StringUtils.fillIn( buildAMoleculeStrings.collectionMultipleGoalPattern, {
+    this.insertChild( 0, new RichText( StringUtils.fillIn( BuildAMoleculeStrings.collectionMultipleGoalPattern, {
       number: box.capacity,
       formula: box.moleculeType.getGeneralFormulaFragment()
     } ), {

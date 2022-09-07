@@ -12,7 +12,7 @@ import { HBox, openPopup, Path } from '../../../../scenery/js/imports.js';
 import exclamationTriangleSolidShape from '../../../../sherpa/js/fontawesome-5/exclamationTriangleSolidShape.js';
 import Dialog from '../../../../sun/js/Dialog.js';
 import buildAMolecule from '../../buildAMolecule.js';
-import buildAMoleculeStrings from '../../buildAMoleculeStrings.js';
+import BuildAMoleculeStrings from '../../BuildAMoleculeStrings.js';
 
 class WarningDialog extends Dialog {
   constructor() {
@@ -24,7 +24,7 @@ class WarningDialog extends Dialog {
           fill: '#E87600', // "safety orange", according to Wikipedia
           scale: 0.06
         } ),
-        new MultiLineText( buildAMoleculeStrings.warning, {
+        new MultiLineText( BuildAMoleculeStrings.warning, {
           font: new PhetFont( 16 ),
           fill: '#000',
           align: 'left',

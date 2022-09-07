@@ -15,7 +15,7 @@ import RectangularPushButton from '../../../../sun/js/buttons/RectangularPushBut
 import nullSoundPlayer from '../../../../tambo/js/shared-sound-players/nullSoundPlayer.js';
 import splitBlue_png from '../../../images/splitBlue_png.js';
 import buildAMolecule from '../../buildAMolecule.js';
-import buildAMoleculeStrings from '../../buildAMoleculeStrings.js';
+import BuildAMoleculeStrings from '../../BuildAMoleculeStrings.js';
 import BAMConstants from '../BAMConstants.js';
 import MoleculeList from '../model/MoleculeList.js';
 import ShowMolecule3DButtonNode from './view3d/ShowMolecule3DButtonNode.js';
@@ -45,7 +45,7 @@ class MoleculeControlsHBox extends HBox {
     if ( completeMolecule ) {
 
       // Label with chemical formula and common name
-      const label = new Text( StringUtils.fillIn( buildAMoleculeStrings.moleculeNamePattern, {
+      const label = new Text( StringUtils.fillIn( BuildAMoleculeStrings.moleculeNamePattern, {
         display: completeMolecule.getDisplayName()
       } ), {
         font: new PhetFont( { size: 17, weight: 'bold' } ),

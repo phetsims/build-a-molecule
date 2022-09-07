@@ -16,7 +16,7 @@ import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import { Node, Text, VBox } from '../../../../scenery/js/imports.js';
 import Panel from '../../../../sun/js/Panel.js';
 import buildAMolecule from '../../buildAMolecule.js';
-import buildAMoleculeStrings from '../../buildAMoleculeStrings.js';
+import BuildAMoleculeStrings from '../../BuildAMoleculeStrings.js';
 import BAMConstants from '../BAMConstants.js';
 import CollectionAreaNode from './CollectionAreaNode.js';
 
@@ -51,7 +51,7 @@ class CollectionPanel extends Panel {
     this.collectionAttachmentCallbacks = collectionAttachmentCallbacks;
 
     // Create header text for panel
-    const yourMoleculesText = new Text( buildAMoleculeStrings.yourMolecules, {
+    const yourMoleculesText = new Text( BuildAMoleculeStrings.yourMolecules, {
       font: new PhetFont( {
         size: 22
       } ),
@@ -70,7 +70,7 @@ class CollectionPanel extends Panel {
 
     // Manages changing the label of the current collection
     bamModel.currentCollectionProperty.link( () => {
-      currentCollectionText.text = StringUtils.fillIn( buildAMoleculeStrings.collectionPattern, {
+      currentCollectionText.text = StringUtils.fillIn( BuildAMoleculeStrings.collectionPattern, {
         number: bamModel.currentIndex + 1
       } );
     } );

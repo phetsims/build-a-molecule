@@ -17,7 +17,7 @@ import TextPushButton from '../../../../sun/js/buttons/TextPushButton.js';
 import Dialog from '../../../../sun/js/Dialog.js';
 import nullSoundPlayer from '../../../../tambo/js/shared-sound-players/nullSoundPlayer.js';
 import buildAMolecule from '../../buildAMolecule.js';
-import buildAMoleculeStrings from '../../buildAMoleculeStrings.js';
+import BuildAMoleculeStrings from '../../BuildAMoleculeStrings.js';
 import BAMConstants from '../BAMConstants.js';
 
 class AllFilledDialog extends Dialog {
@@ -47,7 +47,7 @@ class AllFilledDialog extends Dialog {
         new FaceNode( 120 ).smile(),
 
         // Add a message regarding the completed collection
-        new Text( buildAMoleculeStrings.youCompletedYourCollection, {
+        new Text( BuildAMoleculeStrings.youCompletedYourCollection, {
           font: new PhetFont( {
             size: 20,
             weight: 'bold'
@@ -56,7 +56,7 @@ class AllFilledDialog extends Dialog {
         } ),
 
         // Add the next collection button
-        new TextPushButton( buildAMoleculeStrings.nextCollection, {
+        new TextPushButton( BuildAMoleculeStrings.nextCollection, {
           font: new PhetFont( {
             size: 18,
             weight: 'bold'

@@ -47,7 +47,7 @@ import SO3Node from '../../../../nitroglycerin/js/nodes/SO3Node.js';
 import EnumerationDeprecated from '../../../../phet-core/js/EnumerationDeprecated.js';
 import { Node } from '../../../../scenery/js/imports.js';
 import buildAMolecule from '../../buildAMolecule.js';
-import buildAMoleculeStrings from '../../buildAMoleculeStrings.js';
+import BuildAMoleculeStrings from '../../BuildAMoleculeStrings.js';
 import Bond from './Bond.js';
 import MoleculeStructure from './MoleculeStructure.js';
 
@@ -56,32 +56,32 @@ const OFFSET = 2.5; // used to model our atoms with only 2d data into a 3d repre
 
 // Used to avoid stripping out unused strings, when string.json is accessed via bracket notation. See getDisplayName().
 const TRANSLATABLE_MOLECULE_NAMES = {
-  acetylene: buildAMoleculeStrings.acetylene,
-  ammonia: buildAMoleculeStrings.ammonia,
-  borane: buildAMoleculeStrings.borane,
-  carbonDioxide: buildAMoleculeStrings.carbonDioxide,
-  carbonMonoxide: buildAMoleculeStrings.carbonMonoxide,
-  chloromethane: buildAMoleculeStrings.chloromethane,
-  ethylene: buildAMoleculeStrings.ethylene,
-  fluoromethane: buildAMoleculeStrings.fluoromethane,
-  formaldehyde: buildAMoleculeStrings.formaldehyde,
-  hydrogenCyanide: buildAMoleculeStrings.hydrogenCyanide,
-  hydrogenPeroxide: buildAMoleculeStrings.hydrogenPeroxide,
-  hydrogenSulfide: buildAMoleculeStrings.hydrogenSulfide,
-  methane: buildAMoleculeStrings.methane,
-  molecularChlorine: buildAMoleculeStrings.molecularChlorine,
-  molecularFluorine: buildAMoleculeStrings.molecularFluorine,
-  molecularHydrogen: buildAMoleculeStrings.molecularHydrogen,
-  molecularNitrogen: buildAMoleculeStrings.molecularNitrogen,
-  molecularOxygen: buildAMoleculeStrings.molecularOxygen,
-  nitricOxide: buildAMoleculeStrings.nitricOxide,
-  nitrousOxide: buildAMoleculeStrings.nitrousOxide,
-  ozone: buildAMoleculeStrings.ozone,
-  phosphine: buildAMoleculeStrings.phosphine,
-  silane: buildAMoleculeStrings.silane,
-  sulfurDioxide: buildAMoleculeStrings.sulfurDioxide,
-  trifluoroborane: buildAMoleculeStrings.trifluoroborane,
-  water: buildAMoleculeStrings.water
+  acetylene: BuildAMoleculeStrings.acetylene,
+  ammonia: BuildAMoleculeStrings.ammonia,
+  borane: BuildAMoleculeStrings.borane,
+  carbonDioxide: BuildAMoleculeStrings.carbonDioxide,
+  carbonMonoxide: BuildAMoleculeStrings.carbonMonoxide,
+  chloromethane: BuildAMoleculeStrings.chloromethane,
+  ethylene: BuildAMoleculeStrings.ethylene,
+  fluoromethane: BuildAMoleculeStrings.fluoromethane,
+  formaldehyde: BuildAMoleculeStrings.formaldehyde,
+  hydrogenCyanide: BuildAMoleculeStrings.hydrogenCyanide,
+  hydrogenPeroxide: BuildAMoleculeStrings.hydrogenPeroxide,
+  hydrogenSulfide: BuildAMoleculeStrings.hydrogenSulfide,
+  methane: BuildAMoleculeStrings.methane,
+  molecularChlorine: BuildAMoleculeStrings.molecularChlorine,
+  molecularFluorine: BuildAMoleculeStrings.molecularFluorine,
+  molecularHydrogen: BuildAMoleculeStrings.molecularHydrogen,
+  molecularNitrogen: BuildAMoleculeStrings.molecularNitrogen,
+  molecularOxygen: BuildAMoleculeStrings.molecularOxygen,
+  nitricOxide: BuildAMoleculeStrings.nitricOxide,
+  nitrousOxide: BuildAMoleculeStrings.nitrousOxide,
+  ozone: BuildAMoleculeStrings.ozone,
+  phosphine: BuildAMoleculeStrings.phosphine,
+  silane: BuildAMoleculeStrings.silane,
+  sulfurDioxide: BuildAMoleculeStrings.sulfurDioxide,
+  trifluoroborane: BuildAMoleculeStrings.trifluoroborane,
+  water: BuildAMoleculeStrings.water
 };
 
 // Node types used for molecules

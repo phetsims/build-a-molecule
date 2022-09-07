@@ -23,7 +23,7 @@ import RectangularRadioButtonGroup from '../../../../../sun/js/buttons/Rectangul
 import Dialog from '../../../../../sun/js/Dialog.js';
 import nullSoundPlayer from '../../../../../tambo/js/shared-sound-players/nullSoundPlayer.js';
 import buildAMolecule from '../../../buildAMolecule.js';
-import buildAMoleculeStrings from '../../../buildAMoleculeStrings.js';
+import BuildAMoleculeStrings from '../../../BuildAMoleculeStrings.js';
 import BAMConstants from '../../BAMConstants.js';
 import MoleculeList from '../../model/MoleculeList.js';
 
@@ -79,7 +79,7 @@ class Molecule3DDialog extends Dialog {
     // Update formula text for displayed molecule.
     completeMoleculeProperty.link( completeMolecule => {
       if ( completeMolecule ) {
-        title.setText( StringUtils.fillIn( buildAMoleculeStrings.moleculeNamePattern, {
+        title.setText( StringUtils.fillIn( BuildAMoleculeStrings.moleculeNamePattern, {
           display: completeMolecule.getDisplayName()
         } ) );
         formulaText.setText( completeMolecule.getGeneralFormulaFragment() );

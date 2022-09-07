@@ -15,7 +15,7 @@ import { Color } from '../../../../scenery/js/imports.js';
 import TextPushButton from '../../../../sun/js/buttons/TextPushButton.js';
 import nullSoundPlayer from '../../../../tambo/js/shared-sound-players/nullSoundPlayer.js';
 import buildAMolecule from '../../buildAMolecule.js';
-import buildAMoleculeStrings from '../../buildAMoleculeStrings.js';
+import BuildAMoleculeStrings from '../../BuildAMoleculeStrings.js';
 import BAMConstants from '../BAMConstants.js';
 import AllFilledDialog from './AllFilledDialog.js';
 import BAMScreenView from './BAMScreenView.js';
@@ -36,7 +36,7 @@ class MoleculeCollectingScreenView extends BAMScreenView {
     this.hasShownOnce = false;
 
     // @private {TextPushButton} Create a next collection button
-    this.nextCollectionButton = new TextPushButton( buildAMoleculeStrings.nextCollection, {
+    this.nextCollectionButton = new TextPushButton( BuildAMoleculeStrings.nextCollection, {
       centerX: this.layoutBounds.centerX - 100,
       top: this.layoutBounds.top + BAMConstants.VIEW_PADDING,
       font: new PhetFont( {

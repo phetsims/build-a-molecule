@@ -11,7 +11,7 @@ import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import { RichText } from '../../../../scenery/js/imports.js';
 import buildAMolecule from '../../buildAMolecule.js';
-import buildAMoleculeStrings from '../../buildAMoleculeStrings.js';
+import BuildAMoleculeStrings from '../../BuildAMoleculeStrings.js';
 import BAMConstants from '../BAMConstants.js';
 import CollectionBoxNode from './CollectionBoxNode.js';
 
@@ -25,7 +25,7 @@ class SingleCollectionBoxNode extends CollectionBoxNode {
   constructor( box, toModelBounds, showDialogCallback ) {
     super( box, toModelBounds, showDialogCallback );
     assert && assert( box.capacity === 1 );
-    this.insertChild( 0, new RichText( StringUtils.fillIn( buildAMoleculeStrings.collectionSinglePattern, {
+    this.insertChild( 0, new RichText( StringUtils.fillIn( BuildAMoleculeStrings.collectionSinglePattern, {
       general: box.moleculeType.getGeneralFormulaFragment(),
       display: box.moleculeType.getDisplayName()
     } ), {

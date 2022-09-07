@@ -1,21 +1,21 @@
 // Copyright 2020-2021, University of Colorado Boulder
 
 import buildAMolecule from '../buildAMolecule.js';
-import buildAMoleculeStrings from '../buildAMoleculeStrings.js';
+import BuildAMoleculeStrings from '../BuildAMoleculeStrings.js';
 
 const Strings = {
-  H: buildAMoleculeStrings.hydrogen,
-  O: buildAMoleculeStrings.oxygen,
-  C: buildAMoleculeStrings.carbon,
-  N: buildAMoleculeStrings.nitrogen,
-  F: buildAMoleculeStrings.fluorine,
-  Cl: buildAMoleculeStrings.chlorine,
-  B: buildAMoleculeStrings.boron,
-  S: buildAMoleculeStrings.sulphur,
-  Si: buildAMoleculeStrings.silicon,
-  P: buildAMoleculeStrings.phosphorus,
-  I: buildAMoleculeStrings.iodine,
-  Br: buildAMoleculeStrings.bromine
+  H: BuildAMoleculeStrings.hydrogen,
+  O: BuildAMoleculeStrings.oxygen,
+  C: BuildAMoleculeStrings.carbon,
+  N: BuildAMoleculeStrings.nitrogen,
+  F: BuildAMoleculeStrings.fluorine,
+  Cl: BuildAMoleculeStrings.chlorine,
+  B: BuildAMoleculeStrings.boron,
+  S: BuildAMoleculeStrings.sulphur,
+  Si: BuildAMoleculeStrings.silicon,
+  P: BuildAMoleculeStrings.phosphorus,
+  I: BuildAMoleculeStrings.iodine,
+  Br: BuildAMoleculeStrings.bromine
 };
 
 buildAMolecule.register( 'Strings', Strings );
