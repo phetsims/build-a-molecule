@@ -19,7 +19,7 @@ import PlaygroundModel from './model/PlaygroundModel.js';
 class PlaygroundScreen extends BAMScreen {
   constructor() {
     const options = {
-      name: BuildAMoleculeStrings.title.playground,
+      name: BuildAMoleculeStrings.title.playgroundStringProperty,
       backgroundColorProperty: new Property( BAMConstants.PLAY_AREA_BACKGROUND_COLOR ),
       homeScreenIcon: BAMIconFactory.createPlaygroundScreenIcon()
     };

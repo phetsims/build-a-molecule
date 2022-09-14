@@ -19,7 +19,7 @@ import MultipleModel from './model/MultipleModel.js';
 class MultipleScreen extends BAMScreen {
   constructor() {
     const options = {
-      name: BuildAMoleculeStrings.title.multiple,
+      name: BuildAMoleculeStrings.title.multipleStringProperty,
       backgroundColorProperty: new Property( BAMConstants.PLAY_AREA_BACKGROUND_COLOR ),
       homeScreenIcon: BAMIconFactory.createMultipleScreenIcon()
     };

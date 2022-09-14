@@ -19,7 +19,7 @@ import SingleModel from './model/SingleModel.js';
 class SingleScreen extends BAMScreen {
   constructor() {
     const options = {
-      name: BuildAMoleculeStrings.title.single,
+      name: BuildAMoleculeStrings.title.singleStringProperty,
       backgroundColorProperty: new Property( BAMConstants.PLAY_AREA_BACKGROUND_COLOR ),
       homeScreenIcon: BAMIconFactory.createSingleScreenIcon()
     };
