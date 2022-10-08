@@ -255,10 +255,10 @@ class Molecule3DDialog extends Dialog {
     // Create toggle buttons for scene selection
     const toggleButtonsContent = [ {
       value: ViewStyle.SPACE_FILL,
-      node: spaceFilledIcon
+      createNode: tandem => spaceFilledIcon
     }, {
       value: ViewStyle.BALL_AND_STICK,
-      node: ballAndStickIcon
+      createNode: tandem => ballAndStickIcon
     } ];
 
     // Create the icons for scene selection
