@@ -36,10 +36,10 @@ class MultipleCollectionBoxNode extends CollectionBoxNode {
     // Update the number of collections available
     box.quantityProperty.link( quantity => {
       if ( quantity === 0 ) {
-        quantityNode.text = BuildAMoleculeStrings.collectionMultipleQuantityEmpty;
+        quantityNode.string = BuildAMoleculeStrings.collectionMultipleQuantityEmpty;
       }
       else {
-        quantityNode.text = StringUtils.fillIn( BuildAMoleculeStrings.collectionMultipleQuantityPattern, {
+        quantityNode.string = StringUtils.fillIn( BuildAMoleculeStrings.collectionMultipleQuantityPattern, {
           number: quantity,
           formula: box.moleculeType.getGeneralFormulaFragment()
         } );
