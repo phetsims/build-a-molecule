@@ -13,11 +13,11 @@
     "branch": "HEAD"
   },
   "build-a-molecule": {
-    "sha": "588d6d807da423887d0172cca39a327c7d08f968",
+    "sha": "eef5c3c3b127ab4a3dd9fe7fa66aa0e4803ceec8",
     "branch": "1.0"
   },
   "chipper": {
-    "sha": "da9736e56bfb2e8efc8fae39f898d2a7b7595e1d",
+    "sha": "a7ca71b6dc713cf00689c062b141724f9ee12eee",
     "branch": "HEAD"
   },
   "dot": {
