@@ -34,18 +34,24 @@ class KitPanel extends Node {
     const kitNodes = [];
     kitCollectionProperty.link( kitCollection => {
       kitCollection.kits.forEach( kit => {
-        const kitNode = new KitNode( kit, view );
-        const kitNodeBounds = kitNode.getLocalBounds();
-        kitNode.setLocalBounds( kitNodeBounds.dilatedY( ( kitNodeHeight - kitNodeBounds.getHeight() ) / 2 ) );
 
-        // We only want to adjust width of kit panel on collection views.
-        if ( isCollectingView ) {
-          kitNode.setLocalBounds( kitNodeBounds.dilatedX( ( kitNodeWidth - kitNodeBounds.getWidth() ) / 2 ) );
-        }
-        else {
-          kitNode.setLocalBounds( kitNodeBounds.dilatedX( ( kitNodeWidth - kitNodeBounds.getWidth() ) * 0.02 ) );
-        }
-        kitNodes.push( kitNode );
+        kitNodes.push( {
+          createNode: tandem => {
+
+            const kitNode = new KitNode( kit, view );
+            const kitNodeBounds = kitNode.getLocalBounds();
+            kitNode.setLocalBounds( kitNodeBounds.dilatedY( ( kitNodeHeight - kitNodeBounds.getHeight() ) / 2 ) );
+
+            // We only want to adjust width of kit panel on collection views.
+            if ( isCollectingView ) {
+              kitNode.setLocalBounds( kitNodeBounds.dilatedX( ( kitNodeWidth - kitNodeBounds.getWidth() ) / 2 ) );
+            }
+            else {
+              kitNode.setLocalBounds( kitNodeBounds.dilatedX( ( kitNodeWidth - kitNodeBounds.getWidth() ) * 0.02 ) );
+            }
+            return kitNode;
+          }
+        } );
       } );
     } );
 
@@ -54,7 +60,6 @@ class KitPanel extends Node {
       fill: BAMConstants.KIT_BACKGROUND,
       stroke: BAMConstants.KIT_BORDER,
       itemsPerPage: 1,
-      animationEnabled: false,
       buttonSoundPlayer: nullSoundPlayer
     } );
 
