@@ -1,4 +1,4 @@
-// Copyright 2020-2022, University of Colorado Boulder
+// Copyright 2020-2023, University of Colorado Boulder
 
 /**
  * 3D Molecule display that takes up the entire screen
@@ -255,10 +255,10 @@ class Molecule3DDialog extends Dialog {
     // Create toggle buttons for scene selection
     const toggleButtonsContent = [ {
       value: ViewStyle.SPACE_FILL,
-      createNode: tandem => spaceFilledIcon
+      createNode: () => spaceFilledIcon
     }, {
       value: ViewStyle.BALL_AND_STICK,
-      createNode: tandem => ballAndStickIcon
+      createNode: () => ballAndStickIcon
     } ];
 
     // Create the icons for scene selection
