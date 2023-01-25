@@ -60,7 +60,9 @@ class KitPanel extends Node {
       fill: BAMConstants.KIT_BACKGROUND,
       stroke: BAMConstants.KIT_BORDER,
       itemsPerPage: 1,
-      buttonSoundPlayer: nullSoundPlayer
+      buttonOptions: {
+        soundPlayer: nullSoundPlayer
+      }
     } );
 
     // When the page number changes update the current collection.
