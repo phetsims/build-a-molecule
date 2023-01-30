@@ -314,7 +314,7 @@ class Molecule3DDialog extends Dialog {
     this.quaternionProperty = new Property( new THREE.Quaternion() );
     this.quaternionProperty.link( quaternion => {
 
-      // Copy the new value into the Three object's quaternion and update the matricies.
+      // Copy the new value into the Three object's quaternion and update the matrices.
       moleculeContainer.quaternion.copy( quaternion );
       moleculeContainer.updateMatrix();
       moleculeContainer.updateMatrixWorld();
