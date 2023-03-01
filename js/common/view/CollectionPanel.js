@@ -70,7 +70,7 @@ class CollectionPanel extends Panel {
 
     // Manages changing the label of the current collection
     bamModel.currentCollectionProperty.link( () => {
-      currentCollectionText.text = StringUtils.fillIn( BuildAMoleculeStrings.collectionPattern, {
+      currentCollectionText.string = StringUtils.fillIn( BuildAMoleculeStrings.collectionPattern, {
         number: bamModel.currentIndex + 1
       } );
     } );

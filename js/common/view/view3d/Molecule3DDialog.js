@@ -79,7 +79,7 @@ class Molecule3DDialog extends Dialog {
     // Update formula text for displayed molecule.
     completeMoleculeProperty.link( completeMolecule => {
       if ( completeMolecule ) {
-        title.setText( StringUtils.fillIn( BuildAMoleculeStrings.moleculeNamePattern, {
+        title.setString( StringUtils.fillIn( BuildAMoleculeStrings.moleculeNamePattern, {
           display: completeMolecule.getDisplayName()
         } ) );
         formulaText.setString( completeMolecule.getGeneralFormulaFragment() );
