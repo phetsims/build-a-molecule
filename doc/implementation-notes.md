@@ -65,7 +65,7 @@ An entry of this data set can be read as follows:
  - `Molecule Name`: Common name for the built molecule 
  - `General Formula`:  Formula representation of the molecule
  - `Compound CID`: ID used for identifying molecule in PubChem data set
- - `2d3dOrBoth`: Whether or not this molecule has 2d and/or 3d representations
+ - `2d3dOrBoth`: Whether this molecule has 2d and/or 3d representations
  - `Total Atoms`: Number of atoms in the molecule
  - `Total Bonds`: Number of bonds in the molecule
  - `ElementX x,y,z` : The x,y,z position of the corresponding element X in the molecule
