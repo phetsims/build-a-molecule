@@ -6,9 +6,8 @@
  * @author Denzell Barnett (PhET Interactive Simulations)
  */
 
-import MultiLineText from '../../../../scenery-phet/js/MultiLineText.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
-import { HBox, openPopup, Path } from '../../../../scenery/js/imports.js';
+import { HBox, openPopup, Path, RichText } from '../../../../scenery/js/imports.js';
 import exclamationTriangleSolidShape from '../../../../sherpa/js/fontawesome-5/exclamationTriangleSolidShape.js';
 import Dialog from '../../../../sun/js/Dialog.js';
 import buildAMolecule from '../../buildAMolecule.js';
@@ -24,9 +23,10 @@ class WarningDialog extends Dialog {
           fill: '#E87600', // "safety orange", according to Wikipedia
           scale: 0.06
         } ),
-        new MultiLineText( BuildAMoleculeStrings.warning, {
+        new RichText( BuildAMoleculeStrings.warning, {
           font: new PhetFont( 16 ),
           fill: '#000',
+          replaceNewlines: true,
           align: 'left',
           maxWidth: 600
         } )
