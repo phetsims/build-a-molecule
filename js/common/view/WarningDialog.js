@@ -1,4 +1,4 @@
-// Copyright 2020-2022, University of Colorado Boulder
+// Copyright 2020-2023, University of Colorado Boulder
 
 /**
  * Dialog that displays a warning text. Used as a webgl fallback when webgl isn't supported.
