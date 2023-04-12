@@ -77,9 +77,7 @@ class KitPanel extends Node {
       centerX: this.kitCarousel.centerX,
       pageFill: Color.WHITE,
       pageStroke: Color.BLACK,
-      interactive: true,
-      dotTouchAreaDilation: 4,
-      dotMouseAreaDilation: 4
+      interactive: true
     } );
     this.addChild( inputPageControl );
   }
