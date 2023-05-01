@@ -174,7 +174,7 @@ class Kit {
     const elementBucket = _.find( this.buckets, bucket => {
       return bucket.element.isSameElement( element );
     } );
-    assert && assert( elementBucket !== null, 'Element does not have an associated bucket.' );
+    assert && assert( elementBucket, 'Element does not have an associated bucket.' );
     return elementBucket;
   }
 
