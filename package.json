@@ -25,7 +25,12 @@
       "adapted-from-phet"
     ],
     "supportsSound": true,
-    "simulation": true
+    "simulation": true,
+    "screenNameKeys": [
+      "BUILD_A_MOLECULE/title.single",
+      "BUILD_A_MOLECULE/title.multiple",
+      "BUILD_A_MOLECULE/title.playground"
+    ]
   },
   "eslintConfig": {
     "extends": "../chipper/eslint/sim_eslintrc.js",
