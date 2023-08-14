@@ -18,7 +18,7 @@ import { Color, DOM, Utils } from '../../../../../scenery/js/imports.js';
 import buildAMolecule from '../../../buildAMolecule.js';
 
 // constants
-// debug flag, specifies whether master transforms are tracked and printed to determine "pretty" setup transformations
+// debug flag, specifies whether main transforms are tracked and printed to determine "pretty" setup transformations
 const GRAB_INITIAL_TRANSFORMS = false;
 
 class Molecule3DNode extends DOM {

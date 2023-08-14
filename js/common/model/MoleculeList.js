@@ -66,7 +66,7 @@ class MoleculeList {
     // then load structures
     const mainStructures = MoleculeList.readMoleculeStructuresFromData( structuresData );
     mainStructures.forEach( this.addAllowedStructure.bind( this ) );
-    console.log( `loaded master data in ${Date.now() - startTime}ms` );
+    console.log( `loaded main data in ${Date.now() - startTime}ms` );
   }
 
   /**
@@ -167,7 +167,7 @@ class MoleculeList {
   }
 
   /**
-   * Load master data
+   * Load main data
    *
    * @private
    */
@@ -181,7 +181,7 @@ class MoleculeList {
 
 
   /**
-   * Return master data
+   * Return main data
    *
    * @public
    * @returns {*}
@@ -197,7 +197,7 @@ class MoleculeList {
 
 
   /**
-   * Return molecule name from master data
+   * Return molecule name from main data
    * @param {string} name
    *
    * @private
@@ -207,7 +207,7 @@ class MoleculeList {
     let result = MoleculeList.initialList.moleculeNameMap[ name ];
 
     if ( !result ) {
-      console.log( 'Searching', name, 'in master instance.' );
+      console.log( 'Searching', name, 'in main instance.' );
       result = MoleculeList.getMasterInstance().moleculeNameMap[ name ];
     }
 
