@@ -127,7 +127,7 @@ class CollectionBoxNode extends VBox {
     this.cancelBlinksInProgress();
     this.updateBoxGraphics();
 
-    const completeMolecule = MoleculeList.getMasterInstance().findMatchingCompleteMolecule( molecule );
+    const completeMolecule = MoleculeList.getMainInstance().findMatchingCompleteMolecule( molecule );
     const pseudo3DNode = CollectionBoxNode.lookupThumbnail( completeMolecule, moleculeIdThumbnailMap );
     this.moleculeLayer.addChild( pseudo3DNode );
     this.moleculeNodes.push( pseudo3DNode );

@@ -53,7 +53,7 @@ class Kit {
     this.addedMoleculeEmitter = new Emitter( { parameters: [ { valueType: Molecule } ] } );
     this.removedMoleculeEmitter = new Emitter( { parameters: [ { valueType: Molecule } ] } );
 
-    // @public {Array.<Atom2>} Master list of atoms (in and out of buckets), but not ones in collection boxes
+    // @public {Array.<Atom2>} Main list of atoms (in and out of buckets), but not ones in collection boxes
     this.atoms = [];
 
     // @public {Array.<Atom2>} atoms in the collection box
@@ -682,7 +682,7 @@ class Kit {
    */
   isAllowedStructure( moleculeStructure ) {
     return moleculeStructure.atoms.length < 2 ||
-           MoleculeList.getMasterInstance().isAllowedStructure( moleculeStructure );
+           MoleculeList.getMainInstance().isAllowedStructure( moleculeStructure );
   }
 }
 

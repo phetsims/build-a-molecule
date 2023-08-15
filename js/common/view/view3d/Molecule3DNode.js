@@ -84,7 +84,7 @@ class Molecule3DNode extends DOM {
     if ( GRAB_INITIAL_TRANSFORMS ) {
 
       // @private {Matrix3}
-      this.masterMatrix = Matrix3.identity();
+      this.mainMatrix = Matrix3.identity();
     }
 
     // center the bounds of the atoms
@@ -316,7 +316,7 @@ class Molecule3DNode extends DOM {
       matrix.multiplyVector3( atom );
     } );
     if ( GRAB_INITIAL_TRANSFORMS ) {
-      this.masterMatrix = matrix.timesMatrix( this.masterMatrix );
+      this.mainMatrix = matrix.timesMatrix( this.mainMatrix );
     }
   }
 

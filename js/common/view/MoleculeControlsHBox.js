@@ -41,7 +41,7 @@ class MoleculeControlsHBox extends HBox {
     this.updatePositionListener = this.updatePosition.bind( this );
 
     // Check if molecule data exists
-    const completeMolecule = MoleculeList.getMasterInstance().findMatchingCompleteMolecule( molecule );
+    const completeMolecule = MoleculeList.getMainInstance().findMatchingCompleteMolecule( molecule );
     if ( completeMolecule ) {
 
       // Label with chemical formula and common name

@@ -46,7 +46,7 @@ class MoleculeList {
    * Load a list of all the remaining complete molecules (otherMoleculesData)
    * @private
    */
-  loadMasterData() {
+  loadMainData() {
     const startTime = Date.now();
     // load in our collection molecules first
     MoleculeList.initialList.getAllCompleteMolecules().forEach( this.addCompleteMolecule.bind( this ) );
@@ -173,10 +173,10 @@ class MoleculeList {
    */
   static startInitialization() {
     // Note: (performance) use web worker or chop it up into bits of work
-    MoleculeList.masterInstance = new MoleculeList();
-    MoleculeList.masterInstance.loadMasterData();
+    MoleculeList.mainInstance = new MoleculeList();
+    MoleculeList.mainInstance.loadMainData();
     MoleculeList.initialized = true;
-    console.log( 'Master list loaded.' );
+    console.log( 'Main list loaded.' );
   }
 
 
@@ -186,13 +186,13 @@ class MoleculeList {
    * @public
    * @returns {*}
    */
-  static getMasterInstance() {
+  static getMainInstance() {
     if ( !MoleculeList.initialized ) {
       // Note: (performance) threading-like replacement goes here
       MoleculeList.startInitialization();
     }
 
-    return MoleculeList.masterInstance;
+    return MoleculeList.mainInstance;
   }
 
 
@@ -208,7 +208,7 @@ class MoleculeList {
 
     if ( !result ) {
       console.log( 'Searching', name, 'in main instance.' );
-      result = MoleculeList.getMasterInstance().moleculeNameMap[ name ];
+      result = MoleculeList.getMainInstance().moleculeNameMap[ name ];
     }
 
     return result;
@@ -258,7 +258,7 @@ class MoleculeList {
 
 // statics
 // @private {MoleculeList|null}
-MoleculeList.masterInstance = null;
+MoleculeList.mainInstance = null;
 
 // @private {boolean}
 MoleculeList.initialized = false;
@@ -318,7 +318,7 @@ MoleculeList.collectionBoxMolecules.forEach( molecule => {
 } );
 
 // Note: (performance) postpone all of the loading?
-MoleculeList.getMasterInstance();
+MoleculeList.getMainInstance();
 
 buildAMolecule.register( 'MoleculeList', MoleculeList );
 export default MoleculeList;
