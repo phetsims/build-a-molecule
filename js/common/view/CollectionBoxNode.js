@@ -1,4 +1,4 @@
-// Copyright 2020-2022, University of Colorado Boulder
+// Copyright 2020-2023, University of Colorado Boulder
 
 /**
  * Represents a generic collection box node which is decorated by additional header nodes (probably text describing what can be put in, what is in it,
