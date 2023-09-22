@@ -64,6 +64,9 @@ class KitPanel extends Node {
         soundPlayer: nullSoundPlayer
       }
     } );
+    this.kitCarousel.isAnimatingProperty.link( isAnimating => {
+      this.kitCarousel.pickable = !isAnimating;
+    } );
 
     // When the page number changes update the current collection.
     this.kitCarousel.pageNumberProperty.link( page => {
