@@ -350,7 +350,7 @@ class BAMScreenView extends ScreenView {
    * @returns {AtomNode}
    */
   addAtomNodeToPlayArea( atom ) {
-    const currentKit = this.bamModel.currentCollectionProperty.value.currentKitProperty.value;
+    const originKit = this.bamModel.currentCollectionProperty.value.currentKitProperty.value;
     const atomNode = this.addAtomNodeToPlayAreaNode( atom );
     let lastPosition;
 
@@ -379,7 +379,7 @@ class BAMScreenView extends ScreenView {
 
         // If a molecule is animating interrupt the animation process.
         atom.userControlledProperty.value = true;
-        const molecule = currentKit.getMolecule( atom );
+        const molecule = originKit.getMolecule( atom );
         if ( molecule ) {
           molecule.atoms.forEach( moleculeAtom => {
             if ( moleculeAtom ) {
@@ -390,7 +390,7 @@ class BAMScreenView extends ScreenView {
         }
 
         // Update the current kit in the play area node.
-        this.kitPlayAreaNode.currentKit = currentKit;
+        this.kitPlayAreaNode.currentKit = originKit;
       },
       drag: ( event, listener ) => {
         dragLength += listener.modelDelta.getMagnitude();
@@ -403,7 +403,7 @@ class BAMScreenView extends ScreenView {
         lastPosition = atom.positionProperty.value;
 
         // Handles molecules with multiple atoms
-        const molecule = currentKit.getMolecule( atom );
+        const molecule = originKit.getMolecule( atom );
         if ( molecule ) {
           molecule.atoms.forEach( moleculeAtom => {
             if ( moleculeAtom !== atom ) {
@@ -418,24 +418,32 @@ class BAMScreenView extends ScreenView {
       },
       end: () => {
 
-        // Threshold for how much we can drag before considering an atom selected
-        if ( dragLength < BAMConstants.DRAG_LENGTH_THRESHOLD && ( currentKit.getMolecule( atom ).bonds.length !== 0 ) ) {
-          currentKit.selectedAtomProperty.value = atom;
-        }
-
-        // Consider an atom released and mark its position
+        // Consider the atom released.
         atom.userControlledProperty.value = false;
+
+        // Threshold for how much we can drag before considering an atom selected
+        if ( dragLength < BAMConstants.DRAG_LENGTH_THRESHOLD && ( originKit.getMolecule( atom ).bonds.length !== 0 ) ) {
+          originKit.selectedAtomProperty.value = atom;
+        }
 
         // Keep track of view elements used later in the callback
         const mappedAtomNode = this.kitPlayAreaNode.atomNodeMap[ atom.id ];
 
-        // Responsible for dropping molecules in play area or kit area
-        const droppedInKitArea = mappedAtomNode && mappedAtomNode.bounds.intersectsBounds( this.mappedKitCollectionBounds );
+        // It is possible, due to multitouch, for the selected kit have changed while this atom was being dragged.
+        const kitChangedWhileDragging = originKit !==
+                                        this.bamModel.currentCollectionProperty.value.currentKitProperty.value;
+
+        // Create a boolean flag that indicates whether this atom node was released in the kit area.  If so, the atom
+        // will be returned to its origin.  If the selected kit has changed while drag was in process, pretend that the
+        // atom was dropped back into the kit so that we don't try to create a new composite molecules from invisible
+        // atoms.  See https://github.com/phetsims/build-a-molecule/issues/221 for background on this.
+        const droppedInKitArea =
+          ( mappedAtomNode && mappedAtomNode.bounds.intersectsBounds( this.mappedKitCollectionBounds ) ) ||
+          kitChangedWhileDragging;
 
         // Responsible for bonding molecules in play area or breaking molecule bonds and returning to kit.
         // We don't want to do this while the molecule is animating.
-        currentKit.atomDropped( atom, droppedInKitArea );
-
+        originKit.atomDropped( atom, droppedInKitArea || kitChangedWhileDragging );
 
         // Make sure to update the update button after moving atoms
         this.updateRefillButton();
