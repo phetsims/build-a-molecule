@@ -421,17 +421,21 @@ class BAMScreenView extends ScreenView {
         // Consider the atom released.
         atom.userControlledProperty.value = false;
 
+        // It is possible, due to multitouch, for the selected kit have changed while this atom was being dragged.
+        // Some of the logic below will need to know this.
+        const kitChangedWhileDragging = originKit !==
+                                        this.bamModel.currentCollectionProperty.value.currentKitProperty.value;
+
         // Threshold for how much we can drag before considering an atom selected
-        if ( dragLength < BAMConstants.DRAG_LENGTH_THRESHOLD && ( originKit.getMolecule( atom ).bonds.length !== 0 ) ) {
+        if ( !kitChangedWhileDragging &&
+             dragLength < BAMConstants.DRAG_LENGTH_THRESHOLD &&
+             ( originKit.getMolecule( atom ).bonds.length !== 0 ) ) {
+
           originKit.selectedAtomProperty.value = atom;
         }
 
         // Keep track of view elements used later in the callback
         const mappedAtomNode = this.kitPlayAreaNode.atomNodeMap[ atom.id ];
-
-        // It is possible, due to multitouch, for the selected kit have changed while this atom was being dragged.
-        const kitChangedWhileDragging = originKit !==
-                                        this.bamModel.currentCollectionProperty.value.currentKitProperty.value;
 
         // Create a boolean flag that indicates whether this atom node was released in the kit area.  If so, the atom
         // will be returned to its origin.  If the selected kit has changed while drag was in process, pretend that the
