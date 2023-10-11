@@ -667,7 +667,8 @@ class Kit {
    * @returns {boolean}
    */
   canBond( a, b ) {
-    return this.getMolecule( a ) !== this.getMolecule( b ) &&
+    return this.getMolecule( b ) !== null &&
+           this.getMolecule( a ) !== this.getMolecule( b ) &&
            this.isAllowedStructure( this.getPossibleMoleculeStructureFromBond( a, b ) ) &&
            this.collectionLayout.availablePlayAreaBounds.containsPoint( a.positionProperty.value ) &&
            this.collectionLayout.availablePlayAreaBounds.containsPoint( b.positionProperty.value );
