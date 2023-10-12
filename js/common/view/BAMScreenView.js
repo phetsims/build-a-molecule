@@ -418,9 +418,6 @@ class BAMScreenView extends ScreenView {
       },
       end: () => {
 
-        // Consider the atom released.
-        atom.userControlledProperty.value = false;
-
         // It is possible, due to multitouch, for the selected kit have changed while this atom was being dragged.
         // Some of the logic below will need to know this.
         const kitChangedWhileDragging = originKit !==
@@ -433,6 +430,9 @@ class BAMScreenView extends ScreenView {
 
           originKit.selectedAtomProperty.value = atom;
         }
+
+        // Consider the atom released.
+        atom.userControlledProperty.value = false;
 
         // Keep track of view elements used later in the callback
         const mappedAtomNode = this.kitPlayAreaNode.atomNodeMap[ atom.id ];
