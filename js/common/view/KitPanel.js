@@ -61,7 +61,10 @@ class KitPanel extends Node {
       stroke: BAMConstants.KIT_BORDER,
       itemsPerPage: 1,
       buttonOptions: {
-        soundPlayer: nullSoundPlayer
+        soundPlayer: nullSoundPlayer,
+        interruptListener: () => {
+          phet.joist.display.interruptPointers();
+        }
       }
     } );
     this.kitCarousel.isAnimatingProperty.link( isAnimating => {

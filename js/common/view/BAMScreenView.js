@@ -418,38 +418,26 @@ class BAMScreenView extends ScreenView {
       },
       end: () => {
 
-        // It is possible, due to multitouch, for the selected kit have changed while this atom was being dragged.
-        // Some of the logic below will need to know this.
-        const kitChangedWhileDragging = originKit !==
-                                        this.bamModel.currentCollectionProperty.value.currentKitProperty.value;
-
-        // Threshold for how much we can drag before considering an atom selected
-        if ( !kitChangedWhileDragging &&
-             dragLength < BAMConstants.DRAG_LENGTH_THRESHOLD &&
-             ( originKit.getMolecule( atom ).bonds.length !== 0 ) ) {
-
+        // Test whether the drag was long enough for this to become the selected atom.
+        if ( dragLength < BAMConstants.DRAG_LENGTH_THRESHOLD && ( originKit.getMolecule( atom ).bonds.length !== 0 ) ) {
           originKit.selectedAtomProperty.value = atom;
         }
 
-        // Consider the atom released.
+        // Consider the atom released (which does not prevent it from being selected).
         atom.userControlledProperty.value = false;
 
-        // Keep track of view elements used later in the callback
+        // Keep track of view elements used later in the callback.
         const mappedAtomNode = this.kitPlayAreaNode.atomNodeMap[ atom.id ];
 
-        // Create a boolean flag that indicates whether this atom node was released in the kit area.  If so, the atom
-        // will be returned to its origin.  If the selected kit has changed while drag was in process, pretend that the
-        // atom was dropped back into the kit so that we don't try to create a new composite molecules from invisible
-        // atoms.  See https://github.com/phetsims/build-a-molecule/issues/221 for background on this.
-        const droppedInKitArea =
-          ( mappedAtomNode && mappedAtomNode.bounds.intersectsBounds( this.mappedKitCollectionBounds ) ) ||
-          kitChangedWhileDragging;
+        // Was the atom dropped back into the kit area?
+        const droppedInKitArea = mappedAtomNode &&
+                                 mappedAtomNode.bounds.intersectsBounds( this.mappedKitCollectionBounds );
 
-        // Responsible for bonding molecules in play area or breaking molecule bonds and returning to kit.
-        // We don't want to do this while the molecule is animating.
-        originKit.atomDropped( atom, droppedInKitArea || kitChangedWhileDragging );
+        // Tell the kit from which this atom originated that it was dropped.  This is responsible for bonding molecules
+        // in the play area or breaking molecule bonds and returning the atom to the kit.
+        originKit.atomDropped( atom, droppedInKitArea );
 
-        // Make sure to update the update button after moving atoms
+        // Make sure to update the update button after moving atoms.
         this.updateRefillButton();
       }
     } );
