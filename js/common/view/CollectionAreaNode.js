@@ -8,7 +8,7 @@
  */
 
 import RefreshButton from '../../../../scenery-phet/js/buttons/RefreshButton.js';
-import { Color, Node, VBox } from '../../../../scenery/js/imports.js';
+import { Color, Display, Node, VBox } from '../../../../scenery/js/imports.js';
 import nullSoundPlayer from '../../../../tambo/js/shared-sound-players/nullSoundPlayer.js';
 import buildAMolecule from '../../buildAMolecule.js';
 import MultipleCollectionBoxNode from './MultipleCollectionBoxNode.js';
@@ -46,6 +46,7 @@ class CollectionAreaNode extends Node {
         collection.resetKitsAndBoxes();
         updateRefillButton();
       },
+      interruptListener: Display.INTERRUPT_OTHER_POINTERS,
       iconHeight: 20,
       xMargin: 15,
       yMargin: 5,

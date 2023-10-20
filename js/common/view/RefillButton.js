@@ -11,7 +11,7 @@ import merge from '../../../../phet-core/js/merge.js';
 import SphereBucket from '../../../../phetcommon/js/model/SphereBucket.js';
 import BucketFront from '../../../../scenery-phet/js/bucket/BucketFront.js';
 import BucketHole from '../../../../scenery-phet/js/bucket/BucketHole.js';
-import { Node, Path } from '../../../../scenery/js/imports.js';
+import { Display, Node, Path } from '../../../../scenery/js/imports.js';
 import replySolidShape from '../../../../sherpa/js/fontawesome-5/replySolidShape.js';
 import RectangularPushButton from '../../../../sun/js/buttons/RectangularPushButton.js';
 import nullSoundPlayer from '../../../../tambo/js/shared-sound-players/nullSoundPlayer.js';
@@ -57,6 +57,7 @@ class RefillButton extends RectangularPushButton {
       yMargin: 5,
       content: contentNode,
       listener: buttonListener,
+      interruptListener: Display.INTERRUPT_OTHER_POINTERS,
       baseColor: 'rgb(234,225,88)',
       soundPlayer: nullSoundPlayer
     }, options );
