@@ -8,7 +8,7 @@
  */
 
 import Property from '../../../../axon/js/Property.js';
-import { Color, Node } from '../../../../scenery/js/imports.js';
+import { Color, Node, Display } from '../../../../scenery/js/imports.js';
 import Carousel from '../../../../sun/js/Carousel.js';
 import PageControl from '../../../../sun/js/PageControl.js';
 import nullSoundPlayer from '../../../../tambo/js/shared-sound-players/nullSoundPlayer.js';
@@ -62,9 +62,7 @@ class KitPanel extends Node {
       itemsPerPage: 1,
       buttonOptions: {
         soundPlayer: nullSoundPlayer,
-        interruptListener: () => {
-          phet.joist.display.interruptPointers();
-        }
+        interruptListener: Display.INTERRUPT_OTHER_POINTERS
       }
     } );
     this.kitCarousel.isAnimatingProperty.link( isAnimating => {
