@@ -98,22 +98,28 @@ class LewisDotModel {
   }
 
   /**
-   * Returns the bond direction from A to B. If it doesn't exist, an exception is thrown
+   * Returns the bond direction from A to B. If it doesn't exist an arbitrary direction is returned.
    * @param {Atom} a - A
    * @param {Atom} b - B
-   *
-   * @public
    * @returns {Direction}
+   * @public
    */
   getBondDirection( a, b ) {
     const dotA = this.getLewisDotAtom( a );
+    let direction;
     for ( let i = 0; i < 4; i++ ) {
-      const direction = Direction.VALUES[ i ];
-      if ( dotA && dotA.hasConnection( direction ) && dotA.getLewisDotAtom( direction ).atom === b ) {
-        return direction;
+      const testDirection = Direction.VALUES[ i ];
+      if ( dotA && dotA.hasConnection( testDirection ) && dotA.getLewisDotAtom( testDirection ).atom === b ) {
+        direction = testDirection;
+        break;
       }
     }
-    throw new Error( 'Bond not found' );
+
+    // If the bond wasn't found, assert, and add some additional info to help debug.
+    assert && assert( direction, `Bond not found, atom b in model = ${this.getLewisDotAtom( b ) !== undefined}` );
+
+    // Return the direction found or something arbitrary if nothing was detected.
+    return direction || Direction.VALUES[ 0 ];
   }
 
   /**
