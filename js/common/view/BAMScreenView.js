@@ -418,13 +418,13 @@ class BAMScreenView extends ScreenView {
       },
       end: () => {
 
-        // Consider the atom released.
-        atom.userControlledProperty.value = false;
-
         // Threshold for how much we can drag before considering an atom selected
         if ( dragLength < BAMConstants.DRAG_LENGTH_THRESHOLD && ( originKit.getMolecule( atom ).bonds.length !== 0 ) ) {
           originKit.selectedAtomProperty.value = atom;
         }
+
+        // Consider the atom released.
+        atom.userControlledProperty.value = false;
 
         // Keep track of view elements used later in the callback
         const mappedAtomNode = this.kitPlayAreaNode.atomNodeMap[ atom.id ];
