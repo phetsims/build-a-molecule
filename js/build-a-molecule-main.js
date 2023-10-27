@@ -8,6 +8,7 @@
 
 import Sim from '../../joist/js/Sim.js';
 import simLauncher from '../../joist/js/simLauncher.js';
+import soundManager from '../../tambo/js/soundManager.js';
 import buildAMoleculeStrings from './buildAMoleculeStrings.js';
 import MultipleScreen from './multiple/MultipleScreen.js';
 import PlaygroundScreen from './playground/PlaygroundScreen.js';
@@ -34,4 +35,6 @@ simLauncher.launch( () => {
     new MultipleScreen(),
     new PlaygroundScreen()
   ], simOptions ).start();
+
+  soundManager.setOutputLevelForCategory( 'user-interface', 0 );
 } );
