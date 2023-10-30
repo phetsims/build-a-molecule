@@ -433,9 +433,13 @@ class BAMScreenView extends ScreenView {
         const droppedInKitArea = mappedAtomNode &&
                                  mappedAtomNode.bounds.intersectsBounds( this.mappedKitCollectionBounds );
 
-        // Tell the kit from which this atom originated that it was dropped.  This is responsible for bonding molecules
-        // in the play area or breaking molecule bonds and returning the atom to the kit.
-        originKit.atomDropped( atom, droppedInKitArea );
+        // Did the kit change while the atom was being dragged? This is possible in multitouch scenarios.
+        const kitChangedWhileDragging = originKit !==
+                                        this.bamModel.currentCollectionProperty.value.currentKitProperty.value;
+
+        // Tell the kit from which this atom originated that the atom was dropped.  This is responsible for bonding
+        // molecules in the play area or breaking molecule bonds and returning the atom to the kit.
+        originKit.atomDropped( atom, droppedInKitArea || kitChangedWhileDragging );
 
         // Make sure to update the update button after moving atoms.
         this.updateRefillButton();
