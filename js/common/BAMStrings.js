@@ -1,5 +1,7 @@
 // Copyright 2020-2022, University of Colorado Boulder
 
+// @author Jonathan Olson <jonathan.olson@colorado.edu>
+
 import buildAMolecule from '../buildAMolecule.js';
 import BuildAMoleculeStrings from '../BuildAMoleculeStrings.js';
 

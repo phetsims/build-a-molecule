@@ -1,5 +1,7 @@
 // Copyright 2020-2021, University of Colorado Boulder
 
+// @author Jonathan Olson <jonathan.olson@colorado.edu>
+
 import Dimension2 from '../../../dot/js/Dimension2.js';
 import Utils from '../../../dot/js/Utils.js';
 import Vector2 from '../../../dot/js/Vector2.js';
