@@ -13,7 +13,7 @@
     "branch": "HEAD"
   },
   "build-a-molecule": {
-    "sha": "cf6828125b33aa00fb3749fb4349c73ef2a64d69",
+    "sha": "d65967a5bd0d002beacc103c2ab231b27eac1f9e",
     "branch": "1.0"
   },
   "chipper": {
@@ -57,7 +57,7 @@
     "branch": "HEAD"
   },
   "phetcommon": {
-    "sha": "b3f184c9bfa4b3adf637b044433b470ea90b143a",
+    "sha": "1bd5ae609e9f02ddc685c690386705bfa7eafe1c",
     "branch": "HEAD"
   },
   "phetmarks": {
