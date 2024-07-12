@@ -9,7 +9,7 @@
 
 import RefreshButton from '../../../../scenery-phet/js/buttons/RefreshButton.js';
 import { Color, Display, Node, VBox } from '../../../../scenery/js/imports.js';
-import nullSoundPlayer from '../../../../tambo/js/shared-sound-players/nullSoundPlayer.js';
+import nullSoundPlayer from '../../../../tambo/js/nullSoundPlayer.js';
 import buildAMolecule from '../../buildAMolecule.js';
 import MultipleCollectionBoxNode from './MultipleCollectionBoxNode.js';
 import SingleCollectionBoxNode from './SingleCollectionBoxNode.js';

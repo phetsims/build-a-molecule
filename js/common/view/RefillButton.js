@@ -14,7 +14,7 @@ import BucketHole from '../../../../scenery-phet/js/bucket/BucketHole.js';
 import { Display, Node, Path } from '../../../../scenery/js/imports.js';
 import replySolidShape from '../../../../sherpa/js/fontawesome-5/replySolidShape.js';
 import RectangularPushButton from '../../../../sun/js/buttons/RectangularPushButton.js';
-import nullSoundPlayer from '../../../../tambo/js/shared-sound-players/nullSoundPlayer.js';
+import nullSoundPlayer from '../../../../tambo/js/nullSoundPlayer.js';
 import buildAMolecule from '../../buildAMolecule.js';
 import BAMConstants from '../BAMConstants.js';
 

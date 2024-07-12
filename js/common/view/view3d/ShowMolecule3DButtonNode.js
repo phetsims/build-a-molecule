@@ -12,7 +12,7 @@ import PhetFont from '../../../../../scenery-phet/js/PhetFont.js';
 import { Text } from '../../../../../scenery/js/imports.js';
 import RectangularPushButton from '../../../../../sun/js/buttons/RectangularPushButton.js';
 import ButtonNode from '../../../../../sun/js/buttons/ButtonNode.js';
-import nullSoundPlayer from '../../../../../tambo/js/shared-sound-players/nullSoundPlayer.js';
+import nullSoundPlayer from '../../../../../tambo/js/nullSoundPlayer.js';
 import buildAMolecule from '../../../buildAMolecule.js';
 import BuildAMoleculeStrings from '../../../BuildAMoleculeStrings.js';
 import BAMConstants from '../../BAMConstants.js';
