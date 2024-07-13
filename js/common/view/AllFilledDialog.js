@@ -1,4 +1,4 @@
-// Copyright 2020-2022, University of Colorado Boulder
+// Copyright 2020-2024, University of Colorado Boulder
 
 /**
  * Displays a node that tells the user that all collection boxes are full. Allows the user
