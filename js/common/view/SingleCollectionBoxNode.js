@@ -26,7 +26,7 @@ class SingleCollectionBoxNode extends CollectionBoxNode {
     super( box, toModelBounds, showDialogCallback );
     assert && assert( box.capacity === 1 );
     this.insertChild( 0, new RichText( StringUtils.fillIn( buildAMoleculeStrings.collectionSinglePattern, {
-      general: box.moleculeType.getGeneralFormulaFragment(),
+      general: StringUtils.wrapLTR( box.moleculeType.getGeneralFormulaFragment() ),
       display: box.moleculeType.getDisplayName()
     } ), {
       font: new PhetFont( { size: 16, weight: 'bold' } ),
