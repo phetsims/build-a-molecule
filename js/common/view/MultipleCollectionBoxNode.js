@@ -41,7 +41,7 @@ class MultipleCollectionBoxNode extends CollectionBoxNode {
       else {
         quantityNode.string = StringUtils.fillIn( BuildAMoleculeStrings.collectionMultipleQuantityPattern, {
           number: quantity,
-          formula: box.moleculeType.getGeneralFormulaFragment()
+          formula: StringUtils.wrapLTR( box.moleculeType.getGeneralFormulaFragment() )
         } );
       }
     } );
@@ -50,7 +50,7 @@ class MultipleCollectionBoxNode extends CollectionBoxNode {
     // General formula for the molecule goal
     this.insertChild( 0, new RichText( StringUtils.fillIn( BuildAMoleculeStrings.collectionMultipleGoalPattern, {
       number: box.capacity,
-      formula: box.moleculeType.getGeneralFormulaFragment()
+      formula: StringUtils.wrapLTR( box.moleculeType.getGeneralFormulaFragment() )
     } ), {
       font: new PhetFont( {
         size: 15,
