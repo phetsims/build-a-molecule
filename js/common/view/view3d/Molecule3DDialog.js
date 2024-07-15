@@ -113,7 +113,7 @@ class Molecule3DDialog extends Dialog {
         title.setText( StringUtils.fillIn( buildAMoleculeStrings.moleculeNamePattern, {
           display: completeMolecule.getDisplayName()
         } ) );
-        formulaText.setText( completeMolecule.getGeneralFormulaFragment() );
+        formulaText.setText( StringUtils.wrapLTR( completeMolecule.getGeneralFormulaFragment() ) );
       }
     } );
 
