@@ -42,7 +42,7 @@ class ShowMolecule3DButtonNode extends RectangularPushButton {
       yMargin: 3,
       cursor: 'pointer',
       soundPlayer: nullSoundPlayer,
-      cornerRadius: content.height > 8 ? 4 : 0,
+      cornerRadius: 4,
       buttonAppearanceStrategy: content.height > 8 ? RectangularPushButton.ThreeDAppearanceStrategy : ButtonNode.FlatAppearanceStrategy
     }, options ) );
   }
