@@ -43,6 +43,18 @@
     },
     "rules": {
       "no-view-imported-from-model": "off"
-    }
+    },
+    "overrides": [
+      {
+        "files": [
+          "**/*.ts"
+        ],
+        "parserOptions": {
+          "project": [
+            "../build-a-molecule/tsconfig.json"
+          ]
+        }
+      }
+    ]
   }
 }
