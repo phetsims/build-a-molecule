@@ -51,7 +51,7 @@
         ],
         "parserOptions": {
           "project": [
-            "../build-a-molecule/tsconfig.json"
+            "../chipper/tsconfig/eslint-all/tsconfig.json"
           ]
         }
       }
