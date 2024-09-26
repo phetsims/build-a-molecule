@@ -213,7 +213,6 @@ class BAMModel {
    */
   pickRandomMoleculeNotIn( molecules ) {
     // Infinite loop. We're living on the edge now, baby!
-    // TODO: eslint rule no-constant-condition should be triggering here, but it isn't, see https://github.com/phetsims/chipper/issues/1451
     while ( true ) {
       const molecule = MoleculeList.collectionBoxMolecules[
         dotRandom.nextIntBetween( 0, MoleculeList.collectionBoxMolecules.length - 1 )
