@@ -119,7 +119,6 @@ class BAMScreenView extends ScreenView {
     // @public {ResetAllButton} Create a reset all button. Position of button is adjusted on "Larger" Screen.
     this.resetAllButton = new ResetAllButton( {
       listener: () => {
-        this.interruptSubtreeInput();
 
         // When clicked, empty collection boxes
         bamModel.currentCollectionProperty.value.collectionBoxes.forEach( box => {
