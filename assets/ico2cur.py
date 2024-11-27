@@ -2,8 +2,8 @@
 # coding: utf-8
 # from http://www.janthor.com/sketches/index.php?/archives/10-A-Python-script-to-convert-ICO-to-CUR-files.html, public domain
 
-from optparse import OptionParser
 import sys
+from optparse import OptionParser
 
 usage = """%prog infile [options]
 

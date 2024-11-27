@@ -10,8 +10,8 @@
 import merge from '../../../../../phet-core/js/merge.js';
 import PhetFont from '../../../../../scenery-phet/js/PhetFont.js';
 import { Text } from '../../../../../scenery/js/imports.js';
-import RectangularPushButton from '../../../../../sun/js/buttons/RectangularPushButton.js';
 import ButtonNode from '../../../../../sun/js/buttons/ButtonNode.js';
+import RectangularPushButton from '../../../../../sun/js/buttons/RectangularPushButton.js';
 import nullSoundPlayer from '../../../../../tambo/js/nullSoundPlayer.js';
 import buildAMolecule from '../../../buildAMolecule.js';
 import BuildAMoleculeStrings from '../../../BuildAMoleculeStrings.js';
