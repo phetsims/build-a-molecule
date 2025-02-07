@@ -7,7 +7,10 @@
  */
 
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
-import { HBox, openPopup, Path, RichText } from '../../../../scenery/js/imports.js';
+import HBox from '../../../../scenery/js/layout/nodes/HBox.js';
+import Path from '../../../../scenery/js/nodes/Path.js';
+import RichText from '../../../../scenery/js/nodes/RichText.js';
+import openPopup from '../../../../scenery/js/util/openPopup.js';
 import exclamationTriangleSolidShape from '../../../../sherpa/js/fontawesome-5/exclamationTriangleSolidShape.js';
 import Dialog from '../../../../sun/js/Dialog.js';
 import buildAMolecule from '../../buildAMolecule.js';

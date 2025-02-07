@@ -18,7 +18,12 @@ import EnumerationDeprecated from '../../../../../phet-core/js/EnumerationDeprec
 import StringUtils from '../../../../../phetcommon/js/util/StringUtils.js';
 import PlayPauseButton from '../../../../../scenery-phet/js/buttons/PlayPauseButton.js';
 import PhetFont from '../../../../../scenery-phet/js/PhetFont.js';
-import { Color, PressListener, Rectangle, RichText, Text, VBox } from '../../../../../scenery/js/imports.js';
+import VBox from '../../../../../scenery/js/layout/nodes/VBox.js';
+import PressListener from '../../../../../scenery/js/listeners/PressListener.js';
+import Rectangle from '../../../../../scenery/js/nodes/Rectangle.js';
+import RichText from '../../../../../scenery/js/nodes/RichText.js';
+import Text from '../../../../../scenery/js/nodes/Text.js';
+import Color from '../../../../../scenery/js/util/Color.js';
 import RectangularRadioButtonGroup from '../../../../../sun/js/buttons/RectangularRadioButtonGroup.js';
 import Dialog from '../../../../../sun/js/Dialog.js';
 import nullSoundPlayer from '../../../../../tambo/js/nullSoundPlayer.js';

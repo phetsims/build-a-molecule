@@ -8,7 +8,10 @@
  */
 
 import RefreshButton from '../../../../scenery-phet/js/buttons/RefreshButton.js';
-import { Color, Display, Node, VBox } from '../../../../scenery/js/imports.js';
+import Display from '../../../../scenery/js/display/Display.js';
+import VBox from '../../../../scenery/js/layout/nodes/VBox.js';
+import Node from '../../../../scenery/js/nodes/Node.js';
+import Color from '../../../../scenery/js/util/Color.js';
 import nullSoundPlayer from '../../../../tambo/js/nullSoundPlayer.js';
 import buildAMolecule from '../../buildAMolecule.js';
 import MultipleCollectionBoxNode from './MultipleCollectionBoxNode.js';

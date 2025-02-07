@@ -9,7 +9,7 @@
 
 import merge from '../../../../../phet-core/js/merge.js';
 import PhetFont from '../../../../../scenery-phet/js/PhetFont.js';
-import { Text } from '../../../../../scenery/js/imports.js';
+import Text from '../../../../../scenery/js/nodes/Text.js';
 import ButtonNode from '../../../../../sun/js/buttons/ButtonNode.js';
 import RectangularPushButton from '../../../../../sun/js/buttons/RectangularPushButton.js';
 import nullSoundPlayer from '../../../../../tambo/js/nullSoundPlayer.js';

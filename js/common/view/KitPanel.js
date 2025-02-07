@@ -8,7 +8,9 @@
  */
 
 import Property from '../../../../axon/js/Property.js';
-import { Color, Display, Node } from '../../../../scenery/js/imports.js';
+import Display from '../../../../scenery/js/display/Display.js';
+import Node from '../../../../scenery/js/nodes/Node.js';
+import Color from '../../../../scenery/js/util/Color.js';
 import Carousel from '../../../../sun/js/Carousel.js';
 import PageControl from '../../../../sun/js/PageControl.js';
 import nullSoundPlayer from '../../../../tambo/js/nullSoundPlayer.js';
