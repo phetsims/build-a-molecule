@@ -6,6 +6,7 @@
  * @author Denzell Barnett (PhET Interactive Simulations)
  */
 
+import { QueryStringMachine } from '../../../query-string-machine/js/QueryStringMachineModule.js';
 import buildAMolecule from '../buildAMolecule.js';
 
 const BAMQueryParameters = QueryStringMachine.getAll( {
