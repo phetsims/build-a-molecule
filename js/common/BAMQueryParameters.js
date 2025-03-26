@@ -1,4 +1,4 @@
-// Copyright 2019-2021, University of Colorado Boulder
+// Copyright 2019-2025, University of Colorado Boulder
 
 /**
  * Query parameters supported by this simulation.
