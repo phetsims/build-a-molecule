@@ -202,7 +202,7 @@ class BAMScreenView extends ScreenView {
       this.kitPlayAreaNode.atomLayer.children.forEach( otherAtomNode => {
         if ( otherAtomNode ) {
           otherAtomNode.interruptSubtreeInput();
-          otherAtomNode.atom.userControlledProperty.value = false;
+          otherAtomNode.atom.isDraggingProperty.value = false;
         }
       } );
       if ( previousCollection ) {
@@ -367,7 +367,7 @@ class BAMScreenView extends ScreenView {
         this.kitPlayAreaNode.atomLayer.children.forEach( otherAtomNode => {
           if ( otherAtomNode && atomNode !== otherAtomNode ) {
             otherAtomNode.interruptSubtreeInput();
-            otherAtomNode.atom.userControlledProperty.value = false;
+            otherAtomNode.atom.isDraggingProperty.value = false;
           }
         } );
         dragLength = 0;
@@ -377,7 +377,7 @@ class BAMScreenView extends ScreenView {
         lastPosition = atom.positionProperty.value;
 
         // If a molecule is animating interrupt the animation process.
-        atom.userControlledProperty.value = true;
+        atom.isDraggingProperty.value = true;
         const molecule = originKit.getMolecule( atom );
         if ( molecule ) {
           molecule.atoms.forEach( moleculeAtom => {
@@ -423,7 +423,7 @@ class BAMScreenView extends ScreenView {
         }
 
         // Consider the atom released (which does not prevent it from being selected).
-        atom.userControlledProperty.value = false;
+        atom.isDraggingProperty.value = false;
 
         // Keep track of view elements used later in the callback.
         const mappedAtomNode = this.kitPlayAreaNode.atomNodeMap[ atom.id ];

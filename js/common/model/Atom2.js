@@ -34,7 +34,7 @@ class Atom2 extends Atom {
     this.destinationProperty = new Vector2Property( Vector2.ZERO );
 
     // @public {BooleanProperty}
-    this.userControlledProperty = new BooleanProperty( false );
+    this.isDraggingProperty = new BooleanProperty( false );
     this.visibleProperty = new BooleanProperty( true );
 
     // @public {Emitter} Responsible for grabbing and dropping an atom
@@ -45,7 +45,7 @@ class Atom2 extends Atom {
     stepEmitter.addListener( this.step.bind( this ) );
 
     // Atom exists for entire sim life cycle. No need to dispose.
-    this.userControlledProperty.lazyLink( controlled => {
+    this.isDraggingProperty.lazyLink( controlled => {
       if ( controlled ) {
         this.grabbedByUserEmitter.emit( this );
       }
@@ -92,7 +92,7 @@ class Atom2 extends Atom {
    */
   stepAtomTowardsDestination( dt ) {
     const distance = this.positionProperty.value.distance( this.destinationProperty.value );
-    if ( !this.userControlledProperty.value && distance !== 0 ) {
+    if ( !this.isDraggingProperty.value && distance !== 0 ) {
 
       // Move towards the current destination
       let distanceToTravel = MOTION_VELOCITY * dt;
@@ -161,7 +161,7 @@ class Atom2 extends Atom {
   reset() {
     this.positionProperty.reset();
     this.destinationProperty.reset();
-    this.userControlledProperty.reset();
+    this.isDraggingProperty.reset();
     this.visibleProperty.reset();
   }
 }

@@ -64,7 +64,7 @@ class Molecule3DDialog extends Dialog {
     this.isPlayingProperty = new BooleanProperty( true );
 
     // @public {BooleanProperty}
-    this.userControlledProperty = new BooleanProperty( false );
+    this.isDraggingProperty = new BooleanProperty( false );
 
     // @public {EnumerationDeprecatedProperty} View styles for space filled and ball and stick views.
     this.viewStyleProperty = new EnumerationDeprecatedProperty( ViewStyle, ViewStyle.SPACE_FILL );
@@ -338,7 +338,7 @@ class Molecule3DDialog extends Dialog {
     // Handles user input to rotate molecule
     const pressListener = new PressListener( {
       press: event => {
-        this.userControlledProperty.value = true;
+        this.isDraggingProperty.value = true;
         lastGlobalPoint = event.pointer.point.copy();
 
         // mark the Intent of this pointer listener to indicate that we want to drag and therefore NOT
@@ -356,7 +356,7 @@ class Molecule3DDialog extends Dialog {
         this.quaternionProperty.value = newQuaternion;
       },
       release: () => {
-        this.userControlledProperty.value = false;
+        this.isDraggingProperty.value = false;
       }
     } );
     moleculeNode.addInputListener( pressListener );
@@ -367,7 +367,7 @@ class Molecule3DDialog extends Dialog {
    * @public
    */
   step( dt ) {
-    if ( this.isPlayingProperty.value && !this.userControlledProperty.value ) {
+    if ( this.isPlayingProperty.value && !this.isDraggingProperty.value ) {
 
       // Define a quaternion that is offset by a rotation determined by theta.
       // Multiply the rotated quaternion by the previous quaternion of the THREE object and render it with its new
