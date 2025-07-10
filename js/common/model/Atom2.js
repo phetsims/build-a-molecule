@@ -9,6 +9,7 @@
 
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import Emitter from '../../../../axon/js/Emitter.js';
+import Property from '../../../../axon/js/Property.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import Vector2Property from '../../../../dot/js/Vector2Property.js';
@@ -36,6 +37,9 @@ class Atom2 extends Atom {
     // @public {BooleanProperty}
     this.isDraggingProperty = new BooleanProperty( false );
     this.visibleProperty = new BooleanProperty( true );
+
+    // @public {Property.<ParticleContainer | null>} The container that this atom is in, if any.
+    this.containerProperty = new Property( null );
 
     // @public {Emitter} Responsible for grabbing and dropping an atom
     this.grabbedByUserEmitter = new Emitter( { parameters: [ { valueType: Atom2 } ] } );

@@ -74,7 +74,7 @@ class BAMBucket extends SphereBucket {
    * @public
    */
   placeAtom( atom, addFirstOpen ) {
-    if ( this.containsParticle( atom ) ) {
+    if ( this.includes( atom ) ) {
       this.removeParticle( atom, true );
     }
     addFirstOpen ? this.addParticleFirstOpen( atom, false ) : this.addParticleNearestOpen( atom, false );
