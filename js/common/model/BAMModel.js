@@ -53,7 +53,10 @@ class BAMModel {
     this.collectionLayout = collectionLayout;
 
     // @public {Emitter}
-    this.stepEmitter = new Emitter( { parameters: [ { valueType: 'number' } ] } );
+    this.stepEmitter = new Emitter( {
+      parameters: [ { valueType: 'number' } ],
+      disableListenerLimit: true
+    } );
 
     // @public {Array.<Collection>}
     this.collections = [];
