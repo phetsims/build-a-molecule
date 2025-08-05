@@ -6,7 +6,11 @@
     "type": "git",
     "url": "https://github.com/phetsims/build-a-molecule.git"
   },
+  "scripts": {
+    "test": "playwright test && grunt type-check && grunt lint"
+  },
   "devDependencies": {
+    "@playwright/test": "^1.40.0",
     "grunt": "~1.5.3"
   },
   "phet": {
