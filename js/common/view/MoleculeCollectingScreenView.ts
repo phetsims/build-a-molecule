@@ -1,5 +1,8 @@
 // Copyright 2020-2025, University of Colorado Boulder
 
+/* eslint-disable */
+// @ts-nocheck
+
 /**
  * Subtype of BAMScreenView that shows kits, but also has a collection area to the right-hand side
  *

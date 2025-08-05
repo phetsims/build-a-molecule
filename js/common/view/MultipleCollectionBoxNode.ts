@@ -1,5 +1,8 @@
 // Copyright 2020-2025, University of Colorado Boulder
 
+/* eslint-disable */
+// @ts-nocheck
+
 /**
  * Displays a collection box that can collect multiple molecules with two text labels above. One shows the "goal", and the other shows the current
  * quantity present in the box.

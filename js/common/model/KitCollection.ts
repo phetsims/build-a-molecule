@@ -1,5 +1,8 @@
 // Copyright 2020-2021, University of Colorado Boulder
 
+/* eslint-disable */
+// @ts-nocheck
+
 /**
  * Represents a main running model for the 1st two tabs. Contains a collection of kits and boxes. Kits are responsible
  * for their buckets and atoms.

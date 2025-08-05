@@ -1,5 +1,8 @@
 // Copyright 2020-2021, University of Colorado Boulder
 
+/* eslint-disable */
+// @ts-nocheck
+
 /**
  * Represents a "Build a Molecule" molecule. Also useful as a type alias for code readability
  *

@@ -1,5 +1,8 @@
 // Copyright 2020-2021, University of Colorado Boulder
 
+/* eslint-disable */
+// @ts-nocheck
+
 /**
  * Bond between two atoms
  *

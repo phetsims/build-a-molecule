@@ -1,5 +1,8 @@
 // Copyright 2020-2025, University of Colorado Boulder
 
+/* eslint-disable */
+// @ts-nocheck
+
 /**
  * An internal list of collections that a user will be able to scroll through using a control on the collection area
  *

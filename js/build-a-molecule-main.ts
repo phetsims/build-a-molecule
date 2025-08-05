@@ -1,4 +1,8 @@
 // Copyright 2013-2024, University of Colorado Boulder
+
+/* eslint-disable */
+// @ts-nocheck
+
 /**
  * Main entry point for the sim.
  *

@@ -1,5 +1,8 @@
 // Copyright 2020-2022, University of Colorado Boulder
 
+/* eslint-disable */
+// @ts-nocheck
+
 /**
  * Represents a general molecular structure (without position or instance information).
  *

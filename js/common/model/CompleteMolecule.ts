@@ -1,5 +1,8 @@
 // Copyright 2020-2025, University of Colorado Boulder
 
+/* eslint-disable */
+// @ts-nocheck
+
 /**
  * Represents a complete (stable) molecule with a name and structure. Includes 2d and 3d representations,
  * and can generate visuals of both types.

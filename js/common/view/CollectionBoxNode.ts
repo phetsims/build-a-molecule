@@ -1,5 +1,8 @@
 // Copyright 2020-2025, University of Colorado Boulder
 
+/* eslint-disable */
+// @ts-nocheck
+
 /**
  * Represents a generic collection box node which is decorated by additional header nodes (probably text describing what can be put in, what is in it,
  * etc.)

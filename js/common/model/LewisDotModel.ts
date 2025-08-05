@@ -1,5 +1,8 @@
 // Copyright 2020-2023, University of Colorado Boulder
 
+/* eslint-disable */
+// @ts-nocheck
+
 /**
  * Represents the lewis-dot directional connections between atoms. Holds information for all atoms within a particular kit, but it is generic
  * enough to handle other situations

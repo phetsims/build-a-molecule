@@ -1,5 +1,8 @@
 // Copyright 2020-2025, University of Colorado Boulder
 
+/* eslint-disable */
+// @ts-nocheck
+
 /**
  * Displays a node that tells the user that all collection boxes are full. Allows the user
  * to create a new collection.

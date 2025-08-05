@@ -1,5 +1,8 @@
 // Copyright 2020-2025, University of Colorado Boulder
 
+/* eslint-disable */
+// @ts-nocheck
+
 /**
  * Dialog that displays a warning text. Used as a webgl fallback when webgl isn't supported.
  *

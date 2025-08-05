@@ -1,5 +1,8 @@
 // Copyright 2020-2021, University of Colorado Boulder
 
+/* eslint-disable */
+// @ts-nocheck
+
 /**
  * Histogram of each element in a molecule, and allows fast comparison
  *

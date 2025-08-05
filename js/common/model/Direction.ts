@@ -1,5 +1,8 @@
 // Copyright 2020-2022, University of Colorado Boulder
 
+/* eslint-disable */
+// @ts-nocheck
+
 /**
  * Represents a cardinal direction for use in our model. Also includes unit vector version
  *

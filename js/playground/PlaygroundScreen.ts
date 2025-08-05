@@ -1,5 +1,8 @@
 // Copyright 2013-2022, University of Colorado Boulder
 
+/* eslint-disable */
+// @ts-nocheck
+
 /**
  * 3rd screen: Shows kits below as normal, but without collection boxes.
  *

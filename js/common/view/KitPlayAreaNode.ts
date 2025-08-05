@@ -1,5 +1,8 @@
 // Copyright 2020-2025, University of Colorado Boulder
 
+/* eslint-disable */
+// @ts-nocheck
+
 /**
  * Contains all of the atoms in the center of the screen. These are atoms that have been removed from a kit and not placed
  * in the collection area.

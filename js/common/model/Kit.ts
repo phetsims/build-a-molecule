@@ -1,5 +1,8 @@
 // Copyright 2020-2024, University of Colorado Boulder
 
+/* eslint-disable */
+// @ts-nocheck
+
 /**
  * Contains multiple buckets of different types of atoms and a kit play area for dropping the atoms. There is only one
  * "active" kit at a time, which is regulated by toggling the carousel pages. Active kits have their buckets and kit

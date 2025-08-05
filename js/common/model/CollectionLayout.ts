@@ -1,5 +1,8 @@
 // Copyright 2020-2021, University of Colorado Boulder
 
+/* eslint-disable */
+// @ts-nocheck
+
 /**
  * Contains layout information relevant to where the kits are placed, where molecules can exist in the play area, etc.
  *

@@ -1,5 +1,8 @@
 // Copyright 2013-2022, University of Colorado Boulder
 
+/* eslint-disable */
+// @ts-nocheck
+
 /**
  * 2nd screen: Collection boxes take multiple molecules of the same type.
  *

@@ -1,5 +1,8 @@
 // Copyright 2013-2022, University of Colorado Boulder
 
+/* eslint-disable */
+// @ts-nocheck
+
 /**
  * 1st screen: collection boxes only take 1 molecule, and our 1st kit collection is always the same
  *

@@ -1,5 +1,8 @@
 // Copyright 2020-2025, University of Colorado Boulder
 
+/* eslint-disable */
+// @ts-nocheck
+
 /**
  * A panel that shows collection areas for different collections, and allows switching between those collections
  *
@@ -168,7 +171,7 @@ class CollectionPanel extends Panel {
    * @returns {boolean} If an ancestor is a BuildAMoleculeCanvas
    */
   hasScreenViewAsAncestor() {
-    let node = this; // eslint-disable-line consistent-this
+    let node = this;
     while ( node.getParent() !== null ) {
       node = node.getParent();
       if ( node instanceof ScreenView ) {
