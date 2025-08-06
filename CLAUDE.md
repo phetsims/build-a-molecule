@@ -81,3 +81,60 @@ Steps:
 6. After a file is converted, run `npm test`. This will report any runtime discrepancy (remember we do not want any runtime behavior changes or regressions), and type checking and linting.
 7. If there are tricky parts that you cannot get AFTER 3 TRIES, you have to tag it with // eslint-disable-line or // @ts-expect-error. If those do not work put // @ts-nocheck or /* eslint-disable */ at the top of the file again. DO NOT GET STUCK
 8. The developer will be responsible for commits.
+
+# GOTCHAS - TypeScript Conversion
+
+## Critical API Compatibility Issues
+- **NEVER change property names during conversion** - Other unconverted files may depend on exact property names at runtime
+- Automated tests may pass while runtime crashes due to missing properties
+- When in doubt, keep original naming even if it violates current PhET conventions (use eslint-disable-line)
+
+## Band-aid Fixes for Dependencies
+- Unconverted dependencies require `as any` with proper documentation:
+  ```typescript
+  ( someObject as any ).property // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when SomeClass is converted, see https://github.com/phetsims/build-a-molecule/issues/245
+  ```
+- Always include the issue number in TODO comments
+- Common areas needing band-aids: constructor signatures, property access, method calls
+
+## Import and Type Issues
+- Import types that may not exist yet - define placeholder types when necessary
+- Use existing pattern: `import { ParticleContainer } from '../../../../phetcommon/js/model/ParticleContainer.js';`
+- Generic types often need explicit type parameters: `SphereBucket<Atom2>`, `Property<CompleteMolecule | null>`
+
+## Options Pattern Migration  
+- Replace `merge`/`required` with `optionize` pattern
+- Define `SelfOptions` and `[Class]Options` types
+- Use `optionize<[Class]Options, SelfOptions, EmptySelfOptions>()()`
+- For non-constructor options, may need `combineOptions<>()`
+
+## Lodash Elimination
+- Replace `_.includes()` with `Array.includes()`
+- Replace `_.uniq()` with custom filter: `arr.filter((item, index, arr) => arr.indexOf(item) === index)`
+- Avoid importing lodash in new TypeScript files
+
+## Property and Naming Conventions
+- PhET requires Property suffix for properties, but legacy code may not follow this
+- Use eslint-disable-line when maintaining compatibility is more important
+- Watch for "readonly" vs mutable properties (some methods need mutable arrays)
+
+## Multi-step Editing Process
+- Large MultiEdit operations may fail - break into smaller Edit operations if needed  
+- Always verify changes actually applied by re-reading the file
+- Test frequently with `npm test` after major changes
+
+## Type Annotation Strategy
+- Start with broad types, narrow down as dependencies are converted
+- Use explicit `any` with eslint-disable-line for temporary compatibility
+- Add type annotations to arrays: `const items: Type[] = []`
+- Function parameters and return types are essential for method signatures
+
+## Testing Limitations
+- `npm test` may pass while runtime fails due to incomplete integration testing
+- Pay attention to property access patterns in unconverted files
+- When property names change, search codebase for usage before committing
+
+## Loop and Closure Issues
+- Avoid functions declared in loops that reference loop variables
+- Use eslint-disable-next-line for complex cases that can't be easily refactored
+- Consider extracting loop bodies to separate methods when practical
