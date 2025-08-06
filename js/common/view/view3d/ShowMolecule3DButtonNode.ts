@@ -11,7 +11,7 @@ import merge from '../../../../../phet-core/js/merge.js';
 import PhetFont from '../../../../../scenery-phet/js/PhetFont.js';
 import Text from '../../../../../scenery/js/nodes/Text.js';
 import ButtonNode from '../../../../../sun/js/buttons/ButtonNode.js';
-import RectangularPushButton from '../../../../../sun/js/buttons/RectangularPushButton.js';
+import RectangularPushButton, { RectangularPushButtonOptions } from '../../../../../sun/js/buttons/RectangularPushButton.js';
 import nullSoundPlayer from '../../../../../tambo/js/nullSoundPlayer.js';
 import buildAMolecule from '../../../buildAMolecule.js';
 import BuildAMoleculeStrings from '../../../BuildAMoleculeStrings.js';
@@ -20,8 +20,7 @@ import CompleteMolecule from '../../model/CompleteMolecule.js';
 
 export default class ShowMolecule3DButtonNode extends RectangularPushButton {
 
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-  public constructor( completeMolecule: CompleteMolecule, showDialogCallback: ( completeMolecule: CompleteMolecule ) => void, options?: any ) { // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when CompleteMolecule is converted, see https://github.com/phetsims/build-a-molecule/issues/245
+  public constructor( completeMolecule: CompleteMolecule, showDialogCallback: ( completeMolecule: CompleteMolecule ) => void, options?: RectangularPushButtonOptions ) {
     const content = new Text( BuildAMoleculeStrings.threeD, {
       font: new PhetFont( {
         size: 12,

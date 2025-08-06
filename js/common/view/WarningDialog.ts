@@ -12,7 +12,7 @@ import Path from '../../../../scenery/js/nodes/Path.js';
 import RichText from '../../../../scenery/js/nodes/RichText.js';
 import openPopup from '../../../../scenery/js/util/openPopup.js';
 import exclamationTriangleSolidShape from '../../../../sherpa/js/fontawesome-5/exclamationTriangleSolidShape.js';
-import Dialog from '../../../../sun/js/Dialog.js';
+import Dialog, { DialogOptions } from '../../../../sun/js/Dialog.js';
 import buildAMolecule from '../../buildAMolecule.js';
 import BuildAMoleculeStrings from '../../BuildAMoleculeStrings.js';
 
@@ -51,7 +51,7 @@ class WarningDialog extends Dialog {
       xAlign: 'center',
       title: null,
       resize: false
-    } as any ); // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when Dialog types are available, see https://github.com/phetsims/build-a-molecule/issues/245
+    } as DialogOptions );
   }
 }
 

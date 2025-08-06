@@ -35,7 +35,7 @@ class KitCollectionNode extends Node {
 
     // Maps kit ID => KitNode
     const kitMap: KitNode[] = [];
-    ( collection as any ).kits.forEach( ( kit: any ) => { // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when KitCollection and Kit are converted, see https://github.com/phetsims/build-a-molecule/issues/245
+    collection.kits.forEach( kit => {
       kitMap[ kit.id ] = new KitNode( kit, view );
     } );
   }

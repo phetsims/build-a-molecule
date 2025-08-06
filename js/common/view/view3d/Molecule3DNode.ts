@@ -27,7 +27,7 @@ import TReadOnlyProperty from '../../../../../axon/js/TReadOnlyProperty.js';
 type EnhancedVector3 = Vector3 & {
   element: Element;
   covalentRadius: number;
-  color: any; // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when Element color property is properly typed, see https://github.com/phetsims/build-a-molecule/issues/245
+  color: Color | string;
 };
 
 type ArcData = {
@@ -145,7 +145,7 @@ class Molecule3DNode extends DOM {
     const fullRadius = gCenter.minus( new Vector2( 1, 1 ).normalized().times( element.covalentRadius ) ).magnitude;
     const gradientFill = this.context.createRadialGradient( gCenter.x, gCenter.y, 0, gCenter.x, gCenter.y, fullRadius );
 
-    const baseColor = new Color( element.color as any ); // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when Element color property is properly typed, see https://github.com/phetsims/build-a-molecule/issues/245
+    const baseColor = element.color instanceof Color ? element.color : new Color( element.color );
     gradientFill.addColorStop( 0, baseColor.colorUtilsBrighter( 0.5 ).toCSS() );
     gradientFill.addColorStop( 0.08, baseColor.colorUtilsBrighter( 0.2 ).toCSS() );
     gradientFill.addColorStop( 0.4, baseColor.colorUtilsDarker( 0.1 ).toCSS() );

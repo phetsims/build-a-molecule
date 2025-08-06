@@ -7,18 +7,21 @@
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 
+import Bounds2 from '../../../../dot/js/Bounds2.js';
 import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
+import Node from '../../../../scenery/js/nodes/Node.js';
 import RichText from '../../../../scenery/js/nodes/RichText.js';
 import buildAMolecule from '../../buildAMolecule.js';
 import BuildAMoleculeStrings from '../../BuildAMoleculeStrings.js';
 import BAMConstants from '../BAMConstants.js';
+import CollectionBox from '../model/CollectionBox.js';
+import CompleteMolecule from '../model/CompleteMolecule.js';
 import CollectionBoxNode from './CollectionBoxNode.js';
 
 export default class SingleCollectionBoxNode extends CollectionBoxNode {
 
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-  public constructor( box: any, toModelBounds: any, showDialogCallback: any ) { // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when CollectionBox is converted, see https://github.com/phetsims/build-a-molecule/issues/245
+  public constructor( box: CollectionBox, toModelBounds: ( node: Node ) => Bounds2, showDialogCallback: ( completeMolecule: CompleteMolecule ) => void ) {
     super( box, toModelBounds, showDialogCallback );
     assert && assert( box.capacity === 1 );
     this.insertChild( 0, new RichText( StringUtils.fillIn( BuildAMoleculeStrings.collectionSinglePattern, {

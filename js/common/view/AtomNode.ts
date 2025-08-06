@@ -13,6 +13,7 @@ import Shape from '../../../../kite/js/Shape.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import ShadedSphereNode from '../../../../scenery-phet/js/ShadedSphereNode.js';
+import DragListener from '../../../../scenery/js/listeners/DragListener.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import Text from '../../../../scenery/js/nodes/Text.js';
 import Color from '../../../../scenery/js/util/Color.js';
@@ -37,7 +38,7 @@ class AtomNode extends Node {
 
   // Public fields assigned in constructor
   public readonly atom: Atom2;
-  public dragListener: any | null; // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when DragListener types are available, see https://github.com/phetsims/build-a-molecule/issues/245
+  public dragListener: DragListener | null;
 
   // Private fields
   private readonly translationListener: ( modelPosition: Vector2 ) => void;
@@ -96,7 +97,7 @@ class AtomNode extends Node {
     let node = ELEMENT_MAP[ element.symbol ];
 
     if ( !node ) {
-      const color = new Color( element.color as any ); // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when Element types are available, see https://github.com/phetsims/build-a-molecule/issues/245
+      const color = element.color instanceof Color ? element.color : new Color( element.color );
       const radius = BAMConstants.MODEL_VIEW_TRANSFORM.modelToViewDeltaX( element.covalentRadius );
       const diameter = radius * 2;
 

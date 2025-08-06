@@ -80,7 +80,7 @@ class MoleculeCollectingScreenView extends BAMScreenView {
       } );
 
     // Note: mappedKitCollectionBounds is initialized in parent constructor, we're just re-assigning here
-    ( this as any ).mappedKitCollectionBounds = this.kitCollectionMap[ ( this.bamModel.currentCollectionProperty.value as any ).id ].bounds.dilatedX( 15 ); // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when KitCollection and BAMScreenView are converted, see https://github.com/phetsims/build-a-molecule/issues/245
+    ( this as any ).mappedKitCollectionBounds = this.kitCollectionMap[ this.bamModel.currentCollectionProperty.value.id ].bounds.dilatedX( 15 ); // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when BAMScreenView is converted, see https://github.com/phetsims/build-a-molecule/issues/245
     const collectionAttachmentCallbacks: ( () => void )[] = [];
     const collectionPanel = new CollectionPanel(
       this.bamModel,
@@ -129,7 +129,7 @@ class MoleculeCollectingScreenView extends BAMScreenView {
   public override addCollection( collection: KitCollection ): KitCollectionNode {
     // Replicate parent's addCollection behavior since it's private
     const kitCollectionNode = new KitCollectionNode( collection, this, true );
-    this.kitCollectionMap[ ( collection as any ).id ] = kitCollectionNode; // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when KitCollection is converted, see https://github.com/phetsims/build-a-molecule/issues/245
+    this.kitCollectionMap[ collection.id ] = kitCollectionNode;
     this.hasShownOnce = false;
 
     // show dialog the 1st time all collection boxes are filled

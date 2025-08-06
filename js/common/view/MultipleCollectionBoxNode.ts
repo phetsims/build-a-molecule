@@ -8,6 +8,7 @@
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 
+import Bounds2 from '../../../../dot/js/Bounds2.js';
 import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import RichText from '../../../../scenery/js/nodes/RichText.js';
@@ -28,7 +29,7 @@ class MultipleCollectionBoxNode extends CollectionBoxNode {
    * @param toModelBounds - Used to update position of the collection box
    * @param showDialogCallback - Callback for showing 3D dialog
    */
-  public constructor( box: CollectionBox, toModelBounds: ( node: Node ) => any, showDialogCallback: ( completeMolecule: CompleteMolecule ) => void ) { // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when bounds type is available, see https://github.com/phetsims/build-a-molecule/issues/245
+  public constructor( box: CollectionBox, toModelBounds: ( node: Node ) => Bounds2, showDialogCallback: ( completeMolecule: CompleteMolecule ) => void ) {
     super( box, toModelBounds, showDialogCallback );
 
     // Number of molecules that can be collected

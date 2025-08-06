@@ -9,6 +9,7 @@
 
 import Node from '../../../../scenery/js/nodes/Node.js';
 import buildAMolecule from '../../buildAMolecule.js';
+import Bond from '../model/Bond.js';
 import Kit from '../model/Kit.js';
 import Molecule from '../model/Molecule.js';
 import MoleculeBondNode from './MoleculeBondNode.js';
@@ -20,7 +21,7 @@ export default class MoleculeBondContainerNode extends Node {
   public constructor( kit: Kit, molecule: Molecule ) {
     super();
 
-    this.bondNodes = molecule.bonds.map( ( bond: any ) => { // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when Bond is converted, see https://github.com/phetsims/build-a-molecule/issues/245
+    this.bondNodes = molecule.bonds.map( ( bond: Bond ) => {
       return new MoleculeBondNode( bond, kit );
     } );
     this.children = this.bondNodes;
