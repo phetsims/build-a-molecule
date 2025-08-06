@@ -1,8 +1,5 @@
 // Copyright 2020-2021, University of Colorado Boulder
 
-/* eslint-disable */
-// @ts-nocheck
-
 /**
  * Represents a main running model for the 1st two tabs. Contains a collection of kits and boxes. Kits are responsible
  * for their buckets and atoms.
@@ -14,37 +11,48 @@
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import Property from '../../../../axon/js/Property.js';
 import merge from '../../../../phet-core/js/merge.js';
+import IntentionalAny from '../../../../phet-core/js/types/IntentionalAny.js';
 import buildAMolecule from '../../buildAMolecule.js';
 import BAMQueryParameters from '../BAMQueryParameters.js';
+import Atom2 from './Atom2.js';
+import CollectionBox from './CollectionBox.js';
+import Kit from './Kit.js';
 
 let currentId = 0;
 
 class KitCollection {
-  /**
-   * @param {Object} [options]
-   */
-  constructor( options ) {
+
+  public readonly id: number;
+
+  public readonly kits: Kit[];
+
+  public collectionBoxes: CollectionBox[];
+
+  // Only show a blinking highlight once
+  private hasBlinkedOnce: boolean;
+
+  // this will remain false if we have no collection boxes
+  private allCollectionBoxesFilledProperty: BooleanProperty;
+
+  public currentKitProperty: Property<Kit | null>;
+
+  public constructor( options: IntentionalAny ) {
+    // eslint-disable-next-line phet/bad-typescript-text
     options = merge( {
       enableCues: false // Determines if the arrow cues should be shown
     }, options );
 
-    // @public {number}
     this.id = currentId++;
 
-    // @public {Array.<Kit>}
     this.kits = [];
 
-    // @public {Array.<CollectionBox>}
     this.collectionBoxes = [];
 
-    // @private {boolean} Only show a blinking highlight once
     this.hasBlinkedOnce = false;
 
-    // @public {Property.<boolean>} - this will remain false if we have no collection boxes
     this.allCollectionBoxesFilledProperty = new BooleanProperty( false );
 
-    // @public {Property.<Kit|null>}
-    this.currentKitProperty = new Property( null );
+    this.currentKitProperty = new Property<Kit | null>( null );
 
     // Swap the current kit and update the visibility of the cue nodes in the collection boxes
     this.currentKitProperty.lazyLink( ( newKit, oldKit ) => {
@@ -72,18 +80,14 @@ class KitCollection {
 
   /**
    * Add a kit to this kit collection. Here is where we add listeners to the added kit
-   * @param {Kit} kit
-   * @param {Object} [options]
-   *
-   * @public
    */
-  addKit( kit, options ) {
+  public addKit( kit: Kit, options: IntentionalAny ): void {
     this.kits.push( kit );
-    const dropListener = atom => {
+    const dropListener = ( atom: Atom2 ) => {
 
       // don't drop an atom from the kit to the collection box directly
       if ( kit.isAtomInPlay( atom ) ) {
-        const molecule = kit.getMolecule( atom );
+        const molecule = kit.getMolecule( atom )!;
 
         // check to see if we are trying to drop it in a collection box.
         const numBoxes = this.collectionBoxes.length;
@@ -162,10 +166,8 @@ class KitCollection {
 
   /**
    * Add a collection box
-   * @param {CollectionBox} box
-   * @public
    */
-  addCollectionBox( box ) {
+  public addCollectionBox( box: CollectionBox ): void {
     this.collectionBoxes.push( box );
 
     // listen to when our collection boxes change, so that we can identify when all of our collection boxes are filled
@@ -179,16 +181,15 @@ class KitCollection {
         this.allCollectionBoxesFilledProperty.value = true;
       }
       else {
-        this.allCollectionBoxesFilledProperty.value = this.collectionBoxes.length && allFull;
+        this.allCollectionBoxesFilledProperty.value = this.collectionBoxes.length > 0 && allFull;
       }
     } );
   }
 
   /**
    * Reset this kitCollection
-   * @public
    */
-  reset() {
+  public reset(): void {
     this.collectionBoxes.forEach( box => { box.reset(); } );
     this.kits.forEach( kit => { kit.reset(); } );
     this.hasBlinkedOnce = false;
@@ -197,9 +198,8 @@ class KitCollection {
 
   /**
    * Reset only the kits and boxes
-   * @public
    */
-  resetKitsAndBoxes() {
+  public resetKitsAndBoxes(): void {
     this.kits.forEach( kit => {
       kit.reset();
     } );

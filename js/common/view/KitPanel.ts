@@ -33,7 +33,6 @@ export default class KitPanel extends Node {
     // create kitNodes and unify their heights
     const kitNodes: KitNode[] = [];
     kitCollectionProperty.link( kitCollection => {
-      // @ts-expect-error
       kitCollection.kits.forEach( kit => {
 
         kitNodes.push( {
@@ -76,7 +75,6 @@ export default class KitPanel extends Node {
     // When the page number changes update the current collection.
     this.kitCarousel.pageNumberProperty.link( page => {
 
-      // @ts-expect-error
       kitCollectionProperty.value.currentKitProperty.value = kitCollectionProperty.value.kits[ page ];
     } );
     this.addChild( this.kitCarousel );
