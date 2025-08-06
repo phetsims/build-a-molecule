@@ -19,6 +19,12 @@ import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.j
 import DragListener from '../../../../scenery/js/listeners/DragListener.js';
 import buildAMolecule from '../../buildAMolecule.js';
 import BAMConstants from '../BAMConstants.js';
+import BAMModel from '../model/BAMModel.js';
+import Atom2 from '../model/Atom2.js';
+import Kit from '../model/Kit.js';
+import KitCollection from '../model/KitCollection.js';
+import Molecule from '../model/Molecule.js';
+import CompleteMolecule from '../model/CompleteMolecule.js';
 import AtomNode from './AtomNode.js';
 import KitCollectionNode from './KitCollectionNode.js';
 import KitPlayAreaNode from './KitPlayAreaNode.js';
@@ -28,43 +34,51 @@ import Molecule3DDialog from './view3d/Molecule3DDialog.js';
 import WarningDialog from './WarningDialog.js';
 
 class BAMScreenView extends ScreenView {
+
+  // Public properties
+  public readonly atomNodeMap: Record<number, AtomNode> = {}; // maps Atom2 ID => AtomNode
+  public readonly kitCollectionMap: Record<number, KitCollectionNode> = {};
+  public readonly bamModel: BAMModel;
+  public readonly atomDragBounds: Bounds2;
+  public readonly mappedKitCollectionBounds: Bounds2;
+  public readonly dialog: Molecule3DDialog | WarningDialog;
+  public readonly showDialogCallback: ( completeMolecule: CompleteMolecule ) => void;
+  public readonly kitPlayAreaNode: KitPlayAreaNode;
+  public readonly updateRefillButton: () => void;
+  public readonly resetAllButton: ResetAllButton;
+  public nextCollectionButton: any;  
+
+  // Private properties
+  private readonly addedEmitterListeners: Record<number, ( atom: Atom2 ) => void> = {};
+  private readonly removedEmitterListeners: Record<number, ( atom: Atom2 ) => void> = {};
+  private readonly refillButton: RefillButton;
+
   /**
-   * @param {BAMModel} bamModel
+   * @param bamModel - The model for this screen view
    */
-  constructor( bamModel ) {
+  public constructor( bamModel: BAMModel ) {
     super();
-    // @public {Object.<atomId:number, AtomNode>}
-    this.atomNodeMap = {}; // maps Atom2 ID => AtomNode
 
-    // @public {Object.<kitCollectionId:number, KitCollectionNode}
-    this.kitCollectionMap = {};
-
-    // @private {Object.<kitID:number,function>}
-    this.addedEmitterListeners = {};
-
-    // @private {Object.<kitID:number,function>}
-    this.removedEmitterListeners = {};
-
-    // @public {BAMModel} Initialize and add the kit collection
+    // Initialize and add the kit collection
     this.bamModel = bamModel;
     this.addCollection( bamModel.currentCollectionProperty.value, false );
 
-    // @public {Bounds2} Bounds used to limit where molecules can reside in the play area.
+    // Bounds used to limit where molecules can reside in the play area.
     this.atomDragBounds = new Bounds2( -1575, -850, 1575, 950 );
-    this.mappedKitCollectionBounds = this.kitCollectionMap[ this.bamModel.currentCollectionProperty.value.id ].bounds.dilatedX( 60 );
+    this.mappedKitCollectionBounds = this.kitCollectionMap[ ( this.bamModel.currentCollectionProperty.value as any ).id ].bounds.dilatedX( 60 );  
 
-    // @public {Molecule3DDialog| WarningDialog } Used for representing 3D molecules.
+    // Used for representing 3D molecules.
     // Only create a dialog if webgl is enabled. See https://github.com/phetsims/build-a-molecule/issues/105
     this.dialog = ThreeUtils.isWebGLEnabled() ? new Molecule3DDialog( bamModel.dialogMolecule ) : new WarningDialog();
 
-    // @public {function} Reference to callback that displays dialog for 3d node representation
+    // Reference to callback that displays dialog for 3d node representation
     this.showDialogCallback = this.showDialog.bind( this );
 
     // KitPlayAreaNode for the main BAMScreenView listens to the kitPlayArea of each kit in the model to fill or remove
     // its content.
     const kits = [];
 
-    // @public {KitPlayAreaNode} Create a play area to house the molecules.
+    // Create a play area to house the molecules.
     this.kitPlayAreaNode = new KitPlayAreaNode( kits );
     bamModel.currentCollectionProperty.link( ( newCollection, oldCollection ) => {
       if ( oldCollection ) {
@@ -105,7 +119,7 @@ class BAMScreenView extends ScreenView {
     // Create a kit panel to house the kit carousel
     const kitPanel = this.kitCollectionMap[ bamModel.currentCollectionProperty.value.id ].kitPanel;
 
-    // @private {RefillButton} Create a button to refill the kit buckets with atoms
+    // Create a button to refill the kit buckets with atoms
     this.refillButton = new RefillButton(
       refillListener, {
         left: kitPanel.left,
@@ -114,12 +128,12 @@ class BAMScreenView extends ScreenView {
       } );
     this.refillButton.touchArea = this.refillButton.selfBounds.union( this.refillButton.childBounds ).dilated( 10 );
 
-    // @public {function} Refill button is enabled if atoms exists outside of the bucket
+    // Refill button is enabled if atoms exists outside of the bucket
     this.updateRefillButton = () => {
       this.refillButton.enabled = !this.bamModel.currentCollectionProperty.value.currentKitProperty.value.allBucketsFilled();
     };
 
-    // @public {ResetAllButton} Create a reset all button. Position of button is adjusted on "Larger" Screen.
+    // Create a reset all button. Position of button is adjusted on "Larger" Screen.
     this.resetAllButton = new ResetAllButton( {
       listener: () => {
 
@@ -139,7 +153,7 @@ class BAMScreenView extends ScreenView {
         this.updateRefillButton();
 
         // If the nextCollectionButton is present on screen hide it.
-        if ( _.includes( this.children, this.nextCollectionButton ) ) {
+        if ( this.children.includes( this.nextCollectionButton ) ) {
           this.nextCollectionButton.visible = false;
         }
       },
@@ -154,10 +168,8 @@ class BAMScreenView extends ScreenView {
 
     /**
      * Handles adding molecules and molecule metadata to kit play area.
-     * @param {Molecule} molecule
-     * @param {Kit} kit
      */
-    const addedMoleculeListener = ( molecule, kit ) => {
+    const addedMoleculeListener = ( molecule: Molecule, kit: Kit ) => {
       if ( molecule.atoms.length > 1 ) {
 
         // Only create this if there are multiple atoms
@@ -170,9 +182,8 @@ class BAMScreenView extends ScreenView {
 
     /**
      * Handles removing molecules and molecule metadata to kit play area.
-     * @param {Molecule} molecule
      */
-    const removedMoleculeListener = molecule => {
+    const removedMoleculeListener = ( molecule: Molecule ) => {
       const moleculeControlsHBox = this.kitPlayAreaNode.metadataMap[ molecule.moleculeId ];
       if ( moleculeControlsHBox ) {
         this.kitPlayAreaNode.metadataLayer.removeChild( moleculeControlsHBox );
@@ -184,18 +195,16 @@ class BAMScreenView extends ScreenView {
 
     /**
      * Handles adding atoms to play area and updates the refill button accordingly
-     * @param {Atom2} atom
      */
-    const addAtomNodeToPlayArea = atom => {
+    const addAtomNodeToPlayArea = ( atom: Atom2 ) => {
       this.addAtomNodeToPlayArea( atom );
       this.updateRefillButton();
     };
 
     /**
-     * Handles adding atoms to play area and updates the refill button accordingly
-     * @param {Atom2} atom
+     * Handles removing atoms from play area and updates the refill button accordingly
      */
-    const removeAtomNodeFromPlayArea = atom => {
+    const removeAtomNodeFromPlayArea = ( atom: Atom2 ) => {
       this.onAtomRemovedFromPlayArea( atom );
       this.updateRefillButton();
     };
@@ -265,7 +274,7 @@ class BAMScreenView extends ScreenView {
       } );
     } );
 
-    // @private {function} listener for 'click outside to dismiss'
+    // listener for 'click outside to dismiss'
     this.clickToDismissListener = {
       down: () => {
         bamModel.currentCollectionProperty.value.currentKitProperty.value.selectedAtomProperty.value = null;
@@ -279,11 +288,10 @@ class BAMScreenView extends ScreenView {
   }
 
   /**
-   * @param {number} dt
-   *
-   * @public
+   * Steps the view forward in time
+   * @param dt - The time step
    */
-  step( dt ) {
+  public step( dt: number ): void {
     if ( this.dialog && ThreeUtils.isWebGLEnabled() ) {
       this.dialog.step( dt );
     }
@@ -299,11 +307,9 @@ class BAMScreenView extends ScreenView {
 
   /**
    * Responsible for showing 3d representation of molecule.
-   * @param {CompleteMolecule} completeMolecule
-   *
-   * @private
+   * @param completeMolecule - The molecule to show in 3D
    */
-  showDialog( completeMolecule ) {
+  public showDialog( completeMolecule: CompleteMolecule ): void {
 
     // Bail if we don't have a dialog, due to a lack of webgl support. See https://github.com/phetsims/build-a-molecule/issues/105
     if ( this.dialog ) {
@@ -316,13 +322,11 @@ class BAMScreenView extends ScreenView {
 
   /**
    * Add a collection to the kitCollectionNode
-   * @param {KitCollection} collection
-   * @param {boolean} isCollectingView
-   *
-   * @private
-   * @returns {KitCollectionNode}
+   * @param collection - The collection to add
+   * @param isCollectingView - Whether this is a collecting view
+   * @returns The created KitCollectionNode
    */
-  addCollection( collection, isCollectingView ) {
+  private addCollection( collection: KitCollection, isCollectingView: boolean ): KitCollectionNode {
     const kitCollectionNode = new KitCollectionNode( collection, this, isCollectingView );
     this.kitCollectionMap[ collection.id ] = kitCollectionNode;
 
@@ -332,12 +336,10 @@ class BAMScreenView extends ScreenView {
 
   /**
    * Fill the play area with an atom and map the atom to an atomNode
-   * @param {Atom2} atom
-   *
-   * @private
-   * @returns {AtomNode}
+   * @param atom - The atom to add
+   * @returns The created AtomNode
    */
-  addAtomNodeToPlayAreaNode( atom ) {
+  private addAtomNodeToPlayAreaNode( atom: Atom2 ): AtomNode {
     const atomNode = new AtomNode( atom );
     this.kitPlayAreaNode.atomLayer.addChild( atomNode );
     this.kitPlayAreaNode.atomNodeMap[ atom.id ] = atomNode;
@@ -346,12 +348,10 @@ class BAMScreenView extends ScreenView {
 
   /**
    * Add an atom to the play area in the model. Handled via a drag listener.
-   * @param {Atom2} atom
-   *
-   * @private
-   * @returns {AtomNode}
+   * @param atom - The atom to add
+   * @returns The created AtomNode
    */
-  addAtomNodeToPlayArea( atom ) {
+  private addAtomNodeToPlayArea( atom: Atom2 ): AtomNode {
     const originKit = this.bamModel.currentCollectionProperty.value.currentKitProperty.value;
     const atomNode = this.addAtomNodeToPlayAreaNode( atom );
     let lastPosition;
@@ -454,10 +454,9 @@ class BAMScreenView extends ScreenView {
   /**
    * Removes atom elements from view.
    *
-   * @param {Atom2} atom
-   * @private
+   * @param atom - The atom to remove
    */
-  onAtomRemovedFromPlayArea( atom ) {
+  private onAtomRemovedFromPlayArea( atom: Atom2 ): void {
     // Remove mapped atom node from the view and dispose it.
     const atomNode = this.kitPlayAreaNode.atomNodeMap[ atom.id ];
     atomNode.dragListener.dispose();

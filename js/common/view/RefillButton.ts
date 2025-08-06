@@ -1,8 +1,5 @@
 // Copyright 2020-2025, University of Colorado Boulder
 
-/* eslint-disable */
-// @ts-nocheck
-
 /**
  * Button that refills the kit buckets with the initial atoms.
  *
@@ -10,7 +7,7 @@
  */
 
 import Dimension2 from '../../../../dot/js/Dimension2.js';
-import merge from '../../../../phet-core/js/merge.js';
+import optionize from '../../../../phet-core/js/optionize.js';
 import SphereBucket from '../../../../phetcommon/js/model/SphereBucket.js';
 import BucketFront from '../../../../scenery-phet/js/bucket/BucketFront.js';
 import BucketHole from '../../../../scenery-phet/js/bucket/BucketHole.js';
@@ -18,7 +15,7 @@ import Display from '../../../../scenery/js/display/Display.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import Path from '../../../../scenery/js/nodes/Path.js';
 import replySolidShape from '../../../../sherpa/js/fontawesome-5/replySolidShape.js';
-import RectangularPushButton from '../../../../sun/js/buttons/RectangularPushButton.js';
+import RectangularPushButton, { RectangularPushButtonOptions } from '../../../../sun/js/buttons/RectangularPushButton.js';
 import nullSoundPlayer from '../../../../tambo/js/nullSoundPlayer.js';
 import buildAMolecule from '../../buildAMolecule.js';
 import BAMConstants from '../BAMConstants.js';
@@ -26,12 +23,18 @@ import BAMConstants from '../BAMConstants.js';
 // constants
 const OFFSET = 3;
 
+type SelfOptions = {
+  // No additional options for RefillButton
+};
+
+export type RefillButtonOptions = SelfOptions & RectangularPushButtonOptions;
+
 class RefillButton extends RectangularPushButton {
   /**
-   * @param {function} buttonListener
-   * @param {Object} [options]
+   * @param buttonListener - Function to call when the button is pressed
+   * @param providedOptions - Button options
    */
-  constructor( buttonListener, options ) {
+  public constructor( buttonListener: () => void, providedOptions?: RefillButtonOptions ) {
     const replyIcon = new Path( replySolidShape, {
       fill: 'black', // "safety orange", according to Wikipedia
       scale: 0.05
@@ -58,14 +61,14 @@ class RefillButton extends RectangularPushButton {
     bucketView.bucketHole.top = replyIcon.bottom - OFFSET * 2;
     bucketView.bucketFront.top = bucketView.bucketHole.bottom - OFFSET;
 
-    options = merge( {
+    const options = optionize<RefillButtonOptions, SelfOptions, RectangularPushButtonOptions>()( {
       yMargin: 5,
       content: contentNode,
       listener: buttonListener,
-      interruptListener: Display.INTERRUPT_OTHER_POINTERS,
+      interruptListener: Display.INTERRUPT_OTHER_POINTERS as any, // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when Display types are available, see https://github.com/phetsims/build-a-molecule/issues/245
       baseColor: 'rgb(234,225,88)',
       soundPlayer: nullSoundPlayer
-    }, options );
+    }, providedOptions );
     super( options );
   }
 }

@@ -1,8 +1,5 @@
 // Copyright 2020-2025, University of Colorado Boulder
 
-/* eslint-disable */
-// @ts-nocheck
-
 /**
  * Factory to create icons for home screens and the nav-bar.
  *
@@ -17,6 +14,7 @@ import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
 import buildAMolecule from '../../buildAMolecule.js';
 import BAMConstants from '../../common/BAMConstants.js';
 import MoleculeList from '../../common/model/MoleculeList.js';
+import CompleteMolecule from '../../common/model/CompleteMolecule.js';
 import Molecule3DNode from '../../common/view/view3d/Molecule3DNode.js';
 
 // Options for screen icons
@@ -29,23 +27,23 @@ const BAMIconFactory = {
   /**
    * Create an image for the complete molecule with preferred Image options.
    *
-   * @param {CompleteMolecule} completeMolecule
-   * @param {number} width
-   * @param {number} height
-   * @param {number} scale
-   * @param {boolean} toCollectionBox
-   * @returns {Image}
+   * @param completeMolecule - The molecule to create an icon for
+   * @param width - The width of the icon area
+   * @param height - The height of the icon area
+   * @param scale - The scaling factor
+   * @param toCollectionBox - Whether this icon is for a collection box
+   * @returns The molecule icon image
    */
-  createIconImage( completeMolecule, width, height, scale, toCollectionBox ) {
+  createIconImage( completeMolecule: CompleteMolecule, width: number, height: number, scale: number, toCollectionBox: boolean ): Image {
     const moleculeNode = new Molecule3DNode( completeMolecule, new Bounds2( 0, 0, width, height ), false );
-    const transformMatrix = Molecule3DNode.initialTransforms[ completeMolecule.getGeneralFormula() ];
+    const transformMatrix = ( Molecule3DNode as any ).initialTransforms[ completeMolecule.getGeneralFormula() ]; // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when Molecule3DNode types are available, see https://github.com/phetsims/build-a-molecule/issues/245
     if ( transformMatrix ) {
-      moleculeNode.transformMolecule( transformMatrix );
+      ( moleculeNode as any ).transformMolecule( transformMatrix ); // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when Molecule3DNode types are available, see https://github.com/phetsims/build-a-molecule/issues/245
     }
-    moleculeNode.draw();
-    return new Image( moleculeNode.canvas.toDataURL(), {
-      initialWidth: toCollectionBox ? 0 : moleculeNode.canvas.width,
-      initialHeight: toCollectionBox ? 0 : moleculeNode.canvas.height,
+    ( moleculeNode as any ).draw(); // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when Molecule3DNode types are available, see https://github.com/phetsims/build-a-molecule/issues/245
+    return new Image( ( moleculeNode as any ).canvas.toDataURL(), { // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when Molecule3DNode types are available, see https://github.com/phetsims/build-a-molecule/issues/245
+      initialWidth: toCollectionBox ? 0 : ( moleculeNode as any ).canvas.width, // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when Molecule3DNode types are available, see https://github.com/phetsims/build-a-molecule/issues/245
+      initialHeight: toCollectionBox ? 0 : ( moleculeNode as any ).canvas.height, // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when Molecule3DNode types are available, see https://github.com/phetsims/build-a-molecule/issues/245
       scale: scale
     } );
   },
@@ -53,14 +51,13 @@ const BAMIconFactory = {
   /**
    * Create the home screen and nav-bar icon for the Single screen.
    *
-   * @public
-   * @returns {ScreenIcon}
+   * @returns The Single screen icon
    */
-  createSingleScreenIcon() {
+  createSingleScreenIcon(): ScreenIcon {
 
     // Create icon from complete Molecule
     const moleculeIcon = BAMIconFactory.createIconImage(
-      MoleculeList.H2O,
+      ( MoleculeList as any ).H2O, // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when MoleculeList types are available, see https://github.com/phetsims/build-a-molecule/issues/245
       Screen.MINIMUM_HOME_SCREEN_ICON_SIZE.width,
       Screen.MINIMUM_HOME_SCREEN_ICON_SIZE.height,
       0.85,
@@ -80,16 +77,15 @@ const BAMIconFactory = {
   },
 
   /**
-   * Create the home screen and nav-bar icon for the Multiple
+   * Create the home screen and nav-bar icon for the Multiple screen.
    *
-   * @public
-   * @returns {ScreenIcon}
+   * @returns The Multiple screen icon
    */
-  createMultipleScreenIcon() {
+  createMultipleScreenIcon(): ScreenIcon {
 
     // Iconize first O2 Molecule
     const moleculeIconOne = BAMIconFactory.createIconImage(
-      MoleculeList.O2,
+      ( MoleculeList as any ).O2, // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when MoleculeList types are available, see https://github.com/phetsims/build-a-molecule/issues/245
       Screen.MINIMUM_HOME_SCREEN_ICON_SIZE.width,
       Screen.MINIMUM_HOME_SCREEN_ICON_SIZE.height,
       0.50,
@@ -98,7 +94,7 @@ const BAMIconFactory = {
 
     // Iconize second O2 Molecule
     const moleculeIconTwo = BAMIconFactory.createIconImage(
-      MoleculeList.O2,
+      ( MoleculeList as any ).O2, // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when MoleculeList types are available, see https://github.com/phetsims/build-a-molecule/issues/245
       Screen.MINIMUM_HOME_SCREEN_ICON_SIZE.width,
       Screen.MINIMUM_HOME_SCREEN_ICON_SIZE.height,
       0.50,
@@ -122,14 +118,13 @@ const BAMIconFactory = {
   /**
    * Create the home screen and nav-bar icon for the Playground screen.
    *
-   * @public
-   * @returns {ScreenIcon}
+   * @returns The Playground screen icon
    */
-  createPlaygroundScreenIcon() {
+  createPlaygroundScreenIcon(): ScreenIcon {
 
     // Iconize first O2 Molecule
     const moleculeIcon = BAMIconFactory.createIconImage(
-      MoleculeList.C2H4O2,
+      ( MoleculeList as any ).C2H4O2, // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when MoleculeList types are available, see https://github.com/phetsims/build-a-molecule/issues/245
       Screen.MINIMUM_HOME_SCREEN_ICON_SIZE.width,
       Screen.MINIMUM_HOME_SCREEN_ICON_SIZE.height,
       0.95,

@@ -1,8 +1,5 @@
 // Copyright 2020-2025, University of Colorado Boulder
 
-/* eslint-disable */
-// @ts-nocheck
-
 /**
  * Dialog that displays a warning text. Used as a webgl fallback when webgl isn't supported.
  *
@@ -20,7 +17,7 @@ import buildAMolecule from '../../buildAMolecule.js';
 import BuildAMoleculeStrings from '../../BuildAMoleculeStrings.js';
 
 class WarningDialog extends Dialog {
-  constructor() {
+  public constructor() {
 
     // Message describing the lack of webgl support with a link for more information
     const warningNode = new HBox( {
@@ -54,7 +51,7 @@ class WarningDialog extends Dialog {
       xAlign: 'center',
       title: null,
       resize: false
-    } );
+    } as any ); // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when Dialog types are available, see https://github.com/phetsims/build-a-molecule/issues/245
   }
 }
 

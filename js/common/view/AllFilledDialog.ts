@@ -1,8 +1,5 @@
 // Copyright 2020-2025, University of Colorado Boulder
 
-/* eslint-disable */
-// @ts-nocheck
-
 /**
  * Displays a node that tells the user that all collection boxes are full. Allows the user
  * to create a new collection.
@@ -12,7 +9,8 @@
  */
 
 import Vector2 from '../../../../dot/js/Vector2.js';
-import merge from '../../../../phet-core/js/merge.js';
+import optionize from '../../../../phet-core/js/optionize.js';
+import Property from '../../../../axon/js/Property.js';
 import FaceNode from '../../../../scenery-phet/js/FaceNode.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import VBox from '../../../../scenery/js/layout/nodes/VBox.js';
@@ -25,23 +23,30 @@ import buildAMolecule from '../../buildAMolecule.js';
 import BuildAMoleculeStrings from '../../BuildAMoleculeStrings.js';
 import BAMConstants from '../BAMConstants.js';
 
+type SelfOptions = {
+  // No additional options for this dialog
+};
+
+export type AllFilledDialogOptions = SelfOptions;
+
 class AllFilledDialog extends Dialog {
+
   /**
-   * @param {Property.<Boolean>} buttonClickedProperty
-   * @param {function} regenerateCallback
-   * @param {Object} [options]
+   * @param buttonClickedProperty - Property to track if the button was clicked
+   * @param regenerateCallback - Callback function to regenerate the collection
+   * @param providedOptions - Dialog options
    */
-  constructor( buttonClickedProperty, regenerateCallback, options ) {
-    options = merge( {
+  public constructor( buttonClickedProperty: Property<boolean>, regenerateCallback: () => void, providedOptions?: AllFilledDialogOptions ) {
+    const options = optionize<AllFilledDialogOptions, SelfOptions>()( {
       stroke: new Color( 0, 0, 0 ),
       fill: BAMConstants.COMPLETE_BACKGROUND_COLOR,
       center: Vector2.ZERO,
       bottomMargin: 10,
       cornerRadius: BAMConstants.CORNER_RADIUS,
-      layoutStrategy: ( dialog, simBounds, screenBounds, scale ) => {
-        this.center = dialog.layoutBounds.center.minusXY( 75, 75 );
+      layoutStrategy: ( dialog: any, simBounds: any, screenBounds: any, scale: any ) => { // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when Dialog types are available, see https://github.com/phetsims/build-a-molecule/issues/245
+        dialog.center = dialog.layoutBounds.center.minusXY( 75, 75 );
       }
-    }, options );
+    }, providedOptions );
 
     super( new VBox( {
       spacing: 7,
