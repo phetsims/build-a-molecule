@@ -1,8 +1,5 @@
 // Copyright 2020-2021, University of Colorado Boulder
 
-/* eslint-disable */
-// @ts-nocheck
-
 /**
  * Bond between two atoms
  *
@@ -14,53 +11,37 @@ import Atom from '../../../../nitroglycerin/js/Atom.js';
 import buildAMolecule from '../../buildAMolecule.js';
 
 class Bond {
-  /**
-   * @param {Atom} a
-   * @param {Atom} b
-   */
-  constructor( a, b ) {
+
+  public readonly a: Atom;
+  public readonly b: Atom;
+
+  public constructor( a: Atom, b: Atom ) {
     assert && assert( a !== b, 'Bonds cannot connect an atom to itself' );
 
-    // @public {Atom}
     this.a = a;
-
-    // @public {Atom}
     this.b = b;
   }
 
   /**
    * Checks if the passed in atom is equal to one of the bond's atoms
-   * @param {Atom|PubChemAtom*} atom
-   *
-   * @public
-   * @returns {boolean}
    */
-  contains( atom ) {
-    assert && assert( atom instanceof Atom );
+  public contains( atom: Atom ): boolean {
     return atom === this.a || atom === this.b;
   }
 
   /**
    * Returns the other atom within the bond that isn't the passed in atom
-   * @param {Atom|PubChemAtom*} atom
-   *
-   * @public
-   * @returns {Atom}
    */
-  getOtherAtom( atom ) {
-    assert && assert( atom instanceof Atom );
+  public getOtherAtom( atom: Atom ): Atom {
     assert && assert( this.contains( atom ) );
     return ( this.a === atom ? this.b : this.a );
   }
 
   /**
    * Returns serialized form of bond data
-   * @param {number} index - Index of bond within molecule
-   *
-   * @public
-   * @returns {string}
+   * @param index - Index of bond within molecule
    */
-  toSerial2( index ) {
+  public toSerial2( index: number ): string {
     return `${index}`;
   }
 }
