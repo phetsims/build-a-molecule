@@ -1,8 +1,5 @@
 // Copyright 2020-2025, University of Colorado Boulder
 
-/* eslint-disable */
-// @ts-nocheck
-
 /**
  * 3D Molecule display that takes up the entire screen
  *
@@ -21,74 +18,99 @@ import DOM from '../../../../../scenery/js/nodes/DOM.js';
 import Color from '../../../../../scenery/js/util/Color.js';
 import Utils from '../../../../../scenery/js/util/Utils.js';
 import buildAMolecule from '../../../buildAMolecule.js';
+import CompleteMolecule from '../../model/CompleteMolecule.js';
+import Element from '../../../../../nitroglycerin/js/Element.js';
+import Bounds2 from '../../../../../dot/js/Bounds2.js';
+import TReadOnlyProperty from '../../../../../axon/js/TReadOnlyProperty.js';
+
+// Enhanced Vector3 with additional properties for atoms
+type EnhancedVector3 = Vector3 & {
+  element: Element;
+  covalentRadius: number;
+  color: any; // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when Element color property is properly typed, see https://github.com/phetsims/build-a-molecule/issues/245
+};
+
+type ArcData = {
+  center: Vector2;
+  rx: number;
+  ry: number;
+  rotation: number;
+  circleStart: number;
+  circleEnd: number;
+  ellipseStart: number;
+  ellipseEnd: number;
+};
+
+type EllipticalArcCutResult = {
+  interSectionPointX: number;
+  arcCenterX: number;
+  arcCenterY: number;
+  ellipticalSemiMinor: number;
+  ellipticalSemiMajor: number;
+  startAngle: number;
+  alpha: number;
+} | null;
 
 // constants
 // debug flag, specifies whether main transforms are tracked and printed to determine "pretty" setup transformations
 const GRAB_INITIAL_TRANSFORMS = false;
 
 class Molecule3DNode extends DOM {
-  /**
-   * @param {CompleteMolecule} completeMolecule
-   * @param {Bounds2} initialBounds
-   * @param {boolean} useHighRes
-   */
-  constructor( completeMolecule, initialBounds, useHighRes ) {
+
+  public readonly draggingProperty: TReadOnlyProperty<boolean>;
+  public readonly canvas: HTMLCanvasElement;
+  private readonly backingScale: number;
+  private readonly context: CanvasRenderingContext2D;
+  private readonly currentAtoms: EnhancedVector3[];
+  private readonly gradientMap: Record<string, CanvasGradient>;
+  private dragging: boolean;
+  private lastPosition: Vector2;
+  private currentPosition: Vector2;
+  private mainMatrix?: Matrix3; // only used when GRAB_INITIAL_TRANSFORMS is true
+  private readonly maxTotalRadius: number;
+  public static initialTransforms: Record<string, Matrix3>; // Custom transforms for specific molecules
+
+  public constructor( completeMolecule: CompleteMolecule, initialBounds: Bounds2, useHighRes: boolean ) {
     // construct with the canvas (now properly initially sized)
     const canvas = document.createElement( 'canvas' );
     super( canvas, {
       preventTransform: true
     } );
 
-    // @private {BooleanProperty}
     this.draggingProperty = new BooleanProperty( false );
-
-    // @public {HTMLCanvasElement}
     this.canvas = canvas;
-
-    // @private {number}
+    this.context = this.canvas.getContext( '2d' )!;
     this.backingScale = useHighRes ? Utils.backingScale( this.context ) : 1;
-
-    // @private {CanvasRenderingContext2D}
-    this.context = this.canvas.getContext( '2d' );
     this.canvas.className = 'canvas-3d';
     this.canvas.style.position = 'absolute';
     this.canvas.style.left = '0';
     this.canvas.style.top = '0';
     this.setMoleculeCanvasBounds( initialBounds );
 
-    // @private {Array.<Vector3>} map the atoms into our enhanced format
+    // map the atoms into our enhanced format
     this.currentAtoms = completeMolecule.atoms.map( atom => {
-
       // similar to picometers from angstroms? hopefully?
-      const v = new Vector3( atom.x3d, atom.y3d, atom.z3d ).times( 75 );
-      v.element = atom.element;
-      v.covalentRadius = atom.element.covalentRadius;
-      v.color = atom.element.color;
+      const atomAny = atom as any; // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when MoleculeStructure is converted, see https://github.com/phetsims/build-a-molecule/issues/245
+      const v = new Vector3( atomAny.x3d, atomAny.y3d, atomAny.z3d ).times( 75 ) as EnhancedVector3;
+      v.element = atomAny.element;
+      v.covalentRadius = atomAny.element.covalentRadius;
+      v.color = atomAny.element.color;
       return v;
     } );
 
-    const gradientMap = {}; // element symbol => gradient
+    const gradientMap: Record<string, CanvasGradient> = {}; // element symbol => gradient
     this.currentAtoms.forEach( atom => {
       if ( !gradientMap[ atom.element.symbol ] ) {
         gradientMap[ atom.element.symbol ] = this.createGradient( atom.element );
       }
     } );
 
-    // @private {Object.<string,CanvasGradient>}
     this.gradientMap = gradientMap;
-
-    // @private {boolean}
     this.dragging = false;
-
-    // @private {Vector2}
     this.lastPosition = Vector2.ZERO;
-
-    // @private {Vector2}
     this.currentPosition = Vector2.ZERO;
 
     if ( GRAB_INITIAL_TRANSFORMS ) {
-
-      // @private {Matrix3}
       this.mainMatrix = Matrix3.identity();
     }
 
@@ -112,22 +134,18 @@ class Molecule3DNode extends DOM {
       maxTotalRadius = Math.max( maxTotalRadius, atom.magnitude + atom.covalentRadius );
     } );
 
-    // @private {number}
     this.maxTotalRadius = maxTotalRadius;
   }
 
   /**
-   * @param {Element} element
-   * @private
-   *
-   * @returns {*}
+   * Creates a radial gradient for rendering atoms
    */
-  createGradient( element ) {
+  private createGradient( element: Element ): CanvasGradient {
     const gCenter = new Vector2( -element.covalentRadius / 5, -element.covalentRadius / 5 );
     const fullRadius = gCenter.minus( new Vector2( 1, 1 ).normalized().times( element.covalentRadius ) ).magnitude;
     const gradientFill = this.context.createRadialGradient( gCenter.x, gCenter.y, 0, gCenter.x, gCenter.y, fullRadius );
 
-    const baseColor = new Color( element.color );
+    const baseColor = new Color( element.color as any ); // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when Element color property is properly typed, see https://github.com/phetsims/build-a-molecule/issues/245
     gradientFill.addColorStop( 0, baseColor.colorUtilsBrighter( 0.5 ).toCSS() );
     gradientFill.addColorStop( 0.08, baseColor.colorUtilsBrighter( 0.2 ).toCSS() );
     gradientFill.addColorStop( 0.4, baseColor.colorUtilsDarker( 0.1 ).toCSS() );
@@ -138,15 +156,9 @@ class Molecule3DNode extends DOM {
   }
 
   /**
-   * @param {number} ra
-   * @param {number} rb
-   * @param {number} d
-   * @param {number} theta
-   *
-   * @private
-   * @returns {Object.<number,number>}
+   * Computes elliptical arc parameters for occlusion between atoms
    */
-  ellipticalArcCut( ra, rb, d, theta ) {
+  private ellipticalArcCut( ra: number, rb: number, d: number, theta: number ): EllipticalArcCutResult {
     if ( theta > Math.PI / 2 ) {
       // other one is in front, bail!
     }
@@ -199,12 +211,9 @@ class Molecule3DNode extends DOM {
   }
 
   /**
-   * Visually create the molecule 3D Node
-   * @public
-   *
-   * @return
+   * Visually renders the molecule 3D Node
    */
-  draw() {
+  public draw(): void {
     const canvas = this.canvas;
     const context = this.context;
 
@@ -217,14 +226,12 @@ class Molecule3DNode extends DOM {
     const bigScale = width / this.maxTotalRadius / 2.5;
     context.setTransform( bigScale, 0, 0, bigScale, midX - bigScale * midX, midY - bigScale * midY );
 
-    const atoms = _.sortBy( this.currentAtoms, v => {
-      return v.z;
-    } );
+    const atoms = this.currentAtoms.slice().sort( ( a, b ) => a.z - b.z );
 
     for ( let i = 0; i < atoms.length; i++ ) {
       const atom = atoms[ i ];
 
-      let arcs = [];
+      let arcs: ArcData[] = [];
 
       // check each atom behind this one for occlusion
       for ( let k = 0; k < i; k++ ) {
@@ -253,15 +260,13 @@ class Molecule3DNode extends DOM {
           }
         }
       }
-      arcs = _.sortBy( arcs, arc => {
-        return arc.circleStart;
-      } );
+      arcs = arcs.slice().sort( ( a, b ) => a.circleStart - b.circleStart );
 
       context.save();
       context.translate( midX + atom.x, midY + atom.y );
       context.beginPath();
-      let arc;
-      let ellipticalArc;
+      let arc: Arc;
+      let ellipticalArc: EllipticalArc;
       if ( arcs.length ) {
         for ( let j = 0; j < arcs.length; j++ ) {
           ellipticalArc = new EllipticalArc( arcs[ j ].center,
@@ -286,11 +291,9 @@ class Molecule3DNode extends DOM {
   }
 
   /**
-   * @param {number} timeElapsed
-   *
-   * @public
+   * Updates the molecule rotation and redraws
    */
-  tick( timeElapsed ) {
+  public tick( timeElapsed: number ): void {
     let matrix;
     if ( !this.dragging && this.currentPosition.equals( this.lastPosition ) ) {
       matrix = Matrix3.rotationY( timeElapsed );
@@ -311,27 +314,21 @@ class Molecule3DNode extends DOM {
   }
 
   /**
-   * Transform matrix of molecule
-   * @param {Matrix3} matrix
-   *
-   * @public
+   * Applies a transformation matrix to all atoms in the molecule
    */
-  transformMolecule( matrix ) {
+  public transformMolecule( matrix: Matrix3 ): void {
     this.currentAtoms.forEach( atom => {
       matrix.multiplyVector3( atom );
     } );
     if ( GRAB_INITIAL_TRANSFORMS ) {
-      this.mainMatrix = matrix.timesMatrix( this.mainMatrix );
+      this.mainMatrix = matrix.timesMatrix( this.mainMatrix! );
     }
   }
 
   /**
-   * Set the bounds of the canvas
-   * @param {Bounds2} globalBounds
-   *
-   * @private
+   * Sets the canvas size and position based on the provided bounds
    */
-  setMoleculeCanvasBounds( globalBounds ) {
+  private setMoleculeCanvasBounds( globalBounds: Bounds2 ): void {
     this.canvas.width = globalBounds.width * this.backingScale;
     this.canvas.height = globalBounds.height * this.backingScale;
     this.canvas.style.width = `${globalBounds.width}px`;
@@ -341,7 +338,7 @@ class Molecule3DNode extends DOM {
   }
 }
 
-// @public {Matrix3} Custom transforms for specific molecules to correct the molecule orientation for viewing purposes
+// Custom transforms for specific molecules to correct the molecule orientation for viewing purposes
 Molecule3DNode.initialTransforms = {
   H2O: m3( 0.181499678570479, -0.7277838769374022, -0.6613535326501101,
     0.7878142178395282, 0.5101170681131106, -0.34515117700738,
