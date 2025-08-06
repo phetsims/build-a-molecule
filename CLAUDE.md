@@ -138,3 +138,6 @@ Steps:
 - Avoid functions declared in loops that reference loop variables
 - Use eslint-disable-next-line for complex cases that can't be easily refactored
 - Consider extracting loop bodies to separate methods when practical
+
+## PRESERVE COMMENTS
+- In JSDoc @param and @returns, preserve comments. Only delete if there is no comment for any @param.
