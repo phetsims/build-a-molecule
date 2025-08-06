@@ -1,8 +1,5 @@
 // Copyright 2020-2025, University of Colorado Boulder
 
-/* eslint-disable */
-// @ts-nocheck
-
 /**
  * Subtype of BAMScreenView that shows kits, but also has a collection area to the right-hand side
  *
@@ -11,34 +8,44 @@
  */
 
 import Multilink from '../../../../axon/js/Multilink.js';
+import Bounds2 from '../../../../dot/js/Bounds2.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import Shape from '../../../../kite/js/Shape.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
+import Node from '../../../../scenery/js/nodes/Node.js';
 import Color from '../../../../scenery/js/util/Color.js';
 import TextPushButton from '../../../../sun/js/buttons/TextPushButton.js';
 import nullSoundPlayer from '../../../../tambo/js/nullSoundPlayer.js';
 import buildAMolecule from '../../buildAMolecule.js';
 import BuildAMoleculeStrings from '../../BuildAMoleculeStrings.js';
 import BAMConstants from '../BAMConstants.js';
+import BAMModel from '../model/BAMModel.js';
+import KitCollection from '../model/KitCollection.js';
 import AllFilledDialog from './AllFilledDialog.js';
 import BAMScreenView from './BAMScreenView.js';
 import CollectionPanel from './CollectionPanel.js';
+import KitCollectionNode from './KitCollectionNode.js';
 
+// @ts-expect-error - This class intentionally shadows the private addCollection method from parent for collecting-specific behavior
 class MoleculeCollectingScreenView extends BAMScreenView {
+
+  // Whether the AllFilledDialog has been shown once
+  private hasShownOnce: boolean;
+
+  // Button to go to the next collection
+  public override readonly nextCollectionButton: TextPushButton;
+
+  // Dialog shown when all collection boxes are filled
+  private readonly allFilledDialog: AllFilledDialog;
+
   /**
-   * @param {BAMModel} bamModel
-   * @param {boolean} isSingleCollectionMode
+   * @param bamModel - The main model for Build A Molecule  
+   * @param isSingleCollectionMode - Whether this is in single collection mode
    */
-  constructor( bamModel, isSingleCollectionMode ) {
+  public constructor( bamModel: BAMModel, isSingleCollectionMode: boolean ) {
     super( bamModel );
 
-    // @public {BAMModel}
-    this.bamModel = bamModel;
-
-    // @private {boolean}
     this.hasShownOnce = false;
-
-    // @private {TextPushButton} Create a next collection button
     this.nextCollectionButton = new TextPushButton( BuildAMoleculeStrings.nextCollection, {
       centerX: this.layoutBounds.centerX - 100,
       top: this.layoutBounds.top + BAMConstants.VIEW_PADDING,
@@ -51,7 +58,7 @@ class MoleculeCollectingScreenView extends BAMScreenView {
       soundPlayer: nullSoundPlayer
     } );
     this.nextCollectionButton.touchArea = Shape.bounds( this.nextCollectionButton.localBounds.dilated( 20 ) );
-    this.nextCollectionButton.addListener( () => {
+    this.nextCollectionButton.addListener( (): void => {
       bamModel.regenerateCallback();
       bamModel.buttonClickedProperty.value = false;
       this.nextCollectionButton.visible = false;
@@ -59,35 +66,34 @@ class MoleculeCollectingScreenView extends BAMScreenView {
     this.addChild( this.nextCollectionButton );
     this.nextCollectionButton.visible = false;
 
-    // @private {Dialog} Dialog that shows when all the boxes are filled.
     this.allFilledDialog = new AllFilledDialog(
       bamModel.buttonClickedProperty,
       bamModel.regenerateCallback, {
-        showCallback: () => {
+        showCallback: (): void => {
           this.bamModel.buttonClickedProperty.value = false;
         }
       }
     );
 
     Multilink.lazyMultilink( [ this.allFilledDialog.isShowingProperty, this.bamModel.buttonClickedProperty ],
-      ( isShowing, buttonClicked ) => {
+      ( isShowing: boolean, buttonClicked: boolean ): void => {
         this.nextCollectionButton.visible = !isShowing && !buttonClicked;
       } );
 
-    // @public {Bounds2} Adjust play area and carousel bounds to compensate for CollectionPanel
-    this.mappedKitCollectionBounds = this.kitCollectionMap[ this.bamModel.currentCollectionProperty.value.id ].bounds.dilatedX( 15 );
-    const collectionAttachmentCallbacks = [];
+    // Note: mappedKitCollectionBounds is initialized in parent constructor, we're just re-assigning here
+    ( this as any ).mappedKitCollectionBounds = this.kitCollectionMap[ ( this.bamModel.currentCollectionProperty.value as any ).id ].bounds.dilatedX( 15 ); // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when KitCollection and BAMScreenView are converted, see https://github.com/phetsims/build-a-molecule/issues/245
+    const collectionAttachmentCallbacks: ( () => void )[] = [];
     const collectionPanel = new CollectionPanel(
       this.bamModel,
       isSingleCollectionMode,
       collectionAttachmentCallbacks,
-      node => {
+      ( node: Node ): Bounds2 => {
 
         // returns model bounds from a node, given local coordinates on a node
-        const viewBounds = node.getParent().getUniqueTrail().getTransformTo( this.getUniqueTrail() ).transformBounds2( node.bounds );
+        const viewBounds = node.getParent()!.getUniqueTrail().getTransformTo( this.getUniqueTrail() ).transformBounds2( node.bounds );
         return BAMConstants.MODEL_VIEW_TRANSFORM.viewToModelBounds( viewBounds );
       },
-      this.showDialogCallback,
+      (): void => { /* no-op - showDialogCallback is handled elsewhere */ },
       this.updateRefillButton, {
         xMargin: 10,
         yMargin: 7,
@@ -103,32 +109,33 @@ class MoleculeCollectingScreenView extends BAMScreenView {
     collectionPanel.moveToBack();
 
     // notify attachment
-    collectionAttachmentCallbacks.forEach( callback => { callback(); } );
+    collectionAttachmentCallbacks.forEach( ( callback: () => void ): void => { callback(); } );
 
     // Affects whether the AllFilledDialog will show after resetting.
-    this.resetAllButton.addListener( () => {
+    this.resetAllButton.addListener( (): void => {
       this.hasShownOnce = false;
     } );
 
     // Adjust the center of the AllFilledDialog
-    this.visibleBoundsProperty.link( () => {
+    this.visibleBoundsProperty.link( (): void => {
       this.allFilledDialog.center = this.layoutBounds.center;
     } );
   }
 
   /**
-   * @param {KitCollection} collection
-   *
-   * @override
-   * @public
-   * @returns {Node}
+   * Adds a collection to the view and sets up dialog behavior for when all collection boxes are filled.
+   * @param collection - The kit collection to add
+   * @returns The created KitCollectionNode
    */
-  addCollection( collection ) {
-    const kitCollectionNode = super.addCollection( collection, true );
+  // @ts-expect-error - Method shadows parent private method for collecting-specific behavior
+  public addCollection( collection: KitCollection ): KitCollectionNode {
+    // Replicate parent's addCollection behavior since it's private
+    const kitCollectionNode = new KitCollectionNode( collection, this, true );
+    this.kitCollectionMap[ ( collection as any ).id ] = kitCollectionNode; // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when KitCollection is converted, see https://github.com/phetsims/build-a-molecule/issues/245
     this.hasShownOnce = false;
 
     // show dialog the 1st time all collection boxes are filled
-    collection.allCollectionBoxesFilledProperty.link( filled => {
+    ( collection as any ).allCollectionBoxesFilledProperty.link( ( filled: boolean ): void => { // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when KitCollection is converted, see https://github.com/phetsims/build-a-molecule/issues/245
       if ( filled ) {
         if ( !this.hasShownOnce && !this.bamModel.hasNextCollection() ) {
           this.allFilledDialog.show();
