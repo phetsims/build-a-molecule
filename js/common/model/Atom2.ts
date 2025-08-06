@@ -1,8 +1,5 @@
 // Copyright 2020-2025, University of Colorado Boulder
 
-/* eslint-disable */
-// @ts-nocheck
-
 /**
  * An atom, extended with position/destination information that is animated
  *
@@ -17,34 +14,40 @@ import Bounds2 from '../../../../dot/js/Bounds2.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import Vector2Property from '../../../../dot/js/Vector2Property.js';
 import Atom from '../../../../nitroglycerin/js/Atom.js';
+import Element from '../../../../nitroglycerin/js/Element.js';
 import buildAMolecule from '../../buildAMolecule.js';
+
+type ParticleContainer = unknown; // TODO: Define proper type when ParticleContainer is converted to TypeScript, see https://github.com/phetsims/build-a-molecule/issues/245
 
 // constants
 const MOTION_VELOCITY = 800; // In picometers per second of sim time.
 
 class Atom2 extends Atom {
 
-  /**
-   * @param {Element} element
-   * @param {Emitter} stepEmitter
-   */
-  constructor( element, stepEmitter ) {
+  // Position of atom
+  public readonly positionProperty: Vector2Property;
+
+  // Destination of atom
+  public readonly destinationProperty: Vector2Property;
+
+  public readonly isDraggingProperty: BooleanProperty;
+  public readonly visibleProperty: BooleanProperty;
+
+  // The container that this atom is in, if any.
+  public readonly containerProperty: Property<ParticleContainer | null>;
+
+  // Responsible for grabbing and dropping an atom
+  public readonly grabbedByUserEmitter: Emitter<[ Atom2 ]>;
+  public readonly droppedByUserEmitter: Emitter<[ Atom2 ]>;
+
+  public constructor( element: Element, stepEmitter: Emitter<[ number ]> ) {
     super( element );
 
-    // @public {Vector2Property} Position of atom
     this.positionProperty = new Vector2Property( Vector2.ZERO );
-
-    // @public {Vector2Property} Destination of atom
     this.destinationProperty = new Vector2Property( Vector2.ZERO );
-
-    // @public {BooleanProperty}
     this.isDraggingProperty = new BooleanProperty( false );
     this.visibleProperty = new BooleanProperty( true );
-
-    // @public {Property.<ParticleContainer | null>} The container that this atom is in, if any.
-    this.containerProperty = new Property( null );
-
-    // @public {Emitter} Responsible for grabbing and dropping an atom
+    this.containerProperty = new Property<ParticleContainer | null>( null );
     this.grabbedByUserEmitter = new Emitter( { parameters: [ { valueType: Atom2 } ] } );
     this.droppedByUserEmitter = new Emitter( { parameters: [ { valueType: Atom2 } ] } );
 
@@ -64,40 +67,29 @@ class Atom2 extends Atom {
 
   /**
    * Returns bounds of atom's position considering its covalent radius
-   *
-   * @public
-   * @returns {Bounds2}
    */
-  get positionBounds() {
+  public get positionBounds(): Bounds2 {
     return Bounds2.point( this.positionProperty.value.x, this.positionProperty.value.y ).dilated( this.covalentRadius );
   }
 
   /**
    * Returns bounds of atom's destination considering its covalent radius
-   *
-   * @public
-   * @returns {Bounds2}
    */
-  get destinationBounds() {
+  public get destinationBounds(): Bounds2 {
     return Bounds2.point( this.destinationProperty.value.x, this.destinationProperty.value.y ).dilated( this.covalentRadius );
   }
 
   /**
-   * @param {number} dt - time elapsed in seconds
-   *
-   * @public
+   * @param dt - time elapsed in seconds
    */
-  step( dt ) {
+  public step( dt: number ): void {
     this.stepAtomTowardsDestination( dt );
   }
 
   /**
    * Responsible stepping an atom towards its destination. Velocity of step is modified based on distance to destination.
-   *
-   * @param {number} dt
-   * @private
    */
-  stepAtomTowardsDestination( dt ) {
+  private stepAtomTowardsDestination( dt: number ): void {
     const distance = this.positionProperty.value.distance( this.destinationProperty.value );
     if ( !this.isDraggingProperty.value && distance !== 0 ) {
 
@@ -129,43 +121,31 @@ class Atom2 extends Atom {
 
   /**
    * Add a vector to the current position and destination of the atom
-   * @param {Vector2} delta
-   *
-   * @public
    */
-  translatePositionAndDestination( delta ) {
+  public translatePositionAndDestination( delta: Vector2 ): void {
     this.positionProperty.value = this.positionProperty.value.plus( delta );
     this.destinationProperty.value = this.destinationProperty.value.plus( delta );
   }
 
   /**
    * Update the position and destination to a specific point
-   * @param {Vector2} point
-   *
-   * @public
    */
-  setPositionAndDestination( point ) {
+  public setPositionAndDestination( point: Vector2 ): void {
     this.positionProperty.value = point;
     this.destinationProperty.value = point;
   }
 
   /**
    * Update the position property to a new point
-   * @param {number} x
-   * @param {number} y
-   *
-   * @public
    */
-  translate( x, y ) {
+  public translate( x: number, y: number ): void {
     this.positionProperty.value = new Vector2( this.positionProperty.value.x + x, this.positionProperty.value.y + y );
   }
 
   /**
    * Reset the atom
-   *
-   * @public
    */
-  reset() {
+  public reset(): void {
     this.positionProperty.reset();
     this.destinationProperty.reset();
     this.isDraggingProperty.reset();
