@@ -1,8 +1,5 @@
 // Copyright 2020-2021, University of Colorado Boulder
 
-/* eslint-disable */
-// @ts-nocheck
-
 /**
  * Molecule structure with the hydrogens stripped out (but with the hydrogen count of an atom saved)
  *
@@ -17,6 +14,7 @@ import Atom from '../../../../nitroglycerin/js/Atom.js';
 import PhetioObject from '../../../../tandem/js/PhetioObject.js';
 import buildAMolecule from '../../buildAMolecule.js';
 import MoleculeStructure from './MoleculeStructure.js';
+import Bond from './Bond.js';
 
 export default class StrippedMolecule extends PhetioObject {
 
@@ -24,12 +22,12 @@ export default class StrippedMolecule extends PhetioObject {
   private readonly hydrogenCount: number[];
   public readonly stripped: MoleculeStructure;
 
-  public constructor( original: any ) {
+  public constructor( original: MoleculeStructure ) {
     super();
-    const bondsToAdd = [];
+    const bondsToAdd: Bond[] = [];
 
     // copy non-hydrogens
-    const atomsToAdd = original.atoms.filter( ( atom: any ) => {
+    const atomsToAdd = original.atoms.filter( ( atom: Atom ) => {
       return !atom.isHydrogen();
     } );
 
@@ -61,13 +59,13 @@ export default class StrippedMolecule extends PhetioObject {
     bondsToAdd.forEach( this.stripped.addBond.bind( this.stripped ) );
   }
 
-  private getIndex( atom: Atom2 ): number {
+  private getIndex( atom: Atom ): number {
     const index = this.stripped.atoms.indexOf( atom );
     assert && assert( index !== -1 );
     return index;
   }
 
-  private getHydrogenCount( atom: Atom2 ): number {
+  private getHydrogenCount( atom: Atom ): number {
     return this.hydrogenCount[ this.getIndex( atom ) ];
   }
 
@@ -82,8 +80,8 @@ export default class StrippedMolecule extends PhetioObject {
     }
 
     // Note: (performance) use something more like HashSet here
-    const myVisited = [];
-    const otherVisited = [];
+    const myVisited: Atom[] = [];
+    const otherVisited: Atom[] = [];
     const firstAtom = this.stripped.atoms[ 0 ]; // grab the 1st atom
     const length = other.stripped.atoms.length;
     for ( let i = 0; i < length; i++ ) {
@@ -113,8 +111,8 @@ export default class StrippedMolecule extends PhetioObject {
       // if we have no heavy atoms
       return other.stripped.atoms.length === 0;
     }
-    const myVisited = [];
-    const otherVisited = [];
+    const myVisited: Atom[] = [];
+    const otherVisited: Atom[] = [];
     const firstAtom = this.stripped.atoms[ 0 ]; // grab the 1st atom
     const length = other.stripped.atoms.length;
     for ( let i = 0; i < length; i++ ) {
@@ -127,7 +125,7 @@ export default class StrippedMolecule extends PhetioObject {
     return false;
   }
 
-  public checkEquivalency( other: StrippedMolecule, myVisited: Atom2[], otherVisited: Atom2[], myAtom: Atom2, otherAtom: Atom2, subCheck: boolean ): boolean {
+  public checkEquivalency( other: StrippedMolecule, myVisited: Atom[], otherVisited: Atom[], myAtom: Atom, otherAtom: Atom, subCheck: boolean ): boolean {
     // basically this checks whether two different sub-trees of two different molecules are "equivalent"
 
     /*
@@ -173,10 +171,10 @@ export default class StrippedMolecule extends PhetioObject {
      equivalency matrix. each entry is basically whether the subtree in the direction of the "my" atom is
      equivalent to the subtree in the direction of the "other" atom, for all possible my and other atoms
      */
-    const equivalences = new Array( size * size ); // booleans
+    const equivalences = new Array<boolean>( size * size );
 
     // keep track of available indices for the following matrix equivalency check
-    const availableIndices = [];
+    const availableIndices: number[] = [];
 
     // for the love of god, this matrix is NOT symmetric. It computes whether each tree branch for A is equivalent to each tree branch for B
     for ( let myIndex = 0; myIndex < size; myIndex++ ) {
