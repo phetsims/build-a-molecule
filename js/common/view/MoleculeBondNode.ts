@@ -1,8 +1,5 @@
 // Copyright 2020-2025, University of Colorado Boulder
 
-/* eslint-disable */
-// @ts-nocheck
-
 /**
  * Contains "bond breaking" nodes for a single molecule, so they can be cut apart with scissors
  *
@@ -24,7 +21,9 @@ import scissorsUp_cur from '../../../images/scissorsUp_cur.js';
 import scissorsUp_png from '../../../images/scissorsUp_png.js';
 import buildAMolecule from '../../buildAMolecule.js';
 import BAMConstants from '../BAMConstants.js';
+import Bond from '../model/Bond.js';
 import Direction from '../model/Direction.js';
+import Kit from '../model/Kit.js';
 
 /* Notes on .cur file generation, all from the images directory, with "sudo apt-get install icoutils" for icotool:
  icotool -c -o scissors.ico scissors.png
@@ -38,7 +37,7 @@ import Direction from '../model/Direction.js';
  ./ico2cur.py scissors-closed-up.ico -x 7 -y 13
  */
 
-const images = {
+const images: Record<string, any> = { // eslint-disable-line @typescript-eslint/no-explicit-any -- Image types from PhET imports
   'scissors.png': scissors_png,
   'scissors-closed.png': scissorsClosed_png,
   'scissors-up.png': scissorsUp_png,
@@ -50,25 +49,27 @@ const images = {
 };
 const bondRadius = 6; // "Radius" of the bond target that will break the bond
 
-class MoleculeBondNode extends Node {
-  /**
-   * @param {Bond} bond
-   * @param {Kit} kit
-   */
-  constructor( bond, kit ) {
+export default class MoleculeBondNode extends Node {
+
+  private readonly a: any; // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when Atom2 is converted, see https://github.com/phetsims/build-a-molecule/issues/245
+  private readonly b: any; // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when Atom2 is converted, see https://github.com/phetsims/build-a-molecule/issues/245
+  private readonly kit: any; // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when Kit is converted, see https://github.com/phetsims/build-a-molecule/issues/245
+
+  // Listener that will update the position of our hit target
+  private readonly positionListener: () => void;
+  private readonly toggleTargetVisibility: ( selectedAtom: any ) => void; // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when Atom2 is converted, see https://github.com/phetsims/build-a-molecule/issues/245
+
+  public constructor( bond: Bond, kit: Kit ) {
     super( {} );
 
-    // @private {Atom2}
     this.a = bond.a;
-
-    // @private {Atom2}
     this.b = bond.b;
-
-    // @private {Kit}
     this.kit = kit;
 
     // Use the lewis dot model to get our bond direction
     const bondDirection = kit.getBondDirection( this.a, this.b );
+
+    // @ts-expect-error
     const isHorizontal = bondDirection === Direction.WEST || bondDirection === Direction.EAST;
 
     // Define images for opened and closed scissors
@@ -127,7 +128,6 @@ class MoleculeBondNode extends Node {
     } ) );
     this.addChild( cutTargetNode );
 
-    // @private {function} Listener that will update the position of our hit target
     this.positionListener = () => {
       const orientation = this.b.positionProperty.value.minus( this.a.positionProperty.value );
       if ( orientation.magnitude > 0 ) {
@@ -137,7 +137,6 @@ class MoleculeBondNode extends Node {
       this.setTranslation( BAMConstants.MODEL_VIEW_TRANSFORM.modelToViewPosition( position ) );
     };
 
-    // @private {function(Atom2)}
     this.toggleTargetVisibility = selectedAtom => {
       cutTargetNode.visible = selectedAtom === this.a || selectedAtom === this.b;
     };
@@ -148,11 +147,7 @@ class MoleculeBondNode extends Node {
     this.b.positionProperty.link( this.positionListener );
   }
 
-  /**
-   * @override
-   * @public
-   */
-  dispose() {
+  public override dispose(): void {
     this.kit.selectedAtomProperty.unlink( this.toggleTargetVisibility );
     this.a.positionProperty.unlink( this.positionListener );
     this.b.positionProperty.unlink( this.positionListener );
@@ -162,4 +157,3 @@ class MoleculeBondNode extends Node {
 }
 
 buildAMolecule.register( 'MoleculeBondNode', MoleculeBondNode );
-export default MoleculeBondNode;

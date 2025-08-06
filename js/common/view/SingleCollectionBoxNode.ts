@@ -1,8 +1,5 @@
 // Copyright 2020-2025, University of Colorado Boulder
 
-/* eslint-disable */
-// @ts-nocheck
-
 /**
  * A panel that shows collection areas for different collections, and allows switching between those collections
  *
@@ -18,14 +15,10 @@ import BuildAMoleculeStrings from '../../BuildAMoleculeStrings.js';
 import BAMConstants from '../BAMConstants.js';
 import CollectionBoxNode from './CollectionBoxNode.js';
 
-class SingleCollectionBoxNode extends CollectionBoxNode {
+export default class SingleCollectionBoxNode extends CollectionBoxNode {
 
-  /**
-   * @param {CollectionBox} box
-   * @param {function} toModelBounds
-   * @param {function} showDialogCallback
-   */
-  constructor( box, toModelBounds, showDialogCallback ) {
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+  public constructor( box: any, toModelBounds: any, showDialogCallback: any ) { // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when CollectionBox is converted, see https://github.com/phetsims/build-a-molecule/issues/245
     super( box, toModelBounds, showDialogCallback );
     assert && assert( box.capacity === 1 );
     this.insertChild( 0, new RichText( StringUtils.fillIn( BuildAMoleculeStrings.collectionSinglePattern, {
@@ -39,4 +32,3 @@ class SingleCollectionBoxNode extends CollectionBoxNode {
 }
 
 buildAMolecule.register( 'SingleCollectionBoxNode', SingleCollectionBoxNode );
-export default SingleCollectionBoxNode;

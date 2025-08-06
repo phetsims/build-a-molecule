@@ -1,8 +1,5 @@
 // Copyright 2020-2025, University of Colorado Boulder
 
-/* eslint-disable */
-// @ts-nocheck
-
 /**
  * Contains the kit background and controls for switching between kits
  *
@@ -11,6 +8,7 @@
  */
 
 import Property from '../../../../axon/js/Property.js';
+import IntentionalAny from '../../../../phet-core/js/types/IntentionalAny.js';
 import Display from '../../../../scenery/js/display/Display.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import Color from '../../../../scenery/js/util/Color.js';
@@ -19,28 +17,28 @@ import PageControl from '../../../../sun/js/PageControl.js';
 import nullSoundPlayer from '../../../../tambo/js/nullSoundPlayer.js';
 import buildAMolecule from '../../buildAMolecule.js';
 import BAMConstants from '../BAMConstants.js';
+import KitCollection from '../model/KitCollection.js';
 import KitNode from './KitNode.js';
 
-class KitPanel extends Node {
-  /**
-   * @param {KitCollection} kitCollection
-   * @param {number} kitNodeWidth
-   * @param {number} kitNodeHeight
-   * @param {MoleculeCollectingScreenView|BAMScreenView} view
-   * @param {boolean} isCollectingView
-   */
-  constructor( kitCollection, kitNodeWidth, kitNodeHeight, view, isCollectingView ) {
+export default class KitPanel extends Node {
+
+  public readonly kitCarousel: Carousel;
+
+  public constructor( kitCollection: KitCollection, kitNodeWidth: number, kitNodeHeight: number, view: IntentionalAny, isCollectingView: boolean ) {
     super();
 
     // Keep track of the KitCollection
     const kitCollectionProperty = new Property( kitCollection );
 
     // create kitNodes and unify their heights
-    const kitNodes = [];
+    const kitNodes: KitNode[] = [];
     kitCollectionProperty.link( kitCollection => {
+      // @ts-expect-error
       kitCollection.kits.forEach( kit => {
 
         kitNodes.push( {
+
+          // @ts-expect-error
           createNode: tandem => {
 
             const kitNode = new KitNode( kit, view );
@@ -60,7 +58,8 @@ class KitPanel extends Node {
       } );
     } );
 
-    // @public {Carousel} Treats each kit as an item in the Carousel.
+    // Treats each kit as an item in the Carousel.
+    // @ts-expect-error
     this.kitCarousel = new Carousel( kitNodes, {
       fill: BAMConstants.KIT_BACKGROUND,
       stroke: BAMConstants.KIT_BORDER,
@@ -76,6 +75,8 @@ class KitPanel extends Node {
 
     // When the page number changes update the current collection.
     this.kitCarousel.pageNumberProperty.link( page => {
+
+      // @ts-expect-error
       kitCollectionProperty.value.currentKitProperty.value = kitCollectionProperty.value.kits[ page ];
     } );
     this.addChild( this.kitCarousel );
@@ -91,14 +92,9 @@ class KitPanel extends Node {
     this.addChild( inputPageControl );
   }
 
-  /**
-   * @public
-   * @override
-   */
-  reset() {
+  public reset(): void {
     this.kitCarousel.reset();
   }
 }
 
 buildAMolecule.register( 'KitPanel', KitPanel );
-export default KitPanel;

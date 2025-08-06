@@ -30,20 +30,15 @@ import ShowMolecule3DButtonNode from './view3d/ShowMolecule3DButtonNode.js';
 const DILATION_FACTOR = 4 / 1.2;
 const SCALE = 1.2;
 
-class MoleculeControlsHBox extends HBox {
+export default class MoleculeControlsHBox extends HBox {
 
-  /**
-   * @param {Kit} kit
-   * @param {Molecule} molecule
-   * @param {function} showDialogCallback
-   */
-  constructor( kit, molecule, showDialogCallback ) {
+  public readonly molecule: any;
+  private readonly updatePositionListener: () => void;
+
+  public constructor( kit: any, molecule: any, showDialogCallback: any ) {
     super( { spacing: 9 } );
 
-    // @public {Molecule}
     this.molecule = molecule;
-
-    // @private {function}
     this.updatePositionListener = this.updatePosition.bind( this );
 
     // Check if molecule data exists
@@ -59,7 +54,7 @@ class MoleculeControlsHBox extends HBox {
       } );
       this.addChild( label );
 
-      // @private Button that shows 3d representation of molecule
+      // Button that shows 3d representation of molecule
       const button3d = new ShowMolecule3DButtonNode( completeMolecule, showDialogCallback, {
         scale: SCALE
       } );
@@ -93,11 +88,7 @@ class MoleculeControlsHBox extends HBox {
     this.updatePosition();
   }
 
-  /**
-   * @override
-   * @public
-   */
-  dispose() {
+  public override dispose(): void {
     const listener = this.updatePositionListener;
     if ( listener ) {
       this.molecule.atoms.forEach( atom => {
@@ -109,10 +100,8 @@ class MoleculeControlsHBox extends HBox {
 
   /**
    * Update the position of the controls.
-   *
-   * @private
    */
-  updatePosition() {
+  private updatePosition(): void {
     const modelPositionBounds = this.molecule.positionBounds;
     const moleculeViewBounds = BAMConstants.MODEL_VIEW_TRANSFORM.modelToViewBounds( modelPositionBounds );
 
@@ -122,4 +111,3 @@ class MoleculeControlsHBox extends HBox {
 }
 
 buildAMolecule.register( 'MoleculeControlsHBox', MoleculeControlsHBox );
-export default MoleculeControlsHBox;

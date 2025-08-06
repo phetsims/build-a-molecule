@@ -1,8 +1,5 @@
 // Copyright 2020-2025, University of Colorado Boulder
 
-/* eslint-disable */
-// @ts-nocheck
-
 /**
  * Button responsible for showing a 3D representation of the molecule.
  *
@@ -19,14 +16,12 @@ import nullSoundPlayer from '../../../../../tambo/js/nullSoundPlayer.js';
 import buildAMolecule from '../../../buildAMolecule.js';
 import BuildAMoleculeStrings from '../../../BuildAMoleculeStrings.js';
 import BAMConstants from '../../BAMConstants.js';
+import CompleteMolecule from '../../model/CompleteMolecule.js';
 
-class ShowMolecule3DButtonNode extends RectangularPushButton {
-  /**
-   * @param {CompleteMolecule} completeMolecule
-   * @param {function} showDialogCallback
-   * @param {Object} [options]
-   */
-  constructor( completeMolecule, showDialogCallback, options ) {
+export default class ShowMolecule3DButtonNode extends RectangularPushButton {
+
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+  public constructor( completeMolecule: CompleteMolecule, showDialogCallback: ( completeMolecule: CompleteMolecule ) => void, options?: any ) { // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when CompleteMolecule is converted, see https://github.com/phetsims/build-a-molecule/issues/245
     const content = new Text( BuildAMoleculeStrings.threeD, {
       font: new PhetFont( {
         size: 12,
@@ -52,4 +47,3 @@ class ShowMolecule3DButtonNode extends RectangularPushButton {
 }
 
 buildAMolecule.register( 'ShowMolecule3DButtonNode', ShowMolecule3DButtonNode );
-export default ShowMolecule3DButtonNode;

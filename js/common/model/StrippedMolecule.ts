@@ -13,26 +13,28 @@
  * @author Denzell Barnett (PhET Interactive Simulations)
  */
 
+import Atom from '../../../../nitroglycerin/js/Atom.js';
 import PhetioObject from '../../../../tandem/js/PhetioObject.js';
 import buildAMolecule from '../../buildAMolecule.js';
 import MoleculeStructure from './MoleculeStructure.js';
 
-class StrippedMolecule extends PhetioObject {
-  /**
-   * @param {MoleculeStructure} original
-   */
-  constructor( original ) {
+export default class StrippedMolecule extends PhetioObject {
+
+  // Array indexed the same way as stripped.atoms for efficiency. It's essentially immutable, so this works
+  private readonly hydrogenCount: number[];
+  public readonly stripped: MoleculeStructure;
+
+  public constructor( original: any ) {
     super();
     const bondsToAdd = [];
 
     // copy non-hydrogens
-    const atomsToAdd = _.filter( original.atoms, atom => {
+    const atomsToAdd = original.atoms.filter( ( atom: any ) => {
       return !atom.isHydrogen();
     } );
 
-    // @private {Array.<number>} Array indexed the same way as stripped.atoms for efficiency. It's essentially immutable, so this works
     this.hydrogenCount = new Array( atomsToAdd.length );
-    this.hydrogenCount = _.range( 0, atomsToAdd.length ).map( () => 0 );
+    this.hydrogenCount = _.range( 0, atomsToAdd.length ).map( () => 0 ); // TODO: this looks buggy https://github.com/phetsims/build-a-molecule/issues/245
 
     // copy non-hydrogen honds, and mark hydrogen bonds
     original.bonds.forEach( bond => {
@@ -53,41 +55,23 @@ class StrippedMolecule extends PhetioObject {
       }
     } );
 
-    // @public {MoleculeStructure} Construct the stripped structure
+    // Construct the stripped structure
     this.stripped = new MoleculeStructure( atomsToAdd.length, bondsToAdd.length );
     atomsToAdd.forEach( this.stripped.addAtom.bind( this.stripped ) );
     bondsToAdd.forEach( this.stripped.addBond.bind( this.stripped ) );
   }
 
-  /**
-   * @param {Atom} atom
-   *
-   * @private
-   * @returns {number}
-   */
-  getIndex( atom ) {
+  private getIndex( atom: Atom2 ): number {
     const index = this.stripped.atoms.indexOf( atom );
     assert && assert( index !== -1 );
     return index;
   }
 
-  /**
-   * @param {Atom2} atom
-   * @private
-   *
-   * @returns {number}
-   */
-  getHydrogenCount( atom ) {
+  private getHydrogenCount( atom: Atom2 ): number {
     return this.hydrogenCount[ this.getIndex( atom ) ];
   }
 
-  /**
-   * @param {StrippedMolecule} other
-   * @public
-   *
-   * @returns {boolean}
-   */
-  isEquivalent( other ) { // I know this isn't used, but it might be useful in the future (comment from before the port, still kept for that reason)
+  public isEquivalent( other: StrippedMolecule ): boolean { // I know this isn't used, but it might be useful in the future (comment from before the port, still kept for that reason)
     if ( this === other ) {
       // same instance
       return true;
@@ -118,13 +102,8 @@ class StrippedMolecule extends PhetioObject {
    *
    * This is useful for checking whether "other" is a valid structure by checking it against
    * stripped structures efficiently.
-   *
-   * @param {StrippedMolecule} other   Other (potential) submolecule
-   * @public
-   *
-   * @returns {boolean} Whether "other" is a hydrogen submolecule of this instance
    */
-  isHydrogenSubmolecule( other ) {
+  public isHydrogenSubmolecule( other: StrippedMolecule ): boolean {
     if ( this === other ) {
       // same instance
       return true;
@@ -148,18 +127,7 @@ class StrippedMolecule extends PhetioObject {
     return false;
   }
 
-  /**
-   * @param {StrippedMolecule} other
-   * @param {Array.<Atom2>} myVisited
-   * @param {Array.<Atom2>} otherVisited
-   * @param {Atom2} myAtom
-   * @param {Atom2} otherAtom
-   * @param {boolean} subCheck
-   * @public
-   *
-   * @returns {boolean}
-   */
-  checkEquivalency( other, myVisited, otherVisited, myAtom, otherAtom, subCheck ) {
+  public checkEquivalency( other: StrippedMolecule, myVisited: Atom2[], otherVisited: Atom2[], myAtom: Atom2, otherAtom: Atom2, subCheck: boolean ): boolean {
     // basically this checks whether two different sub-trees of two different molecules are "equivalent"
 
     /*
@@ -226,13 +194,7 @@ class StrippedMolecule extends PhetioObject {
     return MoleculeStructure.checkEquivalencyMatrix( equivalences, 0, availableIndices, size );
   }
 
-  /**
-   * @param {Atom} atom
-   *
-   * @public
-   * @returns {StrippedMolecule}
-   */
-  getCopyWithAtomRemoved( atom ) {
+  public getCopyWithAtomRemoved( atom: Atom ): StrippedMolecule {
     const result = new StrippedMolecule( this.stripped.getCopyWithAtomRemoved( atom ) );
     result.stripped.atoms.forEach( resultAtom => {
       result.hydrogenCount[ result.getIndex( resultAtom ) ] = this.getHydrogenCount( resultAtom );
@@ -242,4 +204,3 @@ class StrippedMolecule extends PhetioObject {
 }
 
 buildAMolecule.register( 'StrippedMolecule', StrippedMolecule );
-export default StrippedMolecule;

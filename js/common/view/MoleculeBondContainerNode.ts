@@ -1,8 +1,5 @@
 // Copyright 2020-2025, University of Colorado Boulder
 
-/* eslint-disable */
-// @ts-nocheck
-
 /**
  * Contains "bond breaking" nodes for a single molecule, so they can be cut apart with scissors
  *
@@ -12,28 +9,25 @@
 
 import Node from '../../../../scenery/js/nodes/Node.js';
 import buildAMolecule from '../../buildAMolecule.js';
+import Kit from '../model/Kit.js';
+import Molecule from '../model/Molecule.js';
 import MoleculeBondNode from './MoleculeBondNode.js';
 
-class MoleculeBondContainerNode extends Node {
-  /**
-   * @param {Kit} kit
-   * @param {Molecule} molecule
-   */
-  constructor( kit, molecule ) {
+export default class MoleculeBondContainerNode extends Node {
+
+  private readonly bondNodes: MoleculeBondNode[];
+
+  public constructor( kit: Kit, molecule: Molecule ) {
     super();
 
-    // @private {Node}
-    this.bondNodes = molecule.bonds.map( bond => {
+    // @ts-expect-error
+    this.bondNodes = molecule.bonds.map( ( bond: any ) => { // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when Bond is converted, see https://github.com/phetsims/build-a-molecule/issues/245
       return new MoleculeBondNode( bond, kit );
     } );
     this.children = this.bondNodes;
   }
 
-  /**
-   * @public
-   * @override
-   */
-  dispose() {
+  public override dispose(): void {
     this.bondNodes.forEach( bondNode => {
       bondNode.dispose();
     } );
@@ -43,4 +37,3 @@ class MoleculeBondContainerNode extends Node {
 }
 
 buildAMolecule.register( 'MoleculeBondContainerNode', MoleculeBondContainerNode );
-export default MoleculeBondContainerNode;
