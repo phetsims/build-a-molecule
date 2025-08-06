@@ -1,8 +1,5 @@
 // Copyright 2020-2022, University of Colorado Boulder
 
-/* eslint-disable */
-// @ts-nocheck
-
 /**
  * Represents a general molecular structure (without position or instance information).
  *
@@ -18,6 +15,7 @@
 import Atom from '../../../../nitroglycerin/js/Atom.js';
 import ChemUtils from '../../../../nitroglycerin/js/ChemUtils.js';
 import Element from '../../../../nitroglycerin/js/Element.js';
+import IntentionalAny from '../../../../phet-core/js/types/IntentionalAny.js';
 import buildAMolecule from '../../buildAMolecule.js';
 import BAMQueryParameters from '../BAMQueryParameters.js';
 import Bond from './Bond.js';
@@ -26,90 +24,72 @@ import ElementHistogram from './ElementHistogram.js';
 let nextMoleculeId = 0;
 
 class MoleculeStructure {
+
+  // Used for molecule identification and ordering for optimization
+  public readonly moleculeId: number;
+
+  // Atoms in the molecule structure
+  public readonly atoms: Atom[];
+
+  // Bonds in the molecule structure
+  public readonly bonds: Bond[];
+
   // NOTE from porting: StrippedMolecule relies on the ordering of atoms, and possibly bonds for efficiency in checking
   // equivalencies. Also to make sure molecule separation isn't duplicated on the same molecule pair.
-  /**
-   * @param {number} [numAtoms]
-   * @param {number} [numBonds]
-   */
-  constructor( numAtoms, numBonds ) {
-
-    // @public {number}
-    this.moleculeId = nextMoleculeId++; // used for molecule identification and ordering for optimization
-
-    // @public {Array.<Atom>}
+  public constructor( numAtoms?: number, numBonds?: number ) {
+    this.moleculeId = nextMoleculeId++;
     this.atoms = [];
-
-    // @public {Array.<Bond>}
     this.bonds = [];
   }
 
   /**
    * Add an atom to the molecule structure
-   * @param {Atom} atom
-   *
-   * @public
-   * @returns {Atom}
    */
-  addAtom( atom ) {
-    assert && assert( !_.includes( this.atoms, atom ), 'Cannot add an already existing atom' );
+  public addAtom( atom: Atom ): Atom {
+    assert && assert( !this.atoms.includes( atom ), 'Cannot add an already existing atom' );
     this.atoms.push( atom ); // NOTE: don't mess with the order
     return atom;
   }
 
   /**
    * Add a bond to the molecule structure
-   * @param {Bond} bond
-   *
-   * @public
    */
-  addBond( bond ) {
-    assert && assert( _.includes( this.atoms, bond.a ) );
-    assert && assert( _.includes( this.atoms, bond.b ) );
+  public addBond( bond: Bond ): void {
+    assert && assert( this.atoms.includes( bond.a ) );
+    assert && assert( this.atoms.includes( bond.b ) );
     this.bonds.push( bond );
   }
 
   /**
    * Return the bonds connected to a specific atom
-   * @param {Atom} atom
-   *
-   * @private
-   * @returns {Array.<Bond>}
    */
-  getBondsInvolving( atom ) {
+  private getBondsInvolving( atom: Atom ): Bond[] {
     // Note: (performance) optimize out function allocation here?
-    return _.filter( this.bonds, bond => {
+    return this.bonds.filter( bond => {
       return bond.contains( atom );
     } );
   }
 
-  /**
-   * @public
-   *
-   * @returns {string}
-   */
-  getHillSystemFormulaFragment() {
+  public getHillSystemFormulaFragment(): string {
     return ChemUtils.hillOrderedSymbol( this.getElementList() );
   }
 
   /**
    * Our best attempt at getting a general molecular naming algorithm that handles organic and non-organic compounds.
    *
-   * @public
-   *
-   * @returns {string} Text which is the molecular formula
+   *  @returns Text which is the molecular formula
    */
-  getGeneralFormula() {
+  public getGeneralFormula(): string {
     const containsCarbon = this.containsElement( Element.C );
     const containsHydrogen = this.containsElement( Element.H );
 
     const organic = containsCarbon && containsHydrogen;
 
-    const electronegativeSortValue = element => {
+    const electronegativeSortValue = ( element: Element ) => {
       return element.electronegativity;
     };
 
-    const alphabeticSortValue = element => {
+    const alphabeticSortValue = ( element: Element ) => {
       let value = 1000 * element.symbol.charCodeAt( 0 );
       if ( element.symbol.length > 1 ) {
         value += element.symbol.charCodeAt( 1 );
@@ -117,7 +97,7 @@ class MoleculeStructure {
       return value;
     };
 
-    const organicSortValue = element => {
+    const organicSortValue = ( element: Element ) => {
       if ( element.isCarbon() ) {
         return 0;
       }
@@ -140,59 +120,40 @@ class MoleculeStructure {
     const formula = ChemUtils.createSymbolWithoutSubscripts( sortedElements );
 
     // return the formula, unless it is in our exception list (in which case, handle the exception case)
+    // @ts-expect-error
     return MoleculeStructure.formulaExceptions[ formula ] || formula;
   }
-
 
   /**
    * Use the above general molecular formula, but return it with HTML subscripts
    *
-   * @public
-   * @returns {string} Molecular formula with HTML subscripts
+   * @returns Molecular formula with HTML subscripts
    */
-  getGeneralFormulaFragment() {
+  public getGeneralFormulaFragment(): string {
     return ChemUtils.toSubscript( this.getGeneralFormula() );
   }
 
   /**
-   * @param {Atom} atom
-   *
-   * @public
-   * @returns {Atom} All neighboring atoms that are connected by bonds to the passed in atom
+   * All neighboring atoms that are connected by bonds to the passed in atom
    */
-  getNeighbors( atom ) {
-    return _.map( this.getBondsInvolving( atom ), bond => {
+  public getNeighbors( atom: Atom ): Atom[] {
+    return this.getBondsInvolving( atom ).map( bond => {
       return bond.getOtherAtom( atom );
     } );
   }
 
-  /**
-   * @public
-   *
-   * @returns {number}
-   */
-  getApproximateMolecularWeight() {
+  public getApproximateMolecularWeight(): number {
     // sum the atomic weights
-    return _.reduce( this.atoms, ( memo, atom ) => {
+    return this.atoms.reduce( ( memo, atom ) => {
       return memo + atom.atomicWeight;
     }, 0 );
   }
 
-  /**
-   * @public
-   *
-   * @returns {boolean}
-   */
-  isValid() {
+  public isValid(): boolean {
     return !this.hasWeirdHydrogenProperties() && !this.hasLoopsOrIsDisconnected();
   }
 
-  /**
-   * @public
-   *
-   * @returns {boolean}
-   */
-  hasWeirdHydrogenProperties() {
+  public hasWeirdHydrogenProperties(): boolean {
     // check for hydrogens that are bonded to more than 1 atom
     const length = this.atoms.length;
     for ( let i = 0; i < length; i++ ) {
@@ -204,27 +165,22 @@ class MoleculeStructure {
     return false;
   }
 
-  /**
-   * @public
-   *
-   * @returns {boolean}
-   */
-  hasLoopsOrIsDisconnected() {
+  public hasLoopsOrIsDisconnected(): boolean {
     // Note: (performance) consider HashSet, or something that has a fast contains lookup
-    const visitedAtoms = [];
-    const dirtyAtoms = [];
+    const visitedAtoms: Atom[] = [];
+    const dirtyAtoms: Atom[] = [];
 
     // pull one atom out. doesn't matter which one
     dirtyAtoms.push( this.atoms[ 0 ] );
 
     while ( dirtyAtoms.length > 0 ) {
       // while atoms are dirty, pull one out
-      const atom = dirtyAtoms.pop();
+      const atom = dirtyAtoms.pop()!;
 
       // for each neighbor, make 'unvisited' atoms dirty and count 'visited' atoms
       let visitedCount = 0;
       this.getNeighbors( atom ).forEach( otherAtom => {
-        if ( _.includes( visitedAtoms, otherAtom ) ) {
+        if ( visitedAtoms.includes( otherAtom ) ) {
           visitedCount += 1;
         }
         else {
@@ -250,46 +206,30 @@ class MoleculeStructure {
 
   /**
    * Checks if this element is within the molecule structure
-   * @param {Element} element
-   *
-   * @private
-   * @returns {boolean}
    */
-  containsElement( element ) {
-    return _.some( this.atoms, atom => atom.element === element );
+  private containsElement( element: Element ): boolean {
+    return this.atoms.some( atom => atom.element === element );
   }
 
   /**
    * Retrieves bonds between atoms a and b
-   *
-   * @param {Atom} a
-   * @param {Atom} b
-   * @public
-   *
-   * @returns {Bond}
    */
-  getBond( a, b ) {
-    const result = _.find( this.bonds, bond => {
+  public getBond( a: Atom, b: Atom ): Bond {
+    const result = this.bonds.find( bond => {
       return bond.contains( a ) && bond.contains( b );
     } );
     assert && assert( result, 'Could not find bond!' );
-    return result;
+    return result!;
   }
 
-  /**
-   * @public
-   * @returns {ElementHistogram}
-   */
-  getHistogram() {
+  public getHistogram(): ElementHistogram {
     return new ElementHistogram( this );
   }
 
   /**
    * Return a copy of the molecule structure based on its bonds and atoms
-   * @private
-   * @returns {MoleculeStructure}
    */
-  copy() {
+  private copy(): MoleculeStructure {
     const result = new MoleculeStructure( this.atoms.length, this.bonds.length );
     this.atoms.forEach( result.addAtom.bind( result ) );
     this.bonds.forEach( result.addBond.bind( result ) );
@@ -299,12 +239,8 @@ class MoleculeStructure {
 
   /**
    * Return a copy of the molecule structure with a specific atom removed
-   * @param {Atom} atomToRemove
-   *
-   * @public
-   * @returns {MoleculeStructure}
    */
-  getCopyWithAtomRemoved( atomToRemove ) {
+  public getCopyWithAtomRemoved( atomToRemove: Atom ): MoleculeStructure {
     const result = new MoleculeStructure( this.atoms.length - 1, 12 ); // default to 12 bonds, probably more?
     this.atoms.forEach( atom => {
       if ( atom !== atomToRemove ) {
@@ -323,13 +259,11 @@ class MoleculeStructure {
    * Check whether the molecular structure is equivalent to another structure. Not terribly efficient, and will
    * probably fail for cyclic graphs.
    *
+   * @param other - Another molecular structure
    *
-   * @param {MoleculeStructure} other - Another molecular structure
-   * @public
-   *
-   * @returns {boolean} True, if there is an isomorphism between the two molecular structures
+   * @returns True, if there is an isomorphism between the two molecular structures
    */
-  isEquivalent( other ) {
+  public isEquivalent( other: MoleculeStructure ): boolean {
     if ( this === other ) {
       // same instance
       return true;
@@ -344,8 +278,8 @@ class MoleculeStructure {
     }
 
     // Note: (performance) sets instead of arrays here?
-    const myVisited = [];
-    const otherVisited = [];
+    const myVisited: Atom[] = [];
+    const otherVisited: Atom[] = [];
     const firstAtom = this.atoms[ 0 ]; // grab the 1st atom
     const length = other.atoms.length;
     for ( let i = 0; i < length; i++ ) {
@@ -360,30 +294,19 @@ class MoleculeStructure {
   }
 
   /**
-   * @param {Atom} atom
-   * @param {Array.<Atom2>} exclusionSet: A set of atoms that should not be in the return value
-   * @public
+   * @param atom
+   * @param exclusionSet: A set of atoms that should not be in the return value
    *
-   * @returns {Array.<Atom>} All neighboring atoms that are connected by bonds to the passed in atom AND aren't in the exclusionSet
+   * @returns<Atom>} All neighboring atoms that are connected by bonds to the passed in atom AND aren't in the exclusionSet
    */
-  getNeighborsNotInSet( atom, exclusionSet ) {
+  public getNeighborsNotInSet( atom: Atom, exclusionSet: Atom[] ): Atom[] {
     // Note: (performance) hashset with fast lookup?
-    return _.filter( this.getNeighbors( atom ), otherAtom => {
-      return !_.includes( exclusionSet, otherAtom );
+    return this.getNeighbors( atom ).filter( otherAtom => {
+      return !exclusionSet.includes( otherAtom );
     } );
   }
 
-  /**
-   * @param {MoleculeStructure} other
-   * @param {Array.<Atom2>} myVisited
-   * @param {Array.<Atom2>} otherVisited
-   * @param {Atom} myAtom
-   * @param {Atom} otherAtom
-   * @public
-   *
-   * @returns {boolean}
-   */
-  checkEquivalency( other, myVisited, otherVisited, myAtom, otherAtom ) {
+  public checkEquivalency( other: MoleculeStructure, myVisited: Atom[], otherVisited: Atom[], myAtom: Atom, otherAtom: Atom ): boolean {
     // basically this checks whether two different sub-trees of two different molecules are 'equivalent'
 
     // ------- If you change this, also consider the similar code in StrippedMolecule
@@ -411,10 +334,10 @@ class MoleculeStructure {
      equivalency matrix. each entry is basically whether the subtree in the direction of the 'my' atom is
      equivalent to the subtree in the direction of the 'other' atom, for all possible my and other atoms
      */
-    const equivalences = new Array( size * size ); // booleans
+    const equivalences = new Array<boolean>( size * size );
 
     // keep track of available indices for the following matrix equivalency check
-    const availableIndices = [];
+    const availableIndices: number[] = [];
 
     // for the love of god, this matrix is NOT symmetric. It computes whether each tree branch for A is equivalent to each tree branch for B
     for ( let myIndex = 0; myIndex < size; myIndex++ ) {
@@ -436,15 +359,9 @@ class MoleculeStructure {
     return MoleculeStructure.checkEquivalencyMatrix( equivalences, 0, availableIndices, size );
   }
 
-  /**
-   * @public
-   *
-   * @returns {Array.<Element>}
-   */
-  getElementList() {
-
+  public getElementList(): Element[] {
     // return defensive copy. if that is changed, examine all usages
-    return _.map( this.atoms, atom => atom.element );
+    return this.atoms.map( atom => atom.element );
   }
 
   /*---------------------------------------------------------------------------*
@@ -457,11 +374,8 @@ class MoleculeStructure {
    *         bond quantity
    *         for each atom, it's symbol
    *         for each bond, two zero-indexed indices of atoms above
-   * @private
-   *
-   * @returns [string]
    */
-  toSerial() {
+  private toSerial(): string {
     let ret = `${this.atoms.length}|${this.bonds.length}`;
     this.atoms.forEach( atom => {
       ret += `|${atom.symbol}`;
@@ -482,11 +396,8 @@ class MoleculeStructure {
    * atomBondSpec = atomSpec(,bondSpec)*
    * atomSpec --- determined by implementation of atom. does not contain '|' or ','
    * bondSpec --- determined by implementation of bond. does not contain '|' or ','
-   * @public
-   *
-   * @returns
    */
-  toSerial2() {
+  public toSerial2(): string {
     let result = '';
 
     // serializing and the following builder appends are not a performance bottleneck. they are left in a more readable form
@@ -495,6 +406,8 @@ class MoleculeStructure {
     for ( let i = 0; i < this.atoms.length; i++ ) {
       const atom = this.atoms[ i ];
       result += `|${atom.toString()}`;
+
+      // eslint-disable-next-line @typescript-eslint/no-loop-func
       this.bonds.forEach( bond => {
         if ( bond.contains( atom ) ) {
           const otherAtom = bond.getOtherAtom( atom );
@@ -511,16 +424,15 @@ class MoleculeStructure {
   /**
    * Combines molecules together by bonding their atoms A and B
    *
-   * @param {MoleculeStructure} molA   Molecule A
-   * @param {MoleculeStructure} molB   Molecule B
-   * @param {Atom}              a      Atom A
-   * @param {Atom}              b      Atom B
-   * @param {MoleculeStructure} result An empty molecule to fill
+   * @param molA   Molecule A
+   * @param molB   Molecule B
+   * @param              a      Atom A
+   * @param              b      Atom B
+   * @param result An empty molecule to fill
    *
-   * @public
-   * @returns {MoleculeStructure} A completely new molecule with all atoms in A and B, where atom A is joined to atom B
+   * @returns A completely new molecule with all atoms in A and B, where atom A is joined to atom B
    */
-  static getCombinedMoleculeFromBond( molA, molB, a, b, result ) {
+  public static getCombinedMoleculeFromBond( molA: MoleculeStructure, molB: MoleculeStructure, a: Atom, b: Atom, result: MoleculeStructure ): MoleculeStructure {
     molA.atoms.forEach( atom => {
       result.addAtom( atom );
     } );
@@ -539,15 +451,14 @@ class MoleculeStructure {
 
   /**
    * Split a bond in a molecule, and return the remaining molecule structure(s)
-   * @param {MoleculeStructure} structure The molecule
-   * @param {Bond}              bond      The bond to break
-   * @param {MoleculeStructure} molA      An empty molecule for the 1st broken part
-   * @param {MoleculeStructure} molB      An empty molecule for the 2nd broken part
+   * @param structure The molecule
+   * @param              bond      The bond to break
+   * @param molA      An empty molecule for the 1st broken part
+   * @param molB      An empty molecule for the 2nd broken part
    *
-   * @public
-   * @returns {Array.<MoleculeStructure>}   A list of remaining structures
+   * @returns<MoleculeStructure>}   A list of remaining structures
    */
-  static getMoleculesFromBrokenBond( structure, bond, molA, molB ) {
+  public static getMoleculesFromBrokenBond( structure: MoleculeStructure, bond: Bond, molA: MoleculeStructure, molB: MoleculeStructure ): MoleculeStructure[] {
     // NOTE: in the future when we have loops, we can't assume that this will break a molecule into two separate molecules!
 
     /*---------------------------------------------------------------------------*
@@ -571,7 +482,10 @@ class MoleculeStructure {
 
       // for all neighbors that don't use our 'bond'
       structure.bonds.forEach( otherBond => {
+        // @ts-expect-error
         if ( otherBond !== bond && otherBond.contains( atom ) ) {
+
+          // @ts-expect-error
           const neighbor = otherBond.getOtherAtom( atom );
 
           // pick out our neighbor, mark it as in 'A', and mark it as dirty so we can process its neighbors
@@ -591,7 +505,7 @@ class MoleculeStructure {
      *----------------------------------------------------------------------------*/
 
     structure.atoms.forEach( atom => {
-      if ( _.includes( atomsInA, atom ) ) {
+      if ( atomsInA.includes( atom ) ) {
         molA.addAtom( atom );
       }
       else {
@@ -626,15 +540,14 @@ class MoleculeStructure {
    *
    * NOTE: equivalency matrices are stored in row-major format (compared to the Java version)
    *
-   * @param {Array.<boolean>} equivalences          Equivalence Matrix, square!, row-major (stored as one boolean array)
-   * @param {number}          myIndex               Index for the row (index into our atoms). calls with myIndex + 1 to children
-   * @param {Array.<number>}  otherRemainingIndices Remaining available 'other' indices
-   * @param {number}          size                  This square matrix is size x size in dimensions
+   * @param equivalences          Equivalence Matrix, square!, row-major (stored as one boolean array)
+   * @param myIndex               Index for the row (index into our atoms). calls with myIndex + 1 to children
+   * @param otherRemainingIndices Remaining available 'other' indices
+   * @param size                  This square matrix is size x size in dimensions
    *
-   * @public
-   * @returns {boolean} Whether a successful matching permutation was found
+   * @returns Whether a successful matching permutation was found
    */
-  static checkEquivalencyMatrix( equivalences, myIndex, otherRemainingIndices, size ) {
+  public static checkEquivalencyMatrix( equivalences: boolean[], myIndex: number, otherRemainingIndices: number[], size: number ): boolean {
     // var size = Math.sqrt( equivalences.length ); // it's square, so this technically works
     // Note: (performance) this should leak memory in un-fun ways, and performance complexity should be sped up
 
@@ -664,15 +577,14 @@ class MoleculeStructure {
 
   /**
    * Deserialize a molecule structure
-   * @param {string}            line              The data (string) to deserialize
-   * @param {MoleculeGenerator} moleculeGenerator function( atomCount, bondCount ):MoleculeStructure. Creates a molecule with properties that we can fill with atoms/bonds
-   * @param {AtomParser}        atomParser        function( atomString ):Atom. Creates an atom from a string representing an atom
-   * @param {BondParser}        bondParser        function( bondString, connectedAtom, moleculeStructure ):Bond. Creates a bond from a string representing a bond
+   * @param            line              The data (string) to deserialize
+   * @param moleculeGenerator function( atomCount, bondCount ):MoleculeStructure. Creates a molecule with properties that we can fill with atoms/bonds
+   * @param        atomParser        function( atomString ):Atom. Creates an atom from a string representing an atom
+   * @param        bondParser        function( bondString, connectedAtom, moleculeStructure ):Bond. Creates a bond from a string representing a bond
    *
-   * @public
-   * @returns {MoleculeStructure} A constructed molecule
+   * @returns A constructed molecule
    */
-  static fromSerial2( line, moleculeGenerator, atomParser, bondParser ) {
+  public static fromSerial2( line: string, moleculeGenerator: ( atomCount: number, bondCount: number ) => MoleculeStructure, atomParser: ( atomString: string ) => Atom, bondParser: ( bondString: string, connectedAtom: Atom, moleculeStructure: MoleculeStructure ) => Bond ): MoleculeStructure {
     const tokens = line.split( '|' );
     let idx = 0;
     const atomCount = Number( tokens[ idx++ ] );
@@ -693,54 +605,28 @@ class MoleculeStructure {
   }
 
   /**
-   * @param {string} line - The data (string) to deserialize
-   *
-   * @public
-   * @returns {MoleculeStructure}
+   * @param line - The data (string) to deserialize
    */
-  static fromSerial2Basic( line ) {
+  public static fromSerial2Basic( line: string ): MoleculeStructure {
     // assumes atom base class (just symbol) and simple bonds (just connectivity)
     return MoleculeStructure.fromSerial2( line, MoleculeStructure.defaultMoleculeGenerator, MoleculeStructure.defaultAtomParser, MoleculeStructure.defaultBondParser );
   }
 
-  /**
-   * @param {number} atomCount
-   * @param {number} bondCount
-   *
-   * @private
-   * @returns {MoleculeStructure}
-   */
-  static defaultMoleculeGenerator( atomCount, bondCount ) {
+  private static defaultMoleculeGenerator( atomCount: number, bondCount: number ): MoleculeStructure {
     return new MoleculeStructure( atomCount, bondCount );
   }
 
-  /**
-   * @param {string} atomString
-   *
-   * @private
-   * @returns {Atom}
-   */
-  static defaultAtomParser( atomString ) {
-
+  private static defaultAtomParser( atomString: string ): Atom {
     // atomString is an element symbol
     return new Atom( Element.getElementBySymbol( atomString ) );
   }
 
-  /**
-   * @param {string} bondString
-   * @param {Atom} connectedAtom
-   * @param {MoleculeStructure} moleculeStructure
-   *
-   * @private
-   * @returns {Bond}
-   */
-  static defaultBondParser( bondString, connectedAtom, moleculeStructure ) {
+  private static defaultBondParser( bondString: string, connectedAtom: Atom, moleculeStructure: MoleculeStructure ): Bond {
     // bondString is index of other atom to bond
     return new Bond( connectedAtom, moleculeStructure.atoms[ Number( bondString ) ] );
   }
 
-  // @private {Object}
-  static formulaExceptions() {
+  public static formulaExceptions(): IntentionalAny {
     return {
       H3N: 'NH3', // treated as if it is organic
       CHN: 'HCN'  // not considered organic

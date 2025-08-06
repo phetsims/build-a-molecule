@@ -20,7 +20,6 @@ export default class MoleculeBondContainerNode extends Node {
   public constructor( kit: Kit, molecule: Molecule ) {
     super();
 
-    // @ts-expect-error
     this.bondNodes = molecule.bonds.map( ( bond: any ) => { // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when Bond is converted, see https://github.com/phetsims/build-a-molecule/issues/245
       return new MoleculeBondNode( bond, kit );
     } );

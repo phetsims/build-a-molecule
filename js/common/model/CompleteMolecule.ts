@@ -271,7 +271,7 @@ class CompleteMolecule extends MoleculeStructure {
   /**
    * @param line
    */
-  public static override fromSerial2( line: string ): CompleteMolecule {
+  public static override fromSerial2( line: string ): MoleculeStructure {
     /*---------------------------------------------------------------------------*
      * extract header
      *----------------------------------------------------------------------------*/
