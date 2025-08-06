@@ -1,7 +1,5 @@
 // Copyright 2020-2021, University of Colorado Boulder
 
-/* eslint-disable */
-// @ts-nocheck
 
 /**
  * Histogram of each element in a molecule, and allows fast comparison
@@ -10,18 +8,21 @@
  * @author Denzell Barnett (PhET Interactive Simulations)
  */
 
+import Element from '../../../../nitroglycerin/js/Element.js';
 import PhetioObject from '../../../../tandem/js/PhetioObject.js';
 import buildAMolecule from '../../buildAMolecule.js';
 import BAMConstants from '../BAMConstants.js';
 
 class ElementHistogram extends PhetioObject {
+
+  private readonly quantities: Record<string, number>;
+
   /**
-   * @param {MoleculeStructure} moleculeStructure
+   * @param moleculeStructure
    */
-  constructor( moleculeStructure ) {
+  public constructor( moleculeStructure: any ) { // eslint-disable-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types -- TODO: Fix when MoleculeStructure is converted, see https://github.com/phetsims/build-a-molecule/issues/245
     super();
 
-    // @private {Object.<element.symbol:string, quantity:number>}
     this.quantities = {};
     BAMConstants.SUPPORTED_ELEMENTS.forEach( element => {
       this.quantities[ element.symbol ] = 0;
@@ -32,44 +33,33 @@ class ElementHistogram extends PhetioObject {
 
   /**
    * Returns the amount of a specific element
-   * @param {Element} element
-   *
-   * @public
-   * @returns {number}
+   * @param element
    */
-  getQuantity( element ) {
+  public getQuantity( element: Element ): number {
     return this.quantities[ element.symbol ];
   }
 
   /**
-   * @param {Element} element
-   * @public
-   *
-   * @returns {number}
+   * @param element
    */
-  addElement( element ) {
+  public addElement( element: Element ): void {
     this.quantities[ element.symbol ] += 1;
   }
 
   /**
    * Adds elements from molecule
-   * @param {MoleculeStructure} molecule
-   *
-   * @public
+   * @param molecule
    */
-  addMolecule( molecule ) {
-    molecule.atoms.forEach( atom => {
+  public addMolecule( molecule: any ): void { // eslint-disable-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types -- TODO: Fix when MoleculeStructure is converted, see https://github.com/phetsims/build-a-molecule/issues/245
+    molecule.atoms.forEach( ( atom: any ) => { // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when MoleculeStructure is converted, see https://github.com/phetsims/build-a-molecule/issues/245
       this.addElement( atom.element );
     } );
   }
 
   /**
    * A hash string that should be unique for each unique histogram, and the same for each equivalent histogram
-   *
-   * @public
-   * @returns {string}
    */
-  getHashString() {
+  public getHashString(): string {
     let hashString = '';
 
     BAMConstants.SUPPORTED_ELEMENTS.forEach( element => {
@@ -80,12 +70,9 @@ class ElementHistogram extends PhetioObject {
 
   /**
    * Compares elements of each histogram
-   * @param {ElementHistogram} otherHistogram
-   *
-   * @public
-   * @returns {boolean}
+   * @param otherHistogram
    */
-  equals( otherHistogram ) {
+  public equals( otherHistogram: ElementHistogram ): boolean {
     if ( otherHistogram instanceof ElementHistogram ) {
       const length = BAMConstants.SUPPORTED_ELEMENTS.length;
       for ( let i = 0; i < length; i++ ) {

@@ -1,7 +1,5 @@
 // Copyright 2020-2021, University of Colorado Boulder
 
-/* eslint-disable */
-// @ts-nocheck
 
 /**
  * Contains layout information relevant to where the kits are placed, where molecules can exist in the play area, etc.
@@ -18,12 +16,19 @@ import BAMConstants from '../BAMConstants.js';
 const KIT_HEIGHT = 550;
 
 class CollectionLayout {
+
+  // Refers to the bucket region
+  public readonly availableKitBounds: Bounds2;
+
+  // Refers to the play area above the bucket region, where molecules can be built, broken, and moved
+  public readonly availablePlayAreaBounds: Bounds2;
+
   /**
    * Construct the necessary layout
    *
-   * @param {boolean} hasCollectionPanel - flag used to scale available bounds width to compensate for collection panel
+   * @param hasCollectionPanel - flag used to scale available bounds width to compensate for collection panel
    */
-  constructor( hasCollectionPanel ) {
+  public constructor( hasCollectionPanel: boolean ) {
 
     // Dimensions of the layout
     const availableWidth = BAMConstants.MODEL_SIZE.width - 2 * BAMConstants.MODEL_PADDING; // minus padding
@@ -34,10 +39,8 @@ class CollectionLayout {
     // scale width to leave room for the collection panel
     const kitAvailableWidth = hasCollectionPanel ? 0.75 : 1;
 
-    // @public {Bounds2} Refers to the bucket region
     this.availableKitBounds = Bounds2.rect( -halfWidth, kitBottom, availableWidth * kitAvailableWidth, KIT_HEIGHT );
 
-    // @public {Bounds2} Refers to the play area above the bucket region, where molecules can be built, broken, and moved
     this.availablePlayAreaBounds = Bounds2.rect(
       -BAMConstants.MODEL_SIZE.width / 2, // far left part of model
       kitTop, // top of kit

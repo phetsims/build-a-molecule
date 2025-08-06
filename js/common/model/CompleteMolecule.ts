@@ -1,7 +1,5 @@
 // Copyright 2020-2025, University of Colorado Boulder
 
-/* eslint-disable */
-// @ts-nocheck
 
 /**
  * Represents a complete (stable) molecule with a name and structure. Includes 2d and 3d representations,
@@ -95,43 +93,47 @@ const nodeTypes = [
 ];
 
 class CompleteMolecule extends MoleculeStructure {
+
+  // as said by pubchem (or overridden)
+  public readonly commonName: string;
+
+  public cid: number;
+
+  // as said by pubchem
+  private readonly molecularFormula: string;
+
+  private readonly has2d: boolean;
+
+  private readonly has3d: boolean;
+
   /**
-   * @param {string} commonName
-   * @param {string} molecularFormula
-   * @param {number} atomCount
-   * @param {number} bondCount
-   * @param {boolean} has2d
-   * @param {boolean} has3d
+   * @param commonName
+   * @param molecularFormula
+   * @param atomCount
+   * @param bondCount
+   * @param has2d
+   * @param has3d
    */
-  constructor( commonName, molecularFormula, atomCount, bondCount, has2d, has3d ) {
+  public constructor( commonName: string, molecularFormula: string, atomCount: number, bondCount: number, has2d: boolean, has3d: boolean ) {
     super( atomCount, bondCount );
 
-    // @public {string} as said by pubchem (or overridden)
     this.commonName = commonName;
 
-    // @public {number}
     this.cid = 0;
 
-    // @private {string} as said by pubchem
     this.molecularFormula = molecularFormula;
 
-    // @private {boolean}
     this.has2d = has2d;
 
-    // @private {boolean}
     this.has3d = has3d;
-
   }
 
   /**
    * Strip out the 'molecular ' part of the string and process the result.
-   *
-   * @public
-   * @returns {string}
    */
-  filterCommonName() {
+  public filterCommonName(): string {
     let result = this.commonName;
-    if ( result.indexOf( 'molecular ' ) === 0 ) {
+    if ( result.startsWith( 'molecular ' ) ) {
       result = result.slice( 'molecular '.length );
     }
     return CompleteMolecule.capitalize( result );
@@ -140,13 +142,12 @@ class CompleteMolecule extends MoleculeStructure {
   /**
    * A translated display name if possible. This does a weird lookup so that we can only list some of the names in the
    * translation, but can accept an even larger number of translated names in a translation file
-   * @public
-   *
-   * @returns
    */
-  getDisplayName() {
+  public getDisplayName(): string {
     // first check if we have the name translated. Do NOT warn on missing
-    const translatableCommonName = TRANSLATABLE_MOLECULE_NAMES[ _.camelCase( this.commonName ) ];
+    // Convert to camelCase manually (replacing lodash _.camelCase)
+    const camelCaseName = this.commonName.toLowerCase().replace( /[^a-zA-Z0-9]+(.)/g, ( match, chr ) => chr.toUpperCase() );
+    const translatableCommonName = ( TRANSLATABLE_MOLECULE_NAMES as any )[ camelCaseName ]; // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when string translations are properly typed, see https://github.com/phetsims/build-a-molecule/issues/245
     if ( translatableCommonName ) {
       return translatableCommonName;
     }
@@ -158,11 +159,8 @@ class CompleteMolecule extends MoleculeStructure {
 
   /**
    * A node that represents a 2d but quasi-3D version
-   *
-   * @public
-   * @returns {Node}
    */
-  createPseudo3DNode() {
+  public createPseudo3DNode(): Node {
     const molecularFormula = this.molecularFormula;
     const molecularFormulaType = `${molecularFormula}Node`;
 
@@ -176,9 +174,7 @@ class CompleteMolecule extends MoleculeStructure {
     }
 
     // otherwise, use our 2d positions to construct a version. we get the correct back-to-front rendering
-    const wrappers = _.sortBy( this.atoms, atom => {
-      return atom.z3d;
-    } );
+    const wrappers = ( ( this as any ).atoms as PubChemAtom[] ).sort( ( a, b ) => a.z3d - b.z3d ); // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when MoleculeStructure is converted, see https://github.com/phetsims/build-a-molecule/issues/245
     return new Node( {
       children: wrappers.map( atomWrapper => {
         return new AtomNode( atomWrapper.element, {
@@ -193,11 +189,8 @@ class CompleteMolecule extends MoleculeStructure {
 
   /**
    * Returns serialized form of complete molecule data
-   *
-   * @public
-   * @returns {string}
    */
-  toSerial2() {
+  public override toSerial2(): string {
     // add in a header
     const format = ( this.has3d ? ( this.has2d ? 'full' : '3d' ) : '2d' );
     return `${this.commonName}|${this.molecularFormula}|${this.cid}|${format}|${super.toSerial2.call( this )}`;
@@ -205,12 +198,9 @@ class CompleteMolecule extends MoleculeStructure {
 
 
   /**
-   * @
-   * @param {string} str
-   *
-   * @private
+   * @param str
    */
-  static capitalize( str ) {
+  private static capitalize( str: string ): string {
     const characters = str.split( '' );
     let lastWasSpace = true;
     for ( let i = 0; i < characters.length; i++ ) {
@@ -237,13 +227,11 @@ class CompleteMolecule extends MoleculeStructure {
   /**
    * Construct a molecule out of a pipe-separated line.
    * WARNING: this always writes out in a "full" configuration, even if the data wasn't contained before
-   * @param {string} line A string that is essentially a serialized molecule
-   *
-   * @public
-   * @returns {CompleteMolecule} that is properly constructed
+   * @param line A string that is essentially a serialized molecule
+   * @returns that is properly constructed
    */
-  static fromString( line ) {
-    let i;
+  public static fromString( line: string ): CompleteMolecule {
+    let i: number;
     const tokens = line.split( '|' );
     let idx = 0;
     const commonName = tokens[ idx++ ];
@@ -260,7 +248,7 @@ class CompleteMolecule extends MoleculeStructure {
       const x3d = parseFloat( tokens[ idx++ ] );
       const y3d = parseFloat( tokens[ idx++ ] );
       const z3d = parseFloat( tokens[ idx++ ] );
-      const atom = new PubChemAtom( Element.getElementBySymbol( symbol ), x2d, y2d, x3d, y3d, z3d );
+      const atom = new PubChemAtom( Element.getElementBySymbol( symbol ), ( PubChemAtomType as any ).FULL, x2d, y2d, x3d, y3d, z3d ); // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when EnumerationDeprecated is converted, see https://github.com/phetsims/build-a-molecule/issues/245
       completeMolecule.addAtom( atom );
     }
 
@@ -269,7 +257,7 @@ class CompleteMolecule extends MoleculeStructure {
       const a = Number( tokens[ idx++ ] );
       const b = Number( tokens[ idx++ ] );
       const order = Number( tokens[ idx++ ] );
-      const bond = new PubChemBond( completeMolecule.atoms[ a - 1 ], completeMolecule.atoms[ b - 1 ], order ); // -1 since our format is 1-based
+      const bond = new PubChemBond( ( completeMolecule as any ).atoms[ a - 1 ] as PubChemAtom, ( completeMolecule as any ).atoms[ b - 1 ] as PubChemAtom, order ); // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when MoleculeStructure is converted, see https://github.com/phetsims/build-a-molecule/issues/245
       completeMolecule.addBond( bond );
     }
 
@@ -281,12 +269,9 @@ class CompleteMolecule extends MoleculeStructure {
 
 
   /**
-   * @param {string} line
-   *
-   * @public
-   * @returns {MoleculeStructure}
+   * @param line
    */
-  static fromSerial2( line ) {
+  public static override fromSerial2( line: string ): CompleteMolecule {
     /*---------------------------------------------------------------------------*
      * extract header
      *----------------------------------------------------------------------------*/
@@ -306,7 +291,7 @@ class CompleteMolecule extends MoleculeStructure {
     // select the atom parser depending on the format
     const atomParser = has3d ? ( has2dAnd3d ? PubChemAtom.parseFull : PubChemAtom.parse3d ) : PubChemAtom.parse2d;
 
-    return MoleculeStructure.fromSerial2( line.slice( burnedLength ), ( atomCount, bondCount ) => {
+    return MoleculeStructure.fromSerial2( line.slice( burnedLength ), ( atomCount: number, bondCount: number ) => {
       const molecule = new CompleteMolecule( commonName, molecularFormula, atomCount, bondCount, has2d, has3d );
       molecule.cid = cid;
       return molecule;
@@ -318,17 +303,24 @@ class CompleteMolecule extends MoleculeStructure {
 const PubChemAtomType = EnumerationDeprecated.byKeys( [ 'TWO_DIMENSION', 'THREE_DIMENSION', 'FULL' ] );
 
 class PubChemAtom extends Atom {
-  constructor( element, type, x2d, y2d, x3d, y3d, z3d ) {
+
+  public readonly type: any; // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when EnumerationDeprecated is converted, see https://github.com/phetsims/build-a-molecule/issues/245
+
+  public readonly x2d: number;
+  public readonly y2d: number;
+
+  public readonly x3d: number;
+  public readonly y3d: number;
+  public readonly z3d: number;
+
+  public constructor( element: Element, type: any, x2d: number, y2d: number, x3d: number, y3d: number, z3d: number ) { // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when EnumerationDeprecated is converted, see https://github.com/phetsims/build-a-molecule/issues/245
     super( element );
 
-    // @public {PubChemAtom}
     this.type = type;
 
-    // @private {number}
     this.x2d = x2d;
     this.y2d = y2d;
 
-    // @public {number}
     this.x3d = x3d;
     this.y3d = y3d;
     this.z3d = z3d;
@@ -336,19 +328,15 @@ class PubChemAtom extends Atom {
 
   /**
    * Stringify the structure of the atom.
-   *
-   * @public
-   * @override
-   * @returns {string}
    */
-  static toString() {
-    if ( this.type === PubChemAtomType.TWO_DIMENSION ) {
+  public override toString(): string {
+    if ( this.type === ( PubChemAtomType as any ).TWO_DIMENSION ) { // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when EnumerationDeprecated is converted, see https://github.com/phetsims/build-a-molecule/issues/245
       return `${super.toString()} ${this.x2d} ${this.y2d}`;
     }
-    else if ( this.type === PubChemAtomType.THREE_DIMENSION ) {
+    else if ( this.type === ( PubChemAtomType as any ).THREE_DIMENSION ) { // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when EnumerationDeprecated is converted, see https://github.com/phetsims/build-a-molecule/issues/245
       return `${super.toString()} ${this.x3d} ${this.y3d} ${this.z3d}`;
     }
-    else if ( this.type === PubChemAtomType.FULL ) {
+    else if ( this.type === ( PubChemAtomType as any ).FULL ) { // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when EnumerationDeprecated is converted, see https://github.com/phetsims/build-a-molecule/issues/245
       return `${super.toString()} ${this.x2d} ${this.y2d} ${this.x3d} ${this.y3d} ${this.z3d}`;
     }
     else {
@@ -358,43 +346,34 @@ class PubChemAtom extends Atom {
 
   /**
    * Parser for PubChemAtom with only 2d data
-   * @param {string} atomString
-   *
-   * @private
-   * @returns {PubChemAtom}
+   * @param atomString
    */
-  static parse2d( atomString ) {
+  public static parse2d( atomString: string ): PubChemAtom {
     const tokens = atomString.split( ' ' );
     const element = Element.getElementBySymbol( tokens[ 0 ] );
     const x2d = parseFloat( tokens[ 1 ] );
     const y2d = parseFloat( tokens[ 2 ] );
-    return new PubChemAtom( element, PubChemAtomType.TWO_DIMENSION, x2d, y2d, x2d - OFFSET, y2d, 0 );
+    return new PubChemAtom( element, ( PubChemAtomType as any ).TWO_DIMENSION, x2d, y2d, x2d - OFFSET, y2d, 0 ); // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when EnumerationDeprecated is converted, see https://github.com/phetsims/build-a-molecule/issues/245
   }
 
   /**
    * Parser for PubChemAtom with only 3d data
-   * @param {string} atomString
-   *
-   * @private
-   * @returns {PubChemAtom}
+   * @param atomString
    */
-  static parse3d( atomString ) {
+  public static parse3d( atomString: string ): PubChemAtom {
     const tokens = atomString.split( ' ' );
     const element = Element.getElementBySymbol( tokens[ 0 ] );
     const x3d = parseFloat( tokens[ 1 ] );
     const y3d = parseFloat( tokens[ 2 ] );
     const z3d = parseFloat( tokens[ 3 ] );
-    return new PubChemAtom( element, PubChemAtomType.THREE_DIMENSION, 0, 0, x3d, y3d, z3d );
+    return new PubChemAtom( element, ( PubChemAtomType as any ).THREE_DIMENSION, 0, 0, x3d, y3d, z3d ); // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when EnumerationDeprecated is converted, see https://github.com/phetsims/build-a-molecule/issues/245
   }
 
   /**
    * Parser for PubChemAtom with 2d and 3d data
-   * @param {string} atomString
-   *
-   * @private
-   * @returns {PubChemAtom}
+   * @param atomString
    */
-  static parseFull( atomString ) {
+  public static parseFull( atomString: string ): PubChemAtom {
     const tokens = atomString.split( ' ' );
     const element = Element.getElementBySymbol( tokens[ 0 ] );
     const x2d = parseFloat( tokens[ 1 ] );
@@ -402,54 +381,49 @@ class PubChemAtom extends Atom {
     const x3d = parseFloat( tokens[ 3 ] );
     const y3d = parseFloat( tokens[ 4 ] );
     const z3d = parseFloat( tokens[ 5 ] );
-    return new PubChemAtom( element, PubChemAtomType.FULL, x2d, y2d, x3d, y3d, z3d );
+    return new PubChemAtom( element, ( PubChemAtomType as any ).FULL, x2d, y2d, x3d, y3d, z3d ); // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when EnumerationDeprecated is converted, see https://github.com/phetsims/build-a-molecule/issues/245
   }
 }
 
 // Signature for bonds, where a and b are PubChemAtoms of some type
 class PubChemBond extends Bond {
+
+  private readonly order: number;
+
   /**
-   * @param {PubChemAtom*} a
-   * @param {PubChemAtoms*} b
-   * @param {number} order
+   * @param a
+   * @param b
+   * @param order
    */
-  constructor( a, b, order ) {
+  public constructor( a: PubChemAtom, b: PubChemAtom, order: number ) {
     super( a, b );
 
-    // @private {number}
     this.order = order;
   }
 
   /**
    * Returns serialized form of bond data including the bond order
-   * @param {number} index - Index of bond within molecule
-   *
-   * @public
-   * @override
-   * @returns {string}
+   * @param index - Index of bond within molecule
    */
-  toSerial2( index ) {
+  public override toSerial2( index: number ): string {
     return `${index}-${this.order}`;
   }
 
   /**
    * Parser for PubChemBond
-   * @param {string} bondString
-   * @param {Atom} connectedAtom
-   * @param {Molecule} molecule
-   *
-   * @public
-   * @returns {PubChemBond}
+   * @param bondString
+   * @param connectedAtom
+   * @param molecule
    */
-  static parse( bondString, connectedAtom, molecule ) {
+  public static parse( bondString: string, connectedAtom: Atom, molecule: any ): PubChemBond { // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when MoleculeStructure is converted, see https://github.com/phetsims/build-a-molecule/issues/245
     const tokens = bondString.split( '-' );
     const index = Number( tokens[ 0 ] );
     const order = Number( tokens[ 1 ] );
-    return new PubChemBond( connectedAtom, molecule.atoms[ index ], order );
+    return new PubChemBond( connectedAtom as PubChemAtom, molecule.atoms[ index ], order );
   }
 }
 
-CompleteMolecule.PubChemBond = PubChemBond;
+// CompleteMolecule.PubChemBond = PubChemBond; // TODO: Add proper static type assignment when TypeScript supports it better, see https://github.com/phetsims/build-a-molecule/issues/245
 
 buildAMolecule.register( 'CompleteMolecule', CompleteMolecule );
 export default CompleteMolecule;

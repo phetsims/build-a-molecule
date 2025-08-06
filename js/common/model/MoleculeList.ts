@@ -3,6 +3,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
+
 /**
  * Has functions relating to lists of molecules (e.g. is a molecule or submolecule allowed?) Uses static initialization to load in a small fraction
  * of molecules from collection-molecules.txt, and then in a separate thread loads the rest of the molecules + the allowed structures. The 1st
@@ -21,24 +22,29 @@ import MoleculeStructure from './MoleculeStructure.js';
 import StrippedMolecule from './StrippedMolecule.js';
 
 class MoleculeList {
-  constructor() {
 
-    // @public {Array.<CompleteMolecule>}
+  public readonly completeMolecules: CompleteMolecule[];
+
+  // Unique name => complete molecule
+  private readonly moleculeNameMap: Record<string, CompleteMolecule>;
+
+  // Formula => allowed stripped molecules (array)
+  private readonly allowedStructureFormulaMap: Record<string, StrippedMolecule[]>;
+
+  public constructor() {
+
     this.completeMolecules = [];
 
-    // @private {Object.<name:string, CompleteMolecule>} Unique name => complete molecule
     this.moleculeNameMap = {};
 
-    // @private {Object.<spot:string, Array.<StrippedMolecule>} Formula => allowed stripped molecules (array)
     this.allowedStructureFormulaMap = {};
   }
 
 
   /**
    * Load in the initial list of complete molecules for the collection boxes (collectionMoleculesData)
-   * @private
    */
-  loadInitialData() {
+  private loadInitialData(): void {
     const startTime = Date.now();
     const mainMolecules = MoleculeList.readCompleteMoleculesFromData( collectionMoleculesData );
     mainMolecules.forEach( this.addCompleteMolecule.bind( this ) );
@@ -47,9 +53,8 @@ class MoleculeList {
 
   /**
    * Load a list of all the remaining complete molecules (otherMoleculesData)
-   * @private
    */
-  loadMainData() {
+  private loadMainData(): void {
     const startTime = Date.now();
     // load in our collection molecules first
     MoleculeList.initialList.getAllCompleteMolecules().forEach( this.addCompleteMolecule.bind( this ) );
@@ -75,12 +80,10 @@ class MoleculeList {
   /**
    * Check whether this structure is allowed. Currently this means it is a "sub-molecule" of one of our complete
    * molecules
-   * @param {MoleculeStructure} moleculeStructure
-   *
-   * @public
-   * @returns {boolean} True if it is allowed
+   * @param moleculeStructure
+   * @returns True if it is allowed
    */
-  isAllowedStructure( moleculeStructure ) {
+  public isAllowedStructure( moleculeStructure: MoleculeStructure ): boolean {
     const strippedMolecule = new StrippedMolecule( moleculeStructure );
     const hashString = strippedMolecule.stripped.getHistogram().getHashString();
 
@@ -113,24 +116,19 @@ class MoleculeList {
 
   /**
    * Find a complete molecule with an equivalent structure to the passed in molecule
-   * @param {MoleculeStructure} moleculeStructure
-   *
-   * @public
-   * @returns {CompleteMolecule|null} Either a matching CompleteMolecule, or null if none is found
+   * @param moleculeStructure
+   * @returns Either a matching CompleteMolecule, or null if none is found
    */
-  findMatchingCompleteMolecule( moleculeStructure ) {
-    return _.find( this.completeMolecules, completeMolecule => {
-      return moleculeStructure.isEquivalent( completeMolecule ) ? completeMolecule : null;
-    } );
+  public findMatchingCompleteMolecule( moleculeStructure: MoleculeStructure ): CompleteMolecule | null {
+    return this.completeMolecules.find( completeMolecule => {
+      return moleculeStructure.isEquivalent( completeMolecule );
+    } ) || null;
   }
 
   /**
    * Return all the complected molecules
-   * @private
-   *
-   * @returns {Array.<Molecule>}
    */
-  getAllCompleteMolecules() {
+  private getAllCompleteMolecules(): CompleteMolecule[] {
     // Note: (performance) do we need a full copy here?
     return this.completeMolecules.slice();
   }
@@ -141,22 +139,18 @@ class MoleculeList {
 
   /**
    * Add a complete molecule and map its common name
-   * @param {CompleteMolecule} completeMolecule
-   *
-   * @private
+   * @param completeMolecule
    */
-  addCompleteMolecule( completeMolecule ) {
+  private addCompleteMolecule( completeMolecule: CompleteMolecule ): void {
     this.completeMolecules.push( completeMolecule );
     this.moleculeNameMap[ completeMolecule.filterCommonName( completeMolecule.commonName ) ] = completeMolecule;
   }
 
   /**
    * Add the structure to the allowed structure map
-   * @param {MoleculeStructure} structure
-   *
-   * @private
+   * @param structure
    */
-  addAllowedStructure( structure ) {
+  private addAllowedStructure( structure: MoleculeStructure ): void {
     const strippedMolecule = new StrippedMolecule( structure );
     const hashString = strippedMolecule.stripped.getHistogram().getHashString();
 
@@ -171,10 +165,8 @@ class MoleculeList {
 
   /**
    * Load main data
-   *
-   * @private
    */
-  static startInitialization() {
+  private static startInitialization(): void {
     // Note: (performance) use web worker or chop it up into bits of work
     MoleculeList.mainInstance = new MoleculeList();
     MoleculeList.mainInstance.loadMainData();
@@ -185,11 +177,8 @@ class MoleculeList {
 
   /**
    * Return main data
-   *
-   * @public
-   * @returns {*}
    */
-  static getMainInstance() {
+  public static getMainInstance(): MoleculeList {
     if ( !MoleculeList.initialized ) {
       // Note: (performance) threading-like replacement goes here
       MoleculeList.startInitialization();
@@ -201,12 +190,9 @@ class MoleculeList {
 
   /**
    * Return molecule name from main data
-   * @param {string} name
-   *
-   * @private
-   * @returns {string}
+   * @param name
    */
-  static getMoleculeByName( name ) {
+  private static getMoleculeByName( name: string ): CompleteMolecule | null {
     let result = MoleculeList.initialList.moleculeNameMap[ name ];
 
     if ( !result ) {
@@ -219,13 +205,10 @@ class MoleculeList {
 
   /**
    * Returns a list of complete molecules
-   * @param {string} strings - File name relative to the sim's data directory
-   *
-   * @private
-   * @returns
+   * @param strings - File name relative to the sim's data directory
    */
-  static readCompleteMoleculesFromData( strings ) {
-    return _.map( strings, string => {
+  private static readCompleteMoleculesFromData( strings: string[] ): CompleteMolecule[] {
+    return strings.map( string => {
       const molecule = CompleteMolecule.fromSerial2( string );
 
       // sanity checks
@@ -239,12 +222,9 @@ class MoleculeList {
 
   /**
    * Returns a list of molecule structures
-   * @param {string} strings - File name relative to the sim's data directory
-   *
-   * @private
-   * @returns
+   * @param strings - File name relative to the sim's data directory
    */
-  static readMoleculeStructuresFromData( strings ) {
+  private static readMoleculeStructuresFromData( strings: string[] ): MoleculeStructure[] {
     const len = strings.length;
     const arr = new Array( len );
     for ( let i = 0; i < len; i++ ) {
@@ -260,13 +240,10 @@ class MoleculeList {
 }
 
 // statics
-// @private {MoleculeList|null}
 MoleculeList.mainInstance = null;
 
-// @private {boolean}
 MoleculeList.initialized = false;
 
-// @private {MoleculeList}
 MoleculeList.initialList = new MoleculeList();
 MoleculeList.initialList.loadInitialData();
 
@@ -274,7 +251,6 @@ MoleculeList.initialList.loadInitialData();
  * molecule references and customized names
  *----------------------------------------------------------------------------*/
 
-// @public {string}
 MoleculeList.CO2 = MoleculeList.getMoleculeByName( 'Carbon Dioxide' );
 MoleculeList.H2O = MoleculeList.getMoleculeByName( 'Water' );
 MoleculeList.N2 = MoleculeList.getMoleculeByName( 'Nitrogen' );
@@ -286,7 +262,7 @@ MoleculeList.Cl2 = MoleculeList.getMoleculeByName( 'Chlorine' );
 MoleculeList.NH3 = MoleculeList.getMoleculeByName( 'Ammonia' );
 MoleculeList.C2H4O2 = MoleculeList.getMoleculeByName( 'Acetic Acid' );
 
-// @public {Array.<String>} Molecules that can be used for collection boxes
+// Molecules that can be used for collection boxes
 MoleculeList.collectionBoxMolecules = [
   MoleculeList.CO2,
   MoleculeList.H2O,
