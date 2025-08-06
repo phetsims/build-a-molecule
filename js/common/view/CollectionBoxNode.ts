@@ -52,7 +52,7 @@ class CollectionBoxNode extends VBox {
    * @param showDialogCallback - Callback for showing 3D dialog
    * @param options - VBox options
    */
-  public constructor( box: CollectionBox, toModelBounds: ( node: Node ) => any, showDialogCallback: () => void, options?: VBoxOptions ) { // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when bounds type is available, see https://github.com/phetsims/build-a-molecule/issues/245
+  public constructor( box: CollectionBox, toModelBounds: ( node: Node ) => any, showDialogCallback: ( completeMolecule: CompleteMolecule ) => void, options?: VBoxOptions ) { // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when bounds type is available, see https://github.com/phetsims/build-a-molecule/issues/245
     super( { spacing: 2 } );
 
     this.box = box;

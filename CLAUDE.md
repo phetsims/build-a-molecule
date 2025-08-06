@@ -143,3 +143,5 @@ Steps:
 - In JSDoc @param and @returns, preserve comments. Only delete if there is no comment for any @param.
 
 ## You can make minor updates to related files as needed!
+
+## If it fails the snapshot-comparison.test, then a regression has been introduced, and must be identified and reverted.
