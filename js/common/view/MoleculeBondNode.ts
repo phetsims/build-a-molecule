@@ -37,7 +37,7 @@ import Kit from '../model/Kit.js';
  ./ico2cur.py scissors-closed-up.ico -x 7 -y 13
  */
 
-const images: Record<string, any> = { // eslint-disable-line @typescript-eslint/no-explicit-any -- Image types from PhET imports
+const images: Record<string, HTMLImageElement> = {
   'scissors.png': scissors_png,
   'scissors-closed.png': scissorsClosed_png,
   'scissors-up.png': scissorsUp_png,
@@ -53,7 +53,7 @@ export default class MoleculeBondNode extends Node {
 
   private readonly a: any; // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when Atom2 is converted, see https://github.com/phetsims/build-a-molecule/issues/245
   private readonly b: any; // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when Atom2 is converted, see https://github.com/phetsims/build-a-molecule/issues/245
-  private readonly kit: any; // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when Kit is converted, see https://github.com/phetsims/build-a-molecule/issues/245
+  private readonly kit: Kit;
 
   // Listener that will update the position of our hit target
   private readonly positionListener: () => void;

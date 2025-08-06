@@ -7,6 +7,7 @@
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 
+import Bounds2 from '../../../../dot/js/Bounds2.js';
 import ScreenView from '../../../../joist/js/ScreenView.js';
 import Shape from '../../../../kite/js/Shape.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
@@ -43,7 +44,7 @@ class CollectionPanel extends Panel {
    * @param updateRefillButton - Function to update refill button
    * @param providedOptions - Panel options
    */
-  public constructor( bamModel: BAMModel, isSingleCollectionMode: boolean, collectionAttachmentCallbacks: ( () => void )[], toModelBounds: ( node: Node ) => any, // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when bounds type is available, see https://github.com/phetsims/build-a-molecule/issues/245
+  public constructor( bamModel: BAMModel, isSingleCollectionMode: boolean, collectionAttachmentCallbacks: ( () => void )[], toModelBounds: ( node: Node ) => Bounds2,
                showDialogCallback: () => void, updateRefillButton: () => void, providedOptions?: CollectionPanelOptions ) {
     const options = optionize<CollectionPanelOptions, SelfOptions, PanelOptions>()( {
       cornerRadius: BAMConstants.CORNER_RADIUS
@@ -93,7 +94,7 @@ class CollectionPanel extends Panel {
       previous() {
         bamModel.switchToPreviousCollection();
       },
-      createTouchAreaShape( shape: any ) { // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when Shape type is available, see https://github.com/phetsims/build-a-molecule/issues/245
+      createTouchAreaShape( shape: Shape ) {
         // square touch area
         return Shape.bounds( shape.bounds.dilated( 7 ) );
       }
@@ -115,7 +116,7 @@ class CollectionPanel extends Panel {
 
     // anonymous function here, so we don't create a bunch of fields
     const createCollectionNode = ( collection: KitCollection ): void => {
-      this.collectionAreaMap[ ( collection as any ).id ] = new CollectionAreaNode( // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when KitCollection is converted to include id, see https://github.com/phetsims/build-a-molecule/issues/245
+      this.collectionAreaMap[ collection.id ] = new CollectionAreaNode(
         collection, isSingleCollectionMode, toModelBounds, showDialogCallback, updateRefillButton
       );
     };
@@ -148,7 +149,7 @@ class CollectionPanel extends Panel {
 
     // swap out the inner collection area
     this.collectionAreaHolder.removeAllChildren();
-    const collectionAreaNode = this.collectionAreaMap[ ( collection as any ).id ]; // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when KitCollection is converted to include id, see https://github.com/phetsims/build-a-molecule/issues/245
+    const collectionAreaNode = this.collectionAreaMap[ collection.id ];
     this.collectionAreaHolder.addChild( collectionAreaNode );
 
     // if we are hooked up, update the box positions. otherwise, listen to the canvas for when it is

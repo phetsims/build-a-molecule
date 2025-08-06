@@ -38,10 +38,10 @@ export default class MultipleModel extends BAMModel {
       new BAMBucket( new Dimension2( 600, 200 ), this.stepEmitter, Element.O, 4 ),
       new BAMBucket( new Dimension2( 500, 200 ), this.stepEmitter, Element.N, 2 )
     ] ), { triggerCue: true } );
-    kitCollection.addCollectionBox( new CollectionBox( ( MoleculeList as any ).CO2, 2 ) ); // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when MoleculeList is converted, see https://github.com/phetsims/build-a-molecule/issues/245
-    kitCollection.addCollectionBox( new CollectionBox( ( MoleculeList as any ).O2, 2 ) ); // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when MoleculeList is converted, see https://github.com/phetsims/build-a-molecule/issues/245
-    kitCollection.addCollectionBox( new CollectionBox( ( MoleculeList as any ).H2, 4 ) ); // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when MoleculeList is converted, see https://github.com/phetsims/build-a-molecule/issues/245
-    kitCollection.addCollectionBox( new CollectionBox( ( MoleculeList as any ).NH3, 2 ) ); // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when MoleculeList is converted, see https://github.com/phetsims/build-a-molecule/issues/245
+    kitCollection.addCollectionBox( new CollectionBox( MoleculeList.CO2!, 2 ) );
+    kitCollection.addCollectionBox( new CollectionBox( MoleculeList.O2!, 2 ) );
+    kitCollection.addCollectionBox( new CollectionBox( MoleculeList.H2!, 4 ) );
+    kitCollection.addCollectionBox( new CollectionBox( MoleculeList.NH3!, 2 ) );
   }
 }
 
