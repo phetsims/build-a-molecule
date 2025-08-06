@@ -1,8 +1,5 @@
 // Copyright 2020-2025, University of Colorado Boulder
 
-/* eslint-disable */
-// @ts-nocheck
-
 /**
  * 3D Molecule display that takes up the entire screen
  *
@@ -14,7 +11,9 @@ import BooleanProperty from '../../../../../axon/js/BooleanProperty.js';
 import EnumerationDeprecatedProperty from '../../../../../axon/js/EnumerationDeprecatedProperty.js';
 import Multilink from '../../../../../axon/js/Multilink.js';
 import Property from '../../../../../axon/js/Property.js';
+import TReadOnlyProperty from '../../../../../axon/js/TReadOnlyProperty.js';
 import Matrix3 from '../../../../../dot/js/Matrix3.js';
+import Vector2 from '../../../../../dot/js/Vector2.js';
 import Vector3 from '../../../../../dot/js/Vector3.js';
 import ThreeNode from '../../../../../mobius/js/ThreeNode.js';
 import EnumerationDeprecated from '../../../../../phet-core/js/EnumerationDeprecated.js';
@@ -34,15 +33,23 @@ import buildAMolecule from '../../../buildAMolecule.js';
 import BuildAMoleculeStrings from '../../../BuildAMoleculeStrings.js';
 import BAMConstants from '../../BAMConstants.js';
 import MoleculeList from '../../model/MoleculeList.js';
+import CompleteMolecule from '../../model/CompleteMolecule.js';
 
 // constants
 const ViewStyle = EnumerationDeprecated.byKeys( [ 'SPACE_FILL', 'BALL_AND_STICK' ] );
 
-class Molecule3DDialog extends Dialog {
-  /**
-   * @param {Property.<CompleteMolecule|null>} completeMoleculeProperty
-   */
-  constructor( completeMoleculeProperty ) {
+export default class Molecule3DDialog extends Dialog {
+
+  public readonly completeMoleculeProperty: TReadOnlyProperty<CompleteMolecule | null>;
+  public readonly isPlayingProperty: BooleanProperty;
+  public readonly isDraggingProperty: BooleanProperty;
+  public readonly viewStyleProperty: EnumerationDeprecatedProperty;
+  private readonly quaternionProperty: Property<THREE.Quaternion>;
+  private readonly moleculeNode: ThreeNode;
+  private readonly spaceFilledIcon: ThreeNode;
+  private readonly ballAndStickIcon: ThreeNode;
+
+  public constructor( completeMoleculeProperty: TReadOnlyProperty<CompleteMolecule | null> ) {
 
     // Holds all of the content within the dialog. Dialog needs to be sized to content before content is added.
     const contentWrapper = new Rectangle( 0, 0, 300, 340 );
@@ -54,22 +61,17 @@ class Molecule3DDialog extends Dialog {
     } );
     super( contentVBox, {
       fill: 'black',
+      // @ts-expect-error -- TODO: Fix when Dialog options are properly typed, see https://github.com/phetsims/build-a-molecule/issues/245
       xAlign: 'center',
       title: title,
       resize: false,
       closeButtonColor: 'white'
     } );
 
-    // @public {Property.<CompleteMolecule|null>}
     this.completeMoleculeProperty = completeMoleculeProperty;
-
-    // @public {BooleanProperty} Property used for playing/pausing a rotating molecule
     this.isPlayingProperty = new BooleanProperty( true );
-
-    // @public {BooleanProperty}
     this.isDraggingProperty = new BooleanProperty( false );
-
-    // @public {EnumerationDeprecatedProperty} View styles for space filled and ball and stick views.
+    // @ts-expect-error -- TODO: Fix when EnumerationDeprecated is properly typed, see https://github.com/phetsims/build-a-molecule/issues/245
     this.viewStyleProperty = new EnumerationDeprecatedProperty( ViewStyle, ViewStyle.SPACE_FILL );
     const playPauseButton = new PlayPauseButton( this.isPlayingProperty, {
       radius: 15,
@@ -96,15 +98,8 @@ class Molecule3DDialog extends Dialog {
 
     /**
      * Build and add atom mesh to container.
-     * @param {CompleteMolecule} completeMolecule
-     * @param {Object3D} container
-     * @param {boolean} requiresAtomOffset
-     * @param {boolean} scaledRadius
-     * @param {Array.<Color>} [colorSet]
-     *
-     * @private
      */
-    const buildAtomMesh = ( completeMolecule, container, requiresAtomOffset, scaledRadius, colorSet ) => {
+    const buildAtomMesh = ( completeMolecule: CompleteMolecule, container: THREE.Object3D, requiresAtomOffset: boolean, scaledRadius: boolean, colorSet?: Color[] ): void => {
       for ( let i = 0; i < completeMolecule.atoms.length; i++ ) {
         const atom = completeMolecule.atoms[ i ];
 
@@ -116,38 +111,37 @@ class Molecule3DDialog extends Dialog {
           color: color
         } ) );
         container.add( iconMesh );
+        // @ts-expect-error -- TODO: Fix when Atom has 3D properties typed, see https://github.com/phetsims/build-a-molecule/issues/245
         iconMesh.position.set( atom.x3d + offset, atom.y3d, atom.z3d );
       }
     };
 
     /**
-     * Build and add atom mesh to container.
-     * @param {CompleteMolecule} completeMolecule
-     * @param {Object3D} container
-     * @param {boolean} requiresBondOffset
-     * @param {boolean} meshThickness
-     *
-     * @private
+     * Build and add bond mesh to container.
      */
-    const buildBondMesh = ( completeMolecule, container, requiresBondOffset, meshThickness ) => {
+    const buildBondMesh = ( completeMolecule: CompleteMolecule, container: THREE.Object3D, requiresBondOffset: boolean, meshThickness: number ): void => {
       completeMolecule.bonds.forEach( bond => {
         let originOffset = -0.25;
         let displacement = 0;
 
         // If a bond has a high order we need to adjust the bond mesh in the y-axis
+        // @ts-expect-error -- TODO: Fix when Bond has order property typed, see https://github.com/phetsims/build-a-molecule/issues/245
         for ( let i = 0; i < bond.order; i++ ) {
 
           // Offset for single bond
+          // @ts-expect-error
           if ( bond.order === 1 ) {
             originOffset = 0;
             displacement = 0;
           }
           // Offset for double bond
+          // @ts-expect-error
           else if ( bond.order === 2 ) {
             originOffset = -0.25;
             displacement = 0.5;
           }
           // Offset for triple bond
+          // @ts-expect-error
           else if ( bond.order === 3 ) {
             originOffset = -0.25;
             displacement = 0.25;
@@ -159,12 +153,14 @@ class Molecule3DDialog extends Dialog {
           }
 
           // Establish parameters for bond mesh
+          // @ts-expect-error -- TODO: Fix when Bond atoms have 3D properties typed, see https://github.com/phetsims/build-a-molecule/issues/245
           const bondAPosition = new Vector3( bond.a.x3d, bond.a.y3d, bond.a.z3d );
+          // @ts-expect-error -- TODO: Fix when Bond atoms have 3D properties typed, see https://github.com/phetsims/build-a-molecule/issues/245
           const bondBPosition = new Vector3( bond.b.x3d, bond.b.y3d, bond.b.z3d );
           const distance = bondAPosition.distance( bondBPosition );
           const bondMesh = new THREE.Mesh(
-            new THREE.CylinderGeometry( meshThickness, meshThickness, distance, 32, false ),
-            new THREE.MeshLambertMaterial( { color: Color.gray } )
+            new THREE.CylinderGeometry( meshThickness, meshThickness, distance, 32 ),
+            new THREE.MeshLambertMaterial( { color: Color.gray.toNumber() } )
           );
 
           // Vector3
@@ -203,11 +199,12 @@ class Molecule3DDialog extends Dialog {
     const spaceFilledScene = spaceFilledIcon.stage.threeScene;
     const spaceFilledContainer = new THREE.Object3D();
     spaceFilledScene.add( spaceFilledContainer );
-    buildAtomMesh( MoleculeList.O2, spaceFilledContainer, false, false, colorSet );
+    buildAtomMesh( MoleculeList.O2!, spaceFilledContainer, false, false, colorSet );
 
     // Listener to change the view style to the space filled representation
     spaceFilledIcon.addInputListener( new PressListener( {
       press: () => {
+        // @ts-expect-error -- TODO: Fix when EnumerationDeprecated is properly typed, see https://github.com/phetsims/build-a-molecule/issues/245
         this.viewStyleProperty.value = ViewStyle.SPACE_FILL;
       }
     } ) );
@@ -220,12 +217,13 @@ class Molecule3DDialog extends Dialog {
     const ballAndStickScene = ballAndStickIcon.stage.threeScene;
     const ballAndStickContainer = new THREE.Object3D();
     ballAndStickScene.add( ballAndStickContainer );
-    buildAtomMesh( MoleculeList.O2, ballAndStickContainer, true, false, colorSet );
-    buildBondMesh( MoleculeList.O2, ballAndStickContainer, true, 0.2 );
+    buildAtomMesh( MoleculeList.O2!, ballAndStickContainer, true, false, colorSet );
+    buildBondMesh( MoleculeList.O2!, ballAndStickContainer, true, 0.2 );
 
     // Updates the view style to the ball and stick representation
     ballAndStickIcon.addInputListener( new PressListener( {
       press: () => {
+        // @ts-expect-error -- TODO: Fix when EnumerationDeprecated is properly typed, see https://github.com/phetsims/build-a-molecule/issues/245
         this.viewStyleProperty.value = ViewStyle.BALL_AND_STICK;
       }
     } ) );
@@ -239,7 +237,7 @@ class Molecule3DDialog extends Dialog {
     moleculeScene.add( moleculeContainer );
 
     // Handle the each 3D representation based on the current view style
-    Multilink.multilink( [ this.viewStyleProperty, completeMoleculeProperty ], ( viewStyle, completeMolecule ) => {
+    Multilink.multilink( [ this.viewStyleProperty, completeMoleculeProperty ], ( viewStyle: any, completeMolecule: CompleteMolecule | null ) => { // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when EnumerationDeprecated is properly typed, see https://github.com/phetsims/build-a-molecule/issues/245
       if ( completeMolecule ) {
 
         // Remove all previous mesh elements if they exists from a previous build
@@ -248,6 +246,7 @@ class Molecule3DDialog extends Dialog {
         }
 
         // Handle building mesh for space fill representation
+        // @ts-expect-error -- TODO: Fix when EnumerationDeprecated is properly typed, see https://github.com/phetsims/build-a-molecule/issues/245
         if ( viewStyle === ViewStyle.SPACE_FILL && completeMolecule ) {
           buildAtomMesh( completeMolecule, moleculeContainer, false, false );
         }
@@ -262,9 +261,11 @@ class Molecule3DDialog extends Dialog {
 
     // Create toggle buttons for scene selection
     const toggleButtonsContent = [ {
+      // @ts-expect-error -- TODO: Fix when EnumerationDeprecated is properly typed, see https://github.com/phetsims/build-a-molecule/issues/245
       value: ViewStyle.SPACE_FILL,
       createNode: () => spaceFilledIcon
     }, {
+      // @ts-expect-error -- TODO: Fix when EnumerationDeprecated is properly typed, see https://github.com/phetsims/build-a-molecule/issues/245
       value: ViewStyle.BALL_AND_STICK,
       createNode: () => ballAndStickIcon
     } ];
@@ -306,7 +307,7 @@ class Molecule3DDialog extends Dialog {
     ballAndStickScene.add( moonLight.clone() );
 
     // Correct the ordering of the dialogs children
-    this.isShowingProperty.link( isShowing => {
+    this.isShowingProperty.link( ( isShowing: boolean ) => {
 
       // Set the order of children for the VBox
       if ( isShowing ) {
@@ -318,9 +319,9 @@ class Molecule3DDialog extends Dialog {
       }
     } );
 
-    // @private {Property.<THREE.Quaternion>} Update matrix of the 3D representation
+    // Update matrix of the 3D representation
     this.quaternionProperty = new Property( new THREE.Quaternion() );
-    this.quaternionProperty.link( quaternion => {
+    this.quaternionProperty.link( ( quaternion: THREE.Quaternion ) => {
 
       // Copy the new value into the Three object's quaternion and update the matrices.
       moleculeContainer.quaternion.copy( quaternion );
@@ -328,19 +329,14 @@ class Molecule3DDialog extends Dialog {
       moleculeContainer.updateMatrixWorld();
     } );
 
-    // @private {ThreeNode}
     this.moleculeNode = moleculeNode;
-
-    // @private {ThreeNode}
     this.spaceFilledIcon = spaceFilledIcon;
-
-    // @private {ThreeNode}
     this.ballAndStickIcon = ballAndStickIcon;
-    let lastGlobalPoint = null;
+    let lastGlobalPoint: Vector2 | null = null;
 
     // Handles user input to rotate molecule
     const pressListener = new PressListener( {
-      press: event => {
+      press: ( event: any ) => { // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when PressListener is properly typed, see https://github.com/phetsims/build-a-molecule/issues/245
         this.isDraggingProperty.value = true;
         lastGlobalPoint = event.pointer.point.copy();
 
@@ -348,12 +344,12 @@ class Molecule3DDialog extends Dialog {
         // pan while zoomed in
         event.pointer.reserveForDrag();
       },
-      drag: event => {
-        const delta = event.pointer.point.minus( lastGlobalPoint );
+      drag: ( event: any ) => { // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when PressListener is properly typed, see https://github.com/phetsims/build-a-molecule/issues/245
+        const delta = event.pointer.point.minus( lastGlobalPoint! );
         lastGlobalPoint = event.pointer.point.copy();
 
         // Compensate for the size of the sim screen by scaling the amount we rotate in THREE.Euler
-        const scale = 1 / ( 100 * window.phet.joist.sim.scaleProperty.value );
+        const scale = 1 / ( 100 * ( window as any ).phet.joist.sim.scaleProperty.value ); // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when global phet types are available, see https://github.com/phetsims/build-a-molecule/issues/245
         const newQuaternion = new THREE.Quaternion().setFromEuler( new THREE.Euler( delta.y * scale, delta.x * scale, 0 ) );
         newQuaternion.multiply( this.quaternionProperty.value );
         this.quaternionProperty.value = newQuaternion;
@@ -366,10 +362,10 @@ class Molecule3DDialog extends Dialog {
   }
 
   /**
-   * @param {number} dt
-   * @public
+   * Steps the animation forward by the given time step.
+   * @param dt - time step in seconds
    */
-  step( dt ) {
+  public step( dt: number ): void {
     if ( this.isPlayingProperty.value && !this.isDraggingProperty.value ) {
 
       // Define a quaternion that is offset by a rotation determined by theta.
@@ -386,10 +382,8 @@ class Molecule3DDialog extends Dialog {
 
   /**
    * Render each ThreeNode scene
-   *
-   * @private
    */
-  render() {
+  private render(): void {
 
     // Main molecule
     this.moleculeNode.layout();
@@ -406,4 +400,3 @@ class Molecule3DDialog extends Dialog {
 }
 
 buildAMolecule.register( 'Molecule3DDialog', Molecule3DDialog );
-export default Molecule3DDialog;
