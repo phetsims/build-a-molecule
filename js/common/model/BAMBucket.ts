@@ -1,8 +1,5 @@
 // Copyright 2020-2025, University of Colorado Boulder
 
-/* eslint-disable */
-// @ts-nocheck
-
 /**
  * A bucket for Atom2
  *
@@ -10,10 +7,12 @@
  * @author Denzell Barnett (PhET Interactive Simulations)
  */
 
-import createObservableArray from '../../../../axon/js/createObservableArray.js';
+import createObservableArray, { type ObservableArray } from '../../../../axon/js/createObservableArray.js';
+import Emitter from '../../../../axon/js/Emitter.js';
 import Dimension2 from '../../../../dot/js/Dimension2.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import Vector2Property from '../../../../dot/js/Vector2Property.js';
+import Element from '../../../../nitroglycerin/js/Element.js';
 import SphereBucket from '../../../../phetcommon/js/model/SphereBucket.js';
 import Color from '../../../../scenery/js/util/Color.js';
 import buildAMolecule from '../../buildAMolecule.js';
@@ -21,39 +20,42 @@ import BAMStrings from '../BAMStrings.js';
 import AtomNode from '../view/AtomNode.js';
 import Atom2 from './Atom2.js';
 
-class BAMBucket extends SphereBucket {
+class BAMBucket extends SphereBucket<Atom2> {
+
+  private readonly positionProperty: Vector2Property;
+
+  // Tracks all of the particles in this bucket
+  public readonly particleList: ObservableArray<Atom2>;
+
+  // Contains atoms for a bucket when the bucket is full.
+  public readonly fullState: Atom2[];
+
+  public readonly element: Element;
+  public readonly width: number;
+
   /**
    * The dimensions used are unit less, i.e. they are not meant to be any specific size (such as meters).  This enabled
    * reusability in any 2D model.
-   * @param {Dimension2} size - Physical size of the bucket (model space)
-   * @param {Emitter} stepEmitter
-   * @param {Element} element - The element of the atoms in the bucket
-   * @param {number} quantity - The number of atoms starting in the bucket
+   * @param size - Physical size of the bucket (model space)
+   * @param stepEmitter
+   * @param element - The element of the atoms in the bucket
+   * @param quantity - The number of atoms starting in the bucket
    */
-  constructor( size, stepEmitter, element, quantity ) {
+  public constructor( size: Dimension2, stepEmitter: Emitter<[ number ]>, element: Element, quantity: number ) {
     super( {
       position: Vector2.ZERO,
       size: size,
       sphereRadius: element.covalentRadius,
       baseColor: element.color,
-      captionText: BAMStrings[ element ],
-      captionColor: AtomNode.getTextColor( new Color( element.color ) ),
+      captionText: BAMStrings[ element.symbol as keyof typeof BAMStrings ],
+      captionColor: AtomNode.getTextColor( new Color( element.color as string ) ),
       verticalParticleOffset: -30 + element.covalentRadius / 2
     } );
 
-    // @private {Property.<Vector2>}
     this.positionProperty = new Vector2Property( this.position );
-
-    // @public {ObservableArrayDef.<Atom2>} Tracks all of the particles in this bucket
     this.particleList = createObservableArray();
-
-    // @public {Array.<Atom2>} Contains atoms for a bucket when the bucket is full.
     this.fullState = [];
-
-    // @public {Element}
     this.element = element;
-
-    // @public {number}
     this.width = this.containerShape.bounds.width * 0.95;
 
     // Update the atoms when bucket's position is changed
@@ -71,12 +73,8 @@ class BAMBucket extends SphereBucket {
 
   /**
    * Instantly place the atom in the correct position, whether or not it is in the bucket
-   * @param {Atom2} atom
-   * @param {boolean} addFirstOpen
-   *
-   * @public
    */
-  placeAtom( atom, addFirstOpen ) {
+  public placeAtom( atom: Atom2, addFirstOpen: boolean ): void {
     if ( this.includes( atom ) ) {
       this.removeParticle( atom, true );
     }
@@ -85,10 +83,8 @@ class BAMBucket extends SphereBucket {
 
   /**
    * Used to assign atoms to bucket's initial state.
-   *
-   * @public
    */
-  setToFullState() {
+  public setToFullState(): void {
     this.fullState.forEach( atom => {
       if ( !this.particleList.includes( atom ) ) {
         this.particleList.push( atom );
@@ -99,23 +95,18 @@ class BAMBucket extends SphereBucket {
 
   /**
    * Checks if the bucket is full.
-   *
-   * @public
-   * @returns {boolean}
    */
-  isFull() {
+  public isFull(): boolean {
     return this.fullState.length === this.particleList.length;
   }
 
   /**
    * Make sure we can fit all of our atoms in just two rows
-   * @param {number} radius - Atomic radius (picometers)
-   * @param {number} quantity - quantity of atoms in bucket
-   *
-   * @public
-   * @returns {number} Width of bucket
+   * @param radius - Atomic radius (picometers)
+   * @param quantity - quantity of atoms in bucket
+   * @returns Width of bucket
    */
-  static calculateIdealBucketWidth( radius, quantity ) {
+  public static calculateIdealBucketWidth( radius: number, quantity: number ): number {
     // calculate atoms to go on the bottom row
     const numOnBottomRow = Math.floor( ( quantity <= 2 ) ? quantity : ( quantity / 2 + 1 ) );
 
@@ -129,14 +120,8 @@ class BAMBucket extends SphereBucket {
 
   /**
    * Return bucket with an ideal width to fit all its atoms.
-   * @param {Emitter} stepEmitter
-   * @param {Element} element
-   * @param {number} quantity
-   *
-   * @public
-   * @returns {BAMBucket}
    */
-  static createAutoSized( stepEmitter, element, quantity ) {
+  public static createAutoSized( stepEmitter: Emitter<[ number ]>, element: Element, quantity: number ): BAMBucket {
     return new BAMBucket( new Dimension2( BAMBucket.calculateIdealBucketWidth( element.covalentRadius, quantity ), 200 ), stepEmitter, element, quantity );
   }
 }

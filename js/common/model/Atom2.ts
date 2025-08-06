@@ -17,7 +17,7 @@ import Atom from '../../../../nitroglycerin/js/Atom.js';
 import Element from '../../../../nitroglycerin/js/Element.js';
 import buildAMolecule from '../../buildAMolecule.js';
 
-type ParticleContainer = unknown; // TODO: Define proper type when ParticleContainer is converted to TypeScript, see https://github.com/phetsims/build-a-molecule/issues/245
+import { ParticleContainer } from '../../../../phetcommon/js/model/ParticleContainer.js';
 
 // constants
 const MOTION_VELOCITY = 800; // In picometers per second of sim time.
@@ -34,7 +34,7 @@ class Atom2 extends Atom {
   public readonly visibleProperty: BooleanProperty;
 
   // The container that this atom is in, if any.
-  public readonly containerProperty: Property<ParticleContainer | null>;
+  public readonly containerProperty: Property<ParticleContainer<Atom2> | null>;
 
   // Responsible for grabbing and dropping an atom
   public readonly grabbedByUserEmitter: Emitter<[ Atom2 ]>;
@@ -47,7 +47,7 @@ class Atom2 extends Atom {
     this.destinationProperty = new Vector2Property( Vector2.ZERO );
     this.isDraggingProperty = new BooleanProperty( false );
     this.visibleProperty = new BooleanProperty( true );
-    this.containerProperty = new Property<ParticleContainer | null>( null );
+    this.containerProperty = new Property<ParticleContainer<Atom2> | null>( null );
     this.grabbedByUserEmitter = new Emitter( { parameters: [ { valueType: Atom2 } ] } );
     this.droppedByUserEmitter = new Emitter( { parameters: [ { valueType: Atom2 } ] } );
 
