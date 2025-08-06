@@ -141,3 +141,5 @@ Steps:
 
 ## PRESERVE COMMENTS
 - In JSDoc @param and @returns, preserve comments. Only delete if there is no comment for any @param.
+
+## You can make minor updates to related files as needed!
