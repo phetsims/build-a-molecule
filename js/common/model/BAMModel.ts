@@ -1,8 +1,5 @@
 // Copyright 2020-2025, University of Colorado Boulder
 
-/* eslint-disable */
-// @ts-nocheck
-
 /**
  * An internal list of collections that a user will be able to scroll through using a control on the collection area
  *
@@ -13,94 +10,91 @@
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import Emitter from '../../../../axon/js/Emitter.js';
 import Property from '../../../../axon/js/Property.js';
+import Bounds2 from '../../../../dot/js/Bounds2.js';
 import Dimension2 from '../../../../dot/js/Dimension2.js';
 import dotRandom from '../../../../dot/js/dotRandom.js';
 import Element from '../../../../nitroglycerin/js/Element.js';
-import merge from '../../../../phet-core/js/merge.js';
-import required from '../../../../phet-core/js/required.js';
+import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import buildAMolecule from '../../buildAMolecule.js';
 import BAMBucket from '../model/BAMBucket.js';
 import CollectionBox from '../model/CollectionBox.js';
 import Kit from '../model/Kit.js';
 import MoleculeList from '../model/MoleculeList.js';
+import CollectionLayout from './CollectionLayout.js';
+import CompleteMolecule from './CompleteMolecule.js';
 import KitCollection from './KitCollection.js';
+
+type SelfOptions = {
+  isMultipleCollection: boolean;
+};
+
+type BAMModelOptions = SelfOptions;
 
 class BAMModel {
 
-  /**
-   * @param {KitCollection} firstCollection
-   * @param {CollectionLayout} collectionLayout
-   * @param {Object} config
-   */
-  constructor( firstCollection, collectionLayout, config ) {
-    config = merge( {
+  public readonly currentCollectionProperty: Property<KitCollection>;
+  public readonly buttonClickedProperty: BooleanProperty;
 
-      // {boolean} Determines whether the collection is built for a single or multiple collection box
-      isMultipleCollection: required( config.isMultipleCollection )
+  // Fires single parameter of {KitCollection}
+  public readonly addedCollectionEmitter: Emitter<[ KitCollection ]>;
+  public readonly removedCollectionEmitter: Emitter<[ KitCollection ]>;
 
-    }, config );
-    assert && assert( config.isMultipleCollection !== null, 'isSingleCollection is required' );
+  public readonly collectionLayout: CollectionLayout;
+  public readonly stepEmitter: Emitter<[ number ]>;
 
+  public collections: KitCollection[]; // Made mutable for reset() method
+  public currentIndex: number;
+  public readonly dialogMolecule: Property<CompleteMolecule | null>; // eslint-disable-line phet/require-property-suffix -- legacy property name for compatibility
 
-    // @public {Property.<KitCollection>}
+  // Declare the first collection we will add
+  public readonly firstCollection: KitCollection;
+
+  // Generates a new kit collection
+  public readonly regenerateCallback: () => void;
+
+  private readonly options: BAMModelOptions;
+
+  public constructor( firstCollection: KitCollection, collectionLayout: CollectionLayout, providedOptions: BAMModelOptions ) {
+    const options = optionize<BAMModelOptions, SelfOptions, EmptySelfOptions>()( {
+      // Empty defaults - isMultipleCollection is required
+    }, providedOptions );
+
+    this.options = options;
     this.currentCollectionProperty = new Property( firstCollection );
-
-    // @public {BooleanProperty}
     this.buttonClickedProperty = new BooleanProperty( false );
-
-    // @public {Emitter} - Fires single parameter of {KitCollection}
     this.addedCollectionEmitter = new Emitter( { parameters: [ { valueType: KitCollection } ] } );
     this.removedCollectionEmitter = new Emitter( { parameters: [ { valueType: KitCollection } ] } );
-
-    // @public {CollectionLayout}
     this.collectionLayout = collectionLayout;
-
-    // @public {Emitter}
     this.stepEmitter = new Emitter( {
       parameters: [ { valueType: 'number' } ],
       disableListenerLimit: true
     } );
-
-    // @public {Array.<Collection>}
     this.collections = [];
-
-    // @public {number}
     this.currentIndex = 0;
-
-    // @public {Property.<CompleteMolecule|null>}
-    this.dialogMolecule = new Property( null );
-
-    // @public {KitCollection} Declare the first collection we will add
+    this.dialogMolecule = new Property<CompleteMolecule | null>( null );
     this.firstCollection = firstCollection;
     this.addCollection( firstCollection );
-
-    // @public {function} Generates a new kit collection
     this.regenerateCallback = () => {
       this.addCollection( this.generateKitCollection(
-        config.isMultipleCollection,
-        this.firstCollection.collectionBoxes.length === 5 ? 5 : 4, // The Multiple Screen requires only 4 collection boxes.
+        options.isMultipleCollection,
+        ( this.firstCollection as any ).collectionBoxes.length === 5 ? 5 : 4, // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when KitCollection is converted, see https://github.com/phetsims/build-a-molecule/issues/245
         this.stepEmitter,
         this.collectionLayout
-      ), true );
+      ) as any ); // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when addCollection signature is known, see https://github.com/phetsims/build-a-molecule/issues/245
     };
   }
 
   /**
-   * @param {number} dt
-   *
-   * @public
+   * @param dt - time elapsed in seconds
    */
-  step( dt ) {
+  public step( dt: number ): void {
     this.stepEmitter.emit( dt );
   }
 
   /**
    * Add a kit collection and make it the current collection
-   * @param {KitCollection} collection
-   *
-   * @public
    */
-  addCollection( collection ) {
+  public addCollection( collection: KitCollection ): void {
     this.collections.push( collection );
     this.addedCollectionEmitter.emit( collection );
 
@@ -110,10 +104,7 @@ class BAMModel {
   }
 
 
-  /**
-   * @public
-   */
-  reset() {
+  public reset(): void {
 
     // switch to the first collection
     this.switchTo( this.collections[ 0 ] );
@@ -132,79 +123,58 @@ class BAMModel {
 
   /**
    * Returns kit bounds within the collection layout
-   *
-   * @public
-   * @returns {Bounds2}
    */
-  availableKitBounds() {
-    return this.collectionLayout.availableKitBounds;
+  public availableKitBounds(): Bounds2 {
+    return ( this.collectionLayout as any ).availableKitBounds; // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when CollectionLayout is converted, see https://github.com/phetsims/build-a-molecule/issues/245
   }
 
   /**
    * Returns play area bounds bounds within the collection layout
-   *
-   * @public
-   * @returns {Bounds2}
    */
-  availablePlayAreaBounds() {
-    return this.collectionLayout.availablePlayAreaBounds;
+  public availablePlayAreaBounds(): Bounds2 {
+    return ( this.collectionLayout as any ).availablePlayAreaBounds; // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when CollectionLayout is converted, see https://github.com/phetsims/build-a-molecule/issues/245
   }
 
   /**
    * Checks if there exists a collection that is before the current collection
-   *
-   * @public
-   * @returns {boolean}
    */
-  hasPreviousCollection() {
+  public hasPreviousCollection(): boolean {
     return this.currentIndex > 0;
   }
 
   /**
    * Checks if there exists a collection that is after the current collection
-   *
-   * @public
-   * @returns {boolean}
    */
-  hasNextCollection() {
+  public hasNextCollection(): boolean {
     return this.currentIndex < this.collections.length - 1;
   }
 
   /**
    * Swap to the collection before the current collection
-   *
-   * @public
    */
-  switchToPreviousCollection() {
+  public switchToPreviousCollection(): void {
     this.switchTo( this.collections[ this.currentIndex - 1 ] );
   }
 
   /**
-   * Swap to the collection before the current collection
-   *
-   * @public
+   * Swap to the collection after the current collection
    */
-  switchToNextCollection() {
+  public switchToNextCollection(): void {
     this.switchTo( this.collections[ this.currentIndex + 1 ] );
   }
 
   /**
    * Swap to a specific collection
-   * @param {KitCollection} collection
-   *
-   * @private
    */
-  switchTo( collection ) {
+  private switchTo( collection: KitCollection ): void {
     this.currentIndex = this.collections.indexOf( collection );
     this.currentCollectionProperty.value = collection;
   }
 
   /**
    * Remove a specific collection
-   * @param {KitCollection} collection
-   * @private
    */
-  removeCollection( collection ) {
+  private removeCollection( collection: KitCollection ): void {
     assert && assert( this.currentCollectionProperty.value !== collection );
     this.collections.shift();
     this.removedCollectionEmitter.emit( collection );
@@ -212,18 +182,14 @@ class BAMModel {
 
   /**
    * Select a random molecule from the data set of possible collection box molecules
-   * @param {Array.<Molecules>}molecules
-   *
-   * @private
-   * @returns {CompleteMolecule}
    */
-  pickRandomMoleculeNotIn( molecules ) {
+  private pickRandomMoleculeNotIn( molecules: CompleteMolecule[] ): CompleteMolecule {
     // Infinite loop. We're living on the edge now, baby!
     while ( true ) {
-      const molecule = MoleculeList.collectionBoxMolecules[
-        dotRandom.nextIntBetween( 0, MoleculeList.collectionBoxMolecules.length - 1 )
+      const molecule = ( MoleculeList as any ).collectionBoxMolecules[ // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when MoleculeList is converted, see https://github.com/phetsims/build-a-molecule/issues/245
+        dotRandom.nextIntBetween( 0, ( MoleculeList as any ).collectionBoxMolecules.length - 1 ) // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when MoleculeList is converted, see https://github.com/phetsims/build-a-molecule/issues/245
         ];
-      if ( !_.includes( molecules, molecule ) ) {
+      if ( !molecules.includes( molecule ) ) {
         return molecule;
       }
     }
@@ -231,22 +197,20 @@ class BAMModel {
 
   /**
    * Generate a group of collection boxes and kits such that the boxes can be filled.
-   * @param {boolean} allowMultipleMolecules Whether collection boxes can have more than 1 molecule
-   * @param {number} numBoxes               Number of collection boxes
-   * @param {Emitter} stepEmitter
-   * @param {CollectionLayout} collectionLayout
-   *
-   * @public
-   * @returns {KitCollection} A consistent kitCollection
+   * @param allowMultipleMolecules Whether collection boxes can have more than 1 molecule
+   * @param numBoxes Number of collection boxes
+   * @param stepEmitter
+   * @param collectionLayout
+   * @returns A consistent kitCollection
    */
-  generateKitCollection( allowMultipleMolecules, numBoxes, stepEmitter, collectionLayout ) {
+  public generateKitCollection( allowMultipleMolecules: boolean, numBoxes: number, stepEmitter: Emitter<[ number ]>, collectionLayout: CollectionLayout ): KitCollection {
     const maxInBox = 3;
-    const usedMolecules = []; // [CompleteMolecule]
-    const kits = [];
-    const boxes = [];
-    let molecules = []; // store all the molecules that will need to be created
+    const usedMolecules: CompleteMolecule[] = [];
+    const kits: Kit[] = [];
+    const boxes: CollectionBox[] = [];
+    let molecules: CompleteMolecule[] = []; // store all the molecules that will need to be created
 
-    let molecule; // used twice in two different loops :(
+    let molecule: CompleteMolecule; // used twice in two different loops :(
 
     for ( let i = 0; i < numBoxes; i++ ) {
       molecule = this.pickRandomMoleculeNotIn( usedMolecules );
@@ -260,12 +224,12 @@ class BAMModel {
         numberInBox = Math.min( 2, numberInBox );
       }
 
-      const box = new CollectionBox( molecule, numberInBox );
+      const box = new CollectionBox( molecule, numberInBox, {} as any ); // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when CollectionBox is converted, see https://github.com/phetsims/build-a-molecule/issues/245
       boxes.push( box );
 
       // add in that many molecules
-      for ( let j = 0; j < box.capacity; j++ ) {
-        molecules.push( molecule.copy() );
+      for ( let j = 0; j < ( box as any ).capacity; j++ ) { // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when CollectionBox is converted, see https://github.com/phetsims/build-a-molecule/issues/245
+        molecules.push( ( molecule as any ).copy() ); // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when CompleteMolecule is converted, see https://github.com/phetsims/build-a-molecule/issues/245
       }
     }
 
@@ -274,7 +238,7 @@ class BAMModel {
 
     // while more molecules to construct are left, create another kit
     while ( molecules.length ) {
-      const buckets = [];
+      const buckets: BAMBucket[] = [];
 
       // pull off the 1st molecule
       molecule = molecules[ 0 ];
@@ -282,6 +246,7 @@ class BAMModel {
       // NOTE: for the future, we could potentially add another type of atom?
 
       let equivalentMoleculesRemaining = 0;
+      // eslint-disable-next-line @typescript-eslint/no-loop-func -- TODO: Refactor to avoid closure over loop variable, see https://github.com/phetsims/build-a-molecule/issues/245
       molecules.forEach( moleculeStructure => {
         if ( moleculeStructure.getHillSystemFormulaFragment() === molecule.getHillSystemFormulaFragment() ) {
           equivalentMoleculesRemaining++;
@@ -292,10 +257,13 @@ class BAMModel {
       let atomMultiple = 1 + ( ableToIncreaseMultiple ? equivalentMoleculesRemaining : 0 );
 
       // for each type of atom
-      _.uniq( molecule.getElementList() ).forEach( element => {
+      // Remove duplicates from element list
+      const uniqueElements = molecule.getElementList().filter( ( element, index, arr ) => arr.indexOf( element ) === index );
+      // eslint-disable-next-line @typescript-eslint/no-loop-func -- TODO: Refactor to avoid closure over loop variable, see https://github.com/phetsims/build-a-molecule/issues/245
+      uniqueElements.forEach( element => {
         // find out how many atoms of this type we need
         let requiredAtomCount = 0;
-        molecule.atoms.forEach( atom => {
+        ( molecule as any ).atoms.forEach( ( atom: any ) => { // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when CompleteMolecule is converted, see https://github.com/phetsims/build-a-molecule/issues/245
           if ( atom.element.isSameElement( element ) ) {
             requiredAtomCount++;
           }
@@ -336,7 +304,7 @@ class BAMModel {
       }
     }
 
-    const collection = new KitCollection();
+    const collection = new KitCollection( {} as any ); // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when KitCollection is converted, see https://github.com/phetsims/build-a-molecule/issues/245
     kits.forEach( collection.addKit.bind( collection ) );
     boxes.forEach( collection.addCollectionBox.bind( collection ) );
     return collection;
