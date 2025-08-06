@@ -52,6 +52,7 @@ class BAMScreenView extends ScreenView {
   private readonly addedEmitterListeners: Record<number, ( atom: Atom2 ) => void> = {};
   private readonly removedEmitterListeners: Record<number, ( atom: Atom2 ) => void> = {};
   private readonly refillButton: RefillButton;
+  private readonly clickToDismissListener: any; // @ts-expect-error - TODO: Fix when scenery event types are available, see https://github.com/phetsims/build-a-molecule/issues/245
 
   /**
    * @param bamModel - The model for this screen view
@@ -280,7 +281,7 @@ class BAMScreenView extends ScreenView {
         bamModel.currentCollectionProperty.value.currentKitProperty.value.selectedAtomProperty.value = null;
       }
     };
-    phet.joist.display.addInputListener( this.clickToDismissListener );
+    ( phet as any ).joist.display.addInputListener( this.clickToDismissListener ); // @ts-expect-error - TODO: Fix when phet global types are available, see https://github.com/phetsims/build-a-molecule/issues/245
 
     kitPanel.kitCarousel.pageNumberProperty.link( () => {
       this.interruptSubtreeInput();
