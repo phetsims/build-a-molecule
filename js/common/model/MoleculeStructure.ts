@@ -120,7 +120,7 @@ class MoleculeStructure {
     const formula = ChemUtils.createSymbolWithoutSubscripts( sortedElements );
 
     // return the formula, unless it is in our exception list (in which case, handle the exception case)
-    // @ts-expect-error
+    // @ts-expect-error - TODO: This looks broken in https://github.com/phetsims/build-a-molecule/issues/245
     return MoleculeStructure.formulaExceptions[ formula ] || formula;
   }
 
@@ -475,17 +475,15 @@ class MoleculeStructure {
     } );
     const dirtyAtoms = [ bond.a ];
     while ( dirtyAtoms.length > 0 ) {
-      const atom = dirtyAtoms.pop();
+      const atom = dirtyAtoms.pop()!;
       _.remove( dirtyAtoms, item => {
         return item === atom ? atom : null;
       } );
 
       // for all neighbors that don't use our 'bond'
       structure.bonds.forEach( otherBond => {
-        // @ts-expect-error
         if ( otherBond !== bond && otherBond.contains( atom ) ) {
 
-          // @ts-expect-error
           const neighbor = otherBond.getOtherAtom( atom );
 
           // pick out our neighbor, mark it as in 'A', and mark it as dirty so we can process its neighbors
@@ -626,11 +624,11 @@ class MoleculeStructure {
     return new Bond( connectedAtom, moleculeStructure.atoms[ Number( bondString ) ] );
   }
 
+  // TODO: This looks broken in https://github.com/phetsims/build-a-molecule/issues/245
   public static formulaExceptions(): IntentionalAny {
     return {
       H3N: 'NH3', // treated as if it is organic
       CHN: 'HCN'  // not considered organic
-
     };
   }
 }

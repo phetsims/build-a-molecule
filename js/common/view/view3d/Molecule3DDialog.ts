@@ -17,6 +17,7 @@ import Vector2 from '../../../../../dot/js/Vector2.js';
 import Vector3 from '../../../../../dot/js/Vector3.js';
 import ThreeNode from '../../../../../mobius/js/ThreeNode.js';
 import EnumerationDeprecated from '../../../../../phet-core/js/EnumerationDeprecated.js';
+import IntentionalAny from '../../../../../phet-core/js/types/IntentionalAny.js';
 import StringUtils from '../../../../../phetcommon/js/util/StringUtils.js';
 import PlayPauseButton from '../../../../../scenery-phet/js/buttons/PlayPauseButton.js';
 import PhetFont from '../../../../../scenery-phet/js/PhetFont.js';
@@ -32,11 +33,14 @@ import nullSoundPlayer from '../../../../../tambo/js/nullSoundPlayer.js';
 import buildAMolecule from '../../../buildAMolecule.js';
 import BuildAMoleculeStrings from '../../../BuildAMoleculeStrings.js';
 import BAMConstants from '../../BAMConstants.js';
-import MoleculeList from '../../model/MoleculeList.js';
 import CompleteMolecule from '../../model/CompleteMolecule.js';
+import MoleculeList from '../../model/MoleculeList.js';
 
 // constants
-const ViewStyle = EnumerationDeprecated.byKeys( [ 'SPACE_FILL', 'BALL_AND_STICK' ] );
+const ViewStyle = EnumerationDeprecated.byKeys( [ 'SPACE_FILL', 'BALL_AND_STICK' ] ) as unknown as {
+  SPACE_FILL: IntentionalAny;
+  BALL_AND_STICK: IntentionalAny;
+};
 
 export default class Molecule3DDialog extends Dialog {
 
@@ -71,7 +75,6 @@ export default class Molecule3DDialog extends Dialog {
     this.completeMoleculeProperty = completeMoleculeProperty;
     this.isPlayingProperty = new BooleanProperty( true );
     this.isDraggingProperty = new BooleanProperty( false );
-    // @ts-expect-error -- TODO: Fix when EnumerationDeprecated is properly typed, see https://github.com/phetsims/build-a-molecule/issues/245
     this.viewStyleProperty = new EnumerationDeprecatedProperty( ViewStyle, ViewStyle.SPACE_FILL );
     const playPauseButton = new PlayPauseButton( this.isPlayingProperty, {
       radius: 15,
@@ -134,13 +137,13 @@ export default class Molecule3DDialog extends Dialog {
             originOffset = 0;
             displacement = 0;
           }
-          // Offset for double bond
+            // Offset for double bond
           // @ts-expect-error
           else if ( bond.order === 2 ) {
             originOffset = -0.25;
             displacement = 0.5;
           }
-          // Offset for triple bond
+            // Offset for triple bond
           // @ts-expect-error
           else if ( bond.order === 3 ) {
             originOffset = -0.25;
@@ -204,7 +207,6 @@ export default class Molecule3DDialog extends Dialog {
     // Listener to change the view style to the space filled representation
     spaceFilledIcon.addInputListener( new PressListener( {
       press: () => {
-        // @ts-expect-error -- TODO: Fix when EnumerationDeprecated is properly typed, see https://github.com/phetsims/build-a-molecule/issues/245
         this.viewStyleProperty.value = ViewStyle.SPACE_FILL;
       }
     } ) );
@@ -223,7 +225,6 @@ export default class Molecule3DDialog extends Dialog {
     // Updates the view style to the ball and stick representation
     ballAndStickIcon.addInputListener( new PressListener( {
       press: () => {
-        // @ts-expect-error -- TODO: Fix when EnumerationDeprecated is properly typed, see https://github.com/phetsims/build-a-molecule/issues/245
         this.viewStyleProperty.value = ViewStyle.BALL_AND_STICK;
       }
     } ) );
@@ -246,7 +247,6 @@ export default class Molecule3DDialog extends Dialog {
         }
 
         // Handle building mesh for space fill representation
-        // @ts-expect-error -- TODO: Fix when EnumerationDeprecated is properly typed, see https://github.com/phetsims/build-a-molecule/issues/245
         if ( viewStyle === ViewStyle.SPACE_FILL && completeMolecule ) {
           buildAtomMesh( completeMolecule, moleculeContainer, false, false );
         }
@@ -261,11 +261,9 @@ export default class Molecule3DDialog extends Dialog {
 
     // Create toggle buttons for scene selection
     const toggleButtonsContent = [ {
-      // @ts-expect-error -- TODO: Fix when EnumerationDeprecated is properly typed, see https://github.com/phetsims/build-a-molecule/issues/245
       value: ViewStyle.SPACE_FILL,
       createNode: () => spaceFilledIcon
     }, {
-      // @ts-expect-error -- TODO: Fix when EnumerationDeprecated is properly typed, see https://github.com/phetsims/build-a-molecule/issues/245
       value: ViewStyle.BALL_AND_STICK,
       createNode: () => ballAndStickIcon
     } ];

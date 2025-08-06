@@ -31,14 +31,13 @@ export default class KitPanel extends Node {
     const kitCollectionProperty = new Property( kitCollection );
 
     // create kitNodes and unify their heights
-    const kitNodes: KitNode[] = [];
+    const kitNodes: Array<{ createNode: () => KitNode }> = [];
     kitCollectionProperty.link( kitCollection => {
       kitCollection.kits.forEach( kit => {
 
         kitNodes.push( {
 
-          // @ts-expect-error
-          createNode: tandem => {
+          createNode: () => {
 
             const kitNode = new KitNode( kit, view );
             const kitNodeBounds = kitNode.getLocalBounds();
@@ -58,13 +57,13 @@ export default class KitPanel extends Node {
     } );
 
     // Treats each kit as an item in the Carousel.
-    // @ts-expect-error
     this.kitCarousel = new Carousel( kitNodes, {
       fill: BAMConstants.KIT_BACKGROUND,
       stroke: BAMConstants.KIT_BORDER,
       itemsPerPage: 1,
       buttonOptions: {
         soundPlayer: nullSoundPlayer,
+        // @ts-expect-error
         interruptListener: Display.INTERRUPT_OTHER_POINTERS
       }
     } );

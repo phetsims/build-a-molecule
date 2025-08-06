@@ -31,7 +31,7 @@ class MoleculeList {
   public static mainInstance: MoleculeList | null;
   public static initialized: boolean;
   public static initialList: MoleculeList;
-  
+
   // Common molecule references - assigned after class definition
   public static CO2: CompleteMolecule | null; // eslint-disable-line phet/uppercase-statics-should-be-readonly -- Assigned after class definition
   public static H2O: CompleteMolecule | null; // eslint-disable-line phet/uppercase-statics-should-be-readonly -- Assigned after class definition
@@ -77,8 +77,7 @@ class MoleculeList {
     const mainMolecules = MoleculeList.readCompleteMoleculesFromData( otherMoleculesData );
     mainMolecules.forEach( molecule => {
       // if our molecule was included in the initial lookup, use that initial version instead so we can have instance equality preserved
-      // @ts-expect-error - filterCommonName is available on CompleteMolecule but not typed in MoleculeStructure
-      const initialListLookup = MoleculeList.initialList.moleculeNameMap[ molecule.filterCommonName( molecule.commonName ) ];
+      const initialListLookup = MoleculeList.initialList.moleculeNameMap[ molecule.filterCommonName() ];
       if ( initialListLookup && molecule.isEquivalent( initialListLookup ) ) {
         molecule = initialListLookup;
       }
@@ -158,8 +157,7 @@ class MoleculeList {
    */
   public addCompleteMolecule( completeMolecule: CompleteMolecule ): void {
     this.completeMolecules.push( completeMolecule );
-    // @ts-expect-error - filterCommonName is available on CompleteMolecule but not fully typed yet
-    this.moleculeNameMap[ completeMolecule.filterCommonName( completeMolecule.commonName ) ] = completeMolecule;
+    this.moleculeNameMap[ completeMolecule.filterCommonName() ] = completeMolecule;
   }
 
   /**
@@ -228,12 +226,8 @@ class MoleculeList {
       const molecule = CompleteMolecule.fromSerial2( string ) as CompleteMolecule;
 
       // sanity checks
-      assert && assert( !molecule.hasLoopsOrIsDisconnected(),
-        // @ts-expect-error - filterCommonName and commonName are available on CompleteMolecule but not fully typed
-        `has loops or is disconnected: ${molecule.filterCommonName( molecule.commonName )}` );
-      assert && assert( !molecule.hasWeirdHydrogenProperties(),
-        // @ts-expect-error - filterCommonName and commonName are available on CompleteMolecule but not fully typed
-        `has weird hydrogen pattern in: ${molecule.filterCommonName( molecule.commonName )}` );
+      assert && assert( !molecule.hasLoopsOrIsDisconnected(), `has loops or is disconnected: ${molecule.filterCommonName()}` );
+      assert && assert( !molecule.hasWeirdHydrogenProperties(), `has weird hydrogen pattern in: ${molecule.filterCommonName()}` );
       return molecule;
     } );
   }

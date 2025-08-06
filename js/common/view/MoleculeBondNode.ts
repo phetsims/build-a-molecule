@@ -69,7 +69,6 @@ export default class MoleculeBondNode extends Node {
     // Use the lewis dot model to get our bond direction
     const bondDirection = kit.getBondDirection( this.a, this.b );
 
-    // @ts-expect-error
     const isHorizontal = bondDirection === Direction.WEST || bondDirection === Direction.EAST;
 
     // Define images for opened and closed scissors

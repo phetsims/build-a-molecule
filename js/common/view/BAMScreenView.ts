@@ -18,12 +18,12 @@ import DragListener from '../../../../scenery/js/listeners/DragListener.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import buildAMolecule from '../../buildAMolecule.js';
 import BAMConstants from '../BAMConstants.js';
-import BAMModel from '../model/BAMModel.js';
 import Atom2 from '../model/Atom2.js';
+import BAMModel from '../model/BAMModel.js';
+import CompleteMolecule from '../model/CompleteMolecule.js';
 import Kit from '../model/Kit.js';
 import KitCollection from '../model/KitCollection.js';
 import Molecule from '../model/Molecule.js';
-import CompleteMolecule from '../model/CompleteMolecule.js';
 import AtomNode from './AtomNode.js';
 import KitCollectionNode from './KitCollectionNode.js';
 import KitPlayAreaNode from './KitPlayAreaNode.js';
@@ -329,7 +329,7 @@ export default class BAMScreenView extends ScreenView {
    * @param isCollectingView - Whether this is a collecting view
    * @returns The created KitCollectionNode
    */
-  private addCollection( collection: KitCollection, isCollectingView: boolean ): KitCollectionNode {
+  protected addCollection( collection: KitCollection, isCollectingView: boolean ): KitCollectionNode {
     const kitCollectionNode = new KitCollectionNode( collection, this as any, isCollectingView ); // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when KitCollectionNode typing is available, see https://github.com/phetsims/build-a-molecule/issues/245
     this.kitCollectionMap[ collection.id ] = kitCollectionNode;
 

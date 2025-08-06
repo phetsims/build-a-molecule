@@ -26,7 +26,6 @@ import BAMScreenView from './BAMScreenView.js';
 import CollectionPanel from './CollectionPanel.js';
 import KitCollectionNode from './KitCollectionNode.js';
 
-// @ts-expect-error - This class intentionally shadows the private addCollection method from parent for collecting-specific behavior
 class MoleculeCollectingScreenView extends BAMScreenView {
 
   // Whether the AllFilledDialog has been shown once
@@ -127,8 +126,7 @@ class MoleculeCollectingScreenView extends BAMScreenView {
    * @param collection - The kit collection to add
    * @returns The created KitCollectionNode
    */
-  // @ts-expect-error - Method shadows parent private method for collecting-specific behavior
-  public addCollection( collection: KitCollection ): KitCollectionNode {
+  public override addCollection( collection: KitCollection ): KitCollectionNode {
     // Replicate parent's addCollection behavior since it's private
     const kitCollectionNode = new KitCollectionNode( collection, this, true );
     this.kitCollectionMap[ ( collection as any ).id ] = kitCollectionNode; // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when KitCollection is converted, see https://github.com/phetsims/build-a-molecule/issues/245

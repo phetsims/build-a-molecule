@@ -54,7 +54,12 @@ const Direction = EnumerationDeprecated.byMap( {
   SOUTH: SOUTH,
   EAST: EAST,
   WEST: WEST
-} );
+} ) as unknown as {
+  NORTH: DirectionValue;
+  SOUTH: DirectionValue;
+  EAST: DirectionValue;
+  WEST: DirectionValue;
+};
 
 buildAMolecule.register( 'Direction', Direction );
 export default Direction;
