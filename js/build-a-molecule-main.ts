@@ -12,6 +12,7 @@
 
 import Sim from '../../joist/js/Sim.js';
 import simLauncher from '../../joist/js/simLauncher.js';
+import Tandem from '../../tandem/js/Tandem.js';
 import soundManager from '../../tambo/js/soundManager.js';
 import BuildAMoleculeStrings from './BuildAMoleculeStrings.js';
 import MultipleScreen from './multiple/MultipleScreen.js';
@@ -35,9 +36,9 @@ simLauncher.launch( () => {
 
   // Create and start the sim
   new Sim( buildAMoleculeTitleStringProperty, [
-    new SingleScreen(),
-    new MultipleScreen(),
-    new PlaygroundScreen()
+    new SingleScreen( Tandem.ROOT.createTandem( 'singleScreen' ) ),
+    new MultipleScreen( Tandem.ROOT.createTandem( 'multipleScreen' ) ),
+    new PlaygroundScreen( Tandem.ROOT.createTandem( 'playgroundScreen' ) )
   ], simOptions ).start();
 
   soundManager.setOutputLevelForCategory( 'user-interface', 0 );

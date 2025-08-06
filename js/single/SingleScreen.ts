@@ -1,8 +1,5 @@
 // Copyright 2013-2022, University of Colorado Boulder
 
-/* eslint-disable */
-// @ts-nocheck
-
 /**
  * 1st screen: collection boxes only take 1 molecule, and our 1st kit collection is always the same
  *
@@ -11,6 +8,7 @@
  */
 
 import Property from '../../../axon/js/Property.js';
+import Tandem from '../../../tandem/js/Tandem.js';
 import buildAMolecule from '../buildAMolecule.js';
 import BuildAMoleculeStrings from '../BuildAMoleculeStrings.js';
 import BAMConstants from '../common/BAMConstants.js';
@@ -19,17 +17,17 @@ import BAMScreen from '../common/view/BAMScreen.js';
 import MoleculeCollectingScreenView from '../common/view/MoleculeCollectingScreenView.js';
 import SingleModel from './model/SingleModel.js';
 
-class SingleScreen extends BAMScreen {
-  constructor() {
-    const options = {
-      name: BuildAMoleculeStrings.title.singleStringProperty,
-      backgroundColorProperty: new Property( BAMConstants.PLAY_AREA_BACKGROUND_COLOR ),
-      homeScreenIcon: BAMIconFactory.createSingleScreenIcon()
-    };
+class SingleScreen extends BAMScreen<SingleModel, MoleculeCollectingScreenView> {
+  public constructor( tandem: Tandem ) {
     super(
       () => new SingleModel(),
-      model => new MoleculeCollectingScreenView( model, true ),
-      options
+      ( model: SingleModel ) => new MoleculeCollectingScreenView( model, true ),
+      {
+        name: BuildAMoleculeStrings.title.singleStringProperty,
+        backgroundColorProperty: new Property( BAMConstants.PLAY_AREA_BACKGROUND_COLOR ),
+        homeScreenIcon: BAMIconFactory.createSingleScreenIcon(),
+        tandem: tandem
+      }
     );
   }
 }

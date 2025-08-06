@@ -1,8 +1,5 @@
 // Copyright 2013-2022, University of Colorado Boulder
 
-/* eslint-disable */
-// @ts-nocheck
-
 /**
  * 3rd screen: Shows kits below as normal, but without collection boxes.
  *
@@ -11,6 +8,7 @@
  */
 
 import Property from '../../../axon/js/Property.js';
+import Tandem from '../../../tandem/js/Tandem.js';
 import buildAMolecule from '../buildAMolecule.js';
 import BuildAMoleculeStrings from '../BuildAMoleculeStrings.js';
 import BAMConstants from '../common/BAMConstants.js';
@@ -19,17 +17,17 @@ import BAMScreen from '../common/view/BAMScreen.js';
 import BAMScreenView from '../common/view/BAMScreenView.js';
 import PlaygroundModel from './model/PlaygroundModel.js';
 
-class PlaygroundScreen extends BAMScreen {
-  constructor() {
-    const options = {
-      name: BuildAMoleculeStrings.title.playgroundStringProperty,
-      backgroundColorProperty: new Property( BAMConstants.PLAY_AREA_BACKGROUND_COLOR ),
-      homeScreenIcon: BAMIconFactory.createPlaygroundScreenIcon()
-    };
+class PlaygroundScreen extends BAMScreen<PlaygroundModel, BAMScreenView> {
+  public constructor( tandem: Tandem ) {
     super(
       () => new PlaygroundModel(),
-      model => new BAMScreenView( model ),
-      options
+      ( model: PlaygroundModel ) => new BAMScreenView( model ),
+      {
+        name: BuildAMoleculeStrings.title.playgroundStringProperty,
+        backgroundColorProperty: new Property( BAMConstants.PLAY_AREA_BACKGROUND_COLOR ),
+        homeScreenIcon: BAMIconFactory.createPlaygroundScreenIcon(),
+        tandem: tandem
+      }
     );
   }
 }
