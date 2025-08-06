@@ -1,8 +1,5 @@
 // Copyright 2020-2025, University of Colorado Boulder
 
-/* eslint-disable */
-// @ts-nocheck
-
 /**
  * A panel that shows collection areas for different collections, and allows switching between those collections
  *
@@ -12,47 +9,51 @@
 
 import ScreenView from '../../../../joist/js/ScreenView.js';
 import Shape from '../../../../kite/js/Shape.js';
-import merge from '../../../../phet-core/js/merge.js';
+import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
 import NextPreviousNavigationNode from '../../../../scenery-phet/js/NextPreviousNavigationNode.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import VBox from '../../../../scenery/js/layout/nodes/VBox.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import Text from '../../../../scenery/js/nodes/Text.js';
-import Panel from '../../../../sun/js/Panel.js';
+import Panel, { PanelOptions } from '../../../../sun/js/Panel.js';
 import buildAMolecule from '../../buildAMolecule.js';
 import BuildAMoleculeStrings from '../../BuildAMoleculeStrings.js';
 import BAMConstants from '../BAMConstants.js';
+import BAMModel from '../model/BAMModel.js';
+import KitCollection from '../model/KitCollection.js';
 import CollectionAreaNode from './CollectionAreaNode.js';
 
+type SelfOptions = EmptySelfOptions;
+export type CollectionPanelOptions = SelfOptions & PanelOptions;
+
 class CollectionPanel extends Panel {
+  
+  private readonly layoutNode: VBox;
+  private readonly collectionAreaHolder: Node;
+  private readonly collectionAreaMap: Record<number, CollectionAreaNode>;
+  private readonly collectionAttachmentCallbacks: ( () => void )[];
+
   /**
-   * @param {BAMModel} bamModel
-   * @param {boolean} isSingleCollectionMode
-   * @param {Array.<function>} collectionAttachmentCallbacks
-   * @param {function} toModelBounds
-   * @param {function} showDialogCallback
-   * @param {function} updateRefillButton
-   * @param {Object} [options]
+   * @param bamModel - The main model for Build A Molecule
+   * @param isSingleCollectionMode - Whether this is in single collection mode
+   * @param collectionAttachmentCallbacks - Callbacks for collection attachment
+   * @param toModelBounds - Function to convert to model bounds
+   * @param showDialogCallback - Callback for showing dialogs
+   * @param updateRefillButton - Function to update refill button
+   * @param providedOptions - Panel options
    */
-  constructor( bamModel, isSingleCollectionMode, collectionAttachmentCallbacks, toModelBounds,
-               showDialogCallback, updateRefillButton, options ) {
-    options = merge( {
+  public constructor( bamModel: BAMModel, isSingleCollectionMode: boolean, collectionAttachmentCallbacks: ( () => void )[], toModelBounds: ( node: Node ) => any, // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when bounds type is available, see https://github.com/phetsims/build-a-molecule/issues/245
+               showDialogCallback: () => void, updateRefillButton: () => void, providedOptions?: CollectionPanelOptions ) {
+    const options = optionize<CollectionPanelOptions, SelfOptions, PanelOptions>()( {
       cornerRadius: BAMConstants.CORNER_RADIUS
-    }, options );
+    }, providedOptions );
     const layoutNode = new VBox( { spacing: 10 } );
     super( layoutNode, options );
 
-    // @private {VBox}
     this.layoutNode = layoutNode;
-
-    // @private {Node}
     this.collectionAreaHolder = new Node();
-
-    // @private {Object.<kitCollectionId:number, Node}
     this.collectionAreaMap = {};
-
-    // @private {Array.<function>}
     this.collectionAttachmentCallbacks = collectionAttachmentCallbacks;
 
     // Create header text for panel
@@ -92,7 +93,7 @@ class CollectionPanel extends Panel {
       previous() {
         bamModel.switchToPreviousCollection();
       },
-      createTouchAreaShape( shape ) {
+      createTouchAreaShape( shape: any ) { // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when Shape type is available, see https://github.com/phetsims/build-a-molecule/issues/245
         // square touch area
         return Shape.bounds( shape.bounds.dilated( 7 ) );
       }
@@ -113,8 +114,8 @@ class CollectionPanel extends Panel {
     this.layoutNode.addChild( this.collectionAreaHolder );
 
     // anonymous function here, so we don't create a bunch of fields
-    const createCollectionNode = collection => {
-      this.collectionAreaMap[ collection.id ] = new CollectionAreaNode(
+    const createCollectionNode = ( collection: KitCollection ): void => {
+      this.collectionAreaMap[ ( collection as any ).id ] = new CollectionAreaNode( // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when KitCollection is converted to include id, see https://github.com/phetsims/build-a-molecule/issues/245
         collection, isSingleCollectionMode, toModelBounds, showDialogCallback, updateRefillButton
       );
     };
@@ -125,7 +126,7 @@ class CollectionPanel extends Panel {
     } );
 
     // If a new collection is added, create one for it
-    bamModel.addedCollectionEmitter.addListener( collection => {
+    bamModel.addedCollectionEmitter.addListener( ( collection: KitCollection ) => {
       createCollectionNode( collection );
     } );
 
@@ -133,7 +134,7 @@ class CollectionPanel extends Panel {
     this.useCollection( bamModel.currentCollectionProperty.value );
 
     // As the current collection changes, use that new collection
-    bamModel.currentCollectionProperty.link( newCollection => {
+    bamModel.currentCollectionProperty.link( ( newCollection: KitCollection ) => {
       this.useCollection( newCollection );
     } );
   }
@@ -141,15 +142,13 @@ class CollectionPanel extends Panel {
 
   /**
    * Swap to use the specified collection for this panel
-   * @param {KitCollection} collection
-   *
-   * @private
+   * @param collection - The collection to use
    */
-  useCollection( collection ) {
+  private useCollection( collection: KitCollection ): void {
 
     // swap out the inner collection area
     this.collectionAreaHolder.removeAllChildren();
-    const collectionAreaNode = this.collectionAreaMap[ collection.id ];
+    const collectionAreaNode = this.collectionAreaMap[ ( collection as any ).id ]; // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when KitCollection is converted to include id, see https://github.com/phetsims/build-a-molecule/issues/245
     this.collectionAreaHolder.addChild( collectionAreaNode );
 
     // if we are hooked up, update the box positions. otherwise, listen to the canvas for when it is
@@ -166,19 +165,24 @@ class CollectionPanel extends Panel {
 
   /**
    * Walk up the scene graph, looking to see if we are a (grand)child of a canvas
-   *
-   * @private
-   * @returns {boolean} If an ancestor is a BuildAMoleculeCanvas
+   * @returns If an ancestor is a ScreenView
    */
-  hasScreenViewAsAncestor() {
-    let node = this;
-    while ( node.getParent() !== null ) {
-      node = node.getParent();
-      if ( node instanceof ScreenView ) {
-        return true;
-      }
+  private hasScreenViewAsAncestor(): boolean {
+    return this.hasScreenViewAsAncestorHelper( this );
+  }
+
+  /**
+   * Helper method to check ancestors without using this alias
+   */
+  private hasScreenViewAsAncestorHelper( node: Node ): boolean {
+    const parent = node.getParent();
+    if ( parent === null ) {
+      return false;
     }
-    return false;
+    if ( parent instanceof ScreenView ) {
+      return true;
+    }
+    return this.hasScreenViewAsAncestorHelper( parent );
   }
 }
 

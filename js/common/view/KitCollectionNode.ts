@@ -1,8 +1,5 @@
 // Copyright 2020-2025, University of Colorado Boulder
 
-/* eslint-disable */
-// @ts-nocheck
-
 /**
  * Contains the kits and atoms in the play area.
  *
@@ -13,27 +10,32 @@
 import Node from '../../../../scenery/js/nodes/Node.js';
 import buildAMolecule from '../../buildAMolecule.js';
 import BAMConstants from '../BAMConstants.js';
+import KitCollection from '../model/KitCollection.js';
 import KitNode from './KitNode.js';
 import KitPanel from './KitPanel.js';
+import MoleculeCollectingScreenView from './MoleculeCollectingScreenView.js';
 
 class KitCollectionNode extends Node {
+
+  public readonly kitPanel: KitPanel;
+
   /**
-   * @param {KitCollection} collection
-   * @param {MoleculeCollectingScreenView} view
-   * @param {boolean} isCollectingView
+   * @param collection - The collection of kits
+   * @param view - The screen view
+   * @param isCollectingView - Whether this is in collecting mode
    */
-  constructor( collection, view, isCollectingView ) {
+  public constructor( collection: KitCollection, view: MoleculeCollectingScreenView, isCollectingView: boolean ) {
     super();
 
-    // @public {KitPanel} Create a kit panel to contain the kit buckets. Height/Widht are empirically determined
+    // Create a kit panel to contain the kit buckets. Height/Width are empirically determined
     this.kitPanel = new KitPanel( collection, 655, 148, view, isCollectingView );
     this.kitPanel.bottom = view.layoutBounds.bottom - BAMConstants.VIEW_PADDING;
     this.kitPanel.left = view.layoutBounds.left + BAMConstants.VIEW_PADDING;
     this.addChild( this.kitPanel );
 
     // Maps kit ID => KitNode
-    const kitMap = [];
-    collection.kits.forEach( kit => {
+    const kitMap: KitNode[] = [];
+    ( collection as any ).kits.forEach( ( kit: any ) => { // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when KitCollection and Kit are converted, see https://github.com/phetsims/build-a-molecule/issues/245
       kitMap[ kit.id ] = new KitNode( kit, view );
     } );
   }

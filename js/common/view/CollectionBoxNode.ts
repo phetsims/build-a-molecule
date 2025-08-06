@@ -1,8 +1,5 @@
 // Copyright 2020-2025, University of Colorado Boulder
 
-/* eslint-disable */
-// @ts-nocheck
-
 /**
  * Represents a generic collection box node which is decorated by additional header nodes (probably text describing what can be put in, what is in it,
  * etc.)
@@ -13,12 +10,15 @@
 
 import stepTimer from '../../../../axon/js/stepTimer.js';
 import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
-import VBox from '../../../../scenery/js/layout/nodes/VBox.js';
+import VBox, { VBoxOptions } from '../../../../scenery/js/layout/nodes/VBox.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
 import Color from '../../../../scenery/js/util/Color.js';
 import buildAMolecule from '../../buildAMolecule.js';
 import BAMConstants from '../BAMConstants.js';
+import CollectionBox from '../model/CollectionBox.js';
+import CompleteMolecule from '../model/CompleteMolecule.js';
+import Molecule from '../model/Molecule.js';
 import MoleculeList from '../model/MoleculeList.js';
 import BAMIconFactory from './BAMIconFactory.js';
 import ShowMolecule3DButtonNode from './view3d/ShowMolecule3DButtonNode.js';
@@ -27,55 +27,56 @@ import ShowMolecule3DButtonNode from './view3d/ShowMolecule3DButtonNode.js';
 const BLACK_BOX_PADDING = 7;
 
 // {Object.<moleculeId:number, Node>} Used to map molecules to their respective thumbnails
-const moleculeIdThumbnailMap = {};
+const moleculeIdThumbnailMap: Record<number, Node> = {};
 
 class CollectionBoxNode extends VBox {
+  
+  private readonly box: CollectionBox;
+  private readonly toModelBounds: ( node: Node ) => any; // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when bounds type is available, see https://github.com/phetsims/build-a-molecule/issues/245
+  private readonly boxNode: Node;
+  private readonly moleculeNodes: Node[];
+  // NOT zero, since that could be a valid timeout ID for stepTimer.setTimeout!
+  private blinkTimeout: any | null; // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when stepTimer types are available, see https://github.com/phetsims/build-a-molecule/issues/245
+  // stores nodes for each molecule
+  private readonly moleculeNodeMap: Record<number, Node>;
+  private readonly blackBox: Rectangle;
+  private readonly button3dWidth: number;
+  // Cue that tells the user where to drop the molecule.
+  private readonly cueNode: ArrowNode;
+  // Layer to house molecules
+  private readonly moleculeLayer: Node;
+
   /**
-   * @param {CollectionBox} box
-   * @param {function} toModelBounds - Used to update position of the collection box
-   * @param {function} showDialogCallback
-   * @param {Object} [options]
+   * @param box - CollectionBox model
+   * @param toModelBounds - Used to update position of the collection box
+   * @param showDialogCallback - Callback for showing 3D dialog
+   * @param options - VBox options
    */
-  constructor( box, toModelBounds, showDialogCallback, options ) {
+  public constructor( box: CollectionBox, toModelBounds: ( node: Node ) => any, showDialogCallback: () => void, options?: VBoxOptions ) { // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when bounds type is available, see https://github.com/phetsims/build-a-molecule/issues/245
     super( { spacing: 2 } );
 
-    // @private {CollectionBox}
     this.box = box;
-
-    // @private {function}
     this.toModelBounds = toModelBounds;
-
-    // @private {Node}
     this.boxNode = new Node();
-
-    // @private {Array.<Node>}
     this.moleculeNodes = [];
-
-    // @private {function|null} NOT zero, since that could be a valid timeout ID for stepTimer.setTimeout!
     this.blinkTimeout = null;
-
-    // @private {Object.<moleculeId:number,Node>} stores nodes for each molecule
     this.moleculeNodeMap = {};
-
-    // @private {Rectangle}
     this.blackBox = new Rectangle( 0, 0, 160, 50, {
       fill: Color.BLACK,
       lineWidth: 4
     } );
 
     // Arrange button position for to trigger 3D representation
-    const show3dButton = new ShowMolecule3DButtonNode( box.moleculeType, showDialogCallback );
+    const show3dButton = new ShowMolecule3DButtonNode( box.moleculeType, showDialogCallback, {} );
     show3dButton.touchArea = show3dButton.bounds.dilated( 10 );
     show3dButton.right = this.blackBox.right - BLACK_BOX_PADDING;
     show3dButton.centerY = this.blackBox.centerY;
 
-    // @private {number}
     this.button3dWidth = show3dButton.width;
     box.quantityProperty.link( quantity => { show3dButton.visible = quantity > 0; } );
     this.blackBox.addChild( show3dButton );
     this.boxNode.addChild( this.blackBox );
 
-    // @private {ArrowNode}Cue that tells the user where to drop the molecule.
     this.cueNode = new ArrowNode( 10, 0, 34, 0, {
       fill: 'blue',
       stroke: 'black',
@@ -98,7 +99,6 @@ class CollectionBoxNode extends VBox {
     );
     this.boxNode.addChild( this.cueNode );
 
-    // @private {Node} Layer to house molecules
     this.moleculeLayer = new Node( {} );
     this.boxNode.addChild( this.moleculeLayer );
 
@@ -116,59 +116,55 @@ class CollectionBoxNode extends VBox {
 
   /**
    * Allows us to set the model position of the collection boxes according to how they are laid out
-   *
-   * @public
    */
-  updatePosition() {
+  public updatePosition(): void {
     this.box.dropBoundsProperty.set( this.toModelBounds( this.blackBox ) );
   }
 
   /**
    * Add molecule to map and molecule layer. Update the layer and graphics.
-   * @param {Molecule} molecule
-   *
-   * @public
+   * @param molecule - The molecule to add
    */
-  addMolecule( molecule ) {
+  public addMolecule( molecule: Molecule ): void {
     this.cancelBlinksInProgress();
     this.updateBoxGraphics();
 
     const completeMolecule = MoleculeList.getMainInstance().findMatchingCompleteMolecule( molecule );
-    const pseudo3DNode = CollectionBoxNode.lookupThumbnail( completeMolecule, moleculeIdThumbnailMap );
-    this.moleculeLayer.addChild( pseudo3DNode );
-    this.moleculeNodes.push( pseudo3DNode );
-    this.moleculeNodeMap[ molecule.moleculeId ] = pseudo3DNode;
+    if ( completeMolecule ) {
+      const pseudo3DNode = CollectionBoxNode.lookupThumbnail( completeMolecule, moleculeIdThumbnailMap );
+      this.moleculeLayer.addChild( pseudo3DNode );
+      this.moleculeNodes.push( pseudo3DNode );
+      this.moleculeNodeMap[ ( molecule as any ).moleculeId ] = pseudo3DNode; // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when Molecule is converted to include moleculeId, see https://github.com/phetsims/build-a-molecule/issues/245
 
-    this.updateMoleculeLayout();
+      this.updateMoleculeLayout();
+    }
   }
 
   /**
    * Remove molecule to map and molecule layer. Update the layer and graphics.
-   * @param {Molecule} molecule
-   *
-   * @private
+   * @param molecule - The molecule to remove
    */
-  removeMolecule( molecule ) {
+  private removeMolecule( molecule: Molecule ): void {
     this.cancelBlinksInProgress();
     this.updateBoxGraphics();
 
-    const lastMoleculeNode = this.moleculeNodeMap[ molecule.moleculeId ];
+    const moleculeId = ( molecule as any ).moleculeId; // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when Molecule is converted to include moleculeId, see https://github.com/phetsims/build-a-molecule/issues/245
+    const lastMoleculeNode = this.moleculeNodeMap[ moleculeId ];
     this.moleculeLayer.removeChild( lastMoleculeNode );
-    _.remove( this.moleculeNodes, item => {
-      return lastMoleculeNode === item ? lastMoleculeNode : null;
-    } );
-    this.moleculeNodeMap[ molecule.moleculeId ].detach();
-    delete this.moleculeNodeMap[ molecule.moleculeId ];
+    const index = this.moleculeNodes.indexOf( lastMoleculeNode );
+    if ( index !== -1 ) {
+      this.moleculeNodes.splice( index, 1 );
+    }
+    this.moleculeNodeMap[ moleculeId ].detach();
+    delete this.moleculeNodeMap[ moleculeId ];
 
     this.updateMoleculeLayout();
   }
 
   /**
    * Update the molecules that are within the box
-   *
-   * @private
    */
-  updateMoleculeLayout() {
+  private updateMoleculeLayout(): void {
 
     // position molecule nodes
     this.layOutMoleculeList( this.moleculeNodes );
@@ -183,12 +179,10 @@ class CollectionBoxNode extends VBox {
 
   /**
    * Layout of molecules. Spaced horizontally with moleculePadding, and vertically centered
-   * @param {Array.<Rectangle>} moleculeNodes List of molecules to lay out
-   *
-   * @private
+   * @param moleculeNodes - List of molecules to lay out
    */
-  layOutMoleculeList( moleculeNodes ) {
-    const maxHeight = _.max( moleculeNodes.map( node => node.height ) );
+  private layOutMoleculeList( moleculeNodes: Node[] ): void {
+    const maxHeight = Math.max( ...moleculeNodes.map( node => node.height ) );
     let x = 0;
     moleculeNodes.forEach( moleculeNode => {
       moleculeNode.setTranslation( x, ( maxHeight - moleculeNode.height ) / 2 );
@@ -198,11 +192,8 @@ class CollectionBoxNode extends VBox {
 
   /**
    * Return the molecule area. Excluding the area in the black box where the 3D button needs to go.
-   *
-   * @private
-   * @returns {Bounds2}
    */
-  getMoleculeAreaInBlackBox() {
+  private getMoleculeAreaInBlackBox(): any { // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when Bounds2 type is available, see https://github.com/phetsims/build-a-molecule/issues/245
     const bounds = this.blackBox.bounds;
 
     // leave room for 3d button on right hand side
@@ -211,11 +202,9 @@ class CollectionBoxNode extends VBox {
 
   /**
    * Center the molecules, while considering if the black box can fit multiple molecules
-   * @param {boolean} isMultipleCollectionBox
-   *
-   * @private
+   * @param isMultipleCollectionBox - Whether this is a multiple collection box
    */
-  centerMoleculesInBlackBox( isMultipleCollectionBox ) {
+  private centerMoleculesInBlackBox( isMultipleCollectionBox: boolean ): void {
     const moleculeArea = this.getMoleculeAreaInBlackBox();
 
     // for now, we scale the molecules up and down depending on their size
@@ -231,10 +220,8 @@ class CollectionBoxNode extends VBox {
 
   /**
    * Update the stroke around the collection box.
-   *
-   * @private
    */
-  updateBoxGraphics() {
+  private updateBoxGraphics(): void {
     if ( this.box.isFull() ) {
       this.blackBox.stroke = BAMConstants.MOLECULE_COLLECTION_BOX_HIGHLIGHT;
       this.box.cueVisibilityProperty.value = false;
@@ -246,10 +233,8 @@ class CollectionBoxNode extends VBox {
 
   /**
    * Sets up a blinking box to register that a molecule was created that can go into a box
-   *
-   * @private
    */
-  blink() {
+  private blink(): void {
     const blinkLengthInSeconds = 1.3;
 
     // our delay between states
@@ -290,38 +275,34 @@ class CollectionBoxNode extends VBox {
         }
 
         // set the blinkTimeout so it can be canceled
-        this.blinkTimeout = stepTimer.setTimeout( tick, blinkDelayInMs );
+        this.blinkTimeout = stepTimer.setTimeout( tick, blinkDelayInMs ) as any; // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when stepTimer types are available, see https://github.com/phetsims/build-a-molecule/issues/245
       }
     };
-    this.blinkTimeout = stepTimer.setTimeout( tick, blinkDelayInMs );
+    this.blinkTimeout = stepTimer.setTimeout( tick, blinkDelayInMs ) as any; // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when stepTimer types are available, see https://github.com/phetsims/build-a-molecule/issues/245
   }
 
   /**
    * Interrupt the blinking
-   *
-   * @private
    */
-  cancelBlinksInProgress() {
+  private cancelBlinksInProgress(): void {
 
     // stop any previous blinking from happening. don't want double-blinking
     if ( this.blinkTimeout !== null ) {
-      stepTimer.clearTimeout( this.blinkTimeout );
+      stepTimer.clearTimeout( this.blinkTimeout ); // The timeout variable is already typed as any for compatibility
       this.blinkTimeout = null;
     }
   }
 
   /**
    * Search for a thumbnail that represents the completed molecule. Thumbnail is drawn using canvas.
-   * @param {CompleteMolecule} completeMolecule
-   * @param {Object.<moleculeId:number, Node>} moleculeMap
-   *
-   * @private
-   * @returns {Node}
+   * @param completeMolecule - The complete molecule to create a thumbnail for
+   * @param moleculeMap - Map of molecule IDs to nodes
    */
-  static lookupThumbnail( completeMolecule, moleculeMap ) {
+  public static lookupThumbnail( completeMolecule: CompleteMolecule, moleculeMap: Record<number, Node> ): Node {
     const dimensionLength = 50;
-    if ( !moleculeMap[ completeMolecule.moleculeId ] ) {
-      moleculeMap[ completeMolecule.moleculeId ] = BAMIconFactory.createIconImage(
+    const moleculeId = ( completeMolecule as any ).moleculeId; // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when CompleteMolecule is converted to include moleculeId, see https://github.com/phetsims/build-a-molecule/issues/245
+    if ( !moleculeMap[ moleculeId ] ) {
+      moleculeMap[ moleculeId ] = BAMIconFactory.createIconImage(
         completeMolecule,
         dimensionLength,
         dimensionLength,
@@ -330,7 +311,7 @@ class CollectionBoxNode extends VBox {
       );
     }
     // wrap the returned image in an extra node so we can transform them independently, and that takes up the proper amount of space
-    return new Rectangle( 0, 0, dimensionLength, dimensionLength, { children: [ moleculeMap[ completeMolecule.moleculeId ] ] } );
+    return new Rectangle( 0, 0, dimensionLength, dimensionLength, { children: [ moleculeMap[ moleculeId ] ] } );
   }
 }
 
