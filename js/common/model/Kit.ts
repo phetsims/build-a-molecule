@@ -1,8 +1,5 @@
 // Copyright 2020-2024, University of Colorado Boulder
 
-/* eslint-disable */
-// @ts-nocheck
-
 /**
  * Contains multiple buckets of different types of atoms and a kit play area for dropping the atoms. There is only one
  * "active" kit at a time, which is regulated by toggling the carousel pages. Active kits have their buckets and kit
@@ -13,16 +10,24 @@
  */
 
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
+import type { ObservableArray } from '../../../../axon/js/createObservableArray.js';
 import createObservableArray from '../../../../axon/js/createObservableArray.js';
 import Emitter from '../../../../axon/js/Emitter.js';
 import Property from '../../../../axon/js/Property.js';
+import TEmitter from '../../../../axon/js/TEmitter.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import dotRandom from '../../../../dot/js/dotRandom.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
+import Atom from '../../../../nitroglycerin/js/Atom.js';
+import affirm from '../../../../perennial-alias/js/browser-and-node/affirm.js';
 import arrayRemove from '../../../../phet-core/js/arrayRemove.js';
 import cleanArray from '../../../../phet-core/js/cleanArray.js';
+import Bucket from '../../../../phetcommon/js/model/Bucket.js';
 import buildAMolecule from '../../buildAMolecule.js';
 import BAMQueryParameters from '../BAMQueryParameters.js';
+import Atom2 from './Atom2.js';
+import CollectionBox from './CollectionBox.js';
+import CollectionLayout from './CollectionLayout.js';
 import LewisDotModel from './LewisDotModel.js';
 import Molecule from './Molecule.js';
 import MoleculeList from './MoleculeList.js';
@@ -30,28 +35,33 @@ import MoleculeStructure from './MoleculeStructure.js';
 
 let kitIdCounter = 0;
 
-class Kit {
+export default class Kit {
 
-  // Public properties
-  public readonly id: number; // unique identifier
-  public readonly atomsInPlayArea: any; // @ts-expect-error - ObservableArrayDef.<Atom2> - atoms currently in the play area
-  public readonly selectedAtomProperty: Property<any>; // @ts-expect-error - Property.<Atom|null> - Atom that has been clicked by user. Used for triggering cut targets for breaking bonds
-  public readonly activeProperty: BooleanProperty; // Whether this kit is the present kit being displayed and interacted with
-  public readonly visibleProperty: BooleanProperty; // Whether this kit is visible
-  public readonly addedMoleculeEmitter: Emitter; // Called with a single parameter molecule
-  public readonly removedMoleculeEmitter: Emitter; // Called with a single parameter molecule
-  public readonly atoms: any[]; // @ts-expect-error - Array.<Atom2> - Main list of atoms (in and out of buckets), but not ones in collection boxes
-  public readonly atomsInCollectionBox: any[]; // @ts-expect-error - Array.<Atom2> - atoms in the collection box
-  public readonly molecules: Molecule[]; // molecules in the play area
-  public lewisDotModel: any; // @ts-expect-error - LewisDotModel|null - Created later, lewis-dot connections between atoms on the play area
-  public readonly buckets: any[]; // @ts-expect-error - Array.<Bucket> - the buckets in this kit
-  public readonly collectionLayout: any; // @ts-expect-error - CollectionLayout - the layout for this kit
+  public readonly id: number;
+  public readonly atomsInPlayArea: ObservableArray<any>; // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when Atom2 is converted, see https://github.com/phetsims/build-a-molecule/issues/245
+  public readonly selectedAtomProperty: Property<any>; // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when Atom2 is converted, see https://github.com/phetsims/build-a-molecule/issues/245
+  public readonly activeProperty: BooleanProperty;
+  public readonly visibleProperty: BooleanProperty;
+  public readonly addedMoleculeEmitter: TEmitter<[ Molecule ]>;
+  public readonly removedMoleculeEmitter: TEmitter<[ Molecule ]>;
+  public atoms: any[]; // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when Atom2 is converted, see https://github.com/phetsims/build-a-molecule/issues/245
+  public readonly atomsInCollectionBox: any[]; // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when Atom2 is converted, see https://github.com/phetsims/build-a-molecule/issues/245
+  public readonly molecules: Molecule[];
+  public lewisDotModel: LewisDotModel | null;
+  public readonly buckets: any[]; // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when Bucket is converted, see https://github.com/phetsims/build-a-molecule/issues/245
+  public readonly collectionLayout: any; // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when CollectionLayout is converted, see https://github.com/phetsims/build-a-molecule/issues/245
+
+  // Static properties - defined at end of file
+  public static BondingOption: typeof BondingOption;
+  public static readonly bondDistanceThreshold = 100;
+  public static readonly bucketPadding = 50;
+  public static readonly interMoleculePadding = 100;
 
   /**
    * @param collectionLayout - The collection layout
    * @param buckets - Array of buckets
    */
-  public constructor( collectionLayout: any, buckets: any[] ) { // @ts-expect-error - TODO: Fix when CollectionLayout and Bucket are converted, see https://github.com/phetsims/build-a-molecule/issues/245
+  public constructor( collectionLayout: CollectionLayout, buckets: Bucket[] ) {
 
     this.id = kitIdCounter++;
     this.atomsInPlayArea = createObservableArray();
@@ -72,7 +82,7 @@ class Kit {
     this.layoutBuckets( buckets );
 
     // Add a molecule to the kit whenever we add an atom to the play area.
-    this.atomsInPlayArea.addItemAddedListener( ( atom: any ) => { // @ts-expect-error - TODO: Fix when Atom2 is converted, see https://github.com/phetsims/build-a-molecule/issues/245
+    this.atomsInPlayArea.addItemAddedListener( ( atom: Atom ) => {
 
       // Add a molecule to the kit with our newly added atom
       const molecule = new Molecule();
@@ -92,7 +102,7 @@ class Kit {
     this.molecules.slice().forEach( this.removeMolecule.bind( this ) );
 
     // put everything back in buckets
-    this.atoms.concat( this.atomsInCollectionBox ).forEach( ( atom: any ) => { // @ts-expect-error - TODO: Fix when Atom2 is converted, see https://github.com/phetsims/build-a-molecule/issues/245
+    this.atoms.concat( this.atomsInCollectionBox ).forEach( ( atom: Atom2 ) => {
       // reset the actual atom
       atom.reset();
 
@@ -111,11 +121,11 @@ class Kit {
     cleanArray( this.molecules );
 
     // keep track of all atoms in our kit
-    this.buckets.forEach( ( bucket: any ) => { // @ts-expect-error - TODO: Fix when Bucket is converted, see https://github.com/phetsims/build-a-molecule/issues/245
+    this.buckets.forEach( ( bucket: any ) => { // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when Bucket is converted, see https://github.com/phetsims/build-a-molecule/issues/245
       this.atoms = this.atoms.concat( bucket.getParticleList() );
 
-      bucket.getParticleList().forEach( ( atom: any ) => { // @ts-expect-error - TODO: Fix when Atom2 is converted, see https://github.com/phetsims/build-a-molecule/issues/245
-        this.lewisDotModel.addAtom( atom );
+      bucket.getParticleList().forEach( ( atom: Atom ) => {
+        this.lewisDotModel!.addAtom( atom );
       } );
 
       // Set the bucket to its filled state.
@@ -127,7 +137,7 @@ class Kit {
    * Adjust the layout of the buckets along with moving their atoms to the correct positions
    * @param buckets - Array of buckets to layout
    */
-  public layoutBuckets( buckets: any[] ): void { // @ts-expect-error - TODO: Fix when Bucket is converted, see https://github.com/phetsims/build-a-molecule/issues/245
+  public layoutBuckets( buckets: any[] ): void { // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when Bucket is converted, see https://github.com/phetsims/build-a-molecule/issues/245
     let usedWidth = 0;
     const bucketBounds = Bounds2.NOTHING.copy(); // considered mutable, used to calculate the center bounds of a bucket AND its atoms
 
@@ -140,7 +150,7 @@ class Kit {
 
       // include both the bucket's shape and its atoms in our bounds, so we can properly center the group
       bucketBounds.includeBounds( bucket.containerShape.bounds );
-      bucket.getParticleList().forEach( ( atom: any ) => { // @ts-expect-error - TODO: Fix when Atom2 is converted, see https://github.com/phetsims/build-a-molecule/issues/245
+      bucket.getParticleList().forEach( ( atom: Atom2 ) => {
         const atomPosition = atom.positionProperty.value;
         bucketBounds.includeBounds( new Bounds2( atomPosition.x - atom.covalentRadius, atomPosition.y - atom.covalentRadius,
           atomPosition.x + atom.covalentRadius, atomPosition.y + atom.covalentRadius ) );
@@ -150,7 +160,7 @@ class Kit {
     }
 
     // centers the buckets horizontally within the kit
-    buckets.forEach( ( bucket: any ) => { // @ts-expect-error - TODO: Fix when Bucket is converted, see https://github.com/phetsims/build-a-molecule/issues/245
+    buckets.forEach( ( bucket: any ) => { // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when Bucket is converted, see https://github.com/phetsims/build-a-molecule/issues/245
 
       // also note: this moves the atoms also!
       bucket.position = new Vector2( bucket.position.x - usedWidth / 2 + bucket.width / 2, bucketBounds.centerY );
@@ -161,8 +171,8 @@ class Kit {
    * Returns the bucket for a given element
    * @param element - The element to find a bucket for
    */
-  private getBucketForElement( element: any ): any { // @ts-expect-error - TODO: Fix when Element and Bucket are converted, see https://github.com/phetsims/build-a-molecule/issues/245
-    const elementBucket = this.buckets.find( ( bucket: any ) => { // @ts-expect-error - TODO: Fix when Bucket is converted, see https://github.com/phetsims/build-a-molecule/issues/245
+  private getBucketForElement( element: any ): any { // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when Element and Bucket are converted, see https://github.com/phetsims/build-a-molecule/issues/245
+    const elementBucket = this.buckets.find( ( bucket: any ) => { // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when Bucket is converted, see https://github.com/phetsims/build-a-molecule/issues/245
       return bucket.element.isSameElement( element );
     } );
     assert && assert( elementBucket, 'Element does not have an associated bucket.' );
@@ -172,14 +182,14 @@ class Kit {
   /**
    * Returns kit bounds within the collection layout
    */
-  public get availableKitBounds(): any { // @ts-expect-error - TODO: Fix when Bounds2 type is available, see https://github.com/phetsims/build-a-molecule/issues/245
+  public get availableKitBounds(): any { // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when Bounds2 type is available, see https://github.com/phetsims/build-a-molecule/issues/245
     return this.collectionLayout.availableKitBounds;
   }
 
   /**
    * Returns play area bounds within the collection layout
    */
-  public get availablePlayAreaBounds(): any { // @ts-expect-error - TODO: Fix when Bounds2 type is available, see https://github.com/phetsims/build-a-molecule/issues/245
+  public get availablePlayAreaBounds(): any { // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when Bounds2 type is available, see https://github.com/phetsims/build-a-molecule/issues/245
     return this.collectionLayout.availablePlayAreaBounds;
   }
 
@@ -189,12 +199,14 @@ class Kit {
    * @param atom - The dropped atom
    * @param droppedInKitArea - Whether the atom was dropped in the kit area
    */
-  public atomDropped( atom: any, droppedInKitArea: boolean ): void { // @ts-expect-error - TODO: Fix when Atom2 is converted, see https://github.com/phetsims/build-a-molecule/issues/245
+  public atomDropped( atom: Atom, droppedInKitArea: boolean ): void {
     const molecule = this.getMolecule( atom );
 
     // dropped on kit, put it in a bucket
     if ( droppedInKitArea ) {
-      this.recycleMoleculeIntoBuckets( molecule );
+      if ( molecule ) {
+        this.recycleMoleculeIntoBuckets( molecule );
+      }
     }
     else {
 
@@ -211,14 +223,16 @@ class Kit {
    * @param molecule - The molecule being put in the box
    * @param box - The collection box
    */
-  public moleculePutInCollectionBox( molecule: Molecule, box: any ): void { // @ts-expect-error - TODO: Fix when CollectionBox is converted, see https://github.com/phetsims/build-a-molecule/issues/245
+  public moleculePutInCollectionBox( molecule: Molecule, box: CollectionBox ): void {
     if ( BAMQueryParameters.logData ) {
       console.log( `You have collected: ${box.moleculeType.commonName}` );
     }
     this.removeMolecule( molecule );
-    molecule.atoms.forEach( ( atom: any ) => { // @ts-expect-error - TODO: Fix when Atom2 is converted, see https://github.com/phetsims/build-a-molecule/issues/245
+    molecule.atoms.forEach( ( atom: Atom ) => {
       this.atoms.splice( this.atoms.indexOf( atom ), 1 );
       this.atomsInCollectionBox.push( atom );
+      affirm( atom instanceof Atom2, 'atom should be an instance of Atom2' );
+
       atom.visibleProperty.value = false;
 
       // Atoms in the CollectionBox shouldn't be in the play area.
@@ -231,7 +245,7 @@ class Kit {
    * Returns whether or not this atom registered in any of the molecule structures
    * @param atom - The atom to check
    */
-  public isAtomInPlay( atom: any ): boolean { // @ts-expect-error - TODO: Fix when Atom2 is converted, see https://github.com/phetsims/build-a-molecule/issues/245
+  public isAtomInPlay( atom: Atom ): boolean {
     return this.getMolecule( atom ) !== null;
   }
 
@@ -239,7 +253,7 @@ class Kit {
    * Return the molecule of a given atom. This can return a molecule with only one atom and zero bonds (single atom).
    * @param atom - The atom to find a molecule for
    */
-  public getMolecule( atom: any ): Molecule | null { // @ts-expect-error - TODO: Fix when Atom2 is converted, see https://github.com/phetsims/build-a-molecule/issues/245
+  public getMolecule( atom: Atom ): Molecule | null {
     // Note: (performance) seems like this could be a bottleneck? faster ways?
     const numMolecules = this.molecules.length;
     for ( let i = 0; i < numMolecules; i++ ) {
@@ -263,10 +277,10 @@ class Kit {
   public breakMolecule( molecule: Molecule ): void {
     const createdMolecules = [];
     this.removeMolecule( molecule );
-    molecule.atoms.forEach( ( atom: any ) => { // @ts-expect-error - TODO: Fix when Atom2 is converted, see https://github.com/phetsims/build-a-molecule/issues/245
+    molecule.atoms.forEach( ( atom: Atom ) => {
 
       // Break the current molecule and create a new molecule for each atom
-      this.lewisDotModel.breakBondsOfAtom( atom );
+      this.lewisDotModel!.breakBondsOfAtom( atom );
       const newMolecule = new Molecule();
       newMolecule.addAtom( atom );
       this.addMolecule( newMolecule );
@@ -282,18 +296,21 @@ class Kit {
    * @param a - Atom A
    * @param b - Atom B
    */
-  public breakBond( a: any, b: any ): void { // @ts-expect-error - TODO: Fix when Atom2 is converted, see https://github.com/phetsims/build-a-molecule/issues/245
+  public breakBond( a: Atom, b: Atom ): void {
 
     // get our old and new molecule structures
     const oldMolecule = this.getMolecule( a );
+    if ( !oldMolecule ) {
+      return;
+    }
     const newMolecules = MoleculeStructure.getMoleculesFromBrokenBond( oldMolecule, oldMolecule.getBond( a, b ), new Molecule(), new Molecule() );
 
     // break the bond in our lewis dot model
-    this.lewisDotModel.breakBond( a, b );
+    this.lewisDotModel!.breakBond( a, b );
 
     // remove the old one, add the new ones (firing listeners)
     this.removeMolecule( oldMolecule );
-    newMolecules.forEach( this.addMolecule.bind( this ) );
+    newMolecules.forEach( ( molecule: MoleculeStructure ) => this.addMolecule( molecule as Molecule ) );
 
     // push the new separate molecules away
     this.separateMoleculeDestinations();
@@ -304,8 +321,8 @@ class Kit {
    * @param a - Atom A
    * @param b - Atom B
    */
-  public getBondDirection( a: any, b: any ): any { // @ts-expect-error - TODO: Fix when Atom2 and Direction are converted, see https://github.com/phetsims/build-a-molecule/issues/245
-    return this.lewisDotModel.getBondDirection( a, b );
+  public getBondDirection( a: Atom, b: Atom ): any { // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when Atom2 and Direction are converted, see https://github.com/phetsims/build-a-molecule/issues/245
+    return this.lewisDotModel!.getBondDirection( a, b );
   }
 
   /**
@@ -313,7 +330,7 @@ class Kit {
    */
   public allBucketsFilled(): boolean {
     let allBucketsFilled = true;
-    this.buckets.forEach( ( bucket: any ) => { // @ts-expect-error - TODO: Fix when Bucket is converted, see https://github.com/phetsims/build-a-molecule/issues/245
+    this.buckets.forEach( ( bucket: any ) => { // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when Bucket is converted, see https://github.com/phetsims/build-a-molecule/issues/245
       if ( !bucket.isFull() ) {
         allBucketsFilled = false;
       }
@@ -344,7 +361,7 @@ class Kit {
    * atom, and then attempts to bond with it.
    * @param atom - The atom to add to play
    */
-  public addAtomToPlay( atom: any ): void { // @ts-expect-error - TODO: Fix when Atom2 is converted, see https://github.com/phetsims/build-a-molecule/issues/245
+  public addAtomToPlay( atom: Atom ): void {
 
     // add the atoms to our models
     const molecule = new Molecule();
@@ -360,8 +377,8 @@ class Kit {
    * Returns whether or not the atom is contained in any of this kit's buckets
    * @param atom - The atom to check
    */
-  private isContainedInBucket( atom: any ): boolean { // @ts-expect-error - TODO: Fix when Atom2 is converted, see https://github.com/phetsims/build-a-molecule/issues/245
-    return this.buckets.some( ( bucket: any ) => { // @ts-expect-error - TODO: Fix when Bucket is converted, see https://github.com/phetsims/build-a-molecule/issues/245
+  private isContainedInBucket( atom: Atom ): boolean {
+    return this.buckets.some( ( bucket: any ) => { // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when Bucket is converted, see https://github.com/phetsims/build-a-molecule/issues/245
       return bucket.containsParticle( atom );
     } );
   }
@@ -371,8 +388,8 @@ class Kit {
    * @param atom - The atom to recycle
    * @param animate - Whether we should display animation
    */
-  private recycleAtomIntoBuckets( atom: any, animate: boolean ): void { // @ts-expect-error - TODO: Fix when Atom2 is converted, see https://github.com/phetsims/build-a-molecule/issues/245
-    this.lewisDotModel.breakBondsOfAtom( atom );
+  private recycleAtomIntoBuckets( atom: Atom, animate: boolean ): void {
+    this.lewisDotModel!.breakBondsOfAtom( atom );
     this.atomsInPlayArea.remove( atom );
     const bucket = this.getBucketForElement( atom.element );
     bucket.addParticleNearestOpen( atom, animate );
@@ -386,7 +403,7 @@ class Kit {
    * @param molecule - The molecule to recycle
    */
   private recycleMoleculeIntoBuckets( molecule: Molecule ): void {
-    molecule.atoms.forEach( ( atom: any ) => { // @ts-expect-error - TODO: Fix when Atom2 is converted, see https://github.com/phetsims/build-a-molecule/issues/245
+    molecule.atoms.forEach( ( atom: Atom ) => {
       this.recycleAtomIntoBuckets( atom, true );
     } );
     this.removeMolecule( molecule );
@@ -396,7 +413,7 @@ class Kit {
    * Add padding to the molecule bounds.
    * @param bounds - The bounds to pad
    */
-  private padMoleculeBounds( bounds: any ): any { // @ts-expect-error - TODO: Fix when Bounds2 is available, see https://github.com/phetsims/build-a-molecule/issues/245
+  private padMoleculeBounds( bounds: any ): any { // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when Bounds2 is available, see https://github.com/phetsims/build-a-molecule/issues/245
     const halfPadding = Kit.interMoleculePadding / 2;
     return Bounds2.rect( bounds.x - halfPadding, bounds.y - halfPadding, bounds.width + Kit.interMoleculePadding, bounds.height + Kit.interMoleculePadding );
   }
@@ -479,15 +496,18 @@ class Kit {
    * @param dirAtoB - The direction from A that the bond will go in (for lewis-dot structure)
    * @param b - Atom B
    */
-  private bond( a: any, dirAtoB: any, b: any ): void { // @ts-expect-error - TODO: Fix when Atom2 and Direction are converted, see https://github.com/phetsims/build-a-molecule/issues/245
-    this.lewisDotModel.bond( a, dirAtoB, b );
+  private bond( a: Atom, dirAtoB: any, b: Atom ): void { // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when Atom2 and Direction are converted, see https://github.com/phetsims/build-a-molecule/issues/245
+    this.lewisDotModel!.bond( a, dirAtoB, b );
     const molA = this.getMolecule( a );
     const molB = this.getMolecule( b );
     if ( molA === molB ) {
       throw new Error( 'WARNING: loop or other invalid structure detected in a molecule' );
     }
 
-    const newMolecule = MoleculeStructure.getCombinedMoleculeFromBond( molA, molB, a, b, new Molecule() );
+    if ( !molA || !molB ) {
+      throw new Error( 'Molecules not found for bonding' );
+    }
+    const newMolecule = MoleculeStructure.getCombinedMoleculeFromBond( molA, molB, a, b, new Molecule() ) as Molecule;
 
     this.removeMolecule( molA );
     this.removeMolecule( molB );
@@ -498,12 +518,15 @@ class Kit {
      *----------------------------------------------------------------------------*/
 
     if ( BAMQueryParameters.logData ) {
-      const serializedForm = this.getMolecule( a ).toSerial2();
-      console.log( `created structure: ${serializedForm}` );
+      const molecule = this.getMolecule( a );
+      if ( molecule ) {
+        const serializedForm = molecule.toSerial2();
+        console.log( `created structure: ${serializedForm}` );
+      }
     }
     const structure = this.getMolecule( a );
-    if ( structure.atoms.length > 2 ) {
-      structure.bonds.forEach( ( bond: any ) => { // @ts-expect-error - TODO: Fix when Bond is converted, see https://github.com/phetsims/build-a-molecule/issues/245
+    if ( structure && structure.atoms.length > 2 ) {
+      structure.bonds.forEach( ( bond: any ) => { // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when Bond is converted, see https://github.com/phetsims/build-a-molecule/issues/245
         if ( bond.a.hasSameElement( bond.b ) && bond.a.symbol === 'H' ) {
           console.log( 'WARNING: Hydrogen bonded to another hydrogen in a molecule which is not diatomic hydrogen' );
         }
@@ -515,31 +538,34 @@ class Kit {
    * @param a - Atom A
    * @param b - Atom B
    */
-  private getPossibleMoleculeStructureFromBond( a: any, b: any ): MoleculeStructure { // @ts-expect-error - TODO: Fix when Atom2 is converted, see https://github.com/phetsims/build-a-molecule/issues/245
+  private getPossibleMoleculeStructureFromBond( a: Atom, b: Atom ): MoleculeStructure {
     const molA = this.getMolecule( a );
     const molB = this.getMolecule( b );
     assert && assert( molA !== molB );
 
+    if ( !molA || !molB ) {
+      throw new Error( 'Molecules not found' );
+    }
     return MoleculeStructure.getCombinedMoleculeFromBond( molA, molB, a, b, new Molecule() );
   }
 
   /**
    * Attempt to bond a molecule to another molecule based on the open bonding options
-   * @param molecule - A molecule that should attempt to bind to other molecules
+   * @param moleculeToAttempt - A molecule that should attempt to bind to other molecules
    */
-  private attemptToBondMolecule( molecule: Molecule ): boolean {
-    let bestBondingOption = null; // {BondingOption|null}
+  private attemptToBondMolecule( moleculeToAttempt: Molecule ): boolean {
+    let bestBondingOption: BondingOption | null = null;
     let bestDistanceFromIdealPosition = Number.POSITIVE_INFINITY;
     let atomsOverlap = false;
 
     // for each atom in our molecule, we try to see if it can bond to other atoms
-    molecule.atoms.forEach( ourAtom => {
+    moleculeToAttempt.atoms.forEach( ourAtom => {
 
       // all other atoms
       this.atoms.forEach( otherAtom => {
 
         // disallow loops in an already-connected molecule
-        if ( this.getMolecule( otherAtom ) === molecule ) {
+        if ( this.getMolecule( otherAtom ) === moleculeToAttempt ) {
           return; // continue, in the inner loop
         }
 
@@ -551,26 +577,26 @@ class Kit {
             return; // continue, in the inner loop
           }
 
-          this.lewisDotModel.getOpenDirections( otherAtom ).forEach( otherDirection => {
+          this.lewisDotModel!.getOpenDirections( otherAtom ).forEach( otherDirection => {
             const direction = otherDirection.opposite;
-            if ( !_.includes( this.lewisDotModel.getOpenDirections( ourAtom ), direction ) ) {
+            if ( !this.lewisDotModel!.getOpenDirections( ourAtom ).includes( direction ) ) {
               // the spot on otherAtom was open, but the corresponding spot on our main atom was not
               return; // continue, in the inner loop
             }
 
             // check the lewis dot model to make sure we wouldn't have two "overlapping" atoms that aren't both hydrogen
-            if ( !this.lewisDotModel.willAllowBond( ourAtom, direction, otherAtom ) ) {
+            if ( !this.lewisDotModel!.willAllowBond( ourAtom, direction, otherAtom ) ) {
               return; // continue, in the inner loop
             }
 
             const bondingOption = new BondingOption( otherAtom, otherDirection, ourAtom );
-            const distance = ourAtom.positionProperty.value.distance( bondingOption.idealPosition );
+            const distance = ( ourAtom as any ).positionProperty.value.distance( bondingOption.idealPosition ); // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when Atom2 is converted, see https://github.com/phetsims/build-a-molecule/issues/245
             if ( distance < bestDistanceFromIdealPosition ) {
               bestBondingOption = bondingOption;
               bestDistanceFromIdealPosition = distance;
             }
 
-            if ( ourAtom.positionBounds.intersectsBounds( otherAtom.positionBounds ) ) {
+            if ( ( ourAtom as any ).positionBounds.intersectsBounds( ( otherAtom as any ).positionBounds ) ) { // eslint-disable-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unnecessary-type-assertion -- TODO: Fix when Atom2 is converted, see https://github.com/phetsims/build-a-molecule/issues/245
               atomsOverlap = true;
             }
           } );
@@ -587,13 +613,21 @@ class Kit {
     }
 
     // cause all atoms in the molecule to move to that position
-    const delta = bestBondingOption.idealPosition.minus( bestBondingOption.b.positionProperty.value );
-    this.getMolecule( bestBondingOption.b ).atoms.forEach( atomInMolecule => {
-      atomInMolecule.setPositionAndDestination( atomInMolecule.positionProperty.value.plus( delta ) );
+    if ( !bestBondingOption ) {
+      return false;
+    }
+    const bondingOption = bestBondingOption as BondingOption;
+    const delta = bondingOption.idealPosition.minus( ( bondingOption.b as any ).positionProperty.value ); // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when Atom2 is converted, see https://github.com/phetsims/build-a-molecule/issues/245
+    const moleculeWithAtom = this.getMolecule( bondingOption.b );
+    if ( !moleculeWithAtom ) {
+      return false;
+    }
+    moleculeWithAtom.atoms.forEach( atomInMolecule => {
+      ( atomInMolecule as any ).setPositionAndDestination( ( atomInMolecule as any ).positionProperty.value.plus( delta ) ); // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when Atom2 is converted, see https://github.com/phetsims/build-a-molecule/issues/245
     } );
 
     // we now will bond the atom
-    this.bond( bestBondingOption.a, bestBondingOption.direction, bestBondingOption.b ); // model bonding
+    this.bond( bondingOption.a, bondingOption.direction, bondingOption.b ); // model bonding
     return true;
   }
 
@@ -602,12 +636,12 @@ class Kit {
    * @param a - Atom A
    * @param b - Atom B
    */
-  private canBond( a: any, b: any ): boolean { // @ts-expect-error - TODO: Fix when Atom2 is converted, see https://github.com/phetsims/build-a-molecule/issues/245
+  private canBond( a: Atom, b: Atom ): boolean {
     return this.getMolecule( b ) !== null &&
            this.getMolecule( a ) !== this.getMolecule( b ) &&
            this.isAllowedStructure( this.getPossibleMoleculeStructureFromBond( a, b ) ) &&
-           this.collectionLayout.availablePlayAreaBounds.containsPoint( a.positionProperty.value ) &&
-           this.collectionLayout.availablePlayAreaBounds.containsPoint( b.positionProperty.value );
+           this.collectionLayout.availablePlayAreaBounds.containsPoint( ( a as any ).positionProperty.value ) && // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when Atom2 is converted, see https://github.com/phetsims/build-a-molecule/issues/245
+           this.collectionLayout.availablePlayAreaBounds.containsPoint( ( b as any ).positionProperty.value ); // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when Atom2 is converted, see https://github.com/phetsims/build-a-molecule/issues/245
   }
 
   /**
@@ -620,32 +654,30 @@ class Kit {
   }
 }
 
-// A bond option from A to B. B would be moved to the position near A to bond.
+/**
+ * A bond option from A to B. B would be moved to the position near A to bond.
+ */
 class BondingOption {
 
-  public readonly a: any; // @ts-expect-error - Atom2 - the first atom in the bond
-  public readonly direction: any; // @ts-expect-error - Direction - the direction of the bond from atom a
-  public readonly b: any; // @ts-expect-error - Atom2 - the second atom in the bond
-  private readonly idealPosition: any; // @ts-expect-error - Vector2 - The position the atom should be placed
+  public readonly a: Atom;
+  public readonly direction: any; // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when Direction is converted, see https://github.com/phetsims/build-a-molecule/issues/245
+  public readonly b: Atom;
+  public readonly idealPosition: any; // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when Vector2 is converted, see https://github.com/phetsims/build-a-molecule/issues/245
 
   /**
    * @param a - Atom A
    * @param direction - The direction
    * @param b - Atom B
    */
-  public constructor( a: any, direction: any, b: any ) { // @ts-expect-error - TODO: Fix when Atom2 and Direction are converted, see https://github.com/phetsims/build-a-molecule/issues/245
+  public constructor( a: Atom, direction: any, b: Atom ) { // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when Atom2 and Direction are converted, see https://github.com/phetsims/build-a-molecule/issues/245
     this.a = a;
     this.direction = direction;
     this.b = b;
-    this.idealPosition = a.positionProperty.value.plus( direction.vector.times( a.covalentRadius + b.covalentRadius ) );
+    this.idealPosition = ( a as any ).positionProperty.value.plus( ( direction as any ).vector.times( ( a as any ).covalentRadius + ( b as any ).covalentRadius ) ); // eslint-disable-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unnecessary-type-assertion -- TODO: Fix when Atom2 and Direction are converted, see https://github.com/phetsims/build-a-molecule/issues/245
   }
 }
 
-// Static properties for Kit
-Kit.BondingOption = BondingOption; // Available bonding option
-Kit.bondDistanceThreshold = 100; // Determines how close a molecule needs to be to attempt to bond
-Kit.bucketPadding = 50; // Distance between each bucket
-Kit.interMoleculePadding = 100; // Determines how far away to separate the molecules from each other
+// Assign the static property after BondingOption class is declared
+Kit.BondingOption = BondingOption;
 
 buildAMolecule.register( 'Kit', Kit );
-export default Kit;
