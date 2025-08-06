@@ -1,9 +1,5 @@
 // Copyright 2020-2023, University of Colorado Boulder
 
-/* eslint-disable */
-// @ts-nocheck
-
-
 /**
  * Has functions relating to lists of molecules (e.g. is a molecule or submolecule allowed?) Uses static initialization to load in a small fraction
  * of molecules from collection-molecules.txt, and then in a separate thread loads the rest of the molecules + the allowed structures. The 1st
@@ -31,6 +27,24 @@ class MoleculeList {
   // Formula => allowed stripped molecules (array)
   private readonly allowedStructureFormulaMap: Record<string, StrippedMolecule[]>;
 
+  // Static properties
+  public static mainInstance: MoleculeList | null;
+  public static initialized: boolean;
+  public static initialList: MoleculeList;
+  
+  // Common molecule references - assigned after class definition
+  public static CO2: CompleteMolecule | null; // eslint-disable-line phet/uppercase-statics-should-be-readonly -- Assigned after class definition
+  public static H2O: CompleteMolecule | null; // eslint-disable-line phet/uppercase-statics-should-be-readonly -- Assigned after class definition
+  public static N2: CompleteMolecule | null; // eslint-disable-line phet/uppercase-statics-should-be-readonly -- Assigned after class definition
+  public static CO: CompleteMolecule | null; // eslint-disable-line phet/uppercase-statics-should-be-readonly -- Assigned after class definition
+  public static NO: CompleteMolecule | null; // eslint-disable-line phet/uppercase-statics-should-be-readonly -- Assigned after class definition
+  public static O2: CompleteMolecule | null; // eslint-disable-line phet/uppercase-statics-should-be-readonly -- Assigned after class definition
+  public static H2: CompleteMolecule | null; // eslint-disable-line phet/uppercase-statics-should-be-readonly -- Assigned after class definition
+  public static Cl2: CompleteMolecule | null;
+  public static NH3: CompleteMolecule | null; // eslint-disable-line phet/uppercase-statics-should-be-readonly -- Assigned after class definition
+  public static C2H4O2: CompleteMolecule | null; // eslint-disable-line phet/uppercase-statics-should-be-readonly -- Assigned after class definition
+  public static collectionBoxMolecules: ( CompleteMolecule | null )[];
+
   public constructor() {
 
     this.completeMolecules = [];
@@ -44,7 +58,7 @@ class MoleculeList {
   /**
    * Load in the initial list of complete molecules for the collection boxes (collectionMoleculesData)
    */
-  private loadInitialData(): void {
+  public loadInitialData(): void {
     const startTime = Date.now();
     const mainMolecules = MoleculeList.readCompleteMoleculesFromData( collectionMoleculesData );
     mainMolecules.forEach( this.addCompleteMolecule.bind( this ) );
@@ -54,7 +68,7 @@ class MoleculeList {
   /**
    * Load a list of all the remaining complete molecules (otherMoleculesData)
    */
-  private loadMainData(): void {
+  public loadMainData(): void {
     const startTime = Date.now();
     // load in our collection molecules first
     MoleculeList.initialList.getAllCompleteMolecules().forEach( this.addCompleteMolecule.bind( this ) );
@@ -63,6 +77,7 @@ class MoleculeList {
     const mainMolecules = MoleculeList.readCompleteMoleculesFromData( otherMoleculesData );
     mainMolecules.forEach( molecule => {
       // if our molecule was included in the initial lookup, use that initial version instead so we can have instance equality preserved
+      // @ts-expect-error - filterCommonName is available on CompleteMolecule but not typed in MoleculeStructure
       const initialListLookup = MoleculeList.initialList.moleculeNameMap[ molecule.filterCommonName( molecule.commonName ) ];
       if ( initialListLookup && molecule.isEquivalent( initialListLookup ) ) {
         molecule = initialListLookup;
@@ -80,7 +95,7 @@ class MoleculeList {
   /**
    * Check whether this structure is allowed. Currently this means it is a "sub-molecule" of one of our complete
    * molecules
-   * @param moleculeStructure
+   * @param moleculeStructure - The molecule structure to check
    * @returns True if it is allowed
    */
   public isAllowedStructure( moleculeStructure: MoleculeStructure ): boolean {
@@ -116,7 +131,7 @@ class MoleculeList {
 
   /**
    * Find a complete molecule with an equivalent structure to the passed in molecule
-   * @param moleculeStructure
+   * @param moleculeStructure - The molecule structure to find a match for
    * @returns Either a matching CompleteMolecule, or null if none is found
    */
   public findMatchingCompleteMolecule( moleculeStructure: MoleculeStructure ): CompleteMolecule | null {
@@ -126,9 +141,9 @@ class MoleculeList {
   }
 
   /**
-   * Return all the complected molecules
+   * Return all the completed molecules
    */
-  private getAllCompleteMolecules(): CompleteMolecule[] {
+  public getAllCompleteMolecules(): CompleteMolecule[] {
     // Note: (performance) do we need a full copy here?
     return this.completeMolecules.slice();
   }
@@ -139,18 +154,19 @@ class MoleculeList {
 
   /**
    * Add a complete molecule and map its common name
-   * @param completeMolecule
+   * @param completeMolecule - The complete molecule to add
    */
-  private addCompleteMolecule( completeMolecule: CompleteMolecule ): void {
+  public addCompleteMolecule( completeMolecule: CompleteMolecule ): void {
     this.completeMolecules.push( completeMolecule );
+    // @ts-expect-error - filterCommonName is available on CompleteMolecule but not fully typed yet
     this.moleculeNameMap[ completeMolecule.filterCommonName( completeMolecule.commonName ) ] = completeMolecule;
   }
 
   /**
    * Add the structure to the allowed structure map
-   * @param structure
+   * @param structure - The molecule structure to add
    */
-  private addAllowedStructure( structure: MoleculeStructure ): void {
+  public addAllowedStructure( structure: MoleculeStructure ): void {
     const strippedMolecule = new StrippedMolecule( structure );
     const hashString = strippedMolecule.stripped.getHistogram().getHashString();
 
@@ -166,7 +182,7 @@ class MoleculeList {
   /**
    * Load main data
    */
-  private static startInitialization(): void {
+  public static startInitialization(): void {
     // Note: (performance) use web worker or chop it up into bits of work
     MoleculeList.mainInstance = new MoleculeList();
     MoleculeList.mainInstance.loadMainData();
@@ -184,15 +200,15 @@ class MoleculeList {
       MoleculeList.startInitialization();
     }
 
-    return MoleculeList.mainInstance;
+    return MoleculeList.mainInstance!; // Non-null assertion - mainInstance is set in startInitialization
   }
 
 
   /**
    * Return molecule name from main data
-   * @param name
+   * @param name - The name of the molecule to get
    */
-  private static getMoleculeByName( name: string ): CompleteMolecule | null {
+  public static getMoleculeByName( name: string ): CompleteMolecule | null {
     let result = MoleculeList.initialList.moleculeNameMap[ name ];
 
     if ( !result ) {
@@ -208,13 +224,15 @@ class MoleculeList {
    * @param strings - File name relative to the sim's data directory
    */
   private static readCompleteMoleculesFromData( strings: string[] ): CompleteMolecule[] {
-    return strings.map( string => {
-      const molecule = CompleteMolecule.fromSerial2( string );
+    return strings.map( ( string: string ): CompleteMolecule => {
+      const molecule = CompleteMolecule.fromSerial2( string ) as CompleteMolecule;
 
       // sanity checks
       assert && assert( !molecule.hasLoopsOrIsDisconnected(),
+        // @ts-expect-error - filterCommonName and commonName are available on CompleteMolecule but not fully typed
         `has loops or is disconnected: ${molecule.filterCommonName( molecule.commonName )}` );
       assert && assert( !molecule.hasWeirdHydrogenProperties(),
+        // @ts-expect-error - filterCommonName and commonName are available on CompleteMolecule but not fully typed
         `has weird hydrogen pattern in: ${molecule.filterCommonName( molecule.commonName )}` );
       return molecule;
     } );
@@ -239,11 +257,9 @@ class MoleculeList {
   }
 }
 
-// statics
+// Initialize static properties
 MoleculeList.mainInstance = null;
-
 MoleculeList.initialized = false;
-
 MoleculeList.initialList = new MoleculeList();
 MoleculeList.initialList.loadInitialData();
 
