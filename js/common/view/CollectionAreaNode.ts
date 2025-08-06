@@ -7,22 +7,25 @@
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 
+import Bounds2 from '../../../../dot/js/Bounds2.js';
 import RefreshButton from '../../../../scenery-phet/js/buttons/RefreshButton.js';
 import Display from '../../../../scenery/js/display/Display.js';
 import VBox from '../../../../scenery/js/layout/nodes/VBox.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import Color from '../../../../scenery/js/util/Color.js';
+import CollectionBox from '../model/CollectionBox.js';
 import nullSoundPlayer from '../../../../tambo/js/nullSoundPlayer.js';
 import buildAMolecule from '../../buildAMolecule.js';
 import KitCollection from '../model/KitCollection.js';
 import CompleteMolecule from '../model/CompleteMolecule.js';
+import CollectionBoxNode from './CollectionBoxNode.js';
 import MultipleCollectionBoxNode from './MultipleCollectionBoxNode.js';
 import SingleCollectionBoxNode from './SingleCollectionBoxNode.js';
 
 class CollectionAreaNode extends Node {
 
   // Private properties
-  private readonly collectionBoxNodes: ( SingleCollectionBoxNode | MultipleCollectionBoxNode )[] = [];
+  private readonly collectionBoxNodes: CollectionBoxNode[] = [];
 
   /**
    * @param collection - The kit collection
@@ -31,7 +34,7 @@ class CollectionAreaNode extends Node {
    * @param showDialogCallback - Callback to show the 3D dialog
    * @param updateRefillButton - Callback to update the refill button state
    */
-  public constructor( collection: KitCollection, isSingleCollectionMode: boolean, toModelBounds: ( bounds: any ) => any, showDialogCallback: ( completeMolecule: CompleteMolecule ) => void, updateRefillButton: () => void ) { // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when bounds types are available, see https://github.com/phetsims/build-a-molecule/issues/245
+  public constructor( collection: KitCollection, isSingleCollectionMode: boolean, toModelBounds: ( node: Node ) => Bounds2, showDialogCallback: ( completeMolecule: CompleteMolecule ) => void, updateRefillButton: () => void ) {
     super();
 
     // Container for collection boxes and reset collection button.
@@ -39,7 +42,7 @@ class CollectionAreaNode extends Node {
     this.addChild( allCollectionItemsVBox );
 
     // Create and add all collection box nodes.
-    ( collection as any ).collectionBoxes.forEach( ( collectionBox: any ) => { // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when KitCollection types are available, see https://github.com/phetsims/build-a-molecule/issues/245
+    collection.collectionBoxes.forEach( ( collectionBox: CollectionBox ) => {
       const collectionBoxNode = isSingleCollectionMode ? new SingleCollectionBoxNode( collectionBox, toModelBounds, showDialogCallback ) :
                                 new MultipleCollectionBoxNode( collectionBox, toModelBounds, showDialogCallback );
       this.collectionBoxNodes.push( collectionBoxNode );
@@ -49,7 +52,7 @@ class CollectionAreaNode extends Node {
     // Reset collection button
     const resetCollectionButton = new RefreshButton( {
       listener() {
-        ( collection as any ).resetKitsAndBoxes(); // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when KitCollection types are available, see https://github.com/phetsims/build-a-molecule/issues/245
+        collection.resetKitsAndBoxes();
         updateRefillButton();
       },
       interruptListener: Display.INTERRUPT_OTHER_POINTERS as any, // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when Display types are available, see https://github.com/phetsims/build-a-molecule/issues/245
@@ -63,9 +66,9 @@ class CollectionAreaNode extends Node {
 
     // When any collection box quantity changes, update whether it is enabled
     const updateEnabled = () => {
-      resetCollectionButton.enabled = ( collection as any ).collectionBoxes.some( ( box: any ) => box.quantityProperty.value ); // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when KitCollection types are available, see https://github.com/phetsims/build-a-molecule/issues/245
+      resetCollectionButton.enabled = collection.collectionBoxes.some( ( box: CollectionBox ) => box.quantityProperty.value );
     };
-    ( collection as any ).collectionBoxes.forEach( ( box: any ) => box.quantityProperty.link( updateEnabled ) ); // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when KitCollection types are available, see https://github.com/phetsims/build-a-molecule/issues/245
+    collection.collectionBoxes.forEach( ( box: CollectionBox ) => box.quantityProperty.link( updateEnabled ) );
 
     allCollectionItemsVBox.addChild( resetCollectionButton );
   }
@@ -75,7 +78,7 @@ class CollectionAreaNode extends Node {
    */
   public updateCollectionBoxPositions(): void {
     this.collectionBoxNodes.forEach( collectionBoxNode => {
-      ( collectionBoxNode as any ).updatePosition(); // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when CollectionBoxNode types are available, see https://github.com/phetsims/build-a-molecule/issues/245
+      collectionBoxNode.updatePosition();
     } );
   }
 }
