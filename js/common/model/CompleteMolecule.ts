@@ -149,7 +149,8 @@ class CompleteMolecule extends MoleculeStructure {
     // first check if we have the name translated. Do NOT warn on missing
     // Convert to camelCase manually (replacing lodash _.camelCase)
     const camelCaseName = this.commonName.toLowerCase().replace( /[^a-zA-Z0-9]+(.)/g, ( match, chr ) => chr.toUpperCase() );
-    const translatableCommonName = ( TRANSLATABLE_MOLECULE_NAMES as any )[ camelCaseName ]; // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when string translations are properly typed, see https://github.com/phetsims/build-a-molecule/issues/245
+    // @ts-expect-error
+    const translatableCommonName = TRANSLATABLE_MOLECULE_NAMES[ camelCaseName ];
     if ( translatableCommonName ) {
       return translatableCommonName;
     }
@@ -176,7 +177,7 @@ class CompleteMolecule extends MoleculeStructure {
     }
 
     // otherwise, use our 2d positions to construct a version. we get the correct back-to-front rendering
-    const wrappers = ( ( this as any ).atoms as PubChemAtom[] ).sort( ( a, b ) => a.z3d - b.z3d ); // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when MoleculeStructure is converted, see https://github.com/phetsims/build-a-molecule/issues/245
+    const wrappers = ( ( this ).atoms as PubChemAtom[] ).sort( ( a, b ) => a.z3d - b.z3d );
     return new Node( {
       children: wrappers.map( atomWrapper => {
         return new AtomNode( atomWrapper.element, {
@@ -251,7 +252,6 @@ class CompleteMolecule extends MoleculeStructure {
       const y3d = parseFloat( tokens[ idx++ ] );
       const z3d = parseFloat( tokens[ idx++ ] );
 
-      // @ts-expect-error
       const atom = new PubChemAtom( Element.getElementBySymbol( symbol ), PubChemAtomType.FULL, x2d, y2d, x3d, y3d, z3d );
 
       completeMolecule.addAtom( atom );
@@ -262,7 +262,7 @@ class CompleteMolecule extends MoleculeStructure {
       const a = Number( tokens[ idx++ ] );
       const b = Number( tokens[ idx++ ] );
       const order = Number( tokens[ idx++ ] );
-      const bond = new PubChemBond( ( completeMolecule as any ).atoms[ a - 1 ] as PubChemAtom, ( completeMolecule as any ).atoms[ b - 1 ] as PubChemAtom, order ); // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when MoleculeStructure is converted, see https://github.com/phetsims/build-a-molecule/issues/245
+      const bond = new PubChemBond( ( completeMolecule ).atoms[ a - 1 ] as PubChemAtom, ( completeMolecule ).atoms[ b - 1 ] as PubChemAtom, order );
       completeMolecule.addBond( bond );
     }
 
@@ -300,18 +300,17 @@ class CompleteMolecule extends MoleculeStructure {
       const molecule = new CompleteMolecule( commonName, molecularFormula, atomCount, bondCount, has2d, has3d );
       molecule.cid = cid;
       return molecule;
-
       // @ts-expect-error
     }, atomParser, PubChemBond.parse );
   }
 }
 
 // Signature for Atom without 2d or 3d representation
-const PubChemAtomType = EnumerationDeprecated.byKeys( [ 'TWO_DIMENSION', 'THREE_DIMENSION', 'FULL' ] );
+const PubChemAtomType = EnumerationDeprecated.byKeys( [ 'TWO_DIMENSION', 'THREE_DIMENSION', 'FULL' ] ) as IntentionalAny;
 
 export class PubChemAtom extends Atom {
 
-  public readonly type: any; // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when EnumerationDeprecated is converted, see https://github.com/phetsims/build-a-molecule/issues/245
+  public readonly type: IntentionalAny;
 
   public readonly x2d: number;
   public readonly y2d: number;
@@ -337,13 +336,13 @@ export class PubChemAtom extends Atom {
    * Stringify the structure of the atom.
    */
   public override toString(): string {
-    if ( this.type === ( PubChemAtomType as any ).TWO_DIMENSION ) { // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when EnumerationDeprecated is converted, see https://github.com/phetsims/build-a-molecule/issues/245
+    if ( this.type === PubChemAtomType.TWO_DIMENSION ) {
       return `${super.toString()} ${this.x2d} ${this.y2d}`;
     }
-    else if ( this.type === ( PubChemAtomType as any ).THREE_DIMENSION ) { // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when EnumerationDeprecated is converted, see https://github.com/phetsims/build-a-molecule/issues/245
+    else if ( this.type === PubChemAtomType.THREE_DIMENSION ) {
       return `${super.toString()} ${this.x3d} ${this.y3d} ${this.z3d}`;
     }
-    else if ( this.type === ( PubChemAtomType as any ).FULL ) { // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when EnumerationDeprecated is converted, see https://github.com/phetsims/build-a-molecule/issues/245
+    else if ( this.type === PubChemAtomType.FULL ) {
       return `${super.toString()} ${this.x2d} ${this.y2d} ${this.x3d} ${this.y3d} ${this.z3d}`;
     }
     else {
@@ -360,7 +359,7 @@ export class PubChemAtom extends Atom {
     const element = Element.getElementBySymbol( tokens[ 0 ] );
     const x2d = parseFloat( tokens[ 1 ] );
     const y2d = parseFloat( tokens[ 2 ] );
-    return new PubChemAtom( element, ( PubChemAtomType as any ).TWO_DIMENSION, x2d, y2d, x2d - OFFSET, y2d, 0 ); // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when EnumerationDeprecated is converted, see https://github.com/phetsims/build-a-molecule/issues/245
+    return new PubChemAtom( element, PubChemAtomType.TWO_DIMENSION, x2d, y2d, x2d - OFFSET, y2d, 0 );
   }
 
   /**
@@ -373,7 +372,7 @@ export class PubChemAtom extends Atom {
     const x3d = parseFloat( tokens[ 1 ] );
     const y3d = parseFloat( tokens[ 2 ] );
     const z3d = parseFloat( tokens[ 3 ] );
-    return new PubChemAtom( element, ( PubChemAtomType as any ).THREE_DIMENSION, 0, 0, x3d, y3d, z3d ); // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when EnumerationDeprecated is converted, see https://github.com/phetsims/build-a-molecule/issues/245
+    return new PubChemAtom( element, PubChemAtomType.THREE_DIMENSION, 0, 0, x3d, y3d, z3d );
   }
 
   /**
@@ -388,7 +387,7 @@ export class PubChemAtom extends Atom {
     const x3d = parseFloat( tokens[ 3 ] );
     const y3d = parseFloat( tokens[ 4 ] );
     const z3d = parseFloat( tokens[ 5 ] );
-    return new PubChemAtom( element, ( PubChemAtomType as any ).FULL, x2d, y2d, x3d, y3d, z3d ); // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when EnumerationDeprecated is converted, see https://github.com/phetsims/build-a-molecule/issues/245
+    return new PubChemAtom( element, PubChemAtomType.FULL, x2d, y2d, x3d, y3d, z3d );
   }
 }
 
@@ -426,8 +425,7 @@ export class PubChemBond extends Bond {
     const tokens = bondString.split( '-' );
     const index = Number( tokens[ 0 ] );
     const order = Number( tokens[ 1 ] );
-    // @ts-expect-error
-    return new PubChemBond( connectedAtom as PubChemAtom, molecule.atoms[ index ], order );
+    return new PubChemBond( connectedAtom as PubChemAtom, molecule.atoms[ index ] as PubChemAtom, order );
   }
 }
 
