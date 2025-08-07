@@ -115,7 +115,7 @@ export default class Molecule3DDialog extends Dialog {
           color: color
         } ) );
         container.add( iconMesh );
-        // @ts-expect-error
+        // @ts-expect-error - would be solved by https://github.com/phetsims/build-a-molecule/issues/246
         iconMesh.position.set( atom.x3d + offset, atom.y3d, atom.z3d );
       }
     };
@@ -156,9 +156,9 @@ export default class Molecule3DDialog extends Dialog {
           }
 
           // Establish parameters for bond mesh
-          // @ts-expect-error
+          // @ts-expect-error - would be solved by https://github.com/phetsims/build-a-molecule/issues/246
           const bondAPosition = new Vector3( bond.a.x3d, bond.a.y3d, bond.a.z3d );
-          // @ts-expect-error
+          // @ts-expect-error - would be solved by https://github.com/phetsims/build-a-molecule/issues/246
           const bondBPosition = new Vector3( bond.b.x3d, bond.b.y3d, bond.b.z3d );
           const distance = bondAPosition.distance( bondBPosition );
           const bondMesh = new THREE.Mesh(

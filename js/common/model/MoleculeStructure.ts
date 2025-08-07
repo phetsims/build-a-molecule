@@ -121,7 +121,7 @@ class MoleculeStructure {
     const formula = ChemUtils.createSymbolWithoutSubscripts( sortedElements );
 
     // return the formula, unless it is in our exception list (in which case, handle the exception case)
-    // @ts-expect-error - TODO: This looks broken in https://github.com/phetsims/build-a-molecule/issues/245
+    // @ts-expect-error - TODO: This looks broken in https://github.com/phetsims/build-a-molecule/issues/247
     return MoleculeStructure.formulaExceptions[ formula ] || formula;
   }
 
@@ -620,7 +620,7 @@ class MoleculeStructure {
    */
   public static fromSerial2Basic( line: string ): MoleculeStructure {
     // assumes atom base class (just symbol) and simple bonds (just connectivity)
-    // @ts-expect-error
+    // @ts-expect-error Relates somewhat to https://github.com/phetsims/build-a-molecule/issues/246
     return MoleculeStructure.fromSerial2( line, MoleculeStructure.defaultMoleculeGenerator, MoleculeStructure.defaultAtomParser, MoleculeStructure.defaultBondParser );
   }
 

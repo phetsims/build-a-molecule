@@ -94,7 +94,7 @@ export default class MoleculeControlsHBox extends HBox {
     } );
     buttonBreak.touchArea = buttonBreak.childBounds.dilated( DILATION_FACTOR );
 
-    // @ts-expect-error
+    // @ts-expect-error - see https://github.com/phetsims/build-a-molecule/issues/248
     buttonBreak.addInputListener( new ButtonListener( {
       fire: () => {
         kit.breakMolecule( molecule );

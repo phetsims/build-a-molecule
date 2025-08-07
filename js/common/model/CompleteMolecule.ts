@@ -299,7 +299,7 @@ class CompleteMolecule extends MoleculeStructure {
       const molecule = new CompleteMolecule( commonName, molecularFormula, atomCount, bondCount, has2d, has3d );
       molecule.cid = cid;
       return molecule;
-      // @ts-expect-error
+      // @ts-expect-error - relates somewhat to https://github.com/phetsims/build-a-molecule/issues/246
     }, atomParser, PubChemBond.parse );
   }
 }
