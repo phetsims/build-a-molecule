@@ -32,19 +32,6 @@ class MoleculeList {
   public static initialized: boolean;
   public static initialList: MoleculeList;
 
-  // Common molecule references - assigned after class definition
-  public static CO2: CompleteMolecule | null; // eslint-disable-line phet/uppercase-statics-should-be-readonly -- Assigned after class definition
-  public static H2O: CompleteMolecule | null; // eslint-disable-line phet/uppercase-statics-should-be-readonly -- Assigned after class definition
-  public static N2: CompleteMolecule | null; // eslint-disable-line phet/uppercase-statics-should-be-readonly -- Assigned after class definition
-  public static CO: CompleteMolecule | null; // eslint-disable-line phet/uppercase-statics-should-be-readonly -- Assigned after class definition
-  public static NO: CompleteMolecule | null; // eslint-disable-line phet/uppercase-statics-should-be-readonly -- Assigned after class definition
-  public static O2: CompleteMolecule | null; // eslint-disable-line phet/uppercase-statics-should-be-readonly -- Assigned after class definition
-  public static H2: CompleteMolecule | null; // eslint-disable-line phet/uppercase-statics-should-be-readonly -- Assigned after class definition
-  public static Cl2: CompleteMolecule | null;
-  public static NH3: CompleteMolecule | null; // eslint-disable-line phet/uppercase-statics-should-be-readonly -- Assigned after class definition
-  public static C2H4O2: CompleteMolecule | null; // eslint-disable-line phet/uppercase-statics-should-be-readonly -- Assigned after class definition
-  public static collectionBoxMolecules: ( CompleteMolecule | null )[];
-
   public constructor() {
 
     this.completeMolecules = [];
@@ -261,48 +248,51 @@ MoleculeList.initialList.loadInitialData();
  * molecule references and customized names
  *----------------------------------------------------------------------------*/
 
-MoleculeList.CO2 = MoleculeList.getMoleculeByName( 'Carbon Dioxide' );
-MoleculeList.H2O = MoleculeList.getMoleculeByName( 'Water' );
-MoleculeList.N2 = MoleculeList.getMoleculeByName( 'Nitrogen' );
-MoleculeList.CO = MoleculeList.getMoleculeByName( 'Carbon Monoxide' );
-MoleculeList.NO = MoleculeList.getMoleculeByName( 'Nitric Oxide' );
-MoleculeList.O2 = MoleculeList.getMoleculeByName( 'Oxygen' );
-MoleculeList.H2 = MoleculeList.getMoleculeByName( 'Hydrogen' );
-MoleculeList.Cl2 = MoleculeList.getMoleculeByName( 'Chlorine' );
-MoleculeList.NH3 = MoleculeList.getMoleculeByName( 'Ammonia' );
-MoleculeList.C2H4O2 = MoleculeList.getMoleculeByName( 'Acetic Acid' );
+// Common molecule references - moved from static properties to avoid null types
+const COMMON_MOLECULES = {
+  CO2: MoleculeList.getMoleculeByName( 'Carbon Dioxide' )!,
+  H2O: MoleculeList.getMoleculeByName( 'Water' )!,
+  N2: MoleculeList.getMoleculeByName( 'Nitrogen' )!,
+  CO: MoleculeList.getMoleculeByName( 'Carbon Monoxide' )!,
+  NO: MoleculeList.getMoleculeByName( 'Nitric Oxide' )!,
+  O2: MoleculeList.getMoleculeByName( 'Oxygen' )!,
+  H2: MoleculeList.getMoleculeByName( 'Hydrogen' )!,
+  Cl2: MoleculeList.getMoleculeByName( 'Chlorine' )!,
+  NH3: MoleculeList.getMoleculeByName( 'Ammonia' )!,
+  C2H4O2: MoleculeList.getMoleculeByName( 'Acetic Acid' )!
+} as const;
 
 // Molecules that can be used for collection boxes
-MoleculeList.collectionBoxMolecules = [
-  MoleculeList.CO2,
-  MoleculeList.H2O,
-  MoleculeList.N2,
-  MoleculeList.CO,
-  MoleculeList.O2,
-  MoleculeList.H2,
-  MoleculeList.NH3,
-  MoleculeList.Cl2,
-  MoleculeList.NO,
-  MoleculeList.getMoleculeByName( 'Acetylene' ),
-  MoleculeList.getMoleculeByName( 'Borane' ),
-  MoleculeList.getMoleculeByName( 'Trifluoroborane' ),
-  MoleculeList.getMoleculeByName( 'Chloromethane' ),
-  MoleculeList.getMoleculeByName( 'Ethylene' ),
-  MoleculeList.getMoleculeByName( 'Fluorine' ),
-  MoleculeList.getMoleculeByName( 'Fluoromethane' ),
-  MoleculeList.getMoleculeByName( 'Formaldehyde' ),
-  MoleculeList.getMoleculeByName( 'Hydrogen Cyanide' ),
-  MoleculeList.getMoleculeByName( 'Hydrogen Peroxide' ),
-  MoleculeList.getMoleculeByName( 'Hydrogen Sulfide' ),
-  MoleculeList.getMoleculeByName( 'Methane' ),
-  MoleculeList.getMoleculeByName( 'Nitrous Oxide' ),
-  MoleculeList.getMoleculeByName( 'Ozone' ),
-  MoleculeList.getMoleculeByName( 'Phosphine' ),
-  MoleculeList.getMoleculeByName( 'Silane' ),
-  MoleculeList.getMoleculeByName( 'Sulfur Dioxide' )
+const COLLECTION_BOX_MOLECULES: CompleteMolecule[] = [
+  COMMON_MOLECULES.CO2,
+  COMMON_MOLECULES.H2O,
+  COMMON_MOLECULES.N2,
+  COMMON_MOLECULES.CO,
+  COMMON_MOLECULES.O2,
+  COMMON_MOLECULES.H2,
+  COMMON_MOLECULES.NH3,
+  COMMON_MOLECULES.Cl2,
+  COMMON_MOLECULES.NO,
+  MoleculeList.getMoleculeByName( 'Acetylene' )!,
+  MoleculeList.getMoleculeByName( 'Borane' )!,
+  MoleculeList.getMoleculeByName( 'Trifluoroborane' )!,
+  MoleculeList.getMoleculeByName( 'Chloromethane' )!,
+  MoleculeList.getMoleculeByName( 'Ethylene' )!,
+  MoleculeList.getMoleculeByName( 'Fluorine' )!,
+  MoleculeList.getMoleculeByName( 'Fluoromethane' )!,
+  MoleculeList.getMoleculeByName( 'Formaldehyde' )!,
+  MoleculeList.getMoleculeByName( 'Hydrogen Cyanide' )!,
+  MoleculeList.getMoleculeByName( 'Hydrogen Peroxide' )!,
+  MoleculeList.getMoleculeByName( 'Hydrogen Sulfide' )!,
+  MoleculeList.getMoleculeByName( 'Methane' )!,
+  MoleculeList.getMoleculeByName( 'Nitrous Oxide' )!,
+  MoleculeList.getMoleculeByName( 'Ozone' )!,
+  MoleculeList.getMoleculeByName( 'Phosphine' )!,
+  MoleculeList.getMoleculeByName( 'Silane' )!,
+  MoleculeList.getMoleculeByName( 'Sulfur Dioxide' )!
 ];
 
-MoleculeList.collectionBoxMolecules.forEach( molecule => {
+COLLECTION_BOX_MOLECULES.forEach( molecule => {
   assert && assert( !!molecule );
 } );
 
@@ -310,4 +300,7 @@ MoleculeList.collectionBoxMolecules.forEach( molecule => {
 MoleculeList.getMainInstance();
 
 buildAMolecule.register( 'MoleculeList', MoleculeList );
+
+// Export the constants for external use
+export { COMMON_MOLECULES, COLLECTION_BOX_MOLECULES };
 export default MoleculeList;

@@ -14,7 +14,7 @@ import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
 import buildAMolecule from '../../buildAMolecule.js';
 import BAMConstants from '../../common/BAMConstants.js';
 import CompleteMolecule from '../../common/model/CompleteMolecule.js';
-import MoleculeList from '../../common/model/MoleculeList.js';
+import { COMMON_MOLECULES } from '../../common/model/MoleculeList.js';
 import Molecule3DNode from '../../common/view/view3d/Molecule3DNode.js';
 
 // Options for screen icons
@@ -57,7 +57,7 @@ const BAMIconFactory = {
 
     // Create icon from complete Molecule
     const moleculeIcon = BAMIconFactory.createIconImage(
-      MoleculeList.H2O!,
+      COMMON_MOLECULES.H2O,
       Screen.MINIMUM_HOME_SCREEN_ICON_SIZE.width,
       Screen.MINIMUM_HOME_SCREEN_ICON_SIZE.height,
       0.85,
@@ -85,7 +85,7 @@ const BAMIconFactory = {
 
     // Iconize first O2 Molecule
     const moleculeIconOne = BAMIconFactory.createIconImage(
-      MoleculeList.O2!,
+      COMMON_MOLECULES.O2,
       Screen.MINIMUM_HOME_SCREEN_ICON_SIZE.width,
       Screen.MINIMUM_HOME_SCREEN_ICON_SIZE.height,
       0.50,
@@ -94,7 +94,7 @@ const BAMIconFactory = {
 
     // Iconize second O2 Molecule
     const moleculeIconTwo = BAMIconFactory.createIconImage(
-      MoleculeList.O2!,
+      COMMON_MOLECULES.O2,
       Screen.MINIMUM_HOME_SCREEN_ICON_SIZE.width,
       Screen.MINIMUM_HOME_SCREEN_ICON_SIZE.height,
       0.50,
@@ -124,7 +124,7 @@ const BAMIconFactory = {
 
     // Iconize first O2 Molecule
     const moleculeIcon = BAMIconFactory.createIconImage(
-      MoleculeList.C2H4O2!,
+      COMMON_MOLECULES.C2H4O2,
       Screen.MINIMUM_HOME_SCREEN_ICON_SIZE.width,
       Screen.MINIMUM_HOME_SCREEN_ICON_SIZE.height,
       0.95,

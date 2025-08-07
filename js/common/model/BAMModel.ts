@@ -19,7 +19,7 @@ import buildAMolecule from '../../buildAMolecule.js';
 import BAMBucket from '../model/BAMBucket.js';
 import CollectionBox from '../model/CollectionBox.js';
 import Kit from '../model/Kit.js';
-import MoleculeList from '../model/MoleculeList.js';
+import { COLLECTION_BOX_MOLECULES } from '../model/MoleculeList.js';
 import CollectionLayout from './CollectionLayout.js';
 import CompleteMolecule from './CompleteMolecule.js';
 import KitCollection from './KitCollection.js';
@@ -187,7 +187,7 @@ class BAMModel {
     // Infinite loop. We're living on the edge now, baby!
     // TODO: Maybe we should have a max number of iterations? See https://github.com/phetsims/build-a-molecule/issues/245
     while ( true ) {
-      const molecule = MoleculeList.collectionBoxMolecules[ dotRandom.nextIntBetween( 0, MoleculeList.collectionBoxMolecules.length - 1 ) ]!;
+      const molecule = COLLECTION_BOX_MOLECULES[ dotRandom.nextIntBetween( 0, COLLECTION_BOX_MOLECULES.length - 1 ) ];
       if ( !molecules.includes( molecule ) ) {
         return molecule;
       }

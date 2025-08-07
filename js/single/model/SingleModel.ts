@@ -15,7 +15,7 @@ import CollectionBox from '../../common/model/CollectionBox.js';
 import CollectionLayout from '../../common/model/CollectionLayout.js';
 import Kit from '../../common/model/Kit.js';
 import KitCollection from '../../common/model/KitCollection.js';
-import MoleculeList from '../../common/model/MoleculeList.js';
+import { COMMON_MOLECULES } from '../../common/model/MoleculeList.js';
 
 export default class SingleModel extends BAMModel {
   public constructor() {
@@ -38,11 +38,11 @@ export default class SingleModel extends BAMModel {
     ] ), { triggerCue: true } );
 
     // Add the collection boxes.
-    kitCollection.addCollectionBox( new CollectionBox( MoleculeList.H2O!, 1 ) );
-    kitCollection.addCollectionBox( new CollectionBox( MoleculeList.O2!, 1 ) );
-    kitCollection.addCollectionBox( new CollectionBox( MoleculeList.H2!, 1 ) );
-    kitCollection.addCollectionBox( new CollectionBox( MoleculeList.CO2!, 1 ) );
-    kitCollection.addCollectionBox( new CollectionBox( MoleculeList.N2!, 1 ) );
+    kitCollection.addCollectionBox( new CollectionBox( COMMON_MOLECULES.H2O, 1 ) );
+    kitCollection.addCollectionBox( new CollectionBox( COMMON_MOLECULES.O2, 1 ) );
+    kitCollection.addCollectionBox( new CollectionBox( COMMON_MOLECULES.H2, 1 ) );
+    kitCollection.addCollectionBox( new CollectionBox( COMMON_MOLECULES.CO2, 1 ) );
+    kitCollection.addCollectionBox( new CollectionBox( COMMON_MOLECULES.N2, 1 ) );
   }
 }
 

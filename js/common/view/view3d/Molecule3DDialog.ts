@@ -35,7 +35,7 @@ import buildAMolecule from '../../../buildAMolecule.js';
 import BuildAMoleculeStrings from '../../../BuildAMoleculeStrings.js';
 import BAMConstants from '../../BAMConstants.js';
 import CompleteMolecule, { PubChemBond } from '../../model/CompleteMolecule.js';
-import MoleculeList from '../../model/MoleculeList.js';
+import { COMMON_MOLECULES } from '../../model/MoleculeList.js';
 
 // constants
 const ViewStyle = EnumerationDeprecated.byKeys( [ 'SPACE_FILL', 'BALL_AND_STICK' ] ) as unknown as {
@@ -187,7 +187,7 @@ export default class Molecule3DDialog extends Dialog {
       } );
     };
 
-    // Construct icons from MoleculeList.O2, see https://github.com/phetsims/build-a-molecule/issues/139.
+    // Construct icons from COMMON_MOLECULES.O2, see https://github.com/phetsims/build-a-molecule/issues/139.
     // Options for ThreeNode icons.
     const iconOptions = {
       cursor: 'pointer',
@@ -200,7 +200,7 @@ export default class Molecule3DDialog extends Dialog {
     const spaceFilledScene = spaceFilledIcon.stage.threeScene;
     const spaceFilledContainer = new THREE.Object3D();
     spaceFilledScene.add( spaceFilledContainer );
-    buildAtomMesh( MoleculeList.O2!, spaceFilledContainer, false, false, colorSet );
+    buildAtomMesh( COMMON_MOLECULES.O2, spaceFilledContainer, false, false, colorSet );
 
     // Listener to change the view style to the space filled representation
     spaceFilledIcon.addInputListener( new PressListener( {
@@ -217,8 +217,8 @@ export default class Molecule3DDialog extends Dialog {
     const ballAndStickScene = ballAndStickIcon.stage.threeScene;
     const ballAndStickContainer = new THREE.Object3D();
     ballAndStickScene.add( ballAndStickContainer );
-    buildAtomMesh( MoleculeList.O2!, ballAndStickContainer, true, false, colorSet );
-    buildBondMesh( MoleculeList.O2!, ballAndStickContainer, true, 0.2 );
+    buildAtomMesh( COMMON_MOLECULES.O2, ballAndStickContainer, true, false, colorSet );
+    buildBondMesh( COMMON_MOLECULES.O2, ballAndStickContainer, true, 0.2 );
 
     // Updates the view style to the ball and stick representation
     ballAndStickIcon.addInputListener( new PressListener( {
