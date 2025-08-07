@@ -334,7 +334,7 @@ export default class BAMScreenView extends ScreenView {
    * @returns The created KitCollectionNode
    */
   protected addCollection( collection: KitCollection, isCollectingView: boolean ): KitCollectionNode {
-    const kitCollectionNode = new KitCollectionNode( collection, this as IntentionalAny, isCollectingView );
+    const kitCollectionNode = new KitCollectionNode( collection, this, isCollectingView );
     this.kitCollectionMap[ collection.id ] = kitCollectionNode;
 
     // supposedly: return this so we can manipulate it in an override....?

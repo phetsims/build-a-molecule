@@ -11,9 +11,9 @@ import Node from '../../../../scenery/js/nodes/Node.js';
 import buildAMolecule from '../../buildAMolecule.js';
 import BAMConstants from '../BAMConstants.js';
 import KitCollection from '../model/KitCollection.js';
+import BAMScreenView from './BAMScreenView.js';
 import KitNode from './KitNode.js';
 import KitPanel from './KitPanel.js';
-import MoleculeCollectingScreenView from './MoleculeCollectingScreenView.js';
 
 class KitCollectionNode extends Node {
 
@@ -24,7 +24,7 @@ class KitCollectionNode extends Node {
    * @param view - The screen view
    * @param isCollectingView - Whether this is in collecting mode
    */
-  public constructor( collection: KitCollection, view: MoleculeCollectingScreenView, isCollectingView: boolean ) {
+  public constructor( collection: KitCollection, view: BAMScreenView, isCollectingView: boolean ) {
     super();
 
     // Create a kit panel to contain the kit buckets. Height/Width are empirically determined

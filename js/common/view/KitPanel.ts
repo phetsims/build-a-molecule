@@ -17,14 +17,14 @@ import nullSoundPlayer from '../../../../tambo/js/nullSoundPlayer.js';
 import buildAMolecule from '../../buildAMolecule.js';
 import BAMConstants from '../BAMConstants.js';
 import KitCollection from '../model/KitCollection.js';
+import BAMScreenView from './BAMScreenView.js';
 import KitNode from './KitNode.js';
-import MoleculeCollectingScreenView from './MoleculeCollectingScreenView.js';
 
 export default class KitPanel extends Node {
 
   public readonly kitCarousel: Carousel;
 
-  public constructor( kitCollection: KitCollection, kitNodeWidth: number, kitNodeHeight: number, view: MoleculeCollectingScreenView, isCollectingView: boolean ) {
+  public constructor( kitCollection: KitCollection, kitNodeWidth: number, kitNodeHeight: number, view: BAMScreenView, isCollectingView: boolean ) {
     super();
 
     // Keep track of the KitCollection

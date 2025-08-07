@@ -15,7 +15,6 @@
 import Atom from '../../../../nitroglycerin/js/Atom.js';
 import ChemUtils from '../../../../nitroglycerin/js/ChemUtils.js';
 import Element from '../../../../nitroglycerin/js/Element.js';
-import IntentionalAny from '../../../../phet-core/js/types/IntentionalAny.js';
 import buildAMolecule from '../../buildAMolecule.js';
 import BAMQueryParameters from '../BAMQueryParameters.js';
 import Atom2 from './Atom2.js';
@@ -639,7 +638,7 @@ class MoleculeStructure {
   }
 
   // TODO: This looks broken in https://github.com/phetsims/build-a-molecule/issues/245
-  public static formulaExceptions(): IntentionalAny {
+  public static formulaExceptions(): Record<string, string> {
     return {
       H3N: 'NH3', // treated as if it is organic
       CHN: 'HCN'  // not considered organic

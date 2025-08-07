@@ -20,7 +20,7 @@ import BAMConstants from '../BAMConstants.js';
 import Atom2 from '../model/Atom2.js';
 import Kit from '../model/Kit.js';
 import AtomNode from './AtomNode.js';
-import MoleculeCollectingScreenView from './MoleculeCollectingScreenView.js';
+import BAMScreenView from './BAMScreenView.js';
 
 class KitNode extends Node {
 
@@ -37,7 +37,7 @@ class KitNode extends Node {
    * @param kit - The kit model to display
    * @param moleculeCollectingScreenView - The screen view this kit node belongs to
    */
-  public constructor( kit: Kit, moleculeCollectingScreenView: MoleculeCollectingScreenView ) {
+  public constructor( kit: Kit, moleculeCollectingScreenView: BAMScreenView ) {
     super();
 
     this.kit = kit;
