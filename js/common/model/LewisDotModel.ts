@@ -18,7 +18,7 @@ import Direction, { DirectionValue } from './Direction.js';
 
 class LewisDotModel {
 
-  public readonly atomMap: Record<number, LewisDotAtom>;
+  public readonly atomMap: Record<string, LewisDotAtom>;
 
   public constructor() {
 
@@ -30,7 +30,6 @@ class LewisDotModel {
    * @param atom
    */
   public addAtom( atom: Atom ): void {
-    // @ts-expect-error
     this.atomMap[ atom.id ] = new LewisDotAtom( atom );
   }
 
@@ -204,11 +203,7 @@ class LewisDotModel {
     return success;
   }
 
-  /**
-   * @param atom
-   */
   private getLewisDotAtom( atom: Atom ): LewisDotAtom {
-    // @ts-expect-error
     return this.atomMap[ atom.id ];
   }
 }
@@ -219,9 +214,6 @@ class LewisDotAtom {
 
   private readonly connections: Record<IntentionalAny, LewisDotAtom | null>;
 
-  /**
-   * @param atom
-   */
   public constructor( atom: Atom ) {
 
     this.atom = atom;
