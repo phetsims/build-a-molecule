@@ -45,8 +45,8 @@ import PF3Node from '../../../../nitroglycerin/js/nodes/PF3Node.js';
 import PH3Node from '../../../../nitroglycerin/js/nodes/PH3Node.js';
 import SO2Node from '../../../../nitroglycerin/js/nodes/SO2Node.js';
 import SO3Node from '../../../../nitroglycerin/js/nodes/SO3Node.js';
-import EnumerationDeprecated from '../../../../phet-core/js/EnumerationDeprecated.js';
-import IntentionalAny from '../../../../phet-core/js/types/IntentionalAny.js';
+import Enumeration from '../../../../phet-core/js/Enumeration.js';
+import EnumerationValue from '../../../../phet-core/js/EnumerationValue.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import buildAMolecule from '../../buildAMolecule.js';
 import BuildAMoleculeStrings from '../../BuildAMoleculeStrings.js';
@@ -304,12 +304,17 @@ class CompleteMolecule extends MoleculeStructure {
   }
 }
 
-// Signature for Atom without 2d or 3d representation
-const PubChemAtomType = EnumerationDeprecated.byKeys( [ 'TWO_DIMENSION', 'THREE_DIMENSION', 'FULL' ] ) as IntentionalAny;
+// Atom type enumeration for PubChem atoms
+class PubChemAtomType extends EnumerationValue {
+  public static readonly TWO_DIMENSION = new PubChemAtomType();
+  public static readonly THREE_DIMENSION = new PubChemAtomType();
+  public static readonly FULL = new PubChemAtomType();
+  public static readonly enumeration = new Enumeration( PubChemAtomType );
+}
 
 export class PubChemAtom extends Atom {
 
-  public readonly type: string;
+  public readonly type: PubChemAtomType;
 
   public readonly x2d: number;
   public readonly y2d: number;
@@ -318,7 +323,7 @@ export class PubChemAtom extends Atom {
   public readonly y3d: number;
   public readonly z3d: number;
 
-  public constructor( element: Element, type: string, x2d: number, y2d: number, x3d: number, y3d: number, z3d: number ) {
+  public constructor( element: Element, type: PubChemAtomType, x2d: number, y2d: number, x3d: number, y3d: number, z3d: number ) {
     super( element );
 
     this.type = type;

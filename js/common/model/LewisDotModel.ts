@@ -60,7 +60,7 @@ class LewisDotModel {
     const dotB = this.getLewisDotAtom( b );
     const direction = this.getBondDirection( a, b );
     dotA.disconnect( direction );
-    dotB.disconnect( direction.opposite! );
+    dotB.disconnect( direction.opposite );
   }
 
   /**
@@ -74,11 +74,11 @@ class LewisDotModel {
     const dotA = this.getLewisDotAtom( a );
     const dotB = this.getLewisDotAtom( b );
     dotA.connect( dirAtoB, dotB );
-    dotB.connect( dirAtoB.opposite!, dotA );
+    dotB.connect( dirAtoB.opposite, dotA );
   }
 
   /**
-   * Returns all of the directions that are open (not bonded to another) on the atom
+   * Returns all directions that are open (not bonded to another) on the atom
    * @param atom
    */
   public getOpenDirections( atom: Atom ): DirectionValue[] {

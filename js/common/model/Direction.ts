@@ -9,55 +9,42 @@
  */
 
 import Vector2 from '../../../../dot/js/Vector2.js';
-import EnumerationDeprecated from '../../../../phet-core/js/EnumerationDeprecated.js';
-import IntentionalAny from '../../../../phet-core/js/types/IntentionalAny.js';
+import Enumeration from '../../../../phet-core/js/Enumeration.js';
+import EnumerationValue from '../../../../phet-core/js/EnumerationValue.js';
 import buildAMolecule from '../../buildAMolecule.js';
 
-// constants
-const DirectionOrientation = EnumerationDeprecated.byKeys( [ 'NORTH', 'EAST', 'SOUTH', 'WEST' ] ) as IntentionalAny;
-
-export class DirectionValue {
-
+// Direction enumeration class with vector and opposite properties
+class Direction extends EnumerationValue {
   public readonly vector: Vector2;
-
   public readonly id: string;
+  public opposite!: Direction;
 
-  public opposite: DirectionValue | null;
+  // Define the enumeration values
+  public static readonly NORTH = new Direction( new Vector2( 0, 1 ), 'NORTH' );
+  public static readonly SOUTH = new Direction( new Vector2( 0, -1 ), 'SOUTH' );
+  public static readonly EAST = new Direction( new Vector2( 1, 0 ), 'EAST' );
+  public static readonly WEST = new Direction( new Vector2( -1, 0 ), 'WEST' );
+
+  public static readonly enumeration = new Enumeration( Direction );
+
+  // Legacy compatibility - provide VALUES array
+  public static readonly VALUES = [ Direction.NORTH, Direction.SOUTH, Direction.EAST, Direction.WEST ];
 
   public constructor( vector: Vector2, id: string ) {
-
+    super();
     this.vector = vector;
-
     this.id = id;
-
-    this.opposite = null;
   }
 }
 
-// Declare cardinal direction values
-const NORTH = new DirectionValue( new Vector2( 0, 1 ), DirectionOrientation.NORTH );
-const SOUTH = new DirectionValue( new Vector2( 0, -1 ), DirectionOrientation.SOUTH );
-const EAST = new DirectionValue( new Vector2( 1, 0 ), DirectionOrientation.EAST );
-const WEST = new DirectionValue( new Vector2( -1, 0 ), DirectionOrientation.WEST );
+// Set up the opposite relationships
+Direction.NORTH.opposite = Direction.SOUTH;
+Direction.SOUTH.opposite = Direction.NORTH;
+Direction.EAST.opposite = Direction.WEST;
+Direction.WEST.opposite = Direction.EAST;
 
-// Declare opposites
-NORTH.opposite = SOUTH;
-SOUTH.opposite = NORTH;
-EAST.opposite = WEST;
-WEST.opposite = EAST;
-
-const Direction = EnumerationDeprecated.byMap( {
-  NORTH: NORTH,
-  SOUTH: SOUTH,
-  EAST: EAST,
-  WEST: WEST
-} ) as unknown as {
-  NORTH: DirectionValue;
-  SOUTH: DirectionValue;
-  EAST: DirectionValue;
-  WEST: DirectionValue;
-  VALUES: DirectionValue[];
-};
+// Export DirectionValue as a type alias for backward compatibility
+export type DirectionValue = Direction;
 
 buildAMolecule.register( 'Direction', Direction );
 export default Direction;

@@ -587,7 +587,7 @@ export default class Kit {
           }
 
           this.lewisDotModel!.getOpenDirections( otherAtom ).forEach( otherDirection => {
-            const direction = otherDirection.opposite!;
+            const direction = otherDirection.opposite;
             if ( !this.lewisDotModel!.getOpenDirections( ourAtom ).includes( direction ) ) {
               // the spot on otherAtom was open, but the corresponding spot on our main atom was not
               return; // continue, in the inner loop

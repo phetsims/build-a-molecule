@@ -8,7 +8,7 @@
  */
 
 import BooleanProperty from '../../../../../axon/js/BooleanProperty.js';
-import EnumerationDeprecatedProperty from '../../../../../axon/js/EnumerationDeprecatedProperty.js';
+import EnumerationProperty from '../../../../../axon/js/EnumerationProperty.js';
 import Multilink from '../../../../../axon/js/Multilink.js';
 import Property from '../../../../../axon/js/Property.js';
 import TReadOnlyProperty from '../../../../../axon/js/TReadOnlyProperty.js';
@@ -17,7 +17,8 @@ import Vector2 from '../../../../../dot/js/Vector2.js';
 import Vector3 from '../../../../../dot/js/Vector3.js';
 import ThreeNode from '../../../../../mobius/js/ThreeNode.js';
 import affirm from '../../../../../perennial-alias/js/browser-and-node/affirm.js';
-import EnumerationDeprecated from '../../../../../phet-core/js/EnumerationDeprecated.js';
+import Enumeration from '../../../../../phet-core/js/Enumeration.js';
+import EnumerationValue from '../../../../../phet-core/js/EnumerationValue.js';
 import IntentionalAny from '../../../../../phet-core/js/types/IntentionalAny.js';
 import StringUtils from '../../../../../phetcommon/js/util/StringUtils.js';
 import PlayPauseButton from '../../../../../scenery-phet/js/buttons/PlayPauseButton.js';
@@ -37,18 +38,19 @@ import BAMConstants from '../../BAMConstants.js';
 import CompleteMolecule, { PubChemBond } from '../../model/CompleteMolecule.js';
 import { COMMON_MOLECULES } from '../../model/MoleculeList.js';
 
-// constants
-const ViewStyle = EnumerationDeprecated.byKeys( [ 'SPACE_FILL', 'BALL_AND_STICK' ] ) as unknown as {
-  SPACE_FILL: IntentionalAny;
-  BALL_AND_STICK: IntentionalAny;
-};
+// View style enumeration for 3D molecule display
+class ViewStyle extends EnumerationValue {
+  public static readonly SPACE_FILL = new ViewStyle();
+  public static readonly BALL_AND_STICK = new ViewStyle();
+  public static readonly enumeration = new Enumeration( ViewStyle );
+}
 
 export default class Molecule3DDialog extends Dialog {
 
   public readonly completeMoleculeProperty: TReadOnlyProperty<CompleteMolecule | null>;
   public readonly isPlayingProperty: BooleanProperty;
   public readonly isDraggingProperty: BooleanProperty;
-  public readonly viewStyleProperty: EnumerationDeprecatedProperty;
+  public readonly viewStyleProperty: EnumerationProperty<ViewStyle>;
   private readonly quaternionProperty: Property<THREE.Quaternion>;
   private readonly moleculeNode: ThreeNode;
   private readonly spaceFilledIcon: ThreeNode;
@@ -74,7 +76,7 @@ export default class Molecule3DDialog extends Dialog {
     this.completeMoleculeProperty = completeMoleculeProperty;
     this.isPlayingProperty = new BooleanProperty( true );
     this.isDraggingProperty = new BooleanProperty( false );
-    this.viewStyleProperty = new EnumerationDeprecatedProperty( ViewStyle, ViewStyle.SPACE_FILL );
+    this.viewStyleProperty = new EnumerationProperty( ViewStyle.SPACE_FILL );
     const playPauseButton = new PlayPauseButton( this.isPlayingProperty, {
       radius: 15,
       valueOffSoundPlayer: nullSoundPlayer,
@@ -137,12 +139,12 @@ export default class Molecule3DDialog extends Dialog {
             originOffset = 0;
             displacement = 0;
           }
-            // Offset for double bond
+          // Offset for double bond
           else if ( bond.order === 2 ) {
             originOffset = -0.25;
             displacement = 0.5;
           }
-            // Offset for triple bond
+          // Offset for triple bond
           else if ( bond.order === 3 ) {
             originOffset = -0.25;
             displacement = 0.25;
@@ -235,11 +237,11 @@ export default class Molecule3DDialog extends Dialog {
     const moleculeScene = moleculeNode.stage.threeScene;
     moleculeScene.add( moleculeContainer );
 
-    // Handle the each 3D representation based on the current view style
-    Multilink.multilink( [ this.viewStyleProperty, completeMoleculeProperty ], ( viewStyle: IntentionalAny, completeMolecule: CompleteMolecule | null ) => {
+    // Handle each 3D representation based on the current view style
+    Multilink.multilink( [ this.viewStyleProperty, completeMoleculeProperty ], ( viewStyle, completeMolecule ) => {
       if ( completeMolecule ) {
 
-        // Remove all previous mesh elements if they exists from a previous build
+        // Remove all previous mesh elements if they exist from a previous build
         while ( moleculeContainer.children.length > 0 ) {
           moleculeContainer.remove( moleculeContainer.children[ 0 ] );
         }
