@@ -58,7 +58,7 @@ import MoleculeStructure from './MoleculeStructure.js';
 const OFFSET = 2.5; // used to model our atoms with only 2d data into a 3d representation
 
 // Used to avoid stripping out unused strings, when string.json is accessed via bracket notation. See getDisplayName().
-const TRANSLATABLE_MOLECULE_NAMES = {
+const TRANSLATABLE_MOLECULE_NAMES: Record<string, string> = {
   acetylene: BuildAMoleculeStrings.acetylene,
   ammonia: BuildAMoleculeStrings.ammonia,
   borane: BuildAMoleculeStrings.borane,
@@ -149,7 +149,6 @@ class CompleteMolecule extends MoleculeStructure {
     // first check if we have the name translated. Do NOT warn on missing
     // Convert to camelCase manually (replacing lodash _.camelCase)
     const camelCaseName = this.commonName.toLowerCase().replace( /[^a-zA-Z0-9]+(.)/g, ( match, chr ) => chr.toUpperCase() );
-    // @ts-expect-error
     const translatableCommonName = TRANSLATABLE_MOLECULE_NAMES[ camelCaseName ];
     if ( translatableCommonName ) {
       return translatableCommonName;
