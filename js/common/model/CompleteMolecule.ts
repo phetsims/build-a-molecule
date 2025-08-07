@@ -176,7 +176,7 @@ class CompleteMolecule extends MoleculeStructure {
     }
 
     // otherwise, use our 2d positions to construct a version. we get the correct back-to-front rendering
-    const wrappers = ( ( this ).atoms as PubChemAtom[] ).sort( ( a, b ) => a.z3d - b.z3d );
+    const wrappers = ( this.atoms as PubChemAtom[] ).sort( ( a, b ) => a.z3d - b.z3d );
     return new Node( {
       children: wrappers.map( atomWrapper => {
         return new AtomNode( atomWrapper.element, {
@@ -261,7 +261,7 @@ class CompleteMolecule extends MoleculeStructure {
       const a = Number( tokens[ idx++ ] );
       const b = Number( tokens[ idx++ ] );
       const order = Number( tokens[ idx++ ] );
-      const bond = new PubChemBond( ( completeMolecule ).atoms[ a - 1 ] as PubChemAtom, ( completeMolecule ).atoms[ b - 1 ] as PubChemAtom, order );
+      const bond = new PubChemBond( completeMolecule.atoms[ a - 1 ] as PubChemAtom, completeMolecule.atoms[ b - 1 ] as PubChemAtom, order );
       completeMolecule.addBond( bond );
     }
 

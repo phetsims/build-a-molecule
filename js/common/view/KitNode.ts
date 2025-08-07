@@ -77,8 +77,8 @@ class KitNode extends Node {
         bucketHole.cursor = bucket.getParticleList().length ? 'pointer' : 'default';
       };
 
-      ( kit ).addedMoleculeEmitter.addListener( bucketHoleCursorUpdate );
-      ( kit ).removedMoleculeEmitter.addListener( bucketHoleCursorUpdate );
+      kit.addedMoleculeEmitter.addListener( bucketHoleCursorUpdate );
+      kit.removedMoleculeEmitter.addListener( bucketHoleCursorUpdate );
       bucketHoleCursorUpdate();
 
 
@@ -189,7 +189,7 @@ class KitNode extends Node {
       bucket.particleList.addItemAddedListener( particleAddedListener );
       bucket.particleList.addItemRemovedListener( particleRemovedListener );
     } );
-    assert && assert( ( kit ).molecules.length === 0 );
+    assert && assert( kit.molecules.length === 0 );
   }
 
   /**

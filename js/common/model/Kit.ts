@@ -668,7 +668,7 @@ class BondingOption {
     this.a = a;
     this.direction = direction;
     this.b = b;
-    this.idealPosition = ( a as Atom2 ).positionProperty.value.plus( ( direction ).vector.times( ( a ).covalentRadius + ( b ).covalentRadius ) );
+    this.idealPosition = ( a as Atom2 ).positionProperty.value.plus( direction.vector.times( a.covalentRadius + b.covalentRadius ) );
   }
 }
 

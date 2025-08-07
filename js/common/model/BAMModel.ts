@@ -212,7 +212,7 @@ class BAMModel {
       boxes.push( box );
 
       // add in that many molecules
-      for ( let j = 0; j < ( box ).capacity; j++ ) {
+      for ( let j = 0; j < box.capacity; j++ ) {
 
         molecules.push( molecule.copy() as CompleteMolecule );
       }
