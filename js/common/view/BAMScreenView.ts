@@ -13,6 +13,8 @@ import Bounds2 from '../../../../dot/js/Bounds2.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import ScreenView from '../../../../joist/js/ScreenView.js';
 import ThreeUtils from '../../../../mobius/js/ThreeUtils.js';
+import affirm from '../../../../perennial-alias/js/browser-and-node/affirm.js';
+import IntentionalAny from '../../../../phet-core/js/types/IntentionalAny.js';
 import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.js';
 import DragListener from '../../../../scenery/js/listeners/DragListener.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
@@ -31,7 +33,6 @@ import MoleculeControlsHBox from './MoleculeControlsHBox.js';
 import RefillButton from './RefillButton.js';
 import Molecule3DDialog from './view3d/Molecule3DDialog.js';
 import WarningDialog from './WarningDialog.js';
-import IntentionalAny from '../../../../phet-core/js/types/IntentionalAny.js';
 
 export default class BAMScreenView extends ScreenView {
 
@@ -213,9 +214,11 @@ export default class BAMScreenView extends ScreenView {
     // When a collection is changed, update the listeners for the kits and KitPlayAreaNode.
     bamModel.currentCollectionProperty.link( ( collection, previousCollection ) => {
       this.kitPlayAreaNode.atomLayer.children.forEach( otherAtomNode => {
+        affirm( otherAtomNode instanceof AtomNode );
+
         if ( otherAtomNode ) {
           otherAtomNode.interruptSubtreeInput();
-          ( otherAtomNode as IntentionalAny ).atom.isDraggingProperty.value = false;
+          otherAtomNode.atom.isDraggingProperty.value = false;
         }
       } );
       if ( previousCollection ) {
@@ -284,7 +287,7 @@ export default class BAMScreenView extends ScreenView {
         bamModel.currentCollectionProperty.value.currentKitProperty.value!.selectedAtomProperty.value = null;
       }
     };
-    ( phet as IntentionalAny ).joist.display.addInputListener( this.clickToDismissListener );
+    phet.joist.display.addInputListener( this.clickToDismissListener );
 
     kitPanel.kitCarousel.pageNumberProperty.link( () => {
       this.interruptSubtreeInput();

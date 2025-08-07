@@ -29,6 +29,7 @@ import Atom2 from './Atom2.js';
 import BAMBucket from './BAMBucket.js';
 import CollectionBox from './CollectionBox.js';
 import CollectionLayout from './CollectionLayout.js';
+import { DirectionValue } from './Direction.js';
 import LewisDotModel from './LewisDotModel.js';
 import Molecule from './Molecule.js';
 import MoleculeList from './MoleculeList.js';
@@ -333,7 +334,7 @@ export default class Kit {
    */
   public allBucketsFilled(): boolean {
     let allBucketsFilled = true;
-    this.buckets.forEach( ( bucket: IntentionalAny ) => {
+    this.buckets.forEach( bucket => {
       if ( !bucket.isFull() ) {
         allBucketsFilled = false;
       }
@@ -381,8 +382,8 @@ export default class Kit {
    * @param atom - The atom to check
    */
   private isContainedInBucket( atom: Atom ): boolean {
-    return this.buckets.some( ( bucket: IntentionalAny ) => {
-      return bucket.containsParticle( atom );
+    return this.buckets.some( bucket => {
+      return bucket.containsParticle( atom as Atom2 );
     } );
   }
 
@@ -419,7 +420,7 @@ export default class Kit {
    * Add padding to the molecule bounds.
    * @param bounds - The bounds to pad
    */
-  private padMoleculeBounds( bounds: IntentionalAny ): IntentionalAny {
+  private padMoleculeBounds( bounds: Bounds2 ): Bounds2 {
     const halfPadding = Kit.interMoleculePadding / 2;
     return Bounds2.rect( bounds.x - halfPadding, bounds.y - halfPadding, bounds.width + Kit.interMoleculePadding, bounds.height + Kit.interMoleculePadding );
   }
@@ -502,7 +503,7 @@ export default class Kit {
    * @param dirAtoB - The direction from A that the bond will go in (for lewis-dot structure)
    * @param b - Atom B
    */
-  private bond( a: Atom, dirAtoB: IntentionalAny, b: Atom ): void {
+  private bond( a: Atom, dirAtoB: DirectionValue, b: Atom ): void {
     this.lewisDotModel!.bond( a, dirAtoB, b );
     const molA = this.getMolecule( a );
     const molB = this.getMolecule( b );
@@ -532,7 +533,7 @@ export default class Kit {
     }
     const structure = this.getMolecule( a );
     if ( structure && structure.atoms.length > 2 ) {
-      structure.bonds.forEach( ( bond: IntentionalAny ) => {
+      structure.bonds.forEach( bond => {
         if ( bond.a.hasSameElement( bond.b ) && bond.a.symbol === 'H' ) {
           console.log( 'WARNING: Hydrogen bonded to another hydrogen in a molecule which is not diatomic hydrogen' );
         }
@@ -625,13 +626,13 @@ export default class Kit {
       return false;
     }
     const bondingOption = bestBondingOption as BondingOption;
-    const delta = bondingOption.idealPosition.minus( ( bondingOption.b as IntentionalAny ).positionProperty.value );
+    const delta = bondingOption.idealPosition.minus( ( bondingOption.b as Atom2 ).positionProperty.value );
     const moleculeWithAtom = this.getMolecule( bondingOption.b );
     if ( !moleculeWithAtom ) {
       return false;
     }
     moleculeWithAtom.atoms.forEach( atomInMolecule => {
-      ( atomInMolecule as IntentionalAny ).setPositionAndDestination( ( atomInMolecule as IntentionalAny ).positionProperty.value.plus( delta ) );
+      ( atomInMolecule as Atom2 ).setPositionAndDestination( ( atomInMolecule as Atom2 ).positionProperty.value.plus( delta ) );
     } );
 
     // we now will bond the atom
@@ -648,8 +649,8 @@ export default class Kit {
     return this.getMolecule( b ) !== null &&
            this.getMolecule( a ) !== this.getMolecule( b ) &&
            this.isAllowedStructure( this.getPossibleMoleculeStructureFromBond( a, b ) ) &&
-           this.collectionLayout.availablePlayAreaBounds.containsPoint( ( a as IntentionalAny ).positionProperty.value ) &&
-           this.collectionLayout.availablePlayAreaBounds.containsPoint( ( b as IntentionalAny ).positionProperty.value );
+           this.collectionLayout.availablePlayAreaBounds.containsPoint( ( a as Atom2 ).positionProperty.value ) &&
+           this.collectionLayout.availablePlayAreaBounds.containsPoint( ( b as Atom2 ).positionProperty.value );
   }
 
   /**
@@ -668,7 +669,7 @@ export default class Kit {
 class BondingOption {
 
   public readonly a: Atom;
-  public readonly direction: IntentionalAny;
+  public readonly direction: DirectionValue;
   public readonly b: Atom;
   public readonly idealPosition: IntentionalAny;
 
@@ -677,11 +678,11 @@ class BondingOption {
    * @param direction - The direction
    * @param b - Atom B
    */
-  public constructor( a: Atom, direction: IntentionalAny, b: Atom ) {
+  public constructor( a: Atom, direction: DirectionValue, b: Atom ) {
     this.a = a;
     this.direction = direction;
     this.b = b;
-    this.idealPosition = ( a as IntentionalAny ).positionProperty.value.plus( ( direction ).vector.times( ( a as IntentionalAny ).covalentRadius + ( b as IntentionalAny ).covalentRadius ) );
+    this.idealPosition = ( a as Atom2 ).positionProperty.value.plus( ( direction ).vector.times( ( a as IntentionalAny ).covalentRadius + ( b as IntentionalAny ).covalentRadius ) );
   }
 }
 

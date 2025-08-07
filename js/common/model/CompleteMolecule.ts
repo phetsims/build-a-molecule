@@ -309,7 +309,7 @@ const PubChemAtomType = EnumerationDeprecated.byKeys( [ 'TWO_DIMENSION', 'THREE_
 
 export class PubChemAtom extends Atom {
 
-  public readonly type: IntentionalAny;
+  public readonly type: string;
 
   public readonly x2d: number;
   public readonly y2d: number;
@@ -318,7 +318,7 @@ export class PubChemAtom extends Atom {
   public readonly y3d: number;
   public readonly z3d: number;
 
-  public constructor( element: Element, type: IntentionalAny, x2d: number, y2d: number, x3d: number, y3d: number, z3d: number ) {
+  public constructor( element: Element, type: string, x2d: number, y2d: number, x3d: number, y3d: number, z3d: number ) {
     super( element );
 
     this.type = type;
