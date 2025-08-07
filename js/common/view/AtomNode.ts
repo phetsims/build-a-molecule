@@ -10,6 +10,7 @@
 
 import Vector2 from '../../../../dot/js/Vector2.js';
 import Shape from '../../../../kite/js/Shape.js';
+import Element from '../../../../nitroglycerin/js/Element.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import ShadedSphereNode from '../../../../scenery-phet/js/ShadedSphereNode.js';
@@ -20,7 +21,6 @@ import Color from '../../../../scenery/js/util/Color.js';
 import buildAMolecule from '../../buildAMolecule.js';
 import BAMConstants from '../BAMConstants.js';
 import Atom2 from '../model/Atom2.js';
-import Element from '../../../../nitroglycerin/js/Element.js';
 
 // constants
 // {Object.<symbol:string,Node> element symbol => graphical node for the atom, so that we can use the DAG to save
@@ -52,7 +52,7 @@ class AtomNode extends Node {
     const grabbableArea = Shape.circle( 0, 0,
       atom.covalentRadius * 0.65 > GRABBABLE_OFFSET ? GRABBABLE_OFFSET : atom.covalentRadius * 0.65
     );
-    
+
     const options = optionize<AtomNodeOptions, SelfOptions>()( {
       cursor: 'pointer',
       touchArea: grabbableArea

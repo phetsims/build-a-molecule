@@ -11,8 +11,8 @@
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
-import RichText from '../../../../scenery/js/nodes/RichText.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
+import RichText from '../../../../scenery/js/nodes/RichText.js';
 import buildAMolecule from '../../buildAMolecule.js';
 import BuildAMoleculeStrings from '../../BuildAMoleculeStrings.js';
 import BAMConstants from '../BAMConstants.js';
@@ -21,7 +21,7 @@ import CompleteMolecule from '../model/CompleteMolecule.js';
 import CollectionBoxNode from './CollectionBoxNode.js';
 
 class MultipleCollectionBoxNode extends CollectionBoxNode {
-  
+
   private readonly quantityNode: RichText;
 
   /**

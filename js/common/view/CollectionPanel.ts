@@ -29,7 +29,7 @@ type SelfOptions = EmptySelfOptions;
 export type CollectionPanelOptions = SelfOptions & PanelOptions;
 
 class CollectionPanel extends Panel {
-  
+
   private readonly layoutNode: VBox;
   private readonly collectionAreaHolder: Node;
   private readonly collectionAreaMap: Record<number, CollectionAreaNode>;
@@ -45,7 +45,7 @@ class CollectionPanel extends Panel {
    * @param providedOptions - Panel options
    */
   public constructor( bamModel: BAMModel, isSingleCollectionMode: boolean, collectionAttachmentCallbacks: ( () => void )[], toModelBounds: ( node: Node ) => Bounds2,
-               showDialogCallback: () => void, updateRefillButton: () => void, providedOptions?: CollectionPanelOptions ) {
+                      showDialogCallback: () => void, updateRefillButton: () => void, providedOptions?: CollectionPanelOptions ) {
     const options = optionize<CollectionPanelOptions, SelfOptions, PanelOptions>()( {
       cornerRadius: BAMConstants.CORNER_RADIUS
     }, providedOptions );

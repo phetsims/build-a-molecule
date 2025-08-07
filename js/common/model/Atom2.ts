@@ -15,9 +15,8 @@ import Vector2 from '../../../../dot/js/Vector2.js';
 import Vector2Property from '../../../../dot/js/Vector2Property.js';
 import Atom from '../../../../nitroglycerin/js/Atom.js';
 import Element from '../../../../nitroglycerin/js/Element.js';
-import buildAMolecule from '../../buildAMolecule.js';
-
 import { ParticleContainer } from '../../../../phetcommon/js/model/ParticleContainer.js';
+import buildAMolecule from '../../buildAMolecule.js';
 
 // constants
 const MOTION_VELOCITY = 800; // In picometers per second of sim time.

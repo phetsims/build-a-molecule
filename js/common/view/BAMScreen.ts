@@ -9,8 +9,8 @@
 
 import Property from '../../../../axon/js/Property.js';
 import Screen, { ScreenOptions } from '../../../../joist/js/Screen.js';
-import TModel from '../../../../joist/js/TModel.js';
 import ScreenView from '../../../../joist/js/ScreenView.js';
+import TModel from '../../../../joist/js/TModel.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import buildAMolecule from '../../buildAMolecule.js';
 import BAMConstants from '../BAMConstants.js';

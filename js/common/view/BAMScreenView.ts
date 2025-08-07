@@ -300,7 +300,7 @@ export default class BAMScreenView extends ScreenView {
    */
   public override step( dt: number ): void {
     if ( this.dialog && ThreeUtils.isWebGLEnabled() ) {
-      ( this.dialog as IntentionalAny ).step( dt );
+      ( this.dialog as Molecule3DDialog ).step( dt );
     }
 
     // Update the visibility of the cues in each collection box
@@ -321,7 +321,7 @@ export default class BAMScreenView extends ScreenView {
     // Bail if we don't have a dialog, due to a lack of webgl support. See https://github.com/phetsims/build-a-molecule/issues/105
     if ( this.dialog ) {
       if ( ThreeUtils.isWebGLEnabled() ) {
-        ( this.dialog as IntentionalAny ).completeMoleculeProperty.value = completeMolecule;
+        ( this.dialog as Molecule3DDialog ).completeMoleculeProperty.value = completeMolecule;
       }
       this.dialog.show();
     }
@@ -349,7 +349,7 @@ export default class BAMScreenView extends ScreenView {
   private addAtomNodeToPlayAreaNode( atom: Atom2 ): AtomNode {
     const atomNode = new AtomNode( atom );
     this.kitPlayAreaNode.atomLayer.addChild( atomNode );
-    ( this.kitPlayAreaNode.atomNodeMap as IntentionalAny )[ atom.id ] = atomNode;
+    this.kitPlayAreaNode.atomNodeMap[ atom.id ] = atomNode;
     return atomNode;
   }
 
@@ -376,8 +376,11 @@ export default class BAMScreenView extends ScreenView {
         // Interrupt drag events on other atom nodes
         this.kitPlayAreaNode.atomLayer.children.forEach( otherAtomNode => {
           if ( otherAtomNode && atomNode !== otherAtomNode ) {
+
+            affirm( otherAtomNode instanceof AtomNode );
+
             otherAtomNode.interruptSubtreeInput();
-            ( otherAtomNode as IntentionalAny ).atom.isDraggingProperty.value = false;
+            otherAtomNode.atom.isDraggingProperty.value = false;
           }
         } );
         dragLength = 0;
@@ -436,7 +439,7 @@ export default class BAMScreenView extends ScreenView {
         atom.isDraggingProperty.value = false;
 
         // Keep track of view elements used later in the callback.
-        const mappedAtomNode = ( this.kitPlayAreaNode.atomNodeMap as IntentionalAny )[ atom.id ];
+        const mappedAtomNode = ( this.kitPlayAreaNode.atomNodeMap )[ atom.id ];
 
         // Was the atom dropped back into the kit area?
         const droppedInKitArea = mappedAtomNode &&
@@ -454,7 +457,7 @@ export default class BAMScreenView extends ScreenView {
         this.updateRefillButton();
       }
     } );
-    ( atomNode as IntentionalAny ).dragListener = atomListener;
+    ( atomNode ).dragListener = atomListener;
     atomNode.addInputListener( atomListener );
     return atomNode;
   }
@@ -469,7 +472,7 @@ export default class BAMScreenView extends ScreenView {
     const atomNode = ( this.kitPlayAreaNode.atomNodeMap as IntentionalAny )[ atom.id ];
     atomNode.dragListener.dispose();
     atomNode.dispose();
-    delete ( this.kitPlayAreaNode.atomNodeMap as IntentionalAny )[ atom.id ];
+    delete ( this.kitPlayAreaNode.atomNodeMap )[ atom.id ];
   }
 }
 

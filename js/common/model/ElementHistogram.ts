@@ -9,7 +9,6 @@
  */
 
 import Element from '../../../../nitroglycerin/js/Element.js';
-import IntentionalAny from '../../../../phet-core/js/types/IntentionalAny.js';
 import PhetioObject from '../../../../tandem/js/PhetioObject.js';
 import buildAMolecule from '../../buildAMolecule.js';
 import BAMConstants from '../BAMConstants.js';
@@ -50,7 +49,7 @@ class ElementHistogram extends PhetioObject {
    * @param molecule
    */
   public addMolecule( molecule: MoleculeStructure ): void {
-    molecule.atoms.forEach( ( atom: IntentionalAny ) => {
+    molecule.atoms.forEach( atom => {
       this.addElement( atom.element );
     } );
   }

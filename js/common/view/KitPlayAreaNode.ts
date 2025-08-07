@@ -36,7 +36,7 @@ class KitPlayAreaNode extends Node {
   private readonly moleculeBondContainerLayer: Node;
 
   // Map of atom id to AtomNode
-  public readonly atomNodeMap: Record<number, AtomNode>;
+  public readonly atomNodeMap: Record<string, AtomNode>;
 
   // Map of molecule id to MoleculeControlsHBox
   public readonly metadataMap: Record<number, MoleculeControlsHBox>;

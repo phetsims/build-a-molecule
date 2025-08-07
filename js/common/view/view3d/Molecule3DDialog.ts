@@ -11,7 +11,7 @@ import BooleanProperty from '../../../../../axon/js/BooleanProperty.js';
 import EnumerationProperty from '../../../../../axon/js/EnumerationProperty.js';
 import Multilink from '../../../../../axon/js/Multilink.js';
 import Property from '../../../../../axon/js/Property.js';
-import TReadOnlyProperty from '../../../../../axon/js/TReadOnlyProperty.js';
+import TProperty from '../../../../../axon/js/TProperty.js';
 import Matrix3 from '../../../../../dot/js/Matrix3.js';
 import Vector2 from '../../../../../dot/js/Vector2.js';
 import Vector3 from '../../../../../dot/js/Vector3.js';
@@ -47,7 +47,7 @@ class ViewStyle extends EnumerationValue {
 
 export default class Molecule3DDialog extends Dialog {
 
-  public readonly completeMoleculeProperty: TReadOnlyProperty<CompleteMolecule | null>;
+  public readonly completeMoleculeProperty: TProperty<CompleteMolecule | null>;
   public readonly isPlayingProperty: BooleanProperty;
   public readonly isDraggingProperty: BooleanProperty;
   public readonly viewStyleProperty: EnumerationProperty<ViewStyle>;
@@ -56,7 +56,7 @@ export default class Molecule3DDialog extends Dialog {
   private readonly spaceFilledIcon: ThreeNode;
   private readonly ballAndStickIcon: ThreeNode;
 
-  public constructor( completeMoleculeProperty: TReadOnlyProperty<CompleteMolecule | null> ) {
+  public constructor( completeMoleculeProperty: TProperty<CompleteMolecule | null> ) {
 
     // Holds all of the content within the dialog. Dialog needs to be sized to content before content is added.
     const contentWrapper = new Rectangle( 0, 0, 300, 340 );

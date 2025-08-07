@@ -14,11 +14,10 @@ import BucketFront from '../../../../scenery-phet/js/bucket/BucketFront.js';
 import BucketHole from '../../../../scenery-phet/js/bucket/BucketHole.js';
 import DragListener from '../../../../scenery/js/listeners/DragListener.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
-// import { SceneryEvent } from '../../../../scenery/js/input/Event.js'; -- Using IntentionalAny for now until scenery types are available
 import buildAMolecule from '../../buildAMolecule.js';
 import BAMConstants from '../BAMConstants.js';
-import Kit from '../model/Kit.js';
 import Atom2 from '../model/Atom2.js';
+import Kit from '../model/Kit.js';
 import AtomNode from './AtomNode.js';
 import MoleculeCollectingScreenView from './MoleculeCollectingScreenView.js';
 
@@ -43,7 +42,7 @@ class KitNode extends Node {
     this.kit = kit;
 
     // Maps for KitNode elements.
-    const atomNodeMap: Record<number, AtomNode> = {}; // atom.id => AtomNode
+    const atomNodeMap: Record<string, AtomNode> = {}; // atom.id => AtomNode
 
     // Layers used for buckets
     const topLayer = new Node();
@@ -57,9 +56,9 @@ class KitNode extends Node {
     this.addChild( this.atomLayer );
     this.addChild( topLayer );
 
-    // Create a bucket based on a the kit's model bucket. This includes a front and back for the bucket contained in
+    // Create a bucket based on a kit's model bucket. This includes a front and back for the bucket contained in
     // different layout.
-    ( kit as IntentionalAny ).buckets.forEach( ( bucket: IntentionalAny ): void => {
+    ( kit ).buckets.forEach( ( bucket: IntentionalAny ): void => {
       const bucketFront = new BucketFront( bucket, BAMConstants.MODEL_VIEW_TRANSFORM );
       const bucketHole = new BucketHole( bucket, BAMConstants.MODEL_VIEW_TRANSFORM );
       // NOTE: we will use the Bucket's hole with an expanded touch area to trigger the "grab by touching the bucket" behavior
@@ -77,8 +76,8 @@ class KitNode extends Node {
         bucketHole.cursor = bucket.getParticleList().length ? 'pointer' : 'default';
       };
 
-      ( kit as IntentionalAny ).addedMoleculeEmitter.addListener( bucketHoleCursorUpdate );
-      ( kit as IntentionalAny ).removedMoleculeEmitter.addListener( bucketHoleCursorUpdate );
+      ( kit ).addedMoleculeEmitter.addListener( bucketHoleCursorUpdate );
+      ( kit ).removedMoleculeEmitter.addListener( bucketHoleCursorUpdate );
       bucketHoleCursorUpdate();
 
 
@@ -88,11 +87,11 @@ class KitNode extends Node {
 
         // Adjust position of atom
         const viewPoint = moleculeCollectingScreenView.globalToLocalPoint( event.pointer!.point );
-        ( atom as IntentionalAny ).positionProperty.value = BAMConstants.MODEL_VIEW_TRANSFORM.viewToModelPosition( viewPoint );
+        ( atom ).positionProperty.value = BAMConstants.MODEL_VIEW_TRANSFORM.viewToModelPosition( viewPoint );
 
         // Add new atom to the play area.
-        const currentKit = ( moleculeCollectingScreenView.bamModel.currentCollectionProperty.value as IntentionalAny ).currentKitProperty.value;
-        ( currentKit ).atomsInPlayArea.push( atom );
+        const currentKit = ( moleculeCollectingScreenView.bamModel.currentCollectionProperty.value ).currentKitProperty.value!;
+        currentKit.atomsInPlayArea.push( atom );
 
         // Handle removing particles from bucket
         if ( bucket.containsParticle( atom ) ) {
@@ -101,10 +100,10 @@ class KitNode extends Node {
           bucket.particleList.remove( atom );
 
           // Get reference to atomNode and call the dragListener
-          const atomNode = moleculeCollectingScreenView.kitPlayAreaNode.atomNodeMap[ ( atom as IntentionalAny ).id ];
+          const atomNode = moleculeCollectingScreenView.kitPlayAreaNode.atomNodeMap[ ( atom ).id ];
 
           if ( atomNode ) {
-            ( atomNode as IntentionalAny ).dragListener.press( event, atomNode );
+            atomNode.dragListener!.press( event, atomNode );
           }
         }
       };
@@ -165,7 +164,7 @@ class KitNode extends Node {
         const atomNode = new AtomNode( atom );
 
         // Keep track of the atomNode by mapping to its atom's ID then add to atom layer
-        atomNodeMap[ ( atom as IntentionalAny ).id ] = atomNode;
+        atomNodeMap[ atom.id ] = atomNode;
 
         // Add the particle to the bucket atom layer and the bucket's particles.
         this.atomLayer.addChild( atomNode );
@@ -189,7 +188,7 @@ class KitNode extends Node {
       bucket.particleList.addItemAddedListener( particleAddedListener );
       bucket.particleList.addItemRemovedListener( particleRemovedListener );
     } );
-    assert && assert( ( kit as IntentionalAny ).molecules.length === 0 );
+    assert && assert( ( kit ).molecules.length === 0 );
   }
 
   /**
@@ -204,7 +203,7 @@ class KitNode extends Node {
 
     const thresholdSquared = threshold * threshold;
 
-    const atoms = ( this.kit as IntentionalAny ).atoms;
+    const atoms = ( this.kit ).atoms;
     const numAtoms = atoms.length;
 
     let best: Atom2 | null = null;

@@ -420,7 +420,7 @@ class MoleculeStructure {
   private getBondSpecsForAtom( atomIndex: number ): string {
     const atom = this.atoms[ atomIndex ];
     let bondSpecs = '';
-    
+
     this.bonds.forEach( bond => {
       if ( bond.contains( atom ) ) {
         const otherAtom = bond.getOtherAtom( atom ) as Atom2;
@@ -430,7 +430,7 @@ class MoleculeStructure {
         }
       }
     } );
-    
+
     return bondSpecs;
   }
 

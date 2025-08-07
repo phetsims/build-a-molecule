@@ -17,12 +17,12 @@ import Vector2 from '../../../../../dot/js/Vector2.js';
 import Vector3 from '../../../../../dot/js/Vector3.js';
 import { Arc, EllipticalArc } from '../../../../../kite/js/segments/Segment.js';
 import Element from '../../../../../nitroglycerin/js/Element.js';
-import IntentionalAny from '../../../../../phet-core/js/types/IntentionalAny.js';
+import affirm from '../../../../../perennial-alias/js/browser-and-node/affirm.js';
 import DOM from '../../../../../scenery/js/nodes/DOM.js';
 import Color from '../../../../../scenery/js/util/Color.js';
 import Utils from '../../../../../scenery/js/util/Utils.js';
 import buildAMolecule from '../../../buildAMolecule.js';
-import CompleteMolecule from '../../model/CompleteMolecule.js';
+import CompleteMolecule, { PubChemAtom } from '../../model/CompleteMolecule.js';
 
 // Enhanced Vector3 with additional properties for atoms
 type EnhancedVector3 = Vector3 & {
@@ -91,11 +91,12 @@ class Molecule3DNode extends DOM {
     // map the atoms into our enhanced format
     this.currentAtoms = completeMolecule.atoms.map( atom => {
       // similar to picometers from angstroms? hopefully?
-      const atomAny = atom as IntentionalAny;
-      const v = new Vector3( atomAny.x3d, atomAny.y3d, atomAny.z3d ).times( 75 ) as EnhancedVector3;
-      v.element = atomAny.element;
-      v.covalentRadius = atomAny.element.covalentRadius;
-      v.color = atomAny.element.color;
+      affirm( atom instanceof PubChemAtom );
+
+      const v = new Vector3( atom.x3d, atom.y3d, atom.z3d ).times( 75 ) as EnhancedVector3;
+      v.element = atom.element;
+      v.covalentRadius = atom.element.covalentRadius;
+      v.color = atom.element.color;
       return v;
     } );
 

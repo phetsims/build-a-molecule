@@ -19,6 +19,7 @@ import Bounds2 from '../../../../dot/js/Bounds2.js';
 import dotRandom from '../../../../dot/js/dotRandom.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import Atom from '../../../../nitroglycerin/js/Atom.js';
+import Element from '../../../../nitroglycerin/js/Element.js';
 import affirm from '../../../../perennial-alias/js/browser-and-node/affirm.js';
 import arrayRemove from '../../../../phet-core/js/arrayRemove.js';
 import cleanArray from '../../../../phet-core/js/cleanArray.js';
@@ -173,8 +174,8 @@ export default class Kit {
    * Returns the bucket for a given element
    * @param element - The element to find a bucket for
    */
-  private getBucketForElement( element: IntentionalAny ): IntentionalAny {
-    const elementBucket = this.buckets.find( ( bucket: IntentionalAny ) => {
+  private getBucketForElement( element: Element ): IntentionalAny {
+    const elementBucket = this.buckets.find( bucket => {
       return bucket.element.isSameElement( element );
     } );
     assert && assert( elementBucket, 'Element does not have an associated bucket.' );
@@ -682,7 +683,7 @@ class BondingOption {
     this.a = a;
     this.direction = direction;
     this.b = b;
-    this.idealPosition = ( a as Atom2 ).positionProperty.value.plus( ( direction ).vector.times( ( a as IntentionalAny ).covalentRadius + ( b as IntentionalAny ).covalentRadius ) );
+    this.idealPosition = ( a as Atom2 ).positionProperty.value.plus( ( direction ).vector.times( ( a ).covalentRadius + ( b ).covalentRadius ) );
   }
 }
 
