@@ -13,6 +13,7 @@ import IntentionalAny from '../../../../phet-core/js/types/IntentionalAny.js';
 import BucketFront from '../../../../scenery-phet/js/bucket/BucketFront.js';
 import BucketHole from '../../../../scenery-phet/js/bucket/BucketHole.js';
 import DragListener from '../../../../scenery/js/listeners/DragListener.js';
+import { PressListenerEvent } from '../../../../scenery/js/listeners/PressListener.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import buildAMolecule from '../../buildAMolecule.js';
 import BAMConstants from '../BAMConstants.js';
@@ -58,7 +59,7 @@ class KitNode extends Node {
 
     // Create a bucket based on a kit's model bucket. This includes a front and back for the bucket contained in
     // different layout.
-    ( kit ).buckets.forEach( ( bucket: IntentionalAny ): void => {
+    kit.buckets.forEach( bucket => {
       const bucketFront = new BucketFront( bucket, BAMConstants.MODEL_VIEW_TRANSFORM );
       const bucketHole = new BucketHole( bucket, BAMConstants.MODEL_VIEW_TRANSFORM );
       // NOTE: we will use the Bucket's hole with an expanded touch area to trigger the "grab by touching the bucket" behavior
@@ -83,10 +84,10 @@ class KitNode extends Node {
 
       // Used for grabbing atoms in bucket. Will be triggered by grabbing the atoms themselves and the bucket the atoms
       // are contained in.
-      const atomNodeDragCallback = ( event: IntentionalAny, atom: Atom2 ): void => {
+      const atomNodeDragCallback = ( event: PressListenerEvent, atom: Atom2 ): void => {
 
         // Adjust position of atom
-        const viewPoint = moleculeCollectingScreenView.globalToLocalPoint( event.pointer!.point );
+        const viewPoint = moleculeCollectingScreenView.globalToLocalPoint( event.pointer.point );
         ( atom ).positionProperty.value = BAMConstants.MODEL_VIEW_TRANSFORM.viewToModelPosition( viewPoint );
 
         // Add new atom to the play area.
@@ -113,11 +114,11 @@ class KitNode extends Node {
 
         // our hook to start dragging an atom (if available in the bucket)
         bucketHole.addInputListener( {
-          down: ( event: IntentionalAny ): void => {
+          down: ( event: PressListenerEvent ): void => {
             this.interruptSubtreeInput();
 
             // coordinate transforms to get our atom
-            const viewPoint = this.globalToLocalPoint( event.pointer!.point );
+            const viewPoint = this.globalToLocalPoint( event.pointer.point );
             const modelPoint = BAMConstants.MODEL_VIEW_TRANSFORM.viewToModelPosition( viewPoint );
             let atom = this.closestAtom( modelPoint, Number.POSITIVE_INFINITY, bucket.element ); // filter by the element
 

@@ -404,7 +404,7 @@ export default class BAMScreenView extends ScreenView {
         // Update the current kit in the play area node.
         this.kitPlayAreaNode.currentKit = originKit;
       },
-      drag: ( event: IntentionalAny, listener: IntentionalAny ) => {
+      drag: ( event: unknown, listener: IntentionalAny ) => {
         dragLength += listener.modelDelta.getMagnitude();
 
         // Get delta from start of drag

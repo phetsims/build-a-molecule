@@ -23,7 +23,6 @@ import Element from '../../../../nitroglycerin/js/Element.js';
 import affirm from '../../../../perennial-alias/js/browser-and-node/affirm.js';
 import arrayRemove from '../../../../phet-core/js/arrayRemove.js';
 import cleanArray from '../../../../phet-core/js/cleanArray.js';
-import IntentionalAny from '../../../../phet-core/js/types/IntentionalAny.js';
 import buildAMolecule from '../../buildAMolecule.js';
 import BAMQueryParameters from '../BAMQueryParameters.js';
 import Atom2 from './Atom2.js';
@@ -174,11 +173,11 @@ export default class Kit {
    * Returns the bucket for a given element
    * @param element - The element to find a bucket for
    */
-  private getBucketForElement( element: Element ): IntentionalAny {
+  private getBucketForElement( element: Element ): BAMBucket {
     const elementBucket = this.buckets.find( bucket => {
       return bucket.element.isSameElement( element );
     } );
-    assert && assert( elementBucket, 'Element does not have an associated bucket.' );
+    affirm( elementBucket, 'Element does not have an associated bucket.' );
     return elementBucket;
   }
 
@@ -326,7 +325,7 @@ export default class Kit {
    * @param a - Atom A
    * @param b - Atom B
    */
-  public getBondDirection( a: Atom, b: Atom ): IntentionalAny {
+  public getBondDirection( a: Atom, b: Atom ): DirectionValue {
     return this.lewisDotModel!.getBondDirection( a, b );
   }
 
@@ -672,7 +671,7 @@ class BondingOption {
   public readonly a: Atom;
   public readonly direction: DirectionValue;
   public readonly b: Atom;
-  public readonly idealPosition: IntentionalAny;
+  public readonly idealPosition: Vector2;
 
   /**
    * @param a - Atom A

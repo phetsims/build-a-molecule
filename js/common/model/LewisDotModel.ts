@@ -12,7 +12,6 @@
 import Utils from '../../../../dot/js/Utils.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import Atom from '../../../../nitroglycerin/js/Atom.js';
-import IntentionalAny from '../../../../phet-core/js/types/IntentionalAny.js';
 import buildAMolecule from '../../buildAMolecule.js';
 import Direction, { DirectionValue } from './Direction.js';
 
@@ -132,7 +131,7 @@ class LewisDotModel {
      * hydrogen.
      *----------------------------------------------------------------------------*/
 
-    const coordinateMap: Record<string, IntentionalAny> = {};
+    const coordinateMap: Record<string, Atom> = {};
 
     // map the molecule on the A side, from the origin
     let success = this.mapMolecule( Vector2.ZERO, a, null, coordinateMap );
@@ -158,7 +157,7 @@ class LewisDotModel {
    * @param coordinateMap Coordinate map to which we add the atoms to
    * @returns Success. Will return false if any heavy atom overlaps on another atom. If it returns false, the coordinate map may be inconsistent
    */
-  private mapMolecule( coordinates: Vector2, atom: Atom, excludedAtom: Atom | null, coordinateMap: Record<string, IntentionalAny> ): boolean {
+  private mapMolecule( coordinates: Vector2, atom: Atom, excludedAtom: Atom | null, coordinateMap: Record<string, Atom> ): boolean {
 
     const dotAtom = this.getLewisDotAtom( atom );
 
@@ -212,7 +211,7 @@ class LewisDotAtom {
 
   public readonly atom: Atom;
 
-  private readonly connections: Record<IntentionalAny, LewisDotAtom | null>;
+  private readonly connections: Record<string, LewisDotAtom | null>;
 
   public constructor( atom: Atom ) {
 

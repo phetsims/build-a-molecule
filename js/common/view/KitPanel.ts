@@ -8,7 +8,6 @@
  */
 
 import Property from '../../../../axon/js/Property.js';
-import IntentionalAny from '../../../../phet-core/js/types/IntentionalAny.js';
 import Display from '../../../../scenery/js/display/Display.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import Color from '../../../../scenery/js/util/Color.js';
@@ -19,12 +18,13 @@ import buildAMolecule from '../../buildAMolecule.js';
 import BAMConstants from '../BAMConstants.js';
 import KitCollection from '../model/KitCollection.js';
 import KitNode from './KitNode.js';
+import MoleculeCollectingScreenView from './MoleculeCollectingScreenView.js';
 
 export default class KitPanel extends Node {
 
   public readonly kitCarousel: Carousel;
 
-  public constructor( kitCollection: KitCollection, kitNodeWidth: number, kitNodeHeight: number, view: IntentionalAny, isCollectingView: boolean ) {
+  public constructor( kitCollection: KitCollection, kitNodeWidth: number, kitNodeHeight: number, view: MoleculeCollectingScreenView, isCollectingView: boolean ) {
     super();
 
     // Keep track of the KitCollection

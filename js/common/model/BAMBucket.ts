@@ -28,7 +28,7 @@ class BAMBucket extends SphereBucket<Atom2> {
   public readonly particleList: ObservableArray<Atom2>;
 
   // Contains atoms for a bucket when the bucket is full.
-  public readonly fullState: Atom2[];
+  public fullState: Atom2[];
 
   public readonly element: Element;
   public readonly width: number;

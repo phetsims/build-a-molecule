@@ -10,8 +10,9 @@
 
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
-import IntentionalAny from '../../../../phet-core/js/types/IntentionalAny.js';
+import affirm from '../../../../perennial-alias/js/browser-and-node/affirm.js';
 import buildAMolecule from '../../buildAMolecule.js';
+import Atom2 from './Atom2.js';
 import MoleculeStructure from './MoleculeStructure.js';
 
 class Molecule extends MoleculeStructure {
@@ -29,7 +30,9 @@ class Molecule extends MoleculeStructure {
   public get positionBounds(): Bounds2 {
     // mutable way of handling this, so we need to make a copy
     const bounds = Bounds2.NOTHING.copy();
-    this.atoms.forEach( ( atom: IntentionalAny ) => {
+    this.atoms.forEach( atom => {
+
+      affirm( atom instanceof Atom2, 'Expected atom to be an instance of Atom2' );
       bounds.includeBounds( atom.positionBounds );
     } );
     return bounds;
@@ -42,7 +45,10 @@ class Molecule extends MoleculeStructure {
 
     // mutable way of handling this, so we need to make a copy
     const bounds = Bounds2.NOTHING.copy();
-    this.atoms.forEach( ( atom: IntentionalAny ) => {
+    this.atoms.forEach( atom => {
+
+      affirm( atom instanceof Atom2, 'Expected atom to be an instance of Atom2' );
+
       bounds.includeBounds( atom.destinationBounds );
     } );
     return bounds;
@@ -53,7 +59,10 @@ class Molecule extends MoleculeStructure {
    * @param delta
    */
   public shiftDestination( delta: Vector2 ): void {
-    this.atoms.forEach( ( atom: IntentionalAny ) => {
+    this.atoms.forEach( atom => {
+
+      affirm( atom instanceof Atom2, 'Expected atom to be an instance of Atom2' );
+
       atom.destinationProperty.value = atom.destinationProperty.value.plus( delta );
     } );
   }
