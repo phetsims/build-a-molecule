@@ -28,7 +28,7 @@ class Molecule extends MoleculeStructure {
   public get positionBounds(): Bounds2 {
     // mutable way of handling this, so we need to make a copy
     const bounds = Bounds2.NOTHING.copy();
-    ( this as any ).atoms.forEach( ( atom: any ) => { // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when MoleculeStructure and Atom are converted, see https://github.com/phetsims/build-a-molecule/issues/245
+    this.atoms.forEach( ( atom: any ) => { // eslint-disable-line @typescript-eslint/no-explicit-any
       bounds.includeBounds( atom.positionBounds );
     } );
     return bounds;
@@ -41,7 +41,7 @@ class Molecule extends MoleculeStructure {
 
     // mutable way of handling this, so we need to make a copy
     const bounds = Bounds2.NOTHING.copy();
-    ( this as any ).atoms.forEach( ( atom: any ) => { // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when MoleculeStructure and Atom are converted, see https://github.com/phetsims/build-a-molecule/issues/245
+    this.atoms.forEach( ( atom: any ) => { // eslint-disable-line @typescript-eslint/no-explicit-any
       bounds.includeBounds( atom.destinationBounds );
     } );
     return bounds;
@@ -52,7 +52,7 @@ class Molecule extends MoleculeStructure {
    * @param delta
    */
   public shiftDestination( delta: Vector2 ): void {
-    ( this as any ).atoms.forEach( ( atom: any ) => { // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when MoleculeStructure and Atom are converted, see https://github.com/phetsims/build-a-molecule/issues/245
+    this.atoms.forEach( ( atom: any ) => { // eslint-disable-line @typescript-eslint/no-explicit-any
       atom.destinationProperty.value = atom.destinationProperty.value.plus( delta );
     } );
   }

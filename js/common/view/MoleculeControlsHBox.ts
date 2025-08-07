@@ -7,8 +7,8 @@
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 
-import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import Shape from '../../../../kite/js/Shape.js';
+import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import ButtonListener from '../../../../scenery/js/input/ButtonListener.js';
@@ -90,15 +90,17 @@ export default class MoleculeControlsHBox extends HBox {
       soundPlayer: nullSoundPlayer
     } );
     buttonBreak.touchArea = buttonBreak.childBounds.dilated( DILATION_FACTOR );
+
+    // @ts-expect-error
     buttonBreak.addInputListener( new ButtonListener( {
       fire: () => {
         kit.breakMolecule( molecule );
       }
-    } ) as any ); // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when ButtonListener is converted, see https://github.com/phetsims/build-a-molecule/issues/245
+    } ) );
     this.addChild( buttonBreak );
 
     molecule.atoms.forEach( atom => {
-      ( atom as any ).positionProperty.link( this.updatePositionListener ); // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when Atom is converted, see https://github.com/phetsims/build-a-molecule/issues/245
+      atom.positionProperty.link( this.updatePositionListener );
     } );
 
     // sanity check. should update (unfortunately) a number of times above
@@ -109,7 +111,7 @@ export default class MoleculeControlsHBox extends HBox {
     const listener = this.updatePositionListener;
     if ( listener ) {
       this.molecule.atoms.forEach( atom => {
-        ( atom as any ).positionProperty.unlink( listener ); // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when Atom is converted, see https://github.com/phetsims/build-a-molecule/issues/245
+        atom.positionProperty.unlink( listener );
       } );
     }
     super.dispose();

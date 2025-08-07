@@ -32,7 +32,7 @@ class KitCollection {
   private hasBlinkedOnce: boolean;
 
   // this will remain false if we have no collection boxes
-  private allCollectionBoxesFilledProperty: BooleanProperty;
+  public allCollectionBoxesFilledProperty: BooleanProperty;
 
   public currentKitProperty: Property<Kit | null>;
 

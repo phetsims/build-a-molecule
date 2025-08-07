@@ -13,8 +13,9 @@
 import Atom from '../../../../nitroglycerin/js/Atom.js';
 import PhetioObject from '../../../../tandem/js/PhetioObject.js';
 import buildAMolecule from '../../buildAMolecule.js';
-import MoleculeStructure from './MoleculeStructure.js';
+import Atom2 from './Atom2.js';
 import Bond from './Bond.js';
+import MoleculeStructure from './MoleculeStructure.js';
 
 export default class StrippedMolecule extends PhetioObject {
 
@@ -44,6 +45,7 @@ export default class StrippedMolecule extends PhetioObject {
 
         if ( aIsHydrogen || bIsHydrogen ) {
           // increment hydrogen count of either A or B, if the bond contains hydrogen
+          // @ts-expect-error
           this.hydrogenCount[ atomsToAdd.indexOf( aIsHydrogen ? bond.b : bond.a ) ]++;
         }
         else {
@@ -59,13 +61,13 @@ export default class StrippedMolecule extends PhetioObject {
     bondsToAdd.forEach( this.stripped.addBond.bind( this.stripped ) );
   }
 
-  private getIndex( atom: Atom ): number {
+  private getIndex( atom: Atom2 ): number {
     const index = this.stripped.atoms.indexOf( atom );
     assert && assert( index !== -1 );
     return index;
   }
 
-  private getHydrogenCount( atom: Atom ): number {
+  private getHydrogenCount( atom: Atom2 ): number {
     return this.hydrogenCount[ this.getIndex( atom ) ];
   }
 
@@ -125,7 +127,7 @@ export default class StrippedMolecule extends PhetioObject {
     return false;
   }
 
-  public checkEquivalency( other: StrippedMolecule, myVisited: Atom[], otherVisited: Atom[], myAtom: Atom, otherAtom: Atom, subCheck: boolean ): boolean {
+  public checkEquivalency( other: StrippedMolecule, myVisited: Atom[], otherVisited: Atom[], myAtom: Atom2, otherAtom: Atom2, subCheck: boolean ): boolean {
     // basically this checks whether two different sub-trees of two different molecules are "equivalent"
 
     /*
@@ -152,7 +154,9 @@ export default class StrippedMolecule extends PhetioObject {
         return false;
       }
     }
+    // @ts-expect-error
     const myUnvisitedNeighbors = this.stripped.getNeighborsNotInSet( myAtom, myVisited );
+    // @ts-expect-error
     const otherUnvisitedNeighbors = other.stripped.getNeighborsNotInSet( otherAtom, otherVisited );
     if ( myUnvisitedNeighbors.length !== otherUnvisitedNeighbors.length ) {
       return false;

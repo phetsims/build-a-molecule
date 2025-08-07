@@ -13,8 +13,8 @@ import Image from '../../../../scenery/js/nodes/Image.js';
 import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
 import buildAMolecule from '../../buildAMolecule.js';
 import BAMConstants from '../../common/BAMConstants.js';
-import MoleculeList from '../../common/model/MoleculeList.js';
 import CompleteMolecule from '../../common/model/CompleteMolecule.js';
+import MoleculeList from '../../common/model/MoleculeList.js';
 import Molecule3DNode from '../../common/view/view3d/Molecule3DNode.js';
 
 // Options for screen icons
@@ -36,14 +36,14 @@ const BAMIconFactory = {
    */
   createIconImage( completeMolecule: CompleteMolecule, width: number, height: number, scale: number, toCollectionBox: boolean ): Image {
     const moleculeNode = new Molecule3DNode( completeMolecule, new Bounds2( 0, 0, width, height ), false );
-    const transformMatrix = ( Molecule3DNode as any ).initialTransforms[ completeMolecule.getGeneralFormula() ]; // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when Molecule3DNode types are available, see https://github.com/phetsims/build-a-molecule/issues/245
+    const transformMatrix = ( Molecule3DNode ).initialTransforms[ completeMolecule.getGeneralFormula() ];
     if ( transformMatrix ) {
-      ( moleculeNode as any ).transformMolecule( transformMatrix ); // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when Molecule3DNode types are available, see https://github.com/phetsims/build-a-molecule/issues/245
+      ( moleculeNode ).transformMolecule( transformMatrix );
     }
-    ( moleculeNode as any ).draw(); // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when Molecule3DNode types are available, see https://github.com/phetsims/build-a-molecule/issues/245
-    return new Image( ( moleculeNode as any ).canvas.toDataURL(), { // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when Molecule3DNode types are available, see https://github.com/phetsims/build-a-molecule/issues/245
-      initialWidth: toCollectionBox ? 0 : ( moleculeNode as any ).canvas.width, // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when Molecule3DNode types are available, see https://github.com/phetsims/build-a-molecule/issues/245
-      initialHeight: toCollectionBox ? 0 : ( moleculeNode as any ).canvas.height, // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when Molecule3DNode types are available, see https://github.com/phetsims/build-a-molecule/issues/245
+    ( moleculeNode ).draw();
+    return new Image( ( moleculeNode ).canvas.toDataURL(), {
+      initialWidth: toCollectionBox ? 0 : ( moleculeNode ).canvas.width,
+      initialHeight: toCollectionBox ? 0 : ( moleculeNode ).canvas.height,
       scale: scale
     } );
   },
@@ -57,7 +57,7 @@ const BAMIconFactory = {
 
     // Create icon from complete Molecule
     const moleculeIcon = BAMIconFactory.createIconImage(
-      ( MoleculeList as any ).H2O, // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when MoleculeList types are available, see https://github.com/phetsims/build-a-molecule/issues/245
+      MoleculeList.H2O!,
       Screen.MINIMUM_HOME_SCREEN_ICON_SIZE.width,
       Screen.MINIMUM_HOME_SCREEN_ICON_SIZE.height,
       0.85,
@@ -85,7 +85,7 @@ const BAMIconFactory = {
 
     // Iconize first O2 Molecule
     const moleculeIconOne = BAMIconFactory.createIconImage(
-      ( MoleculeList as any ).O2, // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when MoleculeList types are available, see https://github.com/phetsims/build-a-molecule/issues/245
+      MoleculeList.O2!,
       Screen.MINIMUM_HOME_SCREEN_ICON_SIZE.width,
       Screen.MINIMUM_HOME_SCREEN_ICON_SIZE.height,
       0.50,
@@ -94,7 +94,7 @@ const BAMIconFactory = {
 
     // Iconize second O2 Molecule
     const moleculeIconTwo = BAMIconFactory.createIconImage(
-      ( MoleculeList as any ).O2, // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when MoleculeList types are available, see https://github.com/phetsims/build-a-molecule/issues/245
+      MoleculeList.O2!,
       Screen.MINIMUM_HOME_SCREEN_ICON_SIZE.width,
       Screen.MINIMUM_HOME_SCREEN_ICON_SIZE.height,
       0.50,
@@ -124,7 +124,7 @@ const BAMIconFactory = {
 
     // Iconize first O2 Molecule
     const moleculeIcon = BAMIconFactory.createIconImage(
-      ( MoleculeList as any ).C2H4O2, // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when MoleculeList types are available, see https://github.com/phetsims/build-a-molecule/issues/245
+      MoleculeList.C2H4O2!,
       Screen.MINIMUM_HOME_SCREEN_ICON_SIZE.width,
       Screen.MINIMUM_HOME_SCREEN_ICON_SIZE.height,
       0.95,

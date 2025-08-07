@@ -12,15 +12,13 @@ import Element from '../../../../nitroglycerin/js/Element.js';
 import PhetioObject from '../../../../tandem/js/PhetioObject.js';
 import buildAMolecule from '../../buildAMolecule.js';
 import BAMConstants from '../BAMConstants.js';
+import type MoleculeStructure from './MoleculeStructure.js';
 
 class ElementHistogram extends PhetioObject {
 
   private readonly quantities: Record<string, number>;
 
-  /**
-   * @param moleculeStructure
-   */
-  public constructor( moleculeStructure: any ) { // eslint-disable-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types -- TODO: Fix when MoleculeStructure is converted, see https://github.com/phetsims/build-a-molecule/issues/245
+  public constructor( moleculeStructure: MoleculeStructure ) {
     super();
 
     this.quantities = {};
@@ -50,8 +48,8 @@ class ElementHistogram extends PhetioObject {
    * Adds elements from molecule
    * @param molecule
    */
-  public addMolecule( molecule: any ): void { // eslint-disable-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types -- TODO: Fix when MoleculeStructure is converted, see https://github.com/phetsims/build-a-molecule/issues/245
-    molecule.atoms.forEach( ( atom: any ) => { // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when MoleculeStructure is converted, see https://github.com/phetsims/build-a-molecule/issues/245
+  public addMolecule( molecule: MoleculeStructure ): void {
+    molecule.atoms.forEach( ( atom: any ) => { // eslint-disable-line @typescript-eslint/no-explicit-any
       this.addElement( atom.element );
     } );
   }

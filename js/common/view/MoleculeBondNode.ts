@@ -21,6 +21,7 @@ import scissorsUp_cur from '../../../images/scissorsUp_cur.js';
 import scissorsUp_png from '../../../images/scissorsUp_png.js';
 import buildAMolecule from '../../buildAMolecule.js';
 import BAMConstants from '../BAMConstants.js';
+import Atom2 from '../model/Atom2.js';
 import Bond from '../model/Bond.js';
 import Direction from '../model/Direction.js';
 import Kit from '../model/Kit.js';
@@ -51,19 +52,19 @@ const bondRadius = 6; // "Radius" of the bond target that will break the bond
 
 export default class MoleculeBondNode extends Node {
 
-  private readonly a: any; // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when Atom2 is converted, see https://github.com/phetsims/build-a-molecule/issues/245
-  private readonly b: any; // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when Atom2 is converted, see https://github.com/phetsims/build-a-molecule/issues/245
+  private readonly a: Atom2;
+  private readonly b: Atom2;
   private readonly kit: Kit;
 
   // Listener that will update the position of our hit target
   private readonly positionListener: () => void;
-  private readonly toggleTargetVisibility: ( selectedAtom: any ) => void; // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when Atom2 is converted, see https://github.com/phetsims/build-a-molecule/issues/245
+  private readonly toggleTargetVisibility: ( selectedAtom: Atom2 | null ) => void;
 
   public constructor( bond: Bond, kit: Kit ) {
     super( {} );
 
-    this.a = bond.a;
-    this.b = bond.b;
+    this.a = bond.a as Atom2;
+    this.b = bond.b as Atom2;
     this.kit = kit;
 
     // Use the lewis dot model to get our bond direction

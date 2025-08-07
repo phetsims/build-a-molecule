@@ -8,20 +8,20 @@
  */
 
 import BooleanProperty from '../../../../../axon/js/BooleanProperty.js';
+import TReadOnlyProperty from '../../../../../axon/js/TReadOnlyProperty.js';
+import Bounds2 from '../../../../../dot/js/Bounds2.js';
 import Bounds3 from '../../../../../dot/js/Bounds3.js';
 import Matrix3, { m3 } from '../../../../../dot/js/Matrix3.js';
 import Quaternion from '../../../../../dot/js/Quaternion.js';
 import Vector2 from '../../../../../dot/js/Vector2.js';
 import Vector3 from '../../../../../dot/js/Vector3.js';
 import { Arc, EllipticalArc } from '../../../../../kite/js/segments/Segment.js';
+import Element from '../../../../../nitroglycerin/js/Element.js';
 import DOM from '../../../../../scenery/js/nodes/DOM.js';
 import Color from '../../../../../scenery/js/util/Color.js';
 import Utils from '../../../../../scenery/js/util/Utils.js';
 import buildAMolecule from '../../../buildAMolecule.js';
 import CompleteMolecule from '../../model/CompleteMolecule.js';
-import Element from '../../../../../nitroglycerin/js/Element.js';
-import Bounds2 from '../../../../../dot/js/Bounds2.js';
-import TReadOnlyProperty from '../../../../../axon/js/TReadOnlyProperty.js';
 
 // Enhanced Vector3 with additional properties for atoms
 type EnhancedVector3 = Vector3 & {
@@ -90,7 +90,7 @@ class Molecule3DNode extends DOM {
     // map the atoms into our enhanced format
     this.currentAtoms = completeMolecule.atoms.map( atom => {
       // similar to picometers from angstroms? hopefully?
-      const atomAny = atom as any; // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when MoleculeStructure is converted, see https://github.com/phetsims/build-a-molecule/issues/245
+      const atomAny = atom as any; // eslint-disable-line @typescript-eslint/no-explicit-any
       const v = new Vector3( atomAny.x3d, atomAny.y3d, atomAny.z3d ).times( 75 ) as EnhancedVector3;
       v.element = atomAny.element;
       v.covalentRadius = atomAny.element.covalentRadius;

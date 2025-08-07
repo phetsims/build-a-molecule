@@ -65,8 +65,8 @@ class KitPlayAreaNode extends Node {
 
       // Unlink the active property listeners for old kits
       oldKits && oldKits.forEach( oldKit => {
-        ( oldKit as any ).activeProperty.unlink( this.kitActivePropertyListenerMap[ ( oldKit as any ).id ] ); // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when Kit is converted, see https://github.com/phetsims/build-a-molecule/issues/245
-        delete this.kitActivePropertyListenerMap[ ( oldKit as any ).id ]; // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when Kit is converted, see https://github.com/phetsims/build-a-molecule/issues/245
+        oldKit.activeProperty.unlink( this.kitActivePropertyListenerMap[ oldKit.id ] );
+        delete this.kitActivePropertyListenerMap[ oldKit.id ];
       } );
       kits.forEach( kit => {
 
@@ -75,16 +75,18 @@ class KitPlayAreaNode extends Node {
           this.atomLayer.children.forEach( atomNode => {
 
             // Check if the atom is in the kit's play area and toggle its visibility.
-            ( atomNode as any ).visible = ( kit as any ).atomsInPlayArea.includes( ( atomNode as any ).atom ); // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when Kit and AtomNode are converted, see https://github.com/phetsims/build-a-molecule/issues/245
+            // @ts-expect-error
+            atomNode.visible = kit.atomsInPlayArea.includes( atomNode.atom );
           } );
           this.metadataLayer.children.forEach( metadataNode => {
 
             // Check if the metadata molecule is a part of the active kit molecules  and toggle its visibility.
-            ( metadataNode as any ).visible = ( kit as any ).molecules.includes( ( metadataNode as any ).molecule ); // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when Kit and MoleculeControlsHBox are converted, see https://github.com/phetsims/build-a-molecule/issues/245
+            // @ts-expect-error
+            metadataNode.visible = kit.molecules.includes( metadataNode.molecule );
           } );
         };
-        ( kit as any ).activeProperty.link( activePropertyListener ); // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when Kit is converted, see https://github.com/phetsims/build-a-molecule/issues/245
-        this.kitActivePropertyListenerMap[ ( kit as any ).id ] = activePropertyListener; // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when Kit is converted, see https://github.com/phetsims/build-a-molecule/issues/245
+        kit.activeProperty.link( activePropertyListener );
+        this.kitActivePropertyListenerMap[ kit.id ] = activePropertyListener;
       } );
     } );
     this.addChild( this.atomLayer );
@@ -98,24 +100,24 @@ class KitPlayAreaNode extends Node {
   public addMoleculeBondNodes( molecule: Molecule ): void {
     const moleculeBondContainerNode = new MoleculeBondContainerNode( this.currentKit!, molecule );
     this.moleculeBondContainerLayer.addChild( moleculeBondContainerNode );
-    this.bondMap[ ( molecule as any ).moleculeId ] = moleculeBondContainerNode; // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when Molecule is converted, see https://github.com/phetsims/build-a-molecule/issues/245
+    this.bondMap[ molecule.moleculeId ] = moleculeBondContainerNode;
   }
 
   /**
    * Remove molecule bond nodes to the kit play area and its map.
    */
   public removeMoleculeBondNodes( molecule: Molecule ): void {
-    const moleculeBondContainerNode = this.bondMap[ ( molecule as any ).moleculeId ]; // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when Molecule is converted, see https://github.com/phetsims/build-a-molecule/issues/245
+    const moleculeBondContainerNode = this.bondMap[ molecule.moleculeId ];
     this.moleculeBondContainerLayer.removeChild( moleculeBondContainerNode );
     moleculeBondContainerNode.dispose();
-    delete this.bondMap[ ( molecule as any ).moleculeId ]; // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when Molecule is converted, see https://github.com/phetsims/build-a-molecule/issues/245
+    delete this.bondMap[ molecule.moleculeId ];
   }
 
   /**
    * Resets the kit of play area.
    */
   public resetPlayAreaKit(): void {
-    ( this.currentKit as any )?.reset(); // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when Kit is converted, see https://github.com/phetsims/build-a-molecule/issues/245
+    this.currentKit?.reset();
   }
 }
 

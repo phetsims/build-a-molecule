@@ -39,7 +39,7 @@ export default class BAMScreenView extends ScreenView {
   public readonly kitCollectionMap: Record<number, KitCollectionNode> = {};
   public readonly bamModel: BAMModel;
   public readonly atomDragBounds: Bounds2;
-  public readonly mappedKitCollectionBounds: Bounds2;
+  public mappedKitCollectionBounds: Bounds2;
   public readonly dialog: Molecule3DDialog | WarningDialog;
   public readonly showDialogCallback: ( completeMolecule: CompleteMolecule ) => void;
   public readonly kitPlayAreaNode: KitPlayAreaNode;

@@ -10,24 +10,21 @@
 
 import Vector2 from '../../../../dot/js/Vector2.js';
 import EnumerationDeprecated from '../../../../phet-core/js/EnumerationDeprecated.js';
+import IntentionalAny from '../../../../phet-core/js/types/IntentionalAny.js';
 import buildAMolecule from '../../buildAMolecule.js';
 
 // constants
-const DirectionOrientation = EnumerationDeprecated.byKeys( [ 'NORTH', 'EAST', 'SOUTH', 'WEST' ] );
+const DirectionOrientation = EnumerationDeprecated.byKeys( [ 'NORTH', 'EAST', 'SOUTH', 'WEST' ] ) as IntentionalAny;
 
-class DirectionValue {
+export class DirectionValue {
 
   public readonly vector: Vector2;
 
-  public readonly id: any; // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when EnumerationDeprecated is converted, see https://github.com/phetsims/build-a-molecule/issues/245
+  public readonly id: string;
 
   public opposite: DirectionValue | null;
 
-  /**
-   * @param vector
-   * @param id
-   */
-  public constructor( vector: Vector2, id: any ) { // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when EnumerationDeprecated is converted, see https://github.com/phetsims/build-a-molecule/issues/245
+  public constructor( vector: Vector2, id: string ) {
 
     this.vector = vector;
 
@@ -38,10 +35,10 @@ class DirectionValue {
 }
 
 // Declare cardinal direction values
-const NORTH = new DirectionValue( new Vector2( 0, 1 ), ( DirectionOrientation as any ).NORTH ); // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when EnumerationDeprecated is converted, see https://github.com/phetsims/build-a-molecule/issues/245
-const SOUTH = new DirectionValue( new Vector2( 0, -1 ), ( DirectionOrientation as any ).SOUTH ); // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when EnumerationDeprecated is converted, see https://github.com/phetsims/build-a-molecule/issues/245
-const EAST = new DirectionValue( new Vector2( 1, 0 ), ( DirectionOrientation as any ).EAST ); // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when EnumerationDeprecated is converted, see https://github.com/phetsims/build-a-molecule/issues/245
-const WEST = new DirectionValue( new Vector2( -1, 0 ), ( DirectionOrientation as any ).WEST ); // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when EnumerationDeprecated is converted, see https://github.com/phetsims/build-a-molecule/issues/245
+const NORTH = new DirectionValue( new Vector2( 0, 1 ), DirectionOrientation.NORTH );
+const SOUTH = new DirectionValue( new Vector2( 0, -1 ), DirectionOrientation.SOUTH );
+const EAST = new DirectionValue( new Vector2( 1, 0 ), DirectionOrientation.EAST );
+const WEST = new DirectionValue( new Vector2( -1, 0 ), DirectionOrientation.WEST );
 
 // Declare opposites
 NORTH.opposite = SOUTH;
@@ -59,6 +56,7 @@ const Direction = EnumerationDeprecated.byMap( {
   SOUTH: DirectionValue;
   EAST: DirectionValue;
   WEST: DirectionValue;
+  VALUES: DirectionValue[];
 };
 
 buildAMolecule.register( 'Direction', Direction );

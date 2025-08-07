@@ -13,11 +13,11 @@ import Display from '../../../../scenery/js/display/Display.js';
 import VBox from '../../../../scenery/js/layout/nodes/VBox.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import Color from '../../../../scenery/js/util/Color.js';
-import CollectionBox from '../model/CollectionBox.js';
 import nullSoundPlayer from '../../../../tambo/js/nullSoundPlayer.js';
 import buildAMolecule from '../../buildAMolecule.js';
-import KitCollection from '../model/KitCollection.js';
+import CollectionBox from '../model/CollectionBox.js';
 import CompleteMolecule from '../model/CompleteMolecule.js';
+import KitCollection from '../model/KitCollection.js';
 import CollectionBoxNode from './CollectionBoxNode.js';
 import MultipleCollectionBoxNode from './MultipleCollectionBoxNode.js';
 import SingleCollectionBoxNode from './SingleCollectionBoxNode.js';
@@ -55,7 +55,9 @@ class CollectionAreaNode extends Node {
         collection.resetKitsAndBoxes();
         updateRefillButton();
       },
-      interruptListener: Display.INTERRUPT_OTHER_POINTERS as any, // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when Display types are available, see https://github.com/phetsims/build-a-molecule/issues/245
+
+      // @ts-expect-error
+      interruptListener: Display.INTERRUPT_OTHER_POINTERS,
       iconHeight: 20,
       xMargin: 15,
       yMargin: 5,

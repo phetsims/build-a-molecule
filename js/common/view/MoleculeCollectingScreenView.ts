@@ -38,7 +38,7 @@ class MoleculeCollectingScreenView extends BAMScreenView {
   private readonly allFilledDialog: AllFilledDialog;
 
   /**
-   * @param bamModel - The main model for Build A Molecule  
+   * @param bamModel - The main model for Build A Molecule
    * @param isSingleCollectionMode - Whether this is in single collection mode
    */
   public constructor( bamModel: BAMModel, isSingleCollectionMode: boolean ) {
@@ -80,7 +80,7 @@ class MoleculeCollectingScreenView extends BAMScreenView {
       } );
 
     // Note: mappedKitCollectionBounds is initialized in parent constructor, we're just re-assigning here
-    ( this as any ).mappedKitCollectionBounds = this.kitCollectionMap[ this.bamModel.currentCollectionProperty.value.id ].bounds.dilatedX( 15 ); // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when BAMScreenView is converted, see https://github.com/phetsims/build-a-molecule/issues/245
+    this.mappedKitCollectionBounds = this.kitCollectionMap[ this.bamModel.currentCollectionProperty.value.id ].bounds.dilatedX( 15 );
     const collectionAttachmentCallbacks: ( () => void )[] = [];
     const collectionPanel = new CollectionPanel(
       this.bamModel,
@@ -133,7 +133,7 @@ class MoleculeCollectingScreenView extends BAMScreenView {
     this.hasShownOnce = false;
 
     // show dialog the 1st time all collection boxes are filled
-    ( collection as any ).allCollectionBoxesFilledProperty.link( ( filled: boolean ): void => { // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when KitCollection is converted, see https://github.com/phetsims/build-a-molecule/issues/245
+    collection.allCollectionBoxesFilledProperty.link( filled => {
       if ( filled ) {
         if ( !this.hasShownOnce && !this.bamModel.hasNextCollection() ) {
           this.allFilledDialog.show();

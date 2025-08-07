@@ -248,7 +248,11 @@ class CompleteMolecule extends MoleculeStructure {
       const x3d = parseFloat( tokens[ idx++ ] );
       const y3d = parseFloat( tokens[ idx++ ] );
       const z3d = parseFloat( tokens[ idx++ ] );
-      const atom = new PubChemAtom( Element.getElementBySymbol( symbol ), ( PubChemAtomType as any ).FULL, x2d, y2d, x3d, y3d, z3d ); // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when EnumerationDeprecated is converted, see https://github.com/phetsims/build-a-molecule/issues/245
+
+      // @ts-expect-error
+      const atom = new PubChemAtom( Element.getElementBySymbol( symbol ), PubChemAtomType.FULL, x2d, y2d, x3d, y3d, z3d );
+
+      // @ts-expect-error
       completeMolecule.addAtom( atom );
     }
 
@@ -295,6 +299,8 @@ class CompleteMolecule extends MoleculeStructure {
       const molecule = new CompleteMolecule( commonName, molecularFormula, atomCount, bondCount, has2d, has3d );
       molecule.cid = cid;
       return molecule;
+
+      // @ts-expect-error
     }, atomParser, PubChemBond.parse );
   }
 }

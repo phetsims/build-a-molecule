@@ -18,6 +18,7 @@ import Element from '../../../../nitroglycerin/js/Element.js';
 import IntentionalAny from '../../../../phet-core/js/types/IntentionalAny.js';
 import buildAMolecule from '../../buildAMolecule.js';
 import BAMQueryParameters from '../BAMQueryParameters.js';
+import Atom2 from './Atom2.js';
 import Bond from './Bond.js';
 import ElementHistogram from './ElementHistogram.js';
 
@@ -29,7 +30,7 @@ class MoleculeStructure {
   public readonly moleculeId: number;
 
   // Atoms in the molecule structure
-  public readonly atoms: Atom[];
+  public readonly atoms: Atom2[];
 
   // Bonds in the molecule structure
   public readonly bonds: Bond[];
@@ -45,7 +46,7 @@ class MoleculeStructure {
   /**
    * Add an atom to the molecule structure
    */
-  public addAtom( atom: Atom ): Atom {
+  public addAtom( atom: Atom2 ): Atom {
     assert && assert( !this.atoms.includes( atom ), 'Cannot add an already existing atom' );
     this.atoms.push( atom ); // NOTE: don't mess with the order
     return atom;
@@ -55,8 +56,8 @@ class MoleculeStructure {
    * Add a bond to the molecule structure
    */
   public addBond( bond: Bond ): void {
-    assert && assert( this.atoms.includes( bond.a ) );
-    assert && assert( this.atoms.includes( bond.b ) );
+    assert && assert( this.atoms.includes( bond.a as Atom2 ) );
+    assert && assert( this.atoms.includes( bond.b as Atom2 ) );
     this.bonds.push( bond );
   }
 
@@ -299,9 +300,11 @@ class MoleculeStructure {
    *
    * @returns<Atom>} All neighboring atoms that are connected by bonds to the passed in atom AND aren't in the exclusionSet
    */
-  public getNeighborsNotInSet( atom: Atom, exclusionSet: Atom[] ): Atom[] {
+  public getNeighborsNotInSet( atom: Atom2, exclusionSet: Atom2[] ): Atom2[] {
     // Note: (performance) hashset with fast lookup?
+    // @ts-expect-error
     return this.getNeighbors( atom ).filter( otherAtom => {
+      // @ts-expect-error
       return !exclusionSet.includes( otherAtom );
     } );
   }
@@ -315,7 +318,9 @@ class MoleculeStructure {
       // if the atoms are of different types, bail. subtrees can't possibly be equivalent
       return false;
     }
+    // @ts-expect-error
     const myUnvisitedNeighbors = this.getNeighborsNotInSet( myAtom, myVisited );
+    // @ts-expect-error
     const otherUnvisitedNeighbors = other.getNeighborsNotInSet( otherAtom, otherVisited );
     if ( myUnvisitedNeighbors.length !== otherUnvisitedNeighbors.length ) {
       return false;
@@ -381,8 +386,8 @@ class MoleculeStructure {
       ret += `|${atom.symbol}`;
     } );
     this.bonds.forEach( bond => {
-      const a = this.atoms.indexOf( bond.a );
-      const b = this.atoms.indexOf( bond.b );
+      const a = this.atoms.indexOf( bond.a as Atom2 );
+      const b = this.atoms.indexOf( bond.b as Atom2 );
       ret += `|${a}|${b}`;
     } );
 
@@ -410,7 +415,7 @@ class MoleculeStructure {
       // eslint-disable-next-line @typescript-eslint/no-loop-func
       this.bonds.forEach( bond => {
         if ( bond.contains( atom ) ) {
-          const otherAtom = bond.getOtherAtom( atom );
+          const otherAtom = bond.getOtherAtom( atom ) as Atom2;
           const index = this.atoms.indexOf( otherAtom );
           if ( index < i ) {
             result += `,${bond.toSerial2( index )}`;
@@ -582,7 +587,7 @@ class MoleculeStructure {
    *
    * @returns A constructed molecule
    */
-  public static fromSerial2( line: string, moleculeGenerator: ( atomCount: number, bondCount: number ) => MoleculeStructure, atomParser: ( atomString: string ) => Atom, bondParser: ( bondString: string, connectedAtom: Atom, moleculeStructure: MoleculeStructure ) => Bond ): MoleculeStructure {
+  public static fromSerial2( line: string, moleculeGenerator: ( atomCount: number, bondCount: number ) => MoleculeStructure, atomParser: ( atomString: string ) => Atom2, bondParser: ( bondString: string, connectedAtom: Atom, moleculeStructure: MoleculeStructure ) => Bond ): MoleculeStructure {
     const tokens = line.split( '|' );
     let idx = 0;
     const atomCount = Number( tokens[ idx++ ] );
@@ -607,6 +612,7 @@ class MoleculeStructure {
    */
   public static fromSerial2Basic( line: string ): MoleculeStructure {
     // assumes atom base class (just symbol) and simple bonds (just connectivity)
+    // @ts-expect-error
     return MoleculeStructure.fromSerial2( line, MoleculeStructure.defaultMoleculeGenerator, MoleculeStructure.defaultAtomParser, MoleculeStructure.defaultBondParser );
   }
 

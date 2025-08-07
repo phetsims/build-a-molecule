@@ -11,8 +11,10 @@
 
 import Utils from '../../../../dot/js/Utils.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
+import Atom from '../../../../nitroglycerin/js/Atom.js';
+import IntentionalAny from '../../../../phet-core/js/types/IntentionalAny.js';
 import buildAMolecule from '../../buildAMolecule.js';
-import Direction from './Direction.js';
+import Direction, { DirectionValue } from './Direction.js';
 
 class LewisDotModel {
 
@@ -27,19 +29,19 @@ class LewisDotModel {
    * Add an atom to the atom map
    * @param atom
    */
-  public addAtom( atom: any ): void { // eslint-disable-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types -- TODO: Fix when Atom is converted, see https://github.com/phetsims/build-a-molecule/issues/245
+  public addAtom( atom: Atom ): void {
+    // @ts-expect-error
     this.atomMap[ atom.id ] = new LewisDotAtom( atom );
   }
 
   /**
    * Remove the bonds from an atom
-   * @param atom
    */
-  public breakBondsOfAtom( atom: any ): void { // eslint-disable-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types -- TODO: Fix when Atom is converted, see https://github.com/phetsims/build-a-molecule/issues/245
+  public breakBondsOfAtom( atom: Atom ): void {
     const dotAtom = this.getLewisDotAtom( atom );
 
     // disconnect all of its bonds
-    ( Direction as any ).VALUES.forEach( ( direction: any ) => { // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when Direction is converted, see https://github.com/phetsims/build-a-molecule/issues/245
+    Direction.VALUES.forEach( direction => {
       if ( dotAtom && dotAtom.hasConnection( direction ) ) {
         const otherDotAtom = dotAtom.getLewisDotAtom( direction );
         if ( otherDotAtom ) {
@@ -54,12 +56,12 @@ class LewisDotModel {
    * @param a - A
    * @param b - B
    */
-  public breakBond( a: any, b: any ): void { // eslint-disable-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types -- TODO: Fix when Atom is converted, see https://github.com/phetsims/build-a-molecule/issues/245
+  public breakBond( a: Atom, b: Atom ): void {
     const dotA = this.getLewisDotAtom( a );
     const dotB = this.getLewisDotAtom( b );
     const direction = this.getBondDirection( a, b );
     dotA.disconnect( direction );
-    dotB.disconnect( direction.opposite );
+    dotB.disconnect( direction.opposite! );
   }
 
   /**
@@ -69,21 +71,21 @@ class LewisDotModel {
    * @param dirAtoB The direction from A to B. So if A is to the left, B is on the right, the direction would be East
    * @param b       B
    */
-  public bond( a: any, dirAtoB: any, b: any ): void { // eslint-disable-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types -- TODO: Fix when Atom and Direction are converted, see https://github.com/phetsims/build-a-molecule/issues/245
+  public bond( a: Atom, dirAtoB: DirectionValue, b: Atom ): void {
     const dotA = this.getLewisDotAtom( a );
     const dotB = this.getLewisDotAtom( b );
     dotA.connect( dirAtoB, dotB );
-    dotB.connect( dirAtoB.opposite, dotA );
+    dotB.connect( dirAtoB.opposite!, dotA );
   }
 
   /**
    * Returns all of the directions that are open (not bonded to another) on the atom
    * @param atom
    */
-  public getOpenDirections( atom: any ): any[] { // eslint-disable-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types -- TODO: Fix when Atom and Direction are converted, see https://github.com/phetsims/build-a-molecule/issues/245
-    const result: any[] = []; // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when Direction is converted, see https://github.com/phetsims/build-a-molecule/issues/245
+  public getOpenDirections( atom: Atom ): DirectionValue[] {
+    const result: DirectionValue[] = [];
     const dotAtom = this.getLewisDotAtom( atom );
-    ( Direction as any ).VALUES.forEach( ( direction: any ) => { // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when Direction is converted, see https://github.com/phetsims/build-a-molecule/issues/245
+    Direction.VALUES.forEach( direction => {
       if ( dotAtom && !dotAtom.hasConnection( direction ) ) {
         result.push( direction );
       }
@@ -96,11 +98,11 @@ class LewisDotModel {
    * @param a - A
    * @param b - B
    */
-  public getBondDirection( a: any, b: any ): any { // eslint-disable-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types -- TODO: Fix when Atom and Direction are converted, see https://github.com/phetsims/build-a-molecule/issues/245
+  public getBondDirection( a: Atom, b: Atom ): DirectionValue {
     const dotA = this.getLewisDotAtom( a );
-    let direction: any; // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when Direction is converted, see https://github.com/phetsims/build-a-molecule/issues/245
+    let direction: DirectionValue;
     for ( let i = 0; i < 4; i++ ) {
-      const testDirection = ( Direction as any ).VALUES[ i ]; // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when Direction is converted, see https://github.com/phetsims/build-a-molecule/issues/245
+      const testDirection = Direction.VALUES[ i ];
       if ( dotA && dotA.hasConnection( testDirection ) && dotA.getLewisDotAtom( testDirection )!.atom === b ) {
         direction = testDirection;
         break;
@@ -108,10 +110,10 @@ class LewisDotModel {
     }
 
     // If the bond wasn't found, assert, and add some additional info to help debug.
-    assert && assert( direction, `Bond not found, atom b in model = ${this.getLewisDotAtom( b ) !== undefined}` );
+    assert && assert( direction!, `Bond not found, atom b in model = ${this.getLewisDotAtom( b ) !== undefined}` );
 
     // Return the direction found or something arbitrary if nothing was detected.
-    return direction || ( Direction as any ).VALUES[ 0 ]; // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when Direction is converted, see https://github.com/phetsims/build-a-molecule/issues/245
+    return direction! || Direction.VALUES[ 0 ];
   }
 
   /**
@@ -122,7 +124,7 @@ class LewisDotModel {
    * @param b         B
    * @returns Whether this bond is considered acceptable
    */
-  public willAllowBond( a: any, direction: any, b: any ): boolean { // eslint-disable-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types -- TODO: Fix when Atom and Direction are converted, see https://github.com/phetsims/build-a-molecule/issues/245
+  public willAllowBond( a: Atom, direction: DirectionValue, b: Atom ): boolean {
 
     /*---------------------------------------------------------------------------*
      * We need to verify that if we bind these two together that no overlaps occur.
@@ -131,7 +133,7 @@ class LewisDotModel {
      * hydrogen.
      *----------------------------------------------------------------------------*/
 
-    const coordinateMap: Record<string, any> = {}; // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when Atom is converted, see https://github.com/phetsims/build-a-molecule/issues/245
+    const coordinateMap: Record<string, IntentionalAny> = {};
 
     // map the molecule on the A side, from the origin
     let success = this.mapMolecule( Vector2.ZERO, a, null, coordinateMap );
@@ -157,7 +159,7 @@ class LewisDotModel {
    * @param coordinateMap Coordinate map to which we add the atoms to
    * @returns Success. Will return false if any heavy atom overlaps on another atom. If it returns false, the coordinate map may be inconsistent
    */
-  private mapMolecule( coordinates: Vector2, atom: any, excludedAtom: any, coordinateMap: Record<string, any> ): boolean { // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when Atom is converted, see https://github.com/phetsims/build-a-molecule/issues/245
+  private mapMolecule( coordinates: Vector2, atom: Atom, excludedAtom: Atom | null, coordinateMap: Record<string, IntentionalAny> ): boolean {
 
     const dotAtom = this.getLewisDotAtom( atom );
 
@@ -182,7 +184,7 @@ class LewisDotModel {
 
     // check all directions so we can explore all other atoms that need to be mapped
     for ( let i = 0; i < 4; i++ ) {
-      const direction = ( Direction as any ).VALUES[ i ]; // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when Direction is converted, see https://github.com/phetsims/build-a-molecule/issues/245
+      const direction = Direction.VALUES[ i ];
       if ( dotAtom && dotAtom.hasConnection( direction ) ) {
         const otherDot = dotAtom.getLewisDotAtom( direction );
 
@@ -205,26 +207,27 @@ class LewisDotModel {
   /**
    * @param atom
    */
-  private getLewisDotAtom( atom: any ): LewisDotAtom { // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when Atom is converted, see https://github.com/phetsims/build-a-molecule/issues/245
+  private getLewisDotAtom( atom: Atom ): LewisDotAtom {
+    // @ts-expect-error
     return this.atomMap[ atom.id ];
   }
 }
 
 class LewisDotAtom {
 
-  public readonly atom: any; // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when Atom is converted, see https://github.com/phetsims/build-a-molecule/issues/245
+  public readonly atom: Atom;
 
-  private readonly connections: Record<any, LewisDotAtom | null>; // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when Direction is converted, see https://github.com/phetsims/build-a-molecule/issues/245
+  private readonly connections: Record<IntentionalAny, LewisDotAtom | null>;
 
   /**
    * @param atom
    */
-  public constructor( atom: any ) { // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when Atom is converted, see https://github.com/phetsims/build-a-molecule/issues/245
+  public constructor( atom: Atom ) {
 
     this.atom = atom;
 
     this.connections = {};
-    ( Direction as any ).VALUES.forEach( ( direction: any ) => { // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when Direction is converted, see https://github.com/phetsims/build-a-molecule/issues/245
+    Direction.VALUES.forEach( ( direction: DirectionValue ) => {
       this.connections[ direction.id ] = null; // nothing in this direction
     } );
   }
@@ -233,7 +236,7 @@ class LewisDotAtom {
    * Checks if a specific direction has any connections
    * @param direction
    */
-  public hasConnection( direction: any ): boolean { // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when Direction is converted, see https://github.com/phetsims/build-a-molecule/issues/245
+  public hasConnection( direction: DirectionValue ): boolean {
     return this.connections[ direction.id ] !== null;
   }
 
@@ -241,7 +244,7 @@ class LewisDotAtom {
    * Returns the atom connected in a specific direction
    * @param direction
    */
-  public getLewisDotAtom( direction: any ): LewisDotAtom | null { // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when Direction is converted, see https://github.com/phetsims/build-a-molecule/issues/245
+  public getLewisDotAtom( direction: DirectionValue ): LewisDotAtom | null {
     return this.connections[ direction.id ];
   }
 
@@ -250,7 +253,7 @@ class LewisDotAtom {
    * @param direction
    * @param lewisDotAtom
    */
-  public connect( direction: any, lewisDotAtom: LewisDotAtom ): void { // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when Direction is converted, see https://github.com/phetsims/build-a-molecule/issues/245
+  public connect( direction: DirectionValue, lewisDotAtom: LewisDotAtom ): void {
     this.connections[ direction.id ] = lewisDotAtom;
   }
 
@@ -258,7 +261,7 @@ class LewisDotAtom {
    * Unassign a lewis dot atom connection to a specific direction
    * @param direction
    */
-  public disconnect( direction: any ): void { // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when Direction is converted, see https://github.com/phetsims/build-a-molecule/issues/245
+  public disconnect( direction: DirectionValue ): void {
     this.connections[ direction.id ] = null;
   }
 }

@@ -65,7 +65,7 @@ export default class Molecule3DDialog extends Dialog {
     } );
     super( contentVBox, {
       fill: 'black',
-      // @ts-expect-error -- TODO: Fix when Dialog options are properly typed, see https://github.com/phetsims/build-a-molecule/issues/245
+      // @ts-expect-error
       xAlign: 'center',
       title: title,
       resize: false,
@@ -114,7 +114,7 @@ export default class Molecule3DDialog extends Dialog {
           color: color
         } ) );
         container.add( iconMesh );
-        // @ts-expect-error -- TODO: Fix when Atom has 3D properties typed, see https://github.com/phetsims/build-a-molecule/issues/245
+        // @ts-expect-error
         iconMesh.position.set( atom.x3d + offset, atom.y3d, atom.z3d );
       }
     };
@@ -128,7 +128,7 @@ export default class Molecule3DDialog extends Dialog {
         let displacement = 0;
 
         // If a bond has a high order we need to adjust the bond mesh in the y-axis
-        // @ts-expect-error -- TODO: Fix when Bond has order property typed, see https://github.com/phetsims/build-a-molecule/issues/245
+        // @ts-expect-error
         for ( let i = 0; i < bond.order; i++ ) {
 
           // Offset for single bond
@@ -156,9 +156,9 @@ export default class Molecule3DDialog extends Dialog {
           }
 
           // Establish parameters for bond mesh
-          // @ts-expect-error -- TODO: Fix when Bond atoms have 3D properties typed, see https://github.com/phetsims/build-a-molecule/issues/245
+          // @ts-expect-error
           const bondAPosition = new Vector3( bond.a.x3d, bond.a.y3d, bond.a.z3d );
-          // @ts-expect-error -- TODO: Fix when Bond atoms have 3D properties typed, see https://github.com/phetsims/build-a-molecule/issues/245
+          // @ts-expect-error
           const bondBPosition = new Vector3( bond.b.x3d, bond.b.y3d, bond.b.z3d );
           const distance = bondAPosition.distance( bondBPosition );
           const bondMesh = new THREE.Mesh(
@@ -238,7 +238,7 @@ export default class Molecule3DDialog extends Dialog {
     moleculeScene.add( moleculeContainer );
 
     // Handle the each 3D representation based on the current view style
-    Multilink.multilink( [ this.viewStyleProperty, completeMoleculeProperty ], ( viewStyle: any, completeMolecule: CompleteMolecule | null ) => { // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when EnumerationDeprecated is properly typed, see https://github.com/phetsims/build-a-molecule/issues/245
+    Multilink.multilink( [ this.viewStyleProperty, completeMoleculeProperty ], ( viewStyle: IntentionalAny, completeMolecule: CompleteMolecule | null ) => {
       if ( completeMolecule ) {
 
         // Remove all previous mesh elements if they exists from a previous build
@@ -334,7 +334,7 @@ export default class Molecule3DDialog extends Dialog {
 
     // Handles user input to rotate molecule
     const pressListener = new PressListener( {
-      press: ( event: any ) => { // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when PressListener is properly typed, see https://github.com/phetsims/build-a-molecule/issues/245
+      press: ( event: IntentionalAny ) => {
         this.isDraggingProperty.value = true;
         lastGlobalPoint = event.pointer.point.copy();
 
@@ -342,12 +342,12 @@ export default class Molecule3DDialog extends Dialog {
         // pan while zoomed in
         event.pointer.reserveForDrag();
       },
-      drag: ( event: any ) => { // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when PressListener is properly typed, see https://github.com/phetsims/build-a-molecule/issues/245
+      drag: ( event: IntentionalAny ) => {
         const delta = event.pointer.point.minus( lastGlobalPoint! );
         lastGlobalPoint = event.pointer.point.copy();
 
         // Compensate for the size of the sim screen by scaling the amount we rotate in THREE.Euler
-        const scale = 1 / ( 100 * ( window as any ).phet.joist.sim.scaleProperty.value ); // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when global phet types are available, see https://github.com/phetsims/build-a-molecule/issues/245
+        const scale = 1 / ( 100 * window.phet.joist.sim.scaleProperty.value );
         const newQuaternion = new THREE.Quaternion().setFromEuler( new THREE.Euler( delta.y * scale, delta.x * scale, 0 ) );
         newQuaternion.multiply( this.quaternionProperty.value );
         this.quaternionProperty.value = newQuaternion;

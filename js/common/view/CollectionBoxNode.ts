@@ -9,6 +9,8 @@
  */
 
 import stepTimer from '../../../../axon/js/stepTimer.js';
+import { TimerListener } from '../../../../axon/js/Timer.js';
+import Bounds2 from '../../../../dot/js/Bounds2.js';
 import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
 import VBox, { VBoxOptions } from '../../../../scenery/js/layout/nodes/VBox.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
@@ -30,13 +32,13 @@ const BLACK_BOX_PADDING = 7;
 const moleculeIdThumbnailMap: Record<number, Node> = {};
 
 class CollectionBoxNode extends VBox {
-  
+
   private readonly box: CollectionBox;
-  private readonly toModelBounds: ( node: Node ) => any; // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when bounds type is available, see https://github.com/phetsims/build-a-molecule/issues/245
+  private readonly toModelBounds: ( node: Node ) => Bounds2;
   private readonly boxNode: Node;
   private readonly moleculeNodes: Node[];
   // NOT zero, since that could be a valid timeout ID for stepTimer.setTimeout!
-  private blinkTimeout: any | null; // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when stepTimer types are available, see https://github.com/phetsims/build-a-molecule/issues/245
+  private blinkTimeout: TimerListener | null; // TODO: Use joist or axon timer? See https://github.com/phetsims/build-a-molecule/issues/245
   // stores nodes for each molecule
   private readonly moleculeNodeMap: Record<number, Node>;
   private readonly blackBox: Rectangle;
@@ -52,7 +54,7 @@ class CollectionBoxNode extends VBox {
    * @param showDialogCallback - Callback for showing 3D dialog
    * @param options - VBox options
    */
-  public constructor( box: CollectionBox, toModelBounds: ( node: Node ) => any, showDialogCallback: ( completeMolecule: CompleteMolecule ) => void, options?: VBoxOptions ) { // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when bounds type is available, see https://github.com/phetsims/build-a-molecule/issues/245
+  public constructor( box: CollectionBox, toModelBounds: ( node: Node ) => Bounds2, showDialogCallback: ( completeMolecule: CompleteMolecule ) => void, options?: VBoxOptions ) {
     super( { spacing: 2 } );
 
     this.box = box;
@@ -134,7 +136,7 @@ class CollectionBoxNode extends VBox {
       const pseudo3DNode = CollectionBoxNode.lookupThumbnail( completeMolecule, moleculeIdThumbnailMap );
       this.moleculeLayer.addChild( pseudo3DNode );
       this.moleculeNodes.push( pseudo3DNode );
-      this.moleculeNodeMap[ ( molecule as any ).moleculeId ] = pseudo3DNode; // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when Molecule is converted to include moleculeId, see https://github.com/phetsims/build-a-molecule/issues/245
+      this.moleculeNodeMap[ molecule.moleculeId ] = pseudo3DNode;
 
       this.updateMoleculeLayout();
     }
@@ -148,7 +150,7 @@ class CollectionBoxNode extends VBox {
     this.cancelBlinksInProgress();
     this.updateBoxGraphics();
 
-    const moleculeId = ( molecule as any ).moleculeId; // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when Molecule is converted to include moleculeId, see https://github.com/phetsims/build-a-molecule/issues/245
+    const moleculeId = molecule.moleculeId;
     const lastMoleculeNode = this.moleculeNodeMap[ moleculeId ];
     this.moleculeLayer.removeChild( lastMoleculeNode );
     const index = this.moleculeNodes.indexOf( lastMoleculeNode );
@@ -193,7 +195,7 @@ class CollectionBoxNode extends VBox {
   /**
    * Return the molecule area. Excluding the area in the black box where the 3D button needs to go.
    */
-  private getMoleculeAreaInBlackBox(): any { // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when Bounds2 type is available, see https://github.com/phetsims/build-a-molecule/issues/245
+  private getMoleculeAreaInBlackBox(): Bounds2 {
     const bounds = this.blackBox.bounds;
 
     // leave room for 3d button on right hand side
@@ -275,10 +277,10 @@ class CollectionBoxNode extends VBox {
         }
 
         // set the blinkTimeout so it can be canceled
-        this.blinkTimeout = stepTimer.setTimeout( tick, blinkDelayInMs ) as any; // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when stepTimer types are available, see https://github.com/phetsims/build-a-molecule/issues/245
+        this.blinkTimeout = stepTimer.setTimeout( tick, blinkDelayInMs );
       }
     };
-    this.blinkTimeout = stepTimer.setTimeout( tick, blinkDelayInMs ) as any; // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when stepTimer types are available, see https://github.com/phetsims/build-a-molecule/issues/245
+    this.blinkTimeout = stepTimer.setTimeout( tick, blinkDelayInMs );
   }
 
   /**
@@ -300,7 +302,7 @@ class CollectionBoxNode extends VBox {
    */
   public static lookupThumbnail( completeMolecule: CompleteMolecule, moleculeMap: Record<number, Node> ): Node {
     const dimensionLength = 50;
-    const moleculeId = ( completeMolecule as any ).moleculeId; // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when CompleteMolecule is converted to include moleculeId, see https://github.com/phetsims/build-a-molecule/issues/245
+    const moleculeId = completeMolecule.moleculeId;
     if ( !moleculeMap[ moleculeId ] ) {
       moleculeMap[ moleculeId ] = BAMIconFactory.createIconImage(
         completeMolecule,

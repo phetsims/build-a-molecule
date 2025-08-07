@@ -8,6 +8,7 @@
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 
+import Bounds2 from '../../../../dot/js/Bounds2.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import Property from '../../../../axon/js/Property.js';
@@ -43,8 +44,8 @@ class AllFilledDialog extends Dialog {
       center: Vector2.ZERO,
       bottomMargin: 10,
       cornerRadius: BAMConstants.CORNER_RADIUS,
-      layoutStrategy: ( dialog: any, simBounds: any, screenBounds: any, scale: any ) => { // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when Dialog types are available, see https://github.com/phetsims/build-a-molecule/issues/245
-        dialog.center = dialog.layoutBounds.center.minusXY( 75, 75 );
+      layoutStrategy: ( dialog: Dialog, simBounds: Bounds2, screenBounds: Bounds2, scale: number ) => {
+        dialog.center = dialog.layoutBounds!.center.minusXY( 75, 75 );
       }
     }, providedOptions );
 

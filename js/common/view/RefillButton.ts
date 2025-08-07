@@ -65,7 +65,8 @@ class RefillButton extends RectangularPushButton {
       yMargin: 5,
       content: contentNode,
       listener: buttonListener,
-      interruptListener: Display.INTERRUPT_OTHER_POINTERS as any, // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when Display types are available, see https://github.com/phetsims/build-a-molecule/issues/245
+      // @ts-expect-error
+      interruptListener: Display.INTERRUPT_OTHER_POINTERS,
       baseColor: 'rgb(234,225,88)',
       soundPlayer: nullSoundPlayer
     }, providedOptions );
