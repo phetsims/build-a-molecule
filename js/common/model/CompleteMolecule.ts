@@ -46,6 +46,7 @@ import PH3Node from '../../../../nitroglycerin/js/nodes/PH3Node.js';
 import SO2Node from '../../../../nitroglycerin/js/nodes/SO2Node.js';
 import SO3Node from '../../../../nitroglycerin/js/nodes/SO3Node.js';
 import EnumerationDeprecated from '../../../../phet-core/js/EnumerationDeprecated.js';
+import IntentionalAny from '../../../../phet-core/js/types/IntentionalAny.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import buildAMolecule from '../../buildAMolecule.js';
 import BuildAMoleculeStrings from '../../BuildAMoleculeStrings.js';
@@ -253,7 +254,6 @@ class CompleteMolecule extends MoleculeStructure {
       // @ts-expect-error
       const atom = new PubChemAtom( Element.getElementBySymbol( symbol ), PubChemAtomType.FULL, x2d, y2d, x3d, y3d, z3d );
 
-      // @ts-expect-error
       completeMolecule.addAtom( atom );
     }
 
@@ -309,7 +309,7 @@ class CompleteMolecule extends MoleculeStructure {
 // Signature for Atom without 2d or 3d representation
 const PubChemAtomType = EnumerationDeprecated.byKeys( [ 'TWO_DIMENSION', 'THREE_DIMENSION', 'FULL' ] );
 
-class PubChemAtom extends Atom {
+export class PubChemAtom extends Atom {
 
   public readonly type: any; // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when EnumerationDeprecated is converted, see https://github.com/phetsims/build-a-molecule/issues/245
 
@@ -320,7 +320,7 @@ class PubChemAtom extends Atom {
   public readonly y3d: number;
   public readonly z3d: number;
 
-  public constructor( element: Element, type: any, x2d: number, y2d: number, x3d: number, y3d: number, z3d: number ) { // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when EnumerationDeprecated is converted, see https://github.com/phetsims/build-a-molecule/issues/245
+  public constructor( element: Element, type: IntentionalAny, x2d: number, y2d: number, x3d: number, y3d: number, z3d: number ) {
     super( element );
 
     this.type = type;

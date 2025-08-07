@@ -30,7 +30,7 @@ class MoleculeStructure {
   public readonly moleculeId: number;
 
   // Atoms in the molecule structure
-  public readonly atoms: Atom2[];
+  public readonly atoms: Atom[];
 
   // Bonds in the molecule structure
   public readonly bonds: Bond[];
@@ -46,7 +46,7 @@ class MoleculeStructure {
   /**
    * Add an atom to the molecule structure
    */
-  public addAtom( atom: Atom2 ): Atom {
+  public addAtom( atom: Atom ): Atom {
     assert && assert( !this.atoms.includes( atom ), 'Cannot add an already existing atom' );
     this.atoms.push( atom ); // NOTE: don't mess with the order
     return atom;
@@ -296,15 +296,13 @@ class MoleculeStructure {
 
   /**
    * @param atom
-   * @param exclusionSet: A set of atoms that should not be in the return value
+   * @param exclusionSet A set of atoms that should not be in the return value
    *
-   * @returns<Atom>} All neighboring atoms that are connected by bonds to the passed in atom AND aren't in the exclusionSet
+   * @returns All neighboring atoms that are connected by bonds to the passed in atom AND aren't in the exclusionSet
    */
-  public getNeighborsNotInSet( atom: Atom2, exclusionSet: Atom2[] ): Atom2[] {
+  public getNeighborsNotInSet( atom: Atom, exclusionSet: Atom[] ): Atom[] {
     // Note: (performance) hashset with fast lookup?
-    // @ts-expect-error
     return this.getNeighbors( atom ).filter( otherAtom => {
-      // @ts-expect-error
       return !exclusionSet.includes( otherAtom );
     } );
   }
@@ -318,9 +316,7 @@ class MoleculeStructure {
       // if the atoms are of different types, bail. subtrees can't possibly be equivalent
       return false;
     }
-    // @ts-expect-error
     const myUnvisitedNeighbors = this.getNeighborsNotInSet( myAtom, myVisited );
-    // @ts-expect-error
     const otherUnvisitedNeighbors = other.getNeighborsNotInSet( otherAtom, otherVisited );
     if ( myUnvisitedNeighbors.length !== otherUnvisitedNeighbors.length ) {
       return false;

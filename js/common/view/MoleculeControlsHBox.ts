@@ -8,6 +8,7 @@
  */
 
 import Shape from '../../../../kite/js/Shape.js';
+import affirm from '../../../../perennial-alias/js/browser-and-node/affirm.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
@@ -21,6 +22,7 @@ import splitBlue_png from '../../../images/splitBlue_png.js';
 import buildAMolecule from '../../buildAMolecule.js';
 import BuildAMoleculeStrings from '../../BuildAMoleculeStrings.js';
 import BAMConstants from '../BAMConstants.js';
+import Atom2 from '../model/Atom2.js';
 import CompleteMolecule from '../model/CompleteMolecule.js';
 import Kit from '../model/Kit.js';
 import Molecule from '../model/Molecule.js';
@@ -46,6 +48,7 @@ export default class MoleculeControlsHBox extends HBox {
    * @param kit - The kit that contains this molecule
    * @param molecule - The molecule to display controls for
    * @param showDialogCallback - Callback to show the 3D dialog for the molecule
+   * @param providedOptions - Options for the HBox
    */
   public constructor( kit: Kit, molecule: Molecule, showDialogCallback: ( completeMolecule: CompleteMolecule ) => void, providedOptions?: MoleculeControlsHBoxOptions ) {
 
@@ -100,6 +103,8 @@ export default class MoleculeControlsHBox extends HBox {
     this.addChild( buttonBreak );
 
     molecule.atoms.forEach( atom => {
+
+      affirm( atom instanceof Atom2 ); // TODO: Make molecule.atoms a type parameter? See https://github.com/phetsims/build-a-molecule/issues/245
       atom.positionProperty.link( this.updatePositionListener );
     } );
 
@@ -111,6 +116,8 @@ export default class MoleculeControlsHBox extends HBox {
     const listener = this.updatePositionListener;
     if ( listener ) {
       this.molecule.atoms.forEach( atom => {
+
+        affirm( atom instanceof Atom2 ); // TODO: Make molecule.atoms a type parameter? See https://github.com/phetsims/build-a-molecule/issues/245
         atom.positionProperty.unlink( listener );
       } );
     }
