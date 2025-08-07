@@ -9,7 +9,7 @@
  * @author Denzell Barnett (PhET Interactive Simulations)
  */
 
-import Utils from '../../../../dot/js/Utils.js';
+import { roundSymmetric } from '../../../../dot/js/util/roundSymmetric.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import Atom from '../../../../nitroglycerin/js/Atom.js';
 import buildAMolecule from '../../buildAMolecule.js';
@@ -162,7 +162,7 @@ class LewisDotModel {
     const dotAtom = this.getLewisDotAtom( atom );
 
     // for sanity and equality (negative zero equals zero, so don't worry about that)
-    const point = new Vector2( Utils.roundSymmetric( coordinates.x ), Utils.roundSymmetric( coordinates.y ) );
+    const point = new Vector2( roundSymmetric( coordinates.x ), roundSymmetric( coordinates.y ) );
 
     const idx = `${point.x},${point.y}`;
 

@@ -35,8 +35,6 @@ import WarningDialog from './WarningDialog.js';
 
 export default class BAMScreenView extends ScreenView {
 
-  // Public properties
-  public readonly atomNodeMap: Record<number, AtomNode> = {}; // maps Atom2 ID => AtomNode
   public readonly kitCollectionMap: Record<number, KitCollectionNode> = {};
   public readonly bamModel: BAMModel;
   public readonly atomDragBounds: Bounds2;

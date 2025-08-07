@@ -71,20 +71,15 @@ class ElementHistogram extends PhetioObject {
    * @param otherHistogram
    */
   public equals( otherHistogram: ElementHistogram ): boolean {
-    if ( otherHistogram instanceof ElementHistogram ) {
-      const length = BAMConstants.SUPPORTED_ELEMENTS.length;
-      for ( let i = 0; i < length; i++ ) {
-        const element = BAMConstants.SUPPORTED_ELEMENTS[ i ];
+    const length = BAMConstants.SUPPORTED_ELEMENTS.length;
+    for ( let i = 0; i < length; i++ ) {
+      const element = BAMConstants.SUPPORTED_ELEMENTS[ i ];
 
-        if ( this.getQuantity( element ) !== otherHistogram.getQuantity( element ) ) {
-          return false;
-        }
+      if ( this.getQuantity( element ) !== otherHistogram.getQuantity( element ) ) {
+        return false;
       }
-      return true;
     }
-    else {
-      return false;
-    }
+    return true;
   }
 }
 

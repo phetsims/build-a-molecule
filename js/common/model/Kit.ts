@@ -182,20 +182,6 @@ export default class Kit {
   }
 
   /**
-   * Returns kit bounds within the collection layout
-   */
-  public get availableKitBounds(): Bounds2 {
-    return this.collectionLayout.availableKitBounds;
-  }
-
-  /**
-   * Returns play area bounds within the collection layout
-   */
-  public get availablePlayAreaBounds(): Bounds2 {
-    return this.collectionLayout.availablePlayAreaBounds;
-  }
-
-  /**
    * Called when an atom is dropped within either the play area OR the kit area. This will NOT be called for molecules
    * dropped into the collection area successfully
    * @param atom - The dropped atom

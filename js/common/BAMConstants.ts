@@ -3,7 +3,7 @@
 // @author Jonathan Olson <jonathan.olson@colorado.edu>
 
 import Dimension2 from '../../../dot/js/Dimension2.js';
-import Utils from '../../../dot/js/Utils.js';
+import { roundSymmetric } from '../../../dot/js/util/roundSymmetric.js';
 import Vector2 from '../../../dot/js/Vector2.js';
 import ScreenView from '../../../joist/js/ScreenView.js';
 import Element from '../../../nitroglycerin/js/Element.js';
@@ -15,7 +15,7 @@ import buildAMolecule from '../buildAMolecule.js';
 const VIEW_SIZE = ScreenView.DEFAULT_LAYOUT_BOUNDS;
 const MODEL_VIEW_TRANSFORM = ModelViewTransform2.createSinglePointScaleInvertedYMapping(
   Vector2.ZERO,
-  new Vector2( Utils.roundSymmetric( VIEW_SIZE.width * 0.5 ), Utils.roundSymmetric( VIEW_SIZE.height * 0.5 ) ),
+  new Vector2( roundSymmetric( VIEW_SIZE.width * 0.5 ), roundSymmetric( VIEW_SIZE.height * 0.5 ) ),
   0.27 * 1.2 // "Zoom factor" - smaller zooms out, larger zooms in
 );
 const MODEL_SIZE = new Dimension2(

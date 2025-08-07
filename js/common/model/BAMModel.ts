@@ -10,7 +10,6 @@
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import Emitter from '../../../../axon/js/Emitter.js';
 import Property from '../../../../axon/js/Property.js';
-import Bounds2 from '../../../../dot/js/Bounds2.js';
 import Dimension2 from '../../../../dot/js/Dimension2.js';
 import dotRandom from '../../../../dot/js/dotRandom.js';
 import Element from '../../../../nitroglycerin/js/Element.js';
@@ -19,10 +18,10 @@ import buildAMolecule from '../../buildAMolecule.js';
 import BAMBucket from '../model/BAMBucket.js';
 import CollectionBox from '../model/CollectionBox.js';
 import Kit from '../model/Kit.js';
-import { COLLECTION_BOX_MOLECULES } from '../model/MoleculeList.js';
 import CollectionLayout from './CollectionLayout.js';
 import CompleteMolecule from './CompleteMolecule.js';
 import KitCollection from './KitCollection.js';
+import { COLLECTION_BOX_MOLECULES } from './MoleculeList.js';
 
 type SelfOptions = {
   isMultipleCollection: boolean;
@@ -119,20 +118,6 @@ class BAMModel {
       }
     } );
     this.collections = [ this.firstCollection ];
-  }
-
-  /**
-   * Returns kit bounds within the collection layout
-   */
-  public availableKitBounds(): Bounds2 {
-    return this.collectionLayout.availableKitBounds;
-  }
-
-  /**
-   * Returns play area bounds within the collection layout
-   */
-  public availablePlayAreaBounds(): Bounds2 {
-    return this.collectionLayout.availablePlayAreaBounds;
   }
 
   /**

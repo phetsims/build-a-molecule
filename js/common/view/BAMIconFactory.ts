@@ -14,7 +14,7 @@ import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
 import buildAMolecule from '../../buildAMolecule.js';
 import BAMConstants from '../../common/BAMConstants.js';
 import CompleteMolecule from '../../common/model/CompleteMolecule.js';
-import { COMMON_MOLECULES } from '../../common/model/MoleculeList.js';
+import { COMMON_MOLECULES } from '../model/MoleculeList.js';
 import Molecule3DNode from '../../common/view/view3d/Molecule3DNode.js';
 
 // Options for screen icons

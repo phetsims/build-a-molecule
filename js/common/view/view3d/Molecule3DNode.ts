@@ -64,9 +64,9 @@ class Molecule3DNode extends DOM {
   private readonly context: CanvasRenderingContext2D;
   private readonly currentAtoms: EnhancedVector3[];
   private readonly gradientMap: Record<string, CanvasGradient>;
-  private dragging: boolean;
+  private readonly dragging: boolean;
   private lastPosition: Vector2;
-  private currentPosition: Vector2;
+  private readonly currentPosition: Vector2;
   private mainMatrix?: Matrix3; // only used when GRAB_INITIAL_TRANSFORMS is true
   private readonly maxTotalRadius: number;
   public static initialTransforms: Record<string, Matrix3>; // Custom transforms for specific molecules
