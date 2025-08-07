@@ -104,7 +104,7 @@ export default class MoleculeControlsHBox extends HBox {
 
     molecule.atoms.forEach( atom => {
 
-      affirm( atom instanceof Atom2 ); // TODO: Make molecule.atoms a type parameter? See https://github.com/phetsims/build-a-molecule/issues/245
+      affirm( atom instanceof Atom2 ); // TODO: Make molecule.atoms a type parameter? See https://github.com/phetsims/build-a-molecule/issues/246
       atom.positionProperty.link( this.updatePositionListener );
     } );
 
@@ -117,7 +117,7 @@ export default class MoleculeControlsHBox extends HBox {
     if ( listener ) {
       this.molecule.atoms.forEach( atom => {
 
-        affirm( atom instanceof Atom2 ); // TODO: Make molecule.atoms a type parameter? See https://github.com/phetsims/build-a-molecule/issues/245
+        affirm( atom instanceof Atom2 ); // TODO: Make molecule.atoms a type parameter? See https://github.com/phetsims/build-a-molecule/issues/246
         atom.positionProperty.unlink( listener );
       } );
     }

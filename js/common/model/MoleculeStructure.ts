@@ -637,7 +637,7 @@ class MoleculeStructure {
     return new Bond( connectedAtom, moleculeStructure.atoms[ Number( bondString ) ] );
   }
 
-  // TODO: This looks broken in https://github.com/phetsims/build-a-molecule/issues/245
+  // TODO: This looks broken in https://github.com/phetsims/build-a-molecule/issues/247
   public static formulaExceptions(): Record<string, string> {
     return {
       H3N: 'NH3', // treated as if it is organic
