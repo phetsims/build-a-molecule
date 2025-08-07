@@ -23,13 +23,17 @@
   window.phet.chipper.packageObject =
     {
       "name": "build-a-molecule",
-      "version": "1.1.0-dev.1",
+      "version": "1.1.0-dev.2",
       "license": "GPL-3.0",
       "repository": {
         "type": "git",
         "url": "https://github.com/phetsims/build-a-molecule.git"
       },
+      "scripts": {
+        "test": "playwright test && grunt type-check && grunt lint"
+      },
       "devDependencies": {
+        "@playwright/test": "^1.40.0",
         "grunt": "~1.5.3"
       },
       "phet": {
