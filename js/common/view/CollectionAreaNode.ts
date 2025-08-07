@@ -56,7 +56,6 @@ class CollectionAreaNode extends Node {
         updateRefillButton();
       },
 
-      // @ts-expect-error
       interruptListener: Display.INTERRUPT_OTHER_POINTERS,
       iconHeight: 20,
       xMargin: 15,

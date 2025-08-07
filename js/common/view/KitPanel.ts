@@ -63,7 +63,6 @@ export default class KitPanel extends Node {
       itemsPerPage: 1,
       buttonOptions: {
         soundPlayer: nullSoundPlayer,
-        // @ts-expect-error
         interruptListener: Display.INTERRUPT_OTHER_POINTERS
       }
     } );

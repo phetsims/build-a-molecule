@@ -65,7 +65,6 @@ class RefillButton extends RectangularPushButton {
       yMargin: 5,
       content: contentNode,
       listener: buttonListener,
-      // @ts-expect-error
       interruptListener: Display.INTERRUPT_OTHER_POINTERS,
       baseColor: 'rgb(234,225,88)',
       soundPlayer: nullSoundPlayer
