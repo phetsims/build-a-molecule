@@ -66,8 +66,6 @@ export default class Molecule3DDialog extends Dialog {
     } );
     super( contentVBox, {
       fill: 'black',
-      // @ts-expect-error
-      xAlign: 'center',
       title: title,
       resize: false,
       closeButtonColor: 'white'
