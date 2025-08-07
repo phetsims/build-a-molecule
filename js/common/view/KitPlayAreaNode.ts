@@ -9,6 +9,7 @@
  */
 
 import Property from '../../../../axon/js/Property.js';
+import affirm from '../../../../perennial-alias/js/browser-and-node/affirm.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import buildAMolecule from '../../buildAMolecule.js';
 import Kit from '../model/Kit.js';
@@ -74,8 +75,9 @@ class KitPlayAreaNode extends Node {
         const activePropertyListener = (): void => {
           this.atomLayer.children.forEach( atomNode => {
 
+            affirm( atomNode instanceof AtomNode, 'Expected atomNode to be an instance of AtomNode' );
+
             // Check if the atom is in the kit's play area and toggle its visibility.
-            // @ts-expect-error
             atomNode.visible = kit.atomsInPlayArea.includes( atomNode.atom );
           } );
           this.metadataLayer.children.forEach( metadataNode => {
