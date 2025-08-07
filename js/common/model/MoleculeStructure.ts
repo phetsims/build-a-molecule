@@ -407,19 +407,31 @@ class MoleculeStructure {
     for ( let i = 0; i < this.atoms.length; i++ ) {
       const atom = this.atoms[ i ];
       result += `|${atom.toString()}`;
-
-      // eslint-disable-next-line @typescript-eslint/no-loop-func
-      this.bonds.forEach( bond => {
-        if ( bond.contains( atom ) ) {
-          const otherAtom = bond.getOtherAtom( atom ) as Atom2;
-          const index = this.atoms.indexOf( otherAtom );
-          if ( index < i ) {
-            result += `,${bond.toSerial2( index )}`;
-          }
-        }
-      } );
+      result += this.getBondSpecsForAtom( i );
     }
     return result;
+  }
+
+  /**
+   * Helper method to get bond specifications for an atom at a given index, avoiding loop function issues
+   * @param atomIndex - The index of the atom in the atoms array
+   * @returns String containing bond specifications for the atom
+   */
+  private getBondSpecsForAtom( atomIndex: number ): string {
+    const atom = this.atoms[ atomIndex ];
+    let bondSpecs = '';
+    
+    this.bonds.forEach( bond => {
+      if ( bond.contains( atom ) ) {
+        const otherAtom = bond.getOtherAtom( atom ) as Atom2;
+        const index = this.atoms.indexOf( otherAtom );
+        if ( index < atomIndex ) {
+          bondSpecs += `,${bond.toSerial2( index )}`;
+        }
+      }
+    } );
+    
+    return bondSpecs;
   }
 
   /**

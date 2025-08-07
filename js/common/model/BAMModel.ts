@@ -250,13 +250,10 @@ class BAMModel {
 
       // NOTE: for the future, we could potentially add another type of atom?
 
-      let equivalentMoleculesRemaining = 0;
-      // eslint-disable-next-line @typescript-eslint/no-loop-func
-      molecules.forEach( moleculeStructure => {
-        if ( moleculeStructure.getHillSystemFormulaFragment() === molecule.getHillSystemFormulaFragment() ) {
-          equivalentMoleculesRemaining++;
-        }
-      } );
+      const targetFormula = molecule.getHillSystemFormulaFragment();
+      const equivalentMoleculesRemaining = molecules.filter( moleculeStructure =>
+        moleculeStructure.getHillSystemFormulaFragment() === targetFormula
+      ).length;
 
       const ableToIncreaseMultiple = allowMultipleMolecules && equivalentMoleculesRemaining > 1;
       let atomMultiple = 1 + ( ableToIncreaseMultiple ? equivalentMoleculesRemaining : 0 );
@@ -264,29 +261,8 @@ class BAMModel {
       // for each type of atom
       // Remove duplicates from element list
       const uniqueElements = molecule.getElementList().filter( ( element, index, arr ) => arr.indexOf( element ) === index );
-      // eslint-disable-next-line @typescript-eslint/no-loop-func
-      uniqueElements.forEach( element => {
-        // find out how many atoms of this type we need
-        let requiredAtomCount = 0;
-        molecule.atoms.forEach( atom => {
-          if ( atom.element.isSameElement( element ) ) {
-            requiredAtomCount++;
-          }
-        } );
-
-        // create a multiple of the required number of atoms, so they can construct 'atomMultiple' molecules with this
-        let atomCount = requiredAtomCount * atomMultiple;
-
-        // possibly add more, if we can only have 1 molecule per box
-        if ( !element.isCarbon() && ( element.isHydrogen() || atomCount < 4 ) ) {
-          atomCount += dotRandom.nextIntBetween( 0, 1 );
-        }
-
-        // funky math part. sqrt scales it so that we can get two layers of atoms if the atom count is above 2
-        const bucketWidth = BAMBucket.calculateIdealBucketWidth( element.covalentRadius, atomCount );
-
-        buckets.push( new BAMBucket( new Dimension2( bucketWidth, 200 ), stepEmitter, element, atomCount ) );
-      } );
+      const elementBuckets = this.createBucketsForElements( uniqueElements, molecule, atomMultiple, stepEmitter );
+      buckets.push( ...elementBuckets );
 
       // add the kit
       kits.push( new Kit( collectionLayout, buckets ) );
@@ -313,6 +289,49 @@ class BAMModel {
     kits.forEach( collection.addKit.bind( collection ) );
     boxes.forEach( collection.addCollectionBox.bind( collection ) );
     return collection;
+  }
+
+  /**
+   * Helper method to create buckets for a list of elements, avoiding loop function issues
+   * @param elements - The elements to create buckets for
+   * @param molecule - The molecule containing the elements
+   * @param atomMultiple - The multiplier for atom count
+   * @param stepEmitter - Step emitter for the buckets
+   * @returns Array of created buckets
+   */
+  private createBucketsForElements( elements: Element[], molecule: CompleteMolecule, atomMultiple: number, stepEmitter: Emitter<[ number ]> ): BAMBucket[] {
+    return elements.map( element => this.createBucketForElement( element, molecule, atomMultiple, stepEmitter ) );
+  }
+
+  /**
+   * Helper method to create a bucket for an element, avoiding loop function issues
+   * @param element - The element to create a bucket for
+   * @param molecule - The molecule containing the element
+   * @param atomMultiple - The multiplier for atom count
+   * @param stepEmitter - Step emitter for the bucket
+   * @returns The created bucket
+   */
+  private createBucketForElement( element: Element, molecule: CompleteMolecule, atomMultiple: number, stepEmitter: Emitter<[ number ]> ): BAMBucket {
+    // find out how many atoms of this type we need
+    let requiredAtomCount = 0;
+    molecule.atoms.forEach( atom => {
+      if ( atom.element.isSameElement( element ) ) {
+        requiredAtomCount++;
+      }
+    } );
+
+    // create a multiple of the required number of atoms, so they can construct 'atomMultiple' molecules with this
+    let atomCount = requiredAtomCount * atomMultiple;
+
+    // possibly add more, if we can only have 1 molecule per box
+    if ( !element.isCarbon() && ( element.isHydrogen() || atomCount < 4 ) ) {
+      atomCount += dotRandom.nextIntBetween( 0, 1 );
+    }
+
+    // funky math part. sqrt scales it so that we can get two layers of atoms if the atom count is above 2
+    const bucketWidth = BAMBucket.calculateIdealBucketWidth( element.covalentRadius, atomCount );
+
+    return new BAMBucket( new Dimension2( bucketWidth, 200 ), stepEmitter, element, atomCount );
   }
 }
 
