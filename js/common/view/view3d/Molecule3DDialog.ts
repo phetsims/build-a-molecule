@@ -19,7 +19,6 @@ import ThreeNode from '../../../../../mobius/js/ThreeNode.js';
 import affirm from '../../../../../perennial-alias/js/browser-and-node/affirm.js';
 import Enumeration from '../../../../../phet-core/js/Enumeration.js';
 import EnumerationValue from '../../../../../phet-core/js/EnumerationValue.js';
-import IntentionalAny from '../../../../../phet-core/js/types/IntentionalAny.js';
 import StringUtils from '../../../../../phetcommon/js/util/StringUtils.js';
 import PlayPauseButton from '../../../../../scenery-phet/js/buttons/PlayPauseButton.js';
 import PhetFont from '../../../../../scenery-phet/js/PhetFont.js';
@@ -334,7 +333,7 @@ export default class Molecule3DDialog extends Dialog {
 
     // Handles user input to rotate molecule
     const pressListener = new PressListener( {
-      press: ( event: IntentionalAny ) => {
+      press: event => {
         this.isDraggingProperty.value = true;
         lastGlobalPoint = event.pointer.point.copy();
 
@@ -342,7 +341,7 @@ export default class Molecule3DDialog extends Dialog {
         // pan while zoomed in
         event.pointer.reserveForDrag();
       },
-      drag: ( event: IntentionalAny ) => {
+      drag: event => {
         const delta = event.pointer.point.minus( lastGlobalPoint! );
         lastGlobalPoint = event.pointer.point.copy();
 

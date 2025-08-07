@@ -9,7 +9,6 @@
 
 import Vector2 from '../../../../dot/js/Vector2.js';
 import Shape from '../../../../kite/js/Shape.js';
-import IntentionalAny from '../../../../phet-core/js/types/IntentionalAny.js';
 import BucketFront from '../../../../scenery-phet/js/bucket/BucketFront.js';
 import BucketHole from '../../../../scenery-phet/js/bucket/BucketHole.js';
 import DragListener from '../../../../scenery/js/listeners/DragListener.js';
@@ -21,6 +20,7 @@ import Atom2 from '../model/Atom2.js';
 import Kit from '../model/Kit.js';
 import AtomNode from './AtomNode.js';
 import BAMScreenView from './BAMScreenView.js';
+import Element from '../../../../nitroglycerin/js/Element.js';
 
 class KitNode extends Node {
 
@@ -146,10 +146,10 @@ class KitNode extends Node {
       const particleRemovedListener = ( atom: Atom2 ): void => {
 
         // Remove atom view elements from bucket node and delete the reference from atom node map
-        if ( atomNodeMap[ ( atom as IntentionalAny ).id ] ) {
-          this.atomLayer.removeChild( atomNodeMap[ ( atom as IntentionalAny ).id ] );
-          atomNodeMap[ ( atom as IntentionalAny ).id ].dispose();
-          delete atomNodeMap[ ( atom as IntentionalAny ).id ];
+        if ( atomNodeMap[ ( atom ).id ] ) {
+          this.atomLayer.removeChild( atomNodeMap[ ( atom ).id ] );
+          atomNodeMap[ ( atom ).id ].dispose();
+          delete atomNodeMap[ ( atom ).id ];
         }
 
         // Remove the atom from the bucket particles
@@ -173,7 +173,7 @@ class KitNode extends Node {
 
         // Add a drag listener that will move the model element when the user
         // drags this atom.
-        atomNode.addInputListener( DragListener.createForwardingListener( ( event: IntentionalAny ): void => {
+        atomNode.addInputListener( DragListener.createForwardingListener( event => {
           atomNodeDragCallback( event, atom );
         }, {
           allowTouchSnag: false
@@ -199,7 +199,7 @@ class KitNode extends Node {
    * @param element - Element to filter by (if provided)
    * @returns The closest atom within threshold, or null if none found
    */
-  private closestAtom( modelPoint: Vector2, threshold: number, element: IntentionalAny ): Atom2 | null {
+  private closestAtom( modelPoint: Vector2, threshold: number, element: Element ): Atom2 | null {
     assert && assert( threshold );
 
     const thresholdSquared = threshold * threshold;

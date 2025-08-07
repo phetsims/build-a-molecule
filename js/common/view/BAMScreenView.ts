@@ -14,7 +14,6 @@ import Vector2 from '../../../../dot/js/Vector2.js';
 import ScreenView from '../../../../joist/js/ScreenView.js';
 import ThreeUtils from '../../../../mobius/js/ThreeUtils.js';
 import affirm from '../../../../perennial-alias/js/browser-and-node/affirm.js';
-import IntentionalAny from '../../../../phet-core/js/types/IntentionalAny.js';
 import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.js';
 import DragListener from '../../../../scenery/js/listeners/DragListener.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
@@ -395,8 +394,11 @@ export default class BAMScreenView extends ScreenView {
         if ( molecule ) {
           molecule.atoms.forEach( moleculeAtom => {
             if ( moleculeAtom ) {
-              ( this.kitPlayAreaNode.atomNodeMap as IntentionalAny )[ moleculeAtom.id ].moveToFront();
-              ( moleculeAtom as IntentionalAny ).destinationProperty.value = ( moleculeAtom as IntentionalAny ).positionProperty.value;
+
+              affirm( moleculeAtom instanceof Atom2, 'Expected moleculeAtom to be an instance of Atom2' );
+
+              this.kitPlayAreaNode.atomNodeMap[ moleculeAtom.id ].moveToFront();
+              moleculeAtom.destinationProperty.value = ( moleculeAtom ).positionProperty.value;
             }
           } );
         }
@@ -404,7 +406,7 @@ export default class BAMScreenView extends ScreenView {
         // Update the current kit in the play area node.
         this.kitPlayAreaNode.currentKit = originKit;
       },
-      drag: ( event: unknown, listener: IntentionalAny ) => {
+      drag: ( event: unknown, listener: DragListener ) => {
         dragLength += listener.modelDelta.getMagnitude();
 
         // Get delta from start of drag
@@ -419,7 +421,10 @@ export default class BAMScreenView extends ScreenView {
         if ( molecule ) {
           molecule.atoms.forEach( moleculeAtom => {
             if ( moleculeAtom !== atom ) {
-              ( moleculeAtom as IntentionalAny ).translatePositionAndDestination( delta );
+
+              affirm( moleculeAtom instanceof Atom2, 'Expected moleculeAtom to be an instance of Atom2' );
+
+              moleculeAtom.translatePositionAndDestination( delta );
             }
           } );
           atomNode.moveToFront();
@@ -468,9 +473,10 @@ export default class BAMScreenView extends ScreenView {
    * @param atom - The atom to remove
    */
   private onAtomRemovedFromPlayArea( atom: Atom2 ): void {
+
     // Remove mapped atom node from the view and dispose it.
-    const atomNode = ( this.kitPlayAreaNode.atomNodeMap as IntentionalAny )[ atom.id ];
-    atomNode.dragListener.dispose();
+    const atomNode = this.kitPlayAreaNode.atomNodeMap[ atom.id ];
+    atomNode.dragListener!.dispose();
     atomNode.dispose();
     delete ( this.kitPlayAreaNode.atomNodeMap )[ atom.id ];
   }
