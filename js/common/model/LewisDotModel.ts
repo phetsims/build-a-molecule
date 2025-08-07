@@ -218,7 +218,7 @@ class LewisDotAtom {
     this.atom = atom;
 
     this.connections = {};
-    Direction.VALUES.forEach( ( direction: DirectionValue ) => {
+    Direction.VALUES.forEach( direction => {
       this.connections[ direction.id ] = null; // nothing in this direction
     } );
   }

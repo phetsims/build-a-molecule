@@ -38,12 +38,12 @@ const BAMIconFactory = {
     const moleculeNode = new Molecule3DNode( completeMolecule, new Bounds2( 0, 0, width, height ), false );
     const transformMatrix = ( Molecule3DNode ).initialTransforms[ completeMolecule.getGeneralFormula() ];
     if ( transformMatrix ) {
-      ( moleculeNode ).transformMolecule( transformMatrix );
+      moleculeNode.transformMolecule( transformMatrix );
     }
-    ( moleculeNode ).draw();
-    return new Image( ( moleculeNode ).canvas.toDataURL(), {
-      initialWidth: toCollectionBox ? 0 : ( moleculeNode ).canvas.width,
-      initialHeight: toCollectionBox ? 0 : ( moleculeNode ).canvas.height,
+    moleculeNode.draw();
+    return new Image( moleculeNode.canvas.toDataURL(), {
+      initialWidth: toCollectionBox ? 0 : moleculeNode.canvas.width,
+      initialHeight: toCollectionBox ? 0 : moleculeNode.canvas.height,
       scale: scale
     } );
   },

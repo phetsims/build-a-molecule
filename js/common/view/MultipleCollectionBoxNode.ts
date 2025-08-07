@@ -41,7 +41,7 @@ class MultipleCollectionBoxNode extends CollectionBoxNode {
     } );
 
     // Update the number of collections available
-    box.quantityProperty.link( ( quantity: number ) => {
+    box.quantityProperty.link( quantity => {
       if ( quantity === 0 ) {
         this.quantityNode.string = BuildAMoleculeStrings.collectionMultipleQuantityEmpty;
       }

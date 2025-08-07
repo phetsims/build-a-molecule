@@ -290,9 +290,7 @@ export default class Kit {
 
     // get our old and new molecule structures
     const oldMolecule = this.getMolecule( a );
-    if ( !oldMolecule ) {
-      return;
-    }
+    affirm( oldMolecule );
     const newMolecules = MoleculeStructure.getMoleculesFromBrokenBond( oldMolecule, oldMolecule.getBond( a, b ), new Molecule(), new Molecule() );
 
     // break the bond in our lewis dot model

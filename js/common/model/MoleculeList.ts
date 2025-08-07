@@ -209,7 +209,7 @@ class MoleculeList {
    * @param strings - File name relative to the sim's data directory
    */
   private static readCompleteMoleculesFromData( strings: string[] ): CompleteMolecule[] {
-    return strings.map( ( string: string ): CompleteMolecule => {
+    return strings.map( string => {
       const molecule = CompleteMolecule.fromSerial2( string ) as CompleteMolecule;
 
       // sanity checks

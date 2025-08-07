@@ -304,7 +304,7 @@ export default class Molecule3DDialog extends Dialog {
     ballAndStickScene.add( moonLight.clone() );
 
     // Correct the ordering of the dialogs children
-    this.isShowingProperty.link( ( isShowing: boolean ) => {
+    this.isShowingProperty.link( isShowing => {
 
       // Set the order of children for the VBox
       if ( isShowing ) {
@@ -318,7 +318,7 @@ export default class Molecule3DDialog extends Dialog {
 
     // Update matrix of the 3D representation
     this.quaternionProperty = new Property( new THREE.Quaternion() );
-    this.quaternionProperty.link( ( quaternion: THREE.Quaternion ) => {
+    this.quaternionProperty.link( quaternion => {
 
       // Copy the new value into the Three object's quaternion and update the matrices.
       moleculeContainer.quaternion.copy( quaternion );

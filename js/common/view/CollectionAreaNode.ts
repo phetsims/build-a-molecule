@@ -42,7 +42,7 @@ class CollectionAreaNode extends Node {
     this.addChild( allCollectionItemsVBox );
 
     // Create and add all collection box nodes.
-    collection.collectionBoxes.forEach( ( collectionBox: CollectionBox ) => {
+    collection.collectionBoxes.forEach( collectionBox => {
       const collectionBoxNode = isSingleCollectionMode ? new SingleCollectionBoxNode( collectionBox, toModelBounds, showDialogCallback ) :
                                 new MultipleCollectionBoxNode( collectionBox, toModelBounds, showDialogCallback );
       this.collectionBoxNodes.push( collectionBoxNode );

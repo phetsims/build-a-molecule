@@ -442,7 +442,7 @@ export default class BAMScreenView extends ScreenView {
         atom.isDraggingProperty.value = false;
 
         // Keep track of view elements used later in the callback.
-        const mappedAtomNode = ( this.kitPlayAreaNode.atomNodeMap )[ atom.id ];
+        const mappedAtomNode = this.kitPlayAreaNode.atomNodeMap[ atom.id ];
 
         // Was the atom dropped back into the kit area?
         const droppedInKitArea = mappedAtomNode &&
@@ -460,7 +460,7 @@ export default class BAMScreenView extends ScreenView {
         this.updateRefillButton();
       }
     } );
-    ( atomNode ).dragListener = atomListener;
+    atomNode.dragListener = atomListener;
     atomNode.addInputListener( atomListener );
     return atomNode;
   }
@@ -476,7 +476,7 @@ export default class BAMScreenView extends ScreenView {
     const atomNode = this.kitPlayAreaNode.atomNodeMap[ atom.id ];
     atomNode.dragListener!.dispose();
     atomNode.dispose();
-    delete ( this.kitPlayAreaNode.atomNodeMap )[ atom.id ];
+    delete this.kitPlayAreaNode.atomNodeMap[ atom.id ];
   }
 }
 

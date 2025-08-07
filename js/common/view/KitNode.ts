@@ -88,7 +88,7 @@ class KitNode extends Node {
 
         // Adjust position of atom
         const viewPoint = moleculeCollectingScreenView.globalToLocalPoint( event.pointer.point );
-        ( atom ).positionProperty.value = BAMConstants.MODEL_VIEW_TRANSFORM.viewToModelPosition( viewPoint );
+        atom.positionProperty.value = BAMConstants.MODEL_VIEW_TRANSFORM.viewToModelPosition( viewPoint );
 
         // Add new atom to the play area.
         const currentKit = ( moleculeCollectingScreenView.bamModel.currentCollectionProperty.value ).currentKitProperty.value!;
@@ -101,7 +101,7 @@ class KitNode extends Node {
           bucket.particleList.remove( atom );
 
           // Get reference to atomNode and call the dragListener
-          const atomNode = moleculeCollectingScreenView.kitPlayAreaNode.atomNodeMap[ ( atom ).id ];
+          const atomNode = moleculeCollectingScreenView.kitPlayAreaNode.atomNodeMap[ atom.id ];
 
           if ( atomNode ) {
             atomNode.dragListener!.press( event, atomNode );
@@ -146,10 +146,10 @@ class KitNode extends Node {
       const particleRemovedListener = ( atom: Atom2 ): void => {
 
         // Remove atom view elements from bucket node and delete the reference from atom node map
-        if ( atomNodeMap[ ( atom ).id ] ) {
-          this.atomLayer.removeChild( atomNodeMap[ ( atom ).id ] );
-          atomNodeMap[ ( atom ).id ].dispose();
-          delete atomNodeMap[ ( atom ).id ];
+        if ( atomNodeMap[ atom.id ] ) {
+          this.atomLayer.removeChild( atomNodeMap[ atom.id ] );
+          atomNodeMap[ atom.id ].dispose();
+          delete atomNodeMap[ atom.id ];
         }
 
         // Remove the atom from the bucket particles
@@ -216,15 +216,15 @@ class KitNode extends Node {
     // ignore stacking order for this operation
     for ( let i = 0; i < numAtoms; i++ ) {
       const atom = atoms[ i ];
-      const position = ( atom ).positionProperty.get();
+      const position = atom.positionProperty.get(); // no ES5 setters so we have the fastest possible code in this inner loop (called during hit testing)
 
       const dx = x - position.x;
       const dy = y - position.y;
 
       // not really distance, persay, since it can go negative
-      const distanceSquared = dx * dx + dy * dy - ( atom ).covalentRadius * ( atom ).covalentRadius;
+      const distanceSquared = dx * dx + dy * dy - atom.covalentRadius * atom.covalentRadius;
 
-      if ( distanceSquared > bestDistanceSquared || ( element && ( atom ).element !== element ) ) {
+      if ( distanceSquared > bestDistanceSquared || ( element && atom.element !== element ) ) {
         continue;
       }
 

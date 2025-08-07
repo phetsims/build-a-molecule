@@ -77,9 +77,6 @@ class AtomNode extends Node {
     this.atom.visibleProperty.link( this.updateVisibilityListener );
   }
 
-  /**
-   * @override
-   */
   public override dispose(): void {
     this.atom.positionProperty.unlink( this.translationListener );
     this.atom.visibleProperty.unlink( this.updateVisibilityListener );
