@@ -10,8 +10,7 @@
 
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import Property from '../../../../axon/js/Property.js';
-import merge from '../../../../phet-core/js/merge.js';
-import IntentionalAny from '../../../../phet-core/js/types/IntentionalAny.js';
+import optionize from '../../../../phet-core/js/optionize.js';
 import buildAMolecule from '../../buildAMolecule.js';
 import BAMQueryParameters from '../BAMQueryParameters.js';
 import Atom2 from './Atom2.js';
@@ -19,6 +18,12 @@ import CollectionBox from './CollectionBox.js';
 import Kit from './Kit.js';
 
 let currentId = 0;
+
+type KitCollectionSelfOptions = {
+  enableCues?: boolean; // Determines if the arrow cues should be shown
+};
+
+export type KitCollectionOptions = KitCollectionSelfOptions;
 
 class KitCollection {
 
@@ -36,11 +41,10 @@ class KitCollection {
 
   public currentKitProperty: Property<Kit | null>;
 
-  public constructor( options: IntentionalAny ) {
-    // eslint-disable-next-line phet/bad-typescript-text
-    options = merge( {
-      enableCues: false // Determines if the arrow cues should be shown
-    }, options );
+  public constructor( providedOptions?: KitCollectionOptions ) {
+    const options = optionize<KitCollectionOptions, KitCollectionSelfOptions>()( {
+      enableCues: false
+    }, providedOptions );
 
     this.id = currentId++;
 
@@ -68,7 +72,7 @@ class KitCollection {
           newKit.molecules.forEach( molecule => {
 
             // Only handle visibility for the first collection
-            if ( molecule && options.enableCues === true && box.willAllowMoleculeDrop( molecule ) ) {
+            if ( molecule && options.enableCues && box.willAllowMoleculeDrop( molecule ) ) {
               box.cueVisibilityProperty.value = true;
             }
           } );
@@ -81,7 +85,15 @@ class KitCollection {
   /**
    * Add a kit to this kit collection. Here is where we add listeners to the added kit
    */
-  public addKit( kit: Kit, options: IntentionalAny ): void {
+  public addKit( kit: Kit, options?: { triggerCue?: boolean } | number ): void {
+    // Handle case where this is called via forEach which passes (item, index, array)
+    let kitOptions: { triggerCue?: boolean } | undefined;
+    if ( typeof options === 'number' ) {
+      kitOptions = undefined;
+    }
+    else {
+      kitOptions = options;
+    }
     this.kits.push( kit );
     const dropListener = ( atom: Atom2 ) => {
 
@@ -119,7 +131,7 @@ class KitCollection {
         kit.molecules.forEach( molecule => {
 
           // Added molecules should trigger an arrow cue if it can be dropped in a collection box
-          if ( box.willAllowMoleculeDrop( molecule ) && ( options && options.triggerCue ) ) {
+          if ( box.willAllowMoleculeDrop( molecule ) && ( kitOptions && kitOptions.triggerCue ) ) {
             box.cueVisibilityProperty.value = true;
 
             // Trigger box blinking only if it has not blinked already
@@ -144,15 +156,15 @@ class KitCollection {
 
         // Hide arrow cues for the removed molecule. This works independently from other molecules that are present
         // in the kit play area.
-        if ( box.willAllowMoleculeDrop( molecule ) && molecule && ( options && options.triggerCue ) ) {
+        if ( box.willAllowMoleculeDrop( molecule ) && molecule && ( kitOptions && kitOptions.triggerCue ) ) {
           box.cueVisibilityProperty.value = false;
         }
 
         // Cycle through all the remaining molecules and trigger the arrow cue if the molecule exists in the
         // kit play area.
         kit.molecules.forEach( remainingMolecule => {
-          if ( box.willAllowMoleculeDrop( remainingMolecule ) && molecule && ( options && options.triggerCue ) ) {
-            box.cueVisibilityProperty.value = box.willAllowMoleculeDrop( remainingMolecule ) && remainingMolecule && ( options && options.triggerCue );
+          if ( box.willAllowMoleculeDrop( remainingMolecule ) && molecule && ( kitOptions && kitOptions.triggerCue ) ) {
+            box.cueVisibilityProperty.value = box.willAllowMoleculeDrop( remainingMolecule ) && remainingMolecule && ( kitOptions && kitOptions.triggerCue );
           }
 
           // Last sanity check to make sure a full box doesn't have an arrow cue shown.
