@@ -1,5 +1,5 @@
 {
-  "comment": "# build-a-molecule 1.1.0-dev.1 Tue Aug 05 2025 17:22:17 GMT-0600 (Mountain Daylight Time)",
+  "comment": "# build-a-molecule 1.1.0-dev.2 Thu Aug 07 2025 09:19:46 GMT-0600 (Mountain Daylight Time)",
   "assert": {
     "sha": "f6d41b399ad32df2a00ab4b329981be0c574d77a",
     "branch": "main"
@@ -13,11 +13,11 @@
     "branch": "main"
   },
   "build-a-molecule": {
-    "sha": "aa23430018e2f4ee378fe40a25331bb5a3c5a27d",
+    "sha": "9f605a7f540bcc145e56bedc285344362acb9bee",
     "branch": "main"
   },
   "chipper": {
-    "sha": "c57d0e3517dc88192d220bc4301953970e28bf74",
+    "sha": "82dbeabd3d47953d54084b08efa059ddde27aa6d",
     "branch": "main"
   },
   "dot": {
@@ -41,7 +41,7 @@
     "branch": "main"
   },
   "perennial-alias": {
-    "sha": "c636b2096ece7a48191444f8ac48bd5bbc399e41",
+    "sha": "025117d425d17be82e930339a67a5a7cffccd53a",
     "branch": "main"
   },
   "phet-core": {
@@ -73,7 +73,7 @@
     "branch": "main"
   },
   "scenery": {
-    "sha": "911e58db80cdbf021eb53f56c8835b246a2742f3",
+    "sha": "0c678a8b1030189214ac4d6c12530db5ee011247",
     "branch": "main"
   },
   "scenery-phet": {
@@ -105,7 +105,7 @@
     "branch": "main"
   },
   "utterance-queue": {
-    "sha": "337413409df400b40327d251465351aeda0ded26",
+    "sha": "e51810068a3273afa89cacd8832d1d825292693a",
     "branch": "main"
   },
   "vegas": {
