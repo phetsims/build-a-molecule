@@ -16,6 +16,7 @@ import Matrix3 from '../../../../../dot/js/Matrix3.js';
 import Vector2 from '../../../../../dot/js/Vector2.js';
 import Vector3 from '../../../../../dot/js/Vector3.js';
 import ThreeNode from '../../../../../mobius/js/ThreeNode.js';
+import affirm from '../../../../../perennial-alias/js/browser-and-node/affirm.js';
 import EnumerationDeprecated from '../../../../../phet-core/js/EnumerationDeprecated.js';
 import IntentionalAny from '../../../../../phet-core/js/types/IntentionalAny.js';
 import StringUtils from '../../../../../phetcommon/js/util/StringUtils.js';
@@ -33,7 +34,7 @@ import nullSoundPlayer from '../../../../../tambo/js/nullSoundPlayer.js';
 import buildAMolecule from '../../../buildAMolecule.js';
 import BuildAMoleculeStrings from '../../../BuildAMoleculeStrings.js';
 import BAMConstants from '../../BAMConstants.js';
-import CompleteMolecule from '../../model/CompleteMolecule.js';
+import CompleteMolecule, { PubChemBond } from '../../model/CompleteMolecule.js';
 import MoleculeList from '../../model/MoleculeList.js';
 
 // constants
@@ -124,27 +125,26 @@ export default class Molecule3DDialog extends Dialog {
      */
     const buildBondMesh = ( completeMolecule: CompleteMolecule, container: THREE.Object3D, requiresBondOffset: boolean, meshThickness: number ): void => {
       completeMolecule.bonds.forEach( bond => {
+
+        affirm( bond instanceof PubChemBond, 'expected bond to be an instance of PubChemBond' );
+
         let originOffset = -0.25;
         let displacement = 0;
 
         // If a bond has a high order we need to adjust the bond mesh in the y-axis
-        // @ts-expect-error
         for ( let i = 0; i < bond.order; i++ ) {
 
           // Offset for single bond
-          // @ts-expect-error
           if ( bond.order === 1 ) {
             originOffset = 0;
             displacement = 0;
           }
             // Offset for double bond
-          // @ts-expect-error
           else if ( bond.order === 2 ) {
             originOffset = -0.25;
             displacement = 0.5;
           }
             // Offset for triple bond
-          // @ts-expect-error
           else if ( bond.order === 3 ) {
             originOffset = -0.25;
             displacement = 0.25;

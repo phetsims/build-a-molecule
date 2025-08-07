@@ -50,6 +50,7 @@ import Node from '../../../../scenery/js/nodes/Node.js';
 import buildAMolecule from '../../buildAMolecule.js';
 import BuildAMoleculeStrings from '../../BuildAMoleculeStrings.js';
 import Bond from './Bond.js';
+import Molecule from './Molecule.js';
 import MoleculeStructure from './MoleculeStructure.js';
 
 // constants
@@ -392,9 +393,9 @@ class PubChemAtom extends Atom {
 }
 
 // Signature for bonds, where a and b are PubChemAtoms of some type
-class PubChemBond extends Bond {
+export class PubChemBond extends Bond {
 
-  private readonly order: number;
+  public readonly order: number;
 
   /**
    * @param a
@@ -421,15 +422,14 @@ class PubChemBond extends Bond {
    * @param connectedAtom
    * @param molecule
    */
-  public static parse( bondString: string, connectedAtom: Atom, molecule: any ): PubChemBond { // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when MoleculeStructure is converted, see https://github.com/phetsims/build-a-molecule/issues/245
+  public static parse( bondString: string, connectedAtom: Atom, molecule: Molecule ): PubChemBond {
     const tokens = bondString.split( '-' );
     const index = Number( tokens[ 0 ] );
     const order = Number( tokens[ 1 ] );
+    // @ts-expect-error
     return new PubChemBond( connectedAtom as PubChemAtom, molecule.atoms[ index ], order );
   }
 }
-
-// CompleteMolecule.PubChemBond = PubChemBond; // TODO: Add proper static type assignment when TypeScript supports it better, see https://github.com/phetsims/build-a-molecule/issues/245
 
 buildAMolecule.register( 'CompleteMolecule', CompleteMolecule );
 export default CompleteMolecule;
