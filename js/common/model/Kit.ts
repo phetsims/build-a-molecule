@@ -22,6 +22,7 @@ import Atom from '../../../../nitroglycerin/js/Atom.js';
 import affirm from '../../../../perennial-alias/js/browser-and-node/affirm.js';
 import arrayRemove from '../../../../phet-core/js/arrayRemove.js';
 import cleanArray from '../../../../phet-core/js/cleanArray.js';
+import IntentionalAny from '../../../../phet-core/js/types/IntentionalAny.js';
 import buildAMolecule from '../../buildAMolecule.js';
 import BAMQueryParameters from '../BAMQueryParameters.js';
 import Atom2 from './Atom2.js';
@@ -171,8 +172,8 @@ export default class Kit {
    * Returns the bucket for a given element
    * @param element - The element to find a bucket for
    */
-  private getBucketForElement( element: any ): any { // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Should element parameter be Element and return type be Bucket?
-    const elementBucket = this.buckets.find( ( bucket: any ) => { // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when Bucket is converted, see https://github.com/phetsims/build-a-molecule/issues/245
+  private getBucketForElement( element: IntentionalAny ): IntentionalAny {
+    const elementBucket = this.buckets.find( ( bucket: IntentionalAny ) => {
       return bucket.element.isSameElement( element );
     } );
     assert && assert( elementBucket, 'Element does not have an associated bucket.' );
@@ -182,14 +183,14 @@ export default class Kit {
   /**
    * Returns kit bounds within the collection layout
    */
-  public get availableKitBounds(): any { // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when Bounds2 type is available, see https://github.com/phetsims/build-a-molecule/issues/245
+  public get availableKitBounds(): Bounds2 {
     return this.collectionLayout.availableKitBounds;
   }
 
   /**
    * Returns play area bounds within the collection layout
    */
-  public get availablePlayAreaBounds(): any { // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when Bounds2 type is available, see https://github.com/phetsims/build-a-molecule/issues/245
+  public get availablePlayAreaBounds(): Bounds2 {
     return this.collectionLayout.availablePlayAreaBounds;
   }
 
@@ -323,7 +324,7 @@ export default class Kit {
    * @param a - Atom A
    * @param b - Atom B
    */
-  public getBondDirection( a: Atom, b: Atom ): any { // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when Atom2 and Direction are converted, see https://github.com/phetsims/build-a-molecule/issues/245
+  public getBondDirection( a: Atom, b: Atom ): IntentionalAny {
     return this.lewisDotModel!.getBondDirection( a, b );
   }
 
@@ -332,7 +333,7 @@ export default class Kit {
    */
   public allBucketsFilled(): boolean {
     let allBucketsFilled = true;
-    this.buckets.forEach( ( bucket: any ) => { // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when Bucket is converted, see https://github.com/phetsims/build-a-molecule/issues/245
+    this.buckets.forEach( ( bucket: IntentionalAny ) => {
       if ( !bucket.isFull() ) {
         allBucketsFilled = false;
       }
@@ -380,7 +381,7 @@ export default class Kit {
    * @param atom - The atom to check
    */
   private isContainedInBucket( atom: Atom ): boolean {
-    return this.buckets.some( ( bucket: any ) => { // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when Bucket is converted, see https://github.com/phetsims/build-a-molecule/issues/245
+    return this.buckets.some( ( bucket: IntentionalAny ) => {
       return bucket.containsParticle( atom );
     } );
   }
@@ -418,7 +419,7 @@ export default class Kit {
    * Add padding to the molecule bounds.
    * @param bounds - The bounds to pad
    */
-  private padMoleculeBounds( bounds: any ): any { // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when Bounds2 is available, see https://github.com/phetsims/build-a-molecule/issues/245
+  private padMoleculeBounds( bounds: IntentionalAny ): IntentionalAny {
     const halfPadding = Kit.interMoleculePadding / 2;
     return Bounds2.rect( bounds.x - halfPadding, bounds.y - halfPadding, bounds.width + Kit.interMoleculePadding, bounds.height + Kit.interMoleculePadding );
   }
@@ -501,7 +502,7 @@ export default class Kit {
    * @param dirAtoB - The direction from A that the bond will go in (for lewis-dot structure)
    * @param b - Atom B
    */
-  private bond( a: Atom, dirAtoB: any, b: Atom ): void { // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when Atom2 and Direction are converted, see https://github.com/phetsims/build-a-molecule/issues/245
+  private bond( a: Atom, dirAtoB: IntentionalAny, b: Atom ): void {
     this.lewisDotModel!.bond( a, dirAtoB, b );
     const molA = this.getMolecule( a );
     const molB = this.getMolecule( b );
@@ -531,7 +532,7 @@ export default class Kit {
     }
     const structure = this.getMolecule( a );
     if ( structure && structure.atoms.length > 2 ) {
-      structure.bonds.forEach( ( bond: any ) => { // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when Bond is converted, see https://github.com/phetsims/build-a-molecule/issues/245
+      structure.bonds.forEach( ( bond: IntentionalAny ) => {
         if ( bond.a.hasSameElement( bond.b ) && bond.a.symbol === 'H' ) {
           console.log( 'WARNING: Hydrogen bonded to another hydrogen in a molecule which is not diatomic hydrogen' );
         }
@@ -624,13 +625,13 @@ export default class Kit {
       return false;
     }
     const bondingOption = bestBondingOption as BondingOption;
-    const delta = bondingOption.idealPosition.minus( ( bondingOption.b as any ).positionProperty.value ); // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when Atom2 is converted, see https://github.com/phetsims/build-a-molecule/issues/245
+    const delta = bondingOption.idealPosition.minus( ( bondingOption.b as IntentionalAny ).positionProperty.value );
     const moleculeWithAtom = this.getMolecule( bondingOption.b );
     if ( !moleculeWithAtom ) {
       return false;
     }
     moleculeWithAtom.atoms.forEach( atomInMolecule => {
-      ( atomInMolecule as any ).setPositionAndDestination( ( atomInMolecule as any ).positionProperty.value.plus( delta ) ); // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when Atom2 is converted, see https://github.com/phetsims/build-a-molecule/issues/245
+      ( atomInMolecule as IntentionalAny ).setPositionAndDestination( ( atomInMolecule as IntentionalAny ).positionProperty.value.plus( delta ) );
     } );
 
     // we now will bond the atom
@@ -647,8 +648,8 @@ export default class Kit {
     return this.getMolecule( b ) !== null &&
            this.getMolecule( a ) !== this.getMolecule( b ) &&
            this.isAllowedStructure( this.getPossibleMoleculeStructureFromBond( a, b ) ) &&
-           this.collectionLayout.availablePlayAreaBounds.containsPoint( ( a as any ).positionProperty.value ) && // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when Atom2 is converted, see https://github.com/phetsims/build-a-molecule/issues/245
-           this.collectionLayout.availablePlayAreaBounds.containsPoint( ( b as any ).positionProperty.value ); // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when Atom2 is converted, see https://github.com/phetsims/build-a-molecule/issues/245
+           this.collectionLayout.availablePlayAreaBounds.containsPoint( ( a as IntentionalAny ).positionProperty.value ) &&
+           this.collectionLayout.availablePlayAreaBounds.containsPoint( ( b as IntentionalAny ).positionProperty.value );
   }
 
   /**
@@ -667,20 +668,20 @@ export default class Kit {
 class BondingOption {
 
   public readonly a: Atom;
-  public readonly direction: any; // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when Direction is converted, see https://github.com/phetsims/build-a-molecule/issues/245
+  public readonly direction: IntentionalAny;
   public readonly b: Atom;
-  public readonly idealPosition: any; // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when Vector2 is converted, see https://github.com/phetsims/build-a-molecule/issues/245
+  public readonly idealPosition: IntentionalAny;
 
   /**
    * @param a - Atom A
    * @param direction - The direction
    * @param b - Atom B
    */
-  public constructor( a: Atom, direction: any, b: Atom ) { // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when Atom2 and Direction are converted, see https://github.com/phetsims/build-a-molecule/issues/245
+  public constructor( a: Atom, direction: IntentionalAny, b: Atom ) {
     this.a = a;
     this.direction = direction;
     this.b = b;
-    this.idealPosition = ( a as any ).positionProperty.value.plus( ( direction as any ).vector.times( ( a as any ).covalentRadius + ( b as any ).covalentRadius ) ); // eslint-disable-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unnecessary-type-assertion -- TODO: Fix when Atom2 and Direction are converted, see https://github.com/phetsims/build-a-molecule/issues/245
+    this.idealPosition = ( a as IntentionalAny ).positionProperty.value.plus( ( direction ).vector.times( ( a as IntentionalAny ).covalentRadius + ( b as IntentionalAny ).covalentRadius ) );
   }
 }
 

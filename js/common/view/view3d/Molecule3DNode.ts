@@ -17,6 +17,7 @@ import Vector2 from '../../../../../dot/js/Vector2.js';
 import Vector3 from '../../../../../dot/js/Vector3.js';
 import { Arc, EllipticalArc } from '../../../../../kite/js/segments/Segment.js';
 import Element from '../../../../../nitroglycerin/js/Element.js';
+import IntentionalAny from '../../../../../phet-core/js/types/IntentionalAny.js';
 import DOM from '../../../../../scenery/js/nodes/DOM.js';
 import Color from '../../../../../scenery/js/util/Color.js';
 import Utils from '../../../../../scenery/js/util/Utils.js';
@@ -90,7 +91,7 @@ class Molecule3DNode extends DOM {
     // map the atoms into our enhanced format
     this.currentAtoms = completeMolecule.atoms.map( atom => {
       // similar to picometers from angstroms? hopefully?
-      const atomAny = atom as any; // eslint-disable-line @typescript-eslint/no-explicit-any
+      const atomAny = atom as IntentionalAny;
       const v = new Vector3( atomAny.x3d, atomAny.y3d, atomAny.z3d ).times( 75 ) as EnhancedVector3;
       v.element = atomAny.element;
       v.covalentRadius = atomAny.element.covalentRadius;

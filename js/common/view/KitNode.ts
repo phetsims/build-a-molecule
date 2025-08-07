@@ -9,11 +9,12 @@
 
 import Vector2 from '../../../../dot/js/Vector2.js';
 import Shape from '../../../../kite/js/Shape.js';
+import IntentionalAny from '../../../../phet-core/js/types/IntentionalAny.js';
 import BucketFront from '../../../../scenery-phet/js/bucket/BucketFront.js';
 import BucketHole from '../../../../scenery-phet/js/bucket/BucketHole.js';
 import DragListener from '../../../../scenery/js/listeners/DragListener.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
-// import { SceneryEvent } from '../../../../scenery/js/input/Event.js'; -- Using any for now until scenery types are available
+// import { SceneryEvent } from '../../../../scenery/js/input/Event.js'; -- Using IntentionalAny for now until scenery types are available
 import buildAMolecule from '../../buildAMolecule.js';
 import BAMConstants from '../BAMConstants.js';
 import Kit from '../model/Kit.js';
@@ -58,7 +59,7 @@ class KitNode extends Node {
 
     // Create a bucket based on a the kit's model bucket. This includes a front and back for the bucket contained in
     // different layout.
-    ( kit as any ).buckets.forEach( ( bucket: any ): void => { // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when Kit and Bucket are converted, see https://github.com/phetsims/build-a-molecule/issues/245
+    ( kit as IntentionalAny ).buckets.forEach( ( bucket: IntentionalAny ): void => {
       const bucketFront = new BucketFront( bucket, BAMConstants.MODEL_VIEW_TRANSFORM );
       const bucketHole = new BucketHole( bucket, BAMConstants.MODEL_VIEW_TRANSFORM );
       // NOTE: we will use the Bucket's hole with an expanded touch area to trigger the "grab by touching the bucket" behavior
@@ -76,22 +77,22 @@ class KitNode extends Node {
         bucketHole.cursor = bucket.getParticleList().length ? 'pointer' : 'default';
       };
 
-      ( kit as any ).addedMoleculeEmitter.addListener( bucketHoleCursorUpdate ); // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when Kit is converted, see https://github.com/phetsims/build-a-molecule/issues/245
-      ( kit as any ).removedMoleculeEmitter.addListener( bucketHoleCursorUpdate ); // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when Kit is converted, see https://github.com/phetsims/build-a-molecule/issues/245
+      ( kit as IntentionalAny ).addedMoleculeEmitter.addListener( bucketHoleCursorUpdate );
+      ( kit as IntentionalAny ).removedMoleculeEmitter.addListener( bucketHoleCursorUpdate );
       bucketHoleCursorUpdate();
 
 
       // Used for grabbing atoms in bucket. Will be triggered by grabbing the atoms themselves and the bucket the atoms
       // are contained in.
-      const atomNodeDragCallback = ( event: any, atom: Atom2 ): void => { // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when SceneryEvent is available, see https://github.com/phetsims/build-a-molecule/issues/245
+      const atomNodeDragCallback = ( event: IntentionalAny, atom: Atom2 ): void => {
 
         // Adjust position of atom
         const viewPoint = moleculeCollectingScreenView.globalToLocalPoint( event.pointer!.point );
-        ( atom as any ).positionProperty.value = BAMConstants.MODEL_VIEW_TRANSFORM.viewToModelPosition( viewPoint ); // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when Atom2 is converted, see https://github.com/phetsims/build-a-molecule/issues/245
+        ( atom as IntentionalAny ).positionProperty.value = BAMConstants.MODEL_VIEW_TRANSFORM.viewToModelPosition( viewPoint );
 
         // Add new atom to the play area.
-        const currentKit = ( moleculeCollectingScreenView.bamModel.currentCollectionProperty.value as any ).currentKitProperty.value; // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when KitCollection is converted, see https://github.com/phetsims/build-a-molecule/issues/245
-        ( currentKit as any ).atomsInPlayArea.push( atom ); // eslint-disable-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unnecessary-type-assertion -- TODO: Fix when Kit is converted, see https://github.com/phetsims/build-a-molecule/issues/245
+        const currentKit = ( moleculeCollectingScreenView.bamModel.currentCollectionProperty.value as IntentionalAny ).currentKitProperty.value;
+        ( currentKit ).atomsInPlayArea.push( atom );
 
         // Handle removing particles from bucket
         if ( bucket.containsParticle( atom ) ) {
@@ -100,10 +101,10 @@ class KitNode extends Node {
           bucket.particleList.remove( atom );
 
           // Get reference to atomNode and call the dragListener
-          const atomNode = moleculeCollectingScreenView.kitPlayAreaNode.atomNodeMap[ ( atom as any ).id ]; // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when Atom2 is converted, see https://github.com/phetsims/build-a-molecule/issues/245
+          const atomNode = moleculeCollectingScreenView.kitPlayAreaNode.atomNodeMap[ ( atom as IntentionalAny ).id ];
 
           if ( atomNode ) {
-            ( atomNode as any ).dragListener.press( event, atomNode ); // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when AtomNode is converted, see https://github.com/phetsims/build-a-molecule/issues/245
+            ( atomNode as IntentionalAny ).dragListener.press( event, atomNode );
           }
         }
       };
@@ -113,7 +114,7 @@ class KitNode extends Node {
 
         // our hook to start dragging an atom (if available in the bucket)
         bucketHole.addInputListener( {
-          down: ( event: any ): void => { // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when SceneryEvent is available, see https://github.com/phetsims/build-a-molecule/issues/245
+          down: ( event: IntentionalAny ): void => {
             this.interruptSubtreeInput();
 
             // coordinate transforms to get our atom
@@ -145,10 +146,10 @@ class KitNode extends Node {
       const particleRemovedListener = ( atom: Atom2 ): void => {
 
         // Remove atom view elements from bucket node and delete the reference from atom node map
-        if ( atomNodeMap[ ( atom as any ).id ] ) { // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when Atom2 is converted, see https://github.com/phetsims/build-a-molecule/issues/245
-          this.atomLayer.removeChild( atomNodeMap[ ( atom as any ).id ] ); // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when Atom2 is converted, see https://github.com/phetsims/build-a-molecule/issues/245
-          atomNodeMap[ ( atom as any ).id ].dispose(); // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when Atom2 is converted, see https://github.com/phetsims/build-a-molecule/issues/245
-          delete atomNodeMap[ ( atom as any ).id ]; // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when Atom2 is converted, see https://github.com/phetsims/build-a-molecule/issues/245
+        if ( atomNodeMap[ ( atom as IntentionalAny ).id ] ) {
+          this.atomLayer.removeChild( atomNodeMap[ ( atom as IntentionalAny ).id ] );
+          atomNodeMap[ ( atom as IntentionalAny ).id ].dispose();
+          delete atomNodeMap[ ( atom as IntentionalAny ).id ];
         }
 
         // Remove the atom from the bucket particles
@@ -164,7 +165,7 @@ class KitNode extends Node {
         const atomNode = new AtomNode( atom );
 
         // Keep track of the atomNode by mapping to its atom's ID then add to atom layer
-        atomNodeMap[ ( atom as any ).id ] = atomNode; // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when Atom2 is converted, see https://github.com/phetsims/build-a-molecule/issues/245
+        atomNodeMap[ ( atom as IntentionalAny ).id ] = atomNode;
 
         // Add the particle to the bucket atom layer and the bucket's particles.
         this.atomLayer.addChild( atomNode );
@@ -172,7 +173,7 @@ class KitNode extends Node {
 
         // Add a drag listener that will move the model element when the user
         // drags this atom.
-        atomNode.addInputListener( DragListener.createForwardingListener( ( event: any ): void => { // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when SceneryEvent is available, see https://github.com/phetsims/build-a-molecule/issues/245
+        atomNode.addInputListener( DragListener.createForwardingListener( ( event: IntentionalAny ): void => {
           atomNodeDragCallback( event, atom );
         }, {
           allowTouchSnag: false
@@ -188,7 +189,7 @@ class KitNode extends Node {
       bucket.particleList.addItemAddedListener( particleAddedListener );
       bucket.particleList.addItemRemovedListener( particleRemovedListener );
     } );
-    assert && assert( ( kit as any ).molecules.length === 0 ); // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when Kit is converted, see https://github.com/phetsims/build-a-molecule/issues/245
+    assert && assert( ( kit as IntentionalAny ).molecules.length === 0 );
   }
 
   /**
@@ -198,12 +199,12 @@ class KitNode extends Node {
    * @param element - Element to filter by (if provided)
    * @returns The closest atom within threshold, or null if none found
    */
-  private closestAtom( modelPoint: Vector2, threshold: number, element: any ): Atom2 | null { // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when Element is available, see https://github.com/phetsims/build-a-molecule/issues/245
+  private closestAtom( modelPoint: Vector2, threshold: number, element: IntentionalAny ): Atom2 | null {
     assert && assert( threshold );
 
     const thresholdSquared = threshold * threshold;
 
-    const atoms = ( this.kit as any ).atoms; // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when Kit is converted, see https://github.com/phetsims/build-a-molecule/issues/245
+    const atoms = ( this.kit as IntentionalAny ).atoms;
     const numAtoms = atoms.length;
 
     let best: Atom2 | null = null;
@@ -215,15 +216,15 @@ class KitNode extends Node {
     // ignore stacking order for this operation
     for ( let i = 0; i < numAtoms; i++ ) {
       const atom = atoms[ i ];
-      const position = ( atom as any ).positionProperty.get(); // eslint-disable-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unnecessary-type-assertion -- TODO: Fix when Atom2 is converted, see https://github.com/phetsims/build-a-molecule/issues/245
+      const position = ( atom ).positionProperty.get();
 
       const dx = x - position.x;
       const dy = y - position.y;
 
       // not really distance, persay, since it can go negative
-      const distanceSquared = dx * dx + dy * dy - ( atom as any ).covalentRadius * ( atom as any ).covalentRadius; // eslint-disable-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unnecessary-type-assertion -- TODO: Fix when Atom2 is converted, see https://github.com/phetsims/build-a-molecule/issues/245
+      const distanceSquared = dx * dx + dy * dy - ( atom ).covalentRadius * ( atom ).covalentRadius;
 
-      if ( distanceSquared > bestDistanceSquared || ( element && ( atom as any ).element !== element ) ) { // eslint-disable-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unnecessary-type-assertion -- TODO: Fix when Atom2 is converted, see https://github.com/phetsims/build-a-molecule/issues/245
+      if ( distanceSquared > bestDistanceSquared || ( element && ( atom ).element !== element ) ) {
         continue;
       }
 

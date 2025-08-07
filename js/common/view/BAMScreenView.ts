@@ -31,6 +31,7 @@ import MoleculeControlsHBox from './MoleculeControlsHBox.js';
 import RefillButton from './RefillButton.js';
 import Molecule3DDialog from './view3d/Molecule3DDialog.js';
 import WarningDialog from './WarningDialog.js';
+import IntentionalAny from '../../../../phet-core/js/types/IntentionalAny.js';
 
 export default class BAMScreenView extends ScreenView {
 
@@ -69,7 +70,7 @@ export default class BAMScreenView extends ScreenView {
 
     // Used for representing 3D molecules.
     // Only create a dialog if webgl is enabled. See https://github.com/phetsims/build-a-molecule/issues/105
-    this.dialog = ThreeUtils.isWebGLEnabled() ? new Molecule3DDialog( bamModel.dialogMolecule ) : new WarningDialog();
+    this.dialog = ThreeUtils.isWebGLEnabled() ? new Molecule3DDialog( bamModel.dialogMoleculeProperty ) : new WarningDialog();
 
     // Reference to callback that displays dialog for 3d node representation
     this.showDialogCallback = this.showDialog.bind( this );
@@ -214,7 +215,7 @@ export default class BAMScreenView extends ScreenView {
       this.kitPlayAreaNode.atomLayer.children.forEach( otherAtomNode => {
         if ( otherAtomNode ) {
           otherAtomNode.interruptSubtreeInput();
-          ( otherAtomNode as any ).atom.isDraggingProperty.value = false; // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when AtomNode typing is available, see https://github.com/phetsims/build-a-molecule/issues/245
+          ( otherAtomNode as IntentionalAny ).atom.isDraggingProperty.value = false;
         }
       } );
       if ( previousCollection ) {
@@ -283,7 +284,7 @@ export default class BAMScreenView extends ScreenView {
         bamModel.currentCollectionProperty.value.currentKitProperty.value!.selectedAtomProperty.value = null;
       }
     };
-    ( phet as any ).joist.display.addInputListener( this.clickToDismissListener ); // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when phet global types are available, see https://github.com/phetsims/build-a-molecule/issues/245
+    ( phet as IntentionalAny ).joist.display.addInputListener( this.clickToDismissListener );
 
     kitPanel.kitCarousel.pageNumberProperty.link( () => {
       this.interruptSubtreeInput();
@@ -296,7 +297,7 @@ export default class BAMScreenView extends ScreenView {
    */
   public override step( dt: number ): void {
     if ( this.dialog && ThreeUtils.isWebGLEnabled() ) {
-      ( this.dialog as any ).step( dt ); // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when Molecule3DDialog typing is available, see https://github.com/phetsims/build-a-molecule/issues/245
+      ( this.dialog as IntentionalAny ).step( dt );
     }
 
     // Update the visibility of the cues in each collection box
@@ -317,7 +318,7 @@ export default class BAMScreenView extends ScreenView {
     // Bail if we don't have a dialog, due to a lack of webgl support. See https://github.com/phetsims/build-a-molecule/issues/105
     if ( this.dialog ) {
       if ( ThreeUtils.isWebGLEnabled() ) {
-        ( this.dialog as any ).completeMoleculeProperty.value = completeMolecule; // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when Molecule3DDialog typing is available, see https://github.com/phetsims/build-a-molecule/issues/245
+        ( this.dialog as IntentionalAny ).completeMoleculeProperty.value = completeMolecule;
       }
       this.dialog.show();
     }
@@ -330,7 +331,7 @@ export default class BAMScreenView extends ScreenView {
    * @returns The created KitCollectionNode
    */
   protected addCollection( collection: KitCollection, isCollectingView: boolean ): KitCollectionNode {
-    const kitCollectionNode = new KitCollectionNode( collection, this as any, isCollectingView ); // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when KitCollectionNode typing is available, see https://github.com/phetsims/build-a-molecule/issues/245
+    const kitCollectionNode = new KitCollectionNode( collection, this as IntentionalAny, isCollectingView );
     this.kitCollectionMap[ collection.id ] = kitCollectionNode;
 
     // supposedly: return this so we can manipulate it in an override....?
@@ -345,7 +346,7 @@ export default class BAMScreenView extends ScreenView {
   private addAtomNodeToPlayAreaNode( atom: Atom2 ): AtomNode {
     const atomNode = new AtomNode( atom );
     this.kitPlayAreaNode.atomLayer.addChild( atomNode );
-    ( this.kitPlayAreaNode.atomNodeMap as any )[ atom.id ] = atomNode; // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when atomNodeMap typing is available, see https://github.com/phetsims/build-a-molecule/issues/245
+    ( this.kitPlayAreaNode.atomNodeMap as IntentionalAny )[ atom.id ] = atomNode;
     return atomNode;
   }
 
@@ -373,7 +374,7 @@ export default class BAMScreenView extends ScreenView {
         this.kitPlayAreaNode.atomLayer.children.forEach( otherAtomNode => {
           if ( otherAtomNode && atomNode !== otherAtomNode ) {
             otherAtomNode.interruptSubtreeInput();
-            ( otherAtomNode as any ).atom.isDraggingProperty.value = false; // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when AtomNode typing is available, see https://github.com/phetsims/build-a-molecule/issues/245
+            ( otherAtomNode as IntentionalAny ).atom.isDraggingProperty.value = false;
           }
         } );
         dragLength = 0;
@@ -388,8 +389,8 @@ export default class BAMScreenView extends ScreenView {
         if ( molecule ) {
           molecule.atoms.forEach( moleculeAtom => {
             if ( moleculeAtom ) {
-              ( this.kitPlayAreaNode.atomNodeMap as any )[ moleculeAtom.id ].moveToFront(); // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when atomNodeMap typing is available, see https://github.com/phetsims/build-a-molecule/issues/245
-              ( moleculeAtom as any ).destinationProperty.value = ( moleculeAtom as any ).positionProperty.value; // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when Atom typing is available, see https://github.com/phetsims/build-a-molecule/issues/245
+              ( this.kitPlayAreaNode.atomNodeMap as IntentionalAny )[ moleculeAtom.id ].moveToFront();
+              ( moleculeAtom as IntentionalAny ).destinationProperty.value = ( moleculeAtom as IntentionalAny ).positionProperty.value;
             }
           } );
         }
@@ -397,7 +398,7 @@ export default class BAMScreenView extends ScreenView {
         // Update the current kit in the play area node.
         this.kitPlayAreaNode.currentKit = originKit;
       },
-      drag: ( event: any, listener: any ) => { // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when DragListener types are available, see https://github.com/phetsims/build-a-molecule/issues/245
+      drag: ( event: IntentionalAny, listener: IntentionalAny ) => {
         dragLength += listener.modelDelta.getMagnitude();
 
         // Get delta from start of drag
@@ -412,7 +413,7 @@ export default class BAMScreenView extends ScreenView {
         if ( molecule ) {
           molecule.atoms.forEach( moleculeAtom => {
             if ( moleculeAtom !== atom ) {
-              ( moleculeAtom as any ).translatePositionAndDestination( delta ); // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when Atom typing is available, see https://github.com/phetsims/build-a-molecule/issues/245
+              ( moleculeAtom as IntentionalAny ).translatePositionAndDestination( delta );
             }
           } );
           atomNode.moveToFront();
@@ -432,7 +433,7 @@ export default class BAMScreenView extends ScreenView {
         atom.isDraggingProperty.value = false;
 
         // Keep track of view elements used later in the callback.
-        const mappedAtomNode = ( this.kitPlayAreaNode.atomNodeMap as any )[ atom.id ]; // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when atomNodeMap typing is available, see https://github.com/phetsims/build-a-molecule/issues/245
+        const mappedAtomNode = ( this.kitPlayAreaNode.atomNodeMap as IntentionalAny )[ atom.id ];
 
         // Was the atom dropped back into the kit area?
         const droppedInKitArea = mappedAtomNode &&
@@ -450,7 +451,7 @@ export default class BAMScreenView extends ScreenView {
         this.updateRefillButton();
       }
     } );
-    ( atomNode as any ).dragListener = atomListener; // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when AtomNode typing is available, see https://github.com/phetsims/build-a-molecule/issues/245
+    ( atomNode as IntentionalAny ).dragListener = atomListener;
     atomNode.addInputListener( atomListener );
     return atomNode;
   }
@@ -462,10 +463,10 @@ export default class BAMScreenView extends ScreenView {
    */
   private onAtomRemovedFromPlayArea( atom: Atom2 ): void {
     // Remove mapped atom node from the view and dispose it.
-    const atomNode = ( this.kitPlayAreaNode.atomNodeMap as any )[ atom.id ]; // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when atomNodeMap typing is available, see https://github.com/phetsims/build-a-molecule/issues/245
+    const atomNode = ( this.kitPlayAreaNode.atomNodeMap as IntentionalAny )[ atom.id ];
     atomNode.dragListener.dispose();
     atomNode.dispose();
-    delete ( this.kitPlayAreaNode.atomNodeMap as any )[ atom.id ]; // eslint-disable-line @typescript-eslint/no-explicit-any -- TODO: Fix when atomNodeMap typing is available, see https://github.com/phetsims/build-a-molecule/issues/245
+    delete ( this.kitPlayAreaNode.atomNodeMap as IntentionalAny )[ atom.id ];
   }
 }
 

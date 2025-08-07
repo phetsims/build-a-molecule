@@ -10,6 +10,7 @@
 
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
+import IntentionalAny from '../../../../phet-core/js/types/IntentionalAny.js';
 import buildAMolecule from '../../buildAMolecule.js';
 import MoleculeStructure from './MoleculeStructure.js';
 
@@ -28,7 +29,7 @@ class Molecule extends MoleculeStructure {
   public get positionBounds(): Bounds2 {
     // mutable way of handling this, so we need to make a copy
     const bounds = Bounds2.NOTHING.copy();
-    this.atoms.forEach( ( atom: any ) => { // eslint-disable-line @typescript-eslint/no-explicit-any
+    this.atoms.forEach( ( atom: IntentionalAny ) => {
       bounds.includeBounds( atom.positionBounds );
     } );
     return bounds;
@@ -41,7 +42,7 @@ class Molecule extends MoleculeStructure {
 
     // mutable way of handling this, so we need to make a copy
     const bounds = Bounds2.NOTHING.copy();
-    this.atoms.forEach( ( atom: any ) => { // eslint-disable-line @typescript-eslint/no-explicit-any
+    this.atoms.forEach( ( atom: IntentionalAny ) => {
       bounds.includeBounds( atom.destinationBounds );
     } );
     return bounds;
@@ -52,7 +53,7 @@ class Molecule extends MoleculeStructure {
    * @param delta
    */
   public shiftDestination( delta: Vector2 ): void {
-    this.atoms.forEach( ( atom: any ) => { // eslint-disable-line @typescript-eslint/no-explicit-any
+    this.atoms.forEach( ( atom: IntentionalAny ) => {
       atom.destinationProperty.value = atom.destinationProperty.value.plus( delta );
     } );
   }
