@@ -185,14 +185,10 @@ class BAMModel {
    */
   private pickRandomMoleculeNotIn( molecules: CompleteMolecule[] ): CompleteMolecule {
     // Infinite loop. We're living on the edge now, baby!
+    // TODO: Maybe we should have a max number of iterations? See https://github.com/phetsims/build-a-molecule/issues/245
     while ( true ) {
-      const molecule = ( MoleculeList ).collectionBoxMolecules[
-        dotRandom.nextIntBetween( 0, ( MoleculeList ).collectionBoxMolecules.length - 1 )
-        ];
-      // @ts-expect-error
+      const molecule = MoleculeList.collectionBoxMolecules[ dotRandom.nextIntBetween( 0, MoleculeList.collectionBoxMolecules.length - 1 ) ]!;
       if ( !molecules.includes( molecule ) ) {
-
-        // @ts-expect-error
         return molecule;
       }
     }
@@ -233,8 +229,7 @@ class BAMModel {
       // add in that many molecules
       for ( let j = 0; j < ( box ).capacity; j++ ) {
 
-        // @ts-expect-error
-        molecules.push( molecule.copy() );
+        molecules.push( molecule.copy() as CompleteMolecule );
       }
     }
 

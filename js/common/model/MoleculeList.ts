@@ -92,7 +92,7 @@ class MoleculeList {
   }
 
   /**
-   * Check whether this structure is allowed. Currently this means it is a "sub-molecule" of one of our complete
+   * Check whether this structure is allowed. Currently, this means it is a "sub-molecule" of one of our complete
    * molecules
    * @param moleculeStructure - The molecule structure to check
    * @returns True if it is allowed

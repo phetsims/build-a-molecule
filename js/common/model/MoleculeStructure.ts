@@ -230,7 +230,7 @@ class MoleculeStructure {
   /**
    * Return a copy of the molecule structure based on its bonds and atoms
    */
-  private copy(): MoleculeStructure {
+  public copy(): MoleculeStructure {
     const result = new MoleculeStructure( this.atoms.length, this.bonds.length );
     this.atoms.forEach( result.addAtom.bind( result ) );
     this.bonds.forEach( result.addBond.bind( result ) );
