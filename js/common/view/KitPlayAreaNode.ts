@@ -82,7 +82,7 @@ class KitPlayAreaNode extends Node {
           } );
           this.metadataLayer.children.forEach( metadataNode => {
 
-            affirm( metadataNode instanceof MoleculeControlsHBox ); // TODO: https://github.com/phetsims/build-a-molecule/issues/245 is this correct?
+            affirm( metadataNode instanceof MoleculeControlsHBox ); // TODO: https://github.com/phetsims/build-a-molecule/issues/253 is this correct?
 
             // Check if the metadata molecule is a part of the active kit molecules  and toggle its visibility.
             metadataNode.visible = kit.molecules.includes( metadataNode.molecule );

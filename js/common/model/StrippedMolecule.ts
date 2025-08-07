@@ -32,7 +32,7 @@ export default class StrippedMolecule extends PhetioObject {
     } );
 
     this.hydrogenCount = new Array( atomsToAdd.length );
-    this.hydrogenCount = _.range( 0, atomsToAdd.length ).map( () => 0 ); // TODO: this looks buggy https://github.com/phetsims/build-a-molecule/issues/245
+    this.hydrogenCount = _.range( 0, atomsToAdd.length ).map( () => 0 ); // TODO: this looks buggy https://github.com/phetsims/build-a-molecule/issues/253
 
     // copy non-hydrogen honds, and mark hydrogen bonds
     original.bonds.forEach( bond => {

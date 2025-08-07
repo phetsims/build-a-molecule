@@ -38,7 +38,7 @@ class CollectionBoxNode extends VBox {
   private readonly boxNode: Node;
   private readonly moleculeNodes: Node[];
   // NOT zero, since that could be a valid timeout ID for stepTimer.setTimeout!
-  private blinkTimeout: TimerListener | null; // TODO: Use joist or axon timer? See https://github.com/phetsims/build-a-molecule/issues/245
+  private blinkTimeout: TimerListener | null; // TODO: Use joist or axon timer? See https://github.com/phetsims/build-a-molecule/issues/253
   // stores nodes for each molecule
   private readonly moleculeNodeMap: Record<number, Node>;
   private readonly blackBox: Rectangle;
