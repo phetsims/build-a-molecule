@@ -1,4 +1,4 @@
-// Copyright 2020-2024, University of Colorado Boulder
+// Copyright 2020-2025, University of Colorado Boulder
 
 /**
  * Contains multiple buckets of different types of atoms and a kit play area for dropping the atoms. There is only one

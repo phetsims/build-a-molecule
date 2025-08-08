@@ -1,4 +1,4 @@
-// Copyright 2020-2021, University of Colorado Boulder
+// Copyright 2020-2025, University of Colorado Boulder
 
 /**
  * Represents a main running model for the 1st two tabs. Contains a collection of kits and boxes. Kits are responsible
