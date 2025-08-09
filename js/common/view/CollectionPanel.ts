@@ -22,6 +22,7 @@ import buildAMolecule from '../../buildAMolecule.js';
 import BuildAMoleculeStrings from '../../BuildAMoleculeStrings.js';
 import BAMConstants from '../BAMConstants.js';
 import BAMModel from '../model/BAMModel.js';
+import CompleteMolecule from '../model/CompleteMolecule.js';
 import KitCollection from '../model/KitCollection.js';
 import CollectionAreaNode from './CollectionAreaNode.js';
 
@@ -45,7 +46,7 @@ class CollectionPanel extends Panel {
    * @param providedOptions - Panel options
    */
   public constructor( bamModel: BAMModel, isSingleCollectionMode: boolean, collectionAttachmentCallbacks: ( () => void )[], toModelBounds: ( node: Node ) => Bounds2,
-                      showDialogCallback: () => void, updateRefillButton: () => void, providedOptions?: CollectionPanelOptions ) {
+                      showDialogCallback: ( completeMolecule: CompleteMolecule ) => void, updateRefillButton: () => void, providedOptions?: CollectionPanelOptions ) {
     const options = optionize<CollectionPanelOptions, SelfOptions, PanelOptions>()( {
       cornerRadius: BAMConstants.CORNER_RADIUS
     }, providedOptions );
