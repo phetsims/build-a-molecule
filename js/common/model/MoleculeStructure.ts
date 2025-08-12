@@ -120,7 +120,6 @@ class MoleculeStructure {
     const formula = ChemUtils.createSymbolWithoutSubscripts( sortedElements );
 
     // return the formula, unless it is in our exception list (in which case, handle the exception case)
-    // @ts-expect-error - TODO: This looks broken in https://github.com/phetsims/build-a-molecule/issues/247
     return MoleculeStructure.formulaExceptions[ formula ] || formula;
   }
 
@@ -637,13 +636,10 @@ class MoleculeStructure {
     return new Bond( connectedAtom, moleculeStructure.atoms[ Number( bondString ) ] );
   }
 
-  // TODO: This looks broken in https://github.com/phetsims/build-a-molecule/issues/247
-  public static formulaExceptions(): Record<string, string> {
-    return {
-      H3N: 'NH3', // treated as if it is organic
-      CHN: 'HCN'  // not considered organic
-    };
-  }
+  public static formulaExceptions: Record<string, string> = {
+    H3N: 'NH3', // treated as if it is organic
+    CHN: 'HCN'  // not considered organic
+  };
 }
 
 buildAMolecule.register( 'MoleculeStructure', MoleculeStructure );
