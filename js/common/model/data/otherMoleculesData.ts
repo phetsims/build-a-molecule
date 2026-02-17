@@ -3,7 +3,7 @@
 /**
  * All other molecules besides the collection molecules
  *
- * @author Jonathan Olson <jonathan.olson@colorado.edu>
+ * @author Jonathan Olson (PhET Interactive Simulations)
  */
 
 import buildAMolecule from '../../../buildAMolecule.js';

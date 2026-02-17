@@ -1,6 +1,6 @@
 // Copyright 2020-2025, University of Colorado Boulder
 
-// @author Jonathan Olson <jonathan.olson@colorado.edu>
+// @author Jonathan Olson (PhET Interactive Simulations)
 
 import Dimension2 from '../../../dot/js/Dimension2.js';
 import { roundSymmetric } from '../../../dot/js/util/roundSymmetric.js';

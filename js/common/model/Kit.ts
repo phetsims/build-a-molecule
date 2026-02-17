@@ -5,7 +5,7 @@
  * "active" kit at a time, which is regulated by toggling the carousel pages. Active kits have their buckets and kit
  * play area's visible for interaction
  *
- * @author Jonathan Olson <jonathan.olson@colorado.edu>
+ * @author Jonathan Olson (PhET Interactive Simulations)
  * @author Denzell Barnett (PhET Interactive Simulations)
  */
 

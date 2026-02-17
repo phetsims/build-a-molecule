@@ -3,7 +3,7 @@
 /**
  * Displays an atom and labels it with the chemical symbol
  *
- * @author Jonathan Olson <jonathan.olson@colorado.edu>
+ * @author Jonathan Olson (PhET Interactive Simulations)
  * @author Denzell Barnett (PhET Interactive Simulations)
  * @author Chris Klusendorf (PhET Interactive Simulations)
  */

@@ -3,7 +3,7 @@
 /**
  * Collection molecules that need to be loaded for the 1st tab to work
  *
- * @author Jonathan Olson <jonathan.olson@colorado.edu>
+ * @author Jonathan Olson (PhET Interactive Simulations)
  */
 
 import buildAMolecule from '../../../buildAMolecule.js';

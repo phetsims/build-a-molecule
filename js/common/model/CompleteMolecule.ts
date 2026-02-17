@@ -7,7 +7,7 @@
  *
  * It's a MoleculeStructure using PubChemAtom
  *
- * @author Jonathan Olson <jonathan.olson@colorado.edu>
+ * @author Jonathan Olson (PhET Interactive Simulations)
  * @author Denzell Barnett (PhET Interactive Simulations)
  */
 

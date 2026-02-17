@@ -3,7 +3,7 @@
 /**
  * Contains "bond breaking" nodes for a single molecule, so they can be cut apart with scissors
  *
- * @author Jonathan Olson <jonathan.olson@colorado.edu>
+ * @author Jonathan Olson (PhET Interactive Simulations)
  * @author Denzell Barnett (PhET Interactive Simulations)
  */
 

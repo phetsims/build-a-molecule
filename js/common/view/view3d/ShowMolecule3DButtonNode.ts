@@ -4,7 +4,7 @@
  * Button responsible for showing a 3D representation of the molecule.
  *
  * @author Denzell Barnett (PhET Interactive Simulations)
- * @author Jonathan Olson <jonathan.olson@colorado.edu>
+ * @author Jonathan Olson (PhET Interactive Simulations)
  */
 
 import merge from '../../../../../phet-core/js/merge.js';

@@ -5,7 +5,7 @@
  * to create a new collection.
  *
  * @author Denzell Barnett (PhET Interactive Simulations)
- * @author Jonathan Olson <jonathan.olson@colorado.edu>
+ * @author Jonathan Olson (PhET Interactive Simulations)
  */
 
 import Property from '../../../../axon/js/Property.js';

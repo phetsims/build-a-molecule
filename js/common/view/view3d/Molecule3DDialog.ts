@@ -3,7 +3,7 @@
 /**
  * 3D Molecule display that takes up the entire screen
  *
- * @author Jonathan Olson <jonathan.olson@colorado.edu>
+ * @author Jonathan Olson (PhET Interactive Simulations)
  * @author Denzell Barnett (PhET Interactive Simulations)
  */
 

@@ -4,7 +4,7 @@
  * Supertype for modules in Build a Molecule. Handles code required for all modules (bounds and the ability to switch models)
  *
  * @author Denzell Barnett (PhET Interactive Simulations)
- * @author Jonathan Olson <jonathan.olson@colorado.edu>
+ * @author Jonathan Olson (PhET Interactive Simulations)
  */
 
 import Property from '../../../../axon/js/Property.js';

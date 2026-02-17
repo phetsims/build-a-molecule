@@ -3,7 +3,7 @@
 /**
  * Structural patterns that are subgraphs of actual molecules
  *
- * @author Jonathan Olson <jonathan.olson@colorado.edu>
+ * @author Jonathan Olson (PhET Interactive Simulations)
  */
 
 import buildAMolecule from '../../../buildAMolecule.js';

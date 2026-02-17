@@ -4,7 +4,7 @@
 /**
  * Contains layout information relevant to where the kits are placed, where molecules can exist in the play area, etc.
  *
- * @author Jonathan Olson <jonathan.olson@colorado.edu>
+ * @author Jonathan Olson (PhET Interactive Simulations)
  * @author Denzell Barnett (PhET Interactive Simulations)
  */
 

@@ -4,7 +4,7 @@
  * 1st screen: collection boxes only take 1 molecule, and our 1st kit collection is always the same
  *
  * @author Denzell Barnett (PhET Interactive Simulations)
- * @author Jonathan Olson <jonathan.olson@colorado.edu>
+ * @author Jonathan Olson (PhET Interactive Simulations)
  */
 
 import Property from '../../../axon/js/Property.js';

@@ -3,7 +3,7 @@
 /**
  * Subtype of BAMScreenView that shows kits, but also has a collection area to the right-hand side
  *
- * @author Jonathan Olson <jonathan.olson@colorado.edu>
+ * @author Jonathan Olson (PhET Interactive Simulations)
  * @author Denzell Barnett (PhET Interactive Simulations)
  */
 

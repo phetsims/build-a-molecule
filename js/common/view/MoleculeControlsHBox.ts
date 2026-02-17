@@ -4,7 +4,7 @@
  * Displays the molecule name, 3D button, and 'X' button to break apart the molecule
  *
  * @author Denzell Barnett (PhET Interactive Simulations)
- * @author Jonathan Olson <jonathan.olson@colorado.edu>
+ * @author Jonathan Olson (PhET Interactive Simulations)
  */
 
 import Shape from '../../../../kite/js/Shape.js';

@@ -3,7 +3,7 @@
 /**
  * An internal list of collections that a user will be able to scroll through using a control on the collection area
  *
- * @author Jonathan Olson <jonathan.olson@colorado.edu>
+ * @author Jonathan Olson (PhET Interactive Simulations)
  * @author Denzell Barnett (PhET Interactive Simulations)
  */
 

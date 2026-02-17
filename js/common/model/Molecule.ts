@@ -4,7 +4,7 @@
 /**
  * Represents a "Build a Molecule" molecule. Also useful as a type alias for code readability
  *
- * @author Jonathan Olson <jonathan.olson@colorado.edu>
+ * @author Jonathan Olson (PhET Interactive Simulations)
  * @author Denzell Barnett (PhET Interactive Simulations)
  */
 

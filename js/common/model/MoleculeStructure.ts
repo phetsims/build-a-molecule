@@ -8,7 +8,7 @@
  *
  * Note: equivalency matrices are stored in row-major format (compared to the Java version)
  *
- * @author Jonathan Olson <jonathan.olson@colorado.edu>
+ * @author Jonathan Olson (PhET Interactive Simulations)
  * @author Denzell Barnett (PhET Interactive Simulations)
  */
 

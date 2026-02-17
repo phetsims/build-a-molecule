@@ -4,7 +4,7 @@
 /**
  * Represents a cardinal direction for use in our model. Also includes unit vector version
  *
- * @author Jonathan Olson <jonathan.olson@colorado.edu>
+ * @author Jonathan Olson (PhET Interactive Simulations)
  * @author Denzell Barnett (PhET Interactive Simulations)
  */
 

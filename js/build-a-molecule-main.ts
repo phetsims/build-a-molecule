@@ -4,7 +4,7 @@
  * Main entry point for the sim.
  *
  * @author Denzell Barnett (PhET Interactive Simulations)
- * @author Jonathan Olson <jonathan.olson@colorado.edu>
+ * @author Jonathan Olson (PhET Interactive Simulations)
  */
 
 import Sim from '../../joist/js/Sim.js';

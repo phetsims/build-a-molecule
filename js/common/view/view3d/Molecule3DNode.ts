@@ -4,7 +4,7 @@
  * 3D Molecule display that takes up the entire screen
  *
  * @author Denzell Barnett (PhET Interactive Simulations)
- * @author Jonathan Olson <jonathan.olson@colorado.edu>
+ * @author Jonathan Olson (PhET Interactive Simulations)
  */
 
 import BooleanProperty from '../../../../../axon/js/BooleanProperty.js';

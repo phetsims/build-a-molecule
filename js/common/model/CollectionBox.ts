@@ -3,7 +3,7 @@
 /**
  * Stores multiple instances of a single type of molecule. Keeps track of quantity, and has a desired capacity.
  *
- * @author Jonathan Olson <jonathan.olson@colorado.edu>
+ * @author Jonathan Olson (PhET Interactive Simulations)
  * @author Denzell Barnett (PhET Interactive Simulations)
  */
 

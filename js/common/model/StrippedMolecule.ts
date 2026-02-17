@@ -6,7 +6,7 @@
  * This class was motivated by a need for efficient molecule comparison. It brought down the cost
  * of filtering molecules from months to minutes, along with significant reductions in the structures' file size.
  *
- * @author Jonathan Olson <jonathan.olson@colorado.edu>
+ * @author Jonathan Olson (PhET Interactive Simulations)
  * @author Denzell Barnett (PhET Interactive Simulations)
  */
 

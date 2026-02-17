@@ -4,7 +4,7 @@
 /**
  * Histogram of each element in a molecule, and allows fast comparison
  *
- * @author Jonathan Olson <jonathan.olson@colorado.edu>
+ * @author Jonathan Olson (PhET Interactive Simulations)
  * @author Denzell Barnett (PhET Interactive Simulations)
  */
 
