@@ -1,4 +1,4 @@
-// Copyright 2020-2025, University of Colorado Boulder
+// Copyright 2020-2026, University of Colorado Boulder
 
 /**
  * Has functions relating to lists of molecules (e.g. is a molecule or submolecule allowed?) Uses static initialization to load in a small fraction

@@ -1,4 +1,4 @@
-// Copyright 2020-2025, University of Colorado Boulder
+// Copyright 2020-2026, University of Colorado Boulder
 
 /**
  * Contains all of the atoms in the center of the screen. These are atoms that have been removed from a kit and not placed

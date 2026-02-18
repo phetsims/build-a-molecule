@@ -1,4 +1,4 @@
-// Copyright 2020-2025, University of Colorado Boulder
+// Copyright 2020-2026, University of Colorado Boulder
 
 /**
  * An atom, extended with position/destination information that is animated
