@@ -13,7 +13,7 @@
     "branch": "HEAD"
   },
   "build-a-molecule": {
-    "sha": "a320d340be03c03c9b795f1f552261c552f7ff01",
+    "sha": "30be878756b37c424bedd262f365d3014b3b4afa",
     "branch": "1.0"
   },
   "chipper": {
@@ -25,7 +25,7 @@
     "branch": "HEAD"
   },
   "joist": {
-    "sha": "0bba43eeade3dda4239b91fd4c99bfa7d694bb5a",
+    "sha": "eac503671d3958bcacae8acbbd5acbdf97452b74",
     "branch": "HEAD"
   },
   "kite": {
