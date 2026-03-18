@@ -9,11 +9,11 @@
     "branch": "HEAD"
   },
   "brand": {
-    "sha": "05a6127c3e11b719ba08628c9c3622b296233f24",
+    "sha": "d57657587b7588abe12f1cd9945bf0d527303777",
     "branch": "HEAD"
   },
   "build-a-molecule": {
-    "sha": "5bd45f8f8a4c4ac40efd4f04c7e8f6886e6bc370",
+    "sha": "3c0b739592ebfe6d60c40f285a144585a8d9d3b6",
     "branch": "1.0"
   },
   "chipper": {
