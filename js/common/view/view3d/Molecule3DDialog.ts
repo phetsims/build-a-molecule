@@ -31,7 +31,6 @@ import Color from '../../../../../scenery/js/util/Color.js';
 import RectangularRadioButtonGroup from '../../../../../sun/js/buttons/RectangularRadioButtonGroup.js';
 import Dialog from '../../../../../sun/js/Dialog.js';
 import nullSoundPlayer from '../../../../../tambo/js/nullSoundPlayer.js';
-import buildAMolecule from '../../../buildAMolecule.js';
 import BuildAMoleculeStrings from '../../../BuildAMoleculeStrings.js';
 import BAMConstants from '../../BAMConstants.js';
 import CompleteMolecule, { PubChemBond } from '../../model/CompleteMolecule.js';
@@ -395,5 +394,3 @@ export default class Molecule3DDialog extends Dialog {
     this.ballAndStickIcon.render( undefined );
   }
 }
-
-buildAMolecule.register( 'Molecule3DDialog', Molecule3DDialog );

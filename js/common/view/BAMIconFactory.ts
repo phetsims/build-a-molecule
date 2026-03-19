@@ -11,7 +11,6 @@ import Screen from '../../../../joist/js/Screen.js';
 import ScreenIcon from '../../../../joist/js/ScreenIcon.js';
 import Image from '../../../../scenery/js/nodes/Image.js';
 import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
-import buildAMolecule from '../../buildAMolecule.js';
 import BAMConstants from '../../common/BAMConstants.js';
 import CompleteMolecule from '../../common/model/CompleteMolecule.js';
 import { COMMON_MOLECULES } from '../model/MoleculeList.js';
@@ -141,5 +140,4 @@ const BAMIconFactory = {
   }
 };
 
-buildAMolecule.register( 'BAMIconFactory', BAMIconFactory );
 export default BAMIconFactory;

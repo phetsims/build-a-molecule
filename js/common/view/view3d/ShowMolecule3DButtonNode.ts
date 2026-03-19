@@ -13,7 +13,6 @@ import Text from '../../../../../scenery/js/nodes/Text.js';
 import ButtonNode from '../../../../../sun/js/buttons/ButtonNode.js';
 import RectangularPushButton, { RectangularPushButtonOptions } from '../../../../../sun/js/buttons/RectangularPushButton.js';
 import nullSoundPlayer from '../../../../../tambo/js/nullSoundPlayer.js';
-import buildAMolecule from '../../../buildAMolecule.js';
 import BuildAMoleculeStrings from '../../../BuildAMoleculeStrings.js';
 import BAMConstants from '../../BAMConstants.js';
 import CompleteMolecule from '../../model/CompleteMolecule.js';
@@ -44,5 +43,3 @@ export default class ShowMolecule3DButtonNode extends RectangularPushButton {
     }, options ) );
   }
 }
-
-buildAMolecule.register( 'ShowMolecule3DButtonNode', ShowMolecule3DButtonNode );

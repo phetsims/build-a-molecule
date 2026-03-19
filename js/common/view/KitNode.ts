@@ -14,7 +14,6 @@ import BucketHole from '../../../../scenery-phet/js/bucket/BucketHole.js';
 import DragListener from '../../../../scenery/js/listeners/DragListener.js';
 import { PressListenerEvent } from '../../../../scenery/js/listeners/PressListener.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
-import buildAMolecule from '../../buildAMolecule.js';
 import BAMConstants from '../BAMConstants.js';
 import Atom2 from '../model/Atom2.js';
 import Kit from '../model/Kit.js';
@@ -236,5 +235,4 @@ class KitNode extends Node {
   }
 }
 
-buildAMolecule.register( 'KitNode', KitNode );
 export default KitNode;

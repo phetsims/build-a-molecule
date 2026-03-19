@@ -17,7 +17,6 @@ import affirm from '../../../../perennial-alias/js/browser-and-node/affirm.js';
 import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.js';
 import DragListener from '../../../../scenery/js/listeners/DragListener.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
-import buildAMolecule from '../../buildAMolecule.js';
 import BAMConstants from '../BAMConstants.js';
 import Atom2 from '../model/Atom2.js';
 import BAMModel from '../model/BAMModel.js';
@@ -479,5 +478,3 @@ export default class BAMScreenView extends ScreenView {
     delete this.kitPlayAreaNode.atomNodeMap[ atom.id ];
   }
 }
-
-buildAMolecule.register( 'BAMScreenView', BAMScreenView );

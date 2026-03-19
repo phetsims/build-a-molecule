@@ -9,7 +9,6 @@
 
 import Property from '../../../axon/js/Property.js';
 import Tandem from '../../../tandem/js/Tandem.js';
-import buildAMolecule from '../buildAMolecule.js';
 import BuildAMoleculeStrings from '../BuildAMoleculeStrings.js';
 import BAMConstants from '../common/BAMConstants.js';
 import BAMIconFactory from '../common/view/BAMIconFactory.js';
@@ -31,5 +30,4 @@ class MultipleScreen extends BAMScreen<MultipleModel, MoleculeCollectingScreenVi
   }
 }
 
-buildAMolecule.register( 'MultipleScreen', MultipleScreen );
 export default MultipleScreen;

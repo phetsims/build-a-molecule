@@ -2,7 +2,6 @@
 
 // @author Jonathan Olson (PhET Interactive Simulations)
 
-import buildAMolecule from '../buildAMolecule.js';
 import BuildAMoleculeStrings from '../BuildAMoleculeStrings.js';
 
 const Strings = {
@@ -20,5 +19,4 @@ const Strings = {
   Br: BuildAMoleculeStrings.bromine
 };
 
-buildAMolecule.register( 'Strings', Strings );
 export default Strings;

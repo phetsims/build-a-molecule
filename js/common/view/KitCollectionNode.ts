@@ -8,7 +8,6 @@
  */
 
 import Node from '../../../../scenery/js/nodes/Node.js';
-import buildAMolecule from '../../buildAMolecule.js';
 import BAMConstants from '../BAMConstants.js';
 import KitCollection from '../model/KitCollection.js';
 import BAMScreenView from './BAMScreenView.js';
@@ -41,5 +40,4 @@ class KitCollectionNode extends Node {
   }
 }
 
-buildAMolecule.register( 'KitCollectionNode', KitCollectionNode );
 export default KitCollectionNode;

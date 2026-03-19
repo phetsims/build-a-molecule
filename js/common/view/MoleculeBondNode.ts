@@ -19,7 +19,6 @@ import scissorsClosedUp_cur from '../../../images/scissorsClosedUp_cur.js';
 import scissorsClosedUp_png from '../../../images/scissorsClosedUp_png.js';
 import scissorsUp_cur from '../../../images/scissorsUp_cur.js';
 import scissorsUp_png from '../../../images/scissorsUp_png.js';
-import buildAMolecule from '../../buildAMolecule.js';
 import BAMConstants from '../BAMConstants.js';
 import Atom2 from '../model/Atom2.js';
 import Bond from '../model/Bond.js';
@@ -155,5 +154,3 @@ export default class MoleculeBondNode extends Node {
     super.dispose();
   }
 }
-
-buildAMolecule.register( 'MoleculeBondNode', MoleculeBondNode );

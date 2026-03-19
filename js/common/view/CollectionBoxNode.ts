@@ -16,7 +16,6 @@ import VBox, { VBoxOptions } from '../../../../scenery/js/layout/nodes/VBox.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
 import Color from '../../../../scenery/js/util/Color.js';
-import buildAMolecule from '../../buildAMolecule.js';
 import BAMConstants from '../BAMConstants.js';
 import CollectionBox from '../model/CollectionBox.js';
 import CompleteMolecule from '../model/CompleteMolecule.js';
@@ -317,5 +316,4 @@ class CollectionBoxNode extends VBox {
   }
 }
 
-buildAMolecule.register( 'CollectionBoxNode', CollectionBoxNode );
 export default CollectionBoxNode;

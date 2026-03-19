@@ -14,7 +14,6 @@ import Property from '../../../../axon/js/Property.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import GameAudioPlayer from '../../../../vegas/js/GameAudioPlayer.js';
-import buildAMolecule from '../../buildAMolecule.js';
 import CompleteMolecule from './CompleteMolecule.js';
 import Molecule from './Molecule.js';
 import MoleculeStructure from './MoleculeStructure.js';
@@ -126,5 +125,4 @@ class CollectionBox {
   }
 }
 
-buildAMolecule.register( 'CollectionBox', CollectionBox );
 export default CollectionBox;

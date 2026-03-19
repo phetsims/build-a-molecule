@@ -8,7 +8,6 @@
  */
 
 import Atom from '../../../../nitroglycerin/js/Atom.js';
-import buildAMolecule from '../../buildAMolecule.js';
 
 class Bond {
 
@@ -46,5 +45,4 @@ class Bond {
   }
 }
 
-buildAMolecule.register( 'Bond', Bond );
 export default Bond;

@@ -11,7 +11,6 @@
 import Vector2 from '../../../../dot/js/Vector2.js';
 import Enumeration from '../../../../phet-core/js/Enumeration.js';
 import EnumerationValue from '../../../../phet-core/js/EnumerationValue.js';
-import buildAMolecule from '../../buildAMolecule.js';
 
 // Direction enumeration class with vector and opposite properties
 class Direction extends EnumerationValue {
@@ -46,5 +45,4 @@ Direction.WEST.opposite = Direction.EAST;
 // Export DirectionValue as a type alias for backward compatibility
 export type DirectionValue = Direction;
 
-buildAMolecule.register( 'Direction', Direction );
 export default Direction;

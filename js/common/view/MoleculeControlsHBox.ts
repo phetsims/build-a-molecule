@@ -19,7 +19,6 @@ import Text from '../../../../scenery/js/nodes/Text.js';
 import RectangularPushButton from '../../../../sun/js/buttons/RectangularPushButton.js';
 import nullSoundPlayer from '../../../../tambo/js/nullSoundPlayer.js';
 import splitBlue_png from '../../../images/splitBlue_png.js';
-import buildAMolecule from '../../buildAMolecule.js';
 import BuildAMoleculeStrings from '../../BuildAMoleculeStrings.js';
 import BAMConstants from '../BAMConstants.js';
 import Atom2 from '../model/Atom2.js';
@@ -134,5 +133,3 @@ export default class MoleculeControlsHBox extends HBox {
       moleculeViewBounds.minY - this.height - 5 ); // offset from top of molecule
   }
 }
-
-buildAMolecule.register( 'MoleculeControlsHBox', MoleculeControlsHBox );

@@ -21,7 +21,6 @@ import affirm from '../../../../../perennial-alias/js/browser-and-node/affirm.js
 import DOM from '../../../../../scenery/js/nodes/DOM.js';
 import Color from '../../../../../scenery/js/util/Color.js';
 import Utils from '../../../../../scenery/js/util/Utils.js';
-import buildAMolecule from '../../../buildAMolecule.js';
 import CompleteMolecule, { PubChemAtom } from '../../model/CompleteMolecule.js';
 
 // Enhanced Vector3 with additional properties for atoms
@@ -377,5 +376,4 @@ Molecule3DNode.initialTransforms = {
     0.06346550494317185, 0.6503497714587849, -0.7569790647339203 )
 };
 
-buildAMolecule.register( 'Molecule3DNode', Molecule3DNode );
 export default Molecule3DNode;

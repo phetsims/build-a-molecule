@@ -18,7 +18,6 @@ import DragListener from '../../../../scenery/js/listeners/DragListener.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import Text from '../../../../scenery/js/nodes/Text.js';
 import Color from '../../../../scenery/js/util/Color.js';
-import buildAMolecule from '../../buildAMolecule.js';
 import BAMConstants from '../BAMConstants.js';
 import Atom2 from '../model/Atom2.js';
 
@@ -128,5 +127,4 @@ class AtomNode extends Node {
   }
 }
 
-buildAMolecule.register( 'AtomNode', AtomNode );
 export default AtomNode;

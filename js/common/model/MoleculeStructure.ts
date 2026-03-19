@@ -15,7 +15,6 @@
 import Atom from '../../../../nitroglycerin/js/Atom.js';
 import ChemUtils from '../../../../nitroglycerin/js/ChemUtils.js';
 import Element from '../../../../nitroglycerin/js/Element.js';
-import buildAMolecule from '../../buildAMolecule.js';
 import BAMQueryParameters from '../BAMQueryParameters.js';
 import Atom2 from './Atom2.js';
 import Bond from './Bond.js';
@@ -642,5 +641,4 @@ class MoleculeStructure {
   };
 }
 
-buildAMolecule.register( 'MoleculeStructure', MoleculeStructure );
 export default MoleculeStructure;

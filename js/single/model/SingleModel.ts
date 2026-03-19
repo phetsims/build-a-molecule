@@ -8,7 +8,6 @@
 
 import Dimension2 from '../../../../dot/js/Dimension2.js';
 import Element from '../../../../nitroglycerin/js/Element.js';
-import buildAMolecule from '../../buildAMolecule.js';
 import BAMBucket from '../../common/model/BAMBucket.js';
 import BAMModel from '../../common/model/BAMModel.js';
 import CollectionBox from '../../common/model/CollectionBox.js';
@@ -45,5 +44,3 @@ export default class SingleModel extends BAMModel {
     kitCollection.addCollectionBox( new CollectionBox( COMMON_MOLECULES.N2, 1 ) );
   }
 }
-
-buildAMolecule.register( 'SingleModel', SingleModel );

@@ -48,7 +48,6 @@ import SO3Node from '../../../../nitroglycerin/js/nodes/SO3Node.js';
 import Enumeration from '../../../../phet-core/js/Enumeration.js';
 import EnumerationValue from '../../../../phet-core/js/EnumerationValue.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
-import buildAMolecule from '../../buildAMolecule.js';
 import BuildAMoleculeStrings from '../../BuildAMoleculeStrings.js';
 import Bond from './Bond.js';
 import Molecule from './Molecule.js';
@@ -433,5 +432,4 @@ export class PubChemBond extends Bond {
   }
 }
 
-buildAMolecule.register( 'CompleteMolecule', CompleteMolecule );
 export default CompleteMolecule;

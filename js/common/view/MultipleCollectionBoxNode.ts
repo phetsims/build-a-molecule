@@ -13,7 +13,6 @@ import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import RichText from '../../../../scenery/js/nodes/RichText.js';
-import buildAMolecule from '../../buildAMolecule.js';
 import BuildAMoleculeStrings from '../../BuildAMoleculeStrings.js';
 import BAMConstants from '../BAMConstants.js';
 import CollectionBox from '../model/CollectionBox.js';
@@ -69,5 +68,4 @@ class MultipleCollectionBoxNode extends CollectionBoxNode {
 }
 
 
-buildAMolecule.register( 'MultipleCollectionBoxNode', MultipleCollectionBoxNode );
 export default MultipleCollectionBoxNode;

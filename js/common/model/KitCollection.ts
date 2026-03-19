@@ -11,7 +11,6 @@
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import Property from '../../../../axon/js/Property.js';
 import optionize from '../../../../phet-core/js/optionize.js';
-import buildAMolecule from '../../buildAMolecule.js';
 import BAMQueryParameters from '../BAMQueryParameters.js';
 import Atom2 from './Atom2.js';
 import CollectionBox from './CollectionBox.js';
@@ -221,5 +220,4 @@ class KitCollection {
   }
 }
 
-buildAMolecule.register( 'KitCollection', KitCollection );
 export default KitCollection;

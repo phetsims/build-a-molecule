@@ -9,7 +9,6 @@
  * @author Denzell Barnett (PhET Interactive Simulations)
  */
 
-import buildAMolecule from '../../buildAMolecule.js';
 import CompleteMolecule from './CompleteMolecule.js';
 import collectionMoleculesData from './data/collectionMoleculesData.js';
 import otherMoleculesData from './data/otherMoleculesData.js';
@@ -298,8 +297,6 @@ COLLECTION_BOX_MOLECULES.forEach( molecule => {
 
 // Note: (performance) postpone all of the loading?
 MoleculeList.getMainInstance();
-
-buildAMolecule.register( 'MoleculeList', MoleculeList );
 
 // Export the constants for external use
 export { COMMON_MOLECULES, COLLECTION_BOX_MOLECULES };

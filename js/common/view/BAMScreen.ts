@@ -12,7 +12,6 @@ import Screen, { ScreenOptions } from '../../../../joist/js/Screen.js';
 import ScreenView from '../../../../joist/js/ScreenView.js';
 import TModel from '../../../../joist/js/TModel.js';
 import optionize from '../../../../phet-core/js/optionize.js';
-import buildAMolecule from '../../buildAMolecule.js';
 import BAMConstants from '../BAMConstants.js';
 
 type SelfOptions = {
@@ -35,5 +34,4 @@ class BAMScreen<M extends TModel, V extends ScreenView> extends Screen<M, V> {
   }
 }
 
-buildAMolecule.register( 'BAMScreen', BAMScreen );
 export default BAMScreen;

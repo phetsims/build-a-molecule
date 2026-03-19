@@ -14,7 +14,6 @@ import VBox from '../../../../scenery/js/layout/nodes/VBox.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import Color from '../../../../scenery/js/util/Color.js';
 import nullSoundPlayer from '../../../../tambo/js/nullSoundPlayer.js';
-import buildAMolecule from '../../buildAMolecule.js';
 import CollectionBox from '../model/CollectionBox.js';
 import CompleteMolecule from '../model/CompleteMolecule.js';
 import KitCollection from '../model/KitCollection.js';
@@ -84,5 +83,4 @@ class CollectionAreaNode extends Node {
   }
 }
 
-buildAMolecule.register( 'CollectionAreaNode', CollectionAreaNode );
 export default CollectionAreaNode;

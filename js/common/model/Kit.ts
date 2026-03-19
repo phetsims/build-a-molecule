@@ -23,7 +23,6 @@ import Element from '../../../../nitroglycerin/js/Element.js';
 import affirm from '../../../../perennial-alias/js/browser-and-node/affirm.js';
 import arrayRemove from '../../../../phet-core/js/arrayRemove.js';
 import cleanArray from '../../../../phet-core/js/cleanArray.js';
-import buildAMolecule from '../../buildAMolecule.js';
 import BAMQueryParameters from '../BAMQueryParameters.js';
 import Atom2 from './Atom2.js';
 import BAMBucket from './BAMBucket.js';
@@ -672,5 +671,3 @@ class BondingOption {
 
 // Assign the static property after BondingOption class is declared
 Kit.BondingOption = BondingOption;
-
-buildAMolecule.register( 'Kit', Kit );

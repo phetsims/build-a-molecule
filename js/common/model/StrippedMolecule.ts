@@ -12,7 +12,6 @@
 
 import Atom from '../../../../nitroglycerin/js/Atom.js';
 import PhetioObject from '../../../../tandem/js/PhetioObject.js';
-import buildAMolecule from '../../buildAMolecule.js';
 import Bond from './Bond.js';
 import MoleculeStructure from './MoleculeStructure.js';
 
@@ -200,5 +199,3 @@ export default class StrippedMolecule extends PhetioObject {
     return result;
   }
 }
-
-buildAMolecule.register( 'StrippedMolecule', StrippedMolecule );

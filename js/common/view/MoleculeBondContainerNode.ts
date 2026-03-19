@@ -8,7 +8,6 @@
  */
 
 import Node from '../../../../scenery/js/nodes/Node.js';
-import buildAMolecule from '../../buildAMolecule.js';
 import Bond from '../model/Bond.js';
 import Kit from '../model/Kit.js';
 import Molecule from '../model/Molecule.js';
@@ -35,5 +34,3 @@ export default class MoleculeBondContainerNode extends Node {
     super.dispose();
   }
 }
-
-buildAMolecule.register( 'MoleculeBondContainerNode', MoleculeBondContainerNode );

@@ -8,7 +8,6 @@
 
 import Dimension2 from '../../../../dot/js/Dimension2.js';
 import Element from '../../../../nitroglycerin/js/Element.js';
-import buildAMolecule from '../../buildAMolecule.js';
 import BAMBucket from '../../common/model/BAMBucket.js';
 import BAMModel from '../../common/model/BAMModel.js';
 import CollectionLayout from '../../common/model/CollectionLayout.js';
@@ -85,5 +84,3 @@ export default class PlaygroundModel extends BAMModel {
     ] ), {} );
   }
 }
-
-buildAMolecule.register( 'PlaygroundModel', PlaygroundModel );

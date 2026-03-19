@@ -20,7 +20,6 @@ import Color from '../../../../scenery/js/util/Color.js';
 import TextPushButton from '../../../../sun/js/buttons/TextPushButton.js';
 import Dialog from '../../../../sun/js/Dialog.js';
 import nullSoundPlayer from '../../../../tambo/js/nullSoundPlayer.js';
-import buildAMolecule from '../../buildAMolecule.js';
 import BuildAMoleculeStrings from '../../BuildAMoleculeStrings.js';
 import BAMConstants from '../BAMConstants.js';
 
@@ -88,5 +87,4 @@ class AllFilledDialog extends Dialog {
   }
 }
 
-buildAMolecule.register( 'AllFilledDialog', AllFilledDialog );
 export default AllFilledDialog;

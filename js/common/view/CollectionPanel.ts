@@ -18,7 +18,6 @@ import VBox from '../../../../scenery/js/layout/nodes/VBox.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import Text from '../../../../scenery/js/nodes/Text.js';
 import Panel, { PanelOptions } from '../../../../sun/js/Panel.js';
-import buildAMolecule from '../../buildAMolecule.js';
 import BuildAMoleculeStrings from '../../BuildAMoleculeStrings.js';
 import BAMConstants from '../BAMConstants.js';
 import BAMModel from '../model/BAMModel.js';
@@ -188,5 +187,4 @@ class CollectionPanel extends Panel {
   }
 }
 
-buildAMolecule.register( 'CollectionPanel', CollectionPanel );
 export default CollectionPanel;

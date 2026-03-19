@@ -9,7 +9,6 @@
  */
 
 import Bounds2 from '../../../../dot/js/Bounds2.js';
-import buildAMolecule from '../../buildAMolecule.js';
 import BAMConstants from '../BAMConstants.js';
 
 // constants
@@ -50,5 +49,4 @@ class CollectionLayout {
   }
 }
 
-buildAMolecule.register( 'CollectionLayout', CollectionLayout );
 export default CollectionLayout;

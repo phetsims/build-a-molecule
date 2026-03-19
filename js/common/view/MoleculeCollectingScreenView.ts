@@ -16,7 +16,6 @@ import Node from '../../../../scenery/js/nodes/Node.js';
 import Color from '../../../../scenery/js/util/Color.js';
 import TextPushButton from '../../../../sun/js/buttons/TextPushButton.js';
 import nullSoundPlayer from '../../../../tambo/js/nullSoundPlayer.js';
-import buildAMolecule from '../../buildAMolecule.js';
 import BuildAMoleculeStrings from '../../BuildAMoleculeStrings.js';
 import BAMConstants from '../BAMConstants.js';
 import BAMModel from '../model/BAMModel.js';
@@ -145,5 +144,4 @@ class MoleculeCollectingScreenView extends BAMScreenView {
   }
 }
 
-buildAMolecule.register( 'MoleculeCollectingScreenView', MoleculeCollectingScreenView );
 export default MoleculeCollectingScreenView;

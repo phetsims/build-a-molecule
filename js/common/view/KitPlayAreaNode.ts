@@ -11,7 +11,6 @@
 import Property from '../../../../axon/js/Property.js';
 import affirm from '../../../../perennial-alias/js/browser-and-node/affirm.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
-import buildAMolecule from '../../buildAMolecule.js';
 import Kit from '../model/Kit.js';
 import Molecule from '../model/Molecule.js';
 import AtomNode from './AtomNode.js';
@@ -124,5 +123,4 @@ class KitPlayAreaNode extends Node {
   }
 }
 
-buildAMolecule.register( 'KitPlayAreaNode', KitPlayAreaNode );
 export default KitPlayAreaNode;

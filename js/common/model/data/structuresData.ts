@@ -6,8 +6,6 @@
  * @author Jonathan Olson (PhET Interactive Simulations)
  */
 
-import buildAMolecule from '../../../buildAMolecule.js';
-
 const structuresData = [
   '0|0',
   '1|0|Br',
@@ -29893,5 +29891,4 @@ const structuresData = [
   '23|22|O|O|O|N|N|N|N,1,2,4|C|C,3,7|C,0,7|C,3,4,5|H,0|H,1|H,2|H,4|H,5|H,5|H,7|H,7|H,8|H,8|H,9|H,9'
 ];
 
-buildAMolecule.register( 'structuresData', structuresData );
 export default structuresData;

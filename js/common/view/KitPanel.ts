@@ -14,7 +14,6 @@ import Color from '../../../../scenery/js/util/Color.js';
 import Carousel from '../../../../sun/js/Carousel.js';
 import PageControl from '../../../../sun/js/PageControl.js';
 import nullSoundPlayer from '../../../../tambo/js/nullSoundPlayer.js';
-import buildAMolecule from '../../buildAMolecule.js';
 import BAMConstants from '../BAMConstants.js';
 import KitCollection from '../model/KitCollection.js';
 import BAMScreenView from './BAMScreenView.js';
@@ -92,5 +91,3 @@ export default class KitPanel extends Node {
     this.kitCarousel.reset();
   }
 }
-
-buildAMolecule.register( 'KitPanel', KitPanel );

@@ -17,7 +17,6 @@ import Path from '../../../../scenery/js/nodes/Path.js';
 import replySolidShape from '../../../../sherpa/js/fontawesome-5/replySolidShape.js';
 import RectangularPushButton, { RectangularPushButtonOptions } from '../../../../sun/js/buttons/RectangularPushButton.js';
 import nullSoundPlayer from '../../../../tambo/js/nullSoundPlayer.js';
-import buildAMolecule from '../../buildAMolecule.js';
 import BAMConstants from '../BAMConstants.js';
 
 // constants
@@ -73,5 +72,4 @@ class RefillButton extends RectangularPushButton {
   }
 }
 
-buildAMolecule.register( 'RefillButton', RefillButton );
 export default RefillButton;

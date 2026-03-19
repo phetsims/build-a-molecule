@@ -15,7 +15,6 @@ import Vector2Property from '../../../../dot/js/Vector2Property.js';
 import Element from '../../../../nitroglycerin/js/Element.js';
 import SphereBucket from '../../../../phetcommon/js/model/SphereBucket.js';
 import Color from '../../../../scenery/js/util/Color.js';
-import buildAMolecule from '../../buildAMolecule.js';
 import BAMStrings from '../BAMStrings.js';
 import AtomNode from '../view/AtomNode.js';
 import Atom2 from './Atom2.js';
@@ -126,5 +125,4 @@ class BAMBucket extends SphereBucket<Atom2> {
   }
 }
 
-buildAMolecule.register( 'BAMBucket', BAMBucket );
 export default BAMBucket;

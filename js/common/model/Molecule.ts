@@ -11,7 +11,6 @@
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import affirm from '../../../../perennial-alias/js/browser-and-node/affirm.js';
-import buildAMolecule from '../../buildAMolecule.js';
 import Atom2 from './Atom2.js';
 import MoleculeStructure from './MoleculeStructure.js';
 
@@ -68,5 +67,4 @@ class Molecule extends MoleculeStructure {
   }
 }
 
-buildAMolecule.register( 'Molecule', Molecule );
 export default Molecule;

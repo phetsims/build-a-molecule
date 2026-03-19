@@ -13,7 +13,6 @@ import RichText from '../../../../scenery/js/nodes/RichText.js';
 import openPopup from '../../../../scenery/js/util/openPopup.js';
 import exclamationTriangleSolidShape from '../../../../sherpa/js/fontawesome-5/exclamationTriangleSolidShape.js';
 import Dialog, { DialogOptions } from '../../../../sun/js/Dialog.js';
-import buildAMolecule from '../../buildAMolecule.js';
 import BuildAMoleculeStrings from '../../BuildAMoleculeStrings.js';
 
 class WarningDialog extends Dialog {
@@ -55,5 +54,4 @@ class WarningDialog extends Dialog {
   }
 }
 
-buildAMolecule.register( 'WarningDialog', WarningDialog );
 export default WarningDialog;

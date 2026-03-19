@@ -9,7 +9,6 @@ import ScreenView from '../../../joist/js/ScreenView.js';
 import Element from '../../../nitroglycerin/js/Element.js';
 import ModelViewTransform2 from '../../../phetcommon/js/view/ModelViewTransform2.js';
 import Color from '../../../scenery/js/util/Color.js';
-import buildAMolecule from '../buildAMolecule.js';
 
 // constants
 const VIEW_SIZE = ScreenView.DEFAULT_LAYOUT_BOUNDS;
@@ -61,5 +60,4 @@ const BAMConstants = {
   ]
 };
 
-buildAMolecule.register( 'BAMConstants', BAMConstants );
 export default BAMConstants;

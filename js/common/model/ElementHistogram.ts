@@ -10,7 +10,6 @@
 
 import Element from '../../../../nitroglycerin/js/Element.js';
 import PhetioObject from '../../../../tandem/js/PhetioObject.js';
-import buildAMolecule from '../../buildAMolecule.js';
 import BAMConstants from '../BAMConstants.js';
 import type MoleculeStructure from './MoleculeStructure.js';
 
@@ -83,5 +82,4 @@ class ElementHistogram extends PhetioObject {
   }
 }
 
-buildAMolecule.register( 'ElementHistogram', ElementHistogram );
 export default ElementHistogram;

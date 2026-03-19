@@ -12,7 +12,6 @@
 import { roundSymmetric } from '../../../../dot/js/util/roundSymmetric.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import Atom from '../../../../nitroglycerin/js/Atom.js';
-import buildAMolecule from '../../buildAMolecule.js';
 import Direction, { DirectionValue } from './Direction.js';
 
 class LewisDotModel {
@@ -257,5 +256,4 @@ class LewisDotAtom {
   }
 }
 
-buildAMolecule.register( 'LewisDotModel', LewisDotModel );
 export default LewisDotModel;

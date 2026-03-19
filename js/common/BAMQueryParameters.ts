@@ -7,7 +7,6 @@
  */
 
 import { QueryStringMachine } from '../../../query-string-machine/js/QueryStringMachineModule.js';
-import buildAMolecule from '../buildAMolecule.js';
 
 const BAMQueryParameters = QueryStringMachine.getAll( {
 
@@ -18,5 +17,4 @@ const BAMQueryParameters = QueryStringMachine.getAll( {
   logData: { type: 'flag' }
 } );
 
-buildAMolecule.register( 'BAMQueryParameters', BAMQueryParameters );
 export default BAMQueryParameters;
