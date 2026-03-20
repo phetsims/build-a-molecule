@@ -126,4 +126,6 @@ type StringsType = {
 
 const BuildAMoleculeStrings = getStringModule( 'BUILD_A_MOLECULE' ) as StringsType;
 
+buildAMolecule.register( 'BuildAMoleculeStrings', BuildAMoleculeStrings );
+
 export default BuildAMoleculeStrings;
