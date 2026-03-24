@@ -13,7 +13,7 @@
     "branch": "HEAD"
   },
   "build-a-molecule": {
-    "sha": "7c61535a6f9f10ff507fb02a2a1bd6b3adff340c",
+    "sha": "79be1c492468fd7fb31b8cef7f035aad453b8b41",
     "branch": "1.0"
   },
   "chipper": {
@@ -69,7 +69,7 @@
     "branch": "HEAD"
   },
   "scenery": {
-    "sha": "9d176c48b7363c1745fc064b692170586e11865e",
+    "sha": "c1ca680b78e7e88de52d1ce154d86de7ae84224a",
     "branch": "HEAD"
   },
   "scenery-phet": {
